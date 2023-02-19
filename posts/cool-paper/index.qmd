@@ -172,3 +172,5 @@ But what is the code in the Quarto file to render what we are seeing above?
     knitr::include_graphics("img/skitch.gif")
 
 Essentially you just need to include an image (here it is within the post directory) and use R code to display, highly leveraging code chunk options.
+
+Explore the entirety of the code behind this page at <https://github.com/sr320/tumbling-oysters/blob/main/posts/cool-paper/index.qmd>

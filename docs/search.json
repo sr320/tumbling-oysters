@@ -25,7 +25,7 @@
     "href": "posts/cool-paper/index.html#how-are-you-including-images",
     "title": "Genetics: Does it really matter?",
     "section": "How are you including images?",
-    "text": "How are you including images?\n\nknitr::include_graphics(\"img/skitch.gif\")\n\n\n\n\n\n\n\n\nBut what is the code in the Quarto file to render what we are seeing above?\n{r skitch, echo = TRUE, out.width = \"70%\", fig.align = \"center\"}\nknitr::include_graphics(\"img/skitch.gif\")\nEssentially you just need to include an image (here it is within the post directory) and use R code to display, highly leveraging code chunk options."
+    "text": "How are you including images?\n\nknitr::include_graphics(\"img/skitch.gif\")\n\n\n\n\n\n\n\n\nBut what is the code in the Quarto file to render what we are seeing above?\n{r skitch, echo = TRUE, out.width = \"70%\", fig.align = \"center\"}\nknitr::include_graphics(\"img/skitch.gif\")\nEssentially you just need to include an image (here it is within the post directory) and use R code to display, highly leveraging code chunk options.\nExplore the entirety of the code behind this page at https://github.com/sr320/tumbling-oysters/blob/main/posts/cool-paper/index.qmd"
   },
   {
     "objectID": "index.html",
