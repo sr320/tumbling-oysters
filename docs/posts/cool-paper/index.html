@@ -119,10 +119,12 @@ div.csl-indent {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -144,10 +146,13 @@ div.csl-indent {
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<meta name="twitter:title" content="Tumbling Oysters - Genetics: Does it really matter?">
+<meta name="twitter:description" content="Here I will describe a recent, cool paper and try to also highlight 1) some of the material covered in our class on Proposal Writing and Professional Development, and 2) some of the features of…">
+<meta name="twitter:image" content="img/schematic.png">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -165,19 +170,22 @@ div.csl-indent {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html">
- <span class="menu-text">About</span></a>
+ <span class="menu-text">Me Elsewhere</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/sr320"><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com"><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com/sr320"><i class="bi bi-twitter" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
 </ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -191,6 +199,7 @@ div.csl-indent {
                                 <div class="quarto-categories">
                 <div class="quarto-category">paper</div>
                 <div class="quarto-category">highlight</div>
+                <div class="quarto-category">code</div>
               </div>
                   </div>
   </div>
@@ -219,7 +228,20 @@ div.csl-indent {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#this-changes-everything" id="toc-this-changes-everything" class="nav-link active" data-scroll-target="#this-changes-everything">This changes everything!</a></li>
+  <li><a href="#manuscript-history" id="toc-manuscript-history" class="nav-link" data-scroll-target="#manuscript-history">Manuscript History</a></li>
+  <li><a href="#practical-aspects-of-posting" id="toc-practical-aspects-of-posting" class="nav-link" data-scroll-target="#practical-aspects-of-posting">Practical Aspects of Posting</a>
+  <ul class="collapse">
+  <li><a href="#how-are-you-including-images" id="toc-how-are-you-including-images" class="nav-link" data-scroll-target="#how-are-you-including-images">How are you including images?</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -227,7 +249,7 @@ div.csl-indent {
 
 
 <p>Here I will describe a recent, cool paper and try to also highlight 1) some of the material covered in our class on Proposal Writing and Professional Development, and 2) some of the features of using Quarto.</p>
-<p>The paper characterizes the relationship of genetics and epigenetics in the Olympia oysters. <span class="citation" data-cites="silliman2023">Silliman et al. (<a href="#ref-silliman2023" role="doc-biblioref">2023</a>)</span></p>
+<p>The paper characterizes the relationship of genetics and epigenetics in the Olympia oysters. The two primary authors are Katherine Silliman and Laura Spencer. <span class="citation" data-cites="silliman2023">Silliman et al. (<a href="#ref-silliman2023" role="doc-biblioref">2023</a>)</span></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -241,6 +263,10 @@ Citation
 <p>Silliman, Katherine, Laura H Spencer, Samuel J White, and Steven B Roberts. 2023. “Epigenetic and Genetic Population Structure Is Coupled in a Marine Invertebrate.” Edited by Soojin Yi. <em>Genome Biology and Evolution</em>, February. <a href="https://doi.org/10.1093/gbe/evad013" class="uri">https://doi.org/10.1093/gbe/evad013</a>.</p>
 </div>
 </div>
+<section id="this-changes-everything" class="level1">
+<h1>This changes everything!</h1>
+<p>We know that genotype and epigenetic patterns are primarily responsible for phenotype, yet there is a lack of understanding to what degree the two are linked. Here we characterized the degree by which genetic variation and DNA methylation variation are coupled in a marine invertebrate and identified potential mechanisms, <em>with almost a third of the methylation variation attributable to genotype.</em> This means <strong>2/3 of methylation is not attributable to genotype</strong>.</p>
+</section>
 <section id="manuscript-history" class="level1">
 <h1>Manuscript History</h1>
 <p>Samples were originally collected in 2015 with sample information documented at https://github.com/RobertsLab/project-olympia.oyster-genomic/wiki/MBD-BSseq-December-2015.</p>
@@ -264,22 +290,31 @@ Citation
 </div>
 </div>
 </div>
-<p>Upon submiting the preprint, the manuscript was submited to Genome Biology and Evolution. As covered in class, <a href="https://github.com/sr320/paper-oly-mbdbs-gen/blob/master/oly-epigen-gen-cover-letter.pdf">a cover letter was submitted</a>.</p>
+<p>Upon submitting the preprint, the manuscript was submited to Genome Biology and Evolution. As covered in class, <a href="https://github.com/sr320/paper-oly-mbdbs-gen/blob/master/oly-epigen-gen-cover-letter.pdf">a cover letter was submitted</a>.</p>
+<p>How long did the publishing process take?</p>
+<pre><code>**Received:**
+&nbsp;23 March 2022
+**Revision received:**
+&nbsp;10 January 2023
+**Accepted:**
+&nbsp;24 January 2023
+**Published:**
+&nbsp;06 February 2023</code></pre>
 <p>The manuscript when through two rounds of comments and revisions. Here are some specific comments and responses.</p>
 <div class="panel-tabset" style="color: grey">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Comment 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Comment 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Comment 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false"></a></li></ul>
 <div class="tab-content" style="color: grey">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><strong>COMMENT:</strong> Line 19-22: I personally think that the last sentence of the abstract is a bit arbitrary / difficult to understand without reading the full paper. Maybe try to explain it a bit more / be more specific.</p>
+<p><br>
+<strong>RESPONSE:</strong> This sentence has been changed to: “When comparing measures of genetic and epigenetic population divergence at specific genomic regions this relationship surprisingly breaks down, which has implications for the methods commonly used to study epigenetic and genetic coupling in marine invertebrates.”</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p><strong>COMMENT:</strong> line 86: This discussion of DNA methylation causing SNPs needs to mention the most important factor: the high mutability of mC relative to C (and basis for methylation effect on CpG o/e metric).<br>
 </p>
 <p><strong>RESPONSE</strong>: Indeed, this is an important factor that likely influences the relationship between methylation and genetic variation. In our discussion, we present the concept of CpG depletion due to the mutability of methylated cytosines, starting at line 454. We have added text to emphasize the importance of this mechanism, which is in bold in the below excerpt:&nbsp;</p>
 <p><br>
 The enrichment of CpG-SNPs associated with methylated CpGs supports the hypothesis that methylation could have preceded and induced genetic variation by altering genome stability and mutation rates (Flores et al.&nbsp;2013). Methylated cytosines readily mutate to thymine by deamination, which results in an overall depletion of CpG dinucleotides (Coulondre et al.&nbsp;1978; Schorderet &amp; Gartler 1992; Bird 1980). For instance, in the Pacific oyster C. gigas mutation rate is biased towards GC -&gt; AT, particularly at methylated CpG sites, and in coding regions (Song 2020), and genes predicted to have low levels of methylation (analyzed in-silico using the established CpG observed / expected relationship) are less genetically diverse (analyzed via SNPs) (Roberts &amp; Gavery 2012). <strong>The higher mutability of methylated cytosines compared to those that are unmethylated is therefore a likely mechanism by which DNA methylation can influence genetic variants.</strong></p>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p><strong>COMMENT:</strong> Line 19-22: I personally think that the last sentence of the abstract is a bit arbitrary / difficult to understand without reading the full paper. Maybe try to explain it a bit more / be more specific.</p>
-<p><br>
-<strong>RESPONSE:</strong> This sentence has been changed to: “When comparing measures of genetic and epigenetic population divergence at specific genomic regions this relationship surprisingly breaks down, which has implications for the methods commonly used to study epigenetic and genetic coupling in marine invertebrates.”</p>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <p><strong>COMMENT</strong> : Even though there are many remaining questions, many previous papers have noted the connection between genetic and DNA methylation divergence. I would like to see more discussion of potential underlying mechanisms with appropriate citations. Yi 2017 and Ritter and Niederhuth 2021 are good places to start, with several relevant references cited therein.</p>
@@ -326,23 +361,23 @@ Important
 </div>
 <p>Speaking of GitHub, let me show-off one of the coolest featurs in Quarto, embedding code.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#installing methylKit</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">"methylKit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#installing methylKit</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">"methylKit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(methylKit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(methylKit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">"https://github.com/sr320/paper-oly-mbdbs-gen/blob/master/analyses/DMLs/R-objects/dml25_counts?raw=true"</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>PCA.DMLs <span class="ot">&lt;-</span> <span class="fu">PCASamples</span>(dml25_counts, <span class="at">obj.return =</span> <span class="cn">TRUE</span>, <span class="at">sd.filter =</span> T) <span class="co">#Run a PCA analysis on percent methylation for all samples. methylKit uses prcomp to create the PCA matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">"https://github.com/sr320/paper-oly-mbdbs-gen/blob/master/analyses/DMLs/R-objects/dml25_counts?raw=true"</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>PCA.DMLs <span class="ot">&lt;-</span> <span class="fu">PCASamples</span>(dml25_counts, <span class="at">obj.return =</span> <span class="cn">TRUE</span>, <span class="at">sd.filter =</span> T) <span class="co">#Run a PCA analysis on percent methylation for all samples. methylKit uses prcomp to create the PCA matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(PCA.DMLs<span class="sc">$</span>rotation)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(PCA.DMLs) <span class="co">#Look at summary statistics. The first PC explains 36.3% of variation, the second PC explains 8.5% of variation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(PCA.DMLs<span class="sc">$</span>rotation)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(PCA.DMLs) <span class="co">#Look at summary statistics. The first PC explains 36.3% of variation, the second PC explains 8.5% of variation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1805
 Importance of components:
@@ -366,7 +401,7 @@ Cumulative Proportion  0.9581 0.98066 1.00000 1.000e+00</code></pre>
 <section id="how-are-you-including-images" class="level2">
 <h2 class="anchored" data-anchor-id="how-are-you-including-images">How are you including images?</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/skitch.gif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">include_graphics</span>(<span class="st">"img/skitch.gif"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -375,9 +410,10 @@ Cumulative Proportion  0.9581 0.98066 1.00000 1.000e+00</code></pre>
 </div>
 </div>
 </div>
-<p>But what is the code in the quarto file?</p>
+<p>But what is the code in the Quarto file to render what we are seeing above?</p>
 <pre><code>{r skitch, echo = TRUE, out.width = "70%", fig.align = "center"}
 knitr::include_graphics("img/skitch.gif")</code></pre>
+<p>Essentially you just need to include an image (here it is within the post directory) and use R code to display, highly leveraging code chunk options.</p>
 
 
 
@@ -409,6 +445,121 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
