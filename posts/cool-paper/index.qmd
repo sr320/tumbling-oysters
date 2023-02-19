@@ -18,12 +18,33 @@ The paper characterizes the relationship of genetics and epigenetics in the Olym
 Silliman, Katherine, Laura H Spencer, Samuel J White, and Steven B Roberts. 2023. "Epigenetic and Genetic Population Structure Is Coupled in a Marine Invertebrate." Edited by Soojin Yi. *Genome Biology and Evolution*, February. <https://doi.org/10.1093/gbe/evad013>.
 :::
 
+------------------------------------------------------------------------
+
 # This changes everything!
 
-We know that genotype and epigenetic patterns are primarily responsible for phenotype, yet there is a lack of understanding to what degree the two are linked. Here we characterized the degree by which genetic variation and DNA methylation variation are coupled in a marine invertebrate and identified potential mechanisms, _with almost a third of the methylation variation attributable to genotype._ This means **2/3 of methylation is not attributable to genotype**.
+We know that genotype and epigenetic patterns are primarily responsible for phenotype, yet there is a lack of understanding to what degree the two are linked. Here we characterized the degree by which genetic variation and DNA methylation variation are coupled in a marine invertebrate and identified potential mechanisms, *with almost a third of the methylation variation attributable to genotype.* This means **2/3 of methylation is not attributable to genotype**.
 
+In order to perform the analysis to see to what degree genetics and epigenetics are linked, first a genome for *Ostrea lurida* had to be characterized. The genome assembly (Accession \# GCA_903981925.1) is 1.1 Gb in size with a contig N50 of 7.8kb. Gene prediction identified 32,210 genes, 170,394 exons, and 163,637 coding sequences.
 
+```{r ncbi, echo = FALSE, out.width = "70%", fig.align = "center"}
+knitr::include_graphics("img/ncbi.png")
+```
 
+Oysters in this experiment were from two different locations in Puget Sound but held under common condidtions. There was clear genetic and epigenetic diffences as determined by SNP and bisulfite treated DNA sequence (MBD-BS)
+
+```{r pca, echo = FALSE, out.width = "60%", fig.align = "center"}
+knitr::include_graphics("img/pca.png")
+```
+
+## So what does it all mean? TLDR
+
+1.  Studies of plasticity and epigenetic variation among groups from different environments must also account for genetic variation, rather than attributing all differences to the environment.
+
+2.  Genetic variation is clearly heritable, our results suggest that some proportion of DNA methylation (and likely associated phenotypes) are also heritable.
+
+3.  Despite our two populations being raised in the same environment, 73% of the epigenetic variation in our system was not attributable to genetics.
+
+------------------------------------------------------------------------
 
 # Manuscript History
 
@@ -121,6 +142,8 @@ PCA.DMLs <- PCASamples(dml25_counts, obj.return = TRUE, sd.filter = T) #Run a PC
 nrow(PCA.DMLs$rotation)
 summary(PCA.DMLs) #Look at summary statistics. The first PC explains 36.3% of variation, the second PC explains 8.5% of variation
 ```
+
+------------------------------------------------------------------------
 
 # Practical Aspects of Posting
 
