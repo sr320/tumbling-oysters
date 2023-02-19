@@ -18,7 +18,7 @@
     "href": "index.html",
     "title": "Tumbling Oysters",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nFeb 18, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Genetics: Does it really matter?\n\n\n\n\n\n\n\npaper\n\n\nhighlight\n\n\n\n\n\n\n\n\n\n\n\nFeb 18, 2023\n\n\nSteven Roberts\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nFeb 17, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -26,5 +26,19 @@
     "title": "About",
     "section": "",
     "text": "About this blog"
+  },
+  {
+    "objectID": "posts/cool-paper/index.html",
+    "href": "posts/cool-paper/index.html",
+    "title": "Genetics: Does it really matter?",
+    "section": "",
+    "text": "Here I will describe a recent, cool paper and try to also highlight 1) some of the material covered in our class on Proposal Writing and Professional Development, and 2) some of the features of using Quarto.\nThe paper characterizes the relationship of genetics and epigenetics in the Olympia oysters. Silliman et al. (2023)"
+  },
+  {
+    "objectID": "posts/cool-paper/index.html#how-are-you-including-images",
+    "href": "posts/cool-paper/index.html#how-are-you-including-images",
+    "title": "Genetics: Does it really matter?",
+    "section": "How are you including images?",
+    "text": "How are you including images?\n\nknitr::include_graphics(\"img/skitch.gif\")\n\n\n\n\n\n\n\n\nBut what is the code in the quarto file?\n{r skitch, echo = TRUE, out.width = \"70%\", fig.align = \"center\"}\nknitr::include_graphics(\"img/skitch.gif\")"
   }
 ]
