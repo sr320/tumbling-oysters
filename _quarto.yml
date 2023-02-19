@@ -14,8 +14,8 @@ website:
 format:
   html:
     theme:
-      light: flatly
       dark: darkly
+      light: flatly
 
 editor: visual
 
