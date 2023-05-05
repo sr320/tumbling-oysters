@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "posts/cvaldi-week04-reflect/index.html",
+    "href": "posts/cvaldi-week04-reflect/index.html",
+    "title": "Molecular stress responses in marine intertebrates",
+    "section": "",
+    "text": "Two weeks ago members of our FISH 600 reading group were asked to select papers to present that cited the following paper:"
+  },
+  {
+    "objectID": "posts/cvaldi-week04-reflect/index.html#discussion-themes",
+    "href": "posts/cvaldi-week04-reflect/index.html#discussion-themes",
+    "title": "Molecular stress responses in marine intertebrates",
+    "section": "Discussion Themes",
+    "text": "Discussion Themes\nOne of the central themes in our groups discussion encompassed the intra-species differences in molecular stress response across various marine invertebrate species. In regards to this theme, we particularly touched upon the transcriptomic responses in stress-tolerant vs stress-susceptible organisms of the same species to environmentally relevant stressors including extreme low salinity and elevation in temperature. The term “frontloading” used in Gleason and Burton 2015 is used to describe the baseline expression of genes that improve an organisms ability to physiologically tolerate extreme periods of stress.\nThis theme of frontloading and resilience across sub-populations of marine invertebrates differs slightly from the paper I selected that also cited the Gleason and Burton 2015 paper:\n\n\n\n\n\n\nCitation\n\n\n\nMorin, M., M. Jönsson, C. K. Wang, D. J. Craik, S. M. Degnan, and B. M. Degnan. 2023. Captivity induces a sweeping and sustained genomic response in a starfish. Molecular Ecology:mec.16947. https://doi.org/10.1111/mec.16947.\n\n\nHere the authors report the inability of a species of starfish to acclimate to the stress that comes with removal from their native environment and introduction into captivity by describing the distinct differences in the transcriptome of wild versus captive individuals. As they evaluated the transcriptomic profiles of wild and formerly-wild starfish, it can be said that the molecular marks of chronic stress expressed by the captive starfish contrast and thus highlight the theme of stress-response frontloading. Furthermore, the paper I selected also serves as evidence for the emphasis in integrating robust methods in research investigating differential gene expression."
+  },
+  {
     "objectID": "posts/post-with-code/index.html",
     "href": "posts/post-with-code/index.html",
     "title": "Post With Code",
@@ -21,6 +35,13 @@
     "text": "Here I will describe a recent, cool paper and try to also highlight 1) some of the material covered in our class on Proposal Writing and Professional Development, and 2) some of the features of using Quarto.\nThe paper characterizes the relationship of genetics and epigenetics in the Olympia oysters. The two primary authors are Katherine Silliman and Laura Spencer. Silliman et al. (2023)"
   },
   {
+    "objectID": "posts/cool-paper/index.html#so-why-does-it-matter",
+    "href": "posts/cool-paper/index.html#so-why-does-it-matter",
+    "title": "Genetics: Does it really matter?",
+    "section": "So why does it matter?",
+    "text": "So why does it matter?\n\nStudies of plasticity and epigenetic variation among groups from different environments must also account for genetic variation, rather than attributing all differences to the environment.\nGenetic variation is clearly heritable, our results suggest that some proportion of DNA methylation (and likely associated phenotypes) are also heritable.\nDespite our two populations being raised in the same environment, 73% of the epigenetic variation in our system was not attributable to genetics."
+  },
+  {
     "objectID": "posts/cool-paper/index.html#how-are-you-including-images",
     "href": "posts/cool-paper/index.html#how-are-you-including-images",
     "title": "Genetics: Does it really matter?",
@@ -28,11 +49,18 @@
     "text": "How are you including images?\n\nknitr::include_graphics(\"img/skitch.gif\")\n\n\n\n\n\n\n\n\nBut what is the code in the Quarto file to render what we are seeing above?\n{r skitch, echo = TRUE, out.width = \"70%\", fig.align = \"center\"}\nknitr::include_graphics(\"img/skitch.gif\")\nEssentially you just need to include an image (here it is within the post directory) and use R code to display, highly leveraging code chunk options.\nExplore the entirety of the code behind this page at https://github.com/sr320/tumbling-oysters/blob/main/posts/cool-paper/index.qmd"
   },
   {
+    "objectID": "posts/GraceL_posts/index.html",
+    "href": "posts/GraceL_posts/index.html",
+    "title": "Tutorial #2 Reflection",
+    "section": "",
+    "text": "Reflection\nLast week, almost all the papers we talked about looked at different living conditions for marine invertebrates and how that influences gene expression or gene regulation. Different conditions we talked about were captivity, salinity levels, and temperature stress. Elevated thermal stress, lowered salinity, and captivity all elevated some stress related genes for all invertebrates. In particular, it seemed that organisms already living in stressful conditions had pre-adapted to their environment, as evidenced by a higher base level of stress gene activation than their unadapted counterparts. I learned what a long non-coding RNA is for the first time in my life, and I finally feel like I understand PCA graphs, to a certain extent."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Tumbling Oysters",
     "section": "",
-    "text": "Genetics: Does it really matter?\n\n\n\n\n\n\n\npaper\n\n\nhighlight\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nFeb 18, 2023\n\n\nSteven Roberts\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nFeb 17, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Molecular stress responses in marine intertebrates\n\n\n\n\n\n\n\npaper\n\n\n\n\n\n\n\n\n\n\n\nApr 30, 2023\n\n\nCeleste Valdivia\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial #2 Reflection\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nApr 27, 2023\n\n\nGrace Leuchtenberger\n\n\n\n\n\n\n  \n\n\n\n\nGenetics: Does it really matter?\n\n\n\n\n\n\n\npaper\n\n\nhighlight\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nFeb 18, 2023\n\n\nSteven Roberts\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nFeb 17, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -40,19 +68,5 @@
     "title": "Me Elsewhere",
     "section": "",
     "text": "Go and explore!"
-  },
-  {
-    "objectID": "posts/cool-paper/index.html#so-what-does-it-all-mean-tldr",
-    "href": "posts/cool-paper/index.html#so-what-does-it-all-mean-tldr",
-    "title": "Genetics: Does it really matter?",
-    "section": "So what does it all mean? TLDR",
-    "text": "So what does it all mean? TLDR\n\nStudies of plasticity and epigenetic variation among groups from different environments must also account for genetic variation, rather than attributing all differences to the environment.\nGenetic variation is clearly heritable, our results suggest that some proportion of DNA methylation (and likely associated phenotypes) are also heritable.\nDespite our two populations being raised in the same environment, 73% of the epigenetic variation in our system was not attributable to genetics."
-  },
-  {
-    "objectID": "posts/cool-paper/index.html#so-why-does-it-matter",
-    "href": "posts/cool-paper/index.html#so-why-does-it-matter",
-    "title": "Genetics: Does it really matter?",
-    "section": "So why does it matter?",
-    "text": "So why does it matter?\n\nStudies of plasticity and epigenetic variation among groups from different environments must also account for genetic variation, rather than attributing all differences to the environment.\nGenetic variation is clearly heritable, our results suggest that some proportion of DNA methylation (and likely associated phenotypes) are also heritable.\nDespite our two populations being raised in the same environment, 73% of the epigenetic variation in our system was not attributable to genetics."
   }
 ]
