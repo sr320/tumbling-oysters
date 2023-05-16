@@ -24,7 +24,7 @@ We were required to find our own, more recent review though, which led me to thi
 
   This paper summarized current work looking to link DNA methylation with phenotypic plasticity in non-model invertebrates. In summarizing previous studies, Steven and Mackenzie found that where DNA is methylated and its degree of methylation varies by species. Moreover, in species with methylation (such as bees and oysters), functionally critical genes were originally hypothesized (and shown in computer analyses) to be more methylated than tissue-specific or inducible genes, and for that methylation to carry through the germline (the next generation). The rationale is that less methylation allows for greater transcriptional flexibility, which makes sense for genes that are constantly turning on and off, unlike genes that need to be expressed constantly (such as DNA and RNA metabolism). With less methylation, the gene can be more easily accessed by transcriptional machinery. This was confirmed by Steven and Mackenzie's sequencing of methylated regions in the oyster genome, and a study done on western honeybees. See image below. 
   
-  ![Gene distribution](elephant.png)
+  ![Gene distribution](genedistmeth.jpg)
 
   Methylation also varied depending on the presence of introns. Methylated genes also appeared to be more conserved across species, and unmethylated genes have more genetic diversity and theoretically more adaptive potential and phenotypic plasticity, via more or fewer alternative splicings of a certain gene, and other pathways. 
 
