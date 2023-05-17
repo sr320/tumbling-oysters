@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Grace Leuchtenberger">
+<meta name="dcterms.date" content="2023-05-16">
 
-<title>Tumbling Oysters</title>
+<title>Tumbling Oysters - Tutorial #4: DNA Methylation Station</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,26 +25,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -62,51 +62,21 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
-<script>
 
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
 
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
-
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<meta name="twitter:title" content="">
-<meta name="twitter:image" content="./posts/welcome/thumbnail.jpg">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tumbling Oysters - Tutorial #4: DNA Methylation Station">
+<meta name="twitter:description" content="For our tutorial this week, I read the paper assigned to everyone, a Roberts lab special:">
+<meta name="twitter:card" content="summary">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Tumbling Oysters</span>
     </a>
   </div>
@@ -116,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">
+    <a class="nav-link" href="../../about.html">
  <span class="menu-text">Me Elsewhere</span></a>
   </li>  
   <li class="nav-item compact">
@@ -139,254 +109,100 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Tutorial #4: DNA Methylation Station</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">news</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Grace Leuchtenberger </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 16, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(6)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(2)</span></div><div class="category" data-category="highlight">highlight <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(4)</span></div><div class="category" data-category="paper">paper <span class="quarto-category-count">(2)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<p>For our tutorial this week, I read the paper assigned to everyone, a Roberts lab special:</p>
+<p><strong>Roberts SB and Gavery MR (2012) Is there a relationship between DNA methylation and phenotypic plasticity in invertebrates? Front. Physio. 2:116. doi: 10.3389/fphys.2011.00116</strong></p>
+<p>which reviewed previous research on DNA methylation and phenotypic plasticity in invertebrates, particularly non-model organisms such as the western honeybee and the Pacific oyster.</p>
+<p>We were required to find our own, more recent review though, which led me to this paper:</p>
+<p><strong>Srut M (2021) Ecotoxicological epigenetics in invertebrates: Emerging tool for the evaluation of present and past pollution burden. Chemosphere. 282. doi: 10.1016/j.chemosphere.2021.131026 </strong></p>
+<p>I will be giving summaries of both papers, comparing them, and describe an experiment that could integrate DNA methylation with my own interests in bivalve physiology.</p>
+</section>
+<section id="roberts-and-gavery-review" class="level1">
+<h1>Roberts and Gavery Review</h1>
+<p>This paper summarized current work looking to link DNA methylation with phenotypic plasticity in non-model invertebrates. In summarizing previous studies, Steven and Mackenzie found that where DNA is methylated and its degree of methylation varies by species. Moreover, in species with methylation (such as bees and oysters), functionally critical genes were originally hypothesized (and shown in computer analyses) to be more methylated than tissue-specific or inducible genes, and for that methylation to carry through the germline (the next generation). The rationale is that less methylation allows for greater transcriptional flexibility, which makes sense for genes that are constantly turning on and off, unlike genes that need to be expressed constantly (such as DNA and RNA metabolism). With less methylation, the gene can be more easily accessed by transcriptional machinery. This was confirmed by Steven and Mackenzie’s sequencing of methylated regions in the oyster genome, and a study done on western honeybees. See image below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="genedistmeth.jpeg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Gene distribution</figcaption><p></p>
+</figure>
+</div>
+<p>Methylation also varied depending on the presence of introns. Methylated genes also appeared to be more conserved across species, and unmethylated genes have more genetic diversity and theoretically more adaptive potential and phenotypic plasticity, via more or fewer alternative splicings of a certain gene, and other pathways.</p>
+</section>
+<section id="srut-review" class="level1">
+<h1>Srut Review</h1>
+<p>This review focused on epigenetic modifications to invertebrate genomes following pollutant exposure, and the potential of using DNA methylation as a biomarker for pollution. The paper starts with a helpful review on what DNA methylation is and how it works before describing different studies of DNA methylation following pollutant exposure. The author then dives into how DNA methylation has changed in various invertebrates when exposed to metals, pesticides, harmful chemicals, radiation, BPA’s, etc. They include a three page table summarizing all the studies they could find. Next, they go into hypotheses of how pollutants alter methylation, with most of them involving hijacking or interruption of enzyme activity that carries out methylation. The next big chunk of the paper summarizes studies that have looked at DNA methylation after pollution over multiple generations after the original parent was exposed to a pollutant. Across multiple species and pollutants, they see mixes of hypo- and hypermethylation depending on the pollutant, the species, and the generation. The final part of the paper looks at challenges within the field of ecotoxicological epigenetics. Accessing robust bisulfite sequencing technology can often be prohibitively expensive, time-consuming, and heavily reliant on good expertise. Moreover, epigenetic data is often not linked to phenotypic expression within studies, and this is in part because of limited, well-characterized methylomes. The author also writes that in order for epigenetic data to be even relevant to ecotoxicology, the field must expand what organisms it uses so that it includes all ecologically relevant species, at different life stages, and all different tissues within an organism. The author concludes this section by saying that beyond DNA methylation, other gene regulatory (epigenetic) mechanisms need to be explored, such as non-coding RNA’s and histones.</p>
+</section>
+<section id="comparisons" class="level1">
+<h1>Comparisons</h1>
+<table class="table">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Similarities</th>
+<th>Differences</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>-Agree that less DNA methylation is linked to increased plasticity -Both discussed DNA methylation in non-model organisms</td>
+<td>-Srut is much newer (2021), talks about more organisms and techniques -Srut talked more specifically about pollutant research, Roberts more about phenotypic plasticity -Srut’s paper talked more about genome wide methylation, Roberts more about specific genes</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="applications-to-my-research" class="level1">
+<h1>Applications to my research</h1>
+<p>I would love to do some targeted DNA methylation analysis in mussels that are exposed to high flow or low flow environments and see if that changes methylation in foot protein genes, given that mussels often lay more threads when exposed to higher flows. Although, that might not be super applicable, as we would likely need to see a change in the composition of the thread in order to make methylation analysis worthwhile. However, maybe there’s hypomethylation near the regulatory apparatus that controls byssal thread deposition. Could be interesting.</p>
 
 
+</section>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="news" data-listing-date-sort="1684220400000" data-listing-file-modified-sort="1684284781485" data-listing-reading-time-sort="6.295">
-<div class="thumbnail">
-<p><a href="./posts/GraceL_methylation/index.html"> <img src="./posts/GraceL_methylation/genedistmeth.jpeg" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/GraceL_methylation/index.html">
-<h3 class="no-anchor listing-title">
-Tutorial #4: DNA Methylation Station
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-</div>
-<a href="./posts/GraceL_methylation/index.html">
-<div class="listing-description">
-For our tutorial this week, I read the paper assigned to everyone, a Roberts lab special:
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/GraceL_methylation/index.html">
-<div class="listing-date">
-May 16, 2023
-</div>
-<div class="listing-author">
-Grace Leuchtenberger
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="paper" data-listing-date-sort="1682838000000" data-listing-file-modified-sort="1683298114734" data-listing-reading-time-sort="1.465">
-<div class="thumbnail">
-<p><a href="./posts/cvaldi-week04-reflect/index.html"> <img src="./posts/cvaldi-week04-reflect/pcaMorin2023.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/cvaldi-week04-reflect/index.html">
-<h3 class="no-anchor listing-title">
-Molecular stress responses in marine intertebrates
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
-paper
-</div>
-</div>
-<a href="./posts/cvaldi-week04-reflect/index.html">
-<div class="listing-description">
-Two weeks ago members of our FISH 600 reading group were asked to select papers to present that cited the following paper:
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/cvaldi-week04-reflect/index.html">
-<div class="listing-date">
-Apr 30, 2023
-</div>
-<div class="listing-author">
-Celeste Valdivia
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="news" data-listing-date-sort="1682578800000" data-listing-file-modified-sort="1683298114734" data-listing-reading-time-sort="0.565">
-<div class="thumbnail">
-<a href="./posts/GraceL_posts/index.html">
-<div class="thumbnail-image">
-
-</div>
-</a><p><a href="./posts/GraceL_posts/index.html"></a></p>
-</div>
-<div class="body">
-<a href="./posts/GraceL_posts/index.html">
-<h3 class="no-anchor listing-title">
-Tutorial #2 Reflection
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-</div>
-<a href="./posts/GraceL_posts/index.html">
-<div class="listing-description">
-Last week, almost all the papers we talked about looked at different living conditions for marine invertebrates and how that influences gene expression or gene regulation.…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/GraceL_posts/index.html">
-<div class="listing-date">
-Apr 27, 2023
-</div>
-<div class="listing-author">
-Grace Leuchtenberger
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="paper,highlight,code" data-listing-date-sort="1676707200000" data-listing-file-modified-sort="1684284795811" data-listing-reading-time-sort="5.77">
-<div class="thumbnail">
-<p><a href="./posts/cool-paper/index.html"> <img src="./posts/cool-paper/img/schematic.png" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/cool-paper/index.html">
-<h3 class="no-anchor listing-title">
-Genetics: Does it really matter?
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
-paper
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('highlight'); return false;">
-highlight
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-</div>
-<a href="./posts/cool-paper/index.html">
-<div class="listing-description">
-Here I will describe a recent…
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/cool-paper/index.html">
-<div class="listing-date">
-Feb 18, 2023
-</div>
-<div class="listing-author">
-Steven Roberts
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="4" data-categories="news,code,analysis" data-listing-date-sort="1676620800000" data-listing-file-modified-sort="1676783145642" data-listing-reading-time-sort="0.045">
-<div class="thumbnail">
-<p><a href="./posts/post-with-code/index.html"> <img src="./posts/post-with-code/image.jpg" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/post-with-code/index.html">
-<h3 class="no-anchor listing-title">
-Post With Code
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
-code
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-</div>
-<a href="./posts/post-with-code/index.html">
-<div class="listing-description">
-This is a post with executable code.
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/post-with-code/index.html">
-<div class="listing-date">
-Feb 17, 2023
-</div>
-<div class="listing-author">
-Harlow Malloc
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="5" data-categories="news" data-listing-date-sort="1676448000000" data-listing-file-modified-sort="1676764000125" data-listing-reading-time-sort="0.16">
-<div class="thumbnail">
-<p><a href="./posts/welcome/index.html"> <img src="./posts/welcome/thumbnail.jpg" class="thumnail-image"> </a></p>
-</div>
-<div class="body">
-<a href="./posts/welcome/index.html">
-<h3 class="no-anchor listing-title">
-Welcome To My Blog
-</h3>
-<div class="listing-subtitle">
-
-</div>
-</a>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
-news
-</div>
-</div>
-<a href="./posts/welcome/index.html">
-<div class="listing-description">
-This is the first post in a Quarto blog. Welcome!
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./posts/welcome/index.html">
-<div class="listing-date">
-Feb 15, 2023
-</div>
-<div class="listing-author">
-Tristan O’Malley
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

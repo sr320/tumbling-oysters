@@ -170,8 +170,7 @@ knitr::include_graphics("img/skitch.gif")
 
 But what is the code in the Quarto file to render what we are seeing above?
 
-```         
-{r skitch, echo = TRUE, out.width = "70%", fig.align = "center"}
+```{r skitch, echo = TRUE, out.width = "70%", fig.align = "center"}
 knitr::include_graphics("img/skitch.gif")
 ```
 
