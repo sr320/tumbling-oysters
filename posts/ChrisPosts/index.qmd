@@ -17,13 +17,13 @@ Quite candidly, I have been conflating types of DNA methylation and this week’
 
 DNA methylation is one of the ways we understand the role of epigenetic response in organisms, but there are a few more; histone modification and non-coding RNA modification are the other mechanisms. While much work has been done to explain this temporary response to  an environmental stressor, there is still plenty of work to be done with DNA methylation leading the way in research and understanding. With that said, DNA methylation manifests in either transcriptional regulation or in gene silencing and the [Roberts & Gavery 2012](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3249382/) addresses both. While this paper was published in 2012, the role of DNA methylation as an epigenetic mechanism hasn’t changed.
 
-![epigeneticPath](epigenticPath.png)
+![epigeneticPath]([epigenticPath.png](https://github.com/sr320/tumbling-oysters/blob/main/posts/ChrisPosts/epigenticPath.png?raw=true))
 Image Caption: This graphic is from the [Pham et al. 2023](https://doi.org/10.1016/j.envpol.2023.121737) review paper on epigenetic tool usage in elucidating the impact of contaminants in the aquatic environment.
 
 ## Roberts & Gavery 2012
-- Main Claim: Evidence that the absence of DNA methylation could contribute to phenotypic plasticity by increasing the number of transcriptional opportunities.
--- Limited methylation might passively facilitate specific transcriptional opportunities
-- Main Claim: The absence of germline methylation facilitates random variation that contributes to phenotypic plasticity and thus could increase adaptive potential.
+* Main Claim: Evidence that the absence of DNA methylation could contribute to phenotypic plasticity by increasing the number of transcriptional opportunities.
+** Limited methylation might passively facilitate specific transcriptional opportunities
+* Main Claim: The absence of germline methylation facilitates random variation that contributes to phenotypic plasticity and thus could increase adaptive potential.
 -- Genes predicted to be methylated at the germline have less genetic diversity compared to genes lacking germline methylation.
 - Main Claim: Methylation may not be functioning as an “on/off” switch but rather function as a fine-tuning of transcriptional control of conserved genes.
 
