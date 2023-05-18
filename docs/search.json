@@ -1,10 +1,31 @@
 [
   {
+    "objectID": "posts/cvaldi-week04-reflect/index.html",
+    "href": "posts/cvaldi-week04-reflect/index.html",
+    "title": "Molecular stress responses in marine intertebrates",
+    "section": "",
+    "text": "Two weeks ago members of our FISH 600 reading group were asked to select papers to present that cited the following paper:"
+  },
+  {
+    "objectID": "posts/cvaldi-week04-reflect/index.html#discussion-themes",
+    "href": "posts/cvaldi-week04-reflect/index.html#discussion-themes",
+    "title": "Molecular stress responses in marine intertebrates",
+    "section": "Discussion Themes",
+    "text": "Discussion Themes\nOne of the central themes in our groups discussion encompassed the intra-species differences in molecular stress response across various marine invertebrate species. In regards to this theme, we particularly touched upon the transcriptomic responses in stress-tolerant vs stress-susceptible organisms of the same species to environmentally relevant stressors including extreme low salinity and elevation in temperature. The term “frontloading” used in Gleason and Burton 2015 is used to describe the baseline expression of genes that improve an organisms ability to physiologically tolerate extreme periods of stress.\nThis theme of frontloading and resilience across sub-populations of marine invertebrates differs slightly from the paper I selected that also cited the Gleason and Burton 2015 paper:\n\n\n\n\n\n\nCitation\n\n\n\nMorin, M., M. Jönsson, C. K. Wang, D. J. Craik, S. M. Degnan, and B. M. Degnan. 2023. Captivity induces a sweeping and sustained genomic response in a starfish. Molecular Ecology:mec.16947. https://doi.org/10.1111/mec.16947.\n\n\nHere the authors report the inability of a species of starfish to acclimate to the stress that comes with removal from their native environment and introduction into captivity by describing the distinct differences in the transcriptome of wild versus captive individuals. As they evaluated the transcriptomic profiles of wild and formerly-wild starfish, it can be said that the molecular marks of chronic stress expressed by the captive starfish contrast and thus highlight the theme of stress-response frontloading. Furthermore, the paper I selected also serves as evidence for the emphasis in integrating robust methods in research investigating differential gene expression."
+  },
+  {
     "objectID": "posts/post-with-code/index.html",
     "href": "posts/post-with-code/index.html",
     "title": "Post With Code",
     "section": "",
     "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "posts/GraceL_methylation/index.html",
+    "href": "posts/GraceL_methylation/index.html",
+    "title": "Tutorial #4: DNA Methylation Station",
+    "section": "",
+    "text": "Summary\nFor our tutorial this week, I read the paper assigned to everyone, a Roberts lab special:\nRoberts SB and Gavery MR (2012) Is there a relationship between DNA methylation and phenotypic plasticity in invertebrates? Front. Physio. 2:116. doi: 10.3389/fphys.2011.00116\nwhich reviewed previous research on DNA methylation and phenotypic plasticity in invertebrates, particularly non-model organisms such as the western honeybee and the Pacific oyster.\nWe were required to find our own, more recent review though, which led me to this paper:\nSrut M (2021) Ecotoxicological epigenetics in invertebrates: Emerging tool for the evaluation of present and past pollution burden. Chemosphere. 282. doi: 10.1016/j.chemosphere.2021.131026 \nI will be giving summaries of both papers, comparing them, and describe an experiment that could integrate DNA methylation with my own interests in bivalve physiology.\n\n\nRoberts and Gavery Review\nThis paper summarized current work looking to link DNA methylation with phenotypic plasticity in non-model invertebrates. In summarizing previous studies, Steven and Mackenzie found that where DNA is methylated and its degree of methylation varies by species. Moreover, in species with methylation (such as bees and oysters), functionally critical genes were originally hypothesized (and shown in computer analyses) to be more methylated than tissue-specific or inducible genes, and for that methylation to carry through the germline (the next generation). The rationale is that less methylation allows for greater transcriptional flexibility, which makes sense for genes that are constantly turning on and off, unlike genes that need to be expressed constantly (such as DNA and RNA metabolism). With less methylation, the gene can be more easily accessed by transcriptional machinery. This was confirmed by Steven and Mackenzie’s sequencing of methylated regions in the oyster genome, and a study done on western honeybees. See image below.\n\n\n\nGene distribution\n\n\nMethylation also varied depending on the presence of introns. Methylated genes also appeared to be more conserved across species, and unmethylated genes have more genetic diversity and theoretically more adaptive potential and phenotypic plasticity, via more or fewer alternative splicings of a certain gene, and other pathways.\n\n\nSrut Review\nThis review focused on epigenetic modifications to invertebrate genomes following pollutant exposure, and the potential of using DNA methylation as a biomarker for pollution. The paper starts with a helpful review on what DNA methylation is and how it works before describing different studies of DNA methylation following pollutant exposure. The author then dives into how DNA methylation has changed in various invertebrates when exposed to metals, pesticides, harmful chemicals, radiation, BPA’s, etc. They include a three page table summarizing all the studies they could find. Next, they go into hypotheses of how pollutants alter methylation, with most of them involving hijacking or interruption of enzyme activity that carries out methylation. The next big chunk of the paper summarizes studies that have looked at DNA methylation after pollution over multiple generations after the original parent was exposed to a pollutant. Across multiple species and pollutants, they see mixes of hypo- and hypermethylation depending on the pollutant, the species, and the generation. The final part of the paper looks at challenges within the field of ecotoxicological epigenetics. Accessing robust bisulfite sequencing technology can often be prohibitively expensive, time-consuming, and heavily reliant on good expertise. Moreover, epigenetic data is often not linked to phenotypic expression within studies, and this is in part because of limited, well-characterized methylomes. The author also writes that in order for epigenetic data to be even relevant to ecotoxicology, the field must expand what organisms it uses so that it includes all ecologically relevant species, at different life stages, and all different tissues within an organism. The author concludes this section by saying that beyond DNA methylation, other gene regulatory (epigenetic) mechanisms need to be explored, such as non-coding RNA’s and histones.\n\n\nComparisons\n\n\n\n\n\n\n\nSimilarities\nDifferences\n\n\n\n\n-Agree that less DNA methylation is linked to increased plasticity -Both discussed DNA methylation in non-model organisms\n-Srut is much newer (2021), talks about more organisms and techniques -Srut talked more specifically about pollutant research, Roberts more about phenotypic plasticity -Srut’s paper talked more about genome wide methylation, Roberts more about specific genes\n\n\n\n\n\nApplications to my research\nI would love to do some targeted DNA methylation analysis in mussels that are exposed to high flow or low flow environments and see if that changes methylation in foot protein genes, given that mussels often lay more threads when exposed to higher flows. Although, that might not be super applicable, as we would likely need to see a change in the composition of the thread in order to make methylation analysis worthwhile. However, maybe there’s hypomethylation near the regulatory apparatus that controls byssal thread deposition. Could be interesting."
   },
   {
     "objectID": "posts/welcome/index.html",
@@ -21,6 +42,13 @@
     "text": "Here I will describe a recent, cool paper and try to also highlight 1) some of the material covered in our class on Proposal Writing and Professional Development, and 2) some of the features of using Quarto.\nThe paper characterizes the relationship of genetics and epigenetics in the Olympia oysters. The two primary authors are Katherine Silliman and Laura Spencer. Silliman et al. (2023)"
   },
   {
+    "objectID": "posts/cool-paper/index.html#so-why-does-it-matter",
+    "href": "posts/cool-paper/index.html#so-why-does-it-matter",
+    "title": "Genetics: Does it really matter?",
+    "section": "So why does it matter?",
+    "text": "So why does it matter?\n\nStudies of plasticity and epigenetic variation among groups from different environments must also account for genetic variation, rather than attributing all differences to the environment.\nGenetic variation is clearly heritable, our results suggest that some proportion of DNA methylation (and likely associated phenotypes) are also heritable.\nDespite our two populations being raised in the same environment, 73% of the epigenetic variation in our system was not attributable to genetics."
+  },
+  {
     "objectID": "posts/cool-paper/index.html#how-are-you-including-images",
     "href": "posts/cool-paper/index.html#how-are-you-including-images",
     "title": "Genetics: Does it really matter?",
@@ -28,11 +56,18 @@
     "text": "How are you including images?\n\nknitr::include_graphics(\"img/skitch.gif\")\n\n\n\n\n\n\n\n\nBut what is the code in the Quarto file to render what we are seeing above?\n{r skitch, echo = TRUE, out.width = \"70%\", fig.align = \"center\"}\nknitr::include_graphics(\"img/skitch.gif\")\nEssentially you just need to include an image (here it is within the post directory) and use R code to display, highly leveraging code chunk options.\nExplore the entirety of the code behind this page at https://github.com/sr320/tumbling-oysters/blob/main/posts/cool-paper/index.qmd"
   },
   {
+    "objectID": "posts/GraceL_posts/index.html",
+    "href": "posts/GraceL_posts/index.html",
+    "title": "Tutorial #2 Reflection",
+    "section": "",
+    "text": "Reflection\nLast week, almost all the papers we talked about looked at different living conditions for marine invertebrates and how that influences gene expression or gene regulation. Different conditions we talked about were captivity, salinity levels, and temperature stress. Elevated thermal stress, lowered salinity, and captivity all elevated some stress related genes for all invertebrates. In particular, it seemed that organisms already living in stressful conditions had pre-adapted to their environment, as evidenced by a higher base level of stress gene activation than their unadapted counterparts. I learned what a long non-coding RNA is for the first time in my life, and I finally feel like I understand PCA graphs, to a certain extent."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Tumbling Oysters",
     "section": "",
-    "text": "Genetics: Does it really matter?\n\n\n\n\n\n\n\npaper\n\n\nhighlight\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nFeb 18, 2023\n\n\nSteven Roberts\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nFeb 17, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
+    "text": "Tutorial #4: DNA Methylation Station\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nMay 16, 2023\n\n\nGrace Leuchtenberger\n\n\n\n\n\n\n  \n\n\n\n\nMolecular stress responses in marine intertebrates\n\n\n\n\n\n\n\npaper\n\n\n\n\n\n\n\n\n\n\n\nApr 30, 2023\n\n\nCeleste Valdivia\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTutorial #2 Reflection\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nApr 27, 2023\n\n\nGrace Leuchtenberger\n\n\n\n\n\n\n  \n\n\n\n\nGenetics: Does it really matter?\n\n\n\n\n\n\n\npaper\n\n\nhighlight\n\n\ncode\n\n\n\n\n\n\n\n\n\n\n\nFeb 18, 2023\n\n\nSteven Roberts\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nFeb 17, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nFeb 15, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -40,19 +75,5 @@
     "title": "Me Elsewhere",
     "section": "",
     "text": "Go and explore!"
-  },
-  {
-    "objectID": "posts/cool-paper/index.html#so-what-does-it-all-mean-tldr",
-    "href": "posts/cool-paper/index.html#so-what-does-it-all-mean-tldr",
-    "title": "Genetics: Does it really matter?",
-    "section": "So what does it all mean? TLDR",
-    "text": "So what does it all mean? TLDR\n\nStudies of plasticity and epigenetic variation among groups from different environments must also account for genetic variation, rather than attributing all differences to the environment.\nGenetic variation is clearly heritable, our results suggest that some proportion of DNA methylation (and likely associated phenotypes) are also heritable.\nDespite our two populations being raised in the same environment, 73% of the epigenetic variation in our system was not attributable to genetics."
-  },
-  {
-    "objectID": "posts/cool-paper/index.html#so-why-does-it-matter",
-    "href": "posts/cool-paper/index.html#so-why-does-it-matter",
-    "title": "Genetics: Does it really matter?",
-    "section": "So why does it matter?",
-    "text": "So why does it matter?\n\nStudies of plasticity and epigenetic variation among groups from different environments must also account for genetic variation, rather than attributing all differences to the environment.\nGenetic variation is clearly heritable, our results suggest that some proportion of DNA methylation (and likely associated phenotypes) are also heritable.\nDespite our two populations being raised in the same environment, 73% of the epigenetic variation in our system was not attributable to genetics."
   }
 ]

@@ -80,14 +80,16 @@ Upon submitting the preprint, the manuscript was submited to Genome Biology and 
 
 How long did the publishing process take?
 
-    **Received:**
-     23 March 2022
-    **Revision received:**
-     10 January 2023
-    **Accepted:**
-     24 January 2023
-    **Published:**
-     06 February 2023
+```         
+**Received:**
+ 23 March 2022
+**Revision received:**
+ 10 January 2023
+**Accepted:**
+ 24 January 2023
+**Published:**
+ 06 February 2023
+```
 
 The manuscript when through two rounds of comments and revisions. Here are some specific comments and responses.
 
@@ -168,8 +170,9 @@ knitr::include_graphics("img/skitch.gif")
 
 But what is the code in the Quarto file to render what we are seeing above?
 
-    {r skitch, echo = TRUE, out.width = "70%", fig.align = "center"}
-    knitr::include_graphics("img/skitch.gif")
+```{r skitch, echo = TRUE, out.width = "70%", fig.align = "center"}
+knitr::include_graphics("img/skitch.gif")
+```
 
 Essentially you just need to include an image (here it is within the post directory) and use R code to display, highly leveraging code chunk options.
 
