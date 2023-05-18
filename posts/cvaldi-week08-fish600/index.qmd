@@ -1,0 +1,46 @@
+---
+title: "Molecular stress responses in marine intertebrates"
+author: "Celeste Valdivia"
+date: "2023-05-17"
+categories: [paper]
+image: "treeSadler2023.png"
+toc: true
+---
+# Objective
+For week 08 of our spring quarter FISH 600 reading group we will be discussing the function of DNA methylation in non-model species. Each group member will be reading Roberts and Gavery 2012 (Paper 1) and will select a second review/commentary paper with similar themes from the last two years (Paper 2).
+------------------------------------------------------------------------
+
+# Paper 1
+::: callout-note
+## Citation
+
+Roberts, S. B., and M. R. Gavery. 2012. Is There a Relationship between DNA Methylation and Phenotypic Plasticity in Invertebrates? Frontiers in Physiology 2. <https://doi.org/10.3389/fphys.2011.00116>.
+:::
+
+
+### Summary of Paper 1
+This paper overall comments on the potential for differences in range and location of CpG methylation landscapes across different taxa to influence the adaptive capacity of those species. Notably, caste-specific genes or genes not methylated in the germline (i.e. not inherited) are expected to be genes that are more amenable to stimuli from the environment. Therefore, the degree to which methylation occurs on any particular gene could potentially be good predictor for identifying greater plasticity of that gene. This is in contrast to genes that are heavily methylated at CpG motifs at inheritance which tend to involve genes that would require tighter control such as those involved in nucleotide and protein metabolism and cell cycle regulation. As such, it's interesting to consider how understanding the differences in methylation patterns across species would pair with their relative adaptive potential. 
+
+
+
+### My Takeaways from Paper 1
+I think it is interesting how different mechanisms of control over gene expression outside of epigenetics also influence plasticity and to consider the interplay between those mechanisms and epigenomic regulations. CpG methylation seems like a rather 'static' method of gene expression control, meaning that it would seem like a more difficult mechanism to move back and forth from. I think especially this method of gene regulation contrasts starkly with mechanisms involved in the post-translational modifications of proteins for example. And so, it could potentially be interesting to consider how different species with different degrees of phenotypic plasticity utilize different combinations of gene regulation dynamics.
+
+
+# Paper 2
+::: callout-note
+## Citation
+Sadler, K. C. 2023. Epigenetics across the evolutionary tree: New paradigms from non‐model animals. BioEssays 45:2200036. <https://doi.org/10.1002/bies.202200036>.
+:::
+### Summary of Paper 2
+This paper focuses on describing the ability to conduct comparative epigenomic work across non-model taxa due to advances in the field and provides a birds-eye-view on epigenomic gene regulatory mechanisms as a whole. There is a particular emphasis on describing functional genomics through commonalities of epigenommic features across diverse taxa. This meaning that organisms are capable of sharing similar epigenetic regulatory mechanisms that produce drastically different phenotypes. 
+
+### My Takeaways
+
+"Over time, genomes with CpG methylation have fewer cytosines than expected so that the observed:expected (O:E) ratio of CpGs serves as a proxy for DNA methylation: an O:E ratio well below 1, like in zebrafish and mice, means that CpGs were hypermutated and thus likely methylated, whereas a CpG ratio close to 1 indicates no or low methylation, like in D. melanogaster and C. elegans. The genomes of octopus and sea squirt have o:e ratios little less than,1 consistent with the low level of methylation in these species."
+
+Many sea squirts like my study species *Botryllus schlosseri* are often either cosmopolitan or invasive species. Perhaps, this attribute can be explained by this idea of having a CpG O:E ratio that indicates low levels of methylation and thus this could be extrapolated to mean  that they would have greater potential for phenotypic plasticity or resilience to different environments as described in Roberts and Gavery 2012. 
+
+# Comparisons
+The Roberts and Gavery 2012 paper and the Sadler 2023 paper describe similar phenomenons regarding differences in the epigenomic landscapes across species from different taxa. However, the Roberts and Gavery 2012 paper emphasizes the implications of these epigenomic landscapes in elucidating the **differences in phenotypic plasticity** across organisms. In contrast Sadler 2023 focuses on the a broader view of the comparative epigenomic field and describes the **overlap of epigenomic features** across phylogenetically distant species.
+
