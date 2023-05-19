@@ -1,9 +1,24 @@
 [
   {
+    "listing": "/posts/ChrisPosts/index.html",
+    "items": []
+  },
+  {
+    "listing": "/posts/ChrisReflection/index.html",
+    "items": []
+  },
+  {
+    "listing": "/posts/ChrisReflection/test.html",
+    "items": []
+  },
+  {
     "listing": "/index.html",
     "items": [
       "/posts/ChrisPosts/index.html",
-      "/posts/zach-dna-methyl/index.html",
+      "/posts/ChrisReflection/index.html",
+      "/posts/ChrisReflection/test.html",
+      "/posts/ChrisPosts/test.html",
+      "/posts/zach-dna-methylation-week/index.html",
       "/posts/cvaldi-week08-fish600/index.html",
       "/posts/GraceL_methylation/index.html",
       "/posts/cvaldi-week04-reflect/index.html",
