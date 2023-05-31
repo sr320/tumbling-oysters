@@ -1,0 +1,23 @@
+---
+title: "Epigenetic mechanisms in marine invertebrates"
+author: "Celeste Valdivia"
+date: "2023-05-27"
+categories: [paper]
+image: ""
+toc: true
+---
+::: callout-note
+## Citation
+
+Trigg, S. A., Y. R. Venkataraman, M. R. Gavery, S. B. Roberts, D. Bhattacharya, A. Downey‐Wall, J. M. Eirin‐Lopez, K. M. Johnson, K. E. Lotterhos, J. B. Puritz, and H. M. Putnam. 2022. Invertebrate methylomes provide insight into mechanisms of environmental tolerance and reveal methodological biases. Molecular Ecology Resources 22:1247–1261.
+ <https://doi.org/10.1111/1755-0998.13542>.
+:::
+
+### Trigg et al. Summary:
+This paper compares the effectiveness of three genome-wide level approaches for estimation of DNA methylation at single base-pair resolution in two non-model marine invertebrate organisms: 
+
+- Whole-genome bisulfite sequencing (WGBS)
+- Reduce representation bisulfite sequencing (RRBS)
+- Methyl-CpG binding domain bisulfite sequencing (MBDBS)
+
+In epigenetics research, WGBS is 
