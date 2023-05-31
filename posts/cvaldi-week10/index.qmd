@@ -1,23 +1,51 @@
 ---
 title: "Epigenetic mechanisms in marine invertebrates"
 author: "Celeste Valdivia"
-date: "2023-05-27"
+date: "2023-05-31"
 categories: [paper]
 image: ""
 toc: true
 ---
+# This weeks readings
 ::: callout-note
 ## Citation
 
-Trigg, S. A., Y. R. Venkataraman, M. R. Gavery, S. B. Roberts, D. Bhattacharya, A. Downey‐Wall, J. M. Eirin‐Lopez, K. M. Johnson, K. E. Lotterhos, J. B. Puritz, and H. M. Putnam. 2022. Invertebrate methylomes provide insight into mechanisms of environmental tolerance and reveal methodological biases. Molecular Ecology Resources 22:1247–1261.
- <https://doi.org/10.1111/1755-0998.13542>.
+Trigg, S. A., Y. R. Venkataraman, M. R. Gavery, S. B. Roberts, D. Bhattacharya, A. Downey‐Wall, J. M. Eirin‐Lopez, K. M. Johnson, K. E. Lotterhos, J. B. Puritz, and H. M. Putnam. 2022. Invertebrate methylomes provide insight into mechanisms of environmental tolerance and reveal methodological biases. Molecular Ecology Resources 22:1247–1261.<https://doi.org/10.1111/1755-0998.13542>.
 :::
 
-### Trigg et al. Summary:
+### Trigg et al. 2022 Summary:
 This paper compares the effectiveness of three genome-wide level approaches for estimation of DNA methylation at single base-pair resolution in two non-model marine invertebrate organisms: 
 
 - Whole-genome bisulfite sequencing (WGBS)
 - Reduce representation bisulfite sequencing (RRBS)
 - Methyl-CpG binding domain bisulfite sequencing (MBDBS)
 
-In epigenetics research, WGBS is 
+In methylomics research, WGBS is the "gold standard" in bisulfite conversion sequencing as it is capable of providing full coverage of the whole methylome at a single base-pair resolution. However, this method is expensive relative to RRBS and MBDBS. Furthermore, given most marine invertebrates have a small fraction of their genomes methylated, the expense of evaluating the whole genome for methylation is not as attractive as other more affordable methods. 
+
+RRBS enriches for CpG-rich regions of the genome through the use of restriction digestion. It was primarily designed for use in mammals that typically contain CpG islands in regulatory regions such as promoters. 
+
+MBDBS involves the use of methyl binding domain proteins that target and enrich for methylated CpGs, then uses bisulfite conversion to ID at the single base-pair resolution fragments of DNA enriched for methylated regions. In marine invertebrates, this technique was projected to be especially useful as highly methylated areas of the genome tend to be found within gene bodies: 
+
+![example of gene body](https://github.com/sr320/tumbling-oysters/blob/main/posts/cvaldi-week10/gene_body.jpeg?raw=true)
+
+As such, generally speaking, since CDS regions tend to be methylated in marine invertebrates, using the enrichment approach involved in MBDBS is considered a cost-effective and method for investigating especially informative regions of the genome.
+
+Ultimately, the authors find that the methylation landscape greatly varies across species, tissue processing methods, and library preparation methods. As such, when selecting for high-resolution quantification of DNA methylation profiles in non-model marine invertebrates, great consideration needs to be taken regarding the biology of the organism, the research question and resultant genomic regions of interest, as well as cost. 
+
+
+::: callout-note
+## Citation
+
+Sun, D., H. Yu, and Q. Li. 2022. Genome-Wide Differential DNA Methylomes Provide Insights into the Infertility of Triploid Oysters. Marine Biotechnology 24:18–31.<https://link.springer.com/article/10.1007/s10126-021-10083-y>.
+:::
+
+In this paper, the authors investigate genome-wide methylomes and transcriptomes of fertile and infertile triploid pacific oysters and compare them to normal diploid individuals using whole genome bisulfite sequencing (WGBS) and RNA-seq with the objective of identifying the epigenetic mechanisms involved in gonadal development in triploid individuals. 
+
+An interesting finding out of this paper is that F-3nα, fertile female triploid pacific oysters, presented higher methylation levels than F-2n, normal diploid females. This contrasts with F-3nβ triploid infertile females that expressed lower methylation levels than F-2n. At first glance, this finding is intuitive, as at least previous discussions in FISH 600 have pointed towards the correlation of greater epigenetic modifications equating to greater regulation of gene expression. Since F-3nα individuals are still capable of producing a large amount of gametes despite the extra load of genomic material to control for, it would be expected to see greater investment in epigenetic modifications to the genome such as methylation especially relative to normal F-2n individuals. This idea is further supported by the evidence that F-3nβ individuals, who produce significantly less gametes, lack that epigenetic "control" of the excess genome and that may inform their ability to successfully undergo healthy gonadal development. Expanding upon this thought, the authors' suggest that the absence of methylation in gene body regions of infertile triploid oysters likely leads to transcriptional effects relating to access to alternative start sites, alternative splicing events, and an overall increase in sequence mutations.
+
+The authors pair this methylomic data with transcriptomic data and find that only 64 genes involved in metabolism are differentially expressed in fertile triploid females compared to the 272 genes in sterile triploid females relative to diploid females.
+
+In terms of broader implications, this study presents a novel angle in terms of investigating gonadal development in invertebrates by evaluating epigenetic influences on the transcriptome of fertile and infertile pacific oysters. 
+
+# Comparison with last meeting
+In our previous meeting we discussed the broader implications of the epigenetic field and the general direction in which it was moving. This week however, we focus in on methods regarding high-throughput quantification of methylation landscapes and the direct applications of these methods such as the gold standard WGBS in elucidating mechanisms of epigenetic regulation in pathways such as gonadal development in marine invertebrates. Much of the work conducted in epigenetics is focused on methylation of the genome especially in vertebrates. The papers discussed here in this post focus in on the distinct nature of invertebrate methylomes relative to other taxa and how the unique biology of marine invertebrates like pacific oyster and coral result in methylation landscapes with unique gene expression regulatory properties.
