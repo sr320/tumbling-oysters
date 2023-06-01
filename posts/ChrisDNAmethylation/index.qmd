@@ -1,20 +1,40 @@
 ---
-title: "DNA Methylation Synthesis"
-author: "Chris"
-date: "2023-04-30"
-categories: [paper]
+title: "DNA Methylation Analysis Methods" 
+author: Chris 
+date: "\`r format(Sys.time(), '%d %B, %Y')\`" 
+output: 
+ html_document: 
+  theme: readable 
+  highlight: zenburn 
+  toc: true 
+  toc_float: true 
+  number_sections: true 
+  code_folding: show 
+  code_download: true 
+editor: 
+   markdown: 
+    wrap: 72 
+ categories: [paper]
 ---
 
+[![Study Organisms](https://github.com/sr320/tumbling-oysters/blob/main/posts/ChrisDNAmethylation/organisms.png?raw=true)](https://github.com/sr320/tumbling-oysters/blob/main/posts/ChrisDNAmethylation/organisms.png?raw=true)\-\--
 
-## [Trigg et al. (2022)](https://onlinelibrary.wiley.com/doi/full/10.1111/1755-0998.13542)
+## Take Home Points
 
+### [Trigg et al. (2022)](https://onlinelibrary.wiley.com/doi/full/10.1111/1755-0998.13542)  
 
+* We evaluated the performance of three approaches that use bisulfite-­treated DNA for library preparation to enable single base-­pair resolution quantification of DNA methylation in corals.
++ whole genome bisulfite sequencing (WGBS)
++ methyl-CpG binding domain bisulfite sequencing (MBDBS)
++ reduced representation bisulfite sequencing (RRBS)
+* Taken together, our findings indicate biology, genome architecture, regions of interest, and depth of coverage are critical considerations when choosing methods for high-resolution quantification of DNA methylation profiles in invertebrates.
+* Our results demonstrate that the methylation landscape can vary significantly across species, which is a critical consideration for both interpreting environmental response capacity, and for experimental design.
+* Together these metrics enable comparative capacity for three common methods in two coral taxa that vary in their phylogeny, genome size, symbiotic unions and environmental performance, and provide the community with a more comprehensive foundation upon which to build laboratory and statistical analyses of DNA methylation, plasticity and acclimatization.  
 
-## [Tang et al. (2023)](https://www.sciencedirect.com/science/article/pii/S0269749123006693)
+### [Tang et al. (2023)](https://www.sciencedirect.com/science/article/pii/S0269749123006693)  
 
+*
 
-## Research Application
+## Scientific Relevance / Impact
 
-
-## Conclusion
-
+## Reflection/ Through-line
