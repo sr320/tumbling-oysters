@@ -1,0 +1,33 @@
+\-\--
+
+title: "DNA Methylation and Species/Tissue Specific Considerations"
+
+author: "Zach Bengtsson"
+
+date: "2023-06-01"
+
+categories: \[paper\]
+
+toc: true
+
+\-\--
+
+## Primary paper
+
+**Invertebrate methylomes provide insight into mechanisms of environmental tolerance and reveal methodological biases**
+
+This paper discusses the role of DNA methylation in marine invertebrates' ability to adapt to changing environments. It compares three methods for studying DNA methylation and analyzes the methylation patterns in two coral species with different environmental sensitivities. The results show that one species has higher methylation levels than the other, and the majority of methylation occurs in gene bodies and flanking regions. The study highlights the importance of considering species-specific factors and genome characteristics when choosing a method for studying DNA methylation. The findings provide insights into the functional role of DNA methylation in environmental tolerance in marine invertebrates.
+
+## Oyster Paper
+
+**Differential DNA methylation in Pacific oyster reproductive tissue in response to ocean acidification**
+
+This study investigates the effects of ocean acidification on the methylome (DNA methylation patterns) of the gonad tissue in Pacific oysters (Crassostrea gigas). They exposed the oysters to low pH conditions for seven weeks and used whole genome bisulfite sequencing to identify methylated regions in the female oyster gonad samples. The analysis revealed a total of 1284 differentially methylated loci primarily in genes associated with development and stress response. The results suggest that DNA methylation may play a regulatory role in gonad and larval development, shaping the oysters' responses to low pH stress. The study also highlights the importance of species- and tissue-specific studies to understand the potential regulatory role of DNA methylation. The findings contribute to the growing understanding of epigenetic responses in molluscan species and provide a foundation for future research on intergenerational epigenetic inheritance and its role in mediating plastic responses to environmental stressors.
+
+![](DML-distribution.png)
+
+![](CpG-locations.png)
+
+## Comparison
+
+Both papers assess methylation in marine invertebrates. The primary paper looks generally at methylation, comparing two species of coral (one considered more environmentally sensitive than the other). The focuses here also appears to be more methodological given the 3 approaches. My paper more specifically examines methylation in the case of OA treatments in oysters. This approach seems more mechanistic than the primary paper's approach, since it is focused on a particular treatment condition with expected physiological responses. However, both papers provide similar conclusions about the importance of acknowledging species specific (and tissue specific in the case of the oyster paper) methylation patterns.
