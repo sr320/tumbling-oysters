@@ -1,0 +1,30 @@
+---
+title: "Tutorial #5 Reflection"
+author: "Grace Leuchtenberger"
+date: "2023-05-29"
+categories: [news]
+---
+
+# Summary
+
+For the last week of our tutorial, we came back to DNA methylation and read another Roberts lab joint: https://doi.org/10.1111/1755-0998.13542
+
+And we also got to read another paper on our organism of choice. Mine looked at morphology and methylation in P. perna in South Africa across habitat types, either bay or open ocean mussels: https://doi.org/10.1007/s00227-018-3310-6.
+
+If you want some quick summaries, look no further. You have arrived.
+
+# Trigg et al. 2021
+
+3 different methods of methylation quantification (bisulfite sequencing) were used to compare methylation in two scleractinian coral species, one environmentally sensitive (*P. acuta*) and one not (*M. capitata*), and they also compared the efficacy of all three methods against each other. The three methods were whole genome bisulfite sequencing (WGBS), reduced representation bisulfite sequncing (RRBS) and methyl-CpG binding domain bisulfite sequencing (MBDBS). WGBS is the top choice (and is the most expensive one) for bisulfite sequencing because it provides full coverage of the genome, and it can detect the entire methylome at single base-pair resolution, so you know exactly where the methylation is in a gene. RRBS uses restriction enzymes to enrich CPG islands, common methylation hotspots in vertebrates, but by using the enzymes only part of the genome is sequenced. MBDBS is described as "MBDBS uses methyl binding domain proteins to target and enrich methylated CpGs, then employs bisulfite conversion to provide single base-pair resolution of DNA fragments enriched for methylated regions." Now I'm not sure hwat domain proteins are, but it sounds like these proteins find the methylated regions, and then the rest of the method uses the bisulfite conversion to provide that really high resolution.
+
+*Acuta* was far less methylated than *capitata*. Most of the methylation for both species was in the intergenic and intron regions. Whole genome bisulfite sequencing still comes out on top as the #1 method for figuring out methylation. However, for the corals, the MBDBS also worked pretty well for a much lower cost, with some potential misidentification of the symbiont's genome as the coral's genome, and a special focus on hypermethylated regions, which could be problems. RRBS covered less overall, but for what it did cover it got greater read depth. Inter-cell methylation differences may also affect MBDBS, which only pulls down methylated DNA, while the other two methods don't "enrich" methylated regions.
+
+# Watson et al. 2018
+
+The authors used RRBS in tandem with morphological measurements to assess differences (epigenetic and otherwise) between bay and "open ocean" populations of P. perna (green-lipped mussels) in South Africa. They didn't find any significant morphological differences between the two types of populations, but I guess they found some epigenetic difference, but the way they write about it makes it seem like they cherry-picked the data a bit. They did a PCoA with just "highly differentiated" methylation susceptible loci and then found a difference in methylation between the two types of populations, but that's like having two piles of red apples, one with a green apple in it, and then picking up only the green apple and a red apple from the other basket and then saying "the two groups are different!" That's my base understanding of it anyway.
+
+# In reference to last week
+
+If last week was about the usage of DNA methylation quantification, this week was about what specific methods are best for DNA methylation quantification. We can safely say that WGBS is the best, but for marine labs that don't quite have the same funding as those in genome sciences departments, MBDBS and RRBS could be useful enough for our purposes.
+
+Interestingly, last week I had an idea to look at methylation in mussels in high and low flow environments, and that's what Watson et al. tried to do, which was cool to read. I'm not sure their data totally supports their conclusions, however.
