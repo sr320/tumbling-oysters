@@ -14,13 +14,13 @@ citation:
 image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_lsamp-2023_-_main_-_RStudio_2023-07-21_13-31-47.png
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 
-# format:
-#   html:
-#     code-fold: true
-#     code-tools: FALSE
-#     code-copy: true
-#     highlight-style: github
-#     code-overflow: wrap
+format:
+  html:
+    code-fold: true
+    code-tools: FALSE
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
 ---
 
 
