@@ -17,7 +17,7 @@ draft: false # setting this to `true` will prevent your post from appearing on y
 format:
   html:
     code-fold: true
-    code-tools: FALSE
+    code-tools: true
     code-copy: true
     highlight-style: github
     code-overflow: wrap
