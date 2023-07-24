@@ -7,11 +7,11 @@ author:
     orcid: 0000-0001-8302-1138
     affiliation: Professor, UW - School of Aquatic and Fishery Sciences
     affiliation-url: https://robertslab.info
-date: 07-21-2023
+date: 07-24-2023
 categories: [ceabigr, R, tidyverse, ggplot, snp] # self-defined categories
 citation: 
   url: https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/ # self-defined
-image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_lsamp-2023_-_main_-_RStudio_2023-07-21_13-31-47.png # finding a good image
+image: https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-12-1.png?raw=true # finding a good image
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 
 format:
@@ -362,7 +362,7 @@ write.table(distrab,file="../output/53-revisit-epi-SNPs/epiMATRIX_mbd_rab.txt", 
 heatmap(distrab, Rowv = NA, Colv = NA, col = cm.colors(256), scale = "none")
 ```
 
-<img src="53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-12-1.png?raw=true" style="display: block; margin: auto;" />
 
 ``` r
 # Perform hierarchical clustering
@@ -376,5 +376,5 @@ labels <- rownames(distrab)
 rect.hclust(hc, k = 6, border = "gray")
 ```
 
-<img src="53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-13-1.png?raw=true" style="display: block; margin: auto;" />
 
