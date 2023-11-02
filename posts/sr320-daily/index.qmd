@@ -7,7 +7,6 @@ image: "http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-
 toc: true
 ---
 
-
 ```{r, results='asis', echo=FALSE, eval=FALSE}
 for (i in 1:30) {
   cat(paste0("\n# November ", i, "\nYour text here...\n"))
@@ -17,120 +16,144 @@ for (i in 1:30) {
 
 # November 1
 
-Went to hatchery to clean oysters. A couple of pipes in control fell. Temperature was 13.9. Installed header heater to 16. 
+Went to hatchery to clean oysters. A couple of pipes in control fell. Temperature was 13.9. Installed header heater to 16.
 
 # November 2
-Non coding RNA meeting- followed by lab meeting- several appts 
 
-Insert date insert time date time.
-I spent a lot of time talking in different different meetings
+Non coding RNA meeting- followed by lab meeting- several appts
 
+Insert date insert time date time. I spent a lot of time talking in different different meetings
 
 ## Non-coding RNA
 
 This meeting was a working group discussion on non-coding RNA. They began by discussing some issues Sam was having with workflows and output from programs like MirTrace. They determined that trimming reads to 25 bases led to more hits in the database, showing trimming has an impact. Steven shared some Markdown files documenting analysis steps and they discussed better ways to share these files. They agreed writing out methods sections ahead of time would help guide future work, even if all steps haven't been completed yet. To wrap up, they decided tomorrow's meeting should focus on working in breakout rooms to further develop introduction, methods, and other sections of their project.
 
-
 Workflows and methods for genetic analysis. (0:02)
 
- Analyzing audio transcript for microRNA analysis. (4:56)
+Analyzing audio transcript for microRNA analysis. (4:56)
 
- Gene sequencing and merging code branches. (11:14)
+Gene sequencing and merging code branches. (11:14)
 
- Using GitHub to create documents and markdown files. (17:07)
+Using GitHub to create documents and markdown files. (17:07)
 
- Planning for tomorrow's meeting. (39:37)
- 
- 
- ## lab meeting
- 
- The meeting began with Grace presenting her research on modeling the immune response of sea stars to sea star wasting disease. Next, Maggie discussed her past research on the effects of temperature on metabolic rate in invasive blue catfish, and her current research using ROVs to study fish assemblages on artificial reefs. Then Aspen presented her chapter on modeling meta Dyneema infections in Tanner crab, showing patterns of infection correlated with temperature, shell condition, and black mat fungus infection. The group provided feedback on her analysis and suggestions for further exploring explanations for differences in infection patterns between sites. Finally, Steven Roberts reminded everyone about monthly reporting requirements and purchasing reimbursements.
- 
- ## ceabigr
- 
- The meeting discussed analyzing alternative splicing in oyster genes to determine if it occurs randomly or in a directed, non-random manner between control and treated samples. They debated different methods to quantify this, such as looking at exon counts and coefficients of variation. Zach agreed to generate exon expression data for all samples. Stephen said he would work on getting this exon count data into a matrix. They also agreed to read the methods section of a relevant paper to help inform their approach. Determining the next steps for analyzing Zach's long non-coding RNA data was discussed, but the group felt it may not directly fit into the current manuscript.
- 
+Planning for tomorrow's meeting. (39:37)
+
+## lab meeting
+
+The meeting began with Grace presenting her research on modeling the immune response of sea stars to sea star wasting disease. Next, Maggie discussed her past research on the effects of temperature on metabolic rate in invasive blue catfish, and her current research using ROVs to study fish assemblages on artificial reefs. Then Aspen presented her chapter on modeling meta Dyneema infections in Tanner crab, showing patterns of infection correlated with temperature, shell condition, and black mat fungus infection. The group provided feedback on her analysis and suggestions for further exploring explanations for differences in infection patterns between sites. Finally, Steven Roberts reminded everyone about monthly reporting requirements and purchasing reimbursements.
+
+## ceabigr
+
+The meeting discussed analyzing alternative splicing in oyster genes to determine if it occurs randomly or in a directed, non-random manner between control and treated samples. They debated different methods to quantify this, such as looking at exon counts and coefficients of variation. Zach agreed to generate exon expression data for all samples. Stephen said he would work on getting this exon count data into a matrix. They also agreed to read the methods section of a relevant paper to help inform their approach. Determining the next steps for analyzing Zach's long non-coding RNA data was discussed, but the group felt it may not directly fit into the current manuscript.
 
 # November 3
+
 Your text here...
 
 # November 4
+
 Your text here...
 
 # November 5
+
 Your text here...
 
 # November 6
+
 Your text here...
 
 # November 7
+
 Your text here...
 
 # November 8
+
 Your text here...
 
 # November 9
+
 Your text here...
 
 # November 10
+
 Your text here...
 
 # November 11
+
 Your text here...
 
 # November 12
+
 Your text here...
 
 # November 13
+
 Your text here...
 
 # November 14
+
 Your text here...
 
 # November 15
+
 Your text here...
 
 # November 16
+
 Your text here...
 
 # November 17
+
 Your text here...
 
 # November 18
+
 Your text here...
 
 # November 19
+
 Your text here...
 
 # November 20
+
 Your text here...
 
 # November 21
+
 Your text here...
 
 # November 22
+
 Your text here...
 
 # November 23
+
 Your text here...
 
 # November 24
+
 Your text here...
 
 # November 25
+
 Your text here...
 
 # November 26
+
 Your text here...
 
 # November 27
+
 Your text here...
 
 # November 28
+
 Your text here...
 
 # November 29
+
 Your text here...
 
 # November 30
+
 Your text here...

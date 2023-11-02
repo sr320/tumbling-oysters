@@ -177,9 +177,30 @@
   {
     "objectID": "posts/sr320-daily/index.html",
     "href": "posts/sr320-daily/index.html",
-    "title": "Daily",
+    "title": "November Daily",
     "section": "",
-    "text": "November 1\nWent to hatchery to clean oysters.\n\n\nNovember 2\nYour text here…\n\n\nNovember 3\nYour text here…\n\n\nNovember 4\nYour text here…\n\n\nNovember 5\nYour text here…\n\n\nNovember 6\nYour text here…\n\n\nNovember 7\nYour text here…\n\n\nNovember 8\nYour text here…\n\n\nNovember 9\nYour text here…\n\n\nNovember 10\nYour text here…\n\n\nNovember 11\nYour text here…\n\n\nNovember 12\nYour text here…\n\n\nNovember 13\nYour text here…\n\n\nNovember 14\nYour text here…\n\n\nNovember 15\nYour text here…\n\n\nNovember 16\nYour text here…\n\n\nNovember 17\nYour text here…\n\n\nNovember 18\nYour text here…\n\n\nNovember 19\nYour text here…\n\n\nNovember 20\nYour text here…\n\n\nNovember 21\nYour text here…\n\n\nNovember 22\nYour text here…\n\n\nNovember 23\nYour text here…\n\n\nNovember 24\nYour text here…\n\n\nNovember 25\nYour text here…\n\n\nNovember 26\nYour text here…\n\n\nNovember 27\nYour text here…\n\n\nNovember 28\nYour text here…\n\n\nNovember 29\nYour text here…\n\n\nNovember 30\nYour text here…"
+    "text": "Went to hatchery to clean oysters. A couple of pipes in control fell. Temperature was 13.9. Installed header heater to 16."
+  },
+  {
+    "objectID": "posts/sr320-daily/index.html#non-coding-rna",
+    "href": "posts/sr320-daily/index.html#non-coding-rna",
+    "title": "November Daily",
+    "section": "Non-coding RNA",
+    "text": "Non-coding RNA\nThis meeting was a working group discussion on non-coding RNA. They began by discussing some issues Sam was having with workflows and output from programs like MirTrace. They determined that trimming reads to 25 bases led to more hits in the database, showing trimming has an impact. Steven shared some Markdown files documenting analysis steps and they discussed better ways to share these files. They agreed writing out methods sections ahead of time would help guide future work, even if all steps haven’t been completed yet. To wrap up, they decided tomorrow’s meeting should focus on working in breakout rooms to further develop introduction, methods, and other sections of their project.\nWorkflows and methods for genetic analysis. (0:02)\nAnalyzing audio transcript for microRNA analysis. (4:56)\nGene sequencing and merging code branches. (11:14)\nUsing GitHub to create documents and markdown files. (17:07)\nPlanning for tomorrow’s meeting. (39:37)"
+  },
+  {
+    "objectID": "posts/sr320-daily/index.html#lab-meeting",
+    "href": "posts/sr320-daily/index.html#lab-meeting",
+    "title": "November Daily",
+    "section": "lab meeting",
+    "text": "lab meeting\nThe meeting began with Grace presenting her research on modeling the immune response of sea stars to sea star wasting disease. Next, Maggie discussed her past research on the effects of temperature on metabolic rate in invasive blue catfish, and her current research using ROVs to study fish assemblages on artificial reefs. Then Aspen presented her chapter on modeling meta Dyneema infections in Tanner crab, showing patterns of infection correlated with temperature, shell condition, and black mat fungus infection. The group provided feedback on her analysis and suggestions for further exploring explanations for differences in infection patterns between sites. Finally, Steven Roberts reminded everyone about monthly reporting requirements and purchasing reimbursements."
+  },
+  {
+    "objectID": "posts/sr320-daily/index.html#ceabigr",
+    "href": "posts/sr320-daily/index.html#ceabigr",
+    "title": "November Daily",
+    "section": "ceabigr",
+    "text": "ceabigr\nThe meeting discussed analyzing alternative splicing in oyster genes to determine if it occurs randomly or in a directed, non-random manner between control and treated samples. They debated different methods to quantify this, such as looking at exon counts and coefficients of variation. Zach agreed to generate exon expression data for all samples. Stephen said he would work on getting this exon count data into a matrix. They also agreed to read the methods section of a relevant paper to help inform their approach. Determining the next steps for analyzing Zach’s long non-coding RNA data was discussed, but the group felt it may not directly fit into the current manuscript."
   },
   {
     "objectID": "posts/ChrisEpigenetics/index.html",
