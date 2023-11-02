@@ -3,15 +3,105 @@ title: "Daily"
 author: "Steven Roberts"
 date: "2023-11-01"
 categories: [noteboook]
-image: ""
+image: "http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2023-11-01_19-00-02.png"
 toc: true
 ---
 
 
-```{r, results='asis', echo=FALSE}
+```{r, results='asis', echo=FALSE, eval=FALSE}
 for (i in 1:30) {
   cat(paste0("\n# November ", i, "\nYour text here...\n"))
 }
 
 ```
 
+# November 1
+
+Went to hatchery to clean oysters. 
+
+# November 2
+Your text here...
+
+# November 3
+Your text here...
+
+# November 4
+Your text here...
+
+# November 5
+Your text here...
+
+# November 6
+Your text here...
+
+# November 7
+Your text here...
+
+# November 8
+Your text here...
+
+# November 9
+Your text here...
+
+# November 10
+Your text here...
+
+# November 11
+Your text here...
+
+# November 12
+Your text here...
+
+# November 13
+Your text here...
+
+# November 14
+Your text here...
+
+# November 15
+Your text here...
+
+# November 16
+Your text here...
+
+# November 17
+Your text here...
+
+# November 18
+Your text here...
+
+# November 19
+Your text here...
+
+# November 20
+Your text here...
+
+# November 21
+Your text here...
+
+# November 22
+Your text here...
+
+# November 23
+Your text here...
+
+# November 24
+Your text here...
+
+# November 25
+Your text here...
+
+# November 26
+Your text here...
+
+# November 27
+Your text here...
+
+# November 28
+Your text here...
+
+# November 29
+Your text here...
+
+# November 30
+Your text here...
