@@ -1,0 +1,17 @@
+---
+title: "Daily"
+author: "Steven Roberts"
+date: "2023-11-01"
+categories: [noteboook]
+image: ""
+toc: true
+---
+
+
+```{r, results='asis', echo=FALSE}
+for (i in 1:30) {
+  cat(paste0("\n# November ", i, "\nYour text here...\n"))
+}
+
+```
+
