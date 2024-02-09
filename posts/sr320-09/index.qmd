@@ -1,0 +1,34 @@
+---
+title: "What I have been up to today"
+description: "rewind"
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+date: 02-08-2023
+categories: [thoughts] # self-defined categories
+#citation: 
+  #url:  # self-defined
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png # finding a good image
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+Today was a day filled with a variety of activities, primarily centered around my work in the Roberts Lab. I started my day by signing into Zoom [moment 1](rewindai://show-moment?source=askRewindCitation&timestamp=1707432535.639&citationSource=inline). I then spent some time reading a scientific article on oyster reproductive processes and their impact on quality losses [moment 2](rewindai://show-moment?source=askRewindCitation&timestamp=1707433027.613&citationSource=inline). This was followed by a deep dive into some data analysis, where I was working with R scripts and genomic data [moment 3](rewindai://show-moment?source=askRewindCitation&timestamp=1707432585.605&citationSource=inline)[moment 4](rewindai://show-moment?source=askRewindCitation&timestamp=1707434521.666&citationSource=inline)[moment 5](rewindai://show-moment?source=askRewindCitation&timestamp=1707429879.705&citationSource=inline)[moment 6](rewindai://show-moment?source=askRewindCitation&timestamp=1707429749.645&citationSource=inline).
+
+I also spent some time on GitHub, where I uploaded files related to DE gene expression and MWU analysis for Pacific oysters exposed to OsHV-1 [moment 7](rewindai://show-moment?source=askRewindCitation&timestamp=1707435213.688&citationSource=inline). I had a discussion on Slack about Rewind, a personalized AI tool [moment 8](rewindai://show-moment?source=askRewindCitation&timestamp=1707434939.676&citationSource=inline)[moment 9](rewindai://show-moment?source=askRewindCitation&timestamp=1707435089.671&citationSource=inline). I also checked my email, where I was troubleshooting an error with a colleague who was experiencing the same issue [moment 10](rewindai://show-moment?source=askRewindCitation&timestamp=1707435129.677&citationSource=inline).
+
+In the midst of my work, I took a break to check in with my family. I used the Find My app to see where everyone was located [moment 11](rewindai://show-moment?source=askRewindCitation&timestamp=1707434518.904&citationSource=inline). I also had a quick chat with Beyer Roberts via iMessage [moment 12](rewindai://show-moment?source=askRewindCitation&timestamp=1707434511.666&citationSource=inline).
+
+Towards the end of the day, I checked my billing information for Scite, a tool I use for my research [moment 13](rewindai://show-moment?source=askRewindCitation&timestamp=1707435221.704&citationSource=inline). I also looked into how Rewind's compression works, as I was curious about the storage it might consume [moment 14](rewindai://show-moment?source=askRewindCitation&timestamp=1707435223.703&citationSource=inline).
+
+Finally, I wrapped up my day by checking my calendar for upcoming appointments and meetings [moment 15](rewindai://show-moment?source=askRewindCitation&timestamp=1707433063.625&citationSource=inline)[moment 16](rewindai://show-moment?source=askRewindCitation&timestamp=1707434523.661&citationSource=inline). It was a productive day, filled with a mix of research, data analysis, and communication with colleagues and family.
