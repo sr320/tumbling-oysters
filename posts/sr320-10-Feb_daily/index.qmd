@@ -68,6 +68,132 @@ I visited the Roberts Lab Handbook, possibly to review lab protocols or guidelin
 
 In summary, my morning was filled with a mix of collaborative meetings, individual work on research projects, and administrative tasks.
 
+```
+
+# Define the vectors for controls and exposed
+controls_females <- c("S16F", "S19F", "S39F", "S44F", "S52F", "S53F", "S54F", "S76F")
+exposed_females <- c("S22F", "S29F", "S35F", "S36F", "S3F", "S41F", "S50F", "S77F") # Assuming "S77" was intended to be "S77F"
+
+
+# Initialize an empty list to store the modified data frames
+filtered_logdata_frames <- list()
+
+# Loop through the list of data frames, filter, and add a source column
+for (name in names(logdata_frames)) {
+  # Filter the dataframe and add a new column 'Source' with the name of the dataframe
+  filtered_logdata_frames[[name]] <- logdata_frames[[name]] %>%
+    filter(GeneID == "LOC111099033") %>%
+    mutate(Source = name) %>%
+    mutate(Exposure_Status = case_when(
+    Source %in% controls_females ~ "control",
+    Source %in% exposed_females ~ "exposed",
+    TRUE ~ NA_character_ # This line handles any Source not in the two lists
+  ))
+
+}
+
+# Merge all the modified dataframes in the list into a new single dataframe
+merged_dataframe <- bind_rows(filtered_logdata_frames)
+```
+
+```
+# Assuming merged_dataframe is your final data frame
+
+# Reshape the data from wide to long format
+long_dataframe <- pivot_longer(merged_dataframe, 
+                               cols = starts_with("fold"),
+                               names_to = "Fold",
+                               values_to = "Value")
+
+# Plot the data
+ggplot(long_dataframe, aes(x = Fold, y = Value, group = Source, color = Exposure_Status)) +
+  geom_line() +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "LOC111099033",
+       x = "Fold",
+       y = "Value") +
+  scale_color_viridis_d() # Optional: Use a viridis color scale for better visibility
+
+```
+
+PI Meeting
+
+1.  Environmental information required for epigenetic tracking
+
+-   Epigenetic changes must be biased by environmental cues
+-   Random changes are unlikely to improve environmental matching
+
+2.  Balance of addition and removal of epigenetic markers\
+
+-   Rates must be approximately equal to avoid drifting to one state
+-   Model formalizes optimal relative rates
+
+3.  Defending model assumptions with empirical data
+
+-   Evidence that stress increases epigenetic machinery
+-   Time-series show changes in epigenetic modifications and gene expression after environmental triggers
+
+4.  Location and mechanism-specific environmental sensing\
+
+-   Examples show information transduced to specific epigenetic modifications
+-   Histone modifications and DNA methylation reinforce responses
+
+Molecular Mechanism Meeting
+
+1.  Discussion about alcohol during interviews
+
+-   Advice not to drink alcohol during dinner with interviewers
+-   People often regret things they say after drinking
+
+2.  Pipeline updates
+
+-   Testing using R1 reads and merging reads for miRNA identification
+-   Trimming R1 reads to 30bp and comparing results of merged reads
+
+3.  Organizing meeting breakout rooms\
+
+-   Creating introduction, methods, short RNA, and long RNA breakout rooms
+-   Assigning meeting participants to relevant rooms
+
+1.  Identifying and comparing long non-coding RNAs across species
+
+-   GFF compare and size filtering of transcripts
+-   Coding potential calculator filtering
+-   Homology analysis using BLAST
+    -   Code chunks for each species
+    -   Comparative BLASTs across species
+
+2.  Results section introduction
+
+-   Lack of results currently
+-   Numbers needed from filtering steps
+-   Figures from size distribution and BLAST results
+
+3.  Linking to methods code and files\
+
+-   Code locations for each species
+-   Links to FASTA and BED files
+-   Validation of files needed
+
+\-\--
+
+Summary
+
+Today, I started my day with a meeting where we discussed the use of AI for note-taking, the impact of storm events on data analysis, and the progress of sequencing projects. We also discussed methylation analysis and planned for an intergroup collaboration meeting. After the meeting, I had a Zoom call with Steven Roberts and Megan Ewing.
+
+I spent a significant part of my day working on a research project related to the molecular mechanisms in coral resilience and environmental triggers. I delved into the epigenetic modifications and their relationship to environmental changes. I also worked on a manuscript related to simulation and environment tracking.
+
+I spent some time on my computer, navigating through various applications and websites. I checked my emails, visited the Roberts Lab website, and used the Slack application for communication. I also worked on gene expression data and referenced the Ostrea edulis genome assembly.
+
+I worked on a proposal draft where I aimed to identify genes associated with sex determination in Olympia oysters and determine the impact of temperature on the expression of identified genes. I also referenced genomic data from the Roberts Lab GitHub repository.
+
+I also spent some time reading a research paper on the gonad transcriptome analysis of pearl oyster Pinctada margaritifera, which helped me identify potential sex differentiation and sex-determining genes.
+
+Throughout the day, I used various bioinformatics tools and databases for my research work. I used the NCBI database for genome assembly data , and I also used R for data analysis. I also referenced some code on GitHub for joining differentially expressed genes (DEGs) with Blast results and UniProt Gene Ontology annotations.
+
+In summary, my day was filled with meetings, research work, data analysis, and reading relevant literature to support my ongoing projects. I interacted with my colleagues through various platforms and used a variety of tools and databases to aid my research.
+
 # February 10
 
 Your text here...

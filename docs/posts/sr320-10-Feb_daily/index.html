@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -59,7 +59,8 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -214,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="february-7" class="level1">
 <h1>February 7</h1>
-<p>Your text here…</p>
+<p>EPIMAR zoom, male ceabigr coding</p>
 </section>
 <section id="february-8" class="level1">
 <h1>February 8</h1>
@@ -227,7 +228,146 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="february-9" class="level1">
 <h1>February 9</h1>
-<p>Your text here…</p>
+<p>I started my morning by checking my emails, where I reviewed a draft proposal from Megan Ewing. I then visited the GitHub profile of Ariana S. Huffmyer, a postdoctoral researcher studying the effects of climate change on coral physiology.</p>
+<p>Next, I worked on a project in RStudio, which seemed to be related to my research. I also checked my Slack workspace, where I had several unread messages and upcoming meetings. I participated in a Zoom meeting with several of my colleagues, including Ross Cunning, Dr.&nbsp;Hollie Putnam, and Roger Nisbet.</p>
+<p>I spent some time managing my files and possibly editing images or documents. I reviewed a document related to DNA methylation analysis and sex determination in oysters. I also engaged in a discussion on Slack about the next steps for analysis given the differential effects of haplotype on physiology and ITS2.</p>
+<p>I visited the Roberts Lab Handbook, possibly to review lab protocols or guidelines. I also spent some time on a project related to oyster survival after heat challenges.</p>
+<p>In summary, my morning was filled with a mix of collaborative meetings, individual work on research projects, and administrative tasks.</p>
+<pre><code>
+# Define the vectors for controls and exposed
+controls_females &lt;- c("S16F", "S19F", "S39F", "S44F", "S52F", "S53F", "S54F", "S76F")
+exposed_females &lt;- c("S22F", "S29F", "S35F", "S36F", "S3F", "S41F", "S50F", "S77F") # Assuming "S77" was intended to be "S77F"
+
+
+# Initialize an empty list to store the modified data frames
+filtered_logdata_frames &lt;- list()
+
+# Loop through the list of data frames, filter, and add a source column
+for (name in names(logdata_frames)) {
+  # Filter the dataframe and add a new column 'Source' with the name of the dataframe
+  filtered_logdata_frames[[name]] &lt;- logdata_frames[[name]] %&gt;%
+    filter(GeneID == "LOC111099033") %&gt;%
+    mutate(Source = name) %&gt;%
+    mutate(Exposure_Status = case_when(
+    Source %in% controls_females ~ "control",
+    Source %in% exposed_females ~ "exposed",
+    TRUE ~ NA_character_ # This line handles any Source not in the two lists
+  ))
+
+}
+
+# Merge all the modified dataframes in the list into a new single dataframe
+merged_dataframe &lt;- bind_rows(filtered_logdata_frames)</code></pre>
+<pre><code># Assuming merged_dataframe is your final data frame
+
+# Reshape the data from wide to long format
+long_dataframe &lt;- pivot_longer(merged_dataframe, 
+                               cols = starts_with("fold"),
+                               names_to = "Fold",
+                               values_to = "Value")
+
+# Plot the data
+ggplot(long_dataframe, aes(x = Fold, y = Value, group = Source, color = Exposure_Status)) +
+  geom_line() +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "LOC111099033",
+       x = "Fold",
+       y = "Value") +
+  scale_color_viridis_d() # Optional: Use a viridis color scale for better visibility
+</code></pre>
+<p>PI Meeting</p>
+<ol type="1">
+<li>Environmental information required for epigenetic tracking</li>
+</ol>
+<ul>
+<li>Epigenetic changes must be biased by environmental cues</li>
+<li>Random changes are unlikely to improve environmental matching</li>
+</ul>
+<ol start="2" type="1">
+<li>Balance of addition and removal of epigenetic markers<br>
+</li>
+</ol>
+<ul>
+<li>Rates must be approximately equal to avoid drifting to one state</li>
+<li>Model formalizes optimal relative rates</li>
+</ul>
+<ol start="3" type="1">
+<li>Defending model assumptions with empirical data</li>
+</ol>
+<ul>
+<li>Evidence that stress increases epigenetic machinery</li>
+<li>Time-series show changes in epigenetic modifications and gene expression after environmental triggers</li>
+</ul>
+<ol start="4" type="1">
+<li>Location and mechanism-specific environmental sensing<br>
+</li>
+</ol>
+<ul>
+<li>Examples show information transduced to specific epigenetic modifications</li>
+<li>Histone modifications and DNA methylation reinforce responses</li>
+</ul>
+<p>Molecular Mechanism Meeting</p>
+<ol type="1">
+<li>Discussion about alcohol during interviews</li>
+</ol>
+<ul>
+<li>Advice not to drink alcohol during dinner with interviewers</li>
+<li>People often regret things they say after drinking</li>
+</ul>
+<ol start="2" type="1">
+<li>Pipeline updates</li>
+</ol>
+<ul>
+<li>Testing using R1 reads and merging reads for miRNA identification</li>
+<li>Trimming R1 reads to 30bp and comparing results of merged reads</li>
+</ul>
+<ol start="3" type="1">
+<li>Organizing meeting breakout rooms<br>
+</li>
+</ol>
+<ul>
+<li>Creating introduction, methods, short RNA, and long RNA breakout rooms</li>
+<li>Assigning meeting participants to relevant rooms</li>
+</ul>
+<ol type="1">
+<li>Identifying and comparing long non-coding RNAs across species</li>
+</ol>
+<ul>
+<li>GFF compare and size filtering of transcripts</li>
+<li>Coding potential calculator filtering</li>
+<li>Homology analysis using BLAST
+<ul>
+<li>Code chunks for each species</li>
+<li>Comparative BLASTs across species</li>
+</ul></li>
+</ul>
+<ol start="2" type="1">
+<li>Results section introduction</li>
+</ol>
+<ul>
+<li>Lack of results currently</li>
+<li>Numbers needed from filtering steps</li>
+<li>Figures from size distribution and BLAST results</li>
+</ul>
+<ol start="3" type="1">
+<li>Linking to methods code and files<br>
+</li>
+</ol>
+<ul>
+<li>Code locations for each species</li>
+<li>Links to FASTA and BED files</li>
+<li>Validation of files needed</li>
+</ul>
+<p>---</p>
+<p>Summary</p>
+<p>Today, I started my day with a meeting where we discussed the use of AI for note-taking, the impact of storm events on data analysis, and the progress of sequencing projects. We also discussed methylation analysis and planned for an intergroup collaboration meeting. After the meeting, I had a Zoom call with Steven Roberts and Megan Ewing.</p>
+<p>I spent a significant part of my day working on a research project related to the molecular mechanisms in coral resilience and environmental triggers. I delved into the epigenetic modifications and their relationship to environmental changes. I also worked on a manuscript related to simulation and environment tracking.</p>
+<p>I spent some time on my computer, navigating through various applications and websites. I checked my emails, visited the Roberts Lab website, and used the Slack application for communication. I also worked on gene expression data and referenced the Ostrea edulis genome assembly.</p>
+<p>I worked on a proposal draft where I aimed to identify genes associated with sex determination in Olympia oysters and determine the impact of temperature on the expression of identified genes. I also referenced genomic data from the Roberts Lab GitHub repository.</p>
+<p>I also spent some time reading a research paper on the gonad transcriptome analysis of pearl oyster Pinctada margaritifera, which helped me identify potential sex differentiation and sex-determining genes.</p>
+<p>Throughout the day, I used various bioinformatics tools and databases for my research work. I used the NCBI database for genome assembly data , and I also used R for data analysis. I also referenced some code on GitHub for joining differentially expressed genes (DEGs) with Blast results and UniProt Gene Ontology annotations.</p>
+<p>In summary, my day was filled with meetings, research work, data analysis, and reading relevant literature to support my ongoing projects. I interacted with my colleagues through various platforms and used a variety of tools and databases to aid my research.</p>
 </section>
 <section id="february-10" class="level1">
 <h1>February 10</h1>
