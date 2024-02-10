@@ -68,7 +68,7 @@ I visited the Roberts Lab Handbook, possibly to review lab protocols or guidelin
 
 In summary, my morning was filled with a mix of collaborative meetings, individual work on research projects, and administrative tasks.
 
-```
+```         
 
 # Define the vectors for controls and exposed
 controls_females <- c("S16F", "S19F", "S39F", "S44F", "S52F", "S53F", "S54F", "S76F")
@@ -96,7 +96,7 @@ for (name in names(logdata_frames)) {
 merged_dataframe <- bind_rows(filtered_logdata_frames)
 ```
 
-```
+```         
 # Assuming merged_dataframe is your final data frame
 
 # Reshape the data from wide to long format
@@ -114,7 +114,6 @@ ggplot(long_dataframe, aes(x = Fold, y = Value, group = Source, color = Exposure
        x = "Fold",
        y = "Value") +
   scale_color_viridis_d() # Optional: Use a viridis color scale for better visibility
-
 ```
 
 PI Meeting
@@ -196,7 +195,15 @@ In summary, my day was filled with meetings, research work, data analysis, and r
 
 # February 10
 
-Your text here...
+Today, I've been quite productive. I started my day by checking my calendar and planning my activities. I then focused on my research grants, reviewing and updating the information in the "Find Grants by PI R1209" document. I also worked on a spreadsheet related to my research funding, ensuring all the details were accurate and up-to-date.
+
+In the midst of these tasks, I took some time to revisit a presentation I had prepared earlier, titled "2019-MonsterJam.key". I also looked at some old photos from my time at the Duke University Marine Lab. This brought back memories of the research and collaborations I had been part of during that period.
+
+I also spent some time on the Roberts Lab website, updating information and reviewing recent activities. I made sure to update the status of various research projects and proposals. I also uploaded a document titled "2023_WSG_proposal-2.pdf" to Droplr.
+
+Towards the end of the day, I revisited a manuscript titled "20230519_Revised_Manuscript - FFAR-Geoduck" on Google Drive. This allowed me to review the progress made on this research and plan for the next steps.
+
+Overall, it's been a day filled with a mix of administrative tasks, research work, and a bit of reminiscing about past projects. I'm satisfied with the progress I've made and look forward to what tomorrow brings.
 
 # February 11
 
