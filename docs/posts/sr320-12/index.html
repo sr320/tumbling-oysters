@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Steven Roberts">
+<meta name="dcterms.date" content="2024-03-11">
+<meta name="description" content="to DESeq">
+
+<title>Tumbling Oysters - HiSat</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="twitter:title" content="Tumbling Oysters - HiSat">
+<meta name="twitter:description" content="to DESeq">
+<meta name="twitter:image" content="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Tumbling Oysters</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">Me Elsewhere</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sr320" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/sr320" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">HiSat</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          to DESeq
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">hisat</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Steven Roberts <a href="https://orcid.org/0000-0001-8302-1138" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://robertslab.info">
+              Professor, UW - School of Aquatic and Fishery Sciences
+              </a>
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 11, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<ul>
+<li><a href="#1-run-hisat-on-rna-seq" id="toc-1-run-hisat-on-rna-seq">1 Run HiSat on RNA-seq</a>
+<ul>
+<li><a href="#11-grab-trimmed-rna-seq-reads" id="toc-11-grab-trimmed-rna-seq-reads">1.1 Grab Trimmed RNA-seq Reads</a></li>
+<li><a href="#12-genome" id="toc-12-genome">1.2 Genome</a></li>
+<li><a href="#13-hisat" id="toc-13-hisat">1.3 HiSat</a>
+<ul>
+<li><a href="#131-performance-tuning" id="toc-131-performance-tuning">1.3.1 Performance tuning</a></li>
+</ul></li>
+<li><a href="#14-convert-to-bam" id="toc-14-convert-to-bam">1.4 convert to bam</a></li>
+<li><a href="#15-looking-at-bams" id="toc-15-looking-at-bams">1.5 Looking at Bams</a>
+<ul>
+<li><a href="#151-an-alternate-faster-differential-expression-analysis-workflow" id="toc-151-an-alternate-faster-differential-expression-analysis-workflow">1.5.1 An alternate, faster differential expression analysis workflow</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#2-stringtie" id="toc-2-stringtie">2 StringTie</a></li>
+</ul>
+<section id="run-hisat-on-rna-seq" class="level1">
+<h1>1 Run HiSat on RNA-seq</h1>
+<p>Will end up with 5 sorted bam files.</p>
+<section id="grab-trimmed-rna-seq-reads" class="level2">
+<h2 class="anchored" data-anchor-id="grab-trimmed-rna-seq-reads">1.1 Grab Trimmed RNA-seq Reads</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../data/fastq/ </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>RNA-ACR-140-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-ACR-140-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
+RNA-ACR-145-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-ACR-145-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
+RNA-ACR-150-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-ACR-150-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
+RNA-ACR-173-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-ACR-173-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
+RNA-ACR-178-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-ACR-178-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</code></pre>
+</section>
+<section id="genome" class="level2">
+<h2 class="anchored" data-anchor-id="genome">1.2 Genome</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../data/GCF_013753865.1_Amil_v2.1_genomic.fna</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>../data/GCF_013753865.1_Amil_v2.1_genomic.fna</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">'^#'</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f3</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"transcript"</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"gene"</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>#gtf-version 2.2
+#!genome-build Amil_v2.1
+#!genome-build-accession NCBI_Assembly:GCF_013753865.1
+#!annotation-source NCBI Acropora millepora Annotation Release 101
+NC_058066.1 Gnomon  gene    1962    23221   .   -   .   gene_id "LOC114963522"; transcript_id ""; db_xref "GeneID:114963522"; gbkey "Gene"; gene "LOC114963522"; gene_biotype "lncRNA"; 
+NC_058066.1 Gnomon  transcript  1962    23221   .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gbkey "ncRNA"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; 
+NC_058066.1 Gnomon  exon    23085   23221   .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; exon_number "1"; 
+NC_058066.1 Gnomon  exon    21001   21093   .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; exon_number "2"; 
+NC_058066.1 Gnomon  exon    18711   18775   .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; exon_number "3"; 
+NC_058066.1 Gnomon  exon    1962    2119    .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; exon_number "4"; 
+874259 ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf
+CDS
+exon
+gene
+start_codon
+stop_codon
+transcript
+874254
+874254</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">'^#'</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f3</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"transcript"</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"gene"</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>##gff-version 3
+#!gff-spec-version 1.21
+#!processor NCBI annotwriter
+#!genome-build Amil_v2.1
+#!genome-build-accession NCBI_Assembly:GCF_013753865.1
+#!annotation-source NCBI Acropora millepora Annotation Release 101
+##sequence-region NC_058066.1 1 39361238
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=45264
+NC_058066.1 RefSeq  region  1   39361238    .   +   .   ID=NC_058066.1:1..39361238;Dbxref=taxon:45264;Name=1;chromosome=1;collection-date=2017;country=Indonesia;gbkey=Src;genome=chromosome;isolate=JS-1;isolation-source=Whole tissue;mol_type=genomic DNA;tissue-type=Adult tissue
+NC_058066.1 Gnomon  gene    1962    23221   .   -   .   ID=gene-LOC114963522;Dbxref=GeneID:114963522;Name=LOC114963522;gbkey=Gene;gene=LOC114963522;gene_biotype=lncRNA
+828216 ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff
+cDNA_match
+CDS
+exon
+gene
+guide_RNA
+lnc_RNA
+mRNA
+pseudogene
+region
+rRNA
+snoRNA
+snRNA
+transcript
+tRNA
+431975
+803260</code></pre>
+</section>
+<section id="hisat" class="level2">
+<h2 class="anchored" data-anchor-id="hisat">1.3 HiSat</h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/hisat2-2.2.1/hisat2_extract_exons.py</span> <span class="dt">\</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="dt">\</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../output/15-Apul-hisat/m_exon.tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/15-Apul-hisat/m_exon.tab</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/15-Apul-hisat/m_exon.tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>NC_058066.1 1961    2118    -
+NC_058066.1 15360   15663   +
+NC_058066.1 18710   18774   -
+NC_058066.1 21000   21092   -
+NC_058066.1 22158   22442   +
+NC_058066.1 23084   23220   -
+NC_058066.1 24770   25066   +
+NC_058066.1 26652   26912   +
+NC_058066.1 27071   27358   +
+NC_058066.1 27658   27951   +
+228010 ../output/15-Apul-hisat/m_exon.tab</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/hisat2-2.2.1/hisat2_extract_splice_sites.py</span> <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../output/15-Apul-hisat/m_splice_sites.tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/15-Apul-hisat/m_splice_sites.tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>NC_058066.1 2118    18710   -
+NC_058066.1 15663   22158   +
+NC_058066.1 18774   21000   -
+NC_058066.1 21092   23084   -
+NC_058066.1 22442   24770   +
+NC_058066.1 25066   26652   +
+NC_058066.1 26912   27071   +
+NC_058066.1 27358   27658   +
+NC_058066.1 27951   28247   +
+NC_058066.1 28534   29196   +</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/hisat2-2.2.1/hisat2-build</span> <span class="dt">\</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>../data/GCF_013753865.1_Amil_v2.1_genomic.fna <span class="dt">\</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>../output/15-Apul-hisat/GCF_013753865.1_Amil_v2.1.index <span class="dt">\</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>--exon ../output/15-Apul-hisat/m_exon.tab <span class="dt">\</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>--ss ../output/15-Apul-hisat/m_splice_sites.tab <span class="dt">\</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>-p 40 <span class="dt">\</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="dt">\</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>2<span class="op">&gt;</span> ../output/15-Apul-hisat/hisat2-build_stats.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> ../output/15-Apul-hisat/hisat2-build_stats.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>    sideSz: 128
+    sideGbwtSz: 104
+    sideGbwtLen: 208
+    numSides: 2299750
+    numLines: 2299750
+    gbwtTotLen: 294368000
+    gbwtTotSz: 294368000
+    reverse: 0
+    linearFM: No
+Total time for call to driver() for forward index: 00:07:58</code></pre>
+<section id="performance-tuning" class="level3">
+<h3 class="anchored" data-anchor-id="performance-tuning">1.3.1 Performance tuning</h3>
+<p>If your computer has multiple processors/cores, use -p The -p option causes HISAT2 to launch a specified number of parallel search threads. Each thread runs on a different processor/core and all threads find alignments in parallel, increasing alignment throughput by approximately a multiple of the number of threads (though in practice, speedup is somewhat worse than linear).</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> ../data/fastq/<span class="pp">*</span>R2_001.fastp-trim.20230519.fastq.gz <span class="dt">\</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="fu">xargs</span> basename <span class="at">-s</span> <span class="at">-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</span> <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> <span class="dt">\</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>/home/shared/hisat2-2.2.1/hisat2 <span class="dt">\</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>-x ../output/15-Apul-hisat/GCF_013753865.1_Amil_v2.1.index <span class="dt">\</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>--dta <span class="dt">\</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>-p 20 <span class="dt">\</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>-1 ../data/fastq/{}-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz <span class="dt">\</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>-2 ../data/fastq/{}-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz <span class="dt">\</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>-S ../output/15-Apul-hisat/{}.sam <span class="dt">\</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>2<span class="op">&gt;</span> ../output/15-Apul-hisat/hisat.out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ../output/15-Apul-hisat/hisat.out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>47710408 reads; of these:
+  47710408 (100.00%) were paired; of these:
+    27825914 (58.32%) aligned concordantly 0 times
+    18559152 (38.90%) aligned concordantly exactly 1 time
+    1325342 (2.78%) aligned concordantly &gt;1 times
+    ----
+    27825914 pairs aligned concordantly 0 times; of these:
+      1201636 (4.32%) aligned discordantly 1 time
+    ----
+    26624278 pairs aligned 0 times concordantly or discordantly; of these:
+      53248556 mates make up the pairs; of these:
+        42533390 (79.88%) aligned 0 times
+        9692346 (18.20%) aligned exactly 1 time
+        1022820 (1.92%) aligned &gt;1 times
+55.43% overall alignment rate
+42864294 reads; of these:
+  42864294 (100.00%) were paired; of these:
+    24356414 (56.82%) aligned concordantly 0 times
+    17135863 (39.98%) aligned concordantly exactly 1 time
+    1372017 (3.20%) aligned concordantly &gt;1 times
+    ----
+    24356414 pairs aligned concordantly 0 times; of these:
+      1142678 (4.69%) aligned discordantly 1 time
+    ----
+    23213736 pairs aligned 0 times concordantly or discordantly; of these:
+      46427472 mates make up the pairs; of these:
+        36609836 (78.85%) aligned 0 times
+        8675847 (18.69%) aligned exactly 1 time
+        1141789 (2.46%) aligned &gt;1 times
+57.30% overall alignment rate
+43712298 reads; of these:
+  43712298 (100.00%) were paired; of these:
+    30967520 (70.84%) aligned concordantly 0 times
+    11666917 (26.69%) aligned concordantly exactly 1 time
+    1077861 (2.47%) aligned concordantly &gt;1 times
+    ----
+    30967520 pairs aligned concordantly 0 times; of these:
+      791338 (2.56%) aligned discordantly 1 time
+    ----
+    30176182 pairs aligned 0 times concordantly or discordantly; of these:
+      60352364 mates make up the pairs; of these:
+        52153613 (86.42%) aligned 0 times
+        7011301 (11.62%) aligned exactly 1 time
+        1187450 (1.97%) aligned &gt;1 times
+40.34% overall alignment rate
+47501524 reads; of these:
+  47501524 (100.00%) were paired; of these:
+    28603496 (60.22%) aligned concordantly 0 times
+    17627744 (37.11%) aligned concordantly exactly 1 time
+    1270284 (2.67%) aligned concordantly &gt;1 times
+    ----
+    28603496 pairs aligned concordantly 0 times; of these:
+      1201709 (4.20%) aligned discordantly 1 time
+    ----
+    27401787 pairs aligned 0 times concordantly or discordantly; of these:
+      54803574 mates make up the pairs; of these:
+        44045470 (80.37%) aligned 0 times
+        9614980 (17.54%) aligned exactly 1 time
+        1143124 (2.09%) aligned &gt;1 times
+53.64% overall alignment rate
+42677752 reads; of these:
+  42677752 (100.00%) were paired; of these:
+    26422177 (61.91%) aligned concordantly 0 times
+    15005422 (35.16%) aligned concordantly exactly 1 time
+    1250153 (2.93%) aligned concordantly &gt;1 times
+    ----
+    26422177 pairs aligned concordantly 0 times; of these:
+      1009838 (3.82%) aligned discordantly 1 time
+    ----
+    25412339 pairs aligned 0 times concordantly or discordantly; of these:
+      50824678 mates make up the pairs; of these:
+        39698309 (78.11%) aligned 0 times
+        9739502 (19.16%) aligned exactly 1 time
+        1386867 (2.73%) aligned &gt;1 times
+53.49% overall alignment rate</code></pre>
+</section>
+</section>
+<section id="convert-to-bam" class="level2">
+<h2 class="anchored" data-anchor-id="convert-to-bam">1.4 convert to bam</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> samfile <span class="kw">in</span> ../output/15-Apul-hisat/<span class="pp">*</span>.sam<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">bamfile</span><span class="op">=</span><span class="st">"</span><span class="va">${samfile</span><span class="op">%</span>.sam<span class="va">}</span><span class="st">.bam"</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="va">sorted_bamfile</span><span class="op">=</span><span class="st">"</span><span class="va">${samfile</span><span class="op">%</span>.sam<span class="va">}</span><span class="st">.sorted.bam"</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="ex">/home/shared/samtools-1.12/samtools</span> view <span class="at">-bS</span> <span class="at">-@</span> 20 <span class="st">"</span><span class="va">$samfile</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$bamfile</span><span class="st">"</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="ex">/home/shared/samtools-1.12/samtools</span> sort <span class="at">-@</span> 20 <span class="st">"</span><span class="va">$bamfile</span><span class="st">"</span> <span class="at">-o</span> <span class="st">"</span><span class="va">$sorted_bamfile</span><span class="st">"</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="ex">/home/shared/samtools-1.12/samtools</span> index <span class="at">-@</span> 20 <span class="st">"</span><span class="va">$sorted_bamfile</span><span class="st">"</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="looking-at-bams" class="level2">
+<h2 class="anchored" data-anchor-id="looking-at-bams">1.5 Looking at Bams</h2>
+<p><span class="math display">\[igv\]</span></p>
+<hr>
+<section id="differential-expression-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="differential-expression-analysis">1.5.0.1 <strong>Differential expression analysis</strong></h4>
+<p>Together with <a href="http://ccb.jhu.edu/software/hisat2">HISAT</a> and <a href="http://biorxiv.org/content/early/2014/09/05/003665">Ballgown</a>, StringTie can be used for estimating differential expression across multiple RNA-Seq samples and generating plots and differential expression tables as described in our <a href="http://www.nature.com/nprot/journal/v11/n9/full/nprot.2016.095.html">protocol paper</a>.<img src="https://ccb.jhu.edu/software/stringtie/DE_pipeline.png" alt="DE workflow"><br>
+Our recommended workflow includes the following steps:</p>
+<ol type="1">
+<li><p>for each RNA-Seq sample, map the reads to the genome with <a href="http://ccb.jhu.edu/software/hisat2">HISAT2</a> using the –dta option. It is highly recommended to use the reference annotation information when mapping the reads, which can be either embedded in the genome index (built with the –ss and –exon options, see <a href="http://ccb.jhu.edu/software/hisat2/manual.shtml#the-hisat2-build-indexer">HISAT2 manual</a>), or provided separately at run time (using the –known-splicesite-infile option of <a href="http://ccb.jhu.edu/software/hisat2/manual.shtml#running-hisat2">HISAT2</a>). The SAM output of each HISAT2 run must be sorted and converted to BAM using samtools as explained above.</p></li>
+<li><p>for each RNA-Seq sample, run StringTie to assemble the read alignments obtained in the previous step; it is recommended to run StringTie with the -G option if the reference annotation is available.</p></li>
+<li><p>run StringTie with <strong>–merge</strong> in order to generate a non-redundant set of transcripts observed in any of the RNA-Seq samples assembled previously. The stringtie –merge mode takes as input a list of all the assembled transcripts files (in GTF format) previously obtained for each sample, as well as a reference annotation file (-G option) if available.</p></li>
+<li><p>for each RNA-Seq sample, run StringTie using the -B/-b and -e options in order to estimate transcript abundances and generate read coverage tables for Ballgown. The -e option is not required but recommended for this run in order to produce more accurate abundance estimations of the input transcripts. Each StringTie run in this step will take as input the sorted read alignments (BAM file) obtained in step 1 for the corresponding sample and the -G option with the merged transcripts (GTF file) generated by stringtie –merge in step 3. Please note that this is the only case where the -G option is not used with a reference annotation, but with the global, merged set of transcripts as observed across all samples. (This step is the equivalent of the <em>Tablemaker</em> step described in the original <a href="https://github.com/alyssafrazee/ballgown">Ballgown pipeline</a>.)</p></li>
+<li><p>Ballgown can now be used to load the coverage tables generated in the previous step and perform various statistical analyses for differential expression, generate plots etc.</p></li>
+</ol>
+<!--# using faster -->
+</section>
+<section id="an-alternate-faster-differential-expression-analysis-workflow" class="level3">
+<h3 class="anchored" data-anchor-id="an-alternate-faster-differential-expression-analysis-workflow">1.5.1 An alternate, faster differential expression analysis workflow</h3>
+<p>can be pursued if there is no interest in novel isoforms (i.e.&nbsp;assembled transcripts present in the samples but missing from the reference annotation), or if only a well known set of transcripts of interest are targeted by the analysis. This simplified protocol has only 3 steps (depicted below) as it bypasses the individual assembly of each RNA-Seq sample and the <em>“transcript merge”</em> step.<img src="https://ccb.jhu.edu/software/stringtie/DE_pipeline_refonly.png" alt="DE workflow">This simplified workflow attempts to directly estimate and analyze the expression of a known set of transcripts as given in the <em>reference annotation</em> file.</p>
+<p>The R package <a href="https://bioconductor.org/packages/devel/bioc/html/IsoformSwitchAnalyzeR.html"><strong>IsoformSwitchAnalyzeR</strong></a> can be used to assign gene names to transcripts assembled by StringTie, which can be particularly helpful in cases where StringTie could not perform this assignment unambigiously.<br>
+The <code>importIsoformExpression() + importRdata()</code> function of the package can be used to import the expression and annotation data into R. During this import the package will attempt to clean up and recover isoform annotations where possible. From the resulting <code>switchAnalyzeRlist</code> object, <em>IsoformSwitchAnalyzeR</em> can detect isoform switches along with predicted functional consequences. The <code>extractGeneExpression()</code> function can be used to get a gene expression (read count) matrix for analysis with other tools.<br>
+More information and code examples can be found <a href="https://bioconductor.org/packages/devel/bioc/vignettes/IsoformSwitchAnalyzeR/inst/doc/IsoformSwitchAnalyzeR.html#examples-visualizations">here</a>.</p>
+</section>
+</section>
+</section>
+<section id="stringtie" class="level1">
+<h1>2 StringTie</h1>
+<p>StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples–an important step in creating a canonical list of across all samples included in the pipeline.</p>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 95%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">-b &lt;path&gt;</td>
+<td style="text-align: left;">Just like -B this option enables the output of *.ctab files for Ballgown, but these files will be created in the provided directory &lt;path&gt; instead of the directory specified by the -o option. Note: adding the -e option is recommended with the -B/-b options, unless novel transcripts are still wanted in the StringTie GTF output.</td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><br>
+-e</td>
+<td style="text-align: left;">this option directs StringTie to operate in <a href="https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual#emode">expression estimation mode</a>; this limits the processing of read alignments to estimating the coverage of the transcripts given with the -G option (hence this option requires -G).</td>
+</tr>
+</tbody>
+</table>
+<table class="table">
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">-G &lt;ref_ann.gff&gt;</td>
+<td style="text-align: left;">Use a <a href="https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual#refann">reference annotation file</a> (in <a href="https://ccb.jhu.edu/software/stringtie/gff.shtml">GTF or GFF3 format</a>) to guide the assembly process. The output will include expressed reference transcripts as well as any novel transcripts that are assembled. This option is required by options -B, -b, -e, -C (see below).</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> ../output/15-Apul-hisat/<span class="pp">*</span>sorted.bam <span class="dt">\</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="fu">xargs</span> basename <span class="at">-s</span> .sorted.bam <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> <span class="dt">\</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie <span class="dt">\</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>-p 20 <span class="dt">\</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>-eB <span class="dt">\</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>-G ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff <span class="dt">\</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>-o ../output/15-Apul-hisat/{}.gtf <span class="dt">\</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>../output/15-Apul-hisat/{}.sorted.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/15-Apul-hisat/RNA<span class="pp">*</span>.gtf</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../output/15-Apul-hisat/RNA<span class="pp">*</span>.gtf</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co">#head ../output/15-Apul-hisat/RNA*.gtf</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'alternate';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb24" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "HiSat"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "to DESeq"</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">    url: </span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 03-11-2024</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [R, hisat] # self-defined categories</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#citation: </span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png # finding a good image</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: true</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"#1-run-hisat-on-rna-seq"</span> <span class="er">id</span><span class="ot">=</span><span class="st">"toc-1-run-hisat-on-rna-seq"</span><span class="kw">&gt;</span>1 Run HiSat on RNA-seq<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"#11-grab-trimmed-rna-seq-reads"</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="ot">        id=</span><span class="st">"toc-11-grab-trimmed-rna-seq-reads"</span><span class="kw">&gt;</span>1.1 Grab Trimmed RNA-seq Reads<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"#12-genome"</span> <span class="er">id</span><span class="ot">=</span><span class="st">"toc-12-genome"</span><span class="kw">&gt;</span>1.2 Genome<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"#13-hisat"</span> <span class="er">id</span><span class="ot">=</span><span class="st">"toc-13-hisat"</span><span class="kw">&gt;</span>1.3 HiSat<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a><span class="ss">        -   </span><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"#131-performance-tuning"</span> <span class="er">id</span><span class="ot">=</span><span class="st">"toc-131-performance-tuning"</span><span class="kw">&gt;</span>1.3.1 Performance tuning<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"#14-convert-to-bam"</span> <span class="er">id</span><span class="ot">=</span><span class="st">"toc-14-convert-to-bam"</span><span class="kw">&gt;</span>1.4 convert to bam<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"#15-looking-at-bams"</span> <span class="er">id</span><span class="ot">=</span><span class="st">"toc-15-looking-at-bams"</span><span class="kw">&gt;</span>1.5 Looking at Bams<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="ss">        -   </span><span class="kw">&lt;a</span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="ot">            href=</span><span class="st">"#151-an-alternate-faster-differential-expression-analysis-workflow"</span></span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a><span class="ot">            id=</span><span class="st">"toc-151-an-alternate-faster-differential-expression-analysis-workflow"</span><span class="kw">&gt;</span>1.5.1 An alternate, faster differential expression analysis workflow<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"#2-stringtie"</span> <span class="er">id</span><span class="ot">=</span><span class="st">"toc-2-stringtie"</span><span class="kw">&gt;</span>2 StringTie<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a><span class="fu"># 1 Run HiSat on RNA-seq</span></span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>Will end up with 5 sorted bam files.</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1.1 Grab Trimmed RNA-seq Reads</span></span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../data/fastq/ </span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-50"><a href="#cb24-50" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb24-51"><a href="#cb24-51" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-140-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-52"><a href="#cb24-52" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-140-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-53"><a href="#cb24-53" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-145-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-54"><a href="#cb24-54" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-145-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-55"><a href="#cb24-55" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-150-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-56"><a href="#cb24-56" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-150-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-57"><a href="#cb24-57" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-173-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-58"><a href="#cb24-58" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-173-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-59"><a href="#cb24-59" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-178-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a><span class="in">RNA-ACR-178-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</span></span>
+<span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1.2 Genome</span></span>
+<span id="cb24-64"><a href="#cb24-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-65"><a href="#cb24-65" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-66"><a href="#cb24-66" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../data/GCF_013753865.1_Amil_v2.1_genomic.fna</span>
+<span id="cb24-67"><a href="#cb24-67" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-68"><a href="#cb24-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-69"><a href="#cb24-69" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb24-70"><a href="#cb24-70" aria-hidden="true" tabindex="-1"></a><span class="in">../data/GCF_013753865.1_Amil_v2.1_genomic.fna</span></span>
+<span id="cb24-71"><a href="#cb24-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-72"><a href="#cb24-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-73"><a href="#cb24-73" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-74"><a href="#cb24-74" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf</span>
+<span id="cb24-75"><a href="#cb24-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-76"><a href="#cb24-76" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf</span>
+<span id="cb24-77"><a href="#cb24-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-78"><a href="#cb24-78" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">'^#'</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f3</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span></span>
+<span id="cb24-79"><a href="#cb24-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-80"><a href="#cb24-80" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"transcript"</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf</span>
+<span id="cb24-81"><a href="#cb24-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-82"><a href="#cb24-82" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"gene"</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf</span>
+<span id="cb24-83"><a href="#cb24-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-84"><a href="#cb24-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-85"><a href="#cb24-85" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb24-86"><a href="#cb24-86" aria-hidden="true" tabindex="-1"></a><span class="in">#gtf-version 2.2</span></span>
+<span id="cb24-87"><a href="#cb24-87" aria-hidden="true" tabindex="-1"></a><span class="in">#!genome-build Amil_v2.1</span></span>
+<span id="cb24-88"><a href="#cb24-88" aria-hidden="true" tabindex="-1"></a><span class="in">#!genome-build-accession NCBI_Assembly:GCF_013753865.1</span></span>
+<span id="cb24-89"><a href="#cb24-89" aria-hidden="true" tabindex="-1"></a><span class="in">#!annotation-source NCBI Acropora millepora Annotation Release 101</span></span>
+<span id="cb24-90"><a href="#cb24-90" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 Gnomon  gene    1962    23221   .   -   .   gene_id "LOC114963522"; transcript_id ""; db_xref "GeneID:114963522"; gbkey "Gene"; gene "LOC114963522"; gene_biotype "lncRNA"; </span></span>
+<span id="cb24-91"><a href="#cb24-91" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 Gnomon  transcript  1962    23221   .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gbkey "ncRNA"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; </span></span>
+<span id="cb24-92"><a href="#cb24-92" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 Gnomon  exon    23085   23221   .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; exon_number "1"; </span></span>
+<span id="cb24-93"><a href="#cb24-93" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 Gnomon  exon    21001   21093   .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; exon_number "2"; </span></span>
+<span id="cb24-94"><a href="#cb24-94" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 Gnomon  exon    18711   18775   .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; exon_number "3"; </span></span>
+<span id="cb24-95"><a href="#cb24-95" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 Gnomon  exon    1962    2119    .   -   .   gene_id "LOC114963522"; transcript_id "XR_003825913.2"; db_xref "GeneID:114963522"; gene "LOC114963522"; model_evidence "Supporting evidence includes similarity to: 100% coverage of the annotated genomic feature by RNAseq alignments, including 2 samples with support for all annotated introns"; product "uncharacterized LOC114963522"; transcript_biotype "lnc_RNA"; exon_number "4"; </span></span>
+<span id="cb24-96"><a href="#cb24-96" aria-hidden="true" tabindex="-1"></a><span class="in">874259 ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf</span></span>
+<span id="cb24-97"><a href="#cb24-97" aria-hidden="true" tabindex="-1"></a><span class="in">CDS</span></span>
+<span id="cb24-98"><a href="#cb24-98" aria-hidden="true" tabindex="-1"></a><span class="in">exon</span></span>
+<span id="cb24-99"><a href="#cb24-99" aria-hidden="true" tabindex="-1"></a><span class="in">gene</span></span>
+<span id="cb24-100"><a href="#cb24-100" aria-hidden="true" tabindex="-1"></a><span class="in">start_codon</span></span>
+<span id="cb24-101"><a href="#cb24-101" aria-hidden="true" tabindex="-1"></a><span class="in">stop_codon</span></span>
+<span id="cb24-102"><a href="#cb24-102" aria-hidden="true" tabindex="-1"></a><span class="in">transcript</span></span>
+<span id="cb24-103"><a href="#cb24-103" aria-hidden="true" tabindex="-1"></a><span class="in">874254</span></span>
+<span id="cb24-104"><a href="#cb24-104" aria-hidden="true" tabindex="-1"></a><span class="in">874254</span></span>
+<span id="cb24-105"><a href="#cb24-105" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-106"><a href="#cb24-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-107"><a href="#cb24-107" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-108"><a href="#cb24-108" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff</span>
+<span id="cb24-109"><a href="#cb24-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-110"><a href="#cb24-110" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff</span>
+<span id="cb24-111"><a href="#cb24-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-112"><a href="#cb24-112" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">'^#'</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f3</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span></span>
+<span id="cb24-113"><a href="#cb24-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-114"><a href="#cb24-114" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"transcript"</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff</span>
+<span id="cb24-115"><a href="#cb24-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-116"><a href="#cb24-116" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"gene"</span> ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff</span>
+<span id="cb24-117"><a href="#cb24-117" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-118"><a href="#cb24-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-119"><a href="#cb24-119" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb24-120"><a href="#cb24-120" aria-hidden="true" tabindex="-1"></a><span class="in">##gff-version 3</span></span>
+<span id="cb24-121"><a href="#cb24-121" aria-hidden="true" tabindex="-1"></a><span class="in">#!gff-spec-version 1.21</span></span>
+<span id="cb24-122"><a href="#cb24-122" aria-hidden="true" tabindex="-1"></a><span class="in">#!processor NCBI annotwriter</span></span>
+<span id="cb24-123"><a href="#cb24-123" aria-hidden="true" tabindex="-1"></a><span class="in">#!genome-build Amil_v2.1</span></span>
+<span id="cb24-124"><a href="#cb24-124" aria-hidden="true" tabindex="-1"></a><span class="in">#!genome-build-accession NCBI_Assembly:GCF_013753865.1</span></span>
+<span id="cb24-125"><a href="#cb24-125" aria-hidden="true" tabindex="-1"></a><span class="in">#!annotation-source NCBI Acropora millepora Annotation Release 101</span></span>
+<span id="cb24-126"><a href="#cb24-126" aria-hidden="true" tabindex="-1"></a><span class="in">##sequence-region NC_058066.1 1 39361238</span></span>
+<span id="cb24-127"><a href="#cb24-127" aria-hidden="true" tabindex="-1"></a><span class="in">##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=45264</span></span>
+<span id="cb24-128"><a href="#cb24-128" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 RefSeq  region  1   39361238    .   +   .   ID=NC_058066.1:1..39361238;Dbxref=taxon:45264;Name=1;chromosome=1;collection-date=2017;country=Indonesia;gbkey=Src;genome=chromosome;isolate=JS-1;isolation-source=Whole tissue;mol_type=genomic DNA;tissue-type=Adult tissue</span></span>
+<span id="cb24-129"><a href="#cb24-129" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 Gnomon  gene    1962    23221   .   -   .   ID=gene-LOC114963522;Dbxref=GeneID:114963522;Name=LOC114963522;gbkey=Gene;gene=LOC114963522;gene_biotype=lncRNA</span></span>
+<span id="cb24-130"><a href="#cb24-130" aria-hidden="true" tabindex="-1"></a><span class="in">828216 ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff</span></span>
+<span id="cb24-131"><a href="#cb24-131" aria-hidden="true" tabindex="-1"></a><span class="in">cDNA_match</span></span>
+<span id="cb24-132"><a href="#cb24-132" aria-hidden="true" tabindex="-1"></a><span class="in">CDS</span></span>
+<span id="cb24-133"><a href="#cb24-133" aria-hidden="true" tabindex="-1"></a><span class="in">exon</span></span>
+<span id="cb24-134"><a href="#cb24-134" aria-hidden="true" tabindex="-1"></a><span class="in">gene</span></span>
+<span id="cb24-135"><a href="#cb24-135" aria-hidden="true" tabindex="-1"></a><span class="in">guide_RNA</span></span>
+<span id="cb24-136"><a href="#cb24-136" aria-hidden="true" tabindex="-1"></a><span class="in">lnc_RNA</span></span>
+<span id="cb24-137"><a href="#cb24-137" aria-hidden="true" tabindex="-1"></a><span class="in">mRNA</span></span>
+<span id="cb24-138"><a href="#cb24-138" aria-hidden="true" tabindex="-1"></a><span class="in">pseudogene</span></span>
+<span id="cb24-139"><a href="#cb24-139" aria-hidden="true" tabindex="-1"></a><span class="in">region</span></span>
+<span id="cb24-140"><a href="#cb24-140" aria-hidden="true" tabindex="-1"></a><span class="in">rRNA</span></span>
+<span id="cb24-141"><a href="#cb24-141" aria-hidden="true" tabindex="-1"></a><span class="in">snoRNA</span></span>
+<span id="cb24-142"><a href="#cb24-142" aria-hidden="true" tabindex="-1"></a><span class="in">snRNA</span></span>
+<span id="cb24-143"><a href="#cb24-143" aria-hidden="true" tabindex="-1"></a><span class="in">transcript</span></span>
+<span id="cb24-144"><a href="#cb24-144" aria-hidden="true" tabindex="-1"></a><span class="in">tRNA</span></span>
+<span id="cb24-145"><a href="#cb24-145" aria-hidden="true" tabindex="-1"></a><span class="in">431975</span></span>
+<span id="cb24-146"><a href="#cb24-146" aria-hidden="true" tabindex="-1"></a><span class="in">803260</span></span>
+<span id="cb24-147"><a href="#cb24-147" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-148"><a href="#cb24-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-149"><a href="#cb24-149" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1.3 HiSat</span></span>
+<span id="cb24-150"><a href="#cb24-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-151"><a href="#cb24-151" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-152"><a href="#cb24-152" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/hisat2-2.2.1/hisat2_extract_exons.py</span> <span class="dt">\</span></span>
+<span id="cb24-153"><a href="#cb24-153" aria-hidden="true" tabindex="-1"></a>../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="dt">\</span></span>
+<span id="cb24-154"><a href="#cb24-154" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../output/15-Apul-hisat/m_exon.tab</span>
+<span id="cb24-155"><a href="#cb24-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-156"><a href="#cb24-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-157"><a href="#cb24-157" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-158"><a href="#cb24-158" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/15-Apul-hisat/m_exon.tab</span>
+<span id="cb24-159"><a href="#cb24-159" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/15-Apul-hisat/m_exon.tab</span>
+<span id="cb24-160"><a href="#cb24-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-161"><a href="#cb24-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-162"><a href="#cb24-162" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb24-163"><a href="#cb24-163" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 1961    2118    -</span></span>
+<span id="cb24-164"><a href="#cb24-164" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 15360   15663   +</span></span>
+<span id="cb24-165"><a href="#cb24-165" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 18710   18774   -</span></span>
+<span id="cb24-166"><a href="#cb24-166" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 21000   21092   -</span></span>
+<span id="cb24-167"><a href="#cb24-167" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 22158   22442   +</span></span>
+<span id="cb24-168"><a href="#cb24-168" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 23084   23220   -</span></span>
+<span id="cb24-169"><a href="#cb24-169" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 24770   25066   +</span></span>
+<span id="cb24-170"><a href="#cb24-170" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 26652   26912   +</span></span>
+<span id="cb24-171"><a href="#cb24-171" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 27071   27358   +</span></span>
+<span id="cb24-172"><a href="#cb24-172" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 27658   27951   +</span></span>
+<span id="cb24-173"><a href="#cb24-173" aria-hidden="true" tabindex="-1"></a><span class="in">228010 ../output/15-Apul-hisat/m_exon.tab</span></span>
+<span id="cb24-174"><a href="#cb24-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-175"><a href="#cb24-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-176"><a href="#cb24-176" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-177"><a href="#cb24-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-178"><a href="#cb24-178" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/hisat2-2.2.1/hisat2_extract_splice_sites.py</span> <span class="dt">\</span></span>
+<span id="cb24-179"><a href="#cb24-179" aria-hidden="true" tabindex="-1"></a>../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="dt">\</span></span>
+<span id="cb24-180"><a href="#cb24-180" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../output/15-Apul-hisat/m_splice_sites.tab</span>
+<span id="cb24-181"><a href="#cb24-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-182"><a href="#cb24-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-183"><a href="#cb24-183" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-184"><a href="#cb24-184" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/15-Apul-hisat/m_splice_sites.tab</span>
+<span id="cb24-185"><a href="#cb24-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-186"><a href="#cb24-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-187"><a href="#cb24-187" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb24-188"><a href="#cb24-188" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 2118    18710   -</span></span>
+<span id="cb24-189"><a href="#cb24-189" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 15663   22158   +</span></span>
+<span id="cb24-190"><a href="#cb24-190" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 18774   21000   -</span></span>
+<span id="cb24-191"><a href="#cb24-191" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 21092   23084   -</span></span>
+<span id="cb24-192"><a href="#cb24-192" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 22442   24770   +</span></span>
+<span id="cb24-193"><a href="#cb24-193" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 25066   26652   +</span></span>
+<span id="cb24-194"><a href="#cb24-194" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 26912   27071   +</span></span>
+<span id="cb24-195"><a href="#cb24-195" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 27358   27658   +</span></span>
+<span id="cb24-196"><a href="#cb24-196" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 27951   28247   +</span></span>
+<span id="cb24-197"><a href="#cb24-197" aria-hidden="true" tabindex="-1"></a><span class="in">NC_058066.1 28534   29196   +</span></span>
+<span id="cb24-198"><a href="#cb24-198" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-199"><a href="#cb24-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-200"><a href="#cb24-200" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-201"><a href="#cb24-201" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/hisat2-2.2.1/hisat2-build</span> <span class="dt">\</span></span>
+<span id="cb24-202"><a href="#cb24-202" aria-hidden="true" tabindex="-1"></a>../data/GCF_013753865.1_Amil_v2.1_genomic.fna <span class="dt">\</span></span>
+<span id="cb24-203"><a href="#cb24-203" aria-hidden="true" tabindex="-1"></a>../output/15-Apul-hisat/GCF_013753865.1_Amil_v2.1.index <span class="dt">\</span></span>
+<span id="cb24-204"><a href="#cb24-204" aria-hidden="true" tabindex="-1"></a>--exon ../output/15-Apul-hisat/m_exon.tab <span class="dt">\</span></span>
+<span id="cb24-205"><a href="#cb24-205" aria-hidden="true" tabindex="-1"></a>--ss ../output/15-Apul-hisat/m_splice_sites.tab <span class="dt">\</span></span>
+<span id="cb24-206"><a href="#cb24-206" aria-hidden="true" tabindex="-1"></a>-p 40 <span class="dt">\</span></span>
+<span id="cb24-207"><a href="#cb24-207" aria-hidden="true" tabindex="-1"></a>../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="dt">\</span></span>
+<span id="cb24-208"><a href="#cb24-208" aria-hidden="true" tabindex="-1"></a>2<span class="op">&gt;</span> ../output/15-Apul-hisat/hisat2-build_stats.txt</span>
+<span id="cb24-209"><a href="#cb24-209" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-210"><a href="#cb24-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-211"><a href="#cb24-211" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-212"><a href="#cb24-212" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span> ../output/15-Apul-hisat/hisat2-build_stats.txt</span>
+<span id="cb24-213"><a href="#cb24-213" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-214"><a href="#cb24-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-215"><a href="#cb24-215" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb24-216"><a href="#cb24-216" aria-hidden="true" tabindex="-1"></a><span class="in">    sideSz: 128</span></span>
+<span id="cb24-217"><a href="#cb24-217" aria-hidden="true" tabindex="-1"></a><span class="in">    sideGbwtSz: 104</span></span>
+<span id="cb24-218"><a href="#cb24-218" aria-hidden="true" tabindex="-1"></a><span class="in">    sideGbwtLen: 208</span></span>
+<span id="cb24-219"><a href="#cb24-219" aria-hidden="true" tabindex="-1"></a><span class="in">    numSides: 2299750</span></span>
+<span id="cb24-220"><a href="#cb24-220" aria-hidden="true" tabindex="-1"></a><span class="in">    numLines: 2299750</span></span>
+<span id="cb24-221"><a href="#cb24-221" aria-hidden="true" tabindex="-1"></a><span class="in">    gbwtTotLen: 294368000</span></span>
+<span id="cb24-222"><a href="#cb24-222" aria-hidden="true" tabindex="-1"></a><span class="in">    gbwtTotSz: 294368000</span></span>
+<span id="cb24-223"><a href="#cb24-223" aria-hidden="true" tabindex="-1"></a><span class="in">    reverse: 0</span></span>
+<span id="cb24-224"><a href="#cb24-224" aria-hidden="true" tabindex="-1"></a><span class="in">    linearFM: No</span></span>
+<span id="cb24-225"><a href="#cb24-225" aria-hidden="true" tabindex="-1"></a><span class="in">Total time for call to driver() for forward index: 00:07:58</span></span>
+<span id="cb24-226"><a href="#cb24-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-227"><a href="#cb24-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-228"><a href="#cb24-228" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.3.1 Performance tuning</span></span>
+<span id="cb24-229"><a href="#cb24-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-230"><a href="#cb24-230" aria-hidden="true" tabindex="-1"></a>If your computer has multiple processors/cores, use -p The -p option causes HISAT2 to launch a specified number of parallel search threads. Each thread runs on a different processor/core and all threads find alignments in parallel, increasing alignment throughput by approximately a multiple of the number of threads (though in practice, speedup is somewhat worse than linear).</span>
+<span id="cb24-231"><a href="#cb24-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-232"><a href="#cb24-232" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-233"><a href="#cb24-233" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> ../data/fastq/<span class="pp">*</span>R2_001.fastp-trim.20230519.fastq.gz <span class="dt">\</span></span>
+<span id="cb24-234"><a href="#cb24-234" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="fu">xargs</span> basename <span class="at">-s</span> <span class="at">-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</span> <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> <span class="dt">\</span></span>
+<span id="cb24-235"><a href="#cb24-235" aria-hidden="true" tabindex="-1"></a>/home/shared/hisat2-2.2.1/hisat2 <span class="dt">\</span></span>
+<span id="cb24-236"><a href="#cb24-236" aria-hidden="true" tabindex="-1"></a>-x ../output/15-Apul-hisat/GCF_013753865.1_Amil_v2.1.index <span class="dt">\</span></span>
+<span id="cb24-237"><a href="#cb24-237" aria-hidden="true" tabindex="-1"></a>--dta <span class="dt">\</span></span>
+<span id="cb24-238"><a href="#cb24-238" aria-hidden="true" tabindex="-1"></a>-p 20 <span class="dt">\</span></span>
+<span id="cb24-239"><a href="#cb24-239" aria-hidden="true" tabindex="-1"></a>-1 ../data/fastq/{}-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz <span class="dt">\</span></span>
+<span id="cb24-240"><a href="#cb24-240" aria-hidden="true" tabindex="-1"></a>-2 ../data/fastq/{}-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz <span class="dt">\</span></span>
+<span id="cb24-241"><a href="#cb24-241" aria-hidden="true" tabindex="-1"></a>-S ../output/15-Apul-hisat/{}.sam <span class="dt">\</span></span>
+<span id="cb24-242"><a href="#cb24-242" aria-hidden="true" tabindex="-1"></a>2<span class="op">&gt;</span> ../output/15-Apul-hisat/hisat.out</span>
+<span id="cb24-243"><a href="#cb24-243" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-244"><a href="#cb24-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-245"><a href="#cb24-245" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-246"><a href="#cb24-246" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> ../output/15-Apul-hisat/hisat.out</span>
+<span id="cb24-247"><a href="#cb24-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-248"><a href="#cb24-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-249"><a href="#cb24-249" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb24-250"><a href="#cb24-250" aria-hidden="true" tabindex="-1"></a><span class="in">47710408 reads; of these:</span></span>
+<span id="cb24-251"><a href="#cb24-251" aria-hidden="true" tabindex="-1"></a><span class="in">  47710408 (100.00%) were paired; of these:</span></span>
+<span id="cb24-252"><a href="#cb24-252" aria-hidden="true" tabindex="-1"></a><span class="in">    27825914 (58.32%) aligned concordantly 0 times</span></span>
+<span id="cb24-253"><a href="#cb24-253" aria-hidden="true" tabindex="-1"></a><span class="in">    18559152 (38.90%) aligned concordantly exactly 1 time</span></span>
+<span id="cb24-254"><a href="#cb24-254" aria-hidden="true" tabindex="-1"></a><span class="in">    1325342 (2.78%) aligned concordantly &gt;1 times</span></span>
+<span id="cb24-255"><a href="#cb24-255" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-256"><a href="#cb24-256" aria-hidden="true" tabindex="-1"></a><span class="in">    27825914 pairs aligned concordantly 0 times; of these:</span></span>
+<span id="cb24-257"><a href="#cb24-257" aria-hidden="true" tabindex="-1"></a><span class="in">      1201636 (4.32%) aligned discordantly 1 time</span></span>
+<span id="cb24-258"><a href="#cb24-258" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-259"><a href="#cb24-259" aria-hidden="true" tabindex="-1"></a><span class="in">    26624278 pairs aligned 0 times concordantly or discordantly; of these:</span></span>
+<span id="cb24-260"><a href="#cb24-260" aria-hidden="true" tabindex="-1"></a><span class="in">      53248556 mates make up the pairs; of these:</span></span>
+<span id="cb24-261"><a href="#cb24-261" aria-hidden="true" tabindex="-1"></a><span class="in">        42533390 (79.88%) aligned 0 times</span></span>
+<span id="cb24-262"><a href="#cb24-262" aria-hidden="true" tabindex="-1"></a><span class="in">        9692346 (18.20%) aligned exactly 1 time</span></span>
+<span id="cb24-263"><a href="#cb24-263" aria-hidden="true" tabindex="-1"></a><span class="in">        1022820 (1.92%) aligned &gt;1 times</span></span>
+<span id="cb24-264"><a href="#cb24-264" aria-hidden="true" tabindex="-1"></a><span class="in">55.43% overall alignment rate</span></span>
+<span id="cb24-265"><a href="#cb24-265" aria-hidden="true" tabindex="-1"></a><span class="in">42864294 reads; of these:</span></span>
+<span id="cb24-266"><a href="#cb24-266" aria-hidden="true" tabindex="-1"></a><span class="in">  42864294 (100.00%) were paired; of these:</span></span>
+<span id="cb24-267"><a href="#cb24-267" aria-hidden="true" tabindex="-1"></a><span class="in">    24356414 (56.82%) aligned concordantly 0 times</span></span>
+<span id="cb24-268"><a href="#cb24-268" aria-hidden="true" tabindex="-1"></a><span class="in">    17135863 (39.98%) aligned concordantly exactly 1 time</span></span>
+<span id="cb24-269"><a href="#cb24-269" aria-hidden="true" tabindex="-1"></a><span class="in">    1372017 (3.20%) aligned concordantly &gt;1 times</span></span>
+<span id="cb24-270"><a href="#cb24-270" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-271"><a href="#cb24-271" aria-hidden="true" tabindex="-1"></a><span class="in">    24356414 pairs aligned concordantly 0 times; of these:</span></span>
+<span id="cb24-272"><a href="#cb24-272" aria-hidden="true" tabindex="-1"></a><span class="in">      1142678 (4.69%) aligned discordantly 1 time</span></span>
+<span id="cb24-273"><a href="#cb24-273" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-274"><a href="#cb24-274" aria-hidden="true" tabindex="-1"></a><span class="in">    23213736 pairs aligned 0 times concordantly or discordantly; of these:</span></span>
+<span id="cb24-275"><a href="#cb24-275" aria-hidden="true" tabindex="-1"></a><span class="in">      46427472 mates make up the pairs; of these:</span></span>
+<span id="cb24-276"><a href="#cb24-276" aria-hidden="true" tabindex="-1"></a><span class="in">        36609836 (78.85%) aligned 0 times</span></span>
+<span id="cb24-277"><a href="#cb24-277" aria-hidden="true" tabindex="-1"></a><span class="in">        8675847 (18.69%) aligned exactly 1 time</span></span>
+<span id="cb24-278"><a href="#cb24-278" aria-hidden="true" tabindex="-1"></a><span class="in">        1141789 (2.46%) aligned &gt;1 times</span></span>
+<span id="cb24-279"><a href="#cb24-279" aria-hidden="true" tabindex="-1"></a><span class="in">57.30% overall alignment rate</span></span>
+<span id="cb24-280"><a href="#cb24-280" aria-hidden="true" tabindex="-1"></a><span class="in">43712298 reads; of these:</span></span>
+<span id="cb24-281"><a href="#cb24-281" aria-hidden="true" tabindex="-1"></a><span class="in">  43712298 (100.00%) were paired; of these:</span></span>
+<span id="cb24-282"><a href="#cb24-282" aria-hidden="true" tabindex="-1"></a><span class="in">    30967520 (70.84%) aligned concordantly 0 times</span></span>
+<span id="cb24-283"><a href="#cb24-283" aria-hidden="true" tabindex="-1"></a><span class="in">    11666917 (26.69%) aligned concordantly exactly 1 time</span></span>
+<span id="cb24-284"><a href="#cb24-284" aria-hidden="true" tabindex="-1"></a><span class="in">    1077861 (2.47%) aligned concordantly &gt;1 times</span></span>
+<span id="cb24-285"><a href="#cb24-285" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-286"><a href="#cb24-286" aria-hidden="true" tabindex="-1"></a><span class="in">    30967520 pairs aligned concordantly 0 times; of these:</span></span>
+<span id="cb24-287"><a href="#cb24-287" aria-hidden="true" tabindex="-1"></a><span class="in">      791338 (2.56%) aligned discordantly 1 time</span></span>
+<span id="cb24-288"><a href="#cb24-288" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-289"><a href="#cb24-289" aria-hidden="true" tabindex="-1"></a><span class="in">    30176182 pairs aligned 0 times concordantly or discordantly; of these:</span></span>
+<span id="cb24-290"><a href="#cb24-290" aria-hidden="true" tabindex="-1"></a><span class="in">      60352364 mates make up the pairs; of these:</span></span>
+<span id="cb24-291"><a href="#cb24-291" aria-hidden="true" tabindex="-1"></a><span class="in">        52153613 (86.42%) aligned 0 times</span></span>
+<span id="cb24-292"><a href="#cb24-292" aria-hidden="true" tabindex="-1"></a><span class="in">        7011301 (11.62%) aligned exactly 1 time</span></span>
+<span id="cb24-293"><a href="#cb24-293" aria-hidden="true" tabindex="-1"></a><span class="in">        1187450 (1.97%) aligned &gt;1 times</span></span>
+<span id="cb24-294"><a href="#cb24-294" aria-hidden="true" tabindex="-1"></a><span class="in">40.34% overall alignment rate</span></span>
+<span id="cb24-295"><a href="#cb24-295" aria-hidden="true" tabindex="-1"></a><span class="in">47501524 reads; of these:</span></span>
+<span id="cb24-296"><a href="#cb24-296" aria-hidden="true" tabindex="-1"></a><span class="in">  47501524 (100.00%) were paired; of these:</span></span>
+<span id="cb24-297"><a href="#cb24-297" aria-hidden="true" tabindex="-1"></a><span class="in">    28603496 (60.22%) aligned concordantly 0 times</span></span>
+<span id="cb24-298"><a href="#cb24-298" aria-hidden="true" tabindex="-1"></a><span class="in">    17627744 (37.11%) aligned concordantly exactly 1 time</span></span>
+<span id="cb24-299"><a href="#cb24-299" aria-hidden="true" tabindex="-1"></a><span class="in">    1270284 (2.67%) aligned concordantly &gt;1 times</span></span>
+<span id="cb24-300"><a href="#cb24-300" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-301"><a href="#cb24-301" aria-hidden="true" tabindex="-1"></a><span class="in">    28603496 pairs aligned concordantly 0 times; of these:</span></span>
+<span id="cb24-302"><a href="#cb24-302" aria-hidden="true" tabindex="-1"></a><span class="in">      1201709 (4.20%) aligned discordantly 1 time</span></span>
+<span id="cb24-303"><a href="#cb24-303" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-304"><a href="#cb24-304" aria-hidden="true" tabindex="-1"></a><span class="in">    27401787 pairs aligned 0 times concordantly or discordantly; of these:</span></span>
+<span id="cb24-305"><a href="#cb24-305" aria-hidden="true" tabindex="-1"></a><span class="in">      54803574 mates make up the pairs; of these:</span></span>
+<span id="cb24-306"><a href="#cb24-306" aria-hidden="true" tabindex="-1"></a><span class="in">        44045470 (80.37%) aligned 0 times</span></span>
+<span id="cb24-307"><a href="#cb24-307" aria-hidden="true" tabindex="-1"></a><span class="in">        9614980 (17.54%) aligned exactly 1 time</span></span>
+<span id="cb24-308"><a href="#cb24-308" aria-hidden="true" tabindex="-1"></a><span class="in">        1143124 (2.09%) aligned &gt;1 times</span></span>
+<span id="cb24-309"><a href="#cb24-309" aria-hidden="true" tabindex="-1"></a><span class="in">53.64% overall alignment rate</span></span>
+<span id="cb24-310"><a href="#cb24-310" aria-hidden="true" tabindex="-1"></a><span class="in">42677752 reads; of these:</span></span>
+<span id="cb24-311"><a href="#cb24-311" aria-hidden="true" tabindex="-1"></a><span class="in">  42677752 (100.00%) were paired; of these:</span></span>
+<span id="cb24-312"><a href="#cb24-312" aria-hidden="true" tabindex="-1"></a><span class="in">    26422177 (61.91%) aligned concordantly 0 times</span></span>
+<span id="cb24-313"><a href="#cb24-313" aria-hidden="true" tabindex="-1"></a><span class="in">    15005422 (35.16%) aligned concordantly exactly 1 time</span></span>
+<span id="cb24-314"><a href="#cb24-314" aria-hidden="true" tabindex="-1"></a><span class="in">    1250153 (2.93%) aligned concordantly &gt;1 times</span></span>
+<span id="cb24-315"><a href="#cb24-315" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-316"><a href="#cb24-316" aria-hidden="true" tabindex="-1"></a><span class="in">    26422177 pairs aligned concordantly 0 times; of these:</span></span>
+<span id="cb24-317"><a href="#cb24-317" aria-hidden="true" tabindex="-1"></a><span class="in">      1009838 (3.82%) aligned discordantly 1 time</span></span>
+<span id="cb24-318"><a href="#cb24-318" aria-hidden="true" tabindex="-1"></a><span class="in">    ----</span></span>
+<span id="cb24-319"><a href="#cb24-319" aria-hidden="true" tabindex="-1"></a><span class="in">    25412339 pairs aligned 0 times concordantly or discordantly; of these:</span></span>
+<span id="cb24-320"><a href="#cb24-320" aria-hidden="true" tabindex="-1"></a><span class="in">      50824678 mates make up the pairs; of these:</span></span>
+<span id="cb24-321"><a href="#cb24-321" aria-hidden="true" tabindex="-1"></a><span class="in">        39698309 (78.11%) aligned 0 times</span></span>
+<span id="cb24-322"><a href="#cb24-322" aria-hidden="true" tabindex="-1"></a><span class="in">        9739502 (19.16%) aligned exactly 1 time</span></span>
+<span id="cb24-323"><a href="#cb24-323" aria-hidden="true" tabindex="-1"></a><span class="in">        1386867 (2.73%) aligned &gt;1 times</span></span>
+<span id="cb24-324"><a href="#cb24-324" aria-hidden="true" tabindex="-1"></a><span class="in">53.49% overall alignment rate</span></span>
+<span id="cb24-325"><a href="#cb24-325" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-326"><a href="#cb24-326" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-327"><a href="#cb24-327" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1.4 convert to bam</span></span>
+<span id="cb24-328"><a href="#cb24-328" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-329"><a href="#cb24-329" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-330"><a href="#cb24-330" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> samfile <span class="kw">in</span> ../output/15-Apul-hisat/<span class="pp">*</span>.sam<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb24-331"><a href="#cb24-331" aria-hidden="true" tabindex="-1"></a>  <span class="va">bamfile</span><span class="op">=</span><span class="st">"</span><span class="va">${samfile</span><span class="op">%</span>.sam<span class="va">}</span><span class="st">.bam"</span></span>
+<span id="cb24-332"><a href="#cb24-332" aria-hidden="true" tabindex="-1"></a>  <span class="va">sorted_bamfile</span><span class="op">=</span><span class="st">"</span><span class="va">${samfile</span><span class="op">%</span>.sam<span class="va">}</span><span class="st">.sorted.bam"</span></span>
+<span id="cb24-333"><a href="#cb24-333" aria-hidden="true" tabindex="-1"></a>  <span class="ex">/home/shared/samtools-1.12/samtools</span> view <span class="at">-bS</span> <span class="at">-@</span> 20 <span class="st">"</span><span class="va">$samfile</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$bamfile</span><span class="st">"</span></span>
+<span id="cb24-334"><a href="#cb24-334" aria-hidden="true" tabindex="-1"></a>  <span class="ex">/home/shared/samtools-1.12/samtools</span> sort <span class="at">-@</span> 20 <span class="st">"</span><span class="va">$bamfile</span><span class="st">"</span> <span class="at">-o</span> <span class="st">"</span><span class="va">$sorted_bamfile</span><span class="st">"</span></span>
+<span id="cb24-335"><a href="#cb24-335" aria-hidden="true" tabindex="-1"></a>  <span class="ex">/home/shared/samtools-1.12/samtools</span> index <span class="at">-@</span> 20 <span class="st">"</span><span class="va">$sorted_bamfile</span><span class="st">"</span></span>
+<span id="cb24-336"><a href="#cb24-336" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb24-337"><a href="#cb24-337" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-338"><a href="#cb24-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-339"><a href="#cb24-339" aria-hidden="true" tabindex="-1"></a><span class="fu">## 1.5 Looking at Bams</span></span>
+<span id="cb24-340"><a href="#cb24-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-341"><a href="#cb24-341" aria-hidden="true" tabindex="-1"></a>$$igv$$</span>
+<span id="cb24-342"><a href="#cb24-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-343"><a href="#cb24-343" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb24-344"><a href="#cb24-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-345"><a href="#cb24-345" aria-hidden="true" tabindex="-1"></a><span class="fu">#### 1.5.0.1 **Differential expression analysis**</span></span>
+<span id="cb24-346"><a href="#cb24-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-347"><a href="#cb24-347" aria-hidden="true" tabindex="-1"></a>Together with <span class="co">[</span><span class="ot">HISAT</span><span class="co">](http://ccb.jhu.edu/software/hisat2)</span> and <span class="co">[</span><span class="ot">Ballgown</span><span class="co">](http://biorxiv.org/content/early/2014/09/05/003665)</span>, StringTie can be used for estimating differential expression across multiple RNA-Seq samples and generating plots and differential expression tables as described in our <span class="co">[</span><span class="ot">protocol paper</span><span class="co">](http://www.nature.com/nprot/journal/v11/n9/full/nprot.2016.095.html)</span>.<span class="kw">&lt;img</span> <span class="er">src</span><span class="ot">=</span><span class="st">"https://ccb.jhu.edu/software/stringtie/DE_pipeline.png"</span> <span class="er">alt</span><span class="ot">=</span><span class="st">"DE workflow"</span><span class="kw">/&gt;</span>\</span>
+<span id="cb24-348"><a href="#cb24-348" aria-hidden="true" tabindex="-1"></a>Our recommended workflow includes the following steps:</span>
+<span id="cb24-349"><a href="#cb24-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-350"><a href="#cb24-350" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>for each RNA-Seq sample, map the reads to the genome with <span class="co">[</span><span class="ot">HISAT2</span><span class="co">](http://ccb.jhu.edu/software/hisat2)</span> using the --dta option. It is highly recommended to use the reference annotation information when mapping the reads, which can be either embedded in the genome index (built with the --ss and --exon options, see <span class="co">[</span><span class="ot">HISAT2 manual</span><span class="co">](http://ccb.jhu.edu/software/hisat2/manual.shtml#the-hisat2-build-indexer)</span>), or provided separately at run time (using the --known-splicesite-infile option of <span class="co">[</span><span class="ot">HISAT2</span><span class="co">](http://ccb.jhu.edu/software/hisat2/manual.shtml#running-hisat2)</span>). The SAM output of each HISAT2 run must be sorted and converted to BAM using samtools as explained above.</span>
+<span id="cb24-351"><a href="#cb24-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-352"><a href="#cb24-352" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>for each RNA-Seq sample, run StringTie to assemble the read alignments obtained in the previous step; it is recommended to run StringTie with the -G option if the reference annotation is available.</span>
+<span id="cb24-353"><a href="#cb24-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-354"><a href="#cb24-354" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>run StringTie with **--merge** in order to generate a non-redundant set of transcripts observed in any of the RNA-Seq samples assembled previously. The stringtie --merge mode takes as input a list of all the assembled transcripts files (in GTF format) previously obtained for each sample, as well as a reference annotation file (-G option) if available.</span>
+<span id="cb24-355"><a href="#cb24-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-356"><a href="#cb24-356" aria-hidden="true" tabindex="-1"></a><span class="ss">4.  </span>for each RNA-Seq sample, run StringTie using the -B/-b and -e options in order to estimate transcript abundances and generate read coverage tables for Ballgown. The -e option is not required but recommended for this run in order to produce more accurate abundance estimations of the input transcripts. Each StringTie run in this step will take as input the sorted read alignments (BAM file) obtained in step 1 for the corresponding sample and the -G option with the merged transcripts (GTF file) generated by stringtie --merge in step 3. Please note that this is the only case where the -G option is not used with a reference annotation, but with the global, merged set of transcripts as observed across all samples. (This step is the equivalent of the *Tablemaker* step described in the original <span class="co">[</span><span class="ot">Ballgown pipeline</span><span class="co">](https://github.com/alyssafrazee/ballgown)</span>.)</span>
+<span id="cb24-357"><a href="#cb24-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-358"><a href="#cb24-358" aria-hidden="true" tabindex="-1"></a><span class="ss">5.  </span>Ballgown can now be used to load the coverage tables generated in the previous step and perform various statistical analyses for differential expression, generate plots etc.</span>
+<span id="cb24-359"><a href="#cb24-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-360"><a href="#cb24-360" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--# using faster --&gt;</span></span>
+<span id="cb24-361"><a href="#cb24-361" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-362"><a href="#cb24-362" aria-hidden="true" tabindex="-1"></a><span class="fu">### 1.5.1 An alternate, faster differential expression analysis workflow</span></span>
+<span id="cb24-363"><a href="#cb24-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-364"><a href="#cb24-364" aria-hidden="true" tabindex="-1"></a>can be pursued if there is no interest in novel isoforms (i.e.&nbsp;assembled transcripts present in the samples but missing from the reference annotation), or if only a well known set of transcripts of interest are targeted by the analysis. This simplified protocol has only 3 steps (depicted below) as it bypasses the individual assembly of each RNA-Seq sample and the *"transcript merge"* step.&lt;img src="https://ccb.jhu.edu/software/stringtie/DE_pipeline_refonly.png" alt="DE workflow"/&gt;This simplified workflow attempts to directly estimate and analyze the expression of a known set of transcripts as given in the *reference annotation* file.</span>
+<span id="cb24-365"><a href="#cb24-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-366"><a href="#cb24-366" aria-hidden="true" tabindex="-1"></a>The R package <span class="co">[</span><span class="ot">**IsoformSwitchAnalyzeR**</span><span class="co">](https://bioconductor.org/packages/devel/bioc/html/IsoformSwitchAnalyzeR.html)</span> can be used to assign gene names to transcripts assembled by StringTie, which can be particularly helpful in cases where StringTie could not perform this assignment unambigiously.\</span>
+<span id="cb24-367"><a href="#cb24-367" aria-hidden="true" tabindex="-1"></a>The <span class="in">`importIsoformExpression() + importRdata()`</span> function of the package can be used to import the expression and annotation data into R. During this import the package will attempt to clean up and recover isoform annotations where possible. From the resulting <span class="in">`switchAnalyzeRlist`</span> object, *IsoformSwitchAnalyzeR* can detect isoform switches along with predicted functional consequences. The <span class="in">`extractGeneExpression()`</span> function can be used to get a gene expression (read count) matrix for analysis with other tools.\</span>
+<span id="cb24-368"><a href="#cb24-368" aria-hidden="true" tabindex="-1"></a>More information and code examples can be found <span class="co">[</span><span class="ot">here</span><span class="co">](https://bioconductor.org/packages/devel/bioc/vignettes/IsoformSwitchAnalyzeR/inst/doc/IsoformSwitchAnalyzeR.html#examples-visualizations)</span>.</span>
+<span id="cb24-369"><a href="#cb24-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-370"><a href="#cb24-370" aria-hidden="true" tabindex="-1"></a><span class="fu"># 2 StringTie</span></span>
+<span id="cb24-371"><a href="#cb24-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-372"><a href="#cb24-372" aria-hidden="true" tabindex="-1"></a>StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples--an important step in creating a canonical list of across all samples included in the pipeline.</span>
+<span id="cb24-373"><a href="#cb24-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-374"><a href="#cb24-374" aria-hidden="true" tabindex="-1"></a>+:------------+:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span id="cb24-375"><a href="#cb24-375" aria-hidden="true" tabindex="-1"></a>| -b <span class="sc">\&lt;</span>path<span class="sc">\&gt;</span> | Just like -B this option enables the output of <span class="sc">\*</span>.ctab files for Ballgown, but these files will be created in the provided directory <span class="sc">\&lt;</span>path<span class="sc">\&gt;</span> instead of the directory specified by the -o option. Note: adding the -e option is recommended with the -B/-b options, unless novel transcripts are still wanted in the StringTie GTF output. |</span>
+<span id="cb24-376"><a href="#cb24-376" aria-hidden="true" tabindex="-1"></a>+-------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span id="cb24-377"><a href="#cb24-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-378"><a href="#cb24-378" aria-hidden="true" tabindex="-1"></a>+:---------+:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span id="cb24-379"><a href="#cb24-379" aria-hidden="true" tabindex="-1"></a>| \        | this option directs StringTie to operate in <span class="co">[</span><span class="ot">expression estimation mode</span><span class="co">](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual#emode)</span>; this limits the processing of read alignments to estimating the coverage of the transcripts given with the -G option (hence this option requires -G). |</span>
+<span id="cb24-380"><a href="#cb24-380" aria-hidden="true" tabindex="-1"></a>| -e       |                                                                                                                                                                                                                                                                                                    |</span>
+<span id="cb24-381"><a href="#cb24-381" aria-hidden="true" tabindex="-1"></a>+----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span id="cb24-382"><a href="#cb24-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-383"><a href="#cb24-383" aria-hidden="true" tabindex="-1"></a>+:-------------------+:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span id="cb24-384"><a href="#cb24-384" aria-hidden="true" tabindex="-1"></a>| -G <span class="sc">\&lt;</span>ref_ann.gff<span class="sc">\&gt;</span> | Use a <span class="co">[</span><span class="ot">reference annotation file</span><span class="co">](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual#refann)</span> (in <span class="co">[</span><span class="ot">GTF or GFF3 format</span><span class="co">](https://ccb.jhu.edu/software/stringtie/gff.shtml)</span>) to guide the assembly process. The output will include expressed reference transcripts as well as any novel transcripts that are assembled. This option is required by options -B, -b, -e, -C (see below). |</span>
+<span id="cb24-385"><a href="#cb24-385" aria-hidden="true" tabindex="-1"></a>+--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+<span id="cb24-386"><a href="#cb24-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-387"><a href="#cb24-387" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-388"><a href="#cb24-388" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> ../output/15-Apul-hisat/<span class="pp">*</span>sorted.bam <span class="dt">\</span></span>
+<span id="cb24-389"><a href="#cb24-389" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="fu">xargs</span> basename <span class="at">-s</span> .sorted.bam <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> <span class="dt">\</span></span>
+<span id="cb24-390"><a href="#cb24-390" aria-hidden="true" tabindex="-1"></a>/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie <span class="dt">\</span></span>
+<span id="cb24-391"><a href="#cb24-391" aria-hidden="true" tabindex="-1"></a>-p 20 <span class="dt">\</span></span>
+<span id="cb24-392"><a href="#cb24-392" aria-hidden="true" tabindex="-1"></a>-eB <span class="dt">\</span></span>
+<span id="cb24-393"><a href="#cb24-393" aria-hidden="true" tabindex="-1"></a>-G ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff <span class="dt">\</span></span>
+<span id="cb24-394"><a href="#cb24-394" aria-hidden="true" tabindex="-1"></a>-o ../output/15-Apul-hisat/{}.gtf <span class="dt">\</span></span>
+<span id="cb24-395"><a href="#cb24-395" aria-hidden="true" tabindex="-1"></a>../output/15-Apul-hisat/{}.sorted.bam</span>
+<span id="cb24-396"><a href="#cb24-396" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb24-397"><a href="#cb24-397" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-398"><a href="#cb24-398" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb24-399"><a href="#cb24-399" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/15-Apul-hisat/RNA<span class="pp">*</span>.gtf</span>
+<span id="cb24-400"><a href="#cb24-400" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../output/15-Apul-hisat/RNA<span class="pp">*</span>.gtf</span>
+<span id="cb24-401"><a href="#cb24-401" aria-hidden="true" tabindex="-1"></a><span class="co">#head ../output/15-Apul-hisat/RNA*.gtf</span></span>
+<span id="cb24-402"><a href="#cb24-402" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
