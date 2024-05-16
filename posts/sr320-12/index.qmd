@@ -1,17 +1,18 @@
 ---
 title: "HiSat"
 description: "to DESeq"
+date: 05-14-24
 author:
   - name: Steven Roberts
     url: 
     orcid: 0000-0001-8302-1138
     affiliation: Professor, UW - School of Aquatic and Fishery Sciences
     affiliation-url: https://robertslab.info
-date: 05-13-2024
+
 categories: [R, hisat] # self-defined categories
 #citation: 
   #url:  # self-defined
-image: http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png # finding a good image
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-15_20-23-56.png # finding a good image
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 
 format:
@@ -22,6 +23,7 @@ format:
     highlight-style: github
     code-overflow: wrap
 ---
+
 
 -   <a href="#1-run-hisat-on-rna-seq" id="toc-1-run-hisat-on-rna-seq">1 Run HiSat on RNA-seq</a>
     -   <a href="#11-grab-trimmed-rna-seq-reads"
@@ -371,18 +373,18 @@ More information and code examples can be found [here](https://bioconductor.org/
 
 StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples--an important step in creating a canonical list of across all samples included in the pipeline.
 
-|             |                                                                                                                                                                                                                                                                                                                                             |
-|:------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
++:------------+:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | -b \<path\> | Just like -B this option enables the output of \*.ctab files for Ballgown, but these files will be created in the provided directory \<path\> instead of the directory specified by the -o option. Note: adding the -e option is recommended with the -B/-b options, unless novel transcripts are still wanted in the StringTie GTF output. |
++-------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-+:---+:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| \  | this option directs StringTie to operate in [expression estimation mode](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual#emode); this limits the processing of read alignments to estimating the coverage of the transcripts given with the -G option (hence this option requires -G). |
-| -e |                                                                                                                                                                                                                                                                                                    |
-+----+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++:--------+:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| \       | this option directs StringTie to operate in [expression estimation mode](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual#emode); this limits the processing of read alignments to estimating the coverage of the transcripts given with the -G option (hence this option requires -G). |
+| -e      |                                                                                                                                                                                                                                                                                                    |
++---------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-|                    |                                                                                                                                                                                                                                                                                                                                                                                              |
-|:-------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
++:-------------------+:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | -G \<ref_ann.gff\> | Use a [reference annotation file](https://ccb.jhu.edu/software/stringtie/index.shtml?t=manual#refann) (in [GTF or GFF3 format](https://ccb.jhu.edu/software/stringtie/gff.shtml)) to guide the assembly process. The output will include expressed reference transcripts as well as any novel transcripts that are assembled. This option is required by options -B, -b, -e, -C (see below). |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 ``` bash
 find ../output/15-Apul-hisat/*sorted.bam \
