@@ -2,6 +2,8 @@
 title: "Looking at Apul miRNA"
 description: "in IGV"
 date: 05-16-2024
+image: https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png 
+
 author:
   - name: Steven Roberts
     url: 
@@ -11,7 +13,7 @@ author:
 categories: [R, datasets, cod] # self-defined categories
 #citation: 
   #url:  # self-defined
-image: https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png # finding a good image
+# finding a good image
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 
 format:
