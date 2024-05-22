@@ -1,6 +1,9 @@
 ---
 title: "Differentially Expressed Transcipts"
 description: "for cod"
+categories: [R, datasets, cod] # self-defined categories
+#citation: 
+
 date: 05-21-2024
 author:
   - name: Steven Roberts
