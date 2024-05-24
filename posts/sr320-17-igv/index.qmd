@@ -1,0 +1,58 @@
+---
+title: "Working with IGV"
+description: "for cod"
+categories: [R, igv, cod] # self-defined categories
+#citation: 
+date: 05-23-2024
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+
+  #url:  # self-defined
+image: https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png # finding a good image
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+Need to index genome
+
+``` bash
+/home/shared/samtools-1.12/samtools faidx ../data/ncbi_dataset/data/GCF_031168955.1/GCF_031168955.1_ASM3116895v1_genomic.fna
+```
+
+``` bash
+/home/shared/samtools-1.12/samtools faidx ../data/ncbi_dataset/data/GCF_031168955.1/GCF_031168955.1_ASM3116895v1_genomic.fa
+```
+
+start of IGV (save as xml)
+
+    <Session genome="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/GCF_031168955.1_ASM3116895v1_genomic.fa" hasGeneTrack="false" hasSequenceTrack="true" locus="NC_082382.1:6171230-6590510" version="8">
+        <Resources>
+            <Resource path="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gff" type="gff"/>
+            <Resource path="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gtf" type="gtf"/>
+        </Resources>
+        <Panel height="807" name="FeaturePanel" width="1500">
+            <Track attributeKey="Reference sequence" clazz="org.broad.igv.track.SequenceTrack" fontSize="10" id="Reference sequence" name="Reference sequence" sequenceTranslationStrandValue="POSITIVE" shouldShowTranslation="false" visible="true"/>
+            <Track attributeKey="genomic.gtf" clazz="org.broad.igv.track.FeatureTrack" fontSize="10" groupByStrand="false" id="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gtf" name="genomic.gtf" visible="true"/>
+            <Track attributeKey="genomic.gff" clazz="org.broad.igv.track.FeatureTrack" fontSize="10" groupByStrand="false" id="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gff" name="genomic.gff" visible="true"/>
+        </Panel>
+        <PanelLayout dividerFractions="0.007334963325183374"/>
+        <HiddenAttributes>
+            <Attribute name="DATA FILE"/>
+            <Attribute name="DATA TYPE"/>
+            <Attribute name="NAME"/>
+        </HiddenAttributes>
+    </Session>
+
+![](https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png)
+
