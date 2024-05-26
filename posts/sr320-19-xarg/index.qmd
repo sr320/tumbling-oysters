@@ -1,0 +1,39 @@
+---
+title: "xargs"
+description: "now with no reason for loops"
+categories: [xargs] # self-defined categories
+#citation: 
+date: 05-27-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-26_11-52-26.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+
+
+```bash
+find /home/shared/8TB_HDD_02/graceac9/data/pycno2021/*_R1_001.fastq.gz.fastp-trim.20220810.fq.gz \
+| xargs -I{} basename -s _R1_001.fastq.gz.fastp-trim.20220810.fq.gz {} \
+| xargs -I{} sh -c '/home/shared/hisat2-2.2.1/hisat2 \
+-x ../analyses/10-hisat-deseq2/GCA_032158295.index \
+--dta \
+-p 20 \
+-1 /home/shared/8TB_HDD_02/graceac9/data/pycno2021/{}_R1_001.fastq.gz.fastp-trim.20220810.fq.gz \
+-2 /home/shared/8TB_HDD_02/graceac9/data/pycno2021/{}_R2_001.fastq.gz.fastp-trim.20220810.fq.gz \
+-S ../analyses/10-hisat-deseq2/{}_02.sam \
+> ../analyses/10-hisat-deseq2/{}_hisat.stdout 2> ../analyses/10-hisat-deseq2/{}_hisat.stderr'
+```
