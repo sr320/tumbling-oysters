@@ -1,0 +1,367 @@
+---
+title: "That escalated quickly"
+description: "going from 1 line script to cronning a sys log"
+categories: [cron, rsync, log] # self-defined categories
+#citation: 
+date: 05-27-2024
+image: https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+::: callout-important
+## TLDR
+
+Everyday at 7am my raven repos are synced to gannet and a system report is generated: <https://gannet.fish.washington.edu/seashell/bu-github/system_report.txt>
+:::
+
+It all started with the fact that I needed to be better at syncing raven repos to gannet (to save big files).
+
+so I started with a simple rsync command
+
+::: callout-note
+## ghr.sh
+
+```         
+#!/bin/bash
+
+cd /home/shared/8TB_HDD_01/sr320/github/
+
+rsync -avz . \
+sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/
+```
+:::
+
+I saved this then had to make it executable with `chmod +x ghr.sh`
+
+then I ran it with `./ghr.sh` and it worked, prompting me for my password. Boy was I proud. The days of copying code and pasting in my terminal were over.
+
+But could I do better? I am running a script lets get some system info so when I run the script I can have something fun to look at? So with a little chatgpt help
+
+::: callout-note
+## ghr.sh
+
+```         
+#!/bin/bash
+
+df -h | grep -E "/dev/sd[abdef]1"
+
+echo ""
+echo "Percent CPUs cranking?"
+
+mpstat 1 1 | awk '/Average:/ {print 100 - $12 "%"}'
+
+echo ""
+echo "Winners"
+
+ps aux | awk '{arr[$1]+=$3; mem[$1]+=$4} END {for (i in arr) {print i, arr[i], mem[i]"%"} }' | sort -nrk2 | head -n 5
+
+echo ""
+echo "How much memory being used?"
+
+free | awk '/Mem:/ {printf "%.2f%\n", $3/$2 * 100}'
+
+echo ""
+echo "Where is my Memory?"
+
+ps aux --sort=-%mem | awk '{printf "%s\t%s\t%.2f%\n", $1, $11, $4}' | head -n 5
+
+cd /home/shared/8TB_HDD_01/sr320/github/
+
+rsync -avz . \
+sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/
+```
+:::
+
+Now that I everytime I would run the script I would get the following before it asked be for a password.
+
+::: {.callout-tip appearance="minimal" icon="false"}
+```         
+/dev/sda1       916G   15M  870G   1% /media/1TB_ext_SSD01
+/dev/sdb1       916G   12K  870G   1% /media/1TB_ext_SSD02
+/dev/sde1       7.3T  4.2T  2.8T  61% /home/shared/8TB_HDD_01
+/dev/sdf1       7.3T  4.7T  2.3T  68% /home/shared/8TB_HDD_02
+/dev/sdd1       7.3T  3.1T  3.9T  45% /home/shared/8TB_HDD_03
+
+Percent CPUs cranking?
+45.01%
+
+Winners
+sr320 2061.8 0.9%
+davnoor 20.2 0.7%
+ece9 12.4 0.1%
+shedurk+ 11.8 0.7%
+gracele+ 9.6 2.8%
+
+How much memory being used?
+6.32%
+
+Where is my Memory?
+USER    COMMAND 0.00%
+gracele+    /usr/lib/rstudio-server/bin/rsession    2.80%
+davnoor /usr/lib/rstudio-server/bin/rsession    0.70%
+shedurk+    /usr/lib/rstudio-server/bin/rsession    0.70%
+sr320   /home/shared/hisat2-2.2.1/hisat2-align-s    0.70%
+```
+:::
+
+Ok this was bettr, but then I said to myself, I should log this. So I created a new script.
+
+::: callout-note
+## status.sh
+
+```         
+#!/bin/bash
+
+# Temporary file for holding the new report
+temp_file="temp_system_report.txt"
+
+# Start of new report block
+echo "---------------------------------------------------" >> $temp_file
+echo "Report generated on: $(date)" > $temp_file
+echo "---------------------------------------------------" >> $temp_file
+
+echo "Free Space" >> $temp_file
+df -h | grep -E "/dev/sd[abdef]1" >> $temp_file
+
+echo "" >> $temp_file
+echo "Percent CPUs cranking?" >> $temp_file
+mpstat 1 1 | awk '/Average:/ {print 100 - $12 "%"}' >> $temp_file
+
+echo "" >> $temp_file
+echo "Winners (Top 5 CPU Users)" >> $temp_file
+ps aux | awk '{arr[$1]+=$3; mem[$1]+=$4} END {for (i in arr) {print i, arr[i], mem[i]"%"} }' | sort -nrk2 | head -n 5 >> $temp_file
+
+echo "" >> $temp_file
+echo "How much memory being used?" >> $temp_file
+free | awk '/Mem:/ {printf "%.2f%\n", $3/$2 * 100}' >> $temp_file
+
+echo "" >> $temp_file
+echo "Where is my Memory? (Top 5 Memory Users)" >> $temp_file
+ps aux --sort=-%mem | awk '{printf "%s\t%s\t%.2f%\n", $1, $11, $4}' | head -n 5 >> $temp_file
+
+echo "---------------------------------------------------" >> $temp_file
+
+
+# Check if the main report file exists
+report_file="system_report.txt"
+if [ -f "$report_file" ]; then
+    # Append the old report to the new report
+    cat $report_file >> $temp_file
+    # Replace the old report with the new one
+    mv $temp_file $report_file
+else
+    # Rename temp file as the report file if report doesn't exist
+    mv $temp_file $report_file
+fi
+
+echo "Updated report has been saved to $report_file."
+```
+:::
+
+I had to make this execeutable with `chmod +x status.sh` and then I ran it with `./status.sh` and it worked. I had a new file `system_report.txt` that had the system info, prepending itself.
+
+::: {.callout-tip appearance="minimal" icon="false"}
+```         
+Report generated on: Sun May 26 06:40:35 PDT 2024
+---------------------------------------------------
+Free Space
+/dev/sda1       916G   15M  870G   1% /media/1TB_ext_SSD01
+/dev/sdb1       916G   12K  870G   1% /media/1TB_ext_SSD02
+/dev/sde1       7.3T  4.2T  2.8T  61% /home/shared/8TB_HDD_01
+/dev/sdf1       7.3T  4.7T  2.3T  68% /home/shared/8TB_HDD_02
+/dev/sdd1       7.3T  3.0T  3.9T  44% /home/shared/8TB_HDD_03
+
+Percent CPUs cranking?
+46%
+
+Winners (Top 5 CPU Users)
+sr320 1543.1 7.7%
+davnoor 20.2 0.7%
+ece9 12.4 0.1%
+shedurk+ 11.8 0.7%
+gracele+ 9.6 2.8%
+
+How much memory being used?
+13.04%
+
+Where is my Memory? (Top 5 Memory Users)
+USER    COMMAND 0.00%
+sr320   java    7.50%
+gracele+    /usr/lib/rstudio-server/bin/rsession    2.80%
+davnoor /usr/lib/rstudio-server/bin/rsession    0.70%
+shedurk+    /usr/lib/rstudio-server/bin/rsession    0.70%
+---------------------------------------------------
+Report generated on: Sun May 26 06:39:37 PDT 2024
+---------------------------------------------------
+Free Space
+/dev/sda1       916G   15M  870G   1% /media/1TB_ext_SSD01
+/dev/sdb1       916G   12K  870G   1% /media/1TB_ext_SSD02
+/dev/sde1       7.3T  4.2T  2.8T  61% /home/shared/8TB_HDD_01
+/dev/sdf1       7.3T  4.7T  2.3T  68% /home/shared/8TB_HDD_02
+/dev/sdd1       7.3T  3.0T  3.9T  44% /home/shared/8TB_HDD_03
+
+Percent CPUs cranking?
+53.85%
+
+Winners (Top 5 CPU Users)
+sr320 1507 7.7%
+davnoor 20.2 0.7%
+ece9 12.4 0.1%
+shedurk+ 11.8 0.7%
+gracele+ 9.6 2.8%
+
+How much memory being used?
+13.03%
+
+Where is my Memory? (Top 5 Memory Users)
+USER    COMMAND 0.00%
+sr320   java    7.50%
+gracele+    /usr/lib/rstudio-server/bin/rsession    2.80%
+davnoor /usr/lib/rstudio-server/bin/rsession    0.70%
+shedurk+    /usr/lib/rstudio-server/bin/rsession    0.70%
+```
+:::
+
+Then I thought this is something everyone is dying to see.
+
+So I went onto modify `ghr.sh`.
+
+::: callout-note
+## ghr.sh
+
+```         
+#!/bin/bash
+
+df -h | grep -E "/dev/sd[abdef]1"
+
+echo ""
+echo "Percent CPUs cranking?"
+
+mpstat 1 1 | awk '/Average:/ {print 100 - $12 "%"}'
+
+echo ""
+echo "Winners"
+
+ps aux | awk '{arr[$1]+=$3; mem[$1]+=$4} END {for (i in arr) {print i, arr[i], mem[i]"%"} }' | sort -nrk2 | head -n 5
+
+echo ""
+echo "How much memory being used?"
+
+free | awk '/Mem:/ {printf "%.2f%\n", $3/$2 * 100}'
+
+echo ""
+echo "Where is my Memory?"
+
+ps aux --sort=-%mem | awk '{printf "%s\t%s\t%.2f%\n", $1, $11, $4}' | head -n 5
+
+/home/shared/8TB_HDD_03/sr320/github/status.sh
+
+
+rsync -avz /home/shared/8TB_HDD_03/sr320/github/ \
+--exclude='*.sam' \
+sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/
+
+
+#cd /home/shared/8TB_HDD_01/sr320/github/
+
+#rsync -avz . \
+#sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/
+
+df -h | grep -E "/dev/sd[abdef]1"
+
+echo ""
+echo "Percent CPUs cranking?"
+
+mpstat 1 1 | awk '/Average:/ {print 100 - $12 "%"}'
+
+echo ""
+echo "Winners"
+
+ps aux | awk '{arr[$1]+=$3; mem[$1]+=$4} END {for (i in arr) {print i, arr[i], mem[i]"%"} }' | sort -nrk2 | head -n 5
+
+echo ""
+echo "How much memory being used?"
+
+free | awk '/Mem:/ {printf "%.2f%\n", $3/$2 * 100}'
+
+echo ""
+echo "Where is my Memory?"
+
+ps aux --sort=-%mem | awk '{printf "%s\t%s\t%.2f%\n", $1, $11, $4}' | head -n 5
+```
+:::
+
+Now when I run `./ghr.sh` I get the system info and then it runs the `status.sh` script and then it rsyncs the files to gannet. (note I got a little fancy and added an exclude for `*.sam` files).
+
+I was still entering my password, so I added my public key to gannet and now I can run this without a password.
+
+on raven to generate a key.
+
+::: {.callout-note appearance="minimal" icon="false"}
+```         
+ssh-keygen -t rsa -b 2048
+```
+:::
+
+Then to add to destination server
+
+::: {.callout-note appearance="minimal" icon="false"}
+```         
+ssh-copy-id sr320@gannet.fish.washington.edu
+```
+:::
+
+so my `rsync` command now looks like this
+
+::: {.callout-note appearance="minimal" icon="false"}
+```         
+rsync -avz -e ssh /home/shared/8TB_HDD_03/sr320/github/ \
+--exclude='*.sam' \
+sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/
+```
+:::
+
+Getting somewhere, but I still had to run this manually. So I thought I should run this every day, so I added it to my crontab with `crontab -e`.
+
+To do this I edited my crontab with `crontab -e` and added the following line.
+
+::: {.callout-note appearance="minimal" icon="false"}
+```         
+EDITOR=nano crontab -e
+```
+:::
+
+Then I added the following line to run the script every day at 7:00 am.
+
+::: {.callout-tip appearance="minimal" icon="false"}
+```         
+0 7 * * * /home/shared/8TB_HDD_03/sr320/github/ghr.sh > /home/shared/8TB_HDD_03/sr320/github/ghr$
+```
+:::
+
+What this does is run the `ghr.sh` script every day at 7:00 am and saves the output to a file called `ghr.log` in the same directory as the script.
+
+My hope was that as above this would write a system report then rsync the files to gannet. It works but the system report is not finished before rsync starts. I thought to myself good enough
+
+::: {.callout-warning appearance="simple"}
+**But as I was writing this post copilot finished my sentence to tell me to add `sleep` comnmand**
+:::
+
+so I did.
+
+The moral of this story is that I started with a simple rsync command, then I added some system info to the script, then I made a script to log the system info, then I added the system info script to the rsync script, then I added my public key to gannet, then was happy (Copilot wrote this last sentence).
