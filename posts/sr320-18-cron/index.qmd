@@ -350,7 +350,7 @@ Then I added the following line to run the script every day at 7:00 am.
 
 ::: {.callout-tip appearance="minimal" icon="false"}
 ```         
-0 7 * * * /home/shared/8TB_HDD_03/sr320/github/ghr.sh > /home/shared/8TB_HDD_03/sr320/github/ghr$
+0 7 * * * /home/shared/8TB_HDD_03/sr320/github/ghr.sh > /home/shared/8TB_HDD_03/sr320/github/ghr.log
 ```
 :::
 
