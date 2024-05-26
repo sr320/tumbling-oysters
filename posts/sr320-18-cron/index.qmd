@@ -4,7 +4,7 @@ description: "going from 1 line script to cronning a sys log"
 categories: [cron, rsync, log] # self-defined categories
 #citation: 
 date: 05-27-2024
-image: https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png # finding a good image
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_DALLE_2024-05-26_10.56.50_-_Create_an_artistic_and_detailed_illustration_representing_the_concept_of_automated_scripting_in_a__2024-05-26_10-57-06.png # finding a good image
 
 author:
   - name: Steven Roberts
@@ -359,7 +359,7 @@ What this does is run the `ghr.sh` script every day at 7:00 am and saves the out
 My hope was that as above this would write a system report then rsync the files to gannet. It works but the system report is not finished before rsync starts. I thought to myself good enough
 
 ::: {.callout-warning appearance="simple"}
-**But as I was writing this post copilot finished my sentence to tell me to add `sleep` comnmand**
+**But as I was writing this post copilot finished my sentence to tell me to add `sleep` command!**
 :::
 
 so I did.
