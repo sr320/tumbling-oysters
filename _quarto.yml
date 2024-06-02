@@ -4,7 +4,9 @@ project:
 website:
   title: "Tumbling Oysters"
   site-url: https://sr320.github.io/tumbling-oysters
-  twitter-card: true
+  search:
+    location: navbar
+    type: overlay
   navbar:
     right:
       - icon: github
