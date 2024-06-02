@@ -7,16 +7,18 @@ website:
   twitter-card: true
   navbar:
     right:
-      - about.qmd
       - icon: github
         href: https://github.com/sr320
-      - icon: twitter
-        href: https://twitter.com/sr320
+
 format:
   html:
     theme:
       dark: darkly
       light: flatly
+    code-background: true
+    code-copy: true
+    code-fold: true
+    code-line-numbers: false
 
 editor: visual
 
