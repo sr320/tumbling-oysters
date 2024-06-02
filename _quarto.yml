@@ -3,6 +3,7 @@ project:
   output-dir: docs
 website:
   title: "Tumbling Oysters"
+  site-url: https://sr320.github.io/tumbling-oysters
   twitter-card: true
   navbar:
     right:
