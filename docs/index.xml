@@ -10,7 +10,657 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Mon, 27 May 2024 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 03 Jun 2024 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>HiSat that SeaStar</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>While there are still some questions related to overall alignment rates and sample specific alignment rates, it is possible that the mess of gtf might be overcome.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" class="img-fluid"></p>
+<p>The problem seemed to have arisen based on the fact NCBI renamed chromosomes whereas annotations (sitting on Dryad) have different IDs. Using a table on NCBI and realizing from author the numbers in their IDs corresponded to chromosome number.</p>
+<section id="making-a-new-gtf" class="level1">
+<h1>Making a new GTF</h1>
+<p>as there are quotes in original gtf I needed to add <code>quote = ""</code></p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb1-2">gtfbttr <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.table</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/augustus.hints.gtf"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\t</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">quote =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)</span>
+<span id="cb1-3"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+<p>added a new column with chromosome number</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">````</span>{{r}}</span>
+<span id="cb2-4">gtfch <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> gtfbttr <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb2-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Chromosome.name =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_extract</span>(V1, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"(?&lt;=</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.)</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d+"</span>),  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract the number after the dot</span></span>
+<span id="cb2-6">         <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Chromosome.name =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_remove_all</span>(Chromosome.name, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^0+"</span>))  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Remove leading zeros</span></span>
+<span id="cb2-7"></span>
+<span id="cb2-8"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+<p>now joining with NCBI table to get the GenBank.seq.accession</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```{r}</span></span>
+<span id="cb3-2">gtfch <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">left_join</span>(ncbi, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Chromosome.name"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb3-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(GenBank.seq.accession, V2, V3, V4, V5, V6, V7, V8, V9) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">is.na</span>(GenBank.seq.accession)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb3-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">write.table</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">file =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../analyses/12-fix-gff/mod_augustus.gtf"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\t</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">quote =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">row.names =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col.names =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb3-6"><span class="in" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">```</span></span></code></pre></div>
+<p>this new gtf is in rpos and can be found <a href="https://gannet.fish.washington.edu/seashell/bu-github/paper-pycno-sswd-2021-2022/analyses/12-fix-gff/mod_augustus.gtf">here</a></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> ../analyses/12-fix-gff/mod_augustus.gtf</span></code></pre></div>
+</div>
+</section>
+<section id="reads" class="level1">
+<h1>Reads</h1>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span> /home/shared/8TB_HDD_02/graceac9/data/pycno2021/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span></span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/FastQC-0.12.1/fastqc</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-2">/home/shared/8TB_HDD_02/graceac9/data/pycno2021/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>fq.gz <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-3">-t 36 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-4">-o ../analyses/13-hisat-deseq2/</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">eval</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/opt/anaconda/anaconda3/bin/conda</span> shell.bash hook<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb7-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">conda</span> activate</span>
+<span id="cb7-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which</span> multiqc</span>
+<span id="cb7-4"></span>
+<span id="cb7-5"></span>
+<span id="cb7-6"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">multiqc</span> ../analyses/13-hisat-deseq2/ <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-7">-o ../analyses/13-hisat-deseq2/</span></code></pre></div>
+</div>
+</section>
+<section id="genome" class="level1">
+<h1>Genome</h1>
+<p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_032158295.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_032158295.1/</a></p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Pycnopodia_helianthoides_genome_assembly_ASM3215829v1_-_NCBI_-_NLM_2024-05-25_15-32-13.png" class="img-fluid"></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ../data</span>
+<span id="cb8-2"></span>
+<span id="cb8-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/datasets</span> download genome accession GCA_032158295.1 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--include</span> gff3,rna,cds,protein,genome,seq-report</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ../data </span>
+<span id="cb9-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">unzip</span> ncbi_dataset.zip</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span> ../data/ncbi_dataset/data/GCA_032158295.1</span></code></pre></div>
+</div>
+<section id="annotation-files" class="level2">
+<h2 class="anchored" data-anchor-id="annotation-files">Annotation files</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> ../analyses/12-fix-gff/mod_augustus.gtf</span>
+<span id="cb11-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> ../data/ncbi_dataset/data/GCA_032158295.1/GCA_032158295.1_ASM3215829v1_genomic.fna</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="hisat" class="level1">
+<h1>Hisat</h1>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/hisat2-2.2.1/hisat2_extract_exons.py</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb12-2">../analyses/12-fix-gff/mod_augustus.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb12-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../analyses/13-hisat-deseq2/m_exon.tab</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/hisat2-2.2.1/hisat2_extract_splice_sites.py</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb13-2">../analyses/12-fix-gff/mod_augustus.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb13-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../analyses/13-hisat-deseq2/m_spice_sites.tab</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"13-hisat-deseq2/GCF*"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> ../analyses/.gitignore</span>
+<span id="cb14-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"13-hisat-deseq2/GCF**fastq"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> ../analyses/.gitignore</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/hisat2-2.2.1/hisat2-build</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb15-2">../data/ncbi_dataset/data/GCA_032158295.1/GCA_032158295.1_ASM3215829v1_genomic.fna <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb15-3">../analyses/13-hisat-deseq2/GCA_032158295.index <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb15-4">--exon ../analyses/13-hisat-deseq2/m_exon.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb15-5">--ss ../analyses/13-hisat-deseq2/m_spice_sites.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb15-6">-p 20 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb15-7">../analyses/12-fix-gff/mod_augustus.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb15-8">2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../analyses/13-hisat-deseq2/hisat2-build_stats.txt</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"13-hisat-deseq2/*sam"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> ../analyses/.gitignore</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> /home/shared/8TB_HDD_02/graceac9/data/pycno2021/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>_R1_001.fastq.gz.fastp-trim.20220810.fq.gz <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> basename <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-s</span> _R1_001.fastq.gz.fastp-trim.20220810.fq.gz <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I{}</span> echo {}</span></code></pre></div>
+</div>
+<p>keeping unmapped reads</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> /home/shared/8TB_HDD_02/graceac9/data/pycno2021/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>_R1_001.fastq.gz.fastp-trim.20220810.fq.gz <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb18-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I{}</span> basename <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-s</span> _R1_001.fastq.gz.fastp-trim.20220810.fq.gz {} <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb18-3"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I{}</span> sh <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'/home/shared/hisat2-2.2.1/hisat2 \</span></span>
+<span id="cb18-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-x ../analyses/13-hisat-deseq2/GCA_032158295.index \</span></span>
+<span id="cb18-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">--dta \</span></span>
+<span id="cb18-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-p 32 \</span></span>
+<span id="cb18-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-1 /home/shared/8TB_HDD_02/graceac9/data/pycno2021/{}_R1_001.fastq.gz.fastp-trim.20220810.fq.gz \</span></span>
+<span id="cb18-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-2 /home/shared/8TB_HDD_02/graceac9/data/pycno2021/{}_R2_001.fastq.gz.fastp-trim.20220810.fq.gz \</span></span>
+<span id="cb18-9"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-S ../analyses/13-hisat-deseq2/{}_03.sam \</span></span>
+<span id="cb18-10"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">--un-conc ../analyses/13-hisat-deseq2/{}_unmapped_reads.fastq \</span></span>
+<span id="cb18-11"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">&gt; ../analyses/13-hisat-deseq2/{}_hisat03.stdout 2&gt; ../analyses/13-hisat-deseq2/{}_hisat03.stderr'</span></span></code></pre></div>
+</div>
+<p>Explanation xargs -I{}: This option allows you to replace {} in the command with the output from the previous command (i.e., basename). It’s used twice: first, to strip the suffix from the filenames, and second, to construct and execute the hisat2 command.</p>
+<p>sh -c: This is used to execute a complex command within xargs. It’s necessary because the output redirection (&gt;, 2&gt;) is shell functionality, and without sh -c, xargs wouldn’t handle it correctly.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"13-hisat-deseq2/*bam"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> ../analyses/.gitignore</span>
+<span id="cb19-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"13-hisat-deseq2/*bam*"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> ../analyses/.gitignore</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">for</span> samfile <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">in</span> ../analyses/13-hisat-deseq2/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.sam<span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">do</span></span>
+<span id="cb20-2">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">bamfile</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${samfile</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span>.sam<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.bam"</span></span>
+<span id="cb20-3">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sorted_bamfile</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${samfile</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span>.sam<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.sorted.bam"</span></span>
+<span id="cb20-4">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/samtools-1.12/samtools</span> view <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-bS</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-@</span> 20 <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$samfile</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bamfile</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb20-5">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/samtools-1.12/samtools</span> sort <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-@</span> 20 <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bamfile</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sorted_bamfile</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb20-6">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/samtools-1.12/samtools</span> index <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-@</span> 20 <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sorted_bamfile</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb20-7"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">done</span></span></code></pre></div>
+</div>
+<p>,</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rm</span> ../analyses/13-hisat-deseq2/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>sam</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span> ../analyses/13-hisat-deseq2/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>sorted.bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span></span></code></pre></div>
+</div>
+</section>
+<section id="stringtie" class="level1">
+<h1>Stringtie</h1>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"13-hisat-deseq2/*gtf"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> ../analyses/.gitignore</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/gffread-0.12.7.Linux_x86_64/gffread</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb24-2">../analyses/12-fix-gff/mod_augustus.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb24-3">-T <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb24-4">-o ../analyses/13-hisat-deseq2/mod_augustus.gff</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> ../analyses/13-hisat-deseq2/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>sorted.bam <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb25-2"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> basename <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-s</span> .sorted.bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I{}</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb25-3">sh <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie \</span></span>
+<span id="cb25-4"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-p 36 \</span></span>
+<span id="cb25-5"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-eB \</span></span>
+<span id="cb25-6"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-G ../analyses/13-hisat-deseq2/mod_augustus.gff \</span></span>
+<span id="cb25-7"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-o ../analyses/13-hisat-deseq2/{}.gtf \</span></span>
+<span id="cb25-8"><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">../analyses/13-hisat-deseq2/{}.sorted.bam'</span></span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">eval</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/opt/anaconda/anaconda3/bin/conda</span> shell.bash hook<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb26-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">conda</span> activate</span>
+<span id="cb26-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">which</span> multiqc</span>
+<span id="cb26-4"></span>
+<span id="cb26-5"></span>
+<span id="cb26-6"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">multiqc</span> ../analyses/13-hisat-deseq2/ <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb26-7">-o ../analyses/13-hisat-deseq2/</span></code></pre></div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>hisat</category>
+  <category>seastar</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/index.html</guid>
+  <pubDate>Mon, 03 Jun 2024 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>xargs</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -9186,151 +9836,6 @@ Roberts, Steven. 2023. <span>“Ggplotting Some qPCR.”</span> July 21,
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/index.html</guid>
   <pubDate>Fri, 21 Jul 2023 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_lsamp-2023_-_main_-_RStudio_2023-07-21_13-31-47.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Mytilus Iso-seq Data check</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-01-mytilus/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Lets take look at Isoseq fasta</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> ../data/</span>
-<span id="cb1-2"></span>
-<span id="cb1-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">curl</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-O</span> https://owl.fish.washington.edu/halfshell/genomic-databank/Mtros-hq_transcripts.fasta</span></code></pre></div>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Load the sequences from a fasta file</span></span>
-<span id="cb2-2">fasta_path <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../data/Mtros-hq_transcripts.fasta"</span> <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Change to your FASTA file path</span></span>
-<span id="cb2-3">dna_sequences <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">readDNAStringSet</span>(fasta_path)</span>
-<span id="cb2-4"></span>
-<span id="cb2-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Calculate the lengths of the sequences</span></span>
-<span id="cb2-6">sequence_lengths <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">width</span>(dna_sequences)</span>
-<span id="cb2-7"></span>
-<span id="cb2-8"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Convert to a data frame for ggplot</span></span>
-<span id="cb2-9">df <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">data.frame</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">Length =</span> sequence_lengths)</span>
-<span id="cb2-10"></span>
-<span id="cb2-11"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Plot the length distribution</span></span>
-<span id="cb2-12"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(df, <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> Length)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> </span>
-<span id="cb2-13">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_histogram</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"black"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"white"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">bins =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">30</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb2-14">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">theme_minimal</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb2-15">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">labs</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">title =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Sequence Length Distribution"</span>,</span>
-<span id="cb2-16">       <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Sequence Length"</span>,</span>
-<span id="cb2-17">       <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Count"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-01-mytilus/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_PSMFC-mytilus-byssus-pilot__RStudio_Server_2023-07-20_10-54-50.png" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Number of sequences shorter than 500 bp</span></span>
-<span id="cb3-2">short_sequences <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sum</span>(sequence_lengths <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">500</span>)</span>
-<span id="cb3-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">print</span>(short_sequences)</span></code></pre></div>
-<pre><code>## [1] 36551</code></pre>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">really_short_sequences <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sum</span>(sequence_lengths <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">200</span>)</span>
-<span id="cb5-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">print</span>(really_short_sequences)</span></code></pre></div>
-<pre><code>## [1] 10038</code></pre>
-
-
-
- ]]></description>
-  <category>noteboook</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-01-mytilus/index.html</guid>
-  <pubDate>Wed, 19 Jul 2023 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_PSMFC-mytilus-byssus-pilot__RStudio_Server_2023-07-20_10-54-50.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
