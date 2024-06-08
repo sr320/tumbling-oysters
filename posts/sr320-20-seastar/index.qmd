@@ -53,8 +53,6 @@ gtfbttr <- read.table("../data/augustus.hints.gtf", sep = "\t", quote = "")
 added a new column with chromosome number
 
 ````{{r}}
-
-````{{r}}
 gtfch <- gtfbttr %>%
   mutate(Chromosome.name = str_extract(V1, "(?<=\\.)\\d+"),  # Extract the number after the dot
          Chromosome.name = str_remove_all(Chromosome.name, "^0+"))  # Remove leading zeros
