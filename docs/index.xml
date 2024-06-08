@@ -10,7 +10,35 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Mon, 03 Jun 2024 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 07 Jun 2024 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Seed travels</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>tldr: We deployed seed in Wescott Bay.</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="http://gannet.fish.washington.edu/seashell/snaps/IMG_6670.mov"></video></div>
+<p>Seed from Point Whitney were picked up on Thursday afternoon and driven up to Wescott Bay Friday morning. Arrived about 11 am. For each bag Grace tagged 15 oysters. oyster where deployed in bottom sitting bags in the schema below.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/http:/gannet.fish.washington.edu/seashell/snaps/IMG_6661.png" class="img-fluid"></p>
+<p>More shots of the deployment.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-29-21.png" class="img-fluid"></p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-30-45.png" class="img-fluid"></p>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>oyster</category>
+  <category>aquaculture</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/index.html</guid>
+  <pubDate>Fri, 07 Jun 2024 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-13-56.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>HiSat that SeaStar</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -9471,367 +9499,6 @@ Roberts, Steven. 2023. <span>“Myt Iso-Seq Annoation.”</span> July 24,
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-04-mytgo/index.html</guid>
   <pubDate>Mon, 24 Jul 2023 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Mytilus_trossulus_Iso-seq_Annotation__quarter-shell__The_lab_notebook_of_Steven_Roberts_2023-08-07_14-19-17.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>ggplotting some qPCR</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(tidyverse)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.0     ✔ readr     2.1.4
-✔ forcats   1.0.0     ✔ stringr   1.5.0
-✔ ggplot2   3.4.1     ✔ tibble    3.1.8
-✔ lubridate 1.9.2     ✔ tidyr     1.3.0
-✔ purrr     1.0.1     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-</div>
-<p>Converted Cq value to aev with: =10^(-(0.3012 * E2) + 11.434)</p>
-<div class="cell" data-hash="index_cache/html/unnamed-chunk-2_fd53775109d5d68cea6aa4a74f7cf7eb">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">qpcr <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"https://raw.githubusercontent.com/sr320/lsamp-2023/main/data/SR-qpcr-data-1.csv"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">header =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span>) </span></code></pre></div>
-</details>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> qpcr, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> Subgroup, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> CqMean)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> </span>
-<span id="cb4-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_boxplot</span>()  <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb4-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">facet_wrap</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Target'</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_boxplot()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> qpcr, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> Subgroup, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> aev)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> </span>
-<span id="cb6-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_boxplot</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">facet_wrap</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'Target'</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_boxplot()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">qpcr <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb8-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(Target <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Cg_18s(1408/9)"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb8-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> Subgroup, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> aev)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> </span>
-<span id="cb8-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_boxplot</span>()  <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb8-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_jitter</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">color =</span> history), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">width =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.1</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">alpha =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>)</span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">qpcr <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb9-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(Target <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Cg_GAPDH(1172/3)"</span>)  <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb9-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> Subgroup, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> aev)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> </span>
-<span id="cb9-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_boxplot</span>()  <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb9-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_jitter</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">color =</span> history), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">width =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.1</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">alpha =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>)</span></code></pre></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing non-finite values (`stat_boxplot()`).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 1 rows containing missing values (`geom_point()`).</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">qpcr <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb12-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(Target <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Cg_ATPsynthase(1385/6)"</span>)  <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb12-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> Subgroup, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> aev)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> </span>
-<span id="cb12-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_boxplot</span>()  <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb12-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_jitter</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">color =</span> history), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">width =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.1</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">alpha =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>)</span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">qpcr <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb13-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(Target <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Cg_citratesynthase(1383/4)"</span>)  <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb13-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> Subgroup, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> aev)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span> </span>
-<span id="cb13-4">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_boxplot</span>()  <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb13-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_jitter</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">color =</span> history), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">width =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.1</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">alpha =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>)</span></code></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-
-
-<!-- -->
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{roberts2023,
-  author = {Roberts, Steven},
-  title = {Ggplotting Some {qPCR}},
-  date = {2023-07-21},
-  url = {https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-roberts2023" class="csl-entry quarto-appendix-citeas">
-Roberts, Steven. 2023. <span>“Ggplotting Some qPCR.”</span> July 21,
-2023. <a href="https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/">https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/</a>.
-</div></div></section></div> ]]></description>
-  <category>Quarto</category>
-  <category>R</category>
-  <category>tidyverse</category>
-  <category>ggplot</category>
-  <category>qPCR</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/index.html</guid>
-  <pubDate>Fri, 21 Jul 2023 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_lsamp-2023_-_main_-_RStudio_2023-07-21_13-31-47.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
