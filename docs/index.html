@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -49,7 +49,12 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -58,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -97,15 +103,42 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="alternate" type="application/rss+xml" title="Tumbling Oysters" href="index.xml"></head>
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="alternate" type="application/rss+xml" title="Tumbling Oysters" href="index.xml" data-external="1"></head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Tumbling Oysters</span>
     </a>
@@ -117,15 +150,15 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/sr320" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/sr320"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -135,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(37)</span></div><div class="category" data-category="GO">GO <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(13)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aquaculture">aquaculture <span class="quarto-category-count">(2)</span></div><div class="category" data-category="blast">blast <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ceabigr">ceabigr <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cod">cod <span class="quarto-category-count">(6)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cron">cron <span class="quarto-category-count">(1)</span></div><div class="category" data-category="datasets">datasets <span class="quarto-category-count">(4)</span></div><div class="category" data-category="deepdive">deepdive <span class="quarto-category-count">(2)</span></div><div class="category" data-category="e5">e5 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ggplot">ggplot <span class="quarto-category-count">(2)</span></div><div class="category" data-category="hardening">hardening <span class="quarto-category-count">(1)</span></div><div class="category" data-category="highlight">highlight <span class="quarto-category-count">(1)</span></div><div class="category" data-category="hisat">hisat <span class="quarto-category-count">(2)</span></div><div class="category" data-category="igv">igv <span class="quarto-category-count">(1)</span></div><div class="category" data-category="lncrna">lncrna <span class="quarto-category-count">(2)</span></div><div class="category" data-category="log">log <span class="quarto-category-count">(1)</span></div><div class="category" data-category="methylation">methylation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="mytilus">mytilus <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(6)</span></div><div class="category" data-category="noteboook">noteboook <span class="quarto-category-count">(3)</span></div><div class="category" data-category="oyster">oyster <span class="quarto-category-count">(2)</span></div><div class="category" data-category="paper">paper <span class="quarto-category-count">(8)</span></div><div class="category" data-category="qPCR">qPCR <span class="quarto-category-count">(1)</span></div><div class="category" data-category="rsync">rsync <span class="quarto-category-count">(1)</span></div><div class="category" data-category="seastar">seastar <span class="quarto-category-count">(1)</span></div><div class="category" data-category="snp">snp <span class="quarto-category-count">(2)</span></div><div class="category" data-category="thoughts">thoughts <span class="quarto-category-count">(1)</span></div><div class="category" data-category="tidyverse">tidyverse <span class="quarto-category-count">(4)</span></div><div class="category" data-category="xargs">xargs <span class="quarto-category-count">(1)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(38)</span></div><div class="category" data-category="GO">GO <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(13)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="aquaculture">aquaculture <span class="quarto-category-count">(3)</span></div><div class="category" data-category="blast">blast <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ceabigr">ceabigr <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cod">cod <span class="quarto-category-count">(6)</span></div><div class="category" data-category="code">code <span class="quarto-category-count">(2)</span></div><div class="category" data-category="cron">cron <span class="quarto-category-count">(1)</span></div><div class="category" data-category="datasets">datasets <span class="quarto-category-count">(4)</span></div><div class="category" data-category="deepdive">deepdive <span class="quarto-category-count">(2)</span></div><div class="category" data-category="e5">e5 <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ggplot">ggplot <span class="quarto-category-count">(2)</span></div><div class="category" data-category="hardening">hardening <span class="quarto-category-count">(1)</span></div><div class="category" data-category="highlight">highlight <span class="quarto-category-count">(1)</span></div><div class="category" data-category="hisat">hisat <span class="quarto-category-count">(2)</span></div><div class="category" data-category="igv">igv <span class="quarto-category-count">(1)</span></div><div class="category" data-category="lncrna">lncrna <span class="quarto-category-count">(2)</span></div><div class="category" data-category="log">log <span class="quarto-category-count">(1)</span></div><div class="category" data-category="methylation">methylation <span class="quarto-category-count">(1)</span></div><div class="category" data-category="mytilus">mytilus <span class="quarto-category-count">(1)</span></div><div class="category" data-category="news">news <span class="quarto-category-count">(6)</span></div><div class="category" data-category="noteboook">noteboook <span class="quarto-category-count">(3)</span></div><div class="category" data-category="oyster">oyster <span class="quarto-category-count">(3)</span></div><div class="category" data-category="paper">paper <span class="quarto-category-count">(8)</span></div><div class="category" data-category="qPCR">qPCR <span class="quarto-category-count">(1)</span></div><div class="category" data-category="rsync">rsync <span class="quarto-category-count">(1)</span></div><div class="category" data-category="seastar">seastar <span class="quarto-category-count">(1)</span></div><div class="category" data-category="snp">snp <span class="quarto-category-count">(2)</span></div><div class="category" data-category="thoughts">thoughts <span class="quarto-category-count">(1)</span></div><div class="category" data-category="tidyverse">tidyverse <span class="quarto-category-count">(4)</span></div><div class="category" data-category="xargs">xargs <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -145,21 +178,22 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="oyster,aquaculture" data-listing-date-sort="1717743600000" data-listing-file-modified-sort="1717867868255" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="0" data-categories="oyster,aquaculture" data-listing-date-sort="1718175600000" data-listing-file-modified-sort="1718473192034" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="210">
 <div class="thumbnail">
-<p><a href="./posts/sr320-21-wescott/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-13-56.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-22-PW/index.html" class="no-external"></a></p><a href="./posts/sr320-22-PW/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-12-18.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-22-PW/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-21-wescott/index.html">
 <h3 class="no-anchor listing-title">
-Seed travels
+<a href="./posts/sr320-22-PW/index.html" class="no-external">Spring Cleaning</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-22-PW/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('oyster'); return false;">
 oyster
@@ -168,14 +202,48 @@ oyster
 aquaculture
 </div>
 </div>
-<a href="./posts/sr320-21-wescott/index.html">
 <div class="listing-description">
-<p>the Wescott Bay Deployment</p>
+<a href="./posts/sr320-22-PW/index.html" class="no-external">Getting ready for spawning</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/sr320-22-PW/index.html" class="no-external">
+<div class="listing-date">
+Jun 12, 2024
+</div>
+<div class="listing-author">
+Steven Roberts
 </div>
 </a>
 </div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="oyster,aquaculture" data-listing-date-sort="1717743600000" data-listing-file-modified-sort="1717867868255" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="53">
+<div class="thumbnail">
+<p><a href="./posts/sr320-21-wescott/index.html" class="no-external"></a></p><a href="./posts/sr320-21-wescott/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-13-56.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-21-wescott/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/sr320-21-wescott/index.html" class="no-external">Seed travels</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/sr320-21-wescott/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('oyster'); return false;">
+oyster
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('aquaculture'); return false;">
+aquaculture
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/sr320-21-wescott/index.html" class="no-external">the Wescott Bay Deployment</a>
+</div>
+</div>
 <div class="metadata">
-<a href="./posts/sr320-21-wescott/index.html">
+<a href="./posts/sr320-21-wescott/index.html" class="no-external">
 <div class="listing-date">
 Jun 7, 2024
 </div>
@@ -185,19 +253,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="hisat,seastar" data-listing-date-sort="1717398000000" data-listing-file-modified-sort="1717432391358" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="2" data-categories="hisat,seastar" data-listing-date-sort="1717398000000" data-listing-file-modified-sort="1717432391358" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="569">
 <div class="thumbnail">
-<p><a href="./posts/sr320-20-seastar/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-20-seastar/index.html" class="no-external"></a></p><a href="./posts/sr320-20-seastar/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-20-seastar/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-20-seastar/index.html">
 <h3 class="no-anchor listing-title">
-HiSat that SeaStar
+<a href="./posts/sr320-20-seastar/index.html" class="no-external">HiSat that SeaStar</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-20-seastar/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('hisat'); return false;">
 hisat
@@ -206,14 +274,12 @@ hisat
 seastar
 </div>
 </div>
-<a href="./posts/sr320-20-seastar/index.html">
 <div class="listing-description">
-<p>finally overcoming gtf h$11</p>
+<a href="./posts/sr320-20-seastar/index.html" class="no-external">finally overcoming gtf h$11</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-20-seastar/index.html">
+<a href="./posts/sr320-20-seastar/index.html" class="no-external">
 <div class="listing-date">
 Jun 3, 2024
 </div>
@@ -223,32 +289,30 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="xargs" data-listing-date-sort="1716793200000" data-listing-file-modified-sort="1716749553116" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="3" data-categories="xargs" data-listing-date-sort="1716793200000" data-listing-file-modified-sort="1716749553116" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="30">
 <div class="thumbnail">
-<p><a href="./posts/sr320-19-xarg/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-26_11-52-26.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-19-xarg/index.html" class="no-external"></a></p><a href="./posts/sr320-19-xarg/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-26_11-52-26.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-19-xarg/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-19-xarg/index.html">
 <h3 class="no-anchor listing-title">
-xargs
+<a href="./posts/sr320-19-xarg/index.html" class="no-external">xargs</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-19-xarg/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('xargs'); return false;">
 xargs
 </div>
 </div>
-<a href="./posts/sr320-19-xarg/index.html">
 <div class="listing-description">
-<p>now with no reason for loops</p>
+<a href="./posts/sr320-19-xarg/index.html" class="no-external">now with no reason for loops</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-19-xarg/index.html">
+<a href="./posts/sr320-19-xarg/index.html" class="no-external">
 <div class="listing-date">
 May 27, 2024
 </div>
@@ -258,19 +322,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="cron,rsync,log" data-listing-date-sort="1716793200000" data-listing-file-modified-sort="1716748875776" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="quarto-post image-right" data-index="4" data-categories="cron,rsync,log" data-listing-date-sort="1716793200000" data-listing-file-modified-sort="1716748875776" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1500">
 <div class="thumbnail">
-<p><a href="./posts/sr320-18-cron/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_DALLE_2024-05-26_10.56.50_-_Create_an_artistic_and_detailed_illustration_representing_the_concept_of_automated_scripting_in_a__2024-05-26_10-57-06.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-18-cron/index.html" class="no-external"></a></p><a href="./posts/sr320-18-cron/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_DALLE_2024-05-26_10.56.50_-_Create_an_artistic_and_detailed_illustration_representing_the_concept_of_automated_scripting_in_a__2024-05-26_10-57-06.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-18-cron/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-18-cron/index.html">
 <h3 class="no-anchor listing-title">
-That escalated quickly
+<a href="./posts/sr320-18-cron/index.html" class="no-external">That escalated quickly</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-18-cron/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('cron'); return false;">
 cron
@@ -282,14 +346,12 @@ rsync
 log
 </div>
 </div>
-<a href="./posts/sr320-18-cron/index.html">
 <div class="listing-description">
-<p>going from 1 line script to cronning a sys log</p>
+<a href="./posts/sr320-18-cron/index.html" class="no-external">going from 1 line script to cronning a sys log</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-18-cron/index.html">
+<a href="./posts/sr320-18-cron/index.html" class="no-external">
 <div class="listing-date">
 May 27, 2024
 </div>
@@ -299,19 +361,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="R,igv,cod" data-listing-date-sort="1716447600000" data-listing-file-modified-sort="1716679121333" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="5" data-categories="R,igv,cod" data-listing-date-sort="1716447600000" data-listing-file-modified-sort="1716679121333" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="218">
 <div class="thumbnail">
-<p><a href="./posts/sr320-17-igv/index.html"> <img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-17-igv/index.html" class="no-external"></a></p><a href="./posts/sr320-17-igv/index.html" class="no-external">
+<p><img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-17-igv/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-17-igv/index.html">
 <h3 class="no-anchor listing-title">
-Working with IGV
+<a href="./posts/sr320-17-igv/index.html" class="no-external">Working with IGV</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-17-igv/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -323,14 +385,12 @@ igv
 cod
 </div>
 </div>
-<a href="./posts/sr320-17-igv/index.html">
 <div class="listing-description">
-<p>for cod</p>
+<a href="./posts/sr320-17-igv/index.html" class="no-external">for cod</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-17-igv/index.html">
+<a href="./posts/sr320-17-igv/index.html" class="no-external">
 <div class="listing-date">
 May 23, 2024
 </div>
@@ -340,19 +400,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="R,blast,cod" data-listing-date-sort="1716274800000" data-listing-file-modified-sort="1716420142115" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="166">
+<div class="quarto-post image-right" data-index="6" data-categories="R,blast,cod" data-listing-date-sort="1716274800000" data-listing-file-modified-sort="1716420142115" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="166" data-listing-word-count-sort="33189">
 <div class="thumbnail">
-<p><a href="./posts/sr320-16-cod_ids/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-21-39.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-16-cod_ids/index.html" class="no-external"></a></p><a href="./posts/sr320-16-cod_ids/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-21-39.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-16-cod_ids/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-16-cod_ids/index.html">
 <h3 class="no-anchor listing-title">
-Getting appropriate IDs for Gene, Transcripts
+<a href="./posts/sr320-16-cod_ids/index.html" class="no-external">Getting appropriate IDs for Gene, Transcripts</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-16-cod_ids/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -364,14 +424,12 @@ blast
 cod
 </div>
 </div>
-<a href="./posts/sr320-16-cod_ids/index.html">
 <div class="listing-description">
-<p>for cod, looking ahead to Uniprot Accessions</p>
+<a href="./posts/sr320-16-cod_ids/index.html" class="no-external">for cod, looking ahead to Uniprot Accessions</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-16-cod_ids/index.html">
+<a href="./posts/sr320-16-cod_ids/index.html" class="no-external">
 <div class="listing-date">
 May 21, 2024
 </div>
@@ -381,19 +439,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="R,datasets,cod" data-listing-date-sort="1716274800000" data-listing-file-modified-sort="1716420042272" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="7" data-categories="R,datasets,cod" data-listing-date-sort="1716274800000" data-listing-file-modified-sort="1716420042272" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1166">
 <div class="thumbnail">
-<p><a href="./posts/sr320-14-coddet/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-14-coddet/index.html" class="no-external"></a></p><a href="./posts/sr320-14-coddet/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-14-coddet/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-14-coddet/index.html">
 <h3 class="no-anchor listing-title">
-Differentially Expressed Transcipts
+<a href="./posts/sr320-14-coddet/index.html" class="no-external">Differentially Expressed Transcipts</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-14-coddet/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -405,14 +463,12 @@ datasets
 cod
 </div>
 </div>
-<a href="./posts/sr320-14-coddet/index.html">
 <div class="listing-description">
-<p>for cod</p>
+<a href="./posts/sr320-14-coddet/index.html" class="no-external">for cod</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-14-coddet/index.html">
+<a href="./posts/sr320-14-coddet/index.html" class="no-external">
 <div class="listing-date">
 May 21, 2024
 </div>
@@ -422,19 +478,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="R,datasets,cod" data-listing-date-sort="1716274800000" data-listing-file-modified-sort="1716419431635" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<div class="quarto-post image-right" data-index="8" data-categories="R,datasets,cod" data-listing-date-sort="1716274800000" data-listing-file-modified-sort="1716419431635" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2227">
 <div class="thumbnail">
-<p><a href="./posts/sr320-15-coddeg/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-07-31.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-15-coddeg/index.html" class="no-external"></a></p><a href="./posts/sr320-15-coddeg/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-07-31.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-15-coddeg/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-15-coddeg/index.html">
 <h3 class="no-anchor listing-title">
-Differentially Expressed Genes
+<a href="./posts/sr320-15-coddeg/index.html" class="no-external">Differentially Expressed Genes</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-15-coddeg/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -446,14 +502,12 @@ datasets
 cod
 </div>
 </div>
-<a href="./posts/sr320-15-coddeg/index.html">
 <div class="listing-description">
-<p>for cod</p>
+<a href="./posts/sr320-15-coddeg/index.html" class="no-external">for cod</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-15-coddeg/index.html">
+<a href="./posts/sr320-15-coddeg/index.html" class="no-external">
 <div class="listing-date">
 May 21, 2024
 </div>
@@ -463,19 +517,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="R,datasets,cod" data-listing-date-sort="1715842800000" data-listing-file-modified-sort="1716418478599" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="9" data-categories="R,datasets,cod" data-listing-date-sort="1715842800000" data-listing-file-modified-sort="1716418478599" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1772">
 <div class="thumbnail">
-<p><a href="./posts/sr320-14-apul-igv/index.html"> <img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-14-apul-igv/index.html" class="no-external"></a></p><a href="./posts/sr320-14-apul-igv/index.html" class="no-external">
+<p><img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-14-apul-igv/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-14-apul-igv/index.html">
 <h3 class="no-anchor listing-title">
-Looking at Apul miRNA
+<a href="./posts/sr320-14-apul-igv/index.html" class="no-external">Looking at Apul miRNA</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-14-apul-igv/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -487,14 +541,12 @@ datasets
 cod
 </div>
 </div>
-<a href="./posts/sr320-14-apul-igv/index.html">
 <div class="listing-description">
-<p>in IGV</p>
+<a href="./posts/sr320-14-apul-igv/index.html" class="no-external">in IGV</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-14-apul-igv/index.html">
+<a href="./posts/sr320-14-apul-igv/index.html" class="no-external">
 <div class="listing-date">
 May 16, 2024
 </div>
@@ -504,19 +556,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="R,hisat" data-listing-date-sort="1715670000000" data-listing-file-modified-sort="1715830458639" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20">
+<div class="quarto-post image-right" data-index="10" data-categories="R,hisat" data-listing-date-sort="1715670000000" data-listing-file-modified-sort="1715830458639" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3966">
 <div class="thumbnail">
-<p><a href="./posts/sr320-12/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-15_20-23-56.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-12/index.html" class="no-external"></a></p><a href="./posts/sr320-12/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-15_20-23-56.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-12/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-12/index.html">
 <h3 class="no-anchor listing-title">
-HiSat
+<a href="./posts/sr320-12/index.html" class="no-external">HiSat</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-12/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -525,14 +577,12 @@ R
 hisat
 </div>
 </div>
-<a href="./posts/sr320-12/index.html">
 <div class="listing-description">
-<p>to DESeq</p>
+<a href="./posts/sr320-12/index.html" class="no-external">to DESeq</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-12/index.html">
+<a href="./posts/sr320-12/index.html" class="no-external">
 <div class="listing-date">
 May 14, 2024
 </div>
@@ -542,19 +592,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="R,datasets,cod" data-listing-date-sort="1715583600000" data-listing-file-modified-sort="1715830429506" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="11" data-categories="R,datasets,cod" data-listing-date-sort="1715583600000" data-listing-file-modified-sort="1715830429506" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1011">
 <div class="thumbnail">
-<p><a href="./posts/sr320-13-cod/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-13-cod/index.html" class="no-external"></a></p><a href="./posts/sr320-13-cod/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-13-cod/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-13-cod/index.html">
 <h3 class="no-anchor listing-title">
-Genome files
+<a href="./posts/sr320-13-cod/index.html" class="no-external">Genome files</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-13-cod/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -566,14 +616,12 @@ datasets
 cod
 </div>
 </div>
-<a href="./posts/sr320-13-cod/index.html">
 <div class="listing-description">
-<p>for cod</p>
+<a href="./posts/sr320-13-cod/index.html" class="no-external">for cod</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-13-cod/index.html">
+<a href="./posts/sr320-13-cod/index.html" class="no-external">
 <div class="listing-date">
 May 13, 2024
 </div>
@@ -583,19 +631,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="oyster,hardening,aquaculture" data-listing-date-sort="1710140400000" data-listing-file-modified-sort="1710278592589" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="12" data-categories="oyster,hardening,aquaculture" data-listing-date-sort="1710140400000" data-listing-file-modified-sort="1710278592589" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="170">
 <div class="thumbnail">
-<p><a href="./posts/sr320-11/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_14-06-23.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-11/index.html" class="no-external"></a></p><a href="./posts/sr320-11/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_14-06-23.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-11/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-11/index.html">
 <h3 class="no-anchor listing-title">
-Launching more stress
+<a href="./posts/sr320-11/index.html" class="no-external">Launching more stress</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-11/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('oyster'); return false;">
 oyster
@@ -607,14 +655,12 @@ hardening
 aquaculture
 </div>
 </div>
-<a href="./posts/sr320-11/index.html">
 <div class="listing-description">
-<p>starting new seed and adult hardening</p>
+<a href="./posts/sr320-11/index.html" class="no-external">starting new seed and adult hardening</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-11/index.html">
+<a href="./posts/sr320-11/index.html" class="no-external">
 <div class="listing-date">
 Mar 11, 2024
 </div>
@@ -624,32 +670,30 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="thoughts" data-listing-date-sort="1707379200000" data-listing-file-modified-sort="1707444055823" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="13" data-categories="thoughts" data-listing-date-sort="1707379200000" data-listing-file-modified-sort="1707444055823" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="258">
 <div class="thumbnail">
-<p><a href="./posts/sr320-09/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-09/index.html" class="no-external"></a></p><a href="./posts/sr320-09/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-09/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-09/index.html">
 <h3 class="no-anchor listing-title">
-What I have been up to today
+<a href="./posts/sr320-09/index.html" class="no-external">What I have been up to today</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-09/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('thoughts'); return false;">
 thoughts
 </div>
 </div>
-<a href="./posts/sr320-09/index.html">
 <div class="listing-description">
-<p>rewind</p>
+<a href="./posts/sr320-09/index.html" class="no-external">rewind</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-09/index.html">
+<a href="./posts/sr320-09/index.html" class="no-external">
 <div class="listing-date">
 Feb 8, 2024
 </div>
@@ -659,32 +703,30 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="noteboook" data-listing-date-sort="1706774400000" data-listing-file-modified-sort="1708442945143" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18">
+<div class="quarto-post image-right" data-index="14" data-categories="noteboook" data-listing-date-sort="1706774400000" data-listing-file-modified-sort="1708442945143" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3461">
 <div class="thumbnail">
-<p><a href="./posts/sr320-10-Feb_daily/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2023-11-01_19-00-02.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-10-Feb_daily/index.html" class="no-external"></a></p><a href="./posts/sr320-10-Feb_daily/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2023-11-01_19-00-02.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-10-Feb_daily/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-10-Feb_daily/index.html">
 <h3 class="no-anchor listing-title">
-February Daily
+<a href="./posts/sr320-10-Feb_daily/index.html" class="no-external">February Daily</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-10-Feb_daily/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('noteboook'); return false;">
 noteboook
 </div>
 </div>
-<a href="./posts/sr320-10-Feb_daily/index.html">
 <div class="listing-description">
-Your text here…
+<a href="./posts/sr320-10-Feb_daily/index.html" class="no-external">Your text here…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-10-Feb_daily/index.html">
+<a href="./posts/sr320-10-Feb_daily/index.html" class="no-external">
 <div class="listing-date">
 Feb 1, 2024
 </div>
@@ -694,19 +736,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="deepdive,R,lncrna,e5" data-listing-date-sort="1698994800000" data-listing-file-modified-sort="1699018586755" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17">
+<div class="quarto-post image-right" data-index="15" data-categories="deepdive,R,lncrna,e5" data-listing-date-sort="1698994800000" data-listing-file-modified-sort="1699018586755" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="17" data-listing-word-count-sort="3266">
 <div class="thumbnail">
-<p><a href="./posts/sr320-08-Apul-lncRNA/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-08-Apul-lncRNA/index.html" class="no-external"></a></p><a href="./posts/sr320-08-Apul-lncRNA/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-08-Apul-lncRNA/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-08-Apul-lncRNA/index.html">
 <h3 class="no-anchor listing-title">
-Apul lncRNA Discovery
+<a href="./posts/sr320-08-Apul-lncRNA/index.html" class="no-external">Apul lncRNA Discovery</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-08-Apul-lncRNA/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('deepdive'); return false;">
 deepdive
@@ -721,14 +763,12 @@ lncrna
 e5
 </div>
 </div>
-<a href="./posts/sr320-08-Apul-lncRNA/index.html">
 <div class="listing-description">
-Steven Roberts 03 November, 2023
+<a href="./posts/sr320-08-Apul-lncRNA/index.html" class="no-external">Steven Roberts 03 November, 2023</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-08-Apul-lncRNA/index.html">
+<a href="./posts/sr320-08-Apul-lncRNA/index.html" class="no-external">
 <div class="listing-date">
 Nov 3, 2023
 </div>
@@ -738,32 +778,30 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="noteboook" data-listing-date-sort="1698822000000" data-listing-file-modified-sort="1699544775737" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="16" data-categories="noteboook" data-listing-date-sort="1698822000000" data-listing-file-modified-sort="1699544775737" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1039">
 <div class="thumbnail">
-<p><a href="./posts/sr320-daily/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2023-11-01_19-00-02.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-daily/index.html" class="no-external"></a></p><a href="./posts/sr320-daily/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2023-11-01_19-00-02.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-daily/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-daily/index.html">
 <h3 class="no-anchor listing-title">
-November Daily
+<a href="./posts/sr320-daily/index.html" class="no-external">November Daily</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-daily/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('noteboook'); return false;">
 noteboook
 </div>
 </div>
-<a href="./posts/sr320-daily/index.html">
 <div class="listing-description">
-Went to hatchery to clean oysters. A couple of pipes in control fell. Temperature was 13.9. Installed header heater to 16.
+<a href="./posts/sr320-daily/index.html" class="no-external">Went to hatchery to clean oysters. A couple of pipes in control fell. Temperature was 13.9. Installed header heater to 16.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-daily/index.html">
+<a href="./posts/sr320-daily/index.html" class="no-external">
 <div class="listing-date">
 Nov 1, 2023
 </div>
@@ -773,19 +811,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="ceabigr,R,tidyverse,methylation,snp" data-listing-date-sort="1694329200000" data-listing-file-modified-sort="1698889977259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="53">
+<div class="quarto-post image-right" data-index="17" data-categories="ceabigr,R,tidyverse,methylation,snp" data-listing-date-sort="1694329200000" data-listing-file-modified-sort="1698889977259" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="53" data-listing-word-count-sort="10559">
 <div class="thumbnail">
-<p><a href="./posts/sr320-05-matrix/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/2023-09-12_08-25-32.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-05-matrix/index.html" class="no-external"></a></p><a href="./posts/sr320-05-matrix/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2023-09-12_08-25-32.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-05-matrix/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-05-matrix/index.html">
 <h3 class="no-anchor listing-title">
-Correlating Matrices
+<a href="./posts/sr320-05-matrix/index.html" class="no-external">Correlating Matrices</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-05-matrix/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('ceabigr'); return false;">
 ceabigr
@@ -803,14 +841,12 @@ methylation
 snp
 </div>
 </div>
-<a href="./posts/sr320-05-matrix/index.html">
 <div class="listing-description">
-Steven Roberts 11 September, 2023
+<a href="./posts/sr320-05-matrix/index.html" class="no-external">Steven Roberts 11 September, 2023</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-05-matrix/index.html">
+<a href="./posts/sr320-05-matrix/index.html" class="no-external">
 <div class="listing-date">
 Sep 10, 2023
 </div>
@@ -820,19 +856,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="deepdive,R,lncrna,e5" data-listing-date-sort="1694156400000" data-listing-file-modified-sort="1698889977260" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20">
+<div class="quarto-post image-right" data-index="18" data-categories="deepdive,R,lncrna,e5" data-listing-date-sort="1694156400000" data-listing-file-modified-sort="1698889977260" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="20" data-listing-word-count-sort="3871">
 <div class="thumbnail">
-<p><a href="./posts/sr320-06-peve-lncRNA/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/2023-09-12_08-31-07.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-06-peve-lncRNA/index.html" class="no-external"></a></p><a href="./posts/sr320-06-peve-lncRNA/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2023-09-12_08-31-07.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-06-peve-lncRNA/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-06-peve-lncRNA/index.html">
 <h3 class="no-anchor listing-title">
-Peve lncRNA alignment
+<a href="./posts/sr320-06-peve-lncRNA/index.html" class="no-external">Peve lncRNA alignment</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-06-peve-lncRNA/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('deepdive'); return false;">
 deepdive
@@ -847,14 +883,12 @@ lncrna
 e5
 </div>
 </div>
-<a href="./posts/sr320-06-peve-lncRNA/index.html">
 <div class="listing-description">
-Steven Roberts 08 September, 2023
+<a href="./posts/sr320-06-peve-lncRNA/index.html" class="no-external">Steven Roberts 08 September, 2023</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-06-peve-lncRNA/index.html">
+<a href="./posts/sr320-06-peve-lncRNA/index.html" class="no-external">
 <div class="listing-date">
 Sep 8, 2023
 </div>
@@ -864,19 +898,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="ceabigr,R,tidyverse,ggplot,snp" data-listing-date-sort="1690182000000" data-listing-file-modified-sort="1698888810386" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="19" data-categories="ceabigr,R,tidyverse,ggplot,snp" data-listing-date-sort="1690182000000" data-listing-file-modified-sort="1698888810386" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2012">
 <div class="thumbnail">
-<p><a href="./posts/sr320-03-grm/index.html"> <img src="https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-12-1.png?raw=true" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-03-grm/index.html" class="no-external"></a></p><a href="./posts/sr320-03-grm/index.html" class="no-external">
+<p><img src="https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-12-1.png?raw=true" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-03-grm/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-03-grm/index.html">
 <h3 class="no-anchor listing-title">
-Epidiverse GRM
+<a href="./posts/sr320-03-grm/index.html" class="no-external">Epidiverse GRM</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-03-grm/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('ceabigr'); return false;">
 ceabigr
@@ -894,14 +928,12 @@ ggplot
 snp
 </div>
 </div>
-<a href="./posts/sr320-03-grm/index.html">
 <div class="listing-description">
-<p>re-evaluating the grm</p>
+<a href="./posts/sr320-03-grm/index.html" class="no-external">re-evaluating the grm </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-03-grm/index.html">
+<a href="./posts/sr320-03-grm/index.html" class="no-external">
 <div class="listing-date">
 Jul 24, 2023
 </div>
@@ -911,19 +943,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="mytilus,R,tidyverse,blast,GO" data-listing-date-sort="1690182000000" data-listing-file-modified-sort="1691443184761" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="20" data-categories="mytilus,R,tidyverse,blast,GO" data-listing-date-sort="1690182000000" data-listing-file-modified-sort="1691443184761" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="863">
 <div class="thumbnail">
-<p><a href="./posts/sr320-04-mytgo/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Mytilus_trossulus_Iso-seq_Annotation__quarter-shell__The_lab_notebook_of_Steven_Roberts_2023-08-07_14-19-17.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-04-mytgo/index.html" class="no-external"></a></p><a href="./posts/sr320-04-mytgo/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Mytilus_trossulus_Iso-seq_Annotation__quarter-shell__The_lab_notebook_of_Steven_Roberts_2023-08-07_14-19-17.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-04-mytgo/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-04-mytgo/index.html">
 <h3 class="no-anchor listing-title">
-Myt Iso-seq Annoation
+<a href="./posts/sr320-04-mytgo/index.html" class="no-external">Myt Iso-seq Annoation</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-04-mytgo/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('mytilus'); return false;">
 mytilus
@@ -941,14 +973,12 @@ blast
 GO
 </div>
 </div>
-<a href="./posts/sr320-04-mytgo/index.html">
 <div class="listing-description">
-<strong>code</strong>: https://github.com/mattgeorgephd/PSMFC-mytilus-byssus-pilot/blob/main/code/06-annotation.Rmd
+<a href="./posts/sr320-04-mytgo/index.html" class="no-external"><strong>code</strong>: https://github.com/mattgeorgephd/PSMFC-mytilus-byssus-pilot/blob/main/code/06-annotation.Rmd</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-04-mytgo/index.html">
+<a href="./posts/sr320-04-mytgo/index.html" class="no-external">
 <div class="listing-date">
 Jul 24, 2023
 </div>
@@ -958,19 +988,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="Quarto,R,tidyverse,ggplot,qPCR" data-listing-date-sort="1689922800000" data-listing-file-modified-sort="1689986965470" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="21" data-categories="Quarto,R,tidyverse,ggplot,qPCR" data-listing-date-sort="1689922800000" data-listing-file-modified-sort="1689986965470" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="172">
 <div class="thumbnail">
-<p><a href="./posts/sr320-02-qpcr/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_lsamp-2023_-_main_-_RStudio_2023-07-21_13-31-47.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-02-qpcr/index.html" class="no-external"></a></p><a href="./posts/sr320-02-qpcr/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_lsamp-2023_-_main_-_RStudio_2023-07-21_13-31-47.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-02-qpcr/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-02-qpcr/index.html">
 <h3 class="no-anchor listing-title">
-ggplotting some qPCR
+<a href="./posts/sr320-02-qpcr/index.html" class="no-external">ggplotting some qPCR</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-02-qpcr/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Quarto'); return false;">
 Quarto
@@ -988,14 +1018,12 @@ ggplot
 qPCR
 </div>
 </div>
-<a href="./posts/sr320-02-qpcr/index.html">
 <div class="listing-description">
-<p>quick take on graphing out some of Noah’s data</p>
+<a href="./posts/sr320-02-qpcr/index.html" class="no-external">quick take on graphing out some of Noah’s data</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-02-qpcr/index.html">
+<a href="./posts/sr320-02-qpcr/index.html" class="no-external">
 <div class="listing-date">
 Jul 21, 2023
 </div>
@@ -1005,32 +1033,30 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="noteboook" data-listing-date-sort="1689750000000" data-listing-file-modified-sort="1689952939195" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="22" data-categories="noteboook" data-listing-date-sort="1689750000000" data-listing-file-modified-sort="1689952939195" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="124">
 <div class="thumbnail">
-<p><a href="./posts/sr320-01-mytilus/index.html"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_PSMFC-mytilus-byssus-pilot__RStudio_Server_2023-07-20_10-54-50.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/sr320-01-mytilus/index.html" class="no-external"></a></p><a href="./posts/sr320-01-mytilus/index.html" class="no-external">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_PSMFC-mytilus-byssus-pilot__RStudio_Server_2023-07-20_10-54-50.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/sr320-01-mytilus/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/sr320-01-mytilus/index.html">
 <h3 class="no-anchor listing-title">
-Mytilus Iso-seq Data check
+<a href="./posts/sr320-01-mytilus/index.html" class="no-external">Mytilus Iso-seq Data check</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/sr320-01-mytilus/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('noteboook'); return false;">
 noteboook
 </div>
 </div>
-<a href="./posts/sr320-01-mytilus/index.html">
 <div class="listing-description">
-Lets take look at Isoseq fasta
+<a href="./posts/sr320-01-mytilus/index.html" class="no-external">Lets take look at Isoseq fasta</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/sr320-01-mytilus/index.html">
+<a href="./posts/sr320-01-mytilus/index.html" class="no-external">
 <div class="listing-date">
 Jul 19, 2023
 </div>
@@ -1040,32 +1066,30 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="22" data-categories="news" data-listing-date-sort="1685602800000" data-listing-file-modified-sort="1685714944144" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="23" data-categories="news" data-listing-date-sort="1685602800000" data-listing-file-modified-sort="1685714944144" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="374">
 <div class="thumbnail">
-<p><a href="./posts/zach-final-week/index.html"> <p class="card-img-top"><img src="posts/zach-final-week/DML-distribution.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/zach-final-week/index.html" class="no-external"></a></p><a href="./posts/zach-final-week/index.html" class="no-external">
+<p class="card-img-top"><img src="posts/zach-final-week/DML-distribution.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/zach-final-week/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/zach-final-week/index.html">
 <h3 class="no-anchor listing-title">
-DNA Methylation and Species/Tissue Specific Considerations
+<a href="./posts/zach-final-week/index.html" class="no-external">DNA Methylation and Species/Tissue Specific Considerations</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/zach-final-week/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
 news
 </div>
 </div>
-<a href="./posts/zach-final-week/index.html">
 <div class="listing-description">
-<strong>Invertebrate methylomes provide insight into mechanisms of environmental tolerance and reveal methodological biases</strong>
+<a href="./posts/zach-final-week/index.html" class="no-external"><strong>Invertebrate methylomes provide insight into mechanisms of environmental tolerance and reveal methodological biases</strong></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/zach-final-week/index.html">
+<a href="./posts/zach-final-week/index.html" class="no-external">
 <div class="listing-date">
 Jun 1, 2023
 </div>
@@ -1075,32 +1099,30 @@ Zach Bengtsson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="23" data-categories="paper" data-listing-date-sort="1685516400000" data-listing-file-modified-sort="1689952958810" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="24" data-categories="paper" data-listing-date-sort="1685516400000" data-listing-file-modified-sort="1689952958810" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="813">
 <div class="thumbnail">
-<p><a href="./posts/cvaldi-week10/index.html"> <img src="./posts/cvaldi-week10/methods.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/cvaldi-week10/index.html" class="no-external"></a></p><a href="./posts/cvaldi-week10/index.html" class="no-external">
+<p><img src="./posts/cvaldi-week10/methods.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/cvaldi-week10/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/cvaldi-week10/index.html">
 <h3 class="no-anchor listing-title">
-Epigenetic mechanisms in marine invertebrates
+<a href="./posts/cvaldi-week10/index.html" class="no-external">Epigenetic mechanisms in marine invertebrates</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/cvaldi-week10/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
 paper
 </div>
 </div>
-<a href="./posts/cvaldi-week10/index.html">
 <div class="listing-description">
-Trigg, S. A., Y. R. Venkataraman, M. R. Gavery, S. B. Roberts, D. Bhattacharya, A. Downey‐Wall, J. M. Eirin‐Lopez, K. M. Johnson, K. E. Lotterhos, J. B. Puritz, and…
+<a href="./posts/cvaldi-week10/index.html" class="no-external">Trigg, S. A., Y. R. Venkataraman, M. R. Gavery, S. B. Roberts, D. Bhattacharya, A. Downey‐Wall, J. M. Eirin‐Lopez, K. M. Johnson, K. E. Lotterhos, J. B. Puritz, and H. M.…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/cvaldi-week10/index.html">
+<a href="./posts/cvaldi-week10/index.html" class="no-external">
 <div class="listing-date">
 May 31, 2023
 </div>
@@ -1110,25 +1132,25 @@ Celeste Valdivia
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="24" data-listing-date-sort="1685516400000" data-listing-file-modified-sort="1685714778462" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="25" data-listing-date-sort="1685516400000" data-listing-file-modified-sort="1685714778462" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="600">
 <div class="thumbnail">
-<p><a href="./posts/ChrisDNAmethylation/index.html"> <p class="card-img-top"><img src="https://github.com/sr320/tumbling-oysters/blob/main/posts/ChrisDNAmethylation/organisms.png?raw=true" alt="Study Organisms"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/ChrisDNAmethylation/index.html" class="no-external"></a></p><a href="./posts/ChrisDNAmethylation/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/ChrisDNAmethylation/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/ChrisDNAmethylation/index.html">
 <h3 class="no-anchor listing-title">
-DNA Methylation Analysis Methods
+<a href="./posts/ChrisDNAmethylation/index.html" class="no-external">DNA Methylation Analysis Methods</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/ChrisDNAmethylation/index.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-[]
+<a href="./posts/ChrisDNAmethylation/index.html" class="no-external">[]</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/ChrisDNAmethylation/index.html">
+<a href="./posts/ChrisDNAmethylation/index.html" class="no-external">
 <div class="listing-date">
 May 31, 2023
 </div>
@@ -1138,32 +1160,30 @@ Chris
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="25" data-categories="news" data-listing-date-sort="1685343600000" data-listing-file-modified-sort="1685714948574" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="26" data-categories="news" data-listing-date-sort="1685343600000" data-listing-file-modified-sort="1685714948574" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="625">
 <div class="thumbnail">
-<p><a href="./posts/GraceL_week10_methylation/index.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="./posts/GraceL_week10_methylation/index.html" class="no-external"></a></p><a href="./posts/GraceL_week10_methylation/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/GraceL_week10_methylation/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/GraceL_week10_methylation/index.html">
 <h3 class="no-anchor listing-title">
-Tutorial #5 Reflection
+<a href="./posts/GraceL_week10_methylation/index.html" class="no-external">Tutorial #5 Reflection</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/GraceL_week10_methylation/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
 news
 </div>
 </div>
-<a href="./posts/GraceL_week10_methylation/index.html">
 <div class="listing-description">
-For the last week of our tutorial, we came back to DNA methylation and read another Roberts lab joint: https://doi.org/10.1111/1755-0998.13542
+<a href="./posts/GraceL_week10_methylation/index.html" class="no-external">For the last week of our tutorial, we came back to DNA methylation and read another Roberts lab joint: https://doi.org/10.1111/1755-0998.13542</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/GraceL_week10_methylation/index.html">
+<a href="./posts/GraceL_week10_methylation/index.html" class="no-external">
 <div class="listing-date">
 May 29, 2023
 </div>
@@ -1173,32 +1193,30 @@ Grace Leuchtenberger
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="26" data-categories="paper" data-listing-date-sort="1685343600000" data-listing-file-modified-sort="1685715067185" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="27" data-categories="paper" data-listing-date-sort="1685343600000" data-listing-file-modified-sort="1685715067185" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="242">
 <div class="thumbnail">
-<p><a href="./posts/zach-week4/index.html"> <p class="card-img-top"><img data-src="posts/zach-week4/lncRNA-filtering.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/zach-week4/index.html" class="no-external"></a></p><a href="./posts/zach-week4/index.html" class="no-external">
+<p class="card-img-top"><img data-src="posts/zach-week4/lncRNA-filtering.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/zach-week4/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/zach-week4/index.html">
 <h3 class="no-anchor listing-title">
-Long non-coding RNAs are associated with spatiotemporal gene expression profiles in the marine gastropod Tegula atra
+<a href="./posts/zach-week4/index.html" class="no-external">Long non-coding RNAs are associated with spatiotemporal gene expression profiles in the marine gastropod Tegula atra</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/zach-week4/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
 paper
 </div>
 </div>
-<a href="./posts/zach-week4/index.html">
 <div class="listing-description">
-<strong>Long non-coding RNAs are associated with spatiotemporal gene expression profiles in the marine gastropod Tegula atra</strong>
+<a href="./posts/zach-week4/index.html" class="no-external"><strong>Long non-coding RNAs are associated with spatiotemporal gene expression profiles in the marine gastropod Tegula atra</strong></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/zach-week4/index.html">
+<a href="./posts/zach-week4/index.html" class="no-external">
 <div class="listing-date">
 May 29, 2023
 </div>
@@ -1208,32 +1226,30 @@ Zach Bengtsson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="27" data-categories="paper" data-listing-date-sort="1684306800000" data-listing-file-modified-sort="1684519676642" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="28" data-categories="paper" data-listing-date-sort="1684306800000" data-listing-file-modified-sort="1684519676642" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="915">
 <div class="thumbnail">
-<p><a href="./posts/zach-dna-methylation-week/index.html"> <p class="card-img-top"><img data-src="posts/zach-dna-methylation-week/DMNT-differences.jpg"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/zach-dna-methylation-week/index.html" class="no-external"></a></p><a href="./posts/zach-dna-methylation-week/index.html" class="no-external">
+<p class="card-img-top"><img data-src="posts/zach-dna-methylation-week/DMNT-differences.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/zach-dna-methylation-week/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/zach-dna-methylation-week/index.html">
 <h3 class="no-anchor listing-title">
-The Role of DNA Methylation and Context Dependence
+<a href="./posts/zach-dna-methylation-week/index.html" class="no-external">The Role of DNA Methylation and Context Dependence</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/zach-dna-methylation-week/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
 paper
 </div>
 </div>
-<a href="./posts/zach-dna-methylation-week/index.html">
 <div class="listing-description">
-Is There a Relationship between DNA Methylation and Phenotypic Plasticity in Invertebrates?
+<a href="./posts/zach-dna-methylation-week/index.html" class="no-external">Is There a Relationship between DNA Methylation and Phenotypic Plasticity in Invertebrates?</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/zach-dna-methylation-week/index.html">
+<a href="./posts/zach-dna-methylation-week/index.html" class="no-external">
 <div class="listing-date">
 May 17, 2023
 </div>
@@ -1243,32 +1259,30 @@ Zach Bengtsson
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="28" data-categories="paper" data-listing-date-sort="1684306800000" data-listing-file-modified-sort="1684417558863" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="29" data-categories="paper" data-listing-date-sort="1684306800000" data-listing-file-modified-sort="1684417558863" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="651">
 <div class="thumbnail">
-<p><a href="./posts/cvaldi-week08-fish600/index.html"> <img data-src="./posts/cvaldi-week08-fish600/treeSadler2023.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/cvaldi-week08-fish600/index.html" class="no-external"></a></p><a href="./posts/cvaldi-week08-fish600/index.html" class="no-external">
+<p><img data-src="./posts/cvaldi-week08-fish600/treeSadler2023.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/cvaldi-week08-fish600/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/cvaldi-week08-fish600/index.html">
 <h3 class="no-anchor listing-title">
-Molecular stress responses in marine intertebrates
+<a href="./posts/cvaldi-week08-fish600/index.html" class="no-external">Molecular stress responses in marine intertebrates</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/cvaldi-week08-fish600/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
 paper
 </div>
 </div>
-<a href="./posts/cvaldi-week08-fish600/index.html">
 <div class="listing-description">
-Roberts, S. B., and M. R. Gavery. 2012. Is There a Relationship between DNA Methylation and Phenotypic Plasticity in Invertebrates? Frontiers in Physiology 2. https://doi.org/10.3389…
+<a href="./posts/cvaldi-week08-fish600/index.html" class="no-external">Roberts, S. B., and M. R. Gavery. 2012. Is There a Relationship between DNA Methylation and Phenotypic Plasticity in Invertebrates? Frontiers in Physiology 2. https://doi.org…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/cvaldi-week08-fish600/index.html">
+<a href="./posts/cvaldi-week08-fish600/index.html" class="no-external">
 <div class="listing-date">
 May 17, 2023
 </div>
@@ -1278,32 +1292,30 @@ Celeste Valdivia
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="29" data-categories="news" data-listing-date-sort="1684220400000" data-listing-file-modified-sort="1684284781485" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="quarto-post image-right" data-index="30" data-categories="news" data-listing-date-sort="1684220400000" data-listing-file-modified-sort="1684284781485" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1259">
 <div class="thumbnail">
-<p><a href="./posts/GraceL_methylation/index.html"> <p class="card-img-top"><img data-src="posts/GraceL_methylation/genedistmeth.jpeg"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/GraceL_methylation/index.html" class="no-external"></a></p><a href="./posts/GraceL_methylation/index.html" class="no-external">
+<p class="card-img-top"><img data-src="posts/GraceL_methylation/genedistmeth.jpeg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/GraceL_methylation/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/GraceL_methylation/index.html">
 <h3 class="no-anchor listing-title">
-Tutorial #4: DNA Methylation Station
+<a href="./posts/GraceL_methylation/index.html" class="no-external">Tutorial #4: DNA Methylation Station</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/GraceL_methylation/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
 news
 </div>
 </div>
-<a href="./posts/GraceL_methylation/index.html">
 <div class="listing-description">
-For our tutorial this week, I read the paper assigned to everyone, a Roberts lab special:
+<a href="./posts/GraceL_methylation/index.html" class="no-external">For our tutorial this week, I read the paper assigned to everyone, a Roberts lab special:</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/GraceL_methylation/index.html">
+<a href="./posts/GraceL_methylation/index.html" class="no-external">
 <div class="listing-date">
 May 16, 2023
 </div>
@@ -1313,32 +1325,30 @@ Grace Leuchtenberger
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="30" data-categories="paper" data-listing-date-sort="1682838000000" data-listing-file-modified-sort="1685715071438" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="31" data-categories="paper" data-listing-date-sort="1682838000000" data-listing-file-modified-sort="1685715071438" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="293">
 <div class="thumbnail">
-<p><a href="./posts/cvaldi-week04-reflect/index.html"> <img data-src="./posts/cvaldi-week04-reflect/pcaMorin2023.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/cvaldi-week04-reflect/index.html" class="no-external"></a></p><a href="./posts/cvaldi-week04-reflect/index.html" class="no-external">
+<p><img data-src="./posts/cvaldi-week04-reflect/pcaMorin2023.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/cvaldi-week04-reflect/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/cvaldi-week04-reflect/index.html">
 <h3 class="no-anchor listing-title">
-Molecular stress responses in marine intertebrates
+<a href="./posts/cvaldi-week04-reflect/index.html" class="no-external">Molecular stress responses in marine intertebrates</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/cvaldi-week04-reflect/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
 paper
 </div>
 </div>
-<a href="./posts/cvaldi-week04-reflect/index.html">
 <div class="listing-description">
-Two weeks ago members of our FISH 600 reading group were asked to select papers to present that cited the following paper:
+<a href="./posts/cvaldi-week04-reflect/index.html" class="no-external">Two weeks ago members of our FISH 600 reading group were asked to select papers to present that cited the following paper:</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/cvaldi-week04-reflect/index.html">
+<a href="./posts/cvaldi-week04-reflect/index.html" class="no-external">
 <div class="listing-date">
 Apr 30, 2023
 </div>
@@ -1348,32 +1358,30 @@ Celeste Valdivia
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="31" data-categories="paper" data-listing-date-sort="1682838000000" data-listing-file-modified-sort="1685714778473" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="32" data-categories="paper" data-listing-date-sort="1682838000000" data-listing-file-modified-sort="1685714778473" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1019">
 <div class="thumbnail">
-<p><a href="./posts/ChrisEpigenetics/index.html"> <p class="card-img-top"><img data-src="https://github.com/sr320/tumbling-oysters/blob/main/posts/ChrisPosts/epigenticPath.png?raw=true" alt="epigentics"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/ChrisEpigenetics/index.html" class="no-external"></a></p><a href="./posts/ChrisEpigenetics/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/ChrisEpigenetics/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/ChrisEpigenetics/index.html">
 <h3 class="no-anchor listing-title">
-DNA Methylation Synthesis
+<a href="./posts/ChrisEpigenetics/index.html" class="no-external">DNA Methylation Synthesis</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/ChrisEpigenetics/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
 paper
 </div>
 </div>
-<a href="./posts/ChrisEpigenetics/index.html">
 <div class="listing-description">
-ntic](“https://github.com/sr320/tumbling-oysters/blob/main/posts/ChrisPosts/epigenticPath.png?raw=true”) ---
+<a href="./posts/ChrisEpigenetics/index.html" class="no-external">ntic](“https://github.com/sr320/tumbling-oysters/blob/main/posts/ChrisPosts/epigenticPath.png?raw=true”) ---</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/ChrisEpigenetics/index.html">
+<a href="./posts/ChrisEpigenetics/index.html" class="no-external">
 <div class="listing-date">
 Apr 30, 2023
 </div>
@@ -1383,32 +1391,30 @@ Chris
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="32" data-categories="paper" data-listing-date-sort="1682751600000" data-listing-file-modified-sort="1685548565958" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="33" data-categories="paper" data-listing-date-sort="1682751600000" data-listing-file-modified-sort="1685548565958" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="266">
 <div class="thumbnail">
-<p><a href="./posts/ChrisReflection/index.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="./posts/ChrisReflection/index.html" class="no-external"></a></p><a href="./posts/ChrisReflection/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/ChrisReflection/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/ChrisReflection/index.html">
 <h3 class="no-anchor listing-title">
-New Family on the Block
+<a href="./posts/ChrisReflection/index.html" class="no-external">New Family on the Block</a>
 </h3>
 <div class="listing-subtitle">
-Week 4 Reflection
+<a href="./posts/ChrisReflection/index.html" class="no-external">Week 4 Reflection</a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
 paper
 </div>
 </div>
-<a href="./posts/ChrisReflection/index.html">
 <div class="listing-description">
-This week we read Gleason &amp; Burton’s 2015 RNA-seq reveals regional differences in transcriptome response to heat stress in the marine snail Chlorostoma funebralis and found individual papers that cited this one. Gleason and Burton noted that there were regional differences in the same species’ response to thermal stress by monitoring…
+<a href="./posts/ChrisReflection/index.html" class="no-external">This week we read Gleason &amp; Burton’s 2015 RNA-seq reveals regional differences in transcriptome response to heat stress in the marine snail Chlorostoma funebralis and found…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/ChrisReflection/index.html">
+<a href="./posts/ChrisReflection/index.html" class="no-external">
 <div class="listing-date">
 Apr 29, 2023
 </div>
@@ -1418,32 +1424,30 @@ Chris
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="33" data-categories="news" data-listing-date-sort="1682578800000" data-listing-file-modified-sort="1683298114734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="34" data-categories="news" data-listing-date-sort="1682578800000" data-listing-file-modified-sort="1683298114734" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="113">
 <div class="thumbnail">
-<p><a href="./posts/GraceL_posts/index.html"> <div class="listing-item-img-placeholder card-img-top" >&nbsp;</div> </a></p>
+<p><a href="./posts/GraceL_posts/index.html" class="no-external"></a></p><a href="./posts/GraceL_posts/index.html" class="no-external">
+<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
+</a><p><a href="./posts/GraceL_posts/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/GraceL_posts/index.html">
 <h3 class="no-anchor listing-title">
-Tutorial #2 Reflection
+<a href="./posts/GraceL_posts/index.html" class="no-external">Tutorial #2 Reflection</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/GraceL_posts/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
 news
 </div>
 </div>
-<a href="./posts/GraceL_posts/index.html">
 <div class="listing-description">
-Last week, almost all the papers we talked about looked at different living conditions for marine invertebrates and how that influences gene expression or gene regulation.…
+<a href="./posts/GraceL_posts/index.html" class="no-external">Last week, almost all the papers we talked about looked at different living conditions for marine invertebrates and how that influences gene expression or gene regulation.…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/GraceL_posts/index.html">
+<a href="./posts/GraceL_posts/index.html" class="no-external">
 <div class="listing-date">
 Apr 27, 2023
 </div>
@@ -1453,19 +1457,19 @@ Grace Leuchtenberger
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="34" data-categories="paper,highlight,code" data-listing-date-sort="1676707200000" data-listing-file-modified-sort="1684284795811" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="35" data-categories="paper,highlight,code" data-listing-date-sort="1676707200000" data-listing-file-modified-sort="1684284795811" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1154">
 <div class="thumbnail">
-<p><a href="./posts/cool-paper/index.html"> <img data-src="./posts/cool-paper/img/schematic.png" class="thumbnail-image"> </a></p>
+<p><a href="./posts/cool-paper/index.html" class="no-external"></a></p><a href="./posts/cool-paper/index.html" class="no-external">
+<p><img data-src="./posts/cool-paper/img/schematic.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/cool-paper/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/cool-paper/index.html">
 <h3 class="no-anchor listing-title">
-Genetics: Does it really matter?
+<a href="./posts/cool-paper/index.html" class="no-external">Genetics: Does it really matter?</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/cool-paper/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('paper'); return false;">
 paper
@@ -1477,14 +1481,12 @@ highlight
 code
 </div>
 </div>
-<a href="./posts/cool-paper/index.html">
 <div class="listing-description">
-Here I will describe a recent…
+<a href="./posts/cool-paper/index.html" class="no-external">Here I will describe a recent, cool paper and try to also highlight 1) some of the material covered in our class on Proposal Writing and Professional Development, and 2)…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/cool-paper/index.html">
+<a href="./posts/cool-paper/index.html" class="no-external">
 <div class="listing-date">
 Feb 18, 2023
 </div>
@@ -1494,19 +1496,19 @@ Steven Roberts
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="35" data-categories="news,code,analysis" data-listing-date-sort="1676620800000" data-listing-file-modified-sort="1676783145642" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="36" data-categories="news,code,analysis" data-listing-date-sort="1676620800000" data-listing-file-modified-sort="1676783145642" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="9">
 <div class="thumbnail">
-<p><a href="./posts/post-with-code/index.html"> <img data-src="./posts/post-with-code/image.jpg" class="thumbnail-image"> </a></p>
+<p><a href="./posts/post-with-code/index.html" class="no-external"></a></p><a href="./posts/post-with-code/index.html" class="no-external">
+<p><img data-src="./posts/post-with-code/image.jpg" class="thumbnail-image"></p>
+</a><p><a href="./posts/post-with-code/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/post-with-code/index.html">
 <h3 class="no-anchor listing-title">
-Post With Code
+<a href="./posts/post-with-code/index.html" class="no-external">Post With Code</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/post-with-code/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
 news
@@ -1518,14 +1520,12 @@ code
 analysis
 </div>
 </div>
-<a href="./posts/post-with-code/index.html">
 <div class="listing-description">
-This is a post with executable code.
+<a href="./posts/post-with-code/index.html" class="no-external">This is a post with executable code.</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/post-with-code/index.html">
+<a href="./posts/post-with-code/index.html" class="no-external">
 <div class="listing-date">
 Feb 17, 2023
 </div>
@@ -1535,32 +1535,30 @@ Harlow Malloc
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="36" data-categories="news" data-listing-date-sort="1676448000000" data-listing-file-modified-sort="1676764000125" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="37" data-categories="news" data-listing-date-sort="1676448000000" data-listing-file-modified-sort="1676764000125" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="32">
 <div class="thumbnail">
-<p><a href="./posts/welcome/index.html"> <p class="card-img-top"><img data-src="posts/welcome/thumbnail.jpg"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/welcome/index.html" class="no-external"></a></p><a href="./posts/welcome/index.html" class="no-external">
+<p class="card-img-top"><img data-src="posts/welcome/thumbnail.jpg"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/welcome/index.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/welcome/index.html">
 <h3 class="no-anchor listing-title">
-Welcome To My Blog
+<a href="./posts/welcome/index.html" class="no-external">Welcome To My Blog</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/welcome/index.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
 news
 </div>
 </div>
-<a href="./posts/welcome/index.html">
 <div class="listing-description">
-This is the first post in a Quarto blog. Welcome!
+<a href="./posts/welcome/index.html" class="no-external">This is the first post in a Quarto blog. Welcome!</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/welcome/index.html">
+<a href="./posts/welcome/index.html" class="no-external">
 <div class="listing-date">
 Feb 15, 2023
 </div>
@@ -1619,6 +1617,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -1687,13 +1712,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'alternate';
+  const darkModeDefault = true;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -1772,10 +1799,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/sr320\.github\.io\/tumbling-oysters");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1785,8 +1829,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1798,7 +1851,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1842,6 +2018,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1867,6 +2044,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1927,6 +2130,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
