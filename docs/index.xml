@@ -10,7 +10,356 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.555</generator>
-<lastBuildDate>Wed, 12 Jun 2024 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 15 Jun 2024 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Repro Repro</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Using Swiss-Prot Repro subset..</p>
+<p>Based on the following GO Term</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_QuickGOTerm_GO0022414_2024-06-15_17-30-33.png" class="img-fluid figure-img"></p>
+<figcaption>GO:0022414</figcaption>
+</figure>
+</div>
+<p><a href="https://www.ebi.ac.uk/QuickGO/term/GO:0022414" class="uri">https://www.ebi.ac.uk/QuickGO/term/GO:0022414</a></p>
+<section id="make-blastdb" class="level1">
+<h1><strong>Make BlastDB</strong></h1>
+<p>(Would only be needed once)</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-H</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Accept: text/plain"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://rest.uniprot.org/uniprotkb/stream?format=fasta&amp;query=%28%28go%3A0022414%29%29+AND+%28reviewed%3Atrue%29"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> ../data/SwissProt-GO:0022414.fa</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> ../data/SwissProt-GO:0022414.fa</span>
+<span id="cb2-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Sequences"</span></span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&gt;"</span> ../data/SwissProt-GO:0022414.fa </span></code></pre></div>
+</div>
+<pre><code>&gt;sp|A0A060A682|HAP2_TETTH Hapless 2 OS=Tetrahymena thermophila OX=5911 GN=HAP2 PE=1 SV=1
+MKFLAFGLIYFHFCILNRCEYITSSTIQKCYNSSNEPNNCSQKAVIVLSLENGQIANTEQ
+VVATLNQLSDSGVNKQLQNSFIFEVTKSPVTALFPLIYLQDFNSQPLEQVIATTLFSCKD
+GFYDSSPTCKFQYDSKGQKILDSQGYCCYCSLSDILGMGNDLSRGKVCYALNLGAGSATA
+HCLKFSPLWYSAFKIQQYQLYFEVNINIYTVDSQNQKNLKQTLKLSTSNPTMKSSDNSTI
+SKIIGTFTPTQPPADLSSYYLVKPSFPATDPRVLQGISSWMFVDKTMFTLDGTQCNKIGV
+SYSGFRQQSSSCSQPVGSCLQNQLENLYQSDLILLSQNKQPKYLLESQGNFNQVQFQGQT
+ILQQGLSGSASTLITIEIDAAQIKFVTNLGIGCISQCSINNFESHSGNGKLVALVQNQGN
+YSAEFVLGFNCSSNVQPIQGQKLFLTANQLYNFNCSVSVNSDISAINNNCTINLYDAIGN
+QLDSKNILFNTTSTNHTSNQGNNTGQQQSSQEYKSSQSCSDKCSSFWSFWCYFSAGCIKE
+Number of Sequences
+12309</code></pre>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.11.0+/bin/makeblastdb</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-2">-in ../data/SwissProt-GO:0022414.fa <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-3">-dbtype prot <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-4">-out ../blastdb/SwissProt-GO:0022414</span></code></pre></div>
+</div>
+</section>
+<section id="set-query" class="level1">
+<h1><strong>Set Query</strong></h1>
+<section id="set-fasta-as-variable" class="level2">
+<h2 class="anchored" data-anchor-id="set-fasta-as-variable"><strong>set fasta as variable</strong></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fasta</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/PO2457_Ostrea_lurida.protein.fasta"</span></span>
+<span id="cb5-2"></span>
+<span id="cb5-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fasta</span></span>
+<span id="cb5-4"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Sequences"</span></span>
+<span id="cb5-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&gt;"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fasta</span></span></code></pre></div>
+</div>
+<pre><code>&gt;ANN15860-RA
+MTDFGIYEVPVQTGVNHTTSSCALQCEIRTTCTLFRINKLTSECDFYNGGRYKTAIPVQGNQFYQKVPDSANCISGRDEWFPEYQKCIWIHMEALNHQEAKDRCESGGKIMMGAKDTTQIKSLMNLLDFKWIHVYALRVGQKSYEWFDGSSVSSTNWWCSDQPYEDSACLGVDLSMIHWCLAGGIDDIPCTDDRTFFCV
+&gt;ANN15859-RA
+MYLCKDFYAIMESSKGDDCENDEDACLQNPCPMDRNCTDLSPDEETAFGRGYNCTPCPSGYQDIDNKCEDLDECNNNSTNICDSFTQDCENTEGGYDCTCKTGYRKVGQTCHDIDECSESTSDCQQICTNSPGSFSCSCVVGHSLNSDNKNCTAQVTDICYDAGLSCEYTCDNSTGTFVCVCPSGYELESNGQNCTVVRGIRVRIGLQHPLACRKRRLNGAVIRMRLEKPRSRVTADIDECTRSVCSQACNNTIGSYSCFCFPGYSLNSDKTTCLACEAPYYGDNCGQVCRCGAGLESCDQVHGCLCLSGWTGTSCNLDIDECTANPAICGSDKICKNLQGSYTCNCREGFEKNGTECVDIDECTNADNNNCNEWTSMCQNTYGGYTCKCLTGYKKKISYYGEILDAFVCHDIDECALDTHDCAQTCTNADGGYHCGCQFGFVLADDRRSCERVSDIASLFPSLNCSYAYKENPSNTSAAYCFCENGYYLHPKDQQSCIDVNECQFYSDTYVVLNKCSNYYHRFTNCVNVPGSYQCTCPPVGFVLENDERTCAVCDGFHYGEDCKTPCNCGPGALTCDNLRGCQCKMGWAGSRCEADIDECSTGTLCTGTNQVCQNTPGSYQCICDTGYKAIRWGICIDIDECNTGTNPCSQVCTNTPGSYYCSCNTGFRLVGTSQCDDYDECSAPVSACDQVCVNTVGSYKCSCNPGFLLNSTTRTTCYSKTVCTNTTLNCSQQCGVNSGGSEYCFCNIGYTLNADGFSCDDRDECSPNPCSENCSQNAPGAGYTCSCSVGKKLDVDQRTCIDCDTGTYGLNCATNCSCNDQNTKSCDKVTGSCICKTGWEGTNCSSDINECLNKTICPSISNCFNNVGTYSCICPSGYSLIGGQCIECSSSTYGLNCGSSCSCKFIFTQSCNKQNGGCSCMFGRDAPNCRYDIGECFNPNTCNLNNSFCSEEPFPYMCICLKGYEYEKHSNGTCIDINECARGTSNCDKNAVCINTEGSFNCSCKSGFTGNGLTCTAALTTTQRVTPGDVTTQRVTPSDVTTQRVTPSGVTTQRVTPGDVTTQRVTPGDVTTPRVTPGDVTTPRVTPGYVTTQRVTPGDVTTTQVIPVDVTTPRVTPGDITTPRVTPGDITTLRVTPGDVTTPRVTPGDVTTLRVTPGDVTTPRVTPGDVTIPHFTPGVVTTQRVTPGDVTTPRVTPGDVITPRITSGDVTSSESVTTDTSTTPVTSQSTEVPTTYTPATGEALFSVSFTFSIDGKQDEKEAIQSEMLTALTALYTGRIKGFIKVILIDSRLGGLIGDHSVVTSSNTPVETRSDFTRTLNNLAKGALKITYNGTQYPVWAIAVADSTGNLQNVSVLVSSTVCQVFDTLNTCPRGQQCDDLDGIVQCRVIEINSKQDSLKVIVGLGVGIPLSFIVVLVLAIIWICYCRQKHKERYFSSKDDLDKTMHTDGFLISGIPTRIFSLGWRVPHALRNWGDDSSTSDVNERRGRRGRGFGNTYRGGRQLYSELIFNYRMMGNF
+&gt;ANN15862-RA
+MSVTYLKGLSTRYRNLTEKEIKRGDELVSVDISEENPTVLLRNVETSSRRIKEFSGKLEETMEKWSMAIEDKETQQGEHDKFSEISEVVFNLLAEANESSDQLVILEKTLQEHLATLKKPAEMTDPRLEQMIHLQSKMQEQILHFQELSLQQHRPGQVAVKLPKLELPTYNGDKIKFKEFWDAFDATVHKNPKLSNIEKFNYLRSKLIGPAHVAISGLSLSNENYDVAITILRDRFGDTQSVINKHYVELINTQCATNDTLSLRKLYDDLERHLRSLEALHQDVNQDVFISMITSKLPKETLLQLEIQKGPKGKWTVQKLRELLKGYITVKESSELQAASVAVHEDKHMTAEALVISTKESTIKHDRQTRRSEKSPMCTYCDGSHWTDECRRYRTIEDRKQRLKGKCFICLKSGHRSKECRVVKACYHCKQTGDHHRSLCPKKFTLRHRESTNTHLTEEVCRTSETPKRSTMSENSLLSSGDIVLMQTARTEVSNQCRENSEPARLLMDSGSQRTYITEKLADKLKLKTRITEKISLITFGAEKPKIVKTPKVSLTIKLKDGQYLSIEANVVPQITGTVQRKPIPKDVQERCQNIWKNLQLADTLPENFEDSTIDILVGSDYYLDLILPERIEIQRGFYLLASRLGWILTGRTQETFGREEQVMMITNGTLSLTEYCLHSAVDECIFTNSLDDFWNLEAIGIQDSPYTSDDERALENFNKTLKIEDNRYQVTWPWKEEFPELPENRELAFGRLKSLVHKLQRNPDLLHKYDDIIQDQCTRGIIEKIPSNHRETGVKHYIPHHAVVDLTKPTTKVRIVYDASAKTEHSHSSLNECLHRGPVMLHDLCGLLMRFRLKKIGIIADIEKAFLQIGLQEKDRNATRFFWLKDATNPTVEDNVQVYRFCRVPFGVISSPFLLAATVDHHLSSYNSETAENIRNNIYVDNVITGVDTIQEAEILYKEAKQIFGDISMNLRDWSSNAEEFHRFIPTEDQSARENLKILGLTWDLKEDVLTVPYQKSKTAPVTKREVLQRVASIFDPLGFFTPVTLKAKLFLQTLWQKNLEWDAPLTKEDIQEWKVIAADLVDIQYCQIPRYLGLSGEVSYRLLCFCDASAKAFATVVYLQLIDASSNICRLVFSKTRLAPTKQITMPRLELLAVLIGVRSMCFVENQLKLKISEKILWTDPQCVLHWIKTKKPLTVFVENRVKEIREKVDLELQYVTSADNPADIASRGIMAETLKDSMQWWNGPSWLTEKKSQWPVWNPSSNDIHSDAIESEYKKPRVMYEAKLLAGEGPPGYKDTCAEQKNPFDIDAERFSSFMKLIRVLAWIQRFIKKLKREKSACGPLTVEEMEEAKILLIKSIQNQNYTDVKSALIEKKRHNLVNQLGLTLDEDGIIRCIGRLGAAQLTEGARAPILLPKKNHVTDLLIDSYHRKSLHAGVSQTLSIVRQTYWIPQGRAEVRRVLRKCTVCKRHEGGPYRMPLMPPLPRKRVNESSPFTYTGVDYFGPIYVKANSGTKKVWVCLFTCLVVRSVHLELMQDMSTEEFLLGLRRFIARWGKPRQLISDNASQFKLASGVIEKAWSSTVSDVDVQSYVANEDMKWQFIVELAPWMGGFYERLIGVVKRCLRKTIGKLCLAFEQLRTLLAEAEAAVNSRPLVYVGDDINSNITLTPAHFLSLNPKIGISGCGEEENTEDPEYLPNISNAEVLLQTWKKGQKHLDAFWKAWRDDYLLSLRERTAYKLKEGRIQHCKEPQIDDVVLIKDDLPRGSWKIGRVCELRASQDGQIRSGKVLLPNKKTLNRPLNLLYPIECSKETENSDSEATKENQSTESDHGTVSGIESVTKPKSQPVLRETPDARPKRRSARRAEEKIKDWLNP
+&gt;ANN15865-RA
+MMALLDQEENNFIRAIFTIHAIAPKAVKRLFKNRHPDNGILTQELSAIKSDLMRTKGFPKHMAFLIFPSQGKHVNPDEFDLSVLIFLLQNFSNLPAPIKGWNTKPPITDSSEAADLTRIRLIRNDLAHNNDGKLKQSEFEVLWKELERVSIFRYLNFIIYLCAHGGCDRSAEDAYSSMAPDPAFASSKALGRLGEGVYDDELKNCKIATRENIDDMKRQVQELSDEIKFFEIATRENIDDMNTQVQGLREELQSPVPFNIRRDMLEEVEEWRKENEDFYETNFARNLHQAAAKEDFIMIIGEPGSGKTTTMHHIALKLNVEGGYDILPIQKPSEIKQYYSNNKRQVFVIDDAVGVHSLNDAMMREWEDLKPSLKRWKLLMINDFVKQSTKLTDPRNHVREMQEKHQCKILVSCRSFLTKTDAFPAFLREIEIVDAQNSRNRIGYLERQNIFATIFRTTRESIPLSKEIVMQYDSFPLLCRMCCSQGTIKPEVFFKRPFKHYFEEIDRMFHENKLSYFVLIFCLVFRCSFPDKPNSDTMEGFHSILDKCHLNQGTSYEEIRATILAMKDTYLRKVGEDEYDFYHIIIRDIIAYHFHSKSGLPILTKYGSDSFIRDRIRPKGPLPEDNPDDGYLIELKKDELSNFIERVCKNLMVKDWLVTFNSNFLPDAELEMHICKYLDRTNQFHSLLKRTNKHQSPNDLTKIQSYNRLLAALVDFPYKKTYQDIYHLRKEVLRPLTFIFWLIGFGWFEMFKAAFAISDTNITREIENSRHATLVLSALGGDEKMIRFINKSIVKSNSRCFICKTSAFLETFFVHCCNCPINHLSGFTIACIMGNGKVANYLKGILSYSADTEFDVSVLENFCTPKVGYLRHYRVSVMEIACNLGHMDMVCHFFKEKKLRIGTVKKSLLMACQNGQKDVFEFLLTEIPKDRFKDIDIRSLLKRSLYIASYFGHEMLVALLLERNVPVDTCDTSKRTPLLAASGRGHINVAKVLFSSGANVNSSDVFGWTPLKVACAKGYTEIVRLLLTNDDIILDDPNSDKCTSENRELPIRVTDEVSDTLLRRVFVSRTYNAILAVFPGYDLFPLFLASCNGHHEIVELLLSKGVSVDRTIEVGGIESSLTVASSNGYPKVVSLLLAHGASLYVEGSGRTALMSVCSSEGNSFNIIPNSVYRETDKYFLGDANHLEAVKEILSKDNSQQFLDTKDEEGMSALHFASLNCHSDIIDLLLVQNIEINTRNSSGITPLWLASKYDYPEIVSILVSHDADVNICSKDKHSPLWIACAERTEGYGLFDTVWTHGKVISMLLTKADIDSIGIENLTALNIACMKDDDELVSYLLSKGASIGNNLLLAFLQTHFKIAGLLILEKIRRL
+&gt;ANN15866-RA
+MLTPTRHLIPPLGTTNVRILYLNGEFLLDSLERIRERVPKFSSAVALVDFYARLTHTGKDYNCKWTEDLSIALQKPKPHRVVNLRHLCRLSINRSVPNTVTRTEMLGYLDKLPVSRHLKTYLKEYPYIH
+Number of Sequences
+33939</code></pre>
+</section>
+</section>
+<section id="blast" class="level1">
+<h1><strong>Blast</strong></h1>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fasta</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/PO2457_Ostrea_lurida.protein.fasta"</span></span>
+<span id="cb7-2"></span>
+<span id="cb7-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/blastp</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-4">-query <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fasta</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-5">-db ../blastdb/SwissProt-GO:0022414 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-6">-out ../output/04-repro-annot/blastout.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-7">-evalue 1E-20 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-8">-num_threads 48 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-9">-max_target_seqs 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-10">-max_hsps 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-11">-outfmt 6</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> ../output/04-repro-annot/blastout.tab</span></code></pre></div>
+</div>
+<pre><code>ANN15859-RA sp|P07207|NOTCH_DROME   27.146  1072    523 60  96  1012    162 1130    5.83e-40    162
+ANN15865-RA sp|Q9VCA8|ANKHM_DROME   27.049  366 193 9   907 1269    2316    2610    1.97e-24    110
+ANN15898-RA sp|Q9Z0E8|S22A5_MOUSE   27.604  576 327 13  236 784 12  524 4.19e-57    204
+ANN15903-RA sp|Q9Z0E8|S22A5_MOUSE   29.242  554 337 11  16  545 2   524 1.16e-63    217
+ANN15914-RA sp|P49891|ST1E1_MOUSE   31.250  256 153 8   28  269 49  295 2.65e-26    103
+ANN04321-RA sp|O15455|TLR3_HUMAN    22.802  671 421 18  29  655 238 855 1.93e-26    114
+ANN04322-RA sp|P15620|ZN271_MOUSE   24.554  505 321 18  1022    1523    80  527 2.78e-26    114
+ANN04330-RA sp|O88572|LRP6_MOUSE    27.494  902 546 38  66  930 65  895 9.40e-60    226
+ANN04334-RA sp|P20241|NRG_DROME 25.049  507 314 23  299 765 26  506 2.24e-24    109
+ANN04339-RA sp|Q969R2|OSBP2_HUMAN   50.591  761 322 13  11  757 184 904 0.0 749</code></pre>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> ../output/04-repro-annot/blastout.tab</span></code></pre></div>
+</div>
+<pre><code>4641 ../output/04-repro-annot/blastout.tab</code></pre>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tr</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'|'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'\t'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> ../output/04-repro-annot/blastout.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb12-2"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../output/04-repro-annot/blastout_sep.tab</span>
+<span id="cb12-3"></span>
+<span id="cb12-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-1</span> ../output/04-repro-annot/blastout_sep.tab</span></code></pre></div>
+</div>
+<pre><code>ANN15859-RA sp  P07207  NOTCH_DROME 27.146  1072    523 60  96  1012    162 1130    5.83e-40    162</code></pre>
+</section>
+<section id="download-swiss-prot-information" class="level1">
+<h1><strong>Download Swiss-Prot Information</strong></h1>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-H</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Accept: text/plain; format=tsv"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://rest.uniprot.org/uniprotkb/stream?fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo_c%2Cgo%2Cgo_f%2Cgo_id&amp;format=tsv&amp;query=%28%28go%3A0022414%29%29+AND+%28reviewed%3Atrue%29"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> ../data/SwissProt-GO:0022414.tsv</span></code></pre></div>
+</div>
+</section>
+<section id="join-blast-with-go-info" class="level1">
+<h1><strong>Join blast with GO info</strong></h1>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">bltabl <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/04-repro-annot/blastout_sep.tab"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\t</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">header =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb15-2"></span>
+<span id="cb15-3">spgo <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/SwissProt-GO:0022414.tsv"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\t</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">header =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">annot_tab <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span></span>
+<span id="cb16-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">left_join</span>(bltabl, spgo,  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"V3"</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Entry"</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb16-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(V1, V3, V13, Protein.names, Organism, Gene.Ontology..biological.process., Gene.Ontology.IDs)</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(annot_tab)</span></code></pre></div>
+</div>
+<pre><code>           V1     V3      V13
+1 ANN15859-RA P07207 5.83e-40
+2 ANN15865-RA Q9VCA8 1.97e-24
+3 ANN15898-RA Q9Z0E8 4.19e-57
+4 ANN15903-RA Q9Z0E8 1.16e-63
+5 ANN15914-RA P49891 2.65e-26
+6 ANN04321-RA O15455 1.93e-26
+                                                                                                                        Protein.names
+1                                             Neurogenic locus Notch protein [Cleaved into: Processed neurogenic locus Notch protein]
+2                  Ankyrin repeat and KH domain-containing protein mask (Multiple ankyrin repeat single KH domain-containing protein)
+3 Organic cation/carnitine transporter 2 (High-affinity sodium-dependent carnitine cotransporter) (Solute carrier family 22 member 5)
+4 Organic cation/carnitine transporter 2 (High-affinity sodium-dependent carnitine cotransporter) (Solute carrier family 22 member 5)
+5       Sulfotransferase 1E1 (ST1E1) (EC 2.8.2.4) (Estrogen sulfotransferase, testis isoform) (Sulfotransferase, estrogen-preferring)
+6                                                                                             Toll-like receptor 3 (CD antigen CD283)
+                             Organism
+1 Drosophila melanogaster (Fruit fly)
+2 Drosophila melanogaster (Fruit fly)
+3                Mus musculus (Mouse)
+4                Mus musculus (Mouse)
+5                Mus musculus (Mouse)
+6                Homo sapiens (Human)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Gene.Ontology..biological.process.
+1 actin filament organization [GO:0007015]; asymmetric cell division [GO:0008356]; axon guidance [GO:0007411]; border follicle cell migration [GO:0007298]; cell dedifferentiation [GO:0043697]; cell differentiation [GO:0030154]; cell fate commitment [GO:0045165]; chaeta development [GO:0022416]; chaeta morphogenesis [GO:0008407]; compartment boundary maintenance [GO:0060289]; compound eye development [GO:0048749]; compound eye morphogenesis [GO:0001745]; compound eye retinal cell programmed cell death [GO:0046667]; crystal cell differentiation [GO:0042688]; defense response to insect [GO:0002213]; determination of adult lifespan [GO:0008340]; dorsal appendage formation [GO:0046843]; dorsal closure [GO:0007391]; dorsal/ventral axis specification [GO:0009950]; embryonic hemopoiesis [GO:0035162]; epithelial cell proliferation involved in Malpighian tubule morphogenesis [GO:0061331]; epithelial cell type specification, open tracheal system [GO:0035153]; eye-antennal disc development [GO:0035214]; eye-antennal disc morphogenesis [GO:0007455]; female germ-line stem cell population maintenance [GO:0036099]; follicle cell of egg chamber development [GO:0030707]; follicle cell of egg chamber migration [GO:0007297]; follicle cell of egg chamber stalk formation [GO:0030713]; foregut morphogenesis [GO:0007440]; formation of a compartment boundary [GO:0060288]; germ-line stem cell population maintenance [GO:0030718]; germ-line stem-cell niche homeostasis [GO:0060250]; germarium-derived egg chamber formation [GO:0007293]; glial cell differentiation [GO:0010001]; glial cell fate determination [GO:0007403]; glial cell migration [GO:0008347]; hemocyte proliferation [GO:0035172]; imaginal disc-derived leg joint morphogenesis [GO:0016348]; imaginal disc-derived leg morphogenesis [GO:0007480]; imaginal disc-derived leg segmentation [GO:0036011]; imaginal disc-derived male genitalia morphogenesis [GO:0048803]; imaginal disc-derived wing margin morphogenesis [GO:0008587]; imaginal disc-derived wing morphogenesis [GO:0007476]; imaginal disc-derived wing vein specification [GO:0007474]; intestinal stem cell homeostasis [GO:0036335]; lamellocyte differentiation [GO:0035171]; larval lymph gland hemopoiesis [GO:0035167]; lateral inhibition [GO:0046331]; leg disc morphogenesis [GO:0007478]; long-term memory [GO:0007616]; lymph gland development [GO:0048542]; Malpighian tubule tip cell differentiation [GO:0061382]; mesoderm development [GO:0007498]; morphogenesis of an epithelial fold [GO:0060571]; motor neuron axon guidance [GO:0008045]; muscle cell cellular homeostasis [GO:0046716]; muscle cell fate determination [GO:0007521]; myoblast development [GO:0048627]; negative regulation of cell-cell adhesion mediated by cadherin [GO:2000048]; negative regulation of compound eye photoreceptor development [GO:0045316]; negative regulation of gene expression [GO:0010629]; negative regulation of lamellocyte differentiation [GO:0035204]; negative regulation of neurogenesis [GO:0050768]; negative regulation of Notch signaling pathway [GO:0045746]; nervous system process [GO:0050877]; neuroblast development [GO:0014019]; neuroblast fate determination [GO:0007400]; neuroblast fate specification [GO:0014018]; neuroblast proliferation [GO:0007405]; neuron fate determination [GO:0048664]; neuron fate specification [GO:0048665]; neuronal stem cell population maintenance [GO:0097150]; Notch signaling pathway [GO:0007219]; ommatidial rotation [GO:0016318]; oocyte localization involved in germarium-derived egg chamber formation [GO:0030720]; oogenesis [GO:0048477]; peripheral nervous system development [GO:0007422]; positive regulation of cell population proliferation [GO:0008284]; positive regulation of crystal cell differentiation [GO:0042691]; positive regulation of DNA-templated transcription [GO:0045893]; positive regulation of G1/S transition of mitotic cell cycle [GO:1900087]; positive regulation of gene expression [GO:0010628]; positive regulation of neuroblast proliferation [GO:0002052]; positive regulation of neuron apoptotic process [GO:0043525]; positive regulation of transcription by RNA polymerase II [GO:0045944]; R1/R6 cell differentiation [GO:0048052]; R3/R4 cell differentiation [GO:0048056]; R7 cell differentiation [GO:0045466]; regulation of cardioblast cell fate specification [GO:0042686]; regulation of cell differentiation [GO:0045595]; regulation of filopodium assembly [GO:0051489]; regulation of glycolytic process [GO:0006110]; regulation of growth [GO:0040008]; regulation of mitotic cell cycle [GO:0007346]; regulation of neuroblast proliferation [GO:1902692]; regulation of neurogenesis [GO:0050767]; regulation of stem cell division [GO:2000035]; response to symbiont [GO:0009608]; retinal cell programmed cell death [GO:0046666]; second mitotic wave involved in compound eye morphogenesis [GO:0016330]; sensory organ development [GO:0007423]; sensory organ precursor cell fate determination [GO:0016360]; stem cell differentiation [GO:0048863]; wing disc dorsal/ventral pattern formation [GO:0048190]; wing disc pattern formation [GO:0035222]
+2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            compound eye photoreceptor cell differentiation [GO:0001751]; dorsal appendage formation [GO:0046843]; flight [GO:0060361]; innate immune response [GO:0045087]; mitochondrion organization [GO:0007005]; negative regulation of autophagy of mitochondrion [GO:1903147]; negative regulation of establishment of blood-brain barrier [GO:0090212]; positive regulation of receptor signaling pathway via JAK-STAT [GO:0046427]; positive regulation of sevenless signaling pathway [GO:0045874]; positive regulation of transcription by RNA polymerase II [GO:0045944]; sarcomere organization [GO:0045214]; vascular endothelial growth factor receptor signaling pathway [GO:0048010]; wound healing, spreading of cells [GO:0044319]; wound healing, spreading of epidermal cells [GO:0035313]
+3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (R)-carnitine transmembrane transport [GO:1902270]; (R)-carnitine transport [GO:1900749]; adult heart development [GO:0007512]; carnitine metabolic process [GO:0009437]; carnitine transport [GO:0015879]; establishment of localization in cell [GO:0051649]; locomotory behavior [GO:0007626]; mitochondrion organization [GO:0007005]; quaternary ammonium group transport [GO:0015697]; reproductive structure development [GO:0048608]; response to tumor necrosis factor [GO:0034612]; response to type II interferon [GO:0034341]; sodium ion transport [GO:0006814]; transport across blood-brain barrier [GO:0150104]
+4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (R)-carnitine transmembrane transport [GO:1902270]; (R)-carnitine transport [GO:1900749]; adult heart development [GO:0007512]; carnitine metabolic process [GO:0009437]; carnitine transport [GO:0015879]; establishment of localization in cell [GO:0051649]; locomotory behavior [GO:0007626]; mitochondrion organization [GO:0007005]; quaternary ammonium group transport [GO:0015697]; reproductive structure development [GO:0048608]; response to tumor necrosis factor [GO:0034612]; response to type II interferon [GO:0034341]; sodium ion transport [GO:0006814]; transport across blood-brain barrier [GO:0150104]
+5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 estrogen metabolic process [GO:0008210]; female pregnancy [GO:0007565]; sulfation [GO:0051923]
+6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                activation of NF-kappaB-inducing kinase activity [GO:0007250]; cellular response to exogenous dsRNA [GO:0071360]; cellular response to interferon-beta [GO:0035458]; cellular response to mechanical stimulus [GO:0071260]; cellular response to type II interferon [GO:0071346]; cellular response to virus [GO:0098586]; cellular response to xenobiotic stimulus [GO:0071466]; defense response to bacterium [GO:0042742]; defense response to virus [GO:0051607]; detection of virus [GO:0009597]; extrinsic apoptotic signaling pathway [GO:0097191]; hyperosmotic response [GO:0006972]; I-kappaB phosphorylation [GO:0007252]; inflammatory response to wounding [GO:0090594]; innate immune response [GO:0045087]; JNK cascade [GO:0007254]; male gonad development [GO:0008584]; microglial cell activation [GO:0001774]; necroptotic signaling pathway [GO:0097527]; negative regulation of osteoclast differentiation [GO:0045671]; positive regulation of angiogenesis [GO:0045766]; positive regulation of apoptotic process [GO:0043065]; positive regulation of canonical NF-kappaB signal transduction [GO:0043123]; positive regulation of chemokine production [GO:0032722]; positive regulation of cytokine production involved in inflammatory response [GO:1900017]; positive regulation of gene expression [GO:0010628]; positive regulation of inflammatory response [GO:0050729]; positive regulation of interferon-alpha production [GO:0032727]; positive regulation of interferon-beta production [GO:0032728]; positive regulation of interleukin-12 production [GO:0032735]; positive regulation of interleukin-6 production [GO:0032755]; positive regulation of interleukin-8 production [GO:0032757]; positive regulation of JNK cascade [GO:0046330]; positive regulation of macrophage cytokine production [GO:0060907]; positive regulation of non-canonical NF-kappaB signal transduction [GO:1901224]; positive regulation of transcription by RNA polymerase II [GO:0045944]; positive regulation of tumor necrosis factor production [GO:0032760]; positive regulation of type II interferon production [GO:0032729]; positive regulation of type III interferon production [GO:0034346]; regulation of dendritic cell cytokine production [GO:0002730]; response to dsRNA [GO:0043331]; response to exogenous dsRNA [GO:0043330]; signal transduction [GO:0007165]; toll-like receptor 3 signaling pathway [GO:0034138]; toll-like receptor signaling pathway [GO:0002224]; type III interferon production [GO:0034343]
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Gene.Ontology.IDs
+1 GO:0001745; GO:0002052; GO:0002213; GO:0003682; GO:0003713; GO:0004888; GO:0005112; GO:0005509; GO:0005634; GO:0005654; GO:0005737; GO:0005768; GO:0005769; GO:0005770; GO:0005771; GO:0005783; GO:0005788; GO:0005796; GO:0005829; GO:0005886; GO:0005912; GO:0006110; GO:0007015; GO:0007219; GO:0007293; GO:0007297; GO:0007298; GO:0007346; GO:0007391; GO:0007400; GO:0007403; GO:0007405; GO:0007411; GO:0007422; GO:0007423; GO:0007440; GO:0007455; GO:0007474; GO:0007476; GO:0007478; GO:0007480; GO:0007498; GO:0007521; GO:0007616; GO:0008045; GO:0008284; GO:0008340; GO:0008347; GO:0008356; GO:0008407; GO:0008587; GO:0009608; GO:0009950; GO:0009986; GO:0010001; GO:0010628; GO:0010629; GO:0014018; GO:0014019; GO:0016020; GO:0016318; GO:0016324; GO:0016330; GO:0016348; GO:0016360; GO:0022416; GO:0030139; GO:0030154; GO:0030707; GO:0030713; GO:0030718; GO:0030720; GO:0032991; GO:0035035; GO:0035153; GO:0035162; GO:0035167; GO:0035171; GO:0035172; GO:0035204; GO:0035214; GO:0035222; GO:0036011; GO:0036099; GO:0036335; GO:0040008; GO:0042686; GO:0042688; GO:0042691; GO:0043525; GO:0043697; GO:0045165; GO:0045316; GO:0045466; GO:0045595; GO:0045746; GO:0045893; GO:0045944; GO:0046331; GO:0046666; GO:0046667; GO:0046716; GO:0046843; GO:0048052; GO:0048056; GO:0048190; GO:0048477; GO:0048542; GO:0048627; GO:0048664; GO:0048665; GO:0048749; GO:0048803; GO:0048863; GO:0050699; GO:0050767; GO:0050768; GO:0050877; GO:0051489; GO:0060250; GO:0060288; GO:0060289; GO:0060571; GO:0061331; GO:0061382; GO:0097150; GO:1900087; GO:1902692; GO:1990433; GO:2000035; GO:2000048
+2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             GO:0001751; GO:0003723; GO:0005634; GO:0005737; GO:0005829; GO:0007005; GO:0019901; GO:0030018; GO:0031430; GO:0035313; GO:0044319; GO:0045087; GO:0045214; GO:0045874; GO:0045944; GO:0046427; GO:0046843; GO:0048010; GO:0060361; GO:0090212; GO:0090575; GO:1903147
+3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     GO:0005524; GO:0005737; GO:0005829; GO:0005886; GO:0006814; GO:0007005; GO:0007512; GO:0007626; GO:0009437; GO:0009925; GO:0015199; GO:0015226; GO:0015293; GO:0015651; GO:0015697; GO:0015879; GO:0016020; GO:0016323; GO:0016324; GO:0031526; GO:0034341; GO:0034612; GO:0048608; GO:0051649; GO:0150104; GO:1900749; GO:1901235; GO:1902270
+4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     GO:0005524; GO:0005737; GO:0005829; GO:0005886; GO:0006814; GO:0007005; GO:0007512; GO:0007626; GO:0009437; GO:0009925; GO:0015199; GO:0015226; GO:0015293; GO:0015651; GO:0015697; GO:0015879; GO:0016020; GO:0016323; GO:0016324; GO:0031526; GO:0034341; GO:0034612; GO:0048608; GO:0051649; GO:0150104; GO:1900749; GO:1901235; GO:1902270
+5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             GO:0004062; GO:0004304; GO:0005496; GO:0005737; GO:0005829; GO:0007565; GO:0008146; GO:0008210; GO:0050294; GO:0051923
+6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             GO:0000139; GO:0001774; GO:0002224; GO:0002730; GO:0003725; GO:0004888; GO:0005615; GO:0005737; GO:0005765; GO:0005769; GO:0005789; GO:0005886; GO:0006972; GO:0007165; GO:0007250; GO:0007252; GO:0007254; GO:0008584; GO:0009597; GO:0010008; GO:0010628; GO:0016020; GO:0031012; GO:0032722; GO:0032727; GO:0032728; GO:0032729; GO:0032735; GO:0032755; GO:0032757; GO:0032760; GO:0034138; GO:0034343; GO:0034346; GO:0035458; GO:0036020; GO:0038023; GO:0038187; GO:0042742; GO:0042802; GO:0043065; GO:0043123; GO:0043330; GO:0043331; GO:0045087; GO:0045671; GO:0045766; GO:0045944; GO:0046330; GO:0050729; GO:0051607; GO:0060907; GO:0071260; GO:0071346; GO:0071360; GO:0071466; GO:0090594; GO:0097191; GO:0097527; GO:0098586; GO:1900017; GO:1901224</code></pre>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>blast</category>
+  <category>gene ontology</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</guid>
+  <pubDate>Sat, 15 Jun 2024 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2024-06-15_17-21-46.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Spring Cleaning</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -8761,495 +9110,6 @@ font-style: inherit;">head</span> ../output/02-Peve-lncRNA-align/lncRNA_lncRNA_b
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-06-peve-lncRNA/</guid>
   <pubDate>Fri, 08 Sep 2023 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2023-09-12_08-31-07.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Epidiverse GRM</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="revisiting-epidiverse-snps" class="level1">
-<h1>Revisiting EpiDiverse SNPs</h1>
-<p>Steven Roberts 24 July, 2023</p>
-<ul>
-<li>0.1 Merging Epidiverse VCFs</li>
-<li>1 NgsRelate
-<ul>
-<li>1.1 Output format</li>
-</ul></li>
-</ul>
-<p>Sam ran Epidiverse</p>
-<p><a href="https://github.com/sr320/ceabigr/issues/69#issuecomment-1258238481" class="uri">https://github.com/sr320/ceabigr/issues/69#issuecomment-1258238481</a></p>
-<ul>
-<li><a href="https://robertslab.github.io/sams-notebook/2022/09/21/BSseq-SNP-Analysis-Nextflow-EpiDiverse-SNP-Pipeline-for-C.virginica-CEABIGR-BSseq-data.html">Notebook</a></li>
-<li>VCF Directory - <a href="https://gannet.fish.washington.edu/Atumefaciens/20220921-cvir-ceabigr-nextflow-epidiverse-snp/snps/vcf/" class="uri">https://gannet.fish.washington.edu/Atumefaciens/20220921-cvir-ceabigr-nextflow-epidiverse-snp/snps/vcf/</a></li>
-<li>results dir - <a href="https://gannet.fish.washington.edu/Atumefaciens/20220921-cvir-ceabigr-nextflow-epidiverse-snp/snps/stats/" class="uri">https://gannet.fish.washington.edu/Atumefaciens/20220921-cvir-ceabigr-nextflow-epidiverse-snp/snps/stats/</a></li>
-</ul>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Compiling_genetic_data__Issue_69__sr320ceabigr_2023-05-03_10-08-58.png" class="img-fluid"></p>
-<section id="merging-epidiverse-vcfs" class="level2">
-<h2 class="anchored" data-anchor-id="merging-epidiverse-vcfs">0.1 Merging Epidiverse VCFs</h2>
-<p>Next step for capturing SNP info in Epidiverse Workflow is merging.</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> ../data/big</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wget</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-r</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-3">--no-directories <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--no-parent</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-4">-P . <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-5">-A <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"*vcf.g*"</span> https://gannet.fish.washington.edu/Atumefaciens/20220921-cvir-ceabigr-nextflow-epidiverse-snp/snps/vcf/</span></code></pre></div>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"></span>
-<span id="cb2-2"></span>
-<span id="cb2-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/bcftools-1.14/bcftools</span>  merge <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-4">--force-samples <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-5">../data/big/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.vcf.gz <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-6">--merge all <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-7">--threads 40 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-8">-O v <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-9">-o ../output/51-SNPs/EpiDiv_merged.vcf</span></code></pre></div>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-20</span> ../output/51-SNPs/EpiDiv_merged.vcf</span></code></pre></div>
-<pre><code>## ##fileformat=VCFv4.2
-## ##FILTER=&lt;ID=PASS,Description="All filters passed"&gt;
-## ##fileDate=20220924
-## ##source=freeBayes v1.3.2-dirty
-## ##reference=GCF_002022765.2_C_virginica-3.0_genomic.fa
-## ##contig=&lt;ID=NC_035780.1,length=65668440&gt;
-## ##contig=&lt;ID=NC_035781.1,length=61752955&gt;
-## ##contig=&lt;ID=NC_035782.1,length=77061148&gt;
-## ##contig=&lt;ID=NC_035783.1,length=59691872&gt;
-## ##contig=&lt;ID=NC_035784.1,length=98698416&gt;
-## ##contig=&lt;ID=NC_035785.1,length=51258098&gt;
-## ##contig=&lt;ID=NC_035786.1,length=57830854&gt;
-## ##contig=&lt;ID=NC_035787.1,length=75944018&gt;
-## ##contig=&lt;ID=NC_035788.1,length=104168038&gt;
-## ##contig=&lt;ID=NC_035789.1,length=32650045&gt;
-## ##contig=&lt;ID=NC_007175.2,length=17244&gt;
-## ##phasing=none
-## ##commandline="freebayes -f GCF_002022765.2_C_virginica-3.0_genomic.fa 12M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam --strict-vcf --no-partial-observations --report-genotype-likelihood-max --genotype-qualities --min-repeat-entropy 1 --min-coverage 0 --min-base-quality 1 --region NC_035780.1:0-100000"
-## ##INFO=&lt;ID=NS,Number=1,Type=Integer,Description="Number of samples with data"&gt;
-## ##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total read depth at the locus"&gt;</code></pre>
-<p>The eventual GRM does not have sample names so wanted to check order of merged files (assuming this is related to how GRM file is created)</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">fgrep</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"R1_val_1"</span> ../output/51-SNPs/EpiDiv_merged.vcf</span></code></pre></div>
-<pre><code>##commandline="freebayes -f GCF_002022765.2_C_virginica-3.0_genomic.fa 12M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam --strict-vcf --no-partial-observations --report-genotype-likelihood-max --genotype-qualities --min-repeat-entropy 1 --min-coverage 0 --min-base-quality 1 --region NC_035780.1:0-100000"
-##bcftools_viewCommand=view -Oz 12M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf; Date=Sat Sep 24 13:39:51 2022
-##bcftools_mergeCommand=merge --force-samples --merge all --threads 40 -O v -o ../output/51-SNPs/EpiDiv_merged.vcf ../data/big/12M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/13M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/16F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/19F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/22F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/23M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/29F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/31M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/35F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/36F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/39F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/3F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/41F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/44F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/48M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/50F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/52F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/53F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/54F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/59M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/64M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/6M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/76F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/77F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/7M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/9M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz; Date=Sun May  7 10:33:42 2023</code></pre>
-<p>Here is the filtering steps</p>
-<p>Let’s break down the command:</p>
-<ul>
-<li><p><strong><code>/home/shared/vcftools-0.1.16/bin/vcftools</code></strong>: This is the path to the VCFtools program. You’re executing the program from its location.</p></li>
-<li><p><strong><code>--vcf ../output/51-SNPs/EpiDiv_merged.vcf</code></strong>: This specifies the input VCF file that you’re going to work with.</p></li>
-<li><p><strong><code>--recode --recode-INFO-all</code></strong>: The <strong><code>--recode</code></strong> option tells VCFtools to generate a new VCF file as output after performing all of the filtering operations. The <strong><code>--recode-INFO-all</code></strong> tells VCFtools to keep all INFO fields from the input VCF in the new output file.</p></li>
-<li><p><strong><code>--min-alleles 2 --max-alleles 2</code></strong>: This filters the data to include only bi-allelic sites, meaning sites that have exactly two alleles (one could be the reference allele, and the other is the variant allele).</p></li>
-<li><p><strong><code>--max-missing 0.5</code></strong>: This is a filter that sets a maximum allowable proportion of individuals with missing data at each site. In this case, it discards any variants where more than 50% of the data is missing.</p></li>
-<li><p><strong><code>--mac 2</code></strong>: This option tells the program to only include sites with a Minor Allele Count of at least 2. This means that the less common variant must appear at least twice in your sample.</p></li>
-<li><p><strong><code>--out ../output/51-SNPs/EpiDiv_merged.f</code></strong>: This is the location and prefix of the output files. Several files might be generated depending on the options you used, and they’ll all start with this prefix.</p></li>
-</ul>
-<p>So, in summary, this command is running a filtering process on a VCF file, and then saving a new VCF file that only includes bi-allelic sites (those with exactly 2 alleles) where less than 50% of the data is missing and the less common variant appears at least twice. The new file will keep all the INFO fields from the original VCF.</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/vcftools-0.1.16/bin/vcftools</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-2">--vcf ../output/51-SNPs/EpiDiv_merged.vcf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-3">--recode <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--recode-INFO-all</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-4">--min-alleles 2 <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--max-alleles</span> 2 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-5">--max-missing 0.5 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-6">--mac 2 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-7">--out ../output/51-SNPs/EpiDiv_merged.f.recode.vcf</span></code></pre></div>
-<p>After filtering, kept 26 out of 26 Individuals Outputting VCF file… After filtering, kept 2343637 out of a possible 144873997 Sites Run Time = 897.00 seconds</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-20</span> ../output/51-SNPs/EpiDiv_merged.f.recode.vcf</span></code></pre></div>
-<pre><code>## ##fileformat=VCFv4.2
-## ##FILTER=&lt;ID=PASS,Description="All filters passed"&gt;
-## ##fileDate=20220924
-## ##source=freeBayes v1.3.2-dirty
-## ##reference=GCF_002022765.2_C_virginica-3.0_genomic.fa
-## ##contig=&lt;ID=NC_035780.1,length=65668440&gt;
-## ##contig=&lt;ID=NC_035781.1,length=61752955&gt;
-## ##contig=&lt;ID=NC_035782.1,length=77061148&gt;
-## ##contig=&lt;ID=NC_035783.1,length=59691872&gt;
-## ##contig=&lt;ID=NC_035784.1,length=98698416&gt;
-## ##contig=&lt;ID=NC_035785.1,length=51258098&gt;
-## ##contig=&lt;ID=NC_035786.1,length=57830854&gt;
-## ##contig=&lt;ID=NC_035787.1,length=75944018&gt;
-## ##contig=&lt;ID=NC_035788.1,length=104168038&gt;
-## ##contig=&lt;ID=NC_035789.1,length=32650045&gt;
-## ##contig=&lt;ID=NC_007175.2,length=17244&gt;
-## ##phasing=none
-## ##commandline="freebayes -f GCF_002022765.2_C_virginica-3.0_genomic.fa 12M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam --strict-vcf --no-partial-observations --report-genotype-likelihood-max --genotype-qualities --min-repeat-entropy 1 --min-coverage 0 --min-base-quality 1 --region NC_035780.1:0-100000"
-## ##INFO=&lt;ID=NS,Number=1,Type=Integer,Description="Number of samples with data"&gt;
-## ##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total read depth at the locus"&gt;</code></pre>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">fgrep</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"R1_val_1"</span> ../output/51-SNPs/EpiDiv_merged.f.recode.vcf</span></code></pre></div>
-</section>
-</section>
-<section id="ngsrelate" class="level1">
-<h1>1 NgsRelate</h1>
-<p>a la</p>
-<p><a href="https://github.com/RobertsLab/resources/issues/1681#issuecomment-1642557685" class="uri">https://github.com/RobertsLab/resources/issues/1681#issuecomment-1642557685</a></p>
-<p>chatGPT</p>
-<p>First, let’s understand what these tools are.</p>
-<ol type="1">
-<li><p><strong>ngsRelate</strong>: This is a software package used for inferring pairwise relatedness from next-generation sequencing (NGS) data. It can calculate different coefficients of relatedness as well as inbreeding coefficients.</p></li>
-<li><p><strong>spaa</strong>: This is an R package that can calculate the genomic relationship matrix (GRM) and genomic kinship matrix (GKM) using SNP array and NGS data.</p></li>
-</ol>
-<p>As of version 2, NgsRelate can parse BCF/VCF files using htslib with the following command:</p>
-<pre><code>./ngsrelate  -h my.VCF.gz -O vcf.res
-By default, NgsRelate will estimate the allele frequencies using the individuals provided in the VCF files. Allele frequencies from the INFO field can used be used instead using -A TAG. The TAG usually take the form of AF or AF1 but can be set to anything. By default the PL data (Phred-scaled likelihoods for genotypes) is parsed, however, the called genotypes can also be used instead with the -T GT option. If called genotypes are being used, the software requires an additional argument (-c 1). If using -c 2, ngsRelate calls genotypes assuming hardy-weinberg.</code></pre>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cut</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-d</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">','</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-f</span> 1 <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;&lt;EOF</span></span>
-<span id="cb12-2"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">12M,S12M,Exposed,M,3,EM05</span></span>
-<span id="cb12-3"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">13M,S13M,Control,M,1,CM04</span></span>
-<span id="cb12-4"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">16F,S16F,Control,F,2,CF05</span></span>
-<span id="cb12-5"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">19F,S19F,Control,F,2,CF08</span></span>
-<span id="cb12-6"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">22F,S22F,Exposed,F,4,EF02</span></span>
-<span id="cb12-7"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">23M,S23M,Exposed,M,3,EM04</span></span>
-<span id="cb12-8"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">29F,S29F,Exposed,F,4,EF07</span></span>
-<span id="cb12-9"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">31M,S31M,Exposed,M,3,EM06</span></span>
-<span id="cb12-10"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">35F,S35F,Exposed,F,4,EF08</span></span>
-<span id="cb12-11"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">36F,S36F,Exposed,F,4,EF05</span></span>
-<span id="cb12-12"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">39F,S39F,Control,F,2,CF06</span></span>
-<span id="cb12-13"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">3F,S3F,Exposed,F,4,EF06</span></span>
-<span id="cb12-14"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">41F,S41F,Exposed,F,4,EF03</span></span>
-<span id="cb12-15"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">44F,S44F,Control,F,2,CF03</span></span>
-<span id="cb12-16"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">48M,S48M,Exposed,M,3,EM03</span></span>
-<span id="cb12-17"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">50F,S50F,Exposed,F,4,EF01</span></span>
-<span id="cb12-18"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">52F,S52F,Control,F,2,CF07</span></span>
-<span id="cb12-19"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">53F,S53F,Control,F,2,CF02</span></span>
-<span id="cb12-20"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">54F,S54F,Control,F,2,CF01</span></span>
-<span id="cb12-21"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">59M,S59M,Exposed,M,3,EM01</span></span>
-<span id="cb12-22"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">64M,S64M,Control,M,1,CM05</span></span>
-<span id="cb12-23"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">6M,S6M,Control,M,1,CM02</span></span>
-<span id="cb12-24"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">76F,S76F,Control,F,2,CF04</span></span>
-<span id="cb12-25"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">77F,S77F,Exposed,F,4,EF04</span></span>
-<span id="cb12-26"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">7M,S7M,Control,M,1,CM01</span></span>
-<span id="cb12-27"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">9M,S9M,Exposed,M,3,EM02</span></span>
-<span id="cb12-28"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">EOF</span></span></code></pre></div>
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/ngsRelate/ngsRelate/ngsRelate</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb13-2">-h ../output/51-SNPs/EpiDiv_merged.f.recode.vcf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb13-3">-T GT <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb13-4">-c 1 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb13-5">-z ../output/53-revisit-epi-SNPs/sample.txt <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb13-6">-O ../output/53-revisit-epi-SNPs/vcf.relatedness</span></code></pre></div>
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-2</span> ../output/53-revisit-epi-SNPs/vcf.relatedness</span></code></pre></div>
-<pre><code>## a    b   ida idb nSites  J9  J8  J7  J6  J5  J4  J3  J2  J1  rab Fa  Fb  theta   inbred_relatedness_1_2  inbred_relatedness_2_1  fraternity  identity    zygosity    2of3_IDB    F_diff_a_b  loglh   nIter   bestoptimll coverage    2dsfs   R0  R1  KING    2dsfs_loglike   2dsfsf_niter
-## 0    1   12M 13M 1038400 0.799793    0.000003    0.051831    0.000002    0.000000    0.000000    0.000000    0.148370    0.000000    0.051833    0.148370    0.148372    0.025916    0.000000    0.000000    0.200201    0.000000    0.200201    0.200204    -0.000001   -1663336.404155 134 -1  0.493654    6.306127e-02,2.031383e-02,6.122145e-02,2.076443e-02,1.558777e-01,1.402793e-01,5.729257e-02,1.300012e-01,3.511883e-01    0.760301    0.362614    -0.130234   -1948248.937260 10</code></pre>
-<section id="output-format" class="level2">
-<h2 class="anchored" data-anchor-id="output-format">1.1 Output format</h2>
-<pre><code>a  b  nSites  J9        J8        J7        J6        J5        J4        J3        J2        J1        rab       Fa        Fb        theta     inbred_relatedness_1_2  inbred_relatedness_2_1  fraternity  identity  zygosity  2of3IDB   FDiff      loglh           nIter  coverage  2dsfs                                                                             R0        R1        KING       2dsfs_loglike   2dsfsf_niter
-0  1  99927   0.384487  0.360978  0.001416  0.178610  0.071681  0.000617  0.002172  0.000034  0.000005  0.237300  0.002828  0.250330  0.127884  0.001091                0.035846                0.001451    0.000005  0.001456  0.345411  -0.088997  -341223.335664  103    0.999270  0.154920,0.087526,0.038724,0.143087,0.155155,0.139345,0.038473,0.087632,0.155138  0.497548  0.290124  0.000991   -356967.175857  7</code></pre>
-<p>The first two columns contain indices of the two individuals used for the analysis. The third column is the number of genomic sites considered. The following nine columns are the maximum likelihood (ML) estimates of the nine jacquard coefficients, where K0==J9; K1==J8; K2==J7 in absence of inbreeding. Based on these Jacquard coefficients, NgsRelate calculates 11 summary statistics:</p>
-<ol start="13" type="1">
-<li><p>rab is the pairwise relatedness <code>(J1+J7+0.75*(J3+J5)+.5*J8)</code> <a href="https://academic.oup.com/jhered/article/106/1/20/2961876">Hedrick et al</a></p></li>
-<li><p>Fa is the inbreeding coefficient of individual a <code>J1+J2+J3+J4</code> <a href="https://www.springer.com/gp/book/9783642884177">Jacquard</a></p></li>
-<li><p>Fb is the inbreeding coefficient of individual b <code>J1+J2+J5+J6</code> <a href="https://www.springer.com/gp/book/9783642884177">Jacquard</a></p></li>
-<li><p>theta is the coefficient of kinship <code>J1 + 0.5*(J3+J5+J7) + 0.25*J8)</code> <a href="https://www.springer.com/gp/book/9783642884177">Jacquard</a></p></li>
-<li><p>inbred_relatedness_1_2 <code>J1+0.5*J3</code> <a href="http://www.genetics.org/content/206/1/105">Ackerman et al</a></p></li>
-<li><p>inbred_relatedness_2_1 <code>J1+0.5*J5</code> <a href="http://www.genetics.org/content/206/1/105">Ackerman et al</a></p></li>
-<li><p>fraternity <code>J2+J7</code> <a href="http://www.genetics.org/content/206/1/105">Ackerman et al</a></p></li>
-<li><p>identity <code>J1</code> <a href="http://www.genetics.org/content/206/1/105">Ackerman et al</a></p></li>
-<li><p>zygosity <code>J1+J2+J7</code> <a href="http://www.genetics.org/content/206/1/105">Ackerman et al</a></p></li>
-<li><p>Two-out-of-three IBD <code>J1+J2+J3+J5+J7+0.5*(J4+J6+J8)</code> <a href="https://www.sciencedirect.com/science/article/pii/S0040580913001123">Miklos csuros</a></p></li>
-<li><p>Inbreeding difference <code>0.5*(J4-J6)</code> <a href="https://www.sciencedirect.com/science/article/pii/S0040580913001123">Miklos csuros</a></p></li>
-<li><p>the log-likelihood of the ML estimate.</p></li>
-<li><p>number of EM iterations. If a <code>-1</code> is displayed. A boundary estimate had a higher likelihood.</p></li>
-<li><p>If differs from <code>-1</code>, a boundary estimate had a higher likelihood. Reported loglikelihood should be highly similar to the corresponding value reported in <code>loglh</code></p></li>
-<li><p>fraction of sites used for the ML estimate</p></li>
-</ol>
-<p>The remaining columns relate to statistics based on a 2D-SFS.</p>
-<ol start="28" type="1">
-<li><p>2dsfs estimates using the same methodology as implemented in realSFS, see <a href="https://github.com/ANGSD/angsd">ANGSD</a></p></li>
-<li><p>R0 <a href="https://www.biorxiv.org/content/early/2018/08/31/260497">Waples et al</a></p></li>
-<li><p>R1 <a href="https://www.biorxiv.org/content/early/2018/08/31/260497">Waples et al</a></p></li>
-<li><p>KING <a href="https://www.biorxiv.org/content/early/2018/08/31/260497">Waples et al</a></p></li>
-<li><p>the log-likelihood of the 2dsfs estimate.</p></li>
-<li><p>number of iterations for 2dsfs estimate</p></li>
-</ol>
-<p>You can also input a file with the IDs of the individuals (on ID per line), using the <code>-z</code> option, in the same order as in the file <code>filelist</code> used to make the genotype likelihoods or the VCF file. If you do the output will also contain these IDs as column 3 and 4.</p>
-<p>Note that in some cases nIter is -1. This indicates that values on the boundary of the parameter space had a higher likelihood than the values achieved using the EM-algorithm (ML methods sometimes have trouble finding the ML estimate when it is on the boundary of the parameter space, and we therefore test the boundary values explicitly and output these if these have the highest likelihood)</p>
-<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1">df <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read.table</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/53-revisit-epi-SNPs/vcf.relatedness"</span>,<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">header =</span> T)</span>
-<span id="cb17-2">dfrab <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> df[,<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ida"</span>,<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"idb"</span>,<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"rab"</span>)]</span>
-<span id="cb17-3">distrab <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">as.matrix</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list2dist</span>(dfrab))</span>
-<span id="cb17-4"></span>
-<span id="cb17-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">write.table</span>(distrab,<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">file=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/53-revisit-epi-SNPs/epiMATRIX_mbd_rab.txt"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col.names =</span> T, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">row.names =</span> T, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\t</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Plot the heatmap</span></span>
-<span id="cb18-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">heatmap</span>(distrab, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">Rowv =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">NA</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">Colv =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">NA</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cm.colors</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">256</span>), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">scale =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"none"</span>)</span></code></pre></div>
-<p><img src="https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-12-1.png?raw=true" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Perform hierarchical clustering</span></span>
-<span id="cb19-2">hc <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">hclust</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">dist</span>(distrab))</span>
-<span id="cb19-3"></span>
-<span id="cb19-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Plot the dendrogram (cladogram)</span></span>
-<span id="cb19-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">plot</span>(hc, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">hang =</span> <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">main =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Cladogram"</span>)</span>
-<span id="cb19-6"></span>
-<span id="cb19-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># If you want to add labels to the leaves of the tree (optional):</span></span>
-<span id="cb19-8">labels <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rownames</span>(distrab)</span>
-<span id="cb19-9"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rect.hclust</span>(hc, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">k =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">6</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">border =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gray"</span>)</span></code></pre></div>
-<p><img src="https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-13-1.png?raw=true" style="display: block; margin: auto;"></p>
-
-
-<!-- -->
-
-</section>
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{roberts2023,
-  author = {Roberts, Steven},
-  title = {Epidiverse {GRM}},
-  date = {2023-07-24},
-  url = {https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/},
-  langid = {en}
-}
-</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-roberts2023" class="csl-entry quarto-appendix-citeas">
-Roberts, Steven. 2023. <span>“Epidiverse GRM.”</span> July 24, 2023. <a href="https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/">https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/</a>.
-</div></div></section></div> ]]></description>
-  <category>ceabigr</category>
-  <category>R</category>
-  <category>tidyverse</category>
-  <category>ggplot</category>
-  <category>snp</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/</guid>
-  <pubDate>Mon, 24 Jul 2023 07:00:00 GMT</pubDate>
-  <media:content url="https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-12-1.png?raw=true" medium="image"/>
 </item>
 </channel>
 </rss>
