@@ -1,0 +1,43 @@
+---
+title: "Huddl Launch"
+description: "First of season day 3 larvae enter"
+categories: [oyster, aquaculture]
+#citation: 
+date: 06-17-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2024-06-15_17-21-46.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code analyses
+)
+```
+
+Went out to the hatchery for a day 3 drop of commercial spawn. Larvae were in 2 5k tanks. The night before there was a bit of a banjo filter clog but it seems no larvae were lost.
+
+We were able to get 1 Million larvae. Those that were caught on 40um filter. The hatchery kept everything on 70 & 60 um filters which came out to be about 66 million.
+
+Huddls were at about 28C with algae pump set at 30 and algae tank getting 24 liters of algae (topped of with water). Flourometer counts were quite high \~40 when larvae were added but we cannot figure out how it got that high. EDTA (0.04g) was added to 50 gallon header. Commercial group will be left in tanks for 8 days. We will try something similar.
