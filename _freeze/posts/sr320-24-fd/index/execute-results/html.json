@@ -1,0 +1,15 @@
+{
+  "hash": "692b790da6b7710f87a9319eac0f77ad",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Huddl Launch\"\ndescription: \"First of season day 3 larvae enter\"\ncategories: [oyster, aquaculture]\n#citation: \ndate: 06-17-2024\nimage: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_ChatGPT_2024-06-17_10-21-36.png # finding a good image\n\nauthor:\n  - name: Steven Roberts\n    url: \n    orcid: 0000-0001-8302-1138\n    affiliation: Professor, UW - School of Aquatic and Fishery Sciences\n    affiliation-url: https://robertslab.info\n  #url:  # self-defined\ndraft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!\nformat:\n  html:\n    code-fold: FALSE\n    code-tools: true\n    code-copy: true\n    highlight-style: github\n    code-overflow: wrap\n---\n\n\n\n\nWent out to the hatchery for a day 3 drop of commercial spawn. Larvae were in 2 5k tanks. The night before there was a bit of a banjo filter clog but it seems no larvae were lost.\n\n![larvae](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-18-50.png){width=\"75%\"}\n\nWe were able to get 1 Million larvae. Those that were caught on 40um filter. The hatchery kept everything on 70 & 60 um filters which came out to be about 66 million.\n\n![larvae](<http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-06-00.png>){width=\"75%\"}\n\nHuddls were at about 28C with algae pump set at 30 and algae tank getting 24 liters of algae (topped of with water). Flourometer counts were quite high \\~40 when larvae were added but we cannot figure out how it got that high. EDTA (0.04g) was added to 50 gallon header. Commercial group will be left in tanks for 8 days. We will try something similar.\n\n![system](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-17-35.png){width=\"75%\"}\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
