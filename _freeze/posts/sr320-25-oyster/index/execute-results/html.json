@@ -1,0 +1,14 @@
+{
+  "hash": "a1f300d6307346d7a81ac8d83408fca4",
+  "result": {
+    "markdown": "---\ntitle: \"Oyster bath\"\ndescription: \"When is it too hot?\"\ncategories: [oyster, temperature]\n#citation: \ndate: 06-20-2024\nimage: http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-20-56.png # finding a good image\n\nauthor:\n  - name: Steven Roberts\n    url: \n    orcid: 0000-0001-8302-1138\n    affiliation: Professor, UW - School of Aquatic and Fishery Sciences\n    affiliation-url: https://robertslab.info\n  #url:  # self-defined\ndraft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!\nformat:\n  html:\n    code-fold: FALSE\n    code-tools: true\n    code-copy: true\n    highlight-style: github\n    code-overflow: wrap\n---\n\n\n\n\nOn the 17th Madeline set up an incubator to see how long it would take oysters to die- [POST](https://genefish.wordpress.com/2024/06/17/6-17-24/)\n\n\nOn the 18th we saw no signs of death but added oysters in water.. in beakers and 12-well plate \n\n![incubator](http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-27-11.png){width=\"70%\"}\n\nCamera monitoring of adults has yet to observe gapping\n\nOn the 20th there was death likely in dry oysters based on smell but no visual indication of gaping. \n\nThe oysters in the 12 well plate had gapers. 5/6 of oysters in freshwater were gaping and 3/6 of oyster in seawater were gaping. \n*This equates to gaping at 48 hours*. \n\nOn the same day oysters were placed in 12 well plate and clear tupperware.  \n\n![incubator](http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-32-00.png){width=\"70%\"}\n\n\nNote that we went with both \"large\" and \"small\" in 12-well plate. The last cohort in the 12-well were all \"small\".\n\nOyster were check by Kathleen on June 21 with no gaping. \n\nCamera shows no gaping on adults on 21.\n\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

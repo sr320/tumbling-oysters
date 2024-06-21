@@ -1,0 +1,65 @@
+---
+title: "Oyster bath"
+description: "When is it too hot?"
+categories: [oyster, temperature]
+#citation: 
+date: 06-20-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-20-56.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code analyses
+)
+```
+
+On the 17th Madeline set up an incubator to see how long it would take oysters to die- [POST](https://genefish.wordpress.com/2024/06/17/6-17-24/)
+
+
+On the 18th we saw no signs of death but added oysters in water.. in beakers and 12-well plate 
+
+![incubator](http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-27-11.png){width="70%"}
+
+Camera monitoring of adults has yet to observe gapping
+
+On the 20th there was death likely in dry oysters based on smell but no visual indication of gaping. 
+
+The oysters in the 12 well plate had gapers. 5/6 of oysters in freshwater were gaping and 3/6 of oyster in seawater were gaping. 
+*This equates to gaping at 48 hours*. 
+
+On the same day oysters were placed in 12 well plate and clear tupperware.  
+
+![incubator](http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-32-00.png){width="70%"}
+
+
+Note that we went with both "large" and "small" in 12-well plate. The last cohort in the 12-well were all "small".
+
+Oyster were check by Kathleen on June 21 with no gaping. 
+
+Camera shows no gaping on adults on 21.
+
+
+
