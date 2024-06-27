@@ -1,0 +1,83 @@
+---
+title: "Double header"
+description: "larvae, ploidy, and 10k seed start"
+categories: [oyster, temperature]
+#citation: 
+date: 06-26-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-12-25.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code analyses
+)
+```
+
+Did a Tuesday / Wednesday B2B. Tuesday - focused on finding Kathleen diploids and triploids.
+
+## Ploidy
+
+See [Kathleen's post](https://shedurkin.github.io/Roberts-LabNotebook/posts/projects/pacific_oyster/2024_06_25_Point_Whitney.html) for more details.
+
+::: callout-warning
+## TLDR: Kathleens's post
+
+The experiment took place at Point Whitney, and involved selecting, counting, measuring, and segregating 200 oysters each from diploid and triploid groups into different treatment and control groups. The oysters ranged in size from 20mm to 60mm, and notable observations included size differences between the groups and instances of mortality and fused oysters.
+
+The oysters were separated into four treatment bags, two each for diploids and triploids, without individual tags but with identifiers on the bags to distinguish among treatment groups and controls. The stress hardening plan involves subjecting these oysters to elevated temperatures (35°C) for four-hour sessions, three times a week for two weeks, with the aim of studying their response to stress.
+:::
+
+On Wednesday, I exposed the treated cohorts to 35°C for 4 hours using right white tub. Oyster are outside in 3-holer.
+
+## Also did some larvae work.
+
+Tuesday 3PM I checked the parameter. They were only single digits, around two or five. The header tank was almost three-quarters full. What I did is I increased the flow water input into the three close uhddles. So now it's a steady stream. Did not touch the flow of the water coming into the back three. And I doubled the pump rate. It was at 40 and now it is at 80. \[water букetting\] The other thing, I realized that if you increase the flow, the huddles cannot take it. While I didn't clean the huddles, I decided for the top three that were getting the higher flow that I would change them out from 40 microns to 75 microns.
+
+Wednesday 11AM First row was now reading 50 on flourometer. Back row 2,2, 20. Went ahead and changed back to 75um filters. Noting flow rate is still different between front and back rows.
+
+## 10k seed start
+
+Seed were divided into 10 bags.
+
+![seed](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-26-59.png){width="70%"}
+
+Plan is to do 5 treatments - Tagging on to Kathleens
+
+| Bags    | Treatments        |
+|---------|-------------------|
+| 14 & 18 | 35C for 1hour     |
+|         | Freshwater 1 hour |
+|         |                   |
+|         |                   |
+|         | control           |
+
+Bags stay in lagoon.
+
+![lagoon](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-31-57.png){width="70%"}
+
+## Hatchery planner
+
+[google-sheet](https://docs.google.com/spreadsheets/d/1CRWMH9Tk5LQFAhCYJin3_Epk1yLwI7kGytP3hRK2vZU/edit?usp=sharing)

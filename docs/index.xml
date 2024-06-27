@@ -6,16 +6,116 @@
       version="2.0">
 <channel>
 <title>Tumbling Oysters</title>
-<link>https://sr320.github.io/tumbling-oysters/index.html</link>
+<link>https://sr320.github.io/tumbling-oysters/</link>
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.3.433</generator>
-<lastBuildDate>Thu, 20 Jun 2024 07:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.555</generator>
+<lastBuildDate>Wed, 26 Jun 2024 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Double header</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Did a Tuesday / Wednesday B2B. Tuesday - focused on finding Kathleen diploids and triploids.</p>
+<section id="ploidy" class="level2">
+<h2 class="anchored" data-anchor-id="ploidy">Ploidy</h2>
+<p>See <a href="https://shedurkin.github.io/Roberts-LabNotebook/posts/projects/pacific_oyster/2024_06_25_Point_Whitney.html">Kathleen’s post</a> for more details.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+TLDR: Kathleens’s post
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The experiment took place at Point Whitney, and involved selecting, counting, measuring, and segregating 200 oysters each from diploid and triploid groups into different treatment and control groups. The oysters ranged in size from 20mm to 60mm, and notable observations included size differences between the groups and instances of mortality and fused oysters.</p>
+<p>The oysters were separated into four treatment bags, two each for diploids and triploids, without individual tags but with identifiers on the bags to distinguish among treatment groups and controls. The stress hardening plan involves subjecting these oysters to elevated temperatures (35°C) for four-hour sessions, three times a week for two weeks, with the aim of studying their response to stress.</p>
+</div>
+</div>
+<p>On Wednesday, I exposed the treated cohorts to 35°C for 4 hours using right white tub. Oyster are outside in 3-holer.</p>
+</section>
+<section id="also-did-some-larvae-work." class="level2">
+<h2 class="anchored" data-anchor-id="also-did-some-larvae-work.">Also did some larvae work.</h2>
+<p>Tuesday 3PM I checked the parameter. They were only single digits, around two or five. The header tank was almost three-quarters full. What I did is I increased the flow water input into the three close uhddles. So now it’s a steady stream. Did not touch the flow of the water coming into the back three. And I doubled the pump rate. It was at 40 and now it is at 80. [water букetting] The other thing, I realized that if you increase the flow, the huddles cannot take it. While I didn’t clean the huddles, I decided for the top three that were getting the higher flow that I would change them out from 40 microns to 75 microns.</p>
+<p>Wednesday 11AM First row was now reading 50 on flourometer. Back row 2,2, 20. Went ahead and changed back to 75um filters. Noting flow rate is still different between front and back rows.</p>
+</section>
+<section id="k-seed-start" class="level2">
+<h2 class="anchored" data-anchor-id="k-seed-start">10k seed start</h2>
+<p>Seed were divided into 10 bags.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-26-59.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>seed</figcaption>
+</figure>
+</div>
+<p>Plan is to do 5 treatments - Tagging on to Kathleens</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Bags</th>
+<th>Treatments</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>14 &amp; 18</td>
+<td>35C for 1hour</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Freshwater 1 hour</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>control</td>
+</tr>
+</tbody>
+</table>
+<p>Bags stay in lagoon.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-31-57.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>lagoon</figcaption>
+</figure>
+</div>
+</section>
+<section id="hatchery-planner" class="level2">
+<h2 class="anchored" data-anchor-id="hatchery-planner">Hatchery planner</h2>
+<p><a href="https://docs.google.com/spreadsheets/d/1CRWMH9Tk5LQFAhCYJin3_Epk1yLwI7kGytP3hRK2vZU/edit?usp=sharing">google-sheet</a></p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>oyster</category>
+  <category>temperature</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/</guid>
+  <pubDate>Wed, 26 Jun 2024 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-12-25.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Oyster bath</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -24,8 +124,8 @@
 <p>On the 18th we saw no signs of death but added oysters in water.. in beakers and 12-well plate</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/http:/gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-27-11.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">incubator</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-27-11.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>incubator</figcaption>
 </figure>
 </div>
 <p>Camera monitoring of adults has yet to observe gapping</p>
@@ -34,8 +134,8 @@
 <p>On the same day oysters were placed in 12 well plate and clear tupperware.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/http:/gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-32-00.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">incubator</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-32-00.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>incubator</figcaption>
 </figure>
 </div>
 <p>Note that we went with both “large” and “small” in 12-well plate. The last cohort in the 12-well were all “small”.</p>
@@ -49,15 +149,16 @@
  ]]></description>
   <category>oyster</category>
   <category>temperature</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/</guid>
   <pubDate>Thu, 20 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-20-56.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Huddl Launch</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -65,22 +166,22 @@
 <p>Went out to the hatchery for a day 3 drop of commercial spawn. Larvae were in 2 5k tanks. The night before there was a bit of a banjo filter clog but it seems no larvae were lost.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-18-50.png" class="img-fluid figure-img" style="width:75.0%"></p>
-<figcaption class="figure-caption">larvae</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-18-50.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>larvae</figcaption>
 </figure>
 </div>
 <p>We were able to get 1 Million larvae. Those that were caught on 40um filter. The hatchery kept everything on 70 &amp; 60 um filters which came out to be about 66 million.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-06-00.png" class="img-fluid figure-img" style="width:75.0%"></p>
-<figcaption class="figure-caption">larvae</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-06-00.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>larvae</figcaption>
 </figure>
 </div>
 <p>Huddls were at about 28C with algae pump set at 30 and algae tank getting 24 liters of algae (topped of with water). Flourometer counts were quite high ~40 when larvae were added but we cannot figure out how it got that high. EDTA (0.04g) was added to 50 gallon header. Commercial group will be left in tanks for 8 days. We will try something similar.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-17-35.png" class="img-fluid figure-img" style="width:75.0%"></p>
-<figcaption class="figure-caption">system</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-17-35.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>system</figcaption>
 </figure>
 </div>
 
@@ -91,15 +192,16 @@
  ]]></description>
   <category>oyster</category>
   <category>aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/</guid>
   <pubDate>Mon, 17 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_ChatGPT_2024-06-17_10-21-36.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Repro Repro</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -108,8 +210,8 @@
 <p>Based on the following GO Term</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_QuickGOTerm_GO0022414_2024-06-15_17-30-33.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">GO:0022414</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_QuickGOTerm_GO0022414_2024-06-15_17-30-33.png" class="img-fluid figure-img"></p>
+<figcaption>GO:0022414</figcaption>
 </figure>
 </div>
 <p><a href="https://www.ebi.ac.uk/QuickGO/term/GO:0022414" class="uri">https://www.ebi.ac.uk/QuickGO/term/GO:0022414</a></p>
@@ -439,15 +541,16 @@ font-style: inherit;">head</span>(annot_tab)</span></code></pre></div>
  ]]></description>
   <category>blast</category>
   <category>gene ontology</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</guid>
   <pubDate>Sat, 15 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2024-06-15_17-21-46.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Spring Cleaning</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -456,26 +559,26 @@ font-style: inherit;">head</span>(annot_tab)</span></code></pre></div>
 <section id="new-bags" class="level1">
 <h1>New bags</h1>
 <p>On the near 10-holers there were 5 bags that were fouled and likely our PH stocks</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-15-13.png" class="img-fluid" style="width:50.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-15-13.png" class="img-fluid" style="width:50.0%"></p>
 <p>In A there were two bags re-labelled with White Tags: 31 and 2.</p>
 <p>In B there were two bags re-labelled with White Tags: 13 and 17. 13 had blue tie wraps on top and bottom (and black on top). 17 had black tie wrap at top. It is assummed blue are BLUE.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-21-35.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">bluewraps</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-21-35.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>bluewraps</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-22-38.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">clean</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-22-38.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>clean</figcaption>
 </figure>
 </div>
 <p>I also cleaned an additonal bag and labelled: White tag: 8</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-24-16.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">bags-trays</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-24-16.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>bags-trays</figcaption>
 </figure>
 </div>
 <p>More inventory notes in <a href="https://ahuffmyer.github.io/ASH_Putnam_Lab_Notebook/Point-Whitney-Field-Day-June-12-2024/">Ariana’s Notebook</a>.</p>
@@ -519,7 +622,7 @@ Toad = F14 (3n)</p>
 <section id="heath-trays" class="level1">
 <h1>Heath Trays</h1>
 <p>Five 2024 USDA family were placed in heath trays. (see pic above)</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-33-15.png" class="img-fluid" style="width:50.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-33-15.png" class="img-fluid" style="width:50.0%"></p>
 </section>
 <section id="spawning" class="level1">
 <h1>Spawning</h1>
@@ -558,7 +661,7 @@ TLDR: Ariana’s post
 </ol>
 </div>
 </div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-35-23.png" class="img-fluid" style="width:50.0%"> <img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-36-36.png" class="img-fluid" style="width:50.0%" alt="eggs"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-35-23.png" class="img-fluid" style="width:50.0%"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-36-36.png" class="img-fluid" style="width:50.0%" alt="eggs"></p>
 
 
 <!-- -->
@@ -568,15 +671,16 @@ TLDR: Ariana’s post
  ]]></description>
   <category>oyster</category>
   <category>aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/</guid>
   <pubDate>Wed, 12 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-12-18.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Seed travels</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -584,10 +688,10 @@ TLDR: Ariana’s post
 <p>tldr: We deployed seed in Wescott Bay.</p>
 <div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="http://gannet.fish.washington.edu/seashell/snaps/IMG_6670.mov"></video></div>
 <p>Seed from Point Whitney were picked up on Thursday afternoon and driven up to Wescott Bay Friday morning. Arrived about 11 am. For each bag Grace tagged 15 oysters. oyster where deployed in bottom sitting bags in the schema below.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/http:/gannet.fish.washington.edu/seashell/snaps/IMG_6661.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/IMG_6661.png" class="img-fluid"></p>
 <p>More shots of the deployment.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-29-21.png" class="img-fluid"></p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-30-45.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-29-21.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-30-45.png" class="img-fluid"></p>
 
 
 <!-- -->
@@ -596,21 +700,22 @@ TLDR: Ariana’s post
  ]]></description>
   <category>oyster</category>
   <category>aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/</guid>
   <pubDate>Fri, 07 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-13-56.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>HiSat that SeaStar</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/</link>
   <description><![CDATA[ 
 
 
 
 
+
 <p>While there are still some questions related to overall alignment rates and sample specific alignment rates, it is possible that the mess of gtf might be overcome.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" class="img-fluid"></p>
 <p>The problem seemed to have arisen based on the fact NCBI renamed chromosomes whereas annotations (sitting on Dryad) have different IDs. Using a table on NCBI and realizing from author the numbers in their IDs corresponded to chromosome number.</p>
 <section id="making-a-new-gtf" class="level1">
 <h1>Making a new GTF</h1>
@@ -618,25 +723,9 @@ TLDR: Ariana’s post
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
-<span id="cb1-2">gtfbttr <span class="ot" style="color: #003B4F;
+<span id="cb1-2"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read.table</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../data/augustus.hints.gtf"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\t</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">quote =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>)</span>
+font-style: inherit;">gtfbttr &lt;- read.table("../data/augustus.hints.gtf", sep = "\t", quote = "")</span></span>
 <span id="cb1-3"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
@@ -644,39 +733,15 @@ font-style: inherit;">```</span></span></code></pre></div>
 <div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
-<span id="cb2-2">gtfch <span class="ot" style="color: #003B4F;
+<span id="cb2-2"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">&lt;-</span> gtfbttr <span class="sc" style="color: #5E5E5E;
+font-style: inherit;">gtfch &lt;- gtfbttr %&gt;%</span></span>
+<span id="cb2-3"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb2-3">  <span class="fu" style="color: #4758AB;
+font-style: inherit;">  mutate(Chromosome.name = str_extract(V1, "(?&lt;=\\.)\\d+"),  # Extract the number after the dot</span></span>
+<span id="cb2-4"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">Chromosome.name =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_extract</span>(V1, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"(?&lt;=</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">.)</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">d+"</span>),  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Extract the number after the dot</span></span>
-<span id="cb2-4">         <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">Chromosome.name =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_remove_all</span>(Chromosome.name, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"^0+"</span>))  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Remove leading zeros</span></span>
+font-style: inherit;">         Chromosome.name = str_remove_all(Chromosome.name, "^0+"))  # Remove leading zeros</span></span>
 <span id="cb2-5"></span>
 <span id="cb2-6"><span class="in" style="color: #5E5E5E;
 background-color: null;
@@ -685,58 +750,18 @@ font-style: inherit;">```</span></span></code></pre></div>
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
-<span id="cb3-2">gtfch <span class="sc" style="color: #5E5E5E;
+<span id="cb3-2"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb3-3"><span class="fu" style="color: #4758AB;
+font-style: inherit;">gtfch %&gt;%</span></span>
+<span id="cb3-3"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">left_join</span>(ncbi, <span class="at" style="color: #657422;
+font-style: inherit;">left_join(ncbi, by = "Chromosome.name") %&gt;%</span></span>
+<span id="cb3-4"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
+font-style: inherit;">select(GenBank.seq.accession, V2, V3, V4, V5, V6, V7, V8, V9) %&gt;% filter(!is.na(GenBank.seq.accession)) %&gt;%</span></span>
+<span id="cb3-5"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">"Chromosome.name"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb3-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">select</span>(GenBank.seq.accession, V2, V3, V4, V5, V6, V7, V8, V9) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">is.na</span>(GenBank.seq.accession)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb3-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">write.table</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">file =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../analyses/12-fix-gff/mod_augustus.gtf"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\t</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">quote =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">row.names =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col.names =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
+font-style: inherit;">write.table(file = "../analyses/12-fix-gff/mod_augustus.gtf", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)</span></span>
 <span id="cb3-6"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
@@ -805,7 +830,7 @@ font-style: inherit;">\</span></span>
 <section id="genome" class="level1">
 <h1>Genome</h1>
 <p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_032158295.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_032158295.1/</a></p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Pycnopodia_helianthoides_genome_assembly_ASM3215829v1_-_NCBI_-_NLM_2024-05-25_15-32-13.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Pycnopodia_helianthoides_genome_assembly_ASM3215829v1_-_NCBI_-_NLM_2024-05-25_15-32-13.png" class="img-fluid"></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="bu" style="color: null;
 background-color: null;
@@ -1242,15 +1267,16 @@ font-style: inherit;">\</span></span>
  ]]></description>
   <category>hisat</category>
   <category>seastar</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/</guid>
   <pubDate>Mon, 03 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>xargs</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1312,15 +1338,16 @@ font-style: inherit;">&gt; ../analyses/10-hisat-deseq2/{}_hisat.stdout 2&gt; ../
 
  ]]></description>
   <category>xargs</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/</guid>
   <pubDate>Mon, 27 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-26_11-52-26.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>That escalated quickly</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1716,15 +1743,16 @@ sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/</code></pre>
   <category>cron</category>
   <category>rsync</category>
   <category>log</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/</guid>
   <pubDate>Mon, 27 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_DALLE_2024-05-26_10.56.50_-_Create_an_artistic_and_detailed_illustration_representing_the_concept_of_automated_scripting_in_a__2024-05-26_10-57-06.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Working with IGV</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -1754,7 +1782,7 @@ font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx ../data/n
         &lt;Attribute name="NAME"/&gt;
     &lt;/HiddenAttributes&gt;
 &lt;/Session&gt;</code></pre>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/https:/gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" class="img-fluid"></p>
+<p><img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" class="img-fluid"></p>
 
 
 <!-- -->
@@ -1764,15 +1792,16 @@ font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx ../data/n
   <category>R</category>
   <category>igv</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/</guid>
   <pubDate>Thu, 23 May 2024 07:00:00 GMT</pubDate>
   <media:content url="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Getting appropriate IDs for Gene, Transcripts</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -2292,15 +2321,16 @@ font-style: inherit;">head</span>(rnatabID)</span></code></pre></div>
   <category>R</category>
   <category>blast</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/</guid>
   <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-21-39.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Differentially Expressed Transcipts</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -2408,8 +2438,8 @@ font-style: inherit;">*</span></span></code></pre></div>
 <p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">genome</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
+<figcaption>genome</figcaption>
 </figure>
 </div>
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="bu" style="color: null;
@@ -3086,7 +3116,7 @@ background-color: null;
 font-style: inherit;">intgroup =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Condition"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-53-23.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-53-23.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Select top 50 differentially expressed genes</span></span>
@@ -3153,7 +3183,7 @@ background-color: null;
 font-style: inherit;">scale =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"row"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-53-07.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-53-07.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Count number of hits with adjusted p-value less then 0.05</span></span>
@@ -3288,7 +3318,7 @@ background-color: null;
 font-style: inherit;">col=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"blue"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-52-48.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-52-48.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">write.table</span>(tmp.sig, <span class="st" style="color: #20794D;
@@ -3369,15 +3399,16 @@ rna-XM_060038089.1 3.171650e-04 rna-XM_060038089.1</code></pre>
   <category>R</category>
   <category>datasets</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/</guid>
   <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Differentially Expressed Genes</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -3482,8 +3513,8 @@ font-style: inherit;">*</span></span></code></pre></div>
 <p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">genome</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
+<figcaption>genome</figcaption>
 </figure>
 </div>
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="bu" style="color: null;
@@ -4117,7 +4148,7 @@ background-color: null;
 font-style: inherit;">intgroup =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Condition"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-10-07.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-10-07.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Select top 50 differentially expressed genes</span></span>
@@ -4184,7 +4215,7 @@ background-color: null;
 font-style: inherit;">scale =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"row"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-09-54.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-09-54.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Count number of hits with adjusted p-value less then 0.05</span></span>
@@ -4319,7 +4350,7 @@ background-color: null;
 font-style: inherit;">col=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"blue"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-09-37.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-09-37.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">write.table</span>(tmp.sig, <span class="st" style="color: #20794D;
@@ -4406,15 +4437,16 @@ gene-LOC132467924|LOC132467924         gene-LOC132467924|LOC132467924</code></pr
   <category>R</category>
   <category>datasets</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/</guid>
   <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-07-31.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Looking at Apul miRNA</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -4558,8 +4590,8 @@ font-style: inherit;">*</span></span></code></pre></div>
 <h1>3 IGV</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/https:/gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">igv</figcaption>
+<p><img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" class="img-fluid figure-img"></p>
+<figcaption>igv</figcaption>
 </figure>
 </div>
 <p>IGV session file: <a href="https://raw.githubusercontent.com/urol-e5/deep-dive/main/D-Apul/code/16.1.ivg_session.xml" class="uri">https://raw.githubusercontent.com/urol-e5/deep-dive/main/D-Apul/code/16.1.ivg_session.xml</a></p>
@@ -4595,15 +4627,16 @@ font-style: inherit;">*</span></span></code></pre></div>
   <category>R</category>
   <category>datasets</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/</guid>
   <pubDate>Thu, 16 May 2024 07:00:00 GMT</pubDate>
   <media:content url="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>HiSat</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-12/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-12/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -5123,7 +5156,7 @@ font-style: inherit;">done</span></span></code></pre></div>
 <hr>
 <section id="differential-expression-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="differential-expression-analysis">1.5.0.1 <strong>Differential expression analysis</strong></h4>
-<p>Together with <a href="http://ccb.jhu.edu/software/hisat2">HISAT</a> and <a href="http://biorxiv.org/content/early/2014/09/05/003665">Ballgown</a>, StringTie can be used for estimating differential expression across multiple RNA-Seq samples and generating plots and differential expression tables as described in our <a href="http://www.nature.com/nprot/journal/v11/n9/full/nprot.2016.095.html">protocol paper</a>.<img src="https://sr320.github.io/tumbling-oysters/posts/sr320-12/https:/ccb.jhu.edu/software/stringtie/DE_pipeline.png" alt="DE workflow"><br>
+<p>Together with <a href="http://ccb.jhu.edu/software/hisat2">HISAT</a> and <a href="http://biorxiv.org/content/early/2014/09/05/003665">Ballgown</a>, StringTie can be used for estimating differential expression across multiple RNA-Seq samples and generating plots and differential expression tables as described in our <a href="http://www.nature.com/nprot/journal/v11/n9/full/nprot.2016.095.html">protocol paper</a>.<img src="https://ccb.jhu.edu/software/stringtie/DE_pipeline.png" alt="DE workflow"><br>
 Our recommended workflow includes the following steps:</p>
 <ol type="1">
 <li><p>for each RNA-Seq sample, map the reads to the genome with <a href="http://ccb.jhu.edu/software/hisat2">HISAT2</a> using the –dta option. It is highly recommended to use the reference annotation information when mapping the reads, which can be either embedded in the genome index (built with the –ss and –exon options, see <a href="http://ccb.jhu.edu/software/hisat2/manual.shtml#the-hisat2-build-indexer">HISAT2 manual</a>), or provided separately at run time (using the –known-splicesite-infile option of <a href="http://ccb.jhu.edu/software/hisat2/manual.shtml#running-hisat2">HISAT2</a>). The SAM output of each HISAT2 run must be sorted and converted to BAM using samtools as explained above.</p></li>
@@ -5136,7 +5169,7 @@ Our recommended workflow includes the following steps:</p>
 </section>
 <section id="an-alternate-faster-differential-expression-analysis-workflow" class="level3">
 <h3 class="anchored" data-anchor-id="an-alternate-faster-differential-expression-analysis-workflow">1.5.1 An alternate, faster differential expression analysis workflow</h3>
-<p>can be pursued if there is no interest in novel isoforms (i.e.&nbsp;assembled transcripts present in the samples but missing from the reference annotation), or if only a well known set of transcripts of interest are targeted by the analysis. This simplified protocol has only 3 steps (depicted below) as it bypasses the individual assembly of each RNA-Seq sample and the <em>“transcript merge”</em> step.<img src="https://sr320.github.io/tumbling-oysters/posts/sr320-12/https:/ccb.jhu.edu/software/stringtie/DE_pipeline_refonly.png" alt="DE workflow">This simplified workflow attempts to directly estimate and analyze the expression of a known set of transcripts as given in the <em>reference annotation</em> file.</p>
+<p>can be pursued if there is no interest in novel isoforms (i.e.&nbsp;assembled transcripts present in the samples but missing from the reference annotation), or if only a well known set of transcripts of interest are targeted by the analysis. This simplified protocol has only 3 steps (depicted below) as it bypasses the individual assembly of each RNA-Seq sample and the <em>“transcript merge”</em> step.<img src="https://ccb.jhu.edu/software/stringtie/DE_pipeline_refonly.png" alt="DE workflow">This simplified workflow attempts to directly estimate and analyze the expression of a known set of transcripts as given in the <em>reference annotation</em> file.</p>
 <p>The R package <a href="https://bioconductor.org/packages/devel/bioc/html/IsoformSwitchAnalyzeR.html"><strong>IsoformSwitchAnalyzeR</strong></a> can be used to assign gene names to transcripts assembled by StringTie, which can be particularly helpful in cases where StringTie could not perform this assignment unambigiously.<br>
 The <code>importIsoformExpression() + importRdata()</code> function of the package can be used to import the expression and annotation data into R. During this import the package will attempt to clean up and recover isoform annotations where possible. From the resulting <code>switchAnalyzeRlist</code> object, <em>IsoformSwitchAnalyzeR</em> can detect isoform switches along with predicted functional consequences. The <code>extractGeneExpression()</code> function can be used to get a gene expression (read count) matrix for analysis with other tools.<br>
 More information and code examples can be found <a href="https://bioconductor.org/packages/devel/bioc/vignettes/IsoformSwitchAnalyzeR/inst/doc/IsoformSwitchAnalyzeR.html#examples-visualizations">here</a>.</p>
@@ -5146,7 +5179,7 @@ More information and code examples can be found <a href="https://bioconductor.or
 <section id="stringtie" class="level1">
 <h1>2 StringTie</h1>
 <p>StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples–an important step in creating a canonical list of across all samples included in the pipeline.</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 4%">
 <col style="width: 95%">
@@ -5158,7 +5191,7 @@ More information and code examples can be found <a href="https://bioconductor.or
 </tr>
 </tbody>
 </table>
-<table class="table">
+<table class="caption-top table">
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><br>
@@ -5167,7 +5200,7 @@ More information and code examples can be found <a href="https://bioconductor.or
 </tr>
 </tbody>
 </table>
-<table class="table">
+<table class="caption-top table">
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">-G &lt;ref_ann.gff&gt;</td>
@@ -5336,11 +5369,7 @@ deseq2.res &lt;- results(dds)
 resOrdered &lt;- deseq2.res[order(deseq2.res$padj), ]</code></pre>
 <pre><code>vsd &lt;- vst(dds, blind = FALSE)
 plotPCA(vsd, intgroup = "Condition")</code></pre>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-20-1.png"><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-12/https:/github.com/urol-e5/deep-dive/raw/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-20-1.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-20-1.png"><img src="https://github.com/urol-e5/deep-dive/raw/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-20-1.png" class="img-fluid"></a></p>
 <pre><code>tmp &lt;- deseq2.res
 # The main plot
 plot(tmp$baseMean, tmp$log2FoldChange, pch=20, cex=0.45, ylim=c(-3, 3), log="x", col="darkgray",
@@ -5352,11 +5381,7 @@ tmp.sig &lt;- deseq2.res[!is.na(deseq2.res$padj) &amp; deseq2.res$padj &lt;= 0.0
 points(tmp.sig$baseMean, tmp.sig$log2FoldChange, pch=20, cex=0.45, col="red")
 # 2 FC lines
 abline(h=c(-1,1), col="blue")</code></pre>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-21-1.png"><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-12/https:/github.com/urol-e5/deep-dive/raw/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-21-1.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-21-1.png"><img src="https://github.com/urol-e5/deep-dive/raw/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-21-1.png" class="img-fluid"></a></p>
 
 
 <!-- -->
@@ -5366,15 +5391,16 @@ abline(h=c(-1,1), col="blue")</code></pre>
  ]]></description>
   <category>R</category>
   <category>hisat</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-12/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-12/</guid>
   <pubDate>Tue, 14 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-15_20-23-56.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Genome files</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-13-cod/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-13-cod/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -5633,8 +5659,8 @@ trimmed_fastq_checksums.md5</code></pre>
 <p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-13-cod/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">genome</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
+<figcaption>genome</figcaption>
 </figure>
 </div>
 <div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="bu" style="color: null;
@@ -5672,27 +5698,28 @@ sequence_report.jsonl</code></pre>
   <category>R</category>
   <category>datasets</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-13-cod/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-13-cod/</guid>
   <pubDate>Mon, 13 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Launching more stress</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-11/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-11/</link>
   <description><![CDATA[ 
+
 
 
 
 
 <p>Today I went out the the hatchery with Beyer adn we did a first heat hardening on small seed and started a ~two week long adult oyster chronic temperature regime.</p>
 <p>Both cohorts are from the 2023 POGS spawn. For the seed two drawers were held outside labelled “stress” (far right stack in causeway). Screen captures were rinsed with fresh water such that all seed would be in short length such that could be dropped into plastic tub.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-11/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_13-55-14.png" class="img-fluid"> Seed were immersed in 24C water for 30 minutes. One pump and two heaters were used. After immersion heaters were directly moved to white tub on far left to avoid melting.</p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_13-55-14.png" class="img-fluid"> Seed were immersed in 24C water for 30 minutes. One pump and two heaters were used. After immersion heaters were directly moved to white tub on far left to avoid melting.</p>
 <p>For adults about 100 adults were removed from Heath Trays, bagged and added to white tub on far right. Two heaters on thermostats were set to 25C, to come on around midnight and turn off at 6am. Below a temperature profile.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-11/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_14-05-24.png" class="img-fluid figure-img" style="width:56.0%"></p>
-<figcaption class="figure-caption">apex</figcaption>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_14-05-24.png" class="img-fluid figure-img" style="width:56.0%"></p>
+<figcaption>apex</figcaption>
 </figure>
 </div>
 <p>The plan is to have this go for about two weeks and then deploy along side siblings that did not get this heat regime.</p>
@@ -5705,15 +5732,16 @@ sequence_report.jsonl</code></pre>
   <category>oyster</category>
   <category>hardening</category>
   <category>aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-11/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-11/</guid>
   <pubDate>Mon, 11 Mar 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_14-06-23.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>What I have been up to today</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-09/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-09/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -5730,15 +5758,16 @@ sequence_report.jsonl</code></pre>
 
  ]]></description>
   <category>thoughts</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-09/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-09/</guid>
   <pubDate>Thu, 08 Feb 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>February Daily</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-10-Feb_daily/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-10-Feb_daily/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -6049,15 +6078,16 @@ ggplot(long_dataframe, aes(x = Fold, y = Value, group = Source, color = Exposure
 
  ]]></description>
   <category>noteboook</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-10-Feb_daily/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-10-Feb_daily/</guid>
   <pubDate>Thu, 01 Feb 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2023-11-01_19-00-02.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Apul lncRNA Discovery</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-08-Apul-lncRNA/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-08-Apul-lncRNA/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -6776,175 +6806,9 @@ getfasta -fi $FASTA -bed $OUTPUT_DIR/apul_deduplicated_final_lncRNAs.bed -fo $OU
   <category>R</category>
   <category>lncrna</category>
   <category>e5</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-08-Apul-lncRNA/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-08-Apul-lncRNA/</guid>
   <pubDate>Fri, 03 Nov 2023 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>November Daily</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-daily/index.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<section id="november-1" class="level1">
-<h1>November 1</h1>
-<p>Went to hatchery to clean oysters. A couple of pipes in control fell. Temperature was 13.9. Installed header heater to 16.</p>
-</section>
-<section id="november-2" class="level1">
-<h1>November 2</h1>
-<p>Non coding RNA meeting- followed by lab meeting- several appts</p>
-<p>Insert date insert time date time. I spent a lot of time talking in different different meetings</p>
-<section id="non-coding-rna" class="level2">
-<h2 class="anchored" data-anchor-id="non-coding-rna">Non-coding RNA</h2>
-<p>This meeting was a working group discussion on non-coding RNA. They began by discussing some issues Sam was having with workflows and output from programs like MirTrace. They determined that trimming reads to 25 bases led to more hits in the database, showing trimming has an impact. Steven shared some Markdown files documenting analysis steps and they discussed better ways to share these files. They agreed writing out methods sections ahead of time would help guide future work, even if all steps haven’t been completed yet. To wrap up, they decided tomorrow’s meeting should focus on working in breakout rooms to further develop introduction, methods, and other sections of their project.</p>
-<p>Workflows and methods for genetic analysis. (0:02)</p>
-<p>Analyzing audio transcript for microRNA analysis. (4:56)</p>
-<p>Gene sequencing and merging code branches. (11:14)</p>
-<p>Using GitHub to create documents and markdown files. (17:07)</p>
-<p>Planning for tomorrow’s meeting. (39:37)</p>
-</section>
-<section id="lab-meeting" class="level2">
-<h2 class="anchored" data-anchor-id="lab-meeting">lab meeting</h2>
-<p>The meeting began with Grace presenting her research on modeling the immune response of sea stars to sea star wasting disease. Next, Maggie discussed her past research on the effects of temperature on metabolic rate in invasive blue catfish, and her current research using ROVs to study fish assemblages on artificial reefs. Then Aspen presented her chapter on modeling meta Dyneema infections in Tanner crab, showing patterns of infection correlated with temperature, shell condition, and black mat fungus infection. The group provided feedback on her analysis and suggestions for further exploring explanations for differences in infection patterns between sites. Finally, Steven Roberts reminded everyone about monthly reporting requirements and purchasing reimbursements.</p>
-</section>
-<section id="ceabigr" class="level2">
-<h2 class="anchored" data-anchor-id="ceabigr">ceabigr</h2>
-<p>The meeting discussed analyzing alternative splicing in oyster genes to determine if it occurs randomly or in a directed, non-random manner between control and treated samples. They debated different methods to quantify this, such as looking at exon counts and coefficients of variation. Zach agreed to generate exon expression data for all samples. Stephen said he would work on getting this exon count data into a matrix. They also agreed to read the methods section of a relevant paper to help inform their approach. Determining the next steps for analyzing Zach’s long non-coding RNA data was discussed, but the group felt it may not directly fit into the current manuscript.</p>
-</section>
-</section>
-<section id="november-3" class="level1">
-<h1>November 3</h1>
-<p>Today started out with the Gugino paper meeting spent most of the time looking at the response to reviewers didn’t get too far. Need to deal with a figure. Also need to think of an interesting polite way to respond to crazy comments.</p>
-<p>After that met with Zack to talk about the coral analysis and funding in the near term that transition directly into the five liquor meeting where we spent majority of the time coding for long, non-coding RNA discovery we actually broke out in the three breakout rooms, the other one group working on short RNA and another group working on the manuscript talking about bigger picture things, it was determined that definitely in the long term will be interested in looking at kind of the evolutionary relationship with cutting RNA.</p>
-<p>This meeting was focused on analyzing long non-coding RNA sequences from multiple species. The group had been working on identifying these sequences and filtering them based on various parameters. For this meeting, Steven Roberts proposed focusing on finalizing the coding and discovery process. The group discussed their progress, with some working on refining the coding and others reviewing the manuscript. They discussed next steps of agreeing on a final list of long and short non-coding RNAs to present at the next meeting, as well as doing comparative analyses across species.</p>
-<p>The next meeting was with Grace where we evaluated her long-term timeline to discuss projects finding courses, etc.</p>
-<ul>
-<li>Grace presented a timeline and funding plan for her PhD research</li>
-<li>She will be analyzing samples from summer 2022 experiments on disease resistance in sea stars</li>
-<li>Her goals are to publish papers from each dataset as she analyzes them</li>
-<li>Funding is secured for sequencing and analyses of the first two datasets</li>
-<li>Drew will check on funding availability for the third dataset from Nature Conservancy</li>
-<li>Grace will send Drew a budget estimate for sequencing the third dataset</li>
-<li>They discussed applying for an NSF supplement to fund Grace’s stipend through an internship</li>
-</ul>
-<p>Also met with Kathleen talked a little bit more about EI project and monthly goals and some background on the cod project and how we will need to identify samples for our analysis</p>
-</section>
-<section id="november-4" class="level1">
-<h1>November 4</h1>
-<p>This is dumb activating dictation from my Mac and recording a notebook post. So today been working on trying to grab a GTF of a long non-coding RNAs that is she seems to be dirty Heidi files from CPCR1 base off that you can’t do a query error substrate of original GTF.</p>
-</section>
-<section id="november-6" class="level1">
-<h1>November 6</h1>
-<p>E5 coding- submitted referenc letter.</p>
-</section>
-<section id="november-7" class="level1">
-<h1>November 7</h1>
-<p>E5 lnc coding, discussed timeline with Aspen - will follow up with credits.</p>
-</section>
-<section id="november-8" class="level1">
-<h1>November 8</h1>
-<p>E5 PI meeting: During the meeting, the group discussed their ongoing projects. Chema provided an update on their RNA analysis work. They also discussed progressing a manuscript on epigenetic simulation that has been in progress. Chema suggested dedicating focused weekly meetings to work on sections of this paper. The group agreed to an initial meeting on November 21st at 10am Pacific time to start working on outlining the paper.</p>
-<p>LncRNA fail when removing splice sites, get no transcripts in merge. Will try repro… should have used separate notebook in hind sight</p>
-</section>
-<section id="november-9" class="level1">
-<h1>November 9</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-10" class="level1">
-<h1>November 10</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-11" class="level1">
-<h1>November 11</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-12" class="level1">
-<h1>November 12</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-13" class="level1">
-<h1>November 13</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-14" class="level1">
-<h1>November 14</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-15" class="level1">
-<h1>November 15</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-16" class="level1">
-<h1>November 16</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-17" class="level1">
-<h1>November 17</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-18" class="level1">
-<h1>November 18</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-19" class="level1">
-<h1>November 19</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-20" class="level1">
-<h1>November 20</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-21" class="level1">
-<h1>November 21</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-22" class="level1">
-<h1>November 22</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-23" class="level1">
-<h1>November 23</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-24" class="level1">
-<h1>November 24</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-25" class="level1">
-<h1>November 25</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-26" class="level1">
-<h1>November 26</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-27" class="level1">
-<h1>November 27</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-28" class="level1">
-<h1>November 28</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-29" class="level1">
-<h1>November 29</h1>
-<p>Your text here…</p>
-</section>
-<section id="november-30" class="level1">
-<h1>November 30</h1>
-<p>Your text here…</p>
-
-
-</section>
-
- ]]></description>
-  <category>noteboook</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-daily/index.html</guid>
-  <pubDate>Wed, 01 Nov 2023 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2023-11-01_19-00-02.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
