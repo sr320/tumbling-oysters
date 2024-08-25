@@ -10,7 +10,299 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.555</generator>
-<lastBuildDate>Wed, 26 Jun 2024 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 25 Aug 2024 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Git that Pro GO</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>tldr:</p>
+<p>Got GO annotations for Deep Dive Protein sets:</p>
+<p>https://raw.githubusercontent.com/urol-e5/deep-dive/main/D-Apul/output/20-Apul-gene-annotation/Apul-protein-GO.tsv</p>
+<p>https://raw.githubusercontent.com/urol-e5/deep-dive/main/E-Peve/output/20-Peve-gene-annotation/Peve-protein-GO.tsv</p>
+<p>https://github.com/urol-e5/deep-dive/raw/main/F-Pmea/output/20-Pmea-gene-annotation/Pmea-protein-GO.tsv</p>
+<hr>
+<p>Here is example code</p>
+<section id="apul-annotation" class="level1">
+<h1>20-Apul Annotation</h1>
+<p>Steven Roberts 25 August, 2024</p>
+<p>Apul</p>
+</section>
+<section id="protein" class="level1">
+<h1>Protein</h1>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ../data</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-O</span> https://gannet.fish.washington.edu/seashell/snaps/GCF_013753865.1_Amil_v2.1.protein.faa</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> ../data/GCF_013753865.1_Amil_v2.1.protein.faa</span></code></pre></div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span> ../../data/blast_dbs</span></code></pre></div>
+</section>
+<section id="swiss-prot-download" class="level1">
+<h1>Swiss Prot download</h1>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ../../data/blast_dbs</span>
+<span id="cb4-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-O</span> https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz</span>
+<span id="cb4-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mv</span> uniprot_sprot.fasta.gz uniprot_sprot_r2024_04.fasta.gz</span>
+<span id="cb4-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">gunzip</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-k</span> uniprot_sprot_r2024_04.fasta.gz</span></code></pre></div>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> ../../data/blast_dbs/uniprot_sprot_r2024_04.fasta</span>
+<span id="cb5-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Sequences"</span></span>
+<span id="cb5-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&gt;"</span> ../../data/blast_dbs/uniprot_sprot_r2024_04.fasta</span></code></pre></div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/makeblastdb</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-2">-in ../../data/blast_dbs/uniprot_sprot_r2024_04.fasta <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-3">-dbtype prot <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-4">-out ../../data/blast_dbs/uniprot_sprot_r2024_04</span></code></pre></div>
+</section>
+<section id="blastp" class="level1">
+<h1>Blastp</h1>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fasta</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/GCF_013753865.1_Amil_v2.1.protein.faa"</span></span>
+<span id="cb7-2"></span>
+<span id="cb7-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/blastp</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-4">-query <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fasta</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-5">-db ../../data/blast_dbs/uniprot_sprot_r2024_04 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-6">-out ../output/20-Apul-gene-annotation/blastp_out.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-7">-evalue 1E-05 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-8">-num_threads 48 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-9">-max_target_seqs 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-10">-max_hsps 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb7-11">-outfmt 6</span></code></pre></div>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> ../output/20-Apul-gene-annotation/blastp_out.tab</span></code></pre></div>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">tr</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'|'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'\t'</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> ../output/20-Apul-gene-annotation/blastp_out.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb9-2"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../output/20-Apul-gene-annotation/blastp_out_sep.tab</span>
+<span id="cb9-3"></span>
+<span id="cb9-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-1</span> ../output/20-Apul-gene-annotation/blastp_out_sep.tab</span></code></pre></div>
+</section>
+<section id="download-go-info" class="level1">
+<h1>Download GO info</h1>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap__in_UniProtKB_search_571864__UniProt_2024-08-23_16-18-03.png" class="img-fluid"></p>
+<pre><code>sr320@raven:/home/shared/8TB_HDD_01/sr320/github/deep-dive/data$ curl -H "Accept: text/plain; format=tsv" "https://rest.uniprot.org/uniprotkb/stream?fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo_c%2Cgo%2Cgo_f%2Cgo_id&amp;format=tsv&amp;query=%28*%29+AND+%28reviewed%3Atrue%29" -o SwissProt-Annot-GO_082324.tsv</code></pre>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> ../../data/SwissProt-Annot-GO_082324.tsv </span></code></pre></div>
+</section>
+<section id="join-blast-with-go-info" class="level1">
+<h1><strong>Join blast with GO info</strong></h1>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">bltabl <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/20-Apul-gene-annotation/blastp_out_sep.tab"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\t</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">header =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb12-2"></span>
+<span id="cb12-3">spgo <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../../data/SwissProt-Annot-GO_082324.tsv"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\t</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">header =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">annot_tab <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">left_join</span>(bltabl, spgo, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"V3"</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Entry"</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb13-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(</span>
+<span id="cb13-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">query =</span> V1,</span>
+<span id="cb13-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">blast_hit =</span> V3,</span>
+<span id="cb13-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">evalue =</span> V13,</span>
+<span id="cb13-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ProteinNames =</span> Protein.names,</span>
+<span id="cb13-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">BiologicalProcess =</span> Gene.Ontology..biological.process.,</span>
+<span id="cb13-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">GeneOntologyIDs =</span> Gene.Ontology.IDs</span>
+<span id="cb13-9">  )</span></code></pre></div>
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(annot_tab)</span></code></pre></div>
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">write.table</span>(annot_tab, </span>
+<span id="cb15-2">            <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">file =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/20-Apul-gene-annotation/Apul-protein-GO.tsv"</span>, </span>
+<span id="cb15-3">            <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\t</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>, </span>
+<span id="cb15-4">            <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">row.names =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>, </span>
+<span id="cb15-5">            <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">quote =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> ../output/20-Apul-gene-annotation/Apul-protein-GO.tsv</span></code></pre></div>
+<hr>
+<p>Actual code at</p>
+<p>https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/20-Apul-gene-annotation.Rmd</p>
+<p>https://github.com/urol-e5/deep-dive/blob/main/E-Peve/code/20-Peve-gene-annotation.Rmd</p>
+<p>https://github.com/urol-e5/deep-dive/blob/main/F-Pmea/code/20-Pmea-gene-annotation.Rmd</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>blast</category>
+  <category>e5</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/</guid>
+  <pubDate>Sun, 25 Aug 2024 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap__in_UniProtKB_search_571864__UniProt_2024-08-23_16-18-03.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Double header</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -6081,734 +6373,6 @@ ggplot(long_dataframe, aes(x = Fold, y = Value, group = Source, color = Exposure
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-10-Feb_daily/</guid>
   <pubDate>Thu, 01 Feb 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2023-11-01_19-00-02.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Apul lncRNA Discovery</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-08-Apul-lncRNA/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="apul-lncrna-discovery" class="level1">
-<h1>05.3-Apul-lncRNA-discovery</h1>
-<p>Steven Roberts 03 November, 2023</p>
-<ul>
-<li>1 Run HiSat on RNA-seq
-<ul>
-<li>1.1 Grab Trimmed RNA-seq Reads</li>
-<li>1.2 Genome</li>
-<li>1.3 HiSat</li>
-<li>1.4 convert to bams</li>
-</ul></li>
-<li>2 StringTie</li>
-<li>3 GFFcompare</li>
-<li>4 Filter</li>
-<li>5 Bedtools</li>
-<li>6 CPC2</li>
-<li>7 De-duplicate GTF</li>
-<li>8 Reformat to BED</li>
-<li>9 BEDTools</li>
-</ul>
-</section>
-<section id="run-hisat-on-rna-seq" class="level1">
-<h1>1 Run HiSat on RNA-seq</h1>
-<section id="grab-trimmed-rna-seq-reads" class="level2">
-<h2 class="anchored" data-anchor-id="grab-trimmed-rna-seq-reads">1.1 Grab Trimmed RNA-seq Reads</h2>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"></span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wget</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-r</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-3">--no-directories <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--no-parent</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-4">-P ../data/fastq/ <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-5">-A <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"*fastq.gz"</span> https://gannet.fish.washington.edu/Atumefaciens/20230519-E5_coral-fastqc-fastp-multiqc-RNAseq/A_pulchra/trimmed/</span></code></pre></div>
-</section>
-<section id="genome" class="level2">
-<h2 class="anchored" data-anchor-id="genome">1.2 Genome</h2>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> ../data</span>
-<span id="cb2-2"></span>
-<span id="cb2-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">curl</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-O</span> http://gannet.fish.washington.edu/seashell/snaps/GCF_013753865.1_Amil_v2.1_genomic.fna</span></code></pre></div>
-</section>
-<section id="hisat" class="level2">
-<h2 class="anchored" data-anchor-id="hisat">1.3 HiSat</h2>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/hisat2-2.2.1/hisat2_extract_exons.py</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-2">../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-3"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/05.32-lncRNA-discovery/m_exon.tab</span></code></pre></div>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/05.32-lncRNA-discovery/m_exon.tab</span></code></pre></div>
-<pre><code>## NC_058066.1  1961    2118    -
-## NC_058066.1  15360   15663   +
-## NC_058066.1  18710   18774   -
-## NC_058066.1  21000   21092   -
-## NC_058066.1  22158   22442   +
-## NC_058066.1  23084   23220   -
-## NC_058066.1  24770   25066   +
-## NC_058066.1  26652   26912   +
-## NC_058066.1  27071   27358   +
-## NC_058066.1  27658   27951   +</code></pre>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"></span>
-<span id="cb6-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/hisat2-2.2.1/hisat2_extract_splice_sites.py</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-3">../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-4"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/05.32-lncRNA-discovery/m_splice_sites.tab</span></code></pre></div>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/05.32-lncRNA-discovery/m_splice_sites.tab</span></code></pre></div>
-<pre><code>## NC_058066.1  2118    18710   -
-## NC_058066.1  15663   22158   +
-## NC_058066.1  18774   21000   -
-## NC_058066.1  21092   23084   -
-## NC_058066.1  22442   24770   +
-## NC_058066.1  25066   26652   +
-## NC_058066.1  26912   27071   +
-## NC_058066.1  27358   27658   +
-## NC_058066.1  27951   28247   +
-## NC_058066.1  28534   29196   +</code></pre>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/hisat2-2.2.1/hisat2-build</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-2">../data/GCF_013753865.1_Amil_v2.1_genomic.fna <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-3">../data/GCF_013753865.1_Amil_v2.1.index <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-4">--exon ../output/05.32-lncRNA-discovery/m_exon.tab <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-5">--ss ../output/05.32-lncRNA-discovery/m_splice_sites.tab <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-6">-p 40 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-7">../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-8">2<span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/05.32-lncRNA-discovery/hisat2-build_stats.txt</span></code></pre></div>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">find</span> ../data/fastq/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>gz</span></code></pre></div>
-<pre><code>## ../data/fastq/RNA-ACR-140-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
-## ../data/fastq/RNA-ACR-140-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
-## ../data/fastq/RNA-ACR-145-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
-## ../data/fastq/RNA-ACR-145-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
-## ../data/fastq/RNA-ACR-150-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
-## ../data/fastq/RNA-ACR-150-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
-## ../data/fastq/RNA-ACR-173-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
-## ../data/fastq/RNA-ACR-173-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
-## ../data/fastq/RNA-ACR-178-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
-## ../data/fastq/RNA-ACR-178-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</code></pre>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">find</span> ../data/fastq/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>R2_001.fastp-trim.20230519.fastq.gz <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb12-2"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> basename <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-s</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-I{}</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb12-3">echo {}</span></code></pre></div>
-<pre><code>## RNA-ACR-140
-## RNA-ACR-145
-## RNA-ACR-150
-## RNA-ACR-173
-## RNA-ACR-178</code></pre>
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">find</span> ../data/fastq/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>R2_001.fastp-trim.20230519.fastq.gz <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb14-2"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> basename <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-s</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-I{}</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb14-3">/home/shared/hisat2-2.2.1/hisat2 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb14-4">-x ../data/GCF_013753865.1_Amil_v2.1.index <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb14-5">-p 20 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb14-6">-1 ../data/fastq/{}-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb14-7">-2 ../data/fastq/{}-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb14-8">-S ../output/05.32-lncRNA-discovery/{}.sam</span></code></pre></div>
-<pre><code>47710408 reads; of these:
-  47710408 (100.00%) were paired; of these:
-    27056517 (56.71%) aligned concordantly 0 times
-    19229695 (40.31%) aligned concordantly exactly 1 time
-    1424196 (2.99%) aligned concordantly &gt;1 times
-    ----
-    27056517 pairs aligned concordantly 0 times; of these:
-      1316579 (4.87%) aligned discordantly 1 time
-    ----
-    25739938 pairs aligned 0 times concordantly or discordantly; of these:
-      51479876 mates make up the pairs; of these:
-        41152624 (79.94%) aligned 0 times
-        9290398 (18.05%) aligned exactly 1 time
-        1036854 (2.01%) aligned &gt;1 times
-56.87% overall alignment rate
-42864294 reads; of these:
-  42864294 (100.00%) were paired; of these:
-    23649791 (55.17%) aligned concordantly 0 times
-    17703533 (41.30%) aligned concordantly exactly 1 time
-    1510970 (3.53%) aligned concordantly &gt;1 times
-    ----
-    23649791 pairs aligned concordantly 0 times; of these:
-      1250605 (5.29%) aligned discordantly 1 time
-    ----
-    22399186 pairs aligned 0 times concordantly or discordantly; of these:
-      44798372 mates make up the pairs; of these:
-        35369621 (78.95%) aligned 0 times
-        8218798 (18.35%) aligned exactly 1 time
-        1209953 (2.70%) aligned &gt;1 times
-58.74% overall alignment rate
-43712298 reads; of these:
-  43712298 (100.00%) were paired; of these:
-    30355359 (69.44%) aligned concordantly 0 times
-    12131465 (27.75%) aligned concordantly exactly 1 time
-    1225474 (2.80%) aligned concordantly &gt;1 times
-    ----
-    30355359 pairs aligned concordantly 0 times; of these:
-      848325 (2.79%) aligned discordantly 1 time
-    ----
-    29507034 pairs aligned 0 times concordantly or discordantly; of these:
-      59014068 mates make up the pairs; of these:
-        51031599 (86.47%) aligned 0 times
-        6695839 (11.35%) aligned exactly 1 time
-        1286630 (2.18%) aligned &gt;1 times
-41.63% overall alignment rate
-47501524 reads; of these:
-  47501524 (100.00%) were paired; of these:
-    27827915 (58.58%) aligned concordantly 0 times
-    18298532 (38.52%) aligned concordantly exactly 1 time
-    1375077 (2.89%) aligned concordantly &gt;1 times
-    ----
-    27827915 pairs aligned concordantly 0 times; of these:
-      1321896 (4.75%) aligned discordantly 1 time
-    ----
-    26506019 pairs aligned 0 times concordantly or discordantly; of these:
-      53012038 mates make up the pairs; of these:
-        42654805 (80.46%) aligned 0 times
-        9174277 (17.31%) aligned exactly 1 time
-        1182956 (2.23%) aligned &gt;1 times
-55.10% overall alignment rate
-42677752 reads; of these:
-  42677752 (100.00%) were paired; of these:
-    25646587 (60.09%) aligned concordantly 0 times
-    15654238 (36.68%) aligned concordantly exactly 1 time
-    1376927 (3.23%) aligned concordantly &gt;1 times
-    ----
-    25646587 pairs aligned concordantly 0 times; of these:
-      1105089 (4.31%) aligned discordantly 1 time
-    ----
-    24541498 pairs aligned 0 times concordantly or discordantly; of these:
-      49082996 mates make up the pairs; of these:
-        38229072 (77.89%) aligned 0 times
-        9393012 (19.14%) aligned exactly 1 time
-        1460912 (2.98%) aligned &gt;1 times
-55.21% overall alignment rate</code></pre>
-</section>
-<section id="convert-to-bams" class="level2">
-<h2 class="anchored" data-anchor-id="convert-to-bams">1.4 convert to bams</h2>
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">for</span> samfile <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">in</span> ../output/05.32-lncRNA-discovery/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.sam<span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">do</span></span>
-<span id="cb16-2">  <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">bamfile</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${samfile</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%</span>.sam<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">.bam"</span></span>
-<span id="cb16-3">  <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">sorted_bamfile</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${samfile</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%</span>.sam<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">.sorted.bam"</span></span>
-<span id="cb16-4">  </span>
-<span id="cb16-5">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Convert SAM to BAM</span></span>
-<span id="cb16-6">  <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/samtools-1.12/samtools</span> view <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-bS</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$samfile</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$bamfile</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb16-7">  </span>
-<span id="cb16-8">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Sort BAM</span></span>
-<span id="cb16-9">  <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/samtools-1.12/samtools</span> sort <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$bamfile</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$sorted_bamfile</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb16-10">  </span>
-<span id="cb16-11">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Index sorted BAM</span></span>
-<span id="cb16-12">  <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/samtools-1.12/samtools</span> index <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$sorted_bamfile</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb16-13"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">done</span></span></code></pre></div>
-</section>
-</section>
-<section id="stringtie" class="level1">
-<h1>2 StringTie</h1>
-<p>StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF (Gene Transfer Format) files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples–an important step in creating a canonical list of lncRNAs across all samples included in the pipeline.</p>
-<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">find</span> ../output/05.32-lncRNA-discovery/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>sorted.bam <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb17-2"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> basename <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-s</span> .sorted.bam <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-I{}</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb17-3">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb17-4">-p 8 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb17-5">-G ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb17-6">-o ../output/05.32-lncRNA-discovery/{}.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb17-7">../output/05.32-lncRNA-discovery/{}.sorted.bam</span></code></pre></div>
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wc</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-l</span> ../output/05.32-lncRNA-discovery/RNA<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.gtf</span>
-<span id="cb18-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ../output/05.32-lncRNA-discovery/RNA<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.gtf</span></code></pre></div>
-<pre><code>##    373617 ../output/05.32-lncRNA-discovery/RNA-ACR-140.gtf
-##    322109 ../output/05.32-lncRNA-discovery/RNA-ACR-145.gtf
-##    340380 ../output/05.32-lncRNA-discovery/RNA-ACR-150.gtf
-##    367972 ../output/05.32-lncRNA-discovery/RNA-ACR-173.gtf
-##    426804 ../output/05.32-lncRNA-discovery/RNA-ACR-178.gtf
-##   1830882 total
-## ../output/05.32-lncRNA-discovery/RNA-ACR-140.gtf
-## ../output/05.32-lncRNA-discovery/RNA-ACR-145.gtf
-## ../output/05.32-lncRNA-discovery/RNA-ACR-150.gtf
-## ../output/05.32-lncRNA-discovery/RNA-ACR-173.gtf
-## ../output/05.32-lncRNA-discovery/RNA-ACR-178.gtf</code></pre>
-<p>Merges all individual GTF assemblies into a single merged GTF file.</p>
-<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb20-2">--merge <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb20-3">-G ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb20-4">-o ../output/05.32-lncRNA-discovery/stringtie_merged.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb20-5">../output/05.32-lncRNA-discovery/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.gtf</span></code></pre></div>
-<div class="sourceCode" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"></span>
-<span id="cb21-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wc</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-l</span> ../output/05.32-lncRNA-discovery/stringtie_merged.gtf</span>
-<span id="cb21-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/05.32-lncRNA-discovery/stringtie_merged.gtf</span></code></pre></div>
-<pre><code>## 726445 ../output/05.32-lncRNA-discovery/stringtie_merged.gtf
-## # /home/shared/stringtie-2.2.1.Linux_x86_64/stringtie --merge -G ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff -o ../output/05.32-lncRNA-discovery/stringtie_merged.gtf ../output/05.32-lncRNA-discovery/RNA-ACR-140.gtf ../output/05.32-lncRNA-discovery/RNA-ACR-145.gtf ../output/05.32-lncRNA-discovery/RNA-ACR-150.gtf ../output/05.32-lncRNA-discovery/RNA-ACR-173.gtf ../output/05.32-lncRNA-discovery/RNA-ACR-178.gtf
-## # StringTie version 2.2.1
-## NC_058066.1  StringTie   transcript  345 1190    1000    .   .   gene_id "MSTRG.1"; transcript_id "MSTRG.1.1"; 
-## NC_058066.1  StringTie   exon    345 1190    1000    .   .   gene_id "MSTRG.1"; transcript_id "MSTRG.1.1"; exon_number "1"; 
-## NC_058066.1  StringTie   transcript  1962    23221   1000    -   .   gene_id "MSTRG.2"; transcript_id "rna-XR_003825913.2"; gene_name "LOC114963522"; ref_gene_id "gene-LOC114963522"; 
-## NC_058066.1  StringTie   exon    1962    2119    1000    -   .   gene_id "MSTRG.2"; transcript_id "rna-XR_003825913.2"; exon_number "1"; gene_name "LOC114963522"; ref_gene_id "gene-LOC114963522"; 
-## NC_058066.1  StringTie   exon    18711   18775   1000    -   .   gene_id "MSTRG.2"; transcript_id "rna-XR_003825913.2"; exon_number "2"; gene_name "LOC114963522"; ref_gene_id "gene-LOC114963522"; 
-## NC_058066.1  StringTie   exon    21001   21093   1000    -   .   gene_id "MSTRG.2"; transcript_id "rna-XR_003825913.2"; exon_number "3"; gene_name "LOC114963522"; ref_gene_id "gene-LOC114963522"; 
-## NC_058066.1  StringTie   exon    23085   23221   1000    -   .   gene_id "MSTRG.2"; transcript_id "rna-XR_003825913.2"; exon_number "4"; gene_name "LOC114963522"; ref_gene_id "gene-LOC114963522"; 
-## NC_058066.1  StringTie   transcript  3278    4416    1000    .   .   gene_id "MSTRG.3"; transcript_id "MSTRG.3.1";</code></pre>
-</section>
-<section id="gffcompare" class="level1">
-<h1>3 GFFcompare</h1>
-<div class="sourceCode" id="cb23" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/gffcompare-0.12.6.Linux_x86_64/gffcompare</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb23-2">-r ../data/Amil/ncbi_dataset/data/GCF_013753865.1/genomic.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb23-3">-G <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb23-4">-o ../output/05.32-lncRNA-discovery/gffcompare_merged <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb23-5">../output/05.32-lncRNA-discovery/stringtie_merged.gtf</span></code></pre></div>
-<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ../output/05.32-lncRNA-discovery/gffcompare_merged<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span></span></code></pre></div>
-<pre><code>## ../output/05.32-lncRNA-discovery/gffcompare_merged.annotated.gtf
-## ../output/05.32-lncRNA-discovery/gffcompare_merged.loci
-## ../output/05.32-lncRNA-discovery/gffcompare_merged.stats
-## ../output/05.32-lncRNA-discovery/gffcompare_merged.stringtie_merged.gtf.refmap
-## ../output/05.32-lncRNA-discovery/gffcompare_merged.stringtie_merged.gtf.tmap
-## ../output/05.32-lncRNA-discovery/gffcompare_merged.tracking</code></pre>
-<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-3</span> ../output/05.32-lncRNA-discovery/gffcompare_merged.annotated.gtf</span></code></pre></div>
-<pre><code>## NC_058066.1  StringTie   transcript  9330    48114   .   +   .   transcript_id "MSTRG.5.2"; gene_id "MSTRG.5"; gene_name "LOC114963508"; xloc "XLOC_000001"; ref_gene_id "gene-LOC114963508"; cmp_ref "rna-XM_029342736.2"; class_code "j"; tss_id "TSS1";
-## NC_058066.1  StringTie   exon    9330    9651    .   +   .   transcript_id "MSTRG.5.2"; gene_id "MSTRG.5"; exon_number "1";
-## NC_058066.1  StringTie   exon    12840   12890   .   +   .   transcript_id "MSTRG.5.2"; gene_id "MSTRG.5"; exon_number "2";</code></pre>
-</section>
-<section id="filter" class="level1">
-<h1>4 Filter</h1>
-<p>Filters the combined GTF output from GFFcompare to select only the lines representing “transcripts” and excluding lines starting with “#” (these are lines in the output format from GFFcompare that don’t contain transcript information). This step further filters for a class code of “u”, and keep only those with lengths greater than 199 bases. The “u’ class code from the GFFcompare step is for”unknown” transcripts, that is those that are not previously annotated in our reference GFF as protein coding. The size filter of +200nt is a common filtering step for isolating lncRNAs.</p>
-<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'$3 == "transcript" &amp;&amp; $1 !~ /^#/ {print}'</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb28-2">../output/05.32-lncRNA-discovery/gffcompare_merged.annotated.gtf <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'class_code "u"'</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'$5 - $4 &gt; 199 {print}'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/05.32-lncRNA-discovery/Apul_lncRNA_candidates.gtf</span></code></pre></div>
-<div class="sourceCode" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/05.32-lncRNA-discovery/Apul_lncRNA_candidates.gtf</span></code></pre></div>
-<pre><code>## NC_058066.1  StringTie   transcript  468619  469943  .   +   .   transcript_id "MSTRG.40.1"; gene_id "MSTRG.40"; xloc "XLOC_000020"; class_code "u"; tss_id "TSS38";
-## NC_058066.1  StringTie   transcript  1153399 1165634 .   +   .   transcript_id "MSTRG.120.1"; gene_id "MSTRG.120"; xloc "XLOC_000058"; class_code "u"; tss_id "TSS95";
-## NC_058066.1  StringTie   transcript  1153404 1165634 .   +   .   transcript_id "MSTRG.120.2"; gene_id "MSTRG.120"; xloc "XLOC_000058"; class_code "u"; tss_id "TSS95";
-## NC_058066.1  StringTie   transcript  1153410 1165634 .   +   .   transcript_id "MSTRG.120.3"; gene_id "MSTRG.120"; xloc "XLOC_000058"; class_code "u"; tss_id "TSS95";
-## NC_058066.1  StringTie   transcript  1154207 1155609 .   +   .   transcript_id "MSTRG.120.4"; gene_id "MSTRG.120"; xloc "XLOC_000058"; class_code "u"; tss_id "TSS96";
-## NC_058066.1  StringTie   transcript  1155787 1165634 .   +   .   transcript_id "MSTRG.120.5"; gene_id "MSTRG.120"; xloc "XLOC_000058"; class_code "u"; tss_id "TSS97";
-## NC_058066.1  StringTie   transcript  1222445 1227226 .   +   .   transcript_id "MSTRG.126.1"; gene_id "MSTRG.126"; xloc "XLOC_000059"; class_code "u"; tss_id "TSS98";
-## NC_058066.1  StringTie   transcript  1222539 1227226 .   +   .   transcript_id "MSTRG.126.2"; gene_id "MSTRG.126"; xloc "XLOC_000059"; class_code "u"; tss_id "TSS98";
-## NC_058066.1  StringTie   transcript  1256163 1257382 .   +   .   transcript_id "MSTRG.136.3"; gene_id "MSTRG.136"; xloc "XLOC_000062"; class_code "u"; tss_id "TSS103";
-## NC_058066.1  StringTie   transcript  1256163 1264306 .   +   .   transcript_id "MSTRG.136.2"; gene_id "MSTRG.136"; xloc "XLOC_000062"; class_code "u"; tss_id "TSS103";</code></pre>
-</section>
-<section id="bedtools" class="level1">
-<h1>5 Bedtools</h1>
-<p>Extracts the sequence data from the <code>$FASTA</code> reference file based on the coordinates from the filtered GTF. The resulting sequences represent potential lncRNA candidates.</p>
-<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb31-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/bedtools2/bin/fastaFromBed</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb31-2">-fi ../data/GCF_013753865.1_Amil_v2.1_genomic.fna <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb31-3">-bed ../output/05.32-lncRNA-discovery/Apul_lncRNA_candidates.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb31-4">-fo ../output/05.32-lncRNA-discovery/Apul_lncRNA_candidates.fasta <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb31-5">-name <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-split</span></span></code></pre></div>
-<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb32-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">fgrep</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span> ../output/05.32-lncRNA-discovery/Apul_lncRNA_candidates.fasta</span>
-<span id="cb32-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/05.32-lncRNA-discovery/Apul_lncRNA_candidates.fasta</span></code></pre></div>
-</section>
-<section id="cpc2" class="level1">
-<h1>6 CPC2</h1>
-<p>Initializes a conda environment (Anaconda) and runs CPC2, a software to predict whether a transcript is coding or non-coding. The results are saved to the $OUTPUT_DIR. CPC2 uses ORF (Open Reading Frame) Analysis, Isometric Feature Mapping (Isomap), Sequence Homology, RNA Sequence Features, and Quality of Translation to assess coding potential and flag any transcripts we would want to exclude using the FASTA generated in the previous step.</p>
-<div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb33-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">eval</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/opt/anaconda/anaconda3/bin/conda</span> shell.bash hook<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb33-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">python</span> /home/shared/CPC2_standalone-1.0.1/bin/CPC2.py <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb33-3">-i ../output/05.32-lncRNA-discovery/Apul_lncRNA_candidates.fasta <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb33-4">-o ../output/05.32-lncRNA-discovery/Apul_CPC2</span></code></pre></div>
-<div class="sourceCode" id="cb34" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb34-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wc</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-l</span> head ../output/05.32-lncRNA-discovery/Apul_CPC2.txt</span>
-<span id="cb34-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/05.32-lncRNA-discovery/Apul_CPC2.txt</span></code></pre></div>
-<pre><code>## wc: head: No such file or directory
-##   16695 ../output/05.32-lncRNA-discovery/Apul_CPC2.txt
-##   16695 total
-## #ID  transcript_length   peptide_length  Fickett_score   pI  ORF_integrity   coding_probability  label
-## transcript::NC_058066.1:468618-469943    1325    73  0.3891  11.48389835357666   1   0.0882804   noncoding
-## transcript::NC_058066.1:1153398-1165634  12236   134 0.3118  9.09901943206787    1   0.295457    noncoding
-## transcript::NC_058066.1:1153403-1165634  12231   134 0.3118  9.09901943206787    1   0.295457    noncoding
-## transcript::NC_058066.1:1153409-1165634  12225   134 0.3118  9.09901943206787    1   0.295457    noncoding
-## transcript::NC_058066.1:1154206-1155609  1403    66  0.37373 8.802658271789554   1   0.0495107   noncoding
-## transcript::NC_058066.1:1155786-1165634  9848    134 0.29479 9.09901943206787    1   0.241898    noncoding
-## transcript::NC_058066.1:1222444-1227226  4782    62  0.32077 9.30048313140869    1   0.0302275   noncoding
-## transcript::NC_058066.1:1222538-1227226  4688    62  0.32077 9.30048313140869    1   0.0302275   noncoding
-## transcript::NC_058066.1:1256162-1257382  1220    41  0.34867000000000004 9.098761558532715   1   0.0140974   noncoding</code></pre>
-<p>#Filter Filters the CPC2 results to get only noncoding transcripts (using the class “noncoding” from the CPC2 results) and extracts their IDs and matches these IDs with the sequences from the previous step to generate a GTF of long noncoding transcripts.</p>
-<p>Matches these IDs with the sequences from the previous step to generate a GTF of noncoding transcripts.</p>
-<div class="sourceCode" id="cb36" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb36-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'$8 == "noncoding" {print $1}'</span> ../output/05.32-lncRNA-discovery/Apul_CPC2.txt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/05.32-lncRNA-discovery/Apul_noncoding_transcripts_ids.txt</span>
-<span id="cb36-2"></span>
-<span id="cb36-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-Fwf</span> ../output/05.32-lncRNA-discovery/Apul_noncoding_transcripts_ids.txt ../output/05.32-lncRNA-discovery/Apul_lncRNA_candidates.fasta <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/05.32-lncRNA-discovery/Apul_lncRNAs.gtf</span></code></pre></div>
-<div class="sourceCode" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb37-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wc</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-l</span> ../output/05.32-lncRNA-discovery/Apul_lncRNAs.gtf</span>
-<span id="cb37-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/05.32-lncRNA-discovery/Apul_lncRNAs.gtf</span></code></pre></div>
-<pre><code>## 16122 ../output/05.32-lncRNA-discovery/Apul_lncRNAs.gtf
-## &gt;transcript::NC_058066.1:468618-469943
-## &gt;transcript::NC_058066.1:1153398-1165634
-## &gt;transcript::NC_058066.1:1153403-1165634
-## &gt;transcript::NC_058066.1:1153409-1165634
-## &gt;transcript::NC_058066.1:1154206-1155609
-## &gt;transcript::NC_058066.1:1155786-1165634
-## &gt;transcript::NC_058066.1:1222444-1227226
-## &gt;transcript::NC_058066.1:1222538-1227226
-## &gt;transcript::NC_058066.1:1256162-1257382
-## &gt;transcript::NC_058066.1:1256162-1264306</code></pre>
-</section>
-<section id="de-duplicate-gtf" class="level1">
-<h1>7 De-duplicate GTF</h1>
-<p>Removes duplicate entries from the GTF file. This results in a list of lncRNAs with transcript IDs that show scaffold and base range. awk ‘!seen<img src="https://latex.codecogs.com/png.latex?%5C$0">++’ $OUTPUT_DIR/apul_merged_final_lncRNAs.gtf &gt; $OUTPUT_DIR/apul_deduplicated_final_lncRNAs.gtf</p>
-</section>
-<section id="reformat-to-bed" class="level1">
-<h1>8 Reformat to BED</h1>
-<p>Converts the GTF format to BED (Browser Extensible Data) format, a commonly used format for representing genomic intervals. This allows us to use bedtools to generate a FASTA of lncRNAs. awk -F”:|-” ‘{print $3 “ $4” $5}’ $OUTPUT_DIR/apul_deduplicated_final_lncRNAs.gtf &gt; $OUTPUT_DIR/apul_deduplicated_final_lncRNAs.bed</p>
-</section>
-<section id="bedtools-1" class="level1">
-<h1>9 BEDTools</h1>
-<p>This extracts sequences from the reference FASTA based on the BED file’s coordinates. The resulting sequences represent the final set of non-redundant lncRNAs. $BEDTOOLS_PATH/bedtools<br>
-getfasta -fi $FASTA -bed $OUTPUT_DIR/apul_deduplicated_final_lncRNAs.bed -fo $OUTPUT_DIR/apul_bedtools_lncRNAs.fasta -name ```</p>
-<p>The results of this pipleine provide the user with GTF files containing transcript IDs (scaffold and sequence range), BED files displaying the same transcript IDs in BED format for use with BEDtools, and FASTA files containing the sequence of identified lncRNAs.</p>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>deepdive</category>
-  <category>R</category>
-  <category>lncrna</category>
-  <category>e5</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-08-Apul-lncRNA/</guid>
-  <pubDate>Fri, 03 Nov 2023 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
