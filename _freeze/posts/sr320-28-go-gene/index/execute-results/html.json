@@ -1,0 +1,15 @@
+{
+  "hash": "837de255bb3e37e1241e7f9d4bcbc9fb",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"R N A T O G O\"\ndescription: \"On the Roan to assigning GO to genes\"\ncategories: [blast, e5]\n#citation: \ndate: 08-27-2024\nimage: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2024-08-27_16-05-41.png # finding a good image\n\nauthor:\n  - name: Steven Roberts\n    url: \n    orcid: 0000-0001-8302-1138\n    affiliation: Professor, UW - School of Aquatic and Fishery Sciences\n    affiliation-url: https://robertslab.info\n  #url:  # self-defined\ndraft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!\nformat:\n  html:\n    code-fold: FALSE\n    code-tools: true\n    code-copy: true\n    highlight-style: github\n    code-overflow: wrap\n---\n\n\n\n\ntldr:\n\nGO annotations for Deep Dive Transcript sets:\n\n<https://github.com/urol-e5/deep-dive/blob/main/D-Apul/output/20-Apul-gene-annotation/Apul-rna-GO.tsv>\n\n<https://github.com/urol-e5/deep-dive/blob/main/E-Peve/output/20-Peve-gene-annotation/Peve-rna-GO.tsv>\n\n<https://github.com/urol-e5/deep-dive/blob/main/F-Pmea/output/20-Pmea-gene-annotation/Pmea-rna-GO.tsv>\n\n------------------------------------------------------------------------\n\nThis was done just as with [proteins set](https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/) (except different query and blastx as opposed to blastp)\n\nNote both Proteins and transcripts wre obtained from: \n<https://github.com/urol-e5/deep-dive/wiki/Species-Characteristics-and-Genomic-Resources>\n\n------------------------------------------------------------------------\n\nActual code at\n\n<https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/20-Apul-gene-annotation.Rmd>\n\n<https://github.com/urol-e5/deep-dive/blob/main/E-Peve/code/20-Peve-gene-annotation.Rmd>\n\n<https://github.com/urol-e5/deep-dive/blob/main/F-Pmea/code/20-Pmea-gene-annotation.Rmd>\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

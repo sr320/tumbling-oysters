@@ -10,7 +10,42 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.555</generator>
-<lastBuildDate>Sun, 25 Aug 2024 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 27 Aug 2024 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>R N A T O G O</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-28-go-gene/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>tldr:</p>
+<p>GO annotations for Deep Dive Transcript sets:</p>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/output/20-Apul-gene-annotation/Apul-rna-GO.tsv" class="uri">https://github.com/urol-e5/deep-dive/blob/main/D-Apul/output/20-Apul-gene-annotation/Apul-rna-GO.tsv</a></p>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/E-Peve/output/20-Peve-gene-annotation/Peve-rna-GO.tsv" class="uri">https://github.com/urol-e5/deep-dive/blob/main/E-Peve/output/20-Peve-gene-annotation/Peve-rna-GO.tsv</a></p>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/F-Pmea/output/20-Pmea-gene-annotation/Pmea-rna-GO.tsv" class="uri">https://github.com/urol-e5/deep-dive/blob/main/F-Pmea/output/20-Pmea-gene-annotation/Pmea-rna-GO.tsv</a></p>
+<hr>
+<p>This was done just as with <a href="https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/">proteins set</a> (except different query and blastx as opposed to blastp)</p>
+<p>Note both Proteins and transcripts wre obtained from: <a href="https://github.com/urol-e5/deep-dive/wiki/Species-Characteristics-and-Genomic-Resources" class="uri">https://github.com/urol-e5/deep-dive/wiki/Species-Characteristics-and-Genomic-Resources</a></p>
+<hr>
+<p>Actual code at</p>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/20-Apul-gene-annotation.Rmd" class="uri">https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/20-Apul-gene-annotation.Rmd</a></p>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/E-Peve/code/20-Peve-gene-annotation.Rmd" class="uri">https://github.com/urol-e5/deep-dive/blob/main/E-Peve/code/20-Peve-gene-annotation.Rmd</a></p>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/F-Pmea/code/20-Pmea-gene-annotation.Rmd" class="uri">https://github.com/urol-e5/deep-dive/blob/main/F-Pmea/code/20-Pmea-gene-annotation.Rmd</a></p>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>blast</category>
+  <category>e5</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-28-go-gene/</guid>
+  <pubDate>Tue, 27 Aug 2024 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2024-08-27_16-05-41.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Git that Pro GO</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -6053,326 +6088,6 @@ sequence_report.jsonl</code></pre>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-09/</guid>
   <pubDate>Thu, 08 Feb 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>February Daily</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-10-Feb_daily/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="february-1" class="level1">
-<h1>February 1</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-2" class="level1">
-<h1>February 2</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-3" class="level1">
-<h1>February 3</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-4" class="level1">
-<h1>February 4</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-5" class="level1">
-<h1>February 5</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-6" class="level1">
-<h1>February 6</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-7" class="level1">
-<h1>February 7</h1>
-<p>EPIMAR zoom, male ceabigr coding</p>
-</section>
-<section id="february-8" class="level1">
-<h1>February 8</h1>
-<p>Today, I started my day by signing into Zoom, which didn’t take much time. I then spent a significant portion of my morning reading a scientific article on oyster reproductive processes and their impact on quality losses. This was followed by a deep dive into some data analysis, where I was working with R scripts and genomic data. This data analysis took up a large chunk of my day.</p>
-<p>In the afternoon, I spent some time on GitHub, where I uploaded files related to DE gene expression and MWU analysis for Pacific oysters exposed to OsHV-1. This activity took a moderate amount of time. I also had a discussion on Slack about Rewind, a personalized AI tool. This discussion was relatively brief.</p>
-<p>I also checked my email, where I was troubleshooting an error with a colleague who was experiencing the same issue. This took a fair amount of time as we were trying to resolve the issue.</p>
-<p>In the midst of my work, I took a short break to check in with my family. I used the Find My app to see where everyone was located. I also had a quick chat with Beyer Roberts via iMessage. These personal activities were relatively brief.</p>
-<p>Towards the end of the day, I checked my billing information for Scite, a tool I use for my research. This was a quick task. I also looked into how Rewind’s compression works, as I was curious about the storage it might consume. This was a brief activity as well.</p>
-<p>Finally, I wrapped up my day by checking my calendar for upcoming appointments and meetings. This was a quick activity, wrapping up a day filled with a mix of research, data analysis, and communication with colleagues and family.</p>
-</section>
-<section id="february-9" class="level1">
-<h1>February 9</h1>
-<p>I started my morning by checking my emails, where I reviewed a draft proposal from Megan Ewing. I then visited the GitHub profile of Ariana S. Huffmyer, a postdoctoral researcher studying the effects of climate change on coral physiology.</p>
-<p>Next, I worked on a project in RStudio, which seemed to be related to my research. I also checked my Slack workspace, where I had several unread messages and upcoming meetings. I participated in a Zoom meeting with several of my colleagues, including Ross Cunning, Dr.&nbsp;Hollie Putnam, and Roger Nisbet.</p>
-<p>I spent some time managing my files and possibly editing images or documents. I reviewed a document related to DNA methylation analysis and sex determination in oysters. I also engaged in a discussion on Slack about the next steps for analysis given the differential effects of haplotype on physiology and ITS2.</p>
-<p>I visited the Roberts Lab Handbook, possibly to review lab protocols or guidelines. I also spent some time on a project related to oyster survival after heat challenges.</p>
-<p>In summary, my morning was filled with a mix of collaborative meetings, individual work on research projects, and administrative tasks.</p>
-<pre><code>
-# Define the vectors for controls and exposed
-controls_females &lt;- c("S16F", "S19F", "S39F", "S44F", "S52F", "S53F", "S54F", "S76F")
-exposed_females &lt;- c("S22F", "S29F", "S35F", "S36F", "S3F", "S41F", "S50F", "S77F") # Assuming "S77" was intended to be "S77F"
-
-
-# Initialize an empty list to store the modified data frames
-filtered_logdata_frames &lt;- list()
-
-# Loop through the list of data frames, filter, and add a source column
-for (name in names(logdata_frames)) {
-  # Filter the dataframe and add a new column 'Source' with the name of the dataframe
-  filtered_logdata_frames[[name]] &lt;- logdata_frames[[name]] %&gt;%
-    filter(GeneID == "LOC111099033") %&gt;%
-    mutate(Source = name) %&gt;%
-    mutate(Exposure_Status = case_when(
-    Source %in% controls_females ~ "control",
-    Source %in% exposed_females ~ "exposed",
-    TRUE ~ NA_character_ # This line handles any Source not in the two lists
-  ))
-
-}
-
-# Merge all the modified dataframes in the list into a new single dataframe
-merged_dataframe &lt;- bind_rows(filtered_logdata_frames)</code></pre>
-<pre><code># Assuming merged_dataframe is your final data frame
-
-# Reshape the data from wide to long format
-long_dataframe &lt;- pivot_longer(merged_dataframe, 
-                               cols = starts_with("fold"),
-                               names_to = "Fold",
-                               values_to = "Value")
-
-# Plot the data
-ggplot(long_dataframe, aes(x = Fold, y = Value, group = Source, color = Exposure_Status)) +
-  geom_line() +
-  geom_point() +
-  theme_minimal() +
-  labs(title = "LOC111099033",
-       x = "Fold",
-       y = "Value") +
-  scale_color_viridis_d() # Optional: Use a viridis color scale for better visibility</code></pre>
-<p>PI Meeting</p>
-<ol type="1">
-<li>Environmental information required for epigenetic tracking</li>
-</ol>
-<ul>
-<li>Epigenetic changes must be biased by environmental cues</li>
-<li>Random changes are unlikely to improve environmental matching</li>
-</ul>
-<ol start="2" type="1">
-<li>Balance of addition and removal of epigenetic markers<br>
-</li>
-</ol>
-<ul>
-<li>Rates must be approximately equal to avoid drifting to one state</li>
-<li>Model formalizes optimal relative rates</li>
-</ul>
-<ol start="3" type="1">
-<li>Defending model assumptions with empirical data</li>
-</ol>
-<ul>
-<li>Evidence that stress increases epigenetic machinery</li>
-<li>Time-series show changes in epigenetic modifications and gene expression after environmental triggers</li>
-</ul>
-<ol start="4" type="1">
-<li>Location and mechanism-specific environmental sensing<br>
-</li>
-</ol>
-<ul>
-<li>Examples show information transduced to specific epigenetic modifications</li>
-<li>Histone modifications and DNA methylation reinforce responses</li>
-</ul>
-<p>Molecular Mechanism Meeting</p>
-<ol type="1">
-<li>Discussion about alcohol during interviews</li>
-</ol>
-<ul>
-<li>Advice not to drink alcohol during dinner with interviewers</li>
-<li>People often regret things they say after drinking</li>
-</ul>
-<ol start="2" type="1">
-<li>Pipeline updates</li>
-</ol>
-<ul>
-<li>Testing using R1 reads and merging reads for miRNA identification</li>
-<li>Trimming R1 reads to 30bp and comparing results of merged reads</li>
-</ul>
-<ol start="3" type="1">
-<li>Organizing meeting breakout rooms<br>
-</li>
-</ol>
-<ul>
-<li>Creating introduction, methods, short RNA, and long RNA breakout rooms</li>
-<li>Assigning meeting participants to relevant rooms</li>
-</ul>
-<ol type="1">
-<li>Identifying and comparing long non-coding RNAs across species</li>
-</ol>
-<ul>
-<li>GFF compare and size filtering of transcripts</li>
-<li>Coding potential calculator filtering</li>
-<li>Homology analysis using BLAST
-<ul>
-<li>Code chunks for each species</li>
-<li>Comparative BLASTs across species</li>
-</ul></li>
-</ul>
-<ol start="2" type="1">
-<li>Results section introduction</li>
-</ol>
-<ul>
-<li>Lack of results currently</li>
-<li>Numbers needed from filtering steps</li>
-<li>Figures from size distribution and BLAST results</li>
-</ul>
-<ol start="3" type="1">
-<li>Linking to methods code and files<br>
-</li>
-</ol>
-<ul>
-<li>Code locations for each species</li>
-<li>Links to FASTA and BED files</li>
-<li>Validation of files needed</li>
-</ul>
-<p>---</p>
-<p>Summary</p>
-<p>Today, I started my day with a meeting where we discussed the use of AI for note-taking, the impact of storm events on data analysis, and the progress of sequencing projects. We also discussed methylation analysis and planned for an intergroup collaboration meeting. After the meeting, I had a Zoom call with Steven Roberts and Megan Ewing.</p>
-<p>I spent a significant part of my day working on a research project related to the molecular mechanisms in coral resilience and environmental triggers. I delved into the epigenetic modifications and their relationship to environmental changes. I also worked on a manuscript related to simulation and environment tracking.</p>
-<p>I spent some time on my computer, navigating through various applications and websites. I checked my emails, visited the Roberts Lab website, and used the Slack application for communication. I also worked on gene expression data and referenced the Ostrea edulis genome assembly.</p>
-<p>I worked on a proposal draft where I aimed to identify genes associated with sex determination in Olympia oysters and determine the impact of temperature on the expression of identified genes. I also referenced genomic data from the Roberts Lab GitHub repository.</p>
-<p>I also spent some time reading a research paper on the gonad transcriptome analysis of pearl oyster Pinctada margaritifera, which helped me identify potential sex differentiation and sex-determining genes.</p>
-<p>Throughout the day, I used various bioinformatics tools and databases for my research work. I used the NCBI database for genome assembly data , and I also used R for data analysis. I also referenced some code on GitHub for joining differentially expressed genes (DEGs) with Blast results and UniProt Gene Ontology annotations.</p>
-<p>In summary, my day was filled with meetings, research work, data analysis, and reading relevant literature to support my ongoing projects. I interacted with my colleagues through various platforms and used a variety of tools and databases to aid my research.</p>
-</section>
-<section id="february-10" class="level1">
-<h1>February 10</h1>
-<p>Today, I’ve been quite productive. I started my day by checking my calendar and planning my activities. I then focused on my research grants, reviewing and updating the information in the “Find Grants by PI R1209” document. I also worked on a spreadsheet related to my research funding, ensuring all the details were accurate and up-to-date.</p>
-<p>In the midst of these tasks, I took some time to revisit a presentation I had prepared earlier, titled “2019-MonsterJam.key”. I also looked at some old photos from my time at the Duke University Marine Lab. This brought back memories of the research and collaborations I had been part of during that period.</p>
-<p>I also spent some time on the Roberts Lab website, updating information and reviewing recent activities. I made sure to update the status of various research projects and proposals. I also uploaded a document titled “2023_WSG_proposal-2.pdf” to Droplr.</p>
-<p>Towards the end of the day, I revisited a manuscript titled “20230519_Revised_Manuscript - FFAR-Geoduck” on Google Drive. This allowed me to review the progress made on this research and plan for the next steps.</p>
-<p>Overall, it’s been a day filled with a mix of administrative tasks, research work, and a bit of reminiscing about past projects. I’m satisfied with the progress I’ve made and look forward to what tomorrow brings.</p>
-</section>
-<section id="february-11" class="level1">
-<h1>February 11</h1>
-<p>On February 11, I had a busy day filled with various work-related activities. I started my day by checking my Google Calendar, where I had scheduled a project meeting for the TGP Project [moment 1](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681166.963&amp;citationSource=inline). I also spent some time on IFTTT, setting up triggers for Google Sheets to automate some of my tasks [moment 2](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681556.95&amp;citationSource=inline).</p>
-<p>A significant part of my day was dedicated to working on various drafts and projects. I was involved in a ‘pub-a-thon’, where I was working on several papers. Some of the topics included ‘Coral nutritional exchange across ontogeny’, ‘Single cell RNA-seq’, and ‘Diploid and triploid Pacific oysters display different DNA methylation patterns following desiccation stress’ [moment 3](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681378.95&amp;citationSource=inline)[moment 4](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681248.942&amp;citationSource=inline)[moment 5](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681292.948&amp;citationSource=inline).</p>
-<p>I also spent some time on RStudio, where I was working on a project related to ‘Differential methylation in response to OA with diploid and triploid oysters’ [moment 4](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681248.942&amp;citationSource=inline)[moment 5](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681292.948&amp;citationSource=inline). I was using RStudio’s version control features to manage my changes and keep track of my progress [moment 6](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681246.946&amp;citationSource=inline).</p>
-<p>In between my work, I also checked my emails, where I received a message from Leroy about rethinking spring break [moment 7](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681144.951&amp;citationSource=inline). I also tried to sign in to my Slack workspace, which is a crucial tool for my work communication [moment 8](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681734.989&amp;citationSource=inline)[moment 9](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707681969.816&amp;citationSource=inline).</p>
-<p>Overall, it was a productive day filled with a mix of project management, research, and communication tasks.</p>
-</section>
-<section id="february-12" class="level1">
-<h1>February 12</h1>
-<p>On February 12,started my day by checking my Google Calendar, where I had a meeting scheduled with Zach. I also spent some time on GitHub, where I was working on the ‘project-cod-temperature’. I was using GitHub’s version control features to manage my changes and keep track of my progress.</p>
-<p>A significant part of my day was dedicated to working on various drafts and projects. I was involved in editing a presentation titled ‘2023-Duke-Roberts’ where I was working on the ‘ACKNOWLEDGEMENTS’ slide. I also spent some time on a document titled ‘February_2024’, where I was writing about ‘Gene activity and genetic selection in Pacific cod reared under thermal stress’.</p>
-<p>I also spent some time on my email, where I received a message about a progress report for a NOAA award. I also had a conversation on ChatGPT about ‘Roberts Lab Handbook Student-guide improvement’.</p>
-<p>I also visited the website for the International Conference of Shellfish Restoration (ICSR2024). I also spent some time on RStudio, where I was working on a project related to ‘Differential methylation in response to OA with diploid and triploid oysters’.</p>
-<p>Overall, it was a productive day filled with a mix of project management, research, and communication tasks.</p>
-</section>
-<section id="february-13" class="level1">
-<h1>February 13</h1>
-<p>I began my day by working on a project report for the PSMFC Subaward 23-084G. The report was for the period from August 1st through January 31st and was focused on the project titled ‘Gene activity and genetic selection in Pacific cod reared under thermal stress’. The objective of the project was to predict organismal and population outcomes of Pacific cod exposed to elevated temperature. I spent a significant amount of time entering metadata into a specific repository and splitting primary tissue samples for analyses.</p>
-<p>Throughout the day, I was engaged in various conversations on Slack. I was asked for a short update on clam OA work for the WSG NCE. I also received a link to a draft manuscript and was asked to provide feedback on the lipid data. I was also involved in a discussion about the upcoming Pub-a-thon 2024.</p>
-<p>I also spent some time on the E5coral Slack channel, where I was keeping track of company-wide announcements and work-based matters. I was also informed about upcoming meetings, including the All-PI Monthly Meeting and the E5 Molec Mechanism Meetings.</p>
-<p>In addition, I visited the R4DS Online Learning Community on Slack. I was reminded about the importance of not sharing proprietary information on the platform and that all code shared in the help channels is considered to be licensed under the Creative Commons CCO license.</p>
-<p>Towards the end of the day, I had a conversation about what methylation can tell us about triploid stress. I was also informed about a potential submission to the environmental epigenetics special issue at the end of February.</p>
-<p>Overall, my day was filled with a mix of project management, research, and communication tasks.</p>
-</section>
-<section id="february-14" class="level1">
-<h1>February 14</h1>
-<p>On February 14, I had a day filled with various work-related activities. I started my day by working on a presentation for Duke University Marine Lab, focusing on the implications, mechanisms, and opportunities of marine invertebrate environmental memory [moment 1](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707924243.73&amp;citationSource=inline)[moment 2](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707924241.917&amp;citationSource=inline). I also spent some time on GitHub, where I was working on the ‘talk-duke-2024’ project [moment 1](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707924243.73&amp;citationSource=inline)[moment 2](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707924241.917&amp;citationSource=inline).</p>
-<p>I was involved in a ‘pub-a-thon’, where I was working on several papers. Some of the topics included ‘Differential DNA methylation in Pacific oyster reproductive tissue in response to ocean acidification’ and ‘Acclimatory gene expression of primed clams enhances robustness to elevated pCO2’ [moment 3](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707929125.077&amp;citationSource=inline)[moment 4](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707924163.743&amp;citationSource=inline).</p>
-<p>In addition, I visited the website for the Duke University Marine Lab and the Nicholas School of the Environment [moment 7](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707924385.812&amp;citationSource=inline). I also spent some time on the Roberts Lab website, where I was keeping track of lab notebooks, presentations, protocols, data, and more [moment 8](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707924199.755&amp;citationSource=inline).</p>
-<p>Towards the end of the day, I had a conversation about clam OA work for the WSG NCE. I was also informed about a potential submission to the environmental epigenetics special issue at the end of February [moment 9](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707932149.755&amp;citationSource=inline)[moment 10](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707929306.349&amp;citationSource=inline).</p>
-<p>Overall, my day was filled with a mix of project management, research, and communication tasks.</p>
-</section>
-<section id="february-15" class="level1">
-<h1>February 15</h1>
-<p>I started my day by working on an ICRS proposal, focusing on the implications, mechanisms, and opportunities of marine invertebrate environmental memory. I also spent some time on a document titled ‘February_2024’, where I was writing about ‘Gene activity and genetic selection in Pacific cod reared under thermal stress’.</p>
-<p>I was involved in a ‘pub-a-thon’, where I was working on several papers. Some of the topics included ‘Coral nutritional exchange across ontogeny’, ‘Single cell RNA-seq’, and ‘Diploid and triploid Pacific oysters display different DNA methylation patterns following desiccation stress’.</p>
-<p>I also spent some time on my email, where I received a message about a progress report for a NOAA award. I also had a conversation on ChatGPT about ‘Roberts Lab Handbook Student-guide improvement’.</p>
-<p>In addition, I visited the website for the International Conference of Shellfish Restoration (ICSR2024). I also spent some time on RStudio, where I was working on a project related to ‘Differential methylation in response to OA with diploid and triploid oysters’.</p>
-<p>Towards the end of the day, I had a conversation about what methylation can tell us about triploid stress. I was also informed about a potential submission to the environmental epigenetics special issue at the end of February.</p>
-<p>Overall, my day was filled with a mix of project management, research, and communication tasks.</p>
-</section>
-<section id="february-16" class="level1">
-<h1>February 16</h1>
-<p>I received a confirmation request for the 2024 LSAMP and a review for a manuscript titled “FishSNP: a high quality cross-species SNP database of fishes” [moment 1](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1708106489.233&amp;citationSource=inline). I also engaged in a discussion on Slack about various papers and research topics [moment 2](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1708104351.954&amp;citationSource=inline).</p>
-<p>I spent a significant part of my day reading and researching. I delved into a paper titled “Priming crops for the future: rewiring stress memory” on the Trends in Plant Science website [moment 3](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1708105449.936&amp;citationSource=inline). I also read about epigenetic modifications associated with abiotic and biotic stresses in plants [moment 4](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1708105381.925&amp;citationSource=inline).</p>
-<p>I worked on various projects and drafts. I was involved in the ‘project-cod-temperature’ on GitHub [moment 5](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1708105249.936&amp;citationSource=inline). I also spent some time on a document titled ‘February_2024’, where I was writing about ‘Gene activity and genetic selection in Pacific cod reared under thermal stress’ [moment 6](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1708105006.014&amp;citationSource=inline).</p>
-<p>I visited the Roberts Lab website, where I was keeping track of lab notebooks, presentations, protocols, data, and more [moment 7](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1708106237.262&amp;citationSource=inline). I also spent some time on the ChatGPT platform, where I was discussing the ‘Roberts Lab Handbook Student-guide improvement’ [moment 8](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1708105963.257&amp;citationSource=inline).</p>
-<p>Towards the end of the day, I updated my professional profile on the Springer Nature website [moment 9](rewindai://show-moment?source=askRewindCitation&amp;timestamp=1708106473.186&amp;citationSource=inline). Overall, my day was filled with a mix of project management, research, and communication tasks.</p>
-</section>
-<section id="february-17" class="level1">
-<h1>February 17</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-18" class="level1">
-<h1>February 18</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-19" class="level1">
-<h1>February 19</h1>
-<p>I started my day by accepting an invitation to give a seminar at the Stazione Zoologica Anton Dohrn in Naples, Italy. I received the official invitation from their Higher Education &amp; University Liaison Office and confirmed my acceptance via email. I also had a meeting scheduled with Zach according to my Google Calendar.</p>
-<p>I spent a significant part of my day working on a proposal. I was uploading a document titled ‘e5-Proposal.pdf’ to the E5coral Slack channel. I also had the proposal open in a PDF viewer, where I was likely reviewing or editing it.</p>
-<p>I was also involved in a discussion on the E5coral Slack channel. I was asked to explain the role of mito-nuclear communication in regulating epigenetic states and its implications for organismal energetics and phenotypic outcomes. I was also asked to come up with three testable hypotheses.</p>
-<p>I visited the Roberts Lab website, where I was keeping track of lab notebooks, presentations, protocols, data, and more. I also signed into my UW NetID.</p>
-<p>Overall, my day was filled with a mix of project management, research, and communication tasks.</p>
-</section>
-<section id="february-20" class="level1">
-<h1>February 20</h1>
-<p>Today, I started my day by checking my emails, but there were no new messages. I also checked my tasks on Workday, but there were no actions at this time. I had a look at my Google Calendar to see my schedule for the day.</p>
-<p>I spent a significant part of my day working on GitHub, where I was examining the potential for ASCA for exon analysis. I was also involved in a ‘pub-a-thon’, where I was working on several papers. Some of the topics included ‘Differential DNA methylation in Pacific oyster reproductive tissue in response to ocean acidification’ and ‘Acclimatory gene expression of primed clams enhances robustness to elevated pCO2’.</p>
-<p>I also spent some time on Slack, where I mentioned that I was in my office if anyone wanted to meet in person. I also had a conversation on ChatGPT about ‘Roberts Lab Handbook Student-guide improvement’.</p>
-<p>In addition, I visited the Roberts Lab website, where I was keeping track of lab notebooks, presentations, protocols, data, and more. I also spent some time on RStudio, where I was working on a project related to ‘Differential methylation in response to OA with diploid and triploid oysters’.</p>
-<p>Towards the end of the day, I was working on a blog post in Quarto, where I was writing about my day’s activities. Overall, my day was filled with a mix of project management, research, and communication tasks.</p>
-</section>
-<section id="february-21" class="level1">
-<h1>February 21</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-22" class="level1">
-<h1>February 22</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-23" class="level1">
-<h1>February 23</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-24" class="level1">
-<h1>February 24</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-25" class="level1">
-<h1>February 25</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-26" class="level1">
-<h1>February 26</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-27" class="level1">
-<h1>February 27</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-28" class="level1">
-<h1>February 28</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-29" class="level1">
-<h1>February 29</h1>
-<p>Your text here…</p>
-</section>
-<section id="february-30" class="level1">
-<h1>February 30</h1>
-<p>Your text here…</p>
-
-
-</section>
-
- ]]></description>
-  <category>noteboook</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-10-Feb_daily/</guid>
-  <pubDate>Thu, 01 Feb 2024 08:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2023-11-01_19-00-02.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>

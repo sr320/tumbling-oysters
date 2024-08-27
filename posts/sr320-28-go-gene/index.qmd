@@ -1,0 +1,64 @@
+---
+title: "R N A T O G O"
+description: "On the Roan to assigning GO to genes"
+categories: [blast, e5]
+#citation: 
+date: 08-27-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2024-08-27_16-05-41.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code analyses
+)
+```
+
+tldr:
+
+GO annotations for Deep Dive Transcript sets:
+
+<https://github.com/urol-e5/deep-dive/blob/main/D-Apul/output/20-Apul-gene-annotation/Apul-rna-GO.tsv>
+
+<https://github.com/urol-e5/deep-dive/blob/main/E-Peve/output/20-Peve-gene-annotation/Peve-rna-GO.tsv>
+
+<https://github.com/urol-e5/deep-dive/blob/main/F-Pmea/output/20-Pmea-gene-annotation/Pmea-rna-GO.tsv>
+
+------------------------------------------------------------------------
+
+This was done just as with [proteins set](https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/) (except different query and blastx as opposed to blastp)
+
+Note both Proteins and transcripts wre obtained from: 
+<https://github.com/urol-e5/deep-dive/wiki/Species-Characteristics-and-Genomic-Resources>
+
+------------------------------------------------------------------------
+
+Actual code at
+
+<https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/20-Apul-gene-annotation.Rmd>
+
+<https://github.com/urol-e5/deep-dive/blob/main/E-Peve/code/20-Peve-gene-annotation.Rmd>
+
+<https://github.com/urol-e5/deep-dive/blob/main/F-Pmea/code/20-Pmea-gene-annotation.Rmd>
