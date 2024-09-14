@@ -1,0 +1,53 @@
+---
+title: "re prime"
+description: "Giving 10k seed more resiliency"
+categories: [oyster, stress]
+#citation: 
+date: 09-14-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-09-14_12-28-40.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code analyses
+)
+```
+
+Went out to hatchery to re prime what is left from 10k seed on Friday Sept 13th.
+
+Rinsed all bags with freshwater hose.
+
+Bags 56 and 66 then went into FW (5 gallon bucket) for two hours.
+
+47 and 30 were moved into white tank inside (far right). Water temperature 23C. (Lagoon is currently at 17C). Two heater set at 36 set to come on 11pm - 5am daily. Temperature profile is as follows.
+
+![Apex](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_APEX_Fusion_2024-09-14_12-34-03.png)
+
+Bags 75 and 76 were placed in FW for two hours then moved into white tank described above. 
+
+Bags 36/37 (controls) and 50/49 (immune) simply went back to lagoon.
+
+Still waiting for info on farm deployment but planning on going out Sunday and checking on water system (flow) and do freshwater immersions. Poly IC should arrive Monday. 

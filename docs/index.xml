@@ -10,7 +10,42 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.555</generator>
-<lastBuildDate>Tue, 27 Aug 2024 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 14 Sep 2024 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>re prime</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/29-prime/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Went out to hatchery to re prime what is left from 10k seed on Friday Sept 13th.</p>
+<p>Rinsed all bags with freshwater hose.</p>
+<p>Bags 56 and 66 then went into FW (5 gallon bucket) for two hours.</p>
+<p>47 and 30 were moved into white tank inside (far right). Water temperature 23C. (Lagoon is currently at 17C). Two heater set at 36 set to come on 11pm - 5am daily. Temperature profile is as follows.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_APEX_Fusion_2024-09-14_12-34-03.png" class="img-fluid figure-img"></p>
+<figcaption>Apex</figcaption>
+</figure>
+</div>
+<p>Bags 75 and 76 were placed in FW for two hours then moved into white tank described above.</p>
+<p>Bags 36/37 (controls) and 50/49 (immune) simply went back to lagoon.</p>
+<p>Still waiting for info on farm deployment but planning on going out Sunday and checking on water system (flow) and do freshwater immersions. Poly IC should arrive Monday.</p>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>oyster</category>
+  <category>stress</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/29-prime/</guid>
+  <pubDate>Sat, 14 Sep 2024 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-09-14_12-28-40.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>R N A T O G O</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -6062,32 +6097,6 @@ sequence_report.jsonl</code></pre>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-11/</guid>
   <pubDate>Mon, 11 Mar 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_14-06-23.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>What I have been up to today</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-09/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Today was a day filled with a variety of activities, primarily centered around my work in the Roberts Lab. I started my day by signing into Zoom <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707432535.639&amp;citationSource=inline">moment 1</a>. I then spent some time reading a scientific article on oyster reproductive processes and their impact on quality losses <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707433027.613&amp;citationSource=inline">moment 2</a>. This was followed by a deep dive into some data analysis, where I was working with R scripts and genomic data <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707432585.605&amp;citationSource=inline">moment 3</a><a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707434521.666&amp;citationSource=inline">moment 4</a><a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707429879.705&amp;citationSource=inline">moment 5</a><a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707429749.645&amp;citationSource=inline">moment 6</a>.</p>
-<p>I also spent some time on GitHub, where I uploaded files related to DE gene expression and MWU analysis for Pacific oysters exposed to OsHV-1 <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707435213.688&amp;citationSource=inline">moment 7</a>. I had a discussion on Slack about Rewind, a personalized AI tool <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707434939.676&amp;citationSource=inline">moment 8</a><a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707435089.671&amp;citationSource=inline">moment 9</a>. I also checked my email, where I was troubleshooting an error with a colleague who was experiencing the same issue <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707435129.677&amp;citationSource=inline">moment 10</a>.</p>
-<p>In the midst of my work, I took a break to check in with my family. I used the Find My app to see where everyone was located <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707434518.904&amp;citationSource=inline">moment 11</a>. I also had a quick chat with Beyer Roberts via iMessage <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707434511.666&amp;citationSource=inline">moment 12</a>.</p>
-<p>Towards the end of the day, I checked my billing information for Scite, a tool I use for my research <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707435221.704&amp;citationSource=inline">moment 13</a>. I also looked into how Rewind’s compression works, as I was curious about the storage it might consume <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707435223.703&amp;citationSource=inline">moment 14</a>.</p>
-<p>Finally, I wrapped up my day by checking my calendar for upcoming appointments and meetings <a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707433063.625&amp;citationSource=inline">moment 15</a><a href="rewindai://show-moment?source=askRewindCitation&amp;timestamp=1707434523.661&amp;citationSource=inline">moment 16</a>. It was a productive day, filled with a mix of research, data analysis, and communication with colleagues and family.</p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>thoughts</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-09/</guid>
-  <pubDate>Thu, 08 Feb 2024 08:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
