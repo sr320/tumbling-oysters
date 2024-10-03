@@ -10,7 +10,32 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.4.555</generator>
-<lastBuildDate>Sat, 14 Sep 2024 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 03 Oct 2024 04:00:00 GMT</lastBuildDate>
+<item>
+  <title>Connecting annotations</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/30-hisat-annot/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Here is a quick explanation of what many folks are running into. The challenge is the solution is very dependent on the species you are working with.</p>
+<div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://gannet.fish.washington.edu/seashell/snaps/RPReplay_Final1727953956.MP4"></video></div>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>blast</category>
+  <category>hisat</category>
+  <category>annotation</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/30-hisat-annot/</guid>
+  <pubDate>Thu, 03 Oct 2024 04:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-09-14_12-28-40.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>re prime</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -54,7 +79,7 @@
   <category>oyster</category>
   <category>stress</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/29-prime/</guid>
-  <pubDate>Sat, 14 Sep 2024 07:00:00 GMT</pubDate>
+  <pubDate>Sat, 14 Sep 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-09-14_12-28-40.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -89,7 +114,7 @@
   <category>blast</category>
   <category>e5</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-28-go-gene/</guid>
-  <pubDate>Tue, 27 Aug 2024 07:00:00 GMT</pubDate>
+  <pubDate>Tue, 27 Aug 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2024-08-27_16-05-41.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -381,7 +406,7 @@ font-style: inherit;">head</span> ../output/20-Apul-gene-annotation/Apul-protein
   <category>blast</category>
   <category>e5</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/</guid>
-  <pubDate>Sun, 25 Aug 2024 07:00:00 GMT</pubDate>
+  <pubDate>Sun, 25 Aug 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap__in_UniProtKB_search_571864__UniProt_2024-08-23_16-18-03.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -480,7 +505,7 @@ TLDR: Kathleens’s post
   <category>oyster</category>
   <category>temperature</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/</guid>
-  <pubDate>Wed, 26 Jun 2024 07:00:00 GMT</pubDate>
+  <pubDate>Wed, 26 Jun 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-12-25.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -523,7 +548,7 @@ TLDR: Kathleens’s post
   <category>oyster</category>
   <category>temperature</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/</guid>
-  <pubDate>Thu, 20 Jun 2024 07:00:00 GMT</pubDate>
+  <pubDate>Thu, 20 Jun 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-20-56.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -566,7 +591,7 @@ TLDR: Kathleens’s post
   <category>oyster</category>
   <category>aquaculture</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/</guid>
-  <pubDate>Mon, 17 Jun 2024 07:00:00 GMT</pubDate>
+  <pubDate>Mon, 17 Jun 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_ChatGPT_2024-06-17_10-21-36.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -915,7 +940,7 @@ font-style: inherit;">head</span>(annot_tab)</span></code></pre></div>
   <category>blast</category>
   <category>gene ontology</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</guid>
-  <pubDate>Sat, 15 Jun 2024 07:00:00 GMT</pubDate>
+  <pubDate>Sat, 15 Jun 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2024-06-15_17-21-46.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -1045,7 +1070,7 @@ TLDR: Ariana’s post
   <category>oyster</category>
   <category>aquaculture</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/</guid>
-  <pubDate>Wed, 12 Jun 2024 07:00:00 GMT</pubDate>
+  <pubDate>Wed, 12 Jun 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-12-18.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -1074,7 +1099,7 @@ TLDR: Ariana’s post
   <category>oyster</category>
   <category>aquaculture</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/</guid>
-  <pubDate>Fri, 07 Jun 2024 07:00:00 GMT</pubDate>
+  <pubDate>Fri, 07 Jun 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-13-56.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -1641,7 +1666,7 @@ font-style: inherit;">\</span></span>
   <category>hisat</category>
   <category>seastar</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/</guid>
-  <pubDate>Mon, 03 Jun 2024 07:00:00 GMT</pubDate>
+  <pubDate>Mon, 03 Jun 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -1712,7 +1737,7 @@ font-style: inherit;">&gt; ../analyses/10-hisat-deseq2/{}_hisat.stdout 2&gt; ../
  ]]></description>
   <category>xargs</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/</guid>
-  <pubDate>Mon, 27 May 2024 07:00:00 GMT</pubDate>
+  <pubDate>Mon, 27 May 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-26_11-52-26.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -2117,7 +2142,7 @@ sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/</code></pre>
   <category>rsync</category>
   <category>log</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/</guid>
-  <pubDate>Mon, 27 May 2024 07:00:00 GMT</pubDate>
+  <pubDate>Mon, 27 May 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_DALLE_2024-05-26_10.56.50_-_Create_an_artistic_and_detailed_illustration_representing_the_concept_of_automated_scripting_in_a__2024-05-26_10-57-06.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -2166,7 +2191,7 @@ font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx ../data/n
   <category>igv</category>
   <category>cod</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/</guid>
-  <pubDate>Thu, 23 May 2024 07:00:00 GMT</pubDate>
+  <pubDate>Thu, 23 May 2024 04:00:00 GMT</pubDate>
   <media:content url="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -2695,7 +2720,7 @@ font-style: inherit;">head</span>(rnatabID)</span></code></pre></div>
   <category>blast</category>
   <category>cod</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/</guid>
-  <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
+  <pubDate>Tue, 21 May 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-21-39.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -3773,7 +3798,7 @@ rna-XM_060038089.1 3.171650e-04 rna-XM_060038089.1</code></pre>
   <category>datasets</category>
   <category>cod</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/</guid>
-  <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
+  <pubDate>Tue, 21 May 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -4811,7 +4836,7 @@ gene-LOC132467924|LOC132467924         gene-LOC132467924|LOC132467924</code></pr
   <category>datasets</category>
   <category>cod</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/</guid>
-  <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
+  <pubDate>Tue, 21 May 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-07-31.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -5001,7 +5026,7 @@ font-style: inherit;">*</span></span></code></pre></div>
   <category>datasets</category>
   <category>cod</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/</guid>
-  <pubDate>Thu, 16 May 2024 07:00:00 GMT</pubDate>
+  <pubDate>Thu, 16 May 2024 04:00:00 GMT</pubDate>
   <media:content url="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -5765,7 +5790,7 @@ abline(h=c(-1,1), col="blue")</code></pre>
   <category>R</category>
   <category>hisat</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-12/</guid>
-  <pubDate>Tue, 14 May 2024 07:00:00 GMT</pubDate>
+  <pubDate>Tue, 14 May 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-15_20-23-56.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -6072,42 +6097,8 @@ sequence_report.jsonl</code></pre>
   <category>datasets</category>
   <category>cod</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-13-cod/</guid>
-  <pubDate>Mon, 13 May 2024 07:00:00 GMT</pubDate>
+  <pubDate>Mon, 13 May 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Launching more stress</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-11/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Today I went out the the hatchery with Beyer adn we did a first heat hardening on small seed and started a ~two week long adult oyster chronic temperature regime.</p>
-<p>Both cohorts are from the 2023 POGS spawn. For the seed two drawers were held outside labelled “stress” (far right stack in causeway). Screen captures were rinsed with fresh water such that all seed would be in short length such that could be dropped into plastic tub.</p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_13-55-14.png" class="img-fluid"> Seed were immersed in 24C water for 30 minutes. One pump and two heaters were used. After immersion heaters were directly moved to white tub on far left to avoid melting.</p>
-<p>For adults about 100 adults were removed from Heath Trays, bagged and added to white tub on far right. Two heaters on thermostats were set to 25C, to come on around midnight and turn off at 6am. Below a temperature profile.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_14-05-24.png" class="img-fluid figure-img" style="width:56.0%"></p>
-<figcaption>apex</figcaption>
-</figure>
-</div>
-<p>The plan is to have this go for about two weeks and then deploy along side siblings that did not get this heat regime.</p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>oyster</category>
-  <category>hardening</category>
-  <category>aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-11/</guid>
-  <pubDate>Mon, 11 Mar 2024 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-03-12_14-06-23.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>

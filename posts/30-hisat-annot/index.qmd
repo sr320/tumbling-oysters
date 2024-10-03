@@ -1,0 +1,42 @@
+---
+title: "Connecting annotations"
+description: "challenges post HiSat"
+categories: [blast, hisat, annotation]
+#citation: 
+date: 10-03-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-09-14_12-28-40.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code analyses
+)
+```
+
+
+Here is a quick explanation of what many folks are running into. The challenge is the solution is very dependent on the species you are working with. 
+
+{{< video https://gannet.fish.washington.edu/seashell/snaps/RPReplay_Final1727953956.MP4 >}}
