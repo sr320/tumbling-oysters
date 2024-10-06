@@ -144,3 +144,13 @@ This assessment compares the genomic assemblies and annotations of three coral s
 ------------------------------------------------------------------------
 
 **Recommendation:** For comparative genomics and evolutionary studies, researchers should consider the differences in assembly quality and annotation methods. Standardizing gene prediction tools and reannotating genomes where necessary could enhance the reliability of cross-species comparisons.
+
+---
+
+data:
+
+-   <https://github.com/urol-e5/deep-dive-expression/blob/main/D-Apul/code/12-Apul-genome-explore.md>
+
+-   <https://github.com/urol-e5/deep-dive-expression/blob/main/E-Peve/code/04-Peve-genome-explore.md>
+
+-   <https://github.com/urol-e5/deep-dive-expression/blob/main/F-Ptuh/code/04-Ptuh-genome-explore.md>
