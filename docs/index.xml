@@ -6,569 +6,158 @@
       version="2.0">
 <channel>
 <title>Tumbling Oysters</title>
-<link>https://sr320.github.io/tumbling-oysters/index.html</link>
+<link>https://sr320.github.io/tumbling-oysters/</link>
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.3.433</generator>
+<generator>quarto-1.4.555</generator>
 <lastBuildDate>Sat, 05 Oct 2024 07:00:00 GMT</lastBuildDate>
 <item>
   <title>Stats on e5 genomes</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/31-e5-genome-stats/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/31-e5-genome-stats/</link>
   <description><![CDATA[ 
 
 
 
 
-<p>As part of the <strong>e5 project</strong>, our team is delving into the genomic intricacies of three coral species to better understand their adaptability and resilience in changing marine environments. Today, I focused on performing fundamental genomic analyses using a custom Bash script, allowing for efficient processing of large genome files directly from the command line.</p>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Coral reefs are biodiversity hotspots and play a critical role in marine ecosystems. Deciphering their genomic information is essential for conservation and understanding their responses to environmental stressors like climate change and ocean acidification. By analyzing genomic data, we can identify genetic factors that contribute to coral health, stress responses, and adaptability.</p>
-</section>
-<section id="methods" class="level2">
-<h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<p>To extract essential genomic statistics from the coral genome files, I employed a Bash script that parses FASTA files. This approach leverages command-line tools and scripting to handle large datasets efficiently without the overhead of loading data into memory-intensive applications.</p>
-<section id="bash-script-for-genome-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="bash-script-for-genome-statistics">Bash Script for Genome Statistics</h3>
-<p>Below is the Bash script used to calculate key genomic statistics:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#!/bin/bash</span></span>
-<span id="cb1-2"></span>
-<span id="cb1-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Check if input file is provided</span></span>
-<span id="cb1-4"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">if</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">[</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$#</span> <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">-ne</span> 1 <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">]</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">then</span></span>
-<span id="cb1-5">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Usage: </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$0</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> genome.fasta"</span></span>
-<span id="cb1-6">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">exit</span> 1</span>
-<span id="cb1-7"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">fi</span></span>
-<span id="cb1-8"></span>
-<span id="cb1-9"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">fasta_file</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$1</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-10"></span>
-<span id="cb1-11"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Number of sequences</span></span>
-<span id="cb1-12"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">num_seqs</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'^&gt;'</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$fasta_file</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb1-13"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Number of sequences: </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$num_seqs</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-14"></span>
-<span id="cb1-15"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Get sequence lengths</span></span>
-<span id="cb1-16"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span></span>
-<span id="cb1-17"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    /^&gt;/ { if (seqlen) { print seqlen; seqlen=0 } next }</span></span>
-<span id="cb1-18"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    { seqlen += length($0) }</span></span>
-<span id="cb1-19"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    END { if (seqlen) print seqlen }</span></span>
-<span id="cb1-20"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$fasta_file</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> seq_lengths.txt</span>
-<span id="cb1-21"></span>
-<span id="cb1-22"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Total length</span></span>
-<span id="cb1-23"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">total_length</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'{sum+=$1} END{print sum}'</span> seq_lengths.txt<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb1-24"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Total length: </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$total_length</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-25"></span>
-<span id="cb1-26"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Longest sequence</span></span>
-<span id="cb1-27"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">longest</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-nr</span> seq_lengths.txt <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-n1</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb1-28"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Longest sequence length: </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$longest</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-29"></span>
-<span id="cb1-30"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Shortest sequence</span></span>
-<span id="cb1-31"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">shortest</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-n</span> seq_lengths.txt <span class="kw" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-n1</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb1-32"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Shortest sequence length: </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$shortest</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-33"></span>
-<span id="cb1-34"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># N50 calculation</span></span>
-<span id="cb1-35"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sort</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-nr</span> seq_lengths.txt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> seq_lengths_sorted.txt</span>
-<span id="cb1-36"></span>
-<span id="cb1-37"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">n50</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-v</span> total_length=<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$total_length</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span></span>
-<span id="cb1-38"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">BEGIN { half_total = total_length / 2; sum = 0 }</span></span>
-<span id="cb1-39"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb1-40"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    sum += $1</span></span>
-<span id="cb1-41"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    if (sum &gt;= half_total) {</span></span>
-<span id="cb1-42"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        print $1</span></span>
-<span id="cb1-43"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        exit</span></span>
-<span id="cb1-44"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    }</span></span>
-<span id="cb1-45"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb1-46"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span> seq_lengths_sorted.txt<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb1-47"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"N50: </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$n50</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-48"></span>
-<span id="cb1-49"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># L50 calculation</span></span>
-<span id="cb1-50"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">l50</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-v</span> total_length=<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$total_length</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span></span>
-<span id="cb1-51"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">BEGIN { half_total = total_length / 2; sum = 0; count = 0 }</span></span>
-<span id="cb1-52"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb1-53"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    sum += $1</span></span>
-<span id="cb1-54"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    count++</span></span>
-<span id="cb1-55"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    if (sum &gt;= half_total) {</span></span>
-<span id="cb1-56"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        print count</span></span>
-<span id="cb1-57"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        exit</span></span>
-<span id="cb1-58"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    }</span></span>
-<span id="cb1-59"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb1-60"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span> seq_lengths_sorted.txt<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb1-61"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"L50: </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$l50</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-62"></span>
-<span id="cb1-63"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># GC content and base counts</span></span>
-<span id="cb1-64"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span></span>
-<span id="cb1-65"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    /^&gt;/ { next }</span></span>
-<span id="cb1-66"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    {</span></span>
-<span id="cb1-67"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        seq = toupper($0)</span></span>
-<span id="cb1-68"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        g += gsub(/G/, "", seq)</span></span>
-<span id="cb1-69"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        c += gsub(/C/, "", seq)</span></span>
-<span id="cb1-70"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        a += gsub(/A/, "", seq)</span></span>
-<span id="cb1-71"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        t += gsub(/T/, "", seq)</span></span>
-<span id="cb1-72"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        n += gsub(/N/, "", seq)</span></span>
-<span id="cb1-73"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    }</span></span>
-<span id="cb1-74"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    END {</span></span>
-<span id="cb1-75"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        total = a + c + g + t + n</span></span>
-<span id="cb1-76"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        gc = g + c</span></span>
-<span id="cb1-77"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        printf "Total bases: %d\n", total</span></span>
-<span id="cb1-78"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        printf "A: %d\n", a</span></span>
-<span id="cb1-79"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        printf "C: %d\n", c</span></span>
-<span id="cb1-80"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        printf "G: %d\n", g</span></span>
-<span id="cb1-81"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        printf "T: %d\n", t</span></span>
-<span id="cb1-82"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        printf "N: %d\n", n</span></span>
-<span id="cb1-83"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">        printf "GC Content: %.2f%%\n", (gc / total) * 100</span></span>
-<span id="cb1-84"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    }</span></span>
-<span id="cb1-85"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$fasta_file</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-86"></span>
-<span id="cb1-87"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Cleanup temporary files</span></span>
-<span id="cb1-88"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">rm</span> seq_lengths.txt seq_lengths_sorted.txt</span></code></pre></div>
-</section>
-<section id="explanation-of-the-script" class="level3">
-<h3 class="anchored" data-anchor-id="explanation-of-the-script">Explanation of the Script</h3>
+
+<p>This assessment compares the genomic assemblies and annotations of three coral species: <em>Acropora pulchra</em> (Apul), <em>Porites evermanni</em> (Peve), and <em>Pocillopora meandrina</em> (Ptuh). The analysis focuses on genome assembly metrics, gene annotation statistics, and potential biological implications.</p>
+<hr>
+<section id="genome-assembly-quality" class="level3">
+<h3 class="anchored" data-anchor-id="genome-assembly-quality"><strong>1. Genome Assembly Quality</strong></h3>
+<section id="number-of-sequences-and-contiguity" class="level4">
+<h4 class="anchored" data-anchor-id="number-of-sequences-and-contiguity"><strong>Number of Sequences and Contiguity</strong></h4>
 <ul>
-<li><strong>Input Validation:</strong> Checks if a genome FASTA file is provided as an argument.</li>
-<li><strong>Number of Sequences:</strong> Uses <code>grep</code> to count the number of header lines (sequences) in the FASTA file.</li>
-<li><strong>Sequence Lengths:</strong> Utilizes <code>awk</code> to calculate the length of each sequence and writes them to <code>seq_lengths.txt</code>.</li>
-<li><strong>Total Length:</strong> Sums up all sequence lengths using <code>awk</code>.</li>
-<li><strong>Longest and Shortest Sequences:</strong> Identifies the longest and shortest sequences by sorting <code>seq_lengths.txt</code>.</li>
-<li><strong>N50 and L50 Calculations:</strong>
+<li><strong>Apul (A. pulchra)</strong>
 <ul>
-<li><strong>N50:</strong> The sequence length at which 50% of the genome is contained in sequences equal to or larger than this length.</li>
-<li><strong>L50:</strong> The minimum number of sequences whose lengths sum to at least 50% of the total genome length.</li>
+<li><strong>Number of Sequences:</strong> 174</li>
+<li><strong>N50:</strong> 17,861,421 bp</li>
+<li><strong>L50:</strong> 10</li>
+<li><strong>Longest Sequence:</strong> 45,111,900 bp</li>
 </ul></li>
-<li><strong>GC Content and Base Counts:</strong> Counts the occurrences of each nucleotide (A, C, G, T, N) and calculates the GC content percentage.</li>
-<li><strong>Cleanup:</strong> Removes temporary files created during the process.</li>
+<li><strong>Peve (P. evermanni)</strong>
+<ul>
+<li><strong>Number of Sequences:</strong> 8,186</li>
+<li><strong>N50:</strong> 171,385 bp</li>
+<li><strong>L50:</strong> 935</li>
+<li><strong>Longest Sequence:</strong> 1,802,771 bp</li>
+</ul></li>
+<li><strong>Ptuh (P. meandrina)</strong>
+<ul>
+<li><strong>Number of Sequences:</strong> 212</li>
+<li><strong>N50:</strong> 10,024,633 bp</li>
+<li><strong>L50:</strong> 13</li>
+<li><strong>Longest Sequence:</strong> 21,651,136 bp</li>
+</ul></li>
+</ul>
+<p><strong>Assessment:</strong></p>
+<ul>
+<li><strong>Assembly Contiguity:</strong> Apul exhibits the highest assembly contiguity, indicated by the lowest number of sequences and highest N50 value. Ptuh ranks second, while Peve has a more fragmented assembly with a significantly higher number of sequences and lower N50.</li>
+<li><strong>Sequence Length Distribution:</strong> Apul’s longest sequence is substantially longer than those of Peve and Ptuh, suggesting a more complete assembly.</li>
 </ul>
 </section>
-<section id="how-to-run-the-script" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-run-the-script">How to Run the Script</h3>
-<ol type="1">
-<li><strong>Save the Script:</strong> Save the script to a file, e.g., <code>genome_stats.sh</code>.</li>
-<li><strong>Make It Executable:</strong> Run <code>chmod +x genome_stats.sh</code> to make the script executable.</li>
-<li><strong>Execute the Script:</strong> Run <code>./genome_stats.sh path/to/genome.fasta</code>.</li>
-</ol>
-</section>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>After running the script on the genome files of the three coral species, the following statistics were obtained:</p>
-<section id="species-d-acropora-pulchra" class="level3">
-<h3 class="anchored" data-anchor-id="species-d-acropora-pulchra">Species D : <em>Acropora pulchra</em></h3>
-<pre class="plaintext"><code>Number of sequences: 174
-Total length: 518313916
-Longest sequence length: 45111900
-Shortest sequence length: 6597
-N50: 17861421
-L50: 10
-Total bases: 518313916
-A: 158272347
-C: 101422742
-G: 100986991
-T: 157631836
-N: 0
-GC Content: 39.05%</code></pre>
-</section>
-<section id="species-e-porites-evermanni" class="level3">
-<h3 class="anchored" data-anchor-id="species-e-porites-evermanni">Species E: Porites evermanni</h3>
-<pre class="plaintext"><code>Number of sequences: 8186
-Total length: 603805388
-Longest sequence length: 1802771
-Shortest sequence length: 2001
-N50: 171385
-L50: 935
-Total bases: 603805388
-A: 171827598
-C: 109822870
-G: 109866618
-T: 171532079
-N: 40756223
-GC Content: 36.38%</code></pre>
-</section>
-<section id="species-f-pocillopora-tuahiniensis" class="level3">
-<h3 class="anchored" data-anchor-id="species-f-pocillopora-tuahiniensis">Species F: Pocillopora tuahiniensis</h3>
-<pre class="plaintext"><code></code></pre>
-</section>
-</section>
-<section id="discussion" class="level2">
-<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
-<p>The Bash script efficiently processes large genome files to extract key genomic statistics without the need for additional software dependencies. The genomes of the three coral species exhibit similar characteristics:</p>
+<section id="genome-size-and-gc-content" class="level4">
+<h4 class="anchored" data-anchor-id="genome-size-and-gc-content"><strong>Genome Size and GC Content</strong></h4>
 <ul>
-<li><strong>Genome Size:</strong></li>
-<li><strong>GC Content:</strong></li>
-<li><strong>N50 and L50 Values:</strong> Indicate the assembly quality and sequence continuity.</li>
+<li><strong>Total Genome Length:</strong>
+<ul>
+<li><strong>Peve:</strong> 603,805,388 bp</li>
+<li><strong>Apul:</strong> 518,313,916 bp</li>
+<li><strong>Ptuh:</strong> 376,579,914 bp</li>
+</ul></li>
+<li><strong>GC Content:</strong>
+<ul>
+<li><strong>Apul:</strong> 39.05%</li>
+<li><strong>Ptuh:</strong> 38.03%</li>
+<li><strong>Peve:</strong> 36.38%</li>
+</ul></li>
 </ul>
-<section id="significance-of-n50-and-l50" class="level3">
-<h3 class="anchored" data-anchor-id="significance-of-n50-and-l50">Significance of N50 and L50</h3>
+<p><strong>Assessment:</strong></p>
 <ul>
-<li><strong>N50:</strong> A higher N50 value suggests longer contiguous sequences, which is desirable for genome assemblies.</li>
-<li><strong>L50:</strong> A lower L50 indicates that fewer sequences are needed to cover 50% of the genome, reflecting better assembly quality.</li>
-</ul>
-</section>
-<section id="implications-for-coral-research" class="level3">
-<h3 class="anchored" data-anchor-id="implications-for-coral-research">Implications for Coral Research</h3>
-<ul>
-<li><strong>Genome Assembly Quality:</strong> The consistent N50 and L50 values suggest comparable assembly qualities across the species, facilitating comparative genomic studies.</li>
-<li><strong>Genetic Insights:</strong> The similar GC content and nucleotide distributions hint at conserved genomic features that may be crucial for coral survival and adaptation.</li>
-<li><strong>Resource Efficiency:</strong> Utilizing Bash scripts allows for rapid analysis, saving computational resources and time, especially when dealing with multiple large genome files.</li>
-</ul>
-</section>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The custom Bash script proved to be an effective tool for conducting preliminary genomic analyses on the coral species. By extracting fundamental genomic statistics directly from the command line, we can quickly assess genome assembly qualities and make informed decisions for downstream analyses.</p>
-</section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
-<ul>
-<li><strong>Functional Annotation:</strong> Proceed with annotating the genomes to identify genes and regulatory elements.</li>
-<li><strong>Comparative Analysis:</strong> Perform comparative genomics to identify species-specific adaptations and conserved genes.</li>
-<li><strong>Transcriptome Integration:</strong> Integrate RNA sequencing data to correlate gene expression patterns with genomic features.</li>
-<li><strong>Environmental Correlation:</strong> Study the relationship between genomic features and environmental stress responses.</li>
-</ul>
-</section>
-<section id="acknowledgments" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
-<p>I extend my gratitude to the e5 project team for their unwavering support and collaboration. Special thanks to the open-source community for providing the tools and resources that make such analyses possible.</p>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ul>
-<li><strong>FASTA Format Specification:</strong> <a href="https://www.ncbi.nlm.nih.gov/blast/fasta.shtml">NCBI FASTA Format</a></li>
-<li><strong>GNU Awk Manual:</strong> <a href="https://www.gnu.org/software/gawk/manual/gawk.html">GNU Awk User’s Guide</a></li>
-<li><strong>Bash Scripting Tutorial:</strong> <a href="https://tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide</a></li>
-<li><strong>Coral Genomics Resources:</strong> <a href="https://reefgenomics.org/">Reef Genomics</a></li>
+<li><strong>Genome Size Variability:</strong> Peve has the largest genome size but the most fragmented assembly, which may indicate repetitive elements or assembly challenges.</li>
+<li><strong>GC Content Consistency:</strong> All species have similar GC content, ranging from 36.38% to 39.05%, which is typical for coral genomes.</li>
 </ul>
 <hr>
-<p><em>For any questions or suggestions regarding this analysis, please feel free to reach out.</em></p>
+</section>
+</section>
+<section id="gene-annotation-and-features" class="level3">
+<h3 class="anchored" data-anchor-id="gene-annotation-and-features"><strong>2. Gene Annotation and Features</strong></h3>
+<section id="gene-counts-and-features" class="level4">
+<h4 class="anchored" data-anchor-id="gene-counts-and-features"><strong>Gene Counts and Features</strong></h4>
+<ul>
+<li><strong>Apul:</strong>
+<ul>
+<li><strong>Total Genes:</strong> 36,447</li>
+<li><strong>Unique Features:</strong> 5 (exon, CDS, gene, mRNA, tRNA)</li>
+<li><strong>Total GFF Entries:</strong> 499,892</li>
+</ul></li>
+<li><strong>Peve:</strong>
+<ul>
+<li><strong>Total Genes:</strong> 40,389</li>
+<li><strong>Unique Features:</strong> 3 (CDS, mRNA, UTR)</li>
+<li><strong>Total GFF Entries:</strong> 286,807</li>
+</ul></li>
+<li><strong>Ptuh:</strong>
+<ul>
+<li><strong>Total Genes:</strong> 31,840</li>
+<li><strong>Unique Features:</strong> 3 (exon, CDS, transcript)</li>
+<li><strong>Total GFF Entries:</strong> 448,910</li>
+</ul></li>
+</ul>
+<p><strong>Assessment:</strong></p>
+<ul>
+<li><strong>Gene Count:</strong> Peve has the highest number of predicted genes, followed by Apul and Ptuh.</li>
+<li><strong>Annotation Features:</strong> Apul includes tRNA annotations, which are absent in Peve and Ptuh. This suggests a more comprehensive annotation in Apul.</li>
+<li><strong>Unique Sources:</strong> Different gene prediction tools were used—Apul (funannotate), Peve (Gmove), Ptuh (AUGUSTUS)—which may affect gene count and features.</li>
+</ul>
+</section>
+<section id="gene-length-and-total-bases" class="level4">
+<h4 class="anchored" data-anchor-id="gene-length-and-total-bases"><strong>Gene Length and Total Bases</strong></h4>
+<ul>
+<li><strong>Average Gene Length:</strong>
+<ul>
+<li><strong>Apul:</strong> 5,887.31 bp</li>
+<li><strong>Ptuh:</strong> 1,376.95 bp</li>
+<li><strong>Peve:</strong> 1,337.5 bp</li>
+</ul></li>
+<li><strong>Total Bases in Genes:</strong>
+<ul>
+<li><strong>Apul:</strong> 214,577,849 bp</li>
+<li><strong>Peve:</strong> 54,020,937 bp</li>
+<li><strong>Ptuh:</strong> 43,842,885 bp</li>
+</ul></li>
+</ul>
+<p><strong>Assessment:</strong></p>
+<ul>
+<li><strong>Gene Length:</strong> Apul’s average gene length is significantly longer than that of Peve and Ptuh, potentially indicating differences in gene structure, annotation methods, or biological variation.</li>
+<li><strong>Total Coding Sequence:</strong> Apul has a higher total base count in genes, which correlates with longer genes and may reflect a greater number of exons or longer intronic regions.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="biological-implications-and-considerations" class="level3">
+<h3 class="anchored" data-anchor-id="biological-implications-and-considerations"><strong>3. Biological Implications and Considerations</strong></h3>
+<ul>
+<li><strong>Assembly Quality Impact:</strong> The higher contiguity in Apul and Ptuh assemblies may lead to more accurate gene predictions and annotations compared to Peve.</li>
+<li><strong>Gene Prediction Tools:</strong> The use of different annotation tools can result in varying gene counts and features. Funannotate (Apul) provides tRNA annotations, suggesting a more thorough annotation pipeline.</li>
+<li><strong>Gene Length Variation:</strong> The discrepancy in average gene lengths might be due to:
+<ul>
+<li><strong>Biological Differences:</strong> Genuine differences in gene structure among species.</li>
+<li><strong>Annotation Strategies:</strong> Differences in handling of introns, UTRs, or alternative splicing events.</li>
+<li><strong>Prediction Algorithms:</strong> Varying sensitivity and specificity of gene prediction tools.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion"><strong>4. Conclusion</strong></h3>
+<ul>
+<li><strong>Best Assembly:</strong> <em>Acropora pulchra</em> (Apul) exhibits the most contiguous and comprehensive genome assembly and annotation among the three species.</li>
+<li><strong>Gene Annotation Depth:</strong> Apul’s inclusion of tRNA and longer gene lengths suggests a more detailed annotation, which could facilitate better functional genomics studies.</li>
+<li><strong>Areas for Improvement:</strong> Peve’s fragmented assembly and shorter gene lengths indicate potential areas for reassembly and reannotation to improve genomic resources.</li>
+</ul>
+<hr>
+<p><strong>Recommendation:</strong> For comparative genomics and evolutionary studies, researchers should consider the differences in assembly quality and annotation methods. Standardizing gene prediction tools and reannotating genomes where necessary could enhance the reliability of cross-species comparisons.</p>
 
 
 <!-- -->
@@ -577,14 +166,14 @@ GC Content: 36.38%</code></pre>
 
  ]]></description>
   <category>e5</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/31-e5-genome-stats/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/31-e5-genome-stats/</guid>
   <pubDate>Sat, 05 Oct 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-10-05_13-39-55.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Connecting annotations</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/30-hisat-annot/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/30-hisat-annot/</link>
   <description><![CDATA[ 
 
 
@@ -601,14 +190,14 @@ GC Content: 36.38%</code></pre>
   <category>blast</category>
   <category>hisat</category>
   <category>annotation</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/30-hisat-annot/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/30-hisat-annot/</guid>
   <pubDate>Thu, 03 Oct 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-10-03_10-09-40.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>re prime</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/29-prime/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/29-prime/</link>
   <description><![CDATA[ 
 
 
@@ -620,7 +209,7 @@ GC Content: 36.38%</code></pre>
 <p>47 and 30 were moved into white tank inside (far right). Water temperature 23C. (Lagoon is currently at 17C). Two heater set at 36 set to come on 11pm - 5am daily. Temperature profile is as follows.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/29-prime/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_APEX_Fusion_2024-09-14_12-34-03.png" class="img-fluid figure-img"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_APEX_Fusion_2024-09-14_12-34-03.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Apex</figcaption>
 </figure>
 </div>
@@ -631,7 +220,7 @@ GC Content: 36.38%</code></pre>
 <h1>Update Sunday Sept 15th</h1>
 <p>Went out and did FW immersion (2 hours) on 75/76 and 56/66.</p>
 <p>Also snapped photos for documenting size and number of seed.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/29-prime/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_IMG_6967.png_2024-09-15_18-49-37.png" class="img-fluid" alt="Bag 30"> Full size images</p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_IMG_6967.png_2024-09-15_18-49-37.png" class="img-fluid" alt="Bag 30"> Full size images</p>
 <ul>
 <li><p><a href="http://gannet.fish.washington.edu/seashell/snaps/IMG_6967.png">Bag 30a</a></p></li>
 <li><p><a href="http://gannet.fish.washington.edu/seashell/snaps/IMG_6968.png">Bag 30b</a></p></li>
@@ -646,14 +235,14 @@ GC Content: 36.38%</code></pre>
  ]]></description>
   <category>oyster</category>
   <category>stress</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/29-prime/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/29-prime/</guid>
   <pubDate>Sat, 14 Sep 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-09-14_12-28-40.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>R N A T O G O</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-28-go-gene/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-28-go-gene/</link>
   <description><![CDATA[ 
 
 
@@ -680,14 +269,14 @@ GC Content: 36.38%</code></pre>
  ]]></description>
   <category>blast</category>
   <category>e5</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-28-go-gene/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-28-go-gene/</guid>
   <pubDate>Tue, 27 Aug 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2024-08-27_16-05-41.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Git that Pro GO</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/</link>
   <description><![CDATA[ 
 
 
@@ -836,7 +425,7 @@ font-style: inherit;">-1</span> ../output/20-Apul-gene-annotation/blastp_out_sep
 </section>
 <section id="download-go-info" class="level1">
 <h1>Download GO info</h1>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap__in_UniProtKB_search_571864__UniProt_2024-08-23_16-18-03.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap__in_UniProtKB_search_571864__UniProt_2024-08-23_16-18-03.png" class="img-fluid"></p>
 <pre><code>sr320@raven:/home/shared/8TB_HDD_01/sr320/github/deep-dive/data$ curl -H "Accept: text/plain; format=tsv" "https://rest.uniprot.org/uniprotkb/stream?fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo_c%2Cgo%2Cgo_f%2Cgo_id&amp;format=tsv&amp;query=%28*%29+AND+%28reviewed%3Atrue%29" -o SwissProt-Annot-GO_082324.tsv</code></pre>
 <div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -971,14 +560,14 @@ font-style: inherit;">head</span> ../output/20-Apul-gene-annotation/Apul-protein
  ]]></description>
   <category>blast</category>
   <category>e5</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/</guid>
   <pubDate>Sun, 25 Aug 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap__in_UniProtKB_search_571864__UniProt_2024-08-23_16-18-03.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Double header</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/</link>
   <description><![CDATA[ 
 
 
@@ -1014,7 +603,7 @@ TLDR: Kathleens’s post
 <p>Seed were divided into 10 bags.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-26-59.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-26-59.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption class="figure-caption">seed</figcaption>
 </figure>
 </div>
@@ -1052,7 +641,7 @@ TLDR: Kathleens’s post
 <p>Bags stay in lagoon.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-31-57.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-31-57.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption class="figure-caption">lagoon</figcaption>
 </figure>
 </div>
@@ -1069,14 +658,14 @@ TLDR: Kathleens’s post
  ]]></description>
   <category>oyster</category>
   <category>temperature</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/</guid>
   <pubDate>Wed, 26 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-12-25.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Oyster bath</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/</link>
   <description><![CDATA[ 
 
 
@@ -1087,7 +676,7 @@ TLDR: Kathleens’s post
 <p>On the 18th we saw no signs of death but added oysters in water.. in beakers and 12-well plate</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/http:/gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-27-11.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-27-11.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption>incubator</figcaption>
 </figure>
 </div>
@@ -1097,7 +686,7 @@ TLDR: Kathleens’s post
 <p>On the same day oysters were placed in 12 well plate and clear tupperware.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/http:/gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-32-00.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-32-00.png" class="img-fluid figure-img" style="width:70.0%"></p>
 <figcaption>incubator</figcaption>
 </figure>
 </div>
@@ -1112,14 +701,14 @@ TLDR: Kathleens’s post
  ]]></description>
   <category>oyster</category>
   <category>temperature</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/</guid>
   <pubDate>Thu, 20 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-20-56.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Huddl Launch</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/</link>
   <description><![CDATA[ 
 
 
@@ -1129,21 +718,21 @@ TLDR: Kathleens’s post
 <p>Went out to the hatchery for a day 3 drop of commercial spawn. Larvae were in 2 5k tanks. The night before there was a bit of a banjo filter clog but it seems no larvae were lost.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-18-50.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-18-50.png" class="img-fluid figure-img" style="width:75.0%"></p>
 <figcaption>larvae</figcaption>
 </figure>
 </div>
 <p>We were able to get 1 Million larvae. Those that were caught on 40um filter. The hatchery kept everything on 70 &amp; 60 um filters which came out to be about 66 million.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-06-00.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-06-00.png" class="img-fluid figure-img" style="width:75.0%"></p>
 <figcaption>larvae</figcaption>
 </figure>
 </div>
 <p>Huddls were at about 28C with algae pump set at 30 and algae tank getting 24 liters of algae (topped of with water). Flourometer counts were quite high ~40 when larvae were added but we cannot figure out how it got that high. EDTA (0.04g) was added to 50 gallon header. Commercial group will be left in tanks for 8 days. We will try something similar.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-17-35.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-17_10-17-35.png" class="img-fluid figure-img" style="width:75.0%"></p>
 <figcaption>system</figcaption>
 </figure>
 </div>
@@ -1155,14 +744,14 @@ TLDR: Kathleens’s post
  ]]></description>
   <category>oyster</category>
   <category>aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/</guid>
   <pubDate>Mon, 17 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_ChatGPT_2024-06-17_10-21-36.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Repro Repro</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</link>
   <description><![CDATA[ 
 
 
@@ -1173,7 +762,7 @@ TLDR: Kathleens’s post
 <p>Based on the following GO Term</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_QuickGOTerm_GO0022414_2024-06-15_17-30-33.png" class="img-fluid figure-img"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_QuickGOTerm_GO0022414_2024-06-15_17-30-33.png" class="img-fluid figure-img"></p>
 <figcaption>GO:0022414</figcaption>
 </figure>
 </div>
@@ -1504,14 +1093,14 @@ font-style: inherit;">head</span>(annot_tab)</span></code></pre></div>
  ]]></description>
   <category>blast</category>
   <category>gene ontology</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</guid>
   <pubDate>Sat, 15 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2024-06-15_17-21-46.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Spring Cleaning</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/</link>
   <description><![CDATA[ 
 
 
@@ -1522,25 +1111,25 @@ font-style: inherit;">head</span>(annot_tab)</span></code></pre></div>
 <section id="new-bags" class="level1">
 <h1>New bags</h1>
 <p>On the near 10-holers there were 5 bags that were fouled and likely our PH stocks</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-15-13.png" class="img-fluid" style="width:50.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-15-13.png" class="img-fluid" style="width:50.0%"></p>
 <p>In A there were two bags re-labelled with White Tags: 31 and 2.</p>
 <p>In B there were two bags re-labelled with White Tags: 13 and 17. 13 had blue tie wraps on top and bottom (and black on top). 17 had black tie wrap at top. It is assummed blue are BLUE.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-21-35.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-21-35.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>bluewraps</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-22-38.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-22-38.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>clean</figcaption>
 </figure>
 </div>
 <p>I also cleaned an additonal bag and labelled: White tag: 8</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-24-16.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-24-16.png" class="img-fluid figure-img" style="width:50.0%"></p>
 <figcaption>bags-trays</figcaption>
 </figure>
 </div>
@@ -1585,7 +1174,7 @@ Toad = F14 (3n)</p>
 <section id="heath-trays" class="level1">
 <h1>Heath Trays</h1>
 <p>Five 2024 USDA family were placed in heath trays. (see pic above)</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-33-15.png" class="img-fluid" style="width:50.0%"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-33-15.png" class="img-fluid" style="width:50.0%"></p>
 </section>
 <section id="spawning" class="level1">
 <h1>Spawning</h1>
@@ -1624,7 +1213,7 @@ TLDR: Ariana’s post
 </ol>
 </div>
 </div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-35-23.png" class="img-fluid" style="width:50.0%"> <img src="https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-36-36.png" class="img-fluid" style="width:50.0%" alt="eggs"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-35-23.png" class="img-fluid" style="width:50.0%"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-36-36.png" class="img-fluid" style="width:50.0%" alt="eggs"></p>
 
 
 <!-- -->
@@ -1634,14 +1223,14 @@ TLDR: Ariana’s post
  ]]></description>
   <category>oyster</category>
   <category>aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/</guid>
   <pubDate>Wed, 12 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-12-18.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Seed travels</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/</link>
   <description><![CDATA[ 
 
 
@@ -1651,10 +1240,10 @@ TLDR: Ariana’s post
 <p>tldr: We deployed seed in Wescott Bay.</p>
 <div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="http://gannet.fish.washington.edu/seashell/snaps/IMG_6670.mov"></video></div>
 <p>Seed from Point Whitney were picked up on Thursday afternoon and driven up to Wescott Bay Friday morning. Arrived about 11 am. For each bag Grace tagged 15 oysters. oyster where deployed in bottom sitting bags in the schema below.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/http:/gannet.fish.washington.edu/seashell/snaps/IMG_6661.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/IMG_6661.png" class="img-fluid"></p>
 <p>More shots of the deployment.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-29-21.png" class="img-fluid"></p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-30-45.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-29-21.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-30-45.png" class="img-fluid"></p>
 
 
 <!-- -->
@@ -1663,14 +1252,14 @@ TLDR: Ariana’s post
  ]]></description>
   <category>oyster</category>
   <category>aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-21-wescott/</guid>
   <pubDate>Fri, 07 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-08_10-13-56.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>HiSat that SeaStar</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/</link>
   <description><![CDATA[ 
 
 
@@ -1678,7 +1267,7 @@ TLDR: Ariana’s post
 
 
 <p>While there are still some questions related to overall alignment rates and sample specific alignment rates, it is possible that the mess of gtf might be overcome.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" class="img-fluid"></p>
 <p>The problem seemed to have arisen based on the fact NCBI renamed chromosomes whereas annotations (sitting on Dryad) have different IDs. Using a table on NCBI and realizing from author the numbers in their IDs corresponded to chromosome number.</p>
 <section id="making-a-new-gtf" class="level1">
 <h1>Making a new GTF</h1>
@@ -1793,7 +1382,7 @@ font-style: inherit;">\</span></span>
 <section id="genome" class="level1">
 <h1>Genome</h1>
 <p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_032158295.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCA_032158295.1/</a></p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Pycnopodia_helianthoides_genome_assembly_ASM3215829v1_-_NCBI_-_NLM_2024-05-25_15-32-13.png" class="img-fluid"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Pycnopodia_helianthoides_genome_assembly_ASM3215829v1_-_NCBI_-_NLM_2024-05-25_15-32-13.png" class="img-fluid"></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="bu" style="color: null;
 background-color: null;
@@ -2230,14 +1819,14 @@ font-style: inherit;">\</span></span>
  ]]></description>
   <category>hisat</category>
   <category>seastar</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-20-seastar/</guid>
   <pubDate>Mon, 03 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-06-03_09-14-54.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>xargs</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/</link>
   <description><![CDATA[ 
 
 
@@ -2301,14 +1890,14 @@ font-style: inherit;">&gt; ../analyses/10-hisat-deseq2/{}_hisat.stdout 2&gt; ../
 
  ]]></description>
   <category>xargs</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/</guid>
   <pubDate>Mon, 27 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-26_11-52-26.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>That escalated quickly</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/</link>
   <description><![CDATA[ 
 
 
@@ -2706,14 +2295,14 @@ sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/</code></pre>
   <category>cron</category>
   <category>rsync</category>
   <category>log</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/</guid>
   <pubDate>Mon, 27 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_DALLE_2024-05-26_10.56.50_-_Create_an_artistic_and_detailed_illustration_representing_the_concept_of_automated_scripting_in_a__2024-05-26_10-57-06.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Working with IGV</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/</link>
   <description><![CDATA[ 
 
 
@@ -2745,7 +2334,7 @@ font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx ../data/n
         &lt;Attribute name="NAME"/&gt;
     &lt;/HiddenAttributes&gt;
 &lt;/Session&gt;</code></pre>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/https:/gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" class="img-fluid"></p>
+<p><img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" class="img-fluid"></p>
 
 
 <!-- -->
@@ -2755,14 +2344,14 @@ font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx ../data/n
   <category>R</category>
   <category>igv</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/</guid>
   <pubDate>Thu, 23 May 2024 07:00:00 GMT</pubDate>
   <media:content url="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Getting appropriate IDs for Gene, Transcripts</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/</link>
   <description><![CDATA[ 
 
 
@@ -3284,14 +2873,14 @@ font-style: inherit;">head</span>(rnatabID)</span></code></pre></div>
   <category>R</category>
   <category>blast</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/</guid>
   <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-21-39.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Differentially Expressed Transcipts</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/</link>
   <description><![CDATA[ 
 
 
@@ -3401,7 +2990,7 @@ font-style: inherit;">*</span></span></code></pre></div>
 <p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
 <figcaption>genome</figcaption>
 </figure>
 </div>
@@ -4079,7 +3668,7 @@ background-color: null;
 font-style: inherit;">intgroup =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Condition"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-53-23.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-53-23.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb38" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Select top 50 differentially expressed genes</span></span>
@@ -4146,7 +3735,7 @@ background-color: null;
 font-style: inherit;">scale =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"row"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-53-07.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-53-07.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Count number of hits with adjusted p-value less then 0.05</span></span>
@@ -4281,7 +3870,7 @@ background-color: null;
 font-style: inherit;">col=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"blue"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-52-48.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_15-52-48.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb42" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">write.table</span>(tmp.sig, <span class="st" style="color: #20794D;
@@ -4362,14 +3951,14 @@ rna-XM_060038089.1 3.171650e-04 rna-XM_060038089.1</code></pre>
   <category>R</category>
   <category>datasets</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-coddet/</guid>
   <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-05-13_16-23-23.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Differentially Expressed Genes</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/</link>
   <description><![CDATA[ 
 
 
@@ -4476,7 +4065,7 @@ font-style: inherit;">*</span></span></code></pre></div>
 <p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/</a></p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Gadus_macrocephalus_genome_assembly_ASM3116895v1_-_NCBI_-_NLM_2024-05-15_09-20-59.png" class="img-fluid figure-img"></p>
 <figcaption>genome</figcaption>
 </figure>
 </div>
@@ -5111,7 +4700,7 @@ background-color: null;
 font-style: inherit;">intgroup =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"Condition"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-10-07.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-10-07.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb40" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Select top 50 differentially expressed genes</span></span>
@@ -5178,7 +4767,7 @@ background-color: null;
 font-style: inherit;">scale =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"row"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-09-54.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-09-54.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb41" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Count number of hits with adjusted p-value less then 0.05</span></span>
@@ -5313,7 +4902,7 @@ background-color: null;
 font-style: inherit;">col=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"blue"</span>)</span></code></pre></div>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/http:/gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-09-37.png" style="display: block; margin: auto;"></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-09-37.png" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb44" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">write.table</span>(tmp.sig, <span class="st" style="color: #20794D;
@@ -5400,14 +4989,14 @@ gene-LOC132467924|LOC132467924         gene-LOC132467924|LOC132467924</code></pr
   <category>R</category>
   <category>datasets</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/</guid>
   <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-07-31.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Looking at Apul miRNA</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/</link>
   <description><![CDATA[ 
 
 
@@ -5553,7 +5142,7 @@ font-style: inherit;">*</span></span></code></pre></div>
 <h1>3 IGV</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/https:/gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" class="img-fluid figure-img"></p>
+<p><img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" class="img-fluid figure-img"></p>
 <figcaption>igv</figcaption>
 </figure>
 </div>
@@ -5590,14 +5179,14 @@ font-style: inherit;">*</span></span></code></pre></div>
   <category>R</category>
   <category>datasets</category>
   <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/</guid>
   <pubDate>Thu, 16 May 2024 07:00:00 GMT</pubDate>
   <media:content url="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>HiSat</title>
   <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-12/index.html</link>
+  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-12/</link>
   <description><![CDATA[ 
 
 
@@ -6119,7 +5708,7 @@ font-style: inherit;">done</span></span></code></pre></div>
 <hr>
 <section id="differential-expression-analysis" class="level4">
 <h4 class="anchored" data-anchor-id="differential-expression-analysis">1.5.0.1 <strong>Differential expression analysis</strong></h4>
-<p>Together with <a href="http://ccb.jhu.edu/software/hisat2">HISAT</a> and <a href="http://biorxiv.org/content/early/2014/09/05/003665">Ballgown</a>, StringTie can be used for estimating differential expression across multiple RNA-Seq samples and generating plots and differential expression tables as described in our <a href="http://www.nature.com/nprot/journal/v11/n9/full/nprot.2016.095.html">protocol paper</a>.<img src="https://sr320.github.io/tumbling-oysters/posts/sr320-12/https:/ccb.jhu.edu/software/stringtie/DE_pipeline.png" alt="DE workflow"><br>
+<p>Together with <a href="http://ccb.jhu.edu/software/hisat2">HISAT</a> and <a href="http://biorxiv.org/content/early/2014/09/05/003665">Ballgown</a>, StringTie can be used for estimating differential expression across multiple RNA-Seq samples and generating plots and differential expression tables as described in our <a href="http://www.nature.com/nprot/journal/v11/n9/full/nprot.2016.095.html">protocol paper</a>.<img src="https://ccb.jhu.edu/software/stringtie/DE_pipeline.png" alt="DE workflow"><br>
 Our recommended workflow includes the following steps:</p>
 <ol type="1">
 <li><p>for each RNA-Seq sample, map the reads to the genome with <a href="http://ccb.jhu.edu/software/hisat2">HISAT2</a> using the –dta option. It is highly recommended to use the reference annotation information when mapping the reads, which can be either embedded in the genome index (built with the –ss and –exon options, see <a href="http://ccb.jhu.edu/software/hisat2/manual.shtml#the-hisat2-build-indexer">HISAT2 manual</a>), or provided separately at run time (using the –known-splicesite-infile option of <a href="http://ccb.jhu.edu/software/hisat2/manual.shtml#running-hisat2">HISAT2</a>). The SAM output of each HISAT2 run must be sorted and converted to BAM using samtools as explained above.</p></li>
@@ -6132,7 +5721,7 @@ Our recommended workflow includes the following steps:</p>
 </section>
 <section id="an-alternate-faster-differential-expression-analysis-workflow" class="level3">
 <h3 class="anchored" data-anchor-id="an-alternate-faster-differential-expression-analysis-workflow">1.5.1 An alternate, faster differential expression analysis workflow</h3>
-<p>can be pursued if there is no interest in novel isoforms (i.e.&nbsp;assembled transcripts present in the samples but missing from the reference annotation), or if only a well known set of transcripts of interest are targeted by the analysis. This simplified protocol has only 3 steps (depicted below) as it bypasses the individual assembly of each RNA-Seq sample and the <em>“transcript merge”</em> step.<img src="https://sr320.github.io/tumbling-oysters/posts/sr320-12/https:/ccb.jhu.edu/software/stringtie/DE_pipeline_refonly.png" alt="DE workflow">This simplified workflow attempts to directly estimate and analyze the expression of a known set of transcripts as given in the <em>reference annotation</em> file.</p>
+<p>can be pursued if there is no interest in novel isoforms (i.e.&nbsp;assembled transcripts present in the samples but missing from the reference annotation), or if only a well known set of transcripts of interest are targeted by the analysis. This simplified protocol has only 3 steps (depicted below) as it bypasses the individual assembly of each RNA-Seq sample and the <em>“transcript merge”</em> step.<img src="https://ccb.jhu.edu/software/stringtie/DE_pipeline_refonly.png" alt="DE workflow">This simplified workflow attempts to directly estimate and analyze the expression of a known set of transcripts as given in the <em>reference annotation</em> file.</p>
 <p>The R package <a href="https://bioconductor.org/packages/devel/bioc/html/IsoformSwitchAnalyzeR.html"><strong>IsoformSwitchAnalyzeR</strong></a> can be used to assign gene names to transcripts assembled by StringTie, which can be particularly helpful in cases where StringTie could not perform this assignment unambigiously.<br>
 The <code>importIsoformExpression() + importRdata()</code> function of the package can be used to import the expression and annotation data into R. During this import the package will attempt to clean up and recover isoform annotations where possible. From the resulting <code>switchAnalyzeRlist</code> object, <em>IsoformSwitchAnalyzeR</em> can detect isoform switches along with predicted functional consequences. The <code>extractGeneExpression()</code> function can be used to get a gene expression (read count) matrix for analysis with other tools.<br>
 More information and code examples can be found <a href="https://bioconductor.org/packages/devel/bioc/vignettes/IsoformSwitchAnalyzeR/inst/doc/IsoformSwitchAnalyzeR.html#examples-visualizations">here</a>.</p>
@@ -6332,7 +5921,7 @@ deseq2.res &lt;- results(dds)
 resOrdered &lt;- deseq2.res[order(deseq2.res$padj), ]</code></pre>
 <pre><code>vsd &lt;- vst(dds, blind = FALSE)
 plotPCA(vsd, intgroup = "Condition")</code></pre>
-<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-20-1.png"><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-12/https:/github.com/urol-e5/deep-dive/raw/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-20-1.png" class="img-fluid"></a></p>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-20-1.png"><img src="https://github.com/urol-e5/deep-dive/raw/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-20-1.png" class="img-fluid"></a></p>
 <pre><code>tmp &lt;- deseq2.res
 # The main plot
 plot(tmp$baseMean, tmp$log2FoldChange, pch=20, cex=0.45, ylim=c(-3, 3), log="x", col="darkgray",
@@ -6344,7 +5933,7 @@ tmp.sig &lt;- deseq2.res[!is.na(deseq2.res$padj) &amp; deseq2.res$padj &lt;= 0.0
 points(tmp.sig$baseMean, tmp.sig$log2FoldChange, pch=20, cex=0.45, col="red")
 # 2 FC lines
 abline(h=c(-1,1), col="blue")</code></pre>
-<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-21-1.png"><img src="https://sr320.github.io/tumbling-oysters/posts/sr320-12/https:/github.com/urol-e5/deep-dive/raw/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-21-1.png" class="img-fluid"></a></p>
+<p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-21-1.png"><img src="https://github.com/urol-e5/deep-dive/raw/main/D-Apul/code/15-Apul-HiSat_files/figure-gfm/unnamed-chunk-21-1.png" class="img-fluid"></a></p>
 
 
 <!-- -->
@@ -6354,7 +5943,7 @@ abline(h=c(-1,1), col="blue")</code></pre>
  ]]></description>
   <category>R</category>
   <category>hisat</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-12/index.html</guid>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-12/</guid>
   <pubDate>Tue, 14 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-15_20-23-56.png" medium="image" type="image/png"/>
 </item>

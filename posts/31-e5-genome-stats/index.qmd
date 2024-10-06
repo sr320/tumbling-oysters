@@ -36,216 +36,111 @@ knitr::opts_chunk$set(
 )
 ```
 
-As part of the **e5 project**, our team is delving into the genomic intricacies of three coral species to better understand their adaptability and resilience in changing marine environments. Today, I focused on performing fundamental genomic analyses using a custom Bash script, allowing for efficient processing of large genome files directly from the command line.
-
-## Introduction
-
-Coral reefs are biodiversity hotspots and play a critical role in marine ecosystems. Deciphering their genomic information is essential for conservation and understanding their responses to environmental stressors like climate change and ocean acidification. By analyzing genomic data, we can identify genetic factors that contribute to coral health, stress responses, and adaptability.
-
-## Methods
-
-To extract essential genomic statistics from the coral genome files, I employed a Bash script that parses FASTA files. This approach leverages command-line tools and scripting to handle large datasets efficiently without the overhead of loading data into memory-intensive applications.
-
-### Bash Script for Genome Statistics
-
-Below is the Bash script used to calculate key genomic statistics:
-
-``` bash
-#!/bin/bash
-
-# Check if input file is provided
-if [ $# -ne 1 ]; then
-    echo "Usage: $0 genome.fasta"
-    exit 1
-fi
-
-fasta_file="$1"
-
-# Number of sequences
-num_seqs=$(grep -c '^>' "$fasta_file")
-echo "Number of sequences: $num_seqs"
-
-# Get sequence lengths
-awk '
-    /^>/ { if (seqlen) { print seqlen; seqlen=0 } next }
-    { seqlen += length($0) }
-    END { if (seqlen) print seqlen }
-' "$fasta_file" > seq_lengths.txt
-
-# Total length
-total_length=$(awk '{sum+=$1} END{print sum}' seq_lengths.txt)
-echo "Total length: $total_length"
-
-# Longest sequence
-longest=$(sort -nr seq_lengths.txt | head -n1)
-echo "Longest sequence length: $longest"
-
-# Shortest sequence
-shortest=$(sort -n seq_lengths.txt | head -n1)
-echo "Shortest sequence length: $shortest"
-
-# N50 calculation
-sort -nr seq_lengths.txt > seq_lengths_sorted.txt
-
-n50=$(awk -v total_length="$total_length" '
-BEGIN { half_total = total_length / 2; sum = 0 }
-{
-    sum += $1
-    if (sum >= half_total) {
-        print $1
-        exit
-    }
-}
-' seq_lengths_sorted.txt)
-echo "N50: $n50"
-
-# L50 calculation
-l50=$(awk -v total_length="$total_length" '
-BEGIN { half_total = total_length / 2; sum = 0; count = 0 }
-{
-    sum += $1
-    count++
-    if (sum >= half_total) {
-        print count
-        exit
-    }
-}
-' seq_lengths_sorted.txt)
-echo "L50: $l50"
-
-# GC content and base counts
-awk '
-    /^>/ { next }
-    {
-        seq = toupper($0)
-        g += gsub(/G/, "", seq)
-        c += gsub(/C/, "", seq)
-        a += gsub(/A/, "", seq)
-        t += gsub(/T/, "", seq)
-        n += gsub(/N/, "", seq)
-    }
-    END {
-        total = a + c + g + t + n
-        gc = g + c
-        printf "Total bases: %d\n", total
-        printf "A: %d\n", a
-        printf "C: %d\n", c
-        printf "G: %d\n", g
-        printf "T: %d\n", t
-        printf "N: %d\n", n
-        printf "GC Content: %.2f%%\n", (gc / total) * 100
-    }
-' "$fasta_file"
-
-# Cleanup temporary files
-rm seq_lengths.txt seq_lengths_sorted.txt
-```
-
-### Explanation of the Script
-
--   **Input Validation:** Checks if a genome FASTA file is provided as an argument.
--   **Number of Sequences:** Uses `grep` to count the number of header lines (sequences) in the FASTA file.
--   **Sequence Lengths:** Utilizes `awk` to calculate the length of each sequence and writes them to `seq_lengths.txt`.
--   **Total Length:** Sums up all sequence lengths using `awk`.
--   **Longest and Shortest Sequences:** Identifies the longest and shortest sequences by sorting `seq_lengths.txt`.
--   **N50 and L50 Calculations:**
-    -   **N50:** The sequence length at which 50% of the genome is contained in sequences equal to or larger than this length.
-    -   **L50:** The minimum number of sequences whose lengths sum to at least 50% of the total genome length.
--   **GC Content and Base Counts:** Counts the occurrences of each nucleotide (A, C, G, T, N) and calculates the GC content percentage.
--   **Cleanup:** Removes temporary files created during the process.
-
-### How to Run the Script
-
-1.  **Save the Script:** Save the script to a file, e.g., `genome_stats.sh`.
-2.  **Make It Executable:** Run `chmod +x genome_stats.sh` to make the script executable.
-3.  **Execute the Script:** Run `./genome_stats.sh path/to/genome.fasta`.
-
-## Results
-
-After running the script on the genome files of the three coral species, the following statistics were obtained:
-
-### Species D : *Acropora pulchra*
-
-``` plaintext
-Number of sequences: 174
-Total length: 518313916
-Longest sequence length: 45111900
-Shortest sequence length: 6597
-N50: 17861421
-L50: 10
-Total bases: 518313916
-A: 158272347
-C: 101422742
-G: 100986991
-T: 157631836
-N: 0
-GC Content: 39.05%
-```
-
-### Species E: Porites evermanni
-
-``` plaintext
-Number of sequences: 8186
-Total length: 603805388
-Longest sequence length: 1802771
-Shortest sequence length: 2001
-N50: 171385
-L50: 935
-Total bases: 603805388
-A: 171827598
-C: 109822870
-G: 109866618
-T: 171532079
-N: 40756223
-GC Content: 36.38%
-```
-
-### Species F: Pocillopora tuahiniensis
-
-``` plaintext
-```
-
-## Discussion
-
-The Bash script efficiently processes large genome files to extract key genomic statistics without the need for additional software dependencies. The genomes of the three coral species exhibit similar characteristics:
-
--   **Genome Size:**
--   **GC Content:**
--   **N50 and L50 Values:** Indicate the assembly quality and sequence continuity.
-
-### Significance of N50 and L50
-
--   **N50:** A higher N50 value suggests longer contiguous sequences, which is desirable for genome assemblies.
--   **L50:** A lower L50 indicates that fewer sequences are needed to cover 50% of the genome, reflecting better assembly quality.
-
-### Implications for Coral Research
-
--   **Genome Assembly Quality:** The consistent N50 and L50 values suggest comparable assembly qualities across the species, facilitating comparative genomic studies.
--   **Genetic Insights:** The similar GC content and nucleotide distributions hint at conserved genomic features that may be crucial for coral survival and adaptation.
--   **Resource Efficiency:** Utilizing Bash scripts allows for rapid analysis, saving computational resources and time, especially when dealing with multiple large genome files.
-
-## Conclusion
-
-The custom Bash script proved to be an effective tool for conducting preliminary genomic analyses on the coral species. By extracting fundamental genomic statistics directly from the command line, we can quickly assess genome assembly qualities and make informed decisions for downstream analyses.
-
-## Next Steps
-
--   **Functional Annotation:** Proceed with annotating the genomes to identify genes and regulatory elements.
--   **Comparative Analysis:** Perform comparative genomics to identify species-specific adaptations and conserved genes.
--   **Transcriptome Integration:** Integrate RNA sequencing data to correlate gene expression patterns with genomic features.
--   **Environmental Correlation:** Study the relationship between genomic features and environmental stress responses.
-
-## Acknowledgments
-
-I extend my gratitude to the e5 project team for their unwavering support and collaboration. Special thanks to the open-source community for providing the tools and resources that make such analyses possible.
-
-## References
-
--   **FASTA Format Specification:** [NCBI FASTA Format](https://www.ncbi.nlm.nih.gov/blast/fasta.shtml)
--   **GNU Awk Manual:** [GNU Awk User's Guide](https://www.gnu.org/software/gawk/manual/gawk.html)
--   **Bash Scripting Tutorial:** [Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/)
--   **Coral Genomics Resources:** [Reef Genomics](https://reefgenomics.org/)
+This assessment compares the genomic assemblies and annotations of three coral species: *Acropora pulchra* (Apul), *Porites evermanni* (Peve), and *Pocillopora meandrina* (Ptuh). The analysis focuses on genome assembly metrics, gene annotation statistics, and potential biological implications.
 
 ------------------------------------------------------------------------
 
-*For any questions or suggestions regarding this analysis, please feel free to reach out.*
+### **1. Genome Assembly Quality**
+
+#### **Number of Sequences and Contiguity**
+
+-   **Apul (A. pulchra)**
+    -   **Number of Sequences:** 174
+    -   **N50:** 17,861,421 bp
+    -   **L50:** 10
+    -   **Longest Sequence:** 45,111,900 bp
+-   **Peve (P. evermanni)**
+    -   **Number of Sequences:** 8,186
+    -   **N50:** 171,385 bp
+    -   **L50:** 935
+    -   **Longest Sequence:** 1,802,771 bp
+-   **Ptuh (P. meandrina)**
+    -   **Number of Sequences:** 212
+    -   **N50:** 10,024,633 bp
+    -   **L50:** 13
+    -   **Longest Sequence:** 21,651,136 bp
+
+**Assessment:**
+
+-   **Assembly Contiguity:** Apul exhibits the highest assembly contiguity, indicated by the lowest number of sequences and highest N50 value. Ptuh ranks second, while Peve has a more fragmented assembly with a significantly higher number of sequences and lower N50.
+-   **Sequence Length Distribution:** Apul's longest sequence is substantially longer than those of Peve and Ptuh, suggesting a more complete assembly.
+
+#### **Genome Size and GC Content**
+
+-   **Total Genome Length:**
+    -   **Peve:** 603,805,388 bp
+    -   **Apul:** 518,313,916 bp
+    -   **Ptuh:** 376,579,914 bp
+-   **GC Content:**
+    -   **Apul:** 39.05%
+    -   **Ptuh:** 38.03%
+    -   **Peve:** 36.38%
+
+**Assessment:**
+
+-   **Genome Size Variability:** Peve has the largest genome size but the most fragmented assembly, which may indicate repetitive elements or assembly challenges.
+-   **GC Content Consistency:** All species have similar GC content, ranging from 36.38% to 39.05%, which is typical for coral genomes.
+
+------------------------------------------------------------------------
+
+### **2. Gene Annotation and Features**
+
+#### **Gene Counts and Features**
+
+-   **Apul:**
+    -   **Total Genes:** 36,447
+    -   **Unique Features:** 5 (exon, CDS, gene, mRNA, tRNA)
+    -   **Total GFF Entries:** 499,892
+-   **Peve:**
+    -   **Total Genes:** 40,389
+    -   **Unique Features:** 3 (CDS, mRNA, UTR)
+    -   **Total GFF Entries:** 286,807
+-   **Ptuh:**
+    -   **Total Genes:** 31,840
+    -   **Unique Features:** 3 (exon, CDS, transcript)
+    -   **Total GFF Entries:** 448,910
+
+**Assessment:**
+
+-   **Gene Count:** Peve has the highest number of predicted genes, followed by Apul and Ptuh.
+-   **Annotation Features:** Apul includes tRNA annotations, which are absent in Peve and Ptuh. This suggests a more comprehensive annotation in Apul.
+-   **Unique Sources:** Different gene prediction tools were used—Apul (funannotate), Peve (Gmove), Ptuh (AUGUSTUS)—which may affect gene count and features.
+
+#### **Gene Length and Total Bases**
+
+-   **Average Gene Length:**
+    -   **Apul:** 5,887.31 bp
+    -   **Ptuh:** 1,376.95 bp
+    -   **Peve:** 1,337.5 bp
+-   **Total Bases in Genes:**
+    -   **Apul:** 214,577,849 bp
+    -   **Peve:** 54,020,937 bp
+    -   **Ptuh:** 43,842,885 bp
+
+**Assessment:**
+
+-   **Gene Length:** Apul's average gene length is significantly longer than that of Peve and Ptuh, potentially indicating differences in gene structure, annotation methods, or biological variation.
+-   **Total Coding Sequence:** Apul has a higher total base count in genes, which correlates with longer genes and may reflect a greater number of exons or longer intronic regions.
+
+------------------------------------------------------------------------
+
+### **3. Biological Implications and Considerations**
+
+-   **Assembly Quality Impact:** The higher contiguity in Apul and Ptuh assemblies may lead to more accurate gene predictions and annotations compared to Peve.
+-   **Gene Prediction Tools:** The use of different annotation tools can result in varying gene counts and features. Funannotate (Apul) provides tRNA annotations, suggesting a more thorough annotation pipeline.
+-   **Gene Length Variation:** The discrepancy in average gene lengths might be due to:
+    -   **Biological Differences:** Genuine differences in gene structure among species.
+    -   **Annotation Strategies:** Differences in handling of introns, UTRs, or alternative splicing events.
+    -   **Prediction Algorithms:** Varying sensitivity and specificity of gene prediction tools.
+
+------------------------------------------------------------------------
+
+### **4. Conclusion**
+
+-   **Best Assembly:** *Acropora pulchra* (Apul) exhibits the most contiguous and comprehensive genome assembly and annotation among the three species.
+-   **Gene Annotation Depth:** Apul's inclusion of tRNA and longer gene lengths suggests a more detailed annotation, which could facilitate better functional genomics studies.
+-   **Areas for Improvement:** Peve's fragmented assembly and shorter gene lengths indicate potential areas for reassembly and reannotation to improve genomic resources.
+
+------------------------------------------------------------------------
+
+**Recommendation:** For comparative genomics and evolutionary studies, researchers should consider the differences in assembly quality and annotation methods. Standardizing gene prediction tools and reannotating genomes where necessary could enhance the reliability of cross-species comparisons.

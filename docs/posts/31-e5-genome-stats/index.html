@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -84,7 +84,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -93,6 +98,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -105,10 +111,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Tumbling Oysters</span>
     </a>
@@ -120,15 +126,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/sr320" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/sr320"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -155,14 +161,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="quarto-title-meta-contents">
       <p class="author">Steven Roberts <a href="https://orcid.org/0000-0001-8302-1138" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
     </div>
-      <div class="quarto-title-meta-contents">
+    <div class="quarto-title-meta-contents">
           <p class="affiliation">
               <a href="https://robertslab.info">
               Professor, UW - School of Aquatic and Fishery Sciences
               </a>
             </p>
         </div>
-      </div>
+    </div>
 
   <div class="quarto-title-meta">
 
@@ -188,223 +194,144 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>As part of the <strong>e5 project</strong>, our team is delving into the genomic intricacies of three coral species to better understand their adaptability and resilience in changing marine environments. Today, I focused on performing fundamental genomic analyses using a custom Bash script, allowing for efficient processing of large genome files directly from the command line.</p>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Coral reefs are biodiversity hotspots and play a critical role in marine ecosystems. Deciphering their genomic information is essential for conservation and understanding their responses to environmental stressors like climate change and ocean acidification. By analyzing genomic data, we can identify genetic factors that contribute to coral health, stress responses, and adaptability.</p>
-</section>
-<section id="methods" class="level2">
-<h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<p>To extract essential genomic statistics from the coral genome files, I employed a Bash script that parses FASTA files. This approach leverages command-line tools and scripting to handle large datasets efficiently without the overhead of loading data into memory-intensive applications.</p>
-<section id="bash-script-for-genome-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="bash-script-for-genome-statistics">Bash Script for Genome Statistics</h3>
-<p>Below is the Bash script used to calculate key genomic statistics:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if input file is provided</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="va">$#</span> <span class="ot">-ne</span> 1 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Usage: </span><span class="va">$0</span><span class="st"> genome.fasta"</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="va">fasta_file</span><span class="op">=</span><span class="st">"</span><span class="va">$1</span><span class="st">"</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of sequences</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="va">num_seqs</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'^&gt;'</span> <span class="st">"</span><span class="va">$fasta_file</span><span class="st">"</span><span class="va">)</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Number of sequences: </span><span class="va">$num_seqs</span><span class="st">"</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Get sequence lengths</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">    /^&gt;/ { if (seqlen) { print seqlen; seqlen=0 } next }</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">    { seqlen += length($0) }</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="st">    END { if (seqlen) print seqlen }</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> <span class="st">"</span><span class="va">$fasta_file</span><span class="st">"</span> <span class="op">&gt;</span> seq_lengths.txt</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Total length</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="va">total_length</span><span class="op">=</span><span class="va">$(</span><span class="fu">awk</span> <span class="st">'{sum+=$1} END{print sum}'</span> seq_lengths.txt<span class="va">)</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Total length: </span><span class="va">$total_length</span><span class="st">"</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Longest sequence</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="va">longest</span><span class="op">=</span><span class="va">$(</span><span class="fu">sort</span> <span class="at">-nr</span> seq_lengths.txt <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span><span class="va">)</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Longest sequence length: </span><span class="va">$longest</span><span class="st">"</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Shortest sequence</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="va">shortest</span><span class="op">=</span><span class="va">$(</span><span class="fu">sort</span> <span class="at">-n</span> seq_lengths.txt <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span><span class="va">)</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Shortest sequence length: </span><span class="va">$shortest</span><span class="st">"</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co"># N50 calculation</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-nr</span> seq_lengths.txt <span class="op">&gt;</span> seq_lengths_sorted.txt</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="va">n50</span><span class="op">=</span><span class="va">$(</span><span class="fu">awk</span> <span class="at">-v</span> total_length=<span class="st">"</span><span class="va">$total_length</span><span class="st">"</span> <span class="st">'</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="st">BEGIN { half_total = total_length / 2; sum = 0 }</span></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="st">    sum += $1</span></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="st">    if (sum &gt;= half_total) {</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="st">        print $1</span></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="st">        exit</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> seq_lengths_sorted.txt<span class="va">)</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"N50: </span><span class="va">$n50</span><span class="st">"</span></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co"># L50 calculation</span></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="va">l50</span><span class="op">=</span><span class="va">$(</span><span class="fu">awk</span> <span class="at">-v</span> total_length=<span class="st">"</span><span class="va">$total_length</span><span class="st">"</span> <span class="st">'</span></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="st">BEGIN { half_total = total_length / 2; sum = 0; count = 0 }</span></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="st">    sum += $1</span></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="st">    count++</span></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="st">    if (sum &gt;= half_total) {</span></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="st">        print count</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="st">        exit</span></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> seq_lengths_sorted.txt<span class="va">)</span></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"L50: </span><span class="va">$l50</span><span class="st">"</span></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="co"># GC content and base counts</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'</span></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="st">    /^&gt;/ { next }</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="st">    {</span></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="st">        seq = toupper($0)</span></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="st">        g += gsub(/G/, "", seq)</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="st">        c += gsub(/C/, "", seq)</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="st">        a += gsub(/A/, "", seq)</span></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="st">        t += gsub(/T/, "", seq)</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="st">        n += gsub(/N/, "", seq)</span></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="st">    END {</span></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="st">        total = a + c + g + t + n</span></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="st">        gc = g + c</span></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "Total bases: %d\n", total</span></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "A: %d\n", a</span></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "C: %d\n", c</span></span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "G: %d\n", g</span></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "T: %d\n", t</span></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "N: %d\n", n</span></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "GC Content: %.2f%%\n", (gc / total) * 100</span></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> <span class="st">"</span><span class="va">$fasta_file</span><span class="st">"</span></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleanup temporary files</span></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> seq_lengths.txt seq_lengths_sorted.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="explanation-of-the-script" class="level3">
-<h3 class="anchored" data-anchor-id="explanation-of-the-script">Explanation of the Script</h3>
+
+<p>This assessment compares the genomic assemblies and annotations of three coral species: <em>Acropora pulchra</em> (Apul), <em>Porites evermanni</em> (Peve), and <em>Pocillopora meandrina</em> (Ptuh). The analysis focuses on genome assembly metrics, gene annotation statistics, and potential biological implications.</p>
+<hr>
+<section id="genome-assembly-quality" class="level3">
+<h3 class="anchored" data-anchor-id="genome-assembly-quality"><strong>1. Genome Assembly Quality</strong></h3>
+<section id="number-of-sequences-and-contiguity" class="level4">
+<h4 class="anchored" data-anchor-id="number-of-sequences-and-contiguity"><strong>Number of Sequences and Contiguity</strong></h4>
 <ul>
-<li><strong>Input Validation:</strong> Checks if a genome FASTA file is provided as an argument.</li>
-<li><strong>Number of Sequences:</strong> Uses <code>grep</code> to count the number of header lines (sequences) in the FASTA file.</li>
-<li><strong>Sequence Lengths:</strong> Utilizes <code>awk</code> to calculate the length of each sequence and writes them to <code>seq_lengths.txt</code>.</li>
-<li><strong>Total Length:</strong> Sums up all sequence lengths using <code>awk</code>.</li>
-<li><strong>Longest and Shortest Sequences:</strong> Identifies the longest and shortest sequences by sorting <code>seq_lengths.txt</code>.</li>
-<li><strong>N50 and L50 Calculations:</strong>
+<li><strong>Apul (A. pulchra)</strong>
 <ul>
-<li><strong>N50:</strong> The sequence length at which 50% of the genome is contained in sequences equal to or larger than this length.</li>
-<li><strong>L50:</strong> The minimum number of sequences whose lengths sum to at least 50% of the total genome length.</li>
+<li><strong>Number of Sequences:</strong> 174</li>
+<li><strong>N50:</strong> 17,861,421 bp</li>
+<li><strong>L50:</strong> 10</li>
+<li><strong>Longest Sequence:</strong> 45,111,900 bp</li>
 </ul></li>
-<li><strong>GC Content and Base Counts:</strong> Counts the occurrences of each nucleotide (A, C, G, T, N) and calculates the GC content percentage.</li>
-<li><strong>Cleanup:</strong> Removes temporary files created during the process.</li>
+<li><strong>Peve (P. evermanni)</strong>
+<ul>
+<li><strong>Number of Sequences:</strong> 8,186</li>
+<li><strong>N50:</strong> 171,385 bp</li>
+<li><strong>L50:</strong> 935</li>
+<li><strong>Longest Sequence:</strong> 1,802,771 bp</li>
+</ul></li>
+<li><strong>Ptuh (P. meandrina)</strong>
+<ul>
+<li><strong>Number of Sequences:</strong> 212</li>
+<li><strong>N50:</strong> 10,024,633 bp</li>
+<li><strong>L50:</strong> 13</li>
+<li><strong>Longest Sequence:</strong> 21,651,136 bp</li>
+</ul></li>
+</ul>
+<p><strong>Assessment:</strong></p>
+<ul>
+<li><strong>Assembly Contiguity:</strong> Apul exhibits the highest assembly contiguity, indicated by the lowest number of sequences and highest N50 value. Ptuh ranks second, while Peve has a more fragmented assembly with a significantly higher number of sequences and lower N50.</li>
+<li><strong>Sequence Length Distribution:</strong> Apul’s longest sequence is substantially longer than those of Peve and Ptuh, suggesting a more complete assembly.</li>
 </ul>
 </section>
-<section id="how-to-run-the-script" class="level3">
-<h3 class="anchored" data-anchor-id="how-to-run-the-script">How to Run the Script</h3>
-<ol type="1">
-<li><strong>Save the Script:</strong> Save the script to a file, e.g., <code>genome_stats.sh</code>.</li>
-<li><strong>Make It Executable:</strong> Run <code>chmod +x genome_stats.sh</code> to make the script executable.</li>
-<li><strong>Execute the Script:</strong> Run <code>./genome_stats.sh path/to/genome.fasta</code>.</li>
-</ol>
-</section>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>After running the script on the genome files of the three coral species, the following statistics were obtained:</p>
-<section id="species-d-acropora-pulchra" class="level3">
-<h3 class="anchored" data-anchor-id="species-d-acropora-pulchra">Species D : <em>Acropora pulchra</em></h3>
-<pre class="plaintext"><code>Number of sequences: 174
-Total length: 518313916
-Longest sequence length: 45111900
-Shortest sequence length: 6597
-N50: 17861421
-L50: 10
-Total bases: 518313916
-A: 158272347
-C: 101422742
-G: 100986991
-T: 157631836
-N: 0
-GC Content: 39.05%</code></pre>
-</section>
-<section id="species-e-porites-evermanni" class="level3">
-<h3 class="anchored" data-anchor-id="species-e-porites-evermanni">Species E: Porites evermanni</h3>
-<pre class="plaintext"><code>Number of sequences: 8186
-Total length: 603805388
-Longest sequence length: 1802771
-Shortest sequence length: 2001
-N50: 171385
-L50: 935
-Total bases: 603805388
-A: 171827598
-C: 109822870
-G: 109866618
-T: 171532079
-N: 40756223
-GC Content: 36.38%</code></pre>
-</section>
-<section id="species-f-pocillopora-tuahiniensis" class="level3">
-<h3 class="anchored" data-anchor-id="species-f-pocillopora-tuahiniensis">Species F: Pocillopora tuahiniensis</h3>
-<pre class="plaintext"><code></code></pre>
-</section>
-</section>
-<section id="discussion" class="level2">
-<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
-<p>The Bash script efficiently processes large genome files to extract key genomic statistics without the need for additional software dependencies. The genomes of the three coral species exhibit similar characteristics:</p>
+<section id="genome-size-and-gc-content" class="level4">
+<h4 class="anchored" data-anchor-id="genome-size-and-gc-content"><strong>Genome Size and GC Content</strong></h4>
 <ul>
-<li><strong>Genome Size:</strong></li>
-<li><strong>GC Content:</strong></li>
-<li><strong>N50 and L50 Values:</strong> Indicate the assembly quality and sequence continuity.</li>
+<li><strong>Total Genome Length:</strong>
+<ul>
+<li><strong>Peve:</strong> 603,805,388 bp</li>
+<li><strong>Apul:</strong> 518,313,916 bp</li>
+<li><strong>Ptuh:</strong> 376,579,914 bp</li>
+</ul></li>
+<li><strong>GC Content:</strong>
+<ul>
+<li><strong>Apul:</strong> 39.05%</li>
+<li><strong>Ptuh:</strong> 38.03%</li>
+<li><strong>Peve:</strong> 36.38%</li>
+</ul></li>
 </ul>
-<section id="significance-of-n50-and-l50" class="level3">
-<h3 class="anchored" data-anchor-id="significance-of-n50-and-l50">Significance of N50 and L50</h3>
+<p><strong>Assessment:</strong></p>
 <ul>
-<li><strong>N50:</strong> A higher N50 value suggests longer contiguous sequences, which is desirable for genome assemblies.</li>
-<li><strong>L50:</strong> A lower L50 indicates that fewer sequences are needed to cover 50% of the genome, reflecting better assembly quality.</li>
-</ul>
-</section>
-<section id="implications-for-coral-research" class="level3">
-<h3 class="anchored" data-anchor-id="implications-for-coral-research">Implications for Coral Research</h3>
-<ul>
-<li><strong>Genome Assembly Quality:</strong> The consistent N50 and L50 values suggest comparable assembly qualities across the species, facilitating comparative genomic studies.</li>
-<li><strong>Genetic Insights:</strong> The similar GC content and nucleotide distributions hint at conserved genomic features that may be crucial for coral survival and adaptation.</li>
-<li><strong>Resource Efficiency:</strong> Utilizing Bash scripts allows for rapid analysis, saving computational resources and time, especially when dealing with multiple large genome files.</li>
-</ul>
-</section>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The custom Bash script proved to be an effective tool for conducting preliminary genomic analyses on the coral species. By extracting fundamental genomic statistics directly from the command line, we can quickly assess genome assembly qualities and make informed decisions for downstream analyses.</p>
-</section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
-<ul>
-<li><strong>Functional Annotation:</strong> Proceed with annotating the genomes to identify genes and regulatory elements.</li>
-<li><strong>Comparative Analysis:</strong> Perform comparative genomics to identify species-specific adaptations and conserved genes.</li>
-<li><strong>Transcriptome Integration:</strong> Integrate RNA sequencing data to correlate gene expression patterns with genomic features.</li>
-<li><strong>Environmental Correlation:</strong> Study the relationship between genomic features and environmental stress responses.</li>
-</ul>
-</section>
-<section id="acknowledgments" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
-<p>I extend my gratitude to the e5 project team for their unwavering support and collaboration. Special thanks to the open-source community for providing the tools and resources that make such analyses possible.</p>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ul>
-<li><strong>FASTA Format Specification:</strong> <a href="https://www.ncbi.nlm.nih.gov/blast/fasta.shtml">NCBI FASTA Format</a></li>
-<li><strong>GNU Awk Manual:</strong> <a href="https://www.gnu.org/software/gawk/manual/gawk.html">GNU Awk User’s Guide</a></li>
-<li><strong>Bash Scripting Tutorial:</strong> <a href="https://tldp.org/LDP/abs/html/">Advanced Bash-Scripting Guide</a></li>
-<li><strong>Coral Genomics Resources:</strong> <a href="https://reefgenomics.org/">Reef Genomics</a></li>
+<li><strong>Genome Size Variability:</strong> Peve has the largest genome size but the most fragmented assembly, which may indicate repetitive elements or assembly challenges.</li>
+<li><strong>GC Content Consistency:</strong> All species have similar GC content, ranging from 36.38% to 39.05%, which is typical for coral genomes.</li>
 </ul>
 <hr>
-<p><em>For any questions or suggestions regarding this analysis, please feel free to reach out.</em></p>
+</section>
+</section>
+<section id="gene-annotation-and-features" class="level3">
+<h3 class="anchored" data-anchor-id="gene-annotation-and-features"><strong>2. Gene Annotation and Features</strong></h3>
+<section id="gene-counts-and-features" class="level4">
+<h4 class="anchored" data-anchor-id="gene-counts-and-features"><strong>Gene Counts and Features</strong></h4>
+<ul>
+<li><strong>Apul:</strong>
+<ul>
+<li><strong>Total Genes:</strong> 36,447</li>
+<li><strong>Unique Features:</strong> 5 (exon, CDS, gene, mRNA, tRNA)</li>
+<li><strong>Total GFF Entries:</strong> 499,892</li>
+</ul></li>
+<li><strong>Peve:</strong>
+<ul>
+<li><strong>Total Genes:</strong> 40,389</li>
+<li><strong>Unique Features:</strong> 3 (CDS, mRNA, UTR)</li>
+<li><strong>Total GFF Entries:</strong> 286,807</li>
+</ul></li>
+<li><strong>Ptuh:</strong>
+<ul>
+<li><strong>Total Genes:</strong> 31,840</li>
+<li><strong>Unique Features:</strong> 3 (exon, CDS, transcript)</li>
+<li><strong>Total GFF Entries:</strong> 448,910</li>
+</ul></li>
+</ul>
+<p><strong>Assessment:</strong></p>
+<ul>
+<li><strong>Gene Count:</strong> Peve has the highest number of predicted genes, followed by Apul and Ptuh.</li>
+<li><strong>Annotation Features:</strong> Apul includes tRNA annotations, which are absent in Peve and Ptuh. This suggests a more comprehensive annotation in Apul.</li>
+<li><strong>Unique Sources:</strong> Different gene prediction tools were used—Apul (funannotate), Peve (Gmove), Ptuh (AUGUSTUS)—which may affect gene count and features.</li>
+</ul>
+</section>
+<section id="gene-length-and-total-bases" class="level4">
+<h4 class="anchored" data-anchor-id="gene-length-and-total-bases"><strong>Gene Length and Total Bases</strong></h4>
+<ul>
+<li><strong>Average Gene Length:</strong>
+<ul>
+<li><strong>Apul:</strong> 5,887.31 bp</li>
+<li><strong>Ptuh:</strong> 1,376.95 bp</li>
+<li><strong>Peve:</strong> 1,337.5 bp</li>
+</ul></li>
+<li><strong>Total Bases in Genes:</strong>
+<ul>
+<li><strong>Apul:</strong> 214,577,849 bp</li>
+<li><strong>Peve:</strong> 54,020,937 bp</li>
+<li><strong>Ptuh:</strong> 43,842,885 bp</li>
+</ul></li>
+</ul>
+<p><strong>Assessment:</strong></p>
+<ul>
+<li><strong>Gene Length:</strong> Apul’s average gene length is significantly longer than that of Peve and Ptuh, potentially indicating differences in gene structure, annotation methods, or biological variation.</li>
+<li><strong>Total Coding Sequence:</strong> Apul has a higher total base count in genes, which correlates with longer genes and may reflect a greater number of exons or longer intronic regions.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="biological-implications-and-considerations" class="level3">
+<h3 class="anchored" data-anchor-id="biological-implications-and-considerations"><strong>3. Biological Implications and Considerations</strong></h3>
+<ul>
+<li><strong>Assembly Quality Impact:</strong> The higher contiguity in Apul and Ptuh assemblies may lead to more accurate gene predictions and annotations compared to Peve.</li>
+<li><strong>Gene Prediction Tools:</strong> The use of different annotation tools can result in varying gene counts and features. Funannotate (Apul) provides tRNA annotations, suggesting a more thorough annotation pipeline.</li>
+<li><strong>Gene Length Variation:</strong> The discrepancy in average gene lengths might be due to:
+<ul>
+<li><strong>Biological Differences:</strong> Genuine differences in gene structure among species.</li>
+<li><strong>Annotation Strategies:</strong> Differences in handling of introns, UTRs, or alternative splicing events.</li>
+<li><strong>Prediction Algorithms:</strong> Varying sensitivity and specificity of gene prediction tools.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion"><strong>4. Conclusion</strong></h3>
+<ul>
+<li><strong>Best Assembly:</strong> <em>Acropora pulchra</em> (Apul) exhibits the most contiguous and comprehensive genome assembly and annotation among the three species.</li>
+<li><strong>Gene Annotation Depth:</strong> Apul’s inclusion of tRNA and longer gene lengths suggests a more detailed annotation, which could facilitate better functional genomics studies.</li>
+<li><strong>Areas for Improvement:</strong> Peve’s fragmented assembly and shorter gene lengths indicate potential areas for reassembly and reannotation to improve genomic resources.</li>
+</ul>
+<hr>
+<p><strong>Recommendation:</strong> For comparative genomics and evolutionary studies, researchers should consider the differences in assembly quality and annotation methods. Standardizing gene prediction tools and reannotating genomes where necessary could enhance the reliability of cross-species comparisons.</p>
 
 
 <!-- -->
@@ -453,6 +380,33 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       } else {
         el.classList.add('notransition');
       }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
     }
   }
   const toggleColorMode = (alternate) => {
@@ -521,13 +475,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'alternate';
+  const darkModeDefault = true;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
     let toAlternate = !hasAlternateSentinel();
     toggleColorMode(toAlternate);
     setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
   };
   // Ensure there is a toggle, if there isn't float one in the top right
   if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
@@ -657,10 +613,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/sr320\.github\.io\/tumbling-oysters");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -670,8 +643,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -683,7 +665,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -727,6 +832,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -752,6 +858,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -811,259 +943,155 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Stats on e5 genomes"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "welcoming new pulcra"</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [e5]</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation: </span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 10-05-2024</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> http://gannet.fish.washington.edu/seashell/snaps/2024-10-05_13-39-55.png # finding a good image</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">    url: </span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: FALSE</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo =</span> <span class="cn">TRUE</span>,         <span class="co"># Display code chunks</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">eval =</span> <span class="cn">FALSE</span>,         <span class="co"># Evaluate code chunks</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">warning =</span> <span class="cn">FALSE</span>,     <span class="co"># Hide warnings</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">message =</span> <span class="cn">FALSE</span>,     <span class="co"># Hide messages</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.width =</span> <span class="dv">6</span>,       <span class="co"># Set plot width in inches</span></span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.height =</span> <span class="dv">4</span>,      <span class="co"># Set plot height in inches</span></span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.align =</span> <span class="st">"center"</span>, <span class="co"># Align plots to the center</span></span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">""</span>         <span class="co"># Prevents appending '##' to beginning of lines in code analyses</span></span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>As part of the **e5 project**, our team is delving into the genomic intricacies of three coral species to better understand their adaptability and resilience in changing marine environments. Today, I focused on performing fundamental genomic analyses using a custom Bash script, allowing for efficient processing of large genome files directly from the command line.</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Introduction</span></span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>Coral reefs are biodiversity hotspots and play a critical role in marine ecosystems. Deciphering their genomic information is essential for conservation and understanding their responses to environmental stressors like climate change and ocean acidification. By analyzing genomic data, we can identify genetic factors that contribute to coral health, stress responses, and adaptability.</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## Methods</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>To extract essential genomic statistics from the coral genome files, I employed a Bash script that parses FASTA files. This approach leverages command-line tools and scripting to handle large datasets efficiently without the overhead of loading data into memory-intensive applications.</span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bash Script for Genome Statistics</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>Below is the Bash script used to calculate key genomic statistics:</span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if input file is provided</span></span>
-<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="va">$#</span> <span class="ot">-ne</span> 1 <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    <span class="bu">echo</span> <span class="st">"Usage: </span><span class="va">$0</span><span class="st"> genome.fasta"</span></span>
-<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="va">fasta_file</span><span class="op">=</span><span class="st">"</span><span class="va">$1</span><span class="st">"</span></span>
-<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of sequences</span></span>
-<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="va">num_seqs</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'^&gt;'</span> <span class="st">"</span><span class="va">$fasta_file</span><span class="st">"</span><span class="va">)</span></span>
-<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Number of sequences: </span><span class="va">$num_seqs</span><span class="st">"</span></span>
-<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Get sequence lengths</span></span>
-<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'</span></span>
-<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="st">    /^&gt;/ { if (seqlen) { print seqlen; seqlen=0 } next }</span></span>
-<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="st">    { seqlen += length($0) }</span></span>
-<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a><span class="st">    END { if (seqlen) print seqlen }</span></span>
-<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> <span class="st">"</span><span class="va">$fasta_file</span><span class="st">"</span> <span class="op">&gt;</span> seq_lengths.txt</span>
-<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Total length</span></span>
-<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a><span class="va">total_length</span><span class="op">=</span><span class="va">$(</span><span class="fu">awk</span> <span class="st">'{sum+=$1} END{print sum}'</span> seq_lengths.txt<span class="va">)</span></span>
-<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Total length: </span><span class="va">$total_length</span><span class="st">"</span></span>
-<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a><span class="co"># Longest sequence</span></span>
-<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a><span class="va">longest</span><span class="op">=</span><span class="va">$(</span><span class="fu">sort</span> <span class="at">-nr</span> seq_lengths.txt <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span><span class="va">)</span></span>
-<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Longest sequence length: </span><span class="va">$longest</span><span class="st">"</span></span>
-<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a><span class="co"># Shortest sequence</span></span>
-<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a><span class="va">shortest</span><span class="op">=</span><span class="va">$(</span><span class="fu">sort</span> <span class="at">-n</span> seq_lengths.txt <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span><span class="va">)</span></span>
-<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Shortest sequence length: </span><span class="va">$shortest</span><span class="st">"</span></span>
-<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a><span class="co"># N50 calculation</span></span>
-<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-nr</span> seq_lengths.txt <span class="op">&gt;</span> seq_lengths_sorted.txt</span>
-<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a><span class="va">n50</span><span class="op">=</span><span class="va">$(</span><span class="fu">awk</span> <span class="at">-v</span> total_length=<span class="st">"</span><span class="va">$total_length</span><span class="st">"</span> <span class="st">'</span></span>
-<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a><span class="st">BEGIN { half_total = total_length / 2; sum = 0 }</span></span>
-<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
-<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a><span class="st">    sum += $1</span></span>
-<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a><span class="st">    if (sum &gt;= half_total) {</span></span>
-<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a><span class="st">        print $1</span></span>
-<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a><span class="st">        exit</span></span>
-<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> seq_lengths_sorted.txt<span class="va">)</span></span>
-<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"N50: </span><span class="va">$n50</span><span class="st">"</span></span>
-<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a><span class="co"># L50 calculation</span></span>
-<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a><span class="va">l50</span><span class="op">=</span><span class="va">$(</span><span class="fu">awk</span> <span class="at">-v</span> total_length=<span class="st">"</span><span class="va">$total_length</span><span class="st">"</span> <span class="st">'</span></span>
-<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a><span class="st">BEGIN { half_total = total_length / 2; sum = 0; count = 0 }</span></span>
-<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a><span class="st">{</span></span>
-<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a><span class="st">    sum += $1</span></span>
-<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a><span class="st">    count++</span></span>
-<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a><span class="st">    if (sum &gt;= half_total) {</span></span>
-<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a><span class="st">        print count</span></span>
-<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a><span class="st">        exit</span></span>
-<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a><span class="st">}</span></span>
-<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> seq_lengths_sorted.txt<span class="va">)</span></span>
-<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"L50: </span><span class="va">$l50</span><span class="st">"</span></span>
-<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a><span class="co"># GC content and base counts</span></span>
-<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'</span></span>
-<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a><span class="st">    /^&gt;/ { next }</span></span>
-<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a><span class="st">    {</span></span>
-<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a><span class="st">        seq = toupper($0)</span></span>
-<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a><span class="st">        g += gsub(/G/, "", seq)</span></span>
-<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a><span class="st">        c += gsub(/C/, "", seq)</span></span>
-<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a><span class="st">        a += gsub(/A/, "", seq)</span></span>
-<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a><span class="st">        t += gsub(/T/, "", seq)</span></span>
-<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a><span class="st">        n += gsub(/N/, "", seq)</span></span>
-<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a><span class="st">    END {</span></span>
-<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a><span class="st">        total = a + c + g + t + n</span></span>
-<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a><span class="st">        gc = g + c</span></span>
-<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "Total bases: %d\n", total</span></span>
-<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "A: %d\n", a</span></span>
-<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "C: %d\n", c</span></span>
-<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "G: %d\n", g</span></span>
-<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "T: %d\n", t</span></span>
-<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "N: %d\n", n</span></span>
-<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a><span class="st">        printf "GC Content: %.2f%%\n", (gc / total) * 100</span></span>
-<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
-<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a><span class="st">'</span> <span class="st">"</span><span class="va">$fasta_file</span><span class="st">"</span></span>
-<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleanup temporary files</span></span>
-<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> seq_lengths.txt seq_lengths_sorted.txt</span>
-<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a><span class="co">### Explanation of the Script</span></span>
-<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Input Validation:<span class="pp">**</span> Checks if a genome FASTA file is provided as an argument.</span>
-<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Number of Sequences:<span class="pp">**</span> Uses <span class="kw">`</span>grep<span class="kw">`</span> <span class="ex">to</span> count the number of header lines <span class="er">(</span><span class="ex">sequences</span><span class="kw">)</span> <span class="er">in</span> <span class="ex">the</span> FASTA file.</span>
-<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Sequence Lengths:<span class="pp">**</span> Utilizes <span class="kw">`</span>awk<span class="kw">`</span> <span class="ex">to</span> calculate the length of each sequence and writes them to <span class="kw">`</span>seq_lengths.txt<span class="kw">`</span><span class="bu">.</span></span>
-<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Total Length:<span class="pp">**</span> Sums up all sequence lengths using <span class="kw">`</span>awk<span class="kw">`</span><span class="bu">.</span></span>
-<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Longest and Shortest Sequences:<span class="pp">**</span> Identifies the longest and shortest sequences by sorting <span class="kw">`</span>seq_lengths.txt<span class="kw">`</span><span class="bu">.</span></span>
-<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>N50 and L50 Calculations:<span class="pp">**</span></span>
-<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span>   <span class="pp">**</span>N50:<span class="pp">**</span> The sequence length at which 50% of the genome is contained in sequences equal to or larger than this length.</span>
-<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>    <span class="ex">-</span>   <span class="pp">**</span>L50:<span class="pp">**</span> The minimum number of sequences whose lengths sum to at least 50% of the total genome length.</span>
-<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>GC Content and Base Counts:<span class="pp">**</span> Counts the occurrences of each nucleotide <span class="er">(</span><span class="ex">A,</span> C, G, T, N<span class="kw">)</span> <span class="ex">and</span> calculates the GC content percentage.</span>
-<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Cleanup:<span class="pp">**</span> Removes temporary files created during the process.</span>
-<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a><span class="co">### How to Run the Script</span></span>
-<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a><span class="ex">1.</span>  <span class="pp">**</span>Save the Script:<span class="pp">**</span> Save the script to a file, e.g., <span class="kw">`</span>genome_stats.sh<span class="kw">`</span><span class="bu">.</span></span>
-<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a><span class="ex">2.</span>  <span class="pp">**</span>Make It Executable:<span class="pp">**</span> Run <span class="kw">`</span>chmod +x genome_stats.sh<span class="kw">`</span> <span class="ex">to</span> make the script executable.</span>
-<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a><span class="ex">3.</span>  <span class="pp">**</span>Execute the Script:<span class="pp">**</span> Run <span class="kw">`</span>./genome_stats.sh path/to/genome.fasta<span class="kw">`</span><span class="bu">.</span></span>
-<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a><span class="co">## Results</span></span>
-<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a><span class="ex">After</span> running the script on the genome files of the three coral species, the following statistics were obtained:</span>
-<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a><span class="co">### Species D : *Acropora pulchra*</span></span>
-<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span> plaintext</span>
-<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a><span class="ex">Number</span> of sequences: 174</span>
-<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> length: 518313916</span>
-<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a><span class="ex">Longest</span> sequence length: 45111900</span>
-<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a><span class="ex">Shortest</span> sequence length: 6597</span>
-<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a><span class="ex">N50:</span> 17861421</span>
-<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a><span class="ex">L50:</span> 10</span>
-<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> bases: 518313916</span>
-<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a><span class="ex">A:</span> 158272347</span>
-<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a><span class="ex">C:</span> 101422742</span>
-<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a><span class="ex">G:</span> 100986991</span>
-<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a><span class="ex">T:</span> 157631836</span>
-<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a><span class="ex">N:</span> 0</span>
-<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a><span class="ex">GC</span> Content: 39.05%</span>
-<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a><span class="co">### Species E: Porites evermanni</span></span>
-<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span> plaintext</span>
-<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a><span class="ex">Number</span> of sequences: 8186</span>
-<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> length: 603805388</span>
-<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a><span class="ex">Longest</span> sequence length: 1802771</span>
-<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a><span class="ex">Shortest</span> sequence length: 2001</span>
-<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a><span class="ex">N50:</span> 171385</span>
-<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a><span class="ex">L50:</span> 935</span>
-<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a><span class="ex">Total</span> bases: 603805388</span>
-<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a><span class="ex">A:</span> 171827598</span>
-<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a><span class="ex">C:</span> 109822870</span>
-<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a><span class="ex">G:</span> 109866618</span>
-<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a><span class="ex">T:</span> 171532079</span>
-<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a><span class="ex">N:</span> 40756223</span>
-<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a><span class="ex">GC</span> Content: 36.38%</span>
-<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a><span class="co">### Species F: Pocillopora tuahiniensis</span></span>
-<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span> plaintext</span>
-<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a><span class="co">## Discussion</span></span>
-<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> Bash script efficiently processes large genome files to extract key genomic statistics without the need for additional software dependencies. The genomes of the three coral species exhibit similar characteristics:</span>
-<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Genome Size:<span class="pp">**</span></span>
-<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>GC Content:<span class="pp">**</span></span>
-<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>N50 and L50 Values:<span class="pp">**</span> Indicate the assembly quality and sequence continuity.</span>
-<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a><span class="co">### Significance of N50 and L50</span></span>
-<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>N50:<span class="pp">**</span> A higher N50 value suggests longer contiguous sequences, which is desirable for genome assemblies.</span>
-<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>L50:<span class="pp">**</span> A lower L50 indicates that fewer sequences are needed to cover 50% of the genome, reflecting better assembly quality.</span>
-<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a><span class="co">### Implications for Coral Research</span></span>
-<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Genome Assembly Quality:<span class="pp">**</span> The consistent N50 and L50 values suggest comparable assembly qualities across the species, facilitating comparative genomic studies.</span>
-<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Genetic Insights:<span class="pp">**</span> The similar GC content and nucleotide distributions hint at conserved genomic features that may be crucial for coral survival and adaptation.</span>
-<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Resource Efficiency:<span class="pp">**</span> Utilizing Bash scripts allows for rapid analysis, saving computational resources and time, especially when dealing with multiple large genome files.</span>
-<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a><span class="co">## Conclusion</span></span>
-<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a><span class="ex">The</span> custom Bash script proved to be an effective tool for conducting preliminary genomic analyses on the coral species. By extracting fundamental genomic statistics directly from the command line, we can quickly assess genome assembly qualities and make informed decisions for downstream analyses.</span>
-<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a><span class="co">## Next Steps</span></span>
-<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Functional Annotation:<span class="pp">**</span> Proceed with annotating the genomes to identify genes and regulatory elements.</span>
-<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Comparative Analysis:<span class="pp">**</span> Perform comparative genomics to identify species-specific adaptations and conserved genes.</span>
-<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Transcriptome Integration:<span class="pp">**</span> Integrate RNA sequencing data to correlate gene expression patterns with genomic features.</span>
-<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>Environmental Correlation:<span class="pp">**</span> Study the relationship between genomic features and environmental stress responses.</span>
-<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a><span class="co">## Acknowledgments</span></span>
-<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a><span class="ex">I</span> extend my gratitude to the e5 project team for their unwavering support and collaboration. Special thanks to the open-source community for providing the tools and resources that make such analyses possible.</span>
-<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a><span class="co">## References</span></span>
-<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>FASTA Format Specification:<span class="pp">**</span> [NCBI FASTA Format]<span class="er">(</span><span class="ex">https://www.ncbi.nlm.nih.gov/blast/fasta.shtml</span><span class="kw">)</span></span>
-<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a><span class="ex">-</span>   <span class="pp">**</span>GNU Awk Manual:<span class="pp">**</span> [GNU Awk User<span class="st">'s Guide](https://www.gnu.org/software/gawk/manual/gawk.html)</span></span>
-<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a><span class="st">-   **Bash Scripting Tutorial:** [Advanced Bash-Scripting Guide](https://tldp.org/LDP/abs/html/)</span></span>
-<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a><span class="st">-   **Coral Genomics Resources:** [Reef Genomics](https://reefgenomics.org/)</span></span>
-<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a><span class="st">------------------------------------------------------------------------</span></span>
-<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a><span class="st">*For any questions or suggestions regarding this analysis, please feel free to reach out.*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Stats on e5 genomes"</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "welcoming new pulcra"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [e5]</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation: </span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 10-05-2024</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> http://gannet.fish.washington.edu/seashell/snaps/2024-10-05_13-39-55.png # finding a good image</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    url: </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: FALSE</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="in">  echo = TRUE,         # Display code chunks</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="in">  eval = FALSE,         # Evaluate code chunks</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="in">  warning = FALSE,     # Hide warnings</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="in">  message = FALSE,     # Hide messages</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="in">  fig.width = 6,       # Set plot width in inches</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="in">  fig.height = 4,      # Set plot height in inches</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="in">  fig.align = "center", # Align plots to the center</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="in">  comment = ""         # Prevents appending '##' to beginning of lines in code analyses</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>This assessment compares the genomic assemblies and annotations of three coral species: *Acropora pulchra* (Apul), *Porites evermanni* (Peve), and *Pocillopora meandrina* (Ptuh). The analysis focuses on genome assembly metrics, gene annotation statistics, and potential biological implications.</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### **1. Genome Assembly Quality**</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Number of Sequences and Contiguity**</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Apul (A. pulchra)**</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Number of Sequences:** 174</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**N50:** 17,861,421 bp</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**L50:** 10</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Longest Sequence:** 45,111,900 bp</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Peve (P. evermanni)**</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Number of Sequences:** 8,186</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**N50:** 171,385 bp</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**L50:** 935</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Longest Sequence:** 1,802,771 bp</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Ptuh (P. meandrina)**</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Number of Sequences:** 212</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**N50:** 10,024,633 bp</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**L50:** 13</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Longest Sequence:** 21,651,136 bp</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>**Assessment:**</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Assembly Contiguity:** Apul exhibits the highest assembly contiguity, indicated by the lowest number of sequences and highest N50 value. Ptuh ranks second, while Peve has a more fragmented assembly with a significantly higher number of sequences and lower N50.</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sequence Length Distribution:** Apul's longest sequence is substantially longer than those of Peve and Ptuh, suggesting a more complete assembly.</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Genome Size and GC Content**</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Total Genome Length:**</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Peve:** 603,805,388 bp</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Apul:** 518,313,916 bp</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Ptuh:** 376,579,914 bp</span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**GC Content:**</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Apul:** 39.05%</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Ptuh:** 38.03%</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Peve:** 36.38%</span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>**Assessment:**</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Genome Size Variability:** Peve has the largest genome size but the most fragmented assembly, which may indicate repetitive elements or assembly challenges.</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**GC Content Consistency:** All species have similar GC content, ranging from 36.38% to 39.05%, which is typical for coral genomes.</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="fu">### **2. Gene Annotation and Features**</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Gene Counts and Features**</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Apul:**</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total Genes:** 36,447</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Unique Features:** 5 (exon, CDS, gene, mRNA, tRNA)</span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total GFF Entries:** 499,892</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Peve:**</span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total Genes:** 40,389</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Unique Features:** 3 (CDS, mRNA, UTR)</span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total GFF Entries:** 286,807</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Ptuh:**</span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total Genes:** 31,840</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Unique Features:** 3 (exon, CDS, transcript)</span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total GFF Entries:** 448,910</span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>**Assessment:**</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Count:** Peve has the highest number of predicted genes, followed by Apul and Ptuh.</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Annotation Features:** Apul includes tRNA annotations, which are absent in Peve and Ptuh. This suggests a more comprehensive annotation in Apul.</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Unique Sources:** Different gene prediction tools were used—Apul (funannotate), Peve (Gmove), Ptuh (AUGUSTUS)—which may affect gene count and features.</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Gene Length and Total Bases**</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Average Gene Length:**</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Apul:** 5,887.31 bp</span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Ptuh:** 1,376.95 bp</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Peve:** 1,337.5 bp</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Total Bases in Genes:**</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Apul:** 214,577,849 bp</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Peve:** 54,020,937 bp</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Ptuh:** 43,842,885 bp</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>**Assessment:**</span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Length:** Apul's average gene length is significantly longer than that of Peve and Ptuh, potentially indicating differences in gene structure, annotation methods, or biological variation.</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Total Coding Sequence:** Apul has a higher total base count in genes, which correlates with longer genes and may reflect a greater number of exons or longer intronic regions.</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### **3. Biological Implications and Considerations**</span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Assembly Quality Impact:** The higher contiguity in Apul and Ptuh assemblies may lead to more accurate gene predictions and annotations compared to Peve.</span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Prediction Tools:** The use of different annotation tools can result in varying gene counts and features. Funannotate (Apul) provides tRNA annotations, suggesting a more thorough annotation pipeline.</span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Length Variation:** The discrepancy in average gene lengths might be due to:</span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Biological Differences:** Genuine differences in gene structure among species.</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Annotation Strategies:** Differences in handling of introns, UTRs, or alternative splicing events.</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Prediction Algorithms:** Varying sensitivity and specificity of gene prediction tools.</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### **4. Conclusion**</span></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Best Assembly:** *Acropora pulchra* (Apul) exhibits the most contiguous and comprehensive genome assembly and annotation among the three species.</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Annotation Depth:** Apul's inclusion of tRNA and longer gene lengths suggests a more detailed annotation, which could facilitate better functional genomics studies.</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Areas for Improvement:** Peve's fragmented assembly and shorter gene lengths indicate potential areas for reassembly and reannotation to improve genomic resources.</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>**Recommendation:** For comparative genomics and evolutionary studies, researchers should consider the differences in assembly quality and annotation methods. Standardizing gene prediction tools and reannotating genomes where necessary could enhance the reliability of cross-species comparisons.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
+
 
 
 
