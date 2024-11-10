@@ -1,0 +1,145 @@
+---
+title: "Running Bismark in SLURM Array for Methylation Analysis"
+description: "checkmate"
+categories: [methylation, klone]
+#citation: 
+date: 11-10-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation__RStudio_Server_2024-11-10_11-32-22.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+
+This post discusses a two-part script for methylation analysis using Bismark, which is managed via SLURM on a high-performance computing (HPC) cluster. This workflow is designed to automate the analysis of large numbers of whole-genome bisulfite sequencing (WGBS) samples efficiently. The setup involves a SLURM script to submit jobs in an array format and a bash script that processes each sample with Bismark. While powerful, there are some potential points of complexity and pitfalls in this workflow, which may challenge new users or cause issues in large-scale executions.
+
+## slurm job
+```shell
+#!/bin/sh
+
+#SBATCH --job-name=bismark_array          # Job name
+#SBATCH --output=%x_%A_%a.slurm.out             # Standard output and error log
+#SBATCH --error=%x_%A_%a.slurm.err              # Error log
+#SBATCH --account=srlab
+#SBATCH --partition=ckpt #update this line - use hyakalloc to find partitions you can use
+#SBATCH --time=01-02:00:00
+#SBATCH --ntasks=1                        # Run a single task
+#SBATCH --cpus-per-task=30                # Number of CPU cores per task
+#SBATCH --array=0-47                      # Array range (adjust based on the number of samples)
+#SBATCH --mem=100G                         # Memory per node
+#SBATCH --chdir=/gscratch/scrubbed/sr320/github/project-mytilus-methylation/output/02-bismark-klone-array
+
+
+
+# Execute Roberts Lab bioinformatics container
+# Binds home directory
+# Binds /gscratch directory
+# Directory bindings allow outputs to be written to the hard drive.
+apptainer exec \
+--home "$PWD" \
+--bind /mmfs1/home/ \
+--bind /mmfs1/gscratch/ \
+/gscratch/srlab/sr320/srlab-bioinformatics-container-586bf21.sif \
+../../code/02.1.sh
+
+```
+
+## bash script
+
+```bash
+#!/bin/bash
+# Set directories and files
+reads_dir="../../data/raw-wgbs/"
+genome_folder="../01-bismark-init/"
+output_dir="."
+checkpoint_file="completed_samples.log"
+
+# Create the checkpoint file if it doesn't exist
+touch ${checkpoint_file}
+
+# Get the list of sample files and corresponding sample names
+files=(${reads_dir}*_1.fastq.gz)
+file="${files[$SLURM_ARRAY_TASK_ID]}"
+sample_name=$(basename "$file" "_1.fastq.gz")
+
+# Check if the sample has already been processed
+if grep -q "^${sample_name}$" ${checkpoint_file}; then
+    echo "Sample ${sample_name} already processed. Skipping..."
+    exit 0
+fi
+
+# Define log files for stdout and stderr
+stdout_log="${output_dir}${sample_name}_stdout.log"
+stderr_log="${output_dir}${sample_name}_stderr.log"
+
+# Run Bismark for this sample
+bismark \
+    -genome ${genome_folder} \
+    -p 30 \
+    -score_min L,0,-0.6 \
+    --non_directional \
+    -u 10000 \
+    -1 ${reads_dir}${sample_name}_1.fastq.gz \
+    -2 ${reads_dir}${sample_name}_2.fastq.gz \
+    -o ${output_dir} \
+    > ${stdout_log} 2> ${stderr_log}
+
+# Check if the command was successful
+if [ $? -eq 0 ]; then
+    # Append the sample name to the checkpoint file
+    echo ${sample_name} >> ${checkpoint_file}
+    echo "Sample ${sample_name} processed successfully."
+else
+    echo "Sample ${sample_name} failed. Check ${stderr_log} for details."
+fi
+
+```
+
+## Potential Pitfalls and Tips
+
+1. Managing Array Jobs in SLURM
+
+	•	Description: The SLURM array functionality (#SBATCH --array=0-47) is used to handle multiple samples. Each job in the array corresponds to a sample, allowing parallel processing, which is ideal for large datasets.
+	•	Potential Issue: Array indexing can be confusing and prone to errors. If the job array range (0-47) does not match the number of samples, it could result in missing or redundant processing. In addition, if the number of samples changes, the array range needs to be updated manually, which can be a source of mistakes.
+	•	Tip: Automate the array range based on sample count or add sanity checks to ensure the array indices match the actual sample count.
+
+2. Path Bindings and Containerized Execution
+
+	•	Description: The SLURM script calls an Apptainer container using apptainer exec with various paths bound (--home "$PWD" and --bind /mmfs1/home/ /mmfs1/gscratch/). This setup isolates the software environment, ensuring consistent software dependencies.
+	•	Potential Issue: If bindings aren’t set up correctly, the container might not be able to access necessary directories, causing runtime errors or failed output generation. It can also be difficult to debug path issues inside the container.
+	•	Tip: Double-check that all required directories (such as genome reference files or raw data folders) are accessible within the container. Testing path bindings on a single sample before running the full array can prevent widespread errors.
+
+3. Checkpoint System for Completed Samples
+
+	•	Description: The bash script uses a checkpointing system with completed_samples.log to track processed samples. Before processing, it checks if a sample is already in this log and skips it if so.
+	•	Potential Issue: If the script is interrupted (e.g., due to a timeout or node failure), samples that were partially processed will not appear in completed_samples.log, potentially leading to partial or corrupted outputs. Additionally, if a sample’s output log is manually edited or removed, the checkpoint will no longer match.
+	•	Tip: Regularly monitor completed_samples.log and the output logs to identify incomplete processing and re-run those samples if necessary. Implementing a more robust checkpointing system, such as one that verifies output file integrity, can also help.
+
+4. Memory and CPU Allocation
+
+	•	Description: The SLURM script requests 100 GB of memory and 30 CPU cores per task (--mem=100G and --cpus-per-task=30). These settings are essential for performance, particularly with WGBS, as Bismark can be resource-intensive.
+	•	Potential Issue: Memory and CPU requirements may vary based on sample size and cluster specifications. Allocating too many resources can lead to longer queue times or wasted computational power, whereas insufficient resources can cause job failures.
+	•	Tip: Start with smaller allocations to determine the minimum requirements for your dataset. Adjust based on real-time monitoring and optimize allocations to minimize queue times and reduce computation costs.
+
+5. Error Handling and Logging
+
+	•	Description: Standard output and error logs are generated for each sample (stdout_log and stderr_log). These logs are helpful for debugging if something goes wrong during processing.
+	•	Potential Issue: If logging paths are incorrectly set, or if log files are overwritten by subsequent runs, critical information may be lost. Additionally, having separate logs for each sample can generate a large number of files, which may be challenging to manage and monitor.
+	•	Tip: Consider implementing a log rotation system or consolidating logs for easier tracking. Reviewing the stderr_log periodically can help identify recurring issues before they impact large numbers of samples.
+
+Conclusion
+
+While this SLURM and bash script setup provides a scalable solution for methylation analysis, understanding these potential challenges is essential for successful execution. By managing SLURM arrays carefully, verifying path bindings, implementing a reliable checkpoint system, optimizing resource requests, and ensuring robust error logging, researchers can streamline this workflow and avoid common pitfalls.
