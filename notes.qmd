@@ -5,7 +5,9 @@ execute:
   echo: false  # Do not show code in the output
 ---
 
-
+November 21, 2024
+Daily Summary                                                                                                                                                      
+Today was a productive day in the RStudio environment, where I concentrated on advancing my project "bestblogever." My main activities included rendering and saving files using Quarto, which is essential for efficient document preparation and management. Additionally, I spent time coding, running shell scripts, and organizing directories andfiles for data processing. This involved setting up directories, creating checkpoint files, and running Bismark alignments, typically used for DNA methylation analysis. I ensured that the scripts executed successfully by checking command outputs and logging the results. Additionally, I reviewed the data outputs to confirm accuracy and made necessary adjustments to the scripts         
 
 ---
 
