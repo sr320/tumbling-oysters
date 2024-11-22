@@ -5,6 +5,18 @@ execute:
   echo: false  # Do not show code in the output
 ---
 
+November 21, 2024 09:00:00
+
+
+```{r}
+# Create a header with bold styling and include date and time
+header_text <- paste(format(Sys.time(), "%B %d, %Y %H:%M:%S"))
+cat("**", header_text, "**")
+```
+
+
+
+---
 November 21, 2024
 
 Posting from phone
