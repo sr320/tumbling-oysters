@@ -1,0 +1,213 @@
+---
+title: "Hip Hip Array"
+description: "Knocking out the code to get bismark happy"
+categories: [methylation, klone]
+#citation: 
+date: 11-20-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-11-21_17-51-28.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+Finally got the kinks out of the code! This is run on klone with a slurm job file and shell script.
+
+## Slurm
+
+```slurm
+#!/bin/sh
+
+#SBATCH --job-name=04-cea-bis          # Job name
+#SBATCH --output=%x_%A_%a.slurm.out             # Standard output and error log
+#SBATCH --error=%x_%A_%a.slurm.err              # Error log
+#SBATCH --account=srlab
+#SBATCH --partition=ckpt #update this line - use hyakalloc to find partitions you can use
+#SBATCH --time=10-02:00:00
+#SBATCH --ntasks=1                        # Run a single task
+#SBATCH --cpus-per-task=30                # Number of CPU cores per task
+#SBATCH --array=0-31                      # Array range (adjust based on the number of samples)
+#SBATCH --mem=100G                         # Memory per node
+#SBATCH --chdir=/gscratch/scrubbed/sr320/github/ceasmallr/output/04.2-bismark-align
+
+
+
+# Execute Roberts Lab bioinformatics container
+# Binds home directory
+# Binds /gscratch directory
+# Directory bindings allow outputs to be written to the hard drive.
+apptainer exec \
+--home "$PWD" \
+--bind /mmfs1/home/ \
+--bind /mmfs1/gscratch/ \
+/gscratch/srlab/sr320/srlab-bioinformatics-container-586bf21.sif \
+../../code/04.1.sh
+```
+
+## Shell 
+
+```bash
+#!/bin/bash
+# Set directories and files
+reads_dir="../../data/"
+genome_folder="../../data/genome"
+output_dir="."
+checkpoint_file="completed_samples.log"
+
+# Create the checkpoint file if it doesn't exist
+touch ${checkpoint_file}
+
+# Get the list of sample files and corresponding sample names
+files=(${reads_dir}*R1_001.fastp-trim.20220827.fq.gz)
+file="${files[$SLURM_ARRAY_TASK_ID]}"
+sample_name=$(basename "$file" "_R1_001.fastp-trim.20220827.fq.gz")
+
+# Check if the sample has already been processed
+if grep -q "^${sample_name}$" ${checkpoint_file}; then
+    echo "Sample ${sample_name} already processed. Skipping..."
+    exit 0
+fi
+
+# Define log files for stdout and stderr
+stdout_log="${output_dir}${sample_name}_stdout.log"
+stderr_log="${output_dir}${sample_name}_stderr.log"
+
+# Run Bismark align
+bismark \
+    -genome ${genome_folder} \
+    -p 8 \
+    -u 10000 \
+    -score_min L,0,-0.6 \
+    --non_directional \
+    -1 ${reads_dir}${sample_name}_R1_001.fastp-trim.20220827.fq.gz \
+    -2 ${reads_dir}${sample_name}_R2_001.fastp-trim.20220827.fq.gz \
+    -o ${output_dir} \
+    --basename ${sample_name} \
+    2> "${sample_name}-${SLURM_ARRAY_TASK_ID}-bismark_summary.txt"
+
+# Check if the command was successful
+if [ $? -eq 0 ]; then
+    # Append the sample name to the checkpoint file
+    echo ${sample_name} >> ${checkpoint_file}
+    echo "Sample ${sample_name} processed successfully."
+else
+    echo "Sample ${sample_name} failed. Check ${stderr_log} for details."
+fi
+
+```
+
+
+## Elevated Shell Script
+
+Not to brag, but Sam helped me take it up a notch by evaluating score_min parameters for comparisons
+
+```bash
+#!/bin/bash
+# Set directories and files
+reads_dir="../../data/"
+genome_folder="../../data/genome"
+output_dir="."
+checkpoint_file="completed_samples.log"
+
+# Create the checkpoint file if it doesn't exist
+touch ${checkpoint_file}
+
+# Get the list of sample files and corresponding sample names
+files=(${reads_dir}*R1_001.fastp-trim.20220827.fq.gz)
+file="${files[$SLURM_ARRAY_TASK_ID]}"
+sample_name=$(basename "$file" "_R1_001.fastp-trim.20220827.fq.gz")
+
+# Check if the sample has already been processed
+if grep -q "^${sample_name}$" ${checkpoint_file}; then
+    echo "Sample ${sample_name} already processed. Skipping..."
+    exit 0
+fi
+
+# Define log files for stdout and stderr
+stdout_log="${output_dir}/${sample_name}_stdout.log"
+stderr_log="${output_dir}/${sample_name}_stderr.log"
+
+# Define the array of score_min parameters to test
+score_min_params=(
+    "L,0,-0.4"
+    "L,0,-0.6"
+    "L,0,-0.8"
+    "L,0,-1.0"
+    "L,-1,-0.6"
+)
+
+# Loop through each score_min parameter
+for score_min in "${score_min_params[@]}"; do
+    echo "Running Bismark for sample ${sample_name} with score_min ${score_min}"
+    
+    # Create a subdirectory for this parameter
+    param_output_dir="${output_dir}/${sample_name}_score_${score_min//,/}"
+    mkdir -p ${param_output_dir}
+
+    # Run Bismark alignment
+    bismark \
+        -genome ${genome_folder} \
+        -p 8 \
+        -u 10000 \
+        -score_min ${score_min} \
+        --non_directional \
+        -1 ${reads_dir}${sample_name}_R1_001.fastp-trim.20220827.fq.gz \
+        -2 ${reads_dir}${sample_name}_R2_001.fastp-trim.20220827.fq.gz \
+        -o ${param_output_dir} \
+        --basename ${sample_name}_${score_min//,/} \
+        2> "${param_output_dir}/${sample_name}-${SLURM_ARRAY_TASK_ID}-bismark_summary.txt"
+
+    # Check if the command was successful
+    if [ $? -eq 0 ]; then
+        echo "Sample ${sample_name} with score_min ${score_min} processed successfully."
+    else
+        echo "Sample ${sample_name} with score_min ${score_min} failed. Check ${stderr_log} for details."
+    fi
+done
+
+# Mark the sample as completed in the checkpoint file
+if [ $? -eq 0 ]; then
+    echo ${sample_name} >> ${checkpoint_file}
+    echo "All tests for sample ${sample_name} completed."
+else
+    echo "Sample ${sample_name} encountered errors. Check logs for details."
+fi
+
+# Define directories
+output_dir="."
+summary_file="${output_dir}/parameter_comparison_summary.csv"
+
+# Initialize summary file
+#echo "Sample,Score_Min,Alignment_Rate,Unique_Alignments,Mismatch_Rate,Bisulfite_Efficiency" > ${summary_file}
+
+# Loop through parameter output directories
+for dir in ${output_dir}/*_score_*; do
+    if [ -d "$dir" ]; then
+        # Extract sample name and score_min parameter from directory name
+        sample_name=$(basename "$dir" | cut -d'_' -f1)
+        score_min=$(basename "$dir" | grep -o "score_.*" | sed 's/score_//; s/_/,/g')
+
+        # Locate the summary file
+        summary_file_path="${dir}/${sample_name}_${score_min}_PE_report.txt"
+
+        # Extract metrics
+        mapping=$(grep "Mapping efficiency:" ${summary_file_path} | awk '{print "mapping efficiency ", $3}')
+        
+
+        # Append to the summary file
+        echo "${sample_name},${score_min},${mapping}" >> ${summary_file}
+    fi
+done
+```

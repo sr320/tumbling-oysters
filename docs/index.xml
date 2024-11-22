@@ -10,7 +10,1089 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.5.57</generator>
-<lastBuildDate>Sun, 10 Nov 2024 08:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 20 Nov 2024 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Hip Hip Array</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/33-bismark-array/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Finally got the kinks out of the code! This is run on klone with a slurm job file and shell script.</p>
+<section id="slurm" class="level2">
+<h2 class="anchored" data-anchor-id="slurm">Slurm</h2>
+<pre class="slurm"><code>#!/bin/sh
+
+#SBATCH --job-name=04-cea-bis          # Job name
+#SBATCH --output=%x_%A_%a.slurm.out             # Standard output and error log
+#SBATCH --error=%x_%A_%a.slurm.err              # Error log
+#SBATCH --account=srlab
+#SBATCH --partition=ckpt #update this line - use hyakalloc to find partitions you can use
+#SBATCH --time=10-02:00:00
+#SBATCH --ntasks=1                        # Run a single task
+#SBATCH --cpus-per-task=30                # Number of CPU cores per task
+#SBATCH --array=0-31                      # Array range (adjust based on the number of samples)
+#SBATCH --mem=100G                         # Memory per node
+#SBATCH --chdir=/gscratch/scrubbed/sr320/github/ceasmallr/output/04.2-bismark-align
+
+
+
+# Execute Roberts Lab bioinformatics container
+# Binds home directory
+# Binds /gscratch directory
+# Directory bindings allow outputs to be written to the hard drive.
+apptainer exec \
+--home "$PWD" \
+--bind /mmfs1/home/ \
+--bind /mmfs1/gscratch/ \
+/gscratch/srlab/sr320/srlab-bioinformatics-container-586bf21.sif \
+../../code/04.1.sh</code></pre>
+</section>
+<section id="shell" class="level2">
+<h2 class="anchored" data-anchor-id="shell">Shell</h2>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#!/bin/bash</span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Set directories and files</span></span>
+<span id="cb2-3"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">reads_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../../data/"</span></span>
+<span id="cb2-4"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">genome_folder</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../../data/genome"</span></span>
+<span id="cb2-5"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">output_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"."</span></span>
+<span id="cb2-6"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">checkpoint_file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"completed_samples.log"</span></span>
+<span id="cb2-7"></span>
+<span id="cb2-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create the checkpoint file if it doesn't exist</span></span>
+<span id="cb2-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">touch</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${checkpoint_file}</span></span>
+<span id="cb2-10"></span>
+<span id="cb2-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get the list of sample files and corresponding sample names</span></span>
+<span id="cb2-12"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">files</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">(${reads_dir}</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>R1_001.fastp-trim.20220827.fq.gz<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb2-13"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${files</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$SLURM_ARRAY_TASK_ID</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb2-14"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample_name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$file</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_R1_001.fastp-trim.20220827.fq.gz"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb2-15"></span>
+<span id="cb2-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check if the sample has already been processed</span></span>
+<span id="cb2-17"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-q</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">$"</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${checkpoint_file}</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span></span>
+<span id="cb2-18">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> already processed. Skipping..."</span></span>
+<span id="cb2-19">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">exit</span> 0</span>
+<span id="cb2-20"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">fi</span></span>
+<span id="cb2-21"></span>
+<span id="cb2-22"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define log files for stdout and stderr</span></span>
+<span id="cb2-23"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">stdout_log</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_stdout.log"</span></span>
+<span id="cb2-24"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">stderr_log</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_stderr.log"</span></span>
+<span id="cb2-25"></span>
+<span id="cb2-26"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Run Bismark align</span></span>
+<span id="cb2-27"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">bismark</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-28">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-genome</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${genome_folder}</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-29">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> 8 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-30">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-u</span> 10000 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-31">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-score_min</span> L,0,-0.6 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-32">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--non_directional</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-33">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-1</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${reads_dir}${sample_name}</span>_R1_001.fastp-trim.20220827.fq.gz <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-34">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-2</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${reads_dir}${sample_name}</span>_R2_001.fastp-trim.20220827.fq.gz <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-35">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-36">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--basename</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-37">    <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${SLURM_ARRAY_TASK_ID}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-bismark_summary.txt"</span></span>
+<span id="cb2-38"></span>
+<span id="cb2-39"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check if the command was successful</span></span>
+<span id="cb2-40"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$?</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">-eq</span> 0 <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">]</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span></span>
+<span id="cb2-41">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Append the sample name to the checkpoint file</span></span>
+<span id="cb2-42">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${checkpoint_file}</span></span>
+<span id="cb2-43">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> processed successfully."</span></span>
+<span id="cb2-44"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span></span>
+<span id="cb2-45">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> failed. Check </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${stderr_log}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> for details."</span></span>
+<span id="cb2-46"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">fi</span></span></code></pre></div>
+</section>
+<section id="elevated-shell-script" class="level2">
+<h2 class="anchored" data-anchor-id="elevated-shell-script">Elevated Shell Script</h2>
+<p>Not to brag, but Sam helped me take it up a notch by evaluating score_min parameters for comparisons</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#!/bin/bash</span></span>
+<span id="cb3-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Set directories and files</span></span>
+<span id="cb3-3"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">reads_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../../data/"</span></span>
+<span id="cb3-4"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">genome_folder</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../../data/genome"</span></span>
+<span id="cb3-5"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">output_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"."</span></span>
+<span id="cb3-6"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">checkpoint_file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"completed_samples.log"</span></span>
+<span id="cb3-7"></span>
+<span id="cb3-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create the checkpoint file if it doesn't exist</span></span>
+<span id="cb3-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">touch</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${checkpoint_file}</span></span>
+<span id="cb3-10"></span>
+<span id="cb3-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get the list of sample files and corresponding sample names</span></span>
+<span id="cb3-12"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">files</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">(${reads_dir}</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>R1_001.fastp-trim.20220827.fq.gz<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb3-13"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${files</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$SLURM_ARRAY_TASK_ID</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb3-14"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample_name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$file</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_R1_001.fastp-trim.20220827.fq.gz"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb3-15"></span>
+<span id="cb3-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check if the sample has already been processed</span></span>
+<span id="cb3-17"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-q</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">$"</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${checkpoint_file}</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span></span>
+<span id="cb3-18">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> already processed. Skipping..."</span></span>
+<span id="cb3-19">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">exit</span> 0</span>
+<span id="cb3-20"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">fi</span></span>
+<span id="cb3-21"></span>
+<span id="cb3-22"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define log files for stdout and stderr</span></span>
+<span id="cb3-23"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">stdout_log</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_stdout.log"</span></span>
+<span id="cb3-24"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">stderr_log</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_stderr.log"</span></span>
+<span id="cb3-25"></span>
+<span id="cb3-26"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define the array of score_min parameters to test</span></span>
+<span id="cb3-27"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">score_min_params</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span id="cb3-28">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"L,0,-0.4"</span></span>
+<span id="cb3-29">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"L,0,-0.6"</span></span>
+<span id="cb3-30">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"L,0,-0.8"</span></span>
+<span id="cb3-31">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"L,0,-1.0"</span></span>
+<span id="cb3-32">    <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"L,-1,-0.6"</span></span>
+<span id="cb3-33"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb3-34"></span>
+<span id="cb3-35"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Loop through each score_min parameter</span></span>
+<span id="cb3-36"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> score_min <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${score_min_params</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[@]</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb3-37">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Running Bismark for sample </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> with score_min </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${score_min}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb3-38">    </span>
+<span id="cb3-39">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create a subdirectory for this parameter</span></span>
+<span id="cb3-40">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">param_output_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_score_</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${score_min</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">,</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb3-41">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${param_output_dir}</span></span>
+<span id="cb3-42"></span>
+<span id="cb3-43">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Run Bismark alignment</span></span>
+<span id="cb3-44">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">bismark</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-45">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-genome</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${genome_folder}</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-46">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> 8 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-47">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-u</span> 10000 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-48">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-score_min</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${score_min}</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-49">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--non_directional</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-50">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-1</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${reads_dir}${sample_name}</span>_R1_001.fastp-trim.20220827.fq.gz <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-51">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-2</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${reads_dir}${sample_name}</span>_R2_001.fastp-trim.20220827.fq.gz <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-52">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${param_output_dir}</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-53">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--basename</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span>_<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${score_min</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span><span class="ss" style="color: #20794D;
+background-color: null;
+font-style: inherit;">,</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-54">        <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${param_output_dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${SLURM_ARRAY_TASK_ID}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">-bismark_summary.txt"</span></span>
+<span id="cb3-55"></span>
+<span id="cb3-56">    <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Check if the command was successful</span></span>
+<span id="cb3-57">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$?</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">-eq</span> 0 <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">]</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span></span>
+<span id="cb3-58">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> with score_min </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${score_min}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> processed successfully."</span></span>
+<span id="cb3-59">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span></span>
+<span id="cb3-60">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> with score_min </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${score_min}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> failed. Check </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${stderr_log}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> for details."</span></span>
+<span id="cb3-61">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">fi</span></span>
+<span id="cb3-62"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span>
+<span id="cb3-63"></span>
+<span id="cb3-64"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Mark the sample as completed in the checkpoint file</span></span>
+<span id="cb3-65"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">[</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$?</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">-eq</span> 0 <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">]</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span></span>
+<span id="cb3-66">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${checkpoint_file}</span></span>
+<span id="cb3-67">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"All tests for sample </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> completed."</span></span>
+<span id="cb3-68"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">else</span></span>
+<span id="cb3-69">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> encountered errors. Check logs for details."</span></span>
+<span id="cb3-70"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">fi</span></span>
+<span id="cb3-71"></span>
+<span id="cb3-72"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define directories</span></span>
+<span id="cb3-73"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">output_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"."</span></span>
+<span id="cb3-74"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">summary_file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/parameter_comparison_summary.csv"</span></span>
+<span id="cb3-75"></span>
+<span id="cb3-76"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Initialize summary file</span></span>
+<span id="cb3-77"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#echo "Sample,Score_Min,Alignment_Rate,Unique_Alignments,Mismatch_Rate,Bisulfite_Efficiency" &gt; ${summary_file}</span></span>
+<span id="cb3-78"></span>
+<span id="cb3-79"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Loop through parameter output directories</span></span>
+<span id="cb3-80"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> dir <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span>/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>_score_<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb3-81">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">[</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">-d</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$dir</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">]</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span></span>
+<span id="cb3-82">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract sample name and score_min parameter from directory name</span></span>
+<span id="cb3-83">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample_name</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$dir</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cut</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-d</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'_'</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-f1</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb3-84">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">score_min</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$dir</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"score_.*"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sed</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'s/score_//; s/_/,/g'</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb3-85"></span>
+<span id="cb3-86">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Locate the summary file</span></span>
+<span id="cb3-87">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">summary_file_path</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${score_min}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_PE_report.txt"</span></span>
+<span id="cb3-88"></span>
+<span id="cb3-89">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract metrics</span></span>
+<span id="cb3-90">        <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mapping</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Mapping efficiency:"</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${summary_file_path}</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{print "mapping efficiency ", $3}'</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb3-91">        </span>
+<span id="cb3-92"></span>
+<span id="cb3-93">        <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Append to the summary file</span></span>
+<span id="cb3-94">        <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">,</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${score_min}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">,</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${mapping}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${summary_file}</span></span>
+<span id="cb3-95">    <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">fi</span></span>
+<span id="cb3-96"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>methylation</category>
+  <category>klone</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/33-bismark-array/</guid>
+  <pubDate>Wed, 20 Nov 2024 08:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-11-21_17-51-28.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Running Bismark in SLURM Array for Methylation Analysis</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -565,6 +1647,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
 
 
 
+
 <p>Here is a quick explanation of what many folks are running into. The challenge and the solution is very dependent on the species you are working with.</p>
 <div class="quarto-video"><video id="video_shortcode_videojs_video1" class="video-js vjs-default-skin vjs-fluid" controls="" preload="auto" data-setup="{}" title=""><source src="https://gannet.fish.washington.edu/seashell/snaps/RPReplay_Final1727953956.MP4"></video></div>
 
@@ -589,6 +1672,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
 
 
 
+
 <p>Went out to hatchery to re prime what is left from 10k seed on Friday Sept 13th.</p>
 <p>Rinsed all bags with freshwater hose.</p>
 <p>Bags 56 and 66 then went into FW (5 gallon bucket) for two hours.</p>
@@ -596,7 +1680,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_APEX_Fusion_2024-09-14_12-34-03.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Apex</figcaption>
+<figcaption>Apex</figcaption>
 </figure>
 </div>
 <p>Bags 75 and 76 were placed in FW for two hours then moved into white tank described above.</p>
@@ -634,6 +1718,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
 
 
 
+
 <p>tldr:</p>
 <p>GO annotations for Deep Dive Transcript sets:</p>
 <p><a href="https://github.com/urol-e5/deep-dive/blob/main/D-Apul/output/20-Apul-gene-annotation/Apul-rna-GO.tsv" class="uri">https://github.com/urol-e5/deep-dive/blob/main/D-Apul/output/20-Apul-gene-annotation/Apul-rna-GO.tsv</a></p>
@@ -664,6 +1749,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/</link>
   <description><![CDATA[ 
+
 
 
 
@@ -959,6 +2045,7 @@ font-style: inherit;">head</span> ../output/20-Apul-gene-annotation/Apul-protein
 
 
 
+
 <p>Did a Tuesday / Wednesday B2B. Tuesday - focused on finding Kathleen diploids and triploids.</p>
 <section id="ploidy" class="level2">
 <h2 class="anchored" data-anchor-id="ploidy">Ploidy</h2>
@@ -990,11 +2077,11 @@ TLDR: Kathleens’s post
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-26-59.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">seed</figcaption>
+<figcaption>seed</figcaption>
 </figure>
 </div>
 <p>Plan is to do 5 treatments - Tagging on to Kathleens</p>
-<table class="table">
+<table class="caption-top table">
 <thead>
 <tr class="header">
 <th>Bags</th>
@@ -1028,7 +2115,7 @@ TLDR: Kathleens’s post
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-31-57.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">lagoon</figcaption>
+<figcaption>lagoon</figcaption>
 </figure>
 </div>
 </section>
@@ -5422,196 +6509,6 @@ gene-LOC132467924|LOC132467924         gene-LOC132467924|LOC132467924</code></pr
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-15-coddeg/</guid>
   <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-07-31.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Looking at Apul miRNA</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="mirna-vis" class="level1">
-<h1>16-miRNA vis</h1>
-<p>Steven Roberts 16 May, 2024</p>
-<ul>
-<li>1 Genome</li>
-<li>2 short stack</li>
-<li>3 IGV</li>
-</ul>
-<p>Apul</p>
-</section>
-<section id="genome" class="level1">
-<h1>1 Genome</h1>
-<p><a href="https://gannet.fish.washington.edu/seashell/bu-github/deep-dive/D-Apul/data/GCF_013753865.1_Amil_v2.1_genomic.fna" class="uri">https://gannet.fish.washington.edu/seashell/bu-github/deep-dive/D-Apul/data/GCF_013753865.1_Amil_v2.1_genomic.fna</a></p>
-<p>Get stuff from NCBI</p>
-<p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_013753865.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_013753865.1/</a></p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/datasets</span> download genome accession GCF_013753865.1 <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--include</span> gff3,gtf,gbff</span></code></pre></div>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"></span>
-<span id="cb2-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">unzip</span> ../data/ncbi_dataset.zip</span></code></pre></div>
-</section>
-<section id="short-stack" class="level1">
-<h1>2 short stack</h1>
-<p>/seashell/bu-github/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out</p>
-<p>See: <a href="https://gannet.fish.washington.edu/seashell/bu-github/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/" class="uri">https://gannet.fish.washington.edu/seashell/bu-github/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/</a></p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span></span></code></pre></div>
-<pre><code>==&gt; ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/alignment_details.tsv &lt;==
-readfile    mapping_type    read_length count
-/home/shared/8TB_HDD_01/sam/gitrepos/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged.bam U   &lt;21 120657
-/home/shared/8TB_HDD_01/sam/gitrepos/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged.bam U   21  43442
-/home/shared/8TB_HDD_01/sam/gitrepos/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged.bam U   22  106124
-/home/shared/8TB_HDD_01/sam/gitrepos/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged.bam U   23  65290
-/home/shared/8TB_HDD_01/sam/gitrepos/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged.bam U   24  84916
-/home/shared/8TB_HDD_01/sam/gitrepos/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged.bam U   &gt;24 3225093
-/home/shared/8TB_HDD_01/sam/gitrepos/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged.bam P   &lt;21 197276
-/home/shared/8TB_HDD_01/sam/gitrepos/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged.bam P   21  60763
-/home/shared/8TB_HDD_01/sam/gitrepos/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged.bam P   22  73569
-
-==&gt; ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Counts.txt &lt;==
-Coords  Name    MIRNA   sRNA-ACR-140-S1-TP2-fastp-adapters-polyG-31bp-merged    sRNA-ACR-145-S1-TP2-fastp-adapters-polyG-31bp-merged    sRNA-ACR-150-S1-TP2-fastp-adapters-polyG-31bp-merged    sRNA-ACR-173-S1-TP2-fastp-adapters-polyG-31bp-merged    sRNA-ACR-178-S1-TP2-fastp-adapters-polyG-31bp-merged
-NC_058066.1:152483-152910   Cluster_1   N   2   131 2   1   4
-NC_058066.1:161064-161674   Cluster_2   N   57  48  219 32  193
-NC_058066.1:172073-172496   Cluster_3   N   36  31  0   36  2
-NC_058066.1:203242-203651   Cluster_4   N   14  28  3   17  38
-NC_058066.1:204535-205150   Cluster_5   N   3   234 17  13  46
-NC_058066.1:205745-206966   Cluster_6   N   914 432 78  247 259
-NC_058066.1:210841-211344   Cluster_7   N   315 200 78  2   652
-NC_058066.1:349655-351297   Cluster_8   N   497 1236    757 767 22
-NC_058066.1:351491-353439   Cluster_9   N   3181    1995    1498    2030    185
-
-==&gt; ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/known_miRNAs.gff3 &lt;==
-NC_058066.1 ShortStack  sRNA    172680  172697  0   +   .   ID=cgr-miR-1260
-NC_058066.1 ShortStack  sRNA    924864  924883  0   -   .   ID=mmu-miR-466i-5p
-NC_058066.1 ShortStack  sRNA    2130443 2130462 0   +   .   ID=mmu-miR-466i-5p
-NC_058066.1 ShortStack  sRNA    2130445 2130464 0   +   .   ID=mmu-miR-466i-5p
-NC_058066.1 ShortStack  sRNA    2130447 2130466 0   +   .   ID=mmu-miR-466i-5p
-NC_058066.1 ShortStack  sRNA    2130449 2130468 0   +   .   ID=mmu-miR-466i-5p
-NC_058066.1 ShortStack  sRNA    2130451 2130470 0   +   .   ID=mmu-miR-466i-5p
-NC_058066.1 ShortStack  sRNA    2130453 2130472 0   +   .   ID=mmu-miR-466i-5p
-NC_058066.1 ShortStack  sRNA    2424062 2424080 0   +   .   ID=gma-miR1533
-NC_058066.1 ShortStack  sRNA    2582838 2582857 0   +   .   ID=mmu-miR-466i-5p
-
-==&gt; ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/mir.fasta &lt;==
-&gt;Cluster_316::NC_058066.1:12757124-12757218(-)
-ATGCTTTACTCCTTTGGGAGGGAGGTTAGTGCAGAGGTCATCGTTATTGATGATCTCTGCAATAGCCTGCCTCCCAAAGGAGTTCTACTAGTCC
-&gt;Cluster_316.mature::NC_058066.1:12757146-12757168(-)
-TGATCTCTGCAATAGCCTGCCT
-&gt;Cluster_316.star::NC_058066.1:12757176-12757198(-)
-GGAGGTTAGTGCAGAGGTCATC
-&gt;Cluster_514::NC_058066.1:20088629-20088720(+)
-TTGAATTGTCTGTGGCCTTCACGGCACCCCTTGCTGGAGTTATTTAATAACGCTAGGAAGGGATGCCGGGAAGGAGATGGTACAATGCAAA
-&gt;Cluster_514.mature::NC_058066.1:20088678-20088700(+)
-ACGCTAGGAAGGGATGCCGGGA
-
-==&gt; ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Results.gff3 &lt;==
-NC_058066.1 ShortStack  Unknown_sRNA_locus  152483  152910  140 -   .   ID=Cluster_1;DicerCall=N;MIRNA=N
-NC_058066.1 ShortStack  Unknown_sRNA_locus  161064  161674  549 .   .   ID=Cluster_2;DicerCall=N;MIRNA=N
-NC_058066.1 ShortStack  Unknown_sRNA_locus  172073  172496  105 -   .   ID=Cluster_3;DicerCall=N;MIRNA=N
-NC_058066.1 ShortStack  Unknown_sRNA_locus  203242  203651  100 .   .   ID=Cluster_4;DicerCall=N;MIRNA=N
-NC_058066.1 ShortStack  Unknown_sRNA_locus  204535  205150  313 .   .   ID=Cluster_5;DicerCall=N;MIRNA=N
-NC_058066.1 ShortStack  Unknown_sRNA_locus  205745  206966  1930    .   .   ID=Cluster_6;DicerCall=N;MIRNA=N
-NC_058066.1 ShortStack  Unknown_sRNA_locus  210841  211344  1247    .   .   ID=Cluster_7;DicerCall=N;MIRNA=N
-NC_058066.1 ShortStack  Unknown_sRNA_locus  349655  351297  3279    +   .   ID=Cluster_8;DicerCall=N;MIRNA=N
-NC_058066.1 ShortStack  Unknown_sRNA_locus  351491  353439  8889    .   .   ID=Cluster_9;DicerCall=N;MIRNA=N
-NC_058066.1 ShortStack  Unknown_sRNA_locus  598651  599068  114 +   .   ID=Cluster_10;DicerCall=N;MIRNA=N
-
-==&gt; ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Results.txt &lt;==
-Locus   Name    Chrom   Start   End Length  Reads   DistinctSequences   FracTop Strand  MajorRNA    MajorRNAReads   Short   Long    21  22  23  24  DicerCall   MIRNA   known_miRNAs
-NC_058066.1:152483-152910   Cluster_1   NC_058066.1 152483  152910  428 140 32  0.05    -   UAAGUACUUUAUCAACUAACUCUAGGCA    75  1   130 0   2   0   7   N   N   NA
-NC_058066.1:161064-161674   Cluster_2   NC_058066.1 161064  161674  611 549 247 0.2987249544626594  .   UUUUAGCCUAGUGCGGGUUUCCAGACGU    43  25  479 16  4   4   21  N   N   NA
-NC_058066.1:172073-172496   Cluster_3   NC_058066.1 172073  172496  424 105 40  0.12380952380952381 -   GCGAUUAUUAACGGCUGGAACGACAGGCGA  16  1   88  1   1   0   14  N   N   NA
-NC_058066.1:203242-203651   Cluster_4   NC_058066.1 203242  203651  410 100 45  0.56    .   UUCUGACUCUAUUAGCAACGAAGACUUU    26  1   96  0   1   0   2   N   N   NA
-NC_058066.1:204535-205150   Cluster_5   NC_058066.1 204535  205150  616 313 157 0.7763578274760383  .   UCCCAACACGUCUAGACUGUACAAUUUCU   32  3   304 1   1   2   2   N   N   NA
-NC_058066.1:205745-206966   Cluster_6   NC_058066.1 205745  206966  1222    1930    416 0.35544041450777203 .   CAAAAGAGCGGACAAAAUAGUCGACAGAUU  716 3   1882    5   10  7   23  N   N   NA
-NC_058066.1:210841-211344   Cluster_7   NC_058066.1 210841  211344  504 1247    333 0.7457898957497995  .   UAAUACUUGUAGUGAAGGUUCAAUCUCGA   95  10  1133    7   7   20  70  N   N   NA
-NC_058066.1:349655-351297   Cluster_8   NC_058066.1 349655  351297  1643    3279    1165    0.8127477889600488  +   UCAGCUUGGAAAUGACAGCUUUUGACGU    255 27  3141    10  22  17  62  N   N   NA
-NC_058066.1:351491-353439   Cluster_9   NC_058066.1 351491  353439  1949    8889    1615    0.4114073574080324  .   UUUCAAAUCAAAGAUCUUCGCAACGAUGA   780 82  8503    34  34  114 122 N   N   NA</code></pre>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wc</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-l</span> ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span></span></code></pre></div>
-<pre><code>    151 ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/alignment_details.tsv
-  18896 ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Counts.txt
-   1446 ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/known_miRNAs.gff3
-    228 ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/mir.fasta
-  18971 ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Results.gff3
-  18896 ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Results.txt
-  58588 total</code></pre>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span> ../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span></span></code></pre></div>
-<pre><code>../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/alignment_details.tsv:25
-../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Counts.txt:0
-../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/known_miRNAs.gff3:0
-../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/mir.fasta:114
-../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Results.gff3:0
-../output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Results.txt:0</code></pre>
-</section>
-<section id="igv" class="level1">
-<h1>3 IGV</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" class="img-fluid figure-img"></p>
-<figcaption>igv</figcaption>
-</figure>
-</div>
-<p>IGV session file: <a href="https://raw.githubusercontent.com/urol-e5/deep-dive/main/D-Apul/code/16.1.ivg_session.xml" class="uri">https://raw.githubusercontent.com/urol-e5/deep-dive/main/D-Apul/code/16.1.ivg_session.xml</a></p>
-<pre><code>&lt;?xml version="1.0" encoding="UTF-8" standalone="no"?&gt;
-&lt;Session genome="https://gannet.fish.washington.edu/seashell/bu-github/deep-dive/D-Apul/data/GCF_013753865.1_Amil_v2.1_genomic.fna" hasGeneTrack="false" hasSequenceTrack="true" locus="NC_058068.1:0-19500522" version="8"&gt;
-    &lt;Resources&gt;
-        &lt;Resource path="https://raw.githubusercontent.com/urol-e5/deep-dive/main/D-Apul/output/05.33-lncRNA-discovery/Apul_lncRNA.bed" type="bed"/&gt;
-        &lt;Resource path="https://gannet.fish.washington.edu/seashell/bu-github/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Results.gff3" type="gff3"/&gt;
-        &lt;Resource path="http://gannet.fish.washington.edu/seashell/snaps/GCF_013753865.1_Amil_v2.1_genomic.gff" type="gff"/&gt;
-        &lt;Resource path="https://gannet.fish.washington.edu/seashell/bu-github/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/known_miRNAs.gff3" type="gff3"/&gt;
-    &lt;/Resources&gt;
-    &lt;Panel height="792" name="FeaturePanel" width="1752"&gt;
-        &lt;Track attributeKey="Reference sequence" clazz="org.broad.igv.track.SequenceTrack" fontSize="10" id="Reference sequence" name="Reference sequence" sequenceTranslationStrandValue="POSITIVE" shouldShowTranslation="false" visible="true"/&gt;
-        &lt;Track attributeKey="GCF_013753865.1_Amil_v2.1_genomic.gff" clazz="org.broad.igv.track.FeatureTrack" displayMode="EXPANDED" fontSize="20" groupByStrand="false" height="100" id="http://gannet.fish.washington.edu/seashell/snaps/GCF_013753865.1_Amil_v2.1_genomic.gff" name="GCF_013753865.1_Amil_v2.1_genomic.gff" visible="true"/&gt;
-        &lt;Track attributeKey="Results.gff3" clazz="org.broad.igv.track.FeatureTrack" colorScale="ContinuousColorScale;0.0;69.0;255,255,255;0,0,178" displayMode="EXPANDED" fontSize="20" groupByStrand="false" id="https://gannet.fish.washington.edu/seashell/bu-github/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/Results.gff3" name="Results.gff3" visible="true"/&gt;
-        &lt;Track attributeKey="known_miRNAs.gff3" clazz="org.broad.igv.track.FeatureTrack" fontSize="20" groupByStrand="false" id="https://gannet.fish.washington.edu/seashell/bu-github/deep-dive/D-Apul/output/13.2.1-Apul-sRNAseq-ShortStack-31bp-fastp-merged-cnidarian_miRBase/ShortStack_out/known_miRNAs.gff3" name="known_miRNAs.gff3" visible="true"/&gt;
-        &lt;Track attributeKey="Apul_lncRNA.bed" clazz="org.broad.igv.track.FeatureTrack" fontSize="20" groupByStrand="false" id="https://raw.githubusercontent.com/urol-e5/deep-dive/main/D-Apul/output/05.33-lncRNA-discovery/Apul_lncRNA.bed" name="Apul_lncRNA.bed" visible="true"/&gt;
-    &lt;/Panel&gt;
-    &lt;PanelLayout dividerFractions="0.007471980074719801"/&gt;
-    &lt;HiddenAttributes&gt;
-        &lt;Attribute name="DATA FILE"/&gt;
-        &lt;Attribute name="DATA TYPE"/&gt;
-        &lt;Attribute name="NAME"/&gt;
-    &lt;/HiddenAttributes&gt;
-&lt;/Session</code></pre>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>R</category>
-  <category>datasets</category>
-  <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-14-apul-igv/</guid>
-  <pubDate>Thu, 16 May 2024 07:00:00 GMT</pubDate>
-  <media:content url="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-16_09-56-45.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>

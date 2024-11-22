@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Steven Roberts">
 <meta name="dcterms.date" content="2023-07-24">
 
-<title>Tumbling Oysters - Myt Iso-seq Annoation</title>
+<title>Myt Iso-seq Annoation – Tumbling Oysters</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -119,7 +119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -131,7 +131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
@@ -465,18 +465,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -508,7 +497,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -567,7 +578,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
@@ -1046,7 +1057,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "6" "MT_Pool_HQ_transcript/5" "sp|Q6V0I7|FAT4_HUMAN" 4.12e-81 "Protocadherin Fat 4 (hFat4) (Cadherin family member 14) (FAT tumor suppressor homolog 4) (Fat-like cadherin protein FAT-J)" "cerebral cortex development [GO:0021987]; heterophilic cell-cell adhesion via plasma membrane cell adhesion molecules [GO:0007157]; hippo signaling [GO:0035329]; homophilic cell adhesion via plasma membrane adhesion molecules [GO:0007156]; neurogenesis [GO:0022008]" "GO:0005509; GO:0005886; GO:0007156; GO:0007157; GO:0021987; GO:0022008; GO:0035329; GO:0070062"</span></span>
 <span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "7" "MT_Pool_HQ_transcript/6" "sp|Q24292|DS_DROME" 6.93e-80 "Protein dachsous (Adherin)" "establishment of ommatidial planar polarity [GO:0042067]; establishment of planar polarity [GO:0001736]; homophilic cell adhesion via plasma membrane adhesion molecules [GO:0007156]; imaginal disc morphogenesis [GO:0007560]; negative regulation of hippo signaling [GO:0035331]; positive regulation of hippo signaling [GO:0035332]; protein localization involved in establishment of planar polarity [GO:0090251]" "GO:0001736; GO:0005509; GO:0005886; GO:0007156; GO:0007560; GO:0016327; GO:0035331; GO:0035332; GO:0042067; GO:0070161; GO:0090251"</span></span>
 <span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "8" "MT_Pool_HQ_transcript/7" "sp|E9Q555|RN213_MOUSE" 0 "E3 ubiquitin-protein ligase RNF213 (EC 2.3.2.27) (EC 3.6.4.-) (E3 ubiquitin-lipopolysaccharide ligase RNF213) (EC 2.3.2.-) (Mysterin) (RING finger protein 213)" "angiogenesis [GO:0001525]; defense response to bacterium [GO:0042742]; immune system process [GO:0002376]; lipid droplet formation [GO:0140042]; lipid ubiquitination [GO:0120323]; negative regulation of non-canonical Wnt signaling pathway [GO:2000051]; protein autoubiquitination [GO:0051865]; protein K63-linked ubiquitination [GO:0070534]; protein ubiquitination [GO:0016567]; regulation of lipid metabolic process [GO:0019216]; sprouting angiogenesis [GO:0002040]; ubiquitin-dependent protein catabolic process [GO:0006511]; xenophagy [GO:0098792]" "GO:0001525; GO:0002040; GO:0002376; GO:0004842; GO:0005524; GO:0005730; GO:0005737; GO:0005811; GO:0005829; GO:0006511; GO:0016567; GO:0016887; GO:0019216; GO:0042742; GO:0046872; GO:0051865; GO:0061630; GO:0070534; GO:0098792; GO:0120323; GO:0140042; GO:2000051"</span></span>
-<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "9" "MT_Pool_HQ_transcript/8" "sp|Q8TD57|DYH3_HUMAN" 0 "Dynein axonemal heavy chain 3 (Axonemal beta dynein heavy chain 3) (HsADHC3) (Ciliary dynein heavy chain 3) (Dnahc3-b)" "cilium-dependent cell motility [GO:0060285]; microtubule-based movement [GO:0007018]" "GO:0003777; GO:0005524; GO:0005858; GO:0005874; GO:0007018; GO:0008569; GO:0030286; GO:0045505; GO:0051959; GO:0060285"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "9" "MT_Pool_HQ_transcript/8" "sp|Q8TD57|DYH3_HUMAN" 0 "Dynein axonemal heavy chain 3 (Axonemal beta dynein heavy chain 3) (HsADHC3) (Ciliary dynein heavy chain 3) (Dnahc3-b)" "cilium-dependent cell motility [GO:0060285]; microtubule-based movement [GO:0007018]" "GO:0003777; GO:0005524; GO:0005858; GO:0005874; GO:0007018; GO:0008569; GO:0030286; GO:0045505; GO:0051959; GO:0060285"</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
