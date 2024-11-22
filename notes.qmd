@@ -5,7 +5,25 @@ execute:
   echo: false  # Do not show code in the output
 ---
 
+## Quick Recap of E5 Meeting 
 
+Relavant Species info
+
+Based on the differences in life history, ecology, and biology between Acropora pulchra, Pocillopora meandrina, and Pocillopora tuahiniensis, we would expect differences in their gene regulatory mechanisms. Here's why:
+	•	Different Symbiotic Strategies and Environmental Sensitivity: The sources highlight that these species have distinct symbiotic strategies, with A. pulchra being a horizontal transmitter and both Pocillopora species being vertical transmitters. Additionally, A. pulchra is generally considered more sensitive to environmental change. These differences likely require distinct gene regulatory mechanisms to manage the acquisition, maintenance, and potential stress responses associated with their symbionts.
+	◦	A. pulchra needs to regulate genes involved in recognizing and incorporating symbionts from the environment, while the Pocillopora species need to regulate genes for the inheritance of symbionts.
+	◦	The higher environmental sensitivity of A. pulchra suggests that its gene regulatory mechanisms may be more responsive to environmental stressors, leading to differential gene expression patterns compared to the Pocillopora species.
+	•	Symbiont Community Composition: Each species associates with different dominant Symbiodiniaceae species and profiles. This variation in symbiont partners is likely to influence host gene expression, as different symbionts may produce different signaling molecules or metabolites that interact with host gene regulatory pathways.
+	◦	For example, the sources found that symbiont community composition was significantly related to host physiology in Porites. This suggests that the specific types of symbionts present can influence host gene expression patterns.
+	•	Cryptic Diversity and Holobiont Identity: The sources emphasize the presence of cryptic diversity within the Pocillopora genus and the importance of considering holobiont identity. Even within the same species, different host haplotypes can exhibit distinct physiological responses and associate with different symbiont communities. This suggests potential genetic differences in gene regulatory mechanisms between holobionts.
+	•	Physiological Differences: The sources detail significant physiological differences between these species, indicating that their gene regulatory mechanisms must be tuned to support their distinct physiological needs.
+	◦	For example, the sources note that Porites corals, with their thicker tissues, have higher overall physiological rates compared to Acropora and Pocillopora. This would necessitate differences in the regulation of genes involved in metabolic processes, growth, and calcification.
+	•	Morphological Differences: The sources describe differences in tissue structure, with Acropora and Porites having perforate tissues and Pocillopora having imperforate tissues. These morphological differences could influence the microenvironment experienced by the coral host and its symbionts, potentially leading to differences in gene expression patterns.
+	◦	For example, perforate tissues might allow for greater exchange of nutrients and gases, which could affect metabolic processes and the regulation of related genes.
+Overall, the sources provide strong evidence that the different life histories, ecologies, symbiont communities, and physiologies of Acropora pulchra, Pocillopora meandrina, and Pocillopora tuahiniensis are likely associated with differences in their gene regulatory mechanisms. Further research, specifically focusing on gene expression analysis across these species, would be needed to confirm and explore the specific nature of these differences.
+
+
+---
 
 quarto render
 
