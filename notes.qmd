@@ -1,0 +1,20 @@
+---
+title: "Daily Notes"
+description: "Stuff that did not make the bar to postworthy"
+execute:
+  echo: false  # Do not show code in the output
+---
+
+
+
+---
+
+```{r, cache=TRUE}
+# Create a header with bold styling and include date and time
+header_text <- paste(format(Sys.time(), "%B %d, %Y %H:%M:%S"))
+cat(header_text)
+```
+
+Today in RStudio, I focused on several tasks related to my project "bestblogever." I worked on rendering and saving files using Quarto for document preparation and management. I also engaged in coding activities, which included running shell scripts and managing directories and files for data processing. This involved setting up directories, creating checkpoint files, and running Bismark alignments, typically used for DNA methylation analysis. I ensured that the scripts executed successfully by checking command outputs and logging the results.
+
+Additionally, I was involved in version control activities, such as staging, committing, and pushing changes to my Git repository. This included reviewing changes in various HTML and XML files related to my project documentation. I also managed my RStudio environment by loading workspaces and utilizing various RStudio features like the console, terminal, and background jobs.
