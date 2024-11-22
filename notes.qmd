@@ -5,21 +5,15 @@ execute:
   echo: false  # Do not show code in the output
 ---
 
-November 21, 2024 09:00:00
 
 
-```{r}
-# Create a header with bold styling and include date and time
-header_text <- paste(format(Sys.time(), "%B %d, %Y %H:%M:%S"))
-cat("**", header_text, "**")
+quarto render
+
+```bash
+find . -name "*.qmd" -mtime -1 -exec quarto render {} \;
 ```
 
-
-
 ---
-November 21, 2024
-
-Posting from phone
 
 ```{r, cache=TRUE}
 # Create a header with bold styling and include date and time
