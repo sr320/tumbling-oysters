@@ -1,0 +1,208 @@
+---
+title: "Time-series Apul lncRNA count matrix"
+description: "and the path to get there"
+categories: [e5, lncRNA]
+#citation: 
+date: 12-20-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries_molecular__RStudio_Server_2024-12-20_03-51-09.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+I started with a bed file from discovery (see below) and used it to count the number of lncRNAs in each sample from Time Series data (Apul) 
+
+## Converted Bed to GTF
+
+``` bash
+awk 'BEGIN{OFS="\t"; count=1} {printf "%s\t.\tlncRNA\t%d\t%d\t.\t+\t.\tgene_id \"lncRNA_%03d\";\n", $1, $2, $3, count++;}' /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/10.1-Apul-lncRNA/Apul_lncRNA.bed \
+> ../output/05-Apul-lncRNA/lncRNAs.gtf
+```
+
+
+```
+==> /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/10.1-Apul-lncRNA/Apul_lncRNA.bed <==
+ntLink_0	84514	93551
+ntLink_0	15627	19151
+ntLink_0	23443	23874
+ntLink_1	7484	9525
+ntLink_1	51265	51766
+ntLink_2	217051	217761
+ntLink_2	330551	331392
+ntLink_3	56721	62176
+ntLink_3	76352	81676
+ntLink_3	95705	100623
+```
+
+### GTF
+
+```
+ntLink_0	.	lncRNA	84514	93551	.	+	.	gene_id "lncRNA_001";
+ntLink_0	.	lncRNA	15627	19151	.	+	.	gene_id "lncRNA_002";
+ntLink_0	.	lncRNA	23443	23874	.	+	.	gene_id "lncRNA_003";
+ntLink_1	.	lncRNA	7484	9525	.	+	.	gene_id "lncRNA_004";
+ntLink_1	.	lncRNA	51265	51766	.	+	.	gene_id "lncRNA_005";
+ntLink_2	.	lncRNA	217051	217761	.	+	.	gene_id "lncRNA_006";
+```
+
+
+## Feature Count
+
+``` bash
+/home/shared/subread-2.0.5-Linux-x86_64/bin/featureCounts \
+-T 42 \
+-a ../output/05-Apul-lncRNA/lncRNAs.gtf \
+-o ../output/05-Apul-lncRNA/counts.txt \
+-t lncRNA \
+-g gene_id \
+-p \
+../data/*sorted.bam
+```
+
+
+## Count Matrix
+
+<https://github.com/urol-e5/timeseries_molecular/blob/main/D-Apul/output/05-Apul-lncRNA/counts.txt>
+
+
+
+
+------------------------------------------------------------------------
+
+Before I did that, first lncRNA were discovered. This was done with the deep-dive expression samples (n=5)
+
+# Discovery
+
+## StringTie
+
+StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF (Gene Transfer Format) files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples--an important step in creating a canonical list of lncRNAs across all samples included in the pipeline.
+
+``` bash
+find ../output/07-Apul-Hisat/*sorted.bam \
+| xargs basename -s .sorted.bam | xargs -I{} \
+/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie \
+-p 42 \
+-G ../data/Apulcra-genome.gff \
+-o ../output/10.1-Apul-lncRNA/{}.gtf \
+../output/07-Apul-Hisat/{}.sorted.bam
+```
+
+Merges all individual GTF assemblies into a single merged GTF file.
+
+This is used to create a non-redundant set of transcripts after running StringTie separately on multiple RNA-Seq datasets.
+
+``` bash
+/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie \
+--merge \
+-G ../data/Apulcra-genome.gff \
+-o ../output/10.1-Apul-lncRNA/stringtie_merged.gtf \
+../output/10.1-Apul-lncRNA/RNA*.gtf
+```
+
+## GFFcompare
+
+https://ccb.jhu.edu/software/stringtie/gffcompare.shtml
+
+``` bash
+/home/shared/gffcompare-0.12.6.Linux_x86_64/gffcompare \
+-r ../data/Apulcra-genome.gff \
+-o ../output/10.1-Apul-lncRNA/gffcompare_merged \
+../output/10.1-Apul-lncRNA/stringtie_merged.gtf
+```
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_687474703a2f2f67616e6e65742e666973682e77617368696e67746f6e2e6564752f7365617368656c6c2f736e6170732f323032332d31312d30335f30392d3_2024-12-20_04-02-37.png)
+
+## Filter
+
+Filters the combined GTF output from GFFcompare to select only the lines representing "transcripts" and excluding lines starting with "\#" (these are lines in the output format from GFFcompare that don't contain transcript information). This step further filters for a class code of "u", and keep only those with lengths greater than 199 bases. The "u' class code from the GFFcompare step is for"unknown" transcripts, that is those that are not previously annotated in our reference GFF as protein coding. The size filter of +200nt is a common filtering step for isolating lncRNAs.
+
+``` bash
+awk '$3 == "transcript" && $1 !~ /^#/' \
+../output/10.1-Apul-lncRNA/gffcompare_merged.annotated.gtf | grep 'class_code "u"\|class_code "x"|\class_code "i"\|class_code "y"' | awk '($5 - $4 > 199) || ($4 - $5 > 199)' > ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.gtf
+```
+
+## Bedtools
+
+Extracts the sequence data from the `$FASTA` reference file based on the coordinates from the filtered GTF. The resulting sequences represent potential lncRNA candidates.
+
+``` bash
+/home/shared/bedtools2/bin/fastaFromBed \
+-fi ../data/Apulcra-genome.fa \
+-bed ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.gtf \
+-fo ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta \
+-name -split
+```
+
+``` bash
+fgrep -c ">" ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta 
+head ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta 
+```
+
+## CPC2
+
+Initializes a conda environment (Anaconda) and runs CPC2, a software to predict whether a transcript is coding or non-coding. The results are saved to the \$OUTPUT_DIR. CPC2 uses ORF (Open Reading Frame) Analysis, Isometric Feature Mapping (Isomap), Sequence Homology, RNA Sequence Features, and Quality of Translation to assess coding potential and flag any transcripts we would want to exclude using the FASTA generated in the previous step.
+
+``` bash
+eval "$(/opt/anaconda/anaconda3/bin/conda shell.bash hook)"
+python /home/shared/CPC2_standalone-1.0.1/bin/CPC2.py \
+-i ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta \
+-o ../output/10.1-Apul-lncRNA/Apul_CPC2
+```
+
+## Filter
+
+Filters the CPC2 results to get only noncoding transcripts (using the class "noncoding" from the CPC2 results) and extracts their IDs and matches these IDs with the sequences from the previous step to generate a GTF of long noncoding transcripts.
+
+Matches these IDs with the sequences from the previous step to generate a GTF of noncoding transcripts.
+
+``` bash
+awk '$8 == "noncoding" {print $1}' ../output/10.1-Apul-lncRNA/Apul_CPC2.txt > ../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt
+```
+
+# subsetting fasta
+
+``` bash
+/home/shared/samtools-1.12/samtools faidx ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta \
+-r ../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt > ../output/10.1-Apul-lncRNA/Apul_lncRNA.fasta
+```
+
+# Getting genome feature track
+
+``` python
+
+# Open the input file and the output file
+with open('../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt', 'r') as infile, open('../output/10.1-Apul-lncRNA/Apul_lncRNA.bed', 'w') as outfile:
+    # Process each line in the input file
+    for line in infile:
+        # Remove 'transcript::' and then split the line by ':' to extract the relevant parts
+        parts = line.strip().replace('transcript::', '').split(':')
+        chromosome = parts[0]
+        # Split the position part by '-' to get start and end positions
+        start, end = parts[1].split('-')
+        
+        # BED format requires the start position to be 0-based
+        # Convert the start position to 0-based by subtracting 1
+        start = str(int(start) - 1)
+        
+        # Write the chromosome, start, and end positions to the output file
+        # Separate each field with a tab character
+        outfile.write(f'{chromosome}\t{start}\t{end}\n')
+
+# After running this script, 'output.bed' will contain the converted data in BED format.
+```
+
+
+* note that when you take this bed and make gtf you get -1 starts that make program fail - of course the 0-based / 1-based issue that will eventually need to be looked into.
