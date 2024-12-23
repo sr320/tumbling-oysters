@@ -1,0 +1,107 @@
+---
+title: "Mytilus DNA methylation calls"
+description: "associated with contaminants"
+categories: [mytilus, methylation, bismark]
+#citation: 
+date: 12-19-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation__RStudio_Server_2024-12-20_04-34-37.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+Following the genome prep did an alignment. This was preceded by an assessment of min_score variable. Selection was based on high alignment rate with minimal non CpG methylation.
+
+Based on <https://marineomics.github.io/FUN_02_DNA_methylation.html>
+
+# Alignment
+
+``` bash
+# Set variables
+reads_dir="../data/"
+genome_folder="../data/"
+output_dir="../output/01.2-bismark"
+score_min="L,0,-1.0"  # Single value for score_min
+
+# Get the list of sample files and corresponding sample names
+for file in ${reads_dir}*_R1.fastp-trim.fq.gz; do
+    sample_name=$(basename "$file" "_R1.fastp-trim.fq.gz")
+    
+    echo "Running Bismark for sample ${sample_name} with score_min ${score_min}"
+
+    
+    # Run Bismark alignment
+    /home/shared/Bismark-0.24.0/bismark \
+        --path_to_bowtie2 /home/shared/bowtie2-2.4.4-linux-x86_64 \
+        -genome ${genome_folder} \
+        -p 8 \
+        -score_min ${score_min} \
+        -1 ${reads_dir}${sample_name}_R1.fastp-trim.fq.gz \
+        -2 ${reads_dir}${sample_name}_R2.fastp-trim.fq.gz \
+        -o ${output_dir} \
+        --basename ${sample_name} \
+        2> "${output_dir}/${sample_name}-bismark_summary.txt"
+done
+```
+
+
+# deduplication
+
+``` bash
+find ../output/01.2-bismark/*.bam | \
+xargs -n 1 basename -s .bam | \
+parallel -j 8 /home/shared/Bismark-0.24.0/deduplicate_bismark \
+--bam \
+--paired \
+--output_dir ../output/09-meth-quant \
+../output/01.2-bismark/{}.bam
+```
+
+
+# Methylation extraction
+
+``` bash
+find ../output/09-meth-quant/*deduplicated.bam | xargs -n 1 -I{} /home/shared/Bismark-0.24.0/bismark_methylation_extractor --bedGraph --counts --comprehensive --merge_non_CpG --multicore 24 --buffer_size 75% --output ../output/09-meth-quant {} 
+```
+
+
+# Methylation call
+
+``` bash
+find ../output/09-meth-quant/*deduplicated.bismark.cov.gz | \
+xargs -n 1 basename -s _pe.deduplicated.bismark.cov.gz | \
+parallel -j 48 /home/shared/Bismark-0.24.0/coverage2cytosine \
+--genome_folder ../data/ \
+-o ../output/09-meth-quant/{} \
+--merge_CpG \
+--zero_based \
+../output/09-meth-quant/{}_pe.deduplicated.bismark.cov.gz
+```
+
+This resulted in CpG_report.merged_CpG_evidence.cov files..
+
+
+# Sorted bams
+
+deduplicated sorted bams were also sorted..
+
+``` bash
+find *.bam | \
+xargs basename -s .bam | \
+xargs -I{} /home/shared/samtools-1.12/samtools \
+sort --threads 48 {}.bam \
+-o {}.sorted.bam
+```
