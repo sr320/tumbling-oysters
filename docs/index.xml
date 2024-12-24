@@ -10,7 +10,706 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.5.57</generator>
-<lastBuildDate>Fri, 20 Dec 2024 08:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 24 Dec 2024 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>We wish you a Merry Mytilus!</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/36-merry/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/mm.gif" class="img-fluid figure-img"></p>
+<figcaption>merry</figcaption>
+</figure>
+</div>
+<p>Following Bismark alignment took data through methylkit to identify DMLs.</p>
+<p>In case methyKit needs an installation</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">requireNamespace</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BiocManager"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">quietly =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>))</span>
+<span id="cb1-2">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BiocManager"</span>)</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">BiocManager<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"methylKit"</span>)</span></code></pre></div>
+<p>Used cov files to import into methylkit</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wget</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-r</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-2">--no-directories <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--no-parent</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-3">-P ../data/ <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-4">-A <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*cov"</span> https://gannet.fish.washington.edu/seashell/bu-github/project-mytilus-methylation/output/09-meth-quant/</span></code></pre></div>
+<p>Get a list of said files</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">analysisFilescov <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(</span>
+<span id="cb3-2">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/105M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-3">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/106M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-4">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/107M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-5">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/109M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-6">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/239M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-7">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/240M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-8">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/241M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-9">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/242M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-10">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/269M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-11">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/270M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-12">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/271M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-13">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/272M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-14">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/69M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-15">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/70M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-16">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/71M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-17">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/72M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-18">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/78M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-19">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/79M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-20">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/80M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-21">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/81M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-22">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/92M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-23">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/94M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-24">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/95M.CpG_report.merged_CpG_evidence.cov"</span></span>
+<span id="cb3-25">) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#Put all .bam files into a list for analysis.</span></span></code></pre></div>
+<p>Create a methylKit object with 2x coverage</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">myobj_23 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">methRead</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">location =</span> analysisFilescov, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sample.id =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"105M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"106M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"107M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"109M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"239M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"240M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"241M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"242M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"269M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"270M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"271M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"272M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"69M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"70M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"71M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"72M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"78M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"79M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"80M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"81M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"92M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"94M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"95M"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">assembly =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Mt"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pipeline =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bismarkCoverage"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">context=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CpG"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mincov=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">treatment =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span></code></pre></div>
+<p>Filter methylKit object for 5x coverage</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">filtered.myobj<span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filterByCoverage</span>(myobj_23,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lo.count=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lo.perc=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>,</span>
+<span id="cb5-2">                                       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">hi.count=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">hi.perc=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">98</span>)</span></code></pre></div>
+<p>Unite methylKit object such that need data for 10 samples per group.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">meth_filter<span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span>methylKit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">unite</span>(filtered.myobj, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">min.per.group=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>L, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">destrand=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span></code></pre></div>
+<p>Visualize the data</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">clusterSamples</span>(meth_filter, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">dist=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"correlation"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">method=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ward"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb7-2"> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">PCASamples</span>(meth_filter)</span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation____RStudio_Server_2024-12-24_07-39-59.png" class="img-fluid figure-img"></p>
+<figcaption>cluster</figcaption>
+</figure>
+</div>
+<p>Find Differences</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">myDiff<span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">calculateDiffMeth</span>(meth_filter,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mc.cores=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>)</span></code></pre></div>
+<p>Get DMLs at 55% Difference</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># get all diffentially methylated bases</span></span>
+<span id="cb9-2">myDiff_1055p<span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getMethylDiff</span>(myDiff,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">difference=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">55</span>,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">qvalue=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">write.table</span>(myDiff_1055p, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">file =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/11-methylkit-klone/myDiff_1055p.tab"</span>)</span></code></pre></div>
+<p>Convert to Bedgraph</p>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Input and output file names</span></span>
+<span id="cb11-2"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">INPUT_FILE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/11-methylkit-klone/myDiff_1055p.tab"</span></span>
+<span id="cb11-3"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUTPUT_FILE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/12-IGV/myDiff1055p.bedgraph"</span></span>
+<span id="cb11-4"></span>
+<span id="cb11-5"></span>
+<span id="cb11-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Write the BEDGRAPH header</span></span>
+<span id="cb11-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"track type=bedGraph name=</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">MethDiff</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> description=</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Methylation difference data</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb11-8"></span>
+<span id="cb11-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Process the input file to remove quotes and convert it to BEDGRAPH format</span></span>
+<span id="cb11-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'NR &gt; 1 {gsub(/"/, "", $2); print $2 "\t" $3-1 "\t" $4 "\t" $8}'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$INPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb11-11"></span>
+<span id="cb11-12"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Conversion complete. Output saved to </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+<pre><code>track type=bedGraph name="MethDiff" description="Methylation difference data"
+NC_086373.1 90626337    90626340    56.3226247436774
+NC_086373.1 105503508   105503511   -57.8638497652582
+NC_086374.1 34742950    34742953    58.2670906200318
+NC_086375.1 31938078    31938081    -60.6923802783675
+NC_086375.1 43581687    43581690    58.1981981981982
+NC_086375.1 90876603    90876606    55.8823529411765
+NC_086376.1 5631155 5631158 58.9955022488756
+NC_086378.1 6633120 6633123 -55.241935483871
+NC_086379.1 1603829 1603832 -60.822949869603
+NC_086379.1 47961733    47961736    56.4495530012771
+NC_086379.1 64017639    64017642    -63.5951772013153
+NC_086379.1 64017774    64017777    -59.1351928466569
+NC_086381.1 21212099    21212102    -56.0704607046071
+NC_086382.1 25952233    25952236    -55.8318584070797
+NC_086382.1 36708760    36708763    -56.5044858523119
+NC_086386.1 17736432    17736435    -58.4235938927313</code></pre>
+<p>Using IGV for some visualization!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/mm.gif" class="img-fluid figure-img"></p>
+<figcaption>merry</figcaption>
+</figure>
+</div>
+<p>Intersecting BEDGRAPH with GFF files to get gene information of where DMLs are located.</p>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Input files</span></span>
+<span id="cb13-2"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">BEDGRAPH</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/12-IGV/myDiff1055p.bedgraph"</span></span>
+<span id="cb13-3"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">GFF_DIR</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/12-IGV"</span></span>
+<span id="cb13-4"></span>
+<span id="cb13-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Output directory for intersect results</span></span>
+<span id="cb13-6"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUTPUT_DIR</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/14-intersectbed/"</span></span>
+<span id="cb13-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_DIR</span></span>
+<span id="cb13-8"></span>
+<span id="cb13-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Loop through all GFF files in the directory</span></span>
+<span id="cb13-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> GFF <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$GFF_DIR</span>/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.gff<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb13-11">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">BASENAME</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$GFF</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> .gff<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb13-12">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUTPUT_FILE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_DIR</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${BASENAME}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_intersect.bed"</span></span>
+<span id="cb13-13">    </span>
+<span id="cb13-14">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Intersecting </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$BEDGRAPH</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> with </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$GFF</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">..."</span></span>
+<span id="cb13-15">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">bedtools</span> intersect <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb13-16">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-loj</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb13-17">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-a</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$BEDGRAPH</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb13-18">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-b</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$GFF</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb13-19">    </span>
+<span id="cb13-20">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Result saved to </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb13-21"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span>
+<span id="cb13-22"></span>
+<span id="cb13-23"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"All intersections completed!"</span></span></code></pre></div>
+<p>TLDR</p>
+<ol type="1">
+<li><p><strong>LOC134690221</strong>: <strong>GRAM domain-containing protein 4-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypermethylated (+56.32).</p>
+<p>• <strong>Function</strong>: Involved in membrane-associated processes like signaling or vesicle trafficking.</p></li>
+<li><p><strong>LOC134695637</strong>: <strong>Otoferlin-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-57.86).</p>
+<p>• <strong>Function</strong>: Plays a role in vesicle-mediated transport and sensory signaling.</p></li>
+<li><p><strong>LOC134707074</strong>: <strong>Receptor-type tyrosine-protein phosphatase N2-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypermethylated (+58.27).</p>
+<p>• <strong>Function</strong>: Regulates cell signaling pathways affecting growth and differentiation.</p></li>
+<li><p><strong>LOC134711256</strong>: <strong>Cancer-related nucleoside-triphosphatase homolog</strong></p>
+<p>• <strong>Methylation status</strong>:</p>
+<p>• Hypomethylated (-60.69).</p>
+<p>• Hypermethylated (+58.20).</p>
+<p>• <strong>Function</strong>: Involved in DNA/RNA metabolism and stress responses.</p></li>
+<li><p><strong>LOC134712818</strong>: <strong>Uncharacterized protein</strong></p>
+<p>• <strong>Methylation status</strong>: Hypermethylated (+55.88).</p>
+<p>• <strong>Function</strong>: Unknown.</p></li>
+<li><p><strong>LOC134714536</strong>: <strong>Coatomer subunit epsilon-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypermethylated (+58.99).</p>
+<p>• <strong>Function</strong>: Key player in intracellular vesicle trafficking.</p></li>
+<li><p><strong>LOC134720671</strong>: <strong>Roundabout homolog 1-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-55.24).</p>
+<p>• <strong>Function</strong>: Guides axon growth and cell migration.</p></li>
+<li><p><strong>LOC134724475</strong>: <strong>Uncharacterized protein</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-60.82).</p>
+<p>• <strong>Function</strong>: Unknown.</p></li>
+<li><p><strong>LOC134725187</strong>: <strong>Membrane protein BRI3-like</strong></p>
+<p>• <strong>Methylation status</strong>:</p>
+<p>• Hypermethylated (+56.45).</p>
+<p>• Hypomethylated (-63.60, -59.14).</p>
+<p>• <strong>Function</strong>: Participates in signaling and membrane dynamics.</p></li>
+<li><p><strong>LOC134685297</strong>: <strong>Tumor protein p53-inducible protein 11-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-56.07).</p>
+<p>• <strong>Function</strong>: Responds to cellular stress, regulates apoptosis, and growth arrest.</p></li>
+<li><p><strong>LOC134687110</strong>: <strong>Alpha-ketoglutarate-dependent dioxygenase alkB homolog 3-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-55.83).</p>
+<p>• <strong>Function</strong>: Modifies nucleic acids or lipids, involved in repair and metabolism.</p></li>
+<li><p><strong>LOC134687290</strong>: <strong>Mitogen-activated protein kinase kinase kinase 5-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-56.50).</p>
+<p>• <strong>Function</strong>: Key regulator of stress response and cellular signaling.</p></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/dml.gif" class="img-fluid figure-img"></p>
+<figcaption>dml</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p>Pollution impacts DNA methylation in mussels as an adaptive or maladaptive response to environmental stress. This epigenetic flexibility allows mussels to fine-tune gene expression for survival, repair, and detoxification under polluted conditions. However, prolonged or excessive changes can lead to impaired growth, reproduction, or transgenerational effects, ultimately affecting mussel populations and ecosystem health.</p>
+</blockquote>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>mytilus</category>
+  <category>methylation</category>
+  <category>methylkit</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/36-merry/</guid>
+  <pubDate>Tue, 24 Dec 2024 08:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Userssr320Desktopigv_session.xml_2024-12-24_07-26-36.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Time-series Apul lncRNA count matrix</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -760,705 +1459,6 @@ font-style: inherit;">\</span></span>
   <guid>https://sr320.github.io/tumbling-oysters/posts/35-myt-meth/</guid>
   <pubDate>Thu, 19 Dec 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation__RStudio_Server_2024-12-20_04-34-37.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>We wish you a Merry Mytilus!</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/36-merry/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/mm.gif" class="img-fluid figure-img"></p>
-<figcaption>merry</figcaption>
-</figure>
-</div>
-<p>Following Bismark alignment took data through methylkit to identify DMLs.</p>
-<p>In case methyKit needs an installation</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">requireNamespace</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"BiocManager"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">quietly =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span>))</span>
-<span id="cb1-2">    <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"BiocManager"</span>)</span>
-<span id="cb1-3"></span>
-<span id="cb1-4">BiocManager<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">install</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"methylKit"</span>)</span></code></pre></div>
-<p>Used cov files to import into methylkit</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wget</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-r</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-2">--no-directories <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--no-parent</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-3">-P ../data/ <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-4">-A <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"*cov"</span> https://gannet.fish.washington.edu/seashell/bu-github/project-mytilus-methylation/output/09-meth-quant/</span></code></pre></div>
-<p>Get a list of said files</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">analysisFilescov <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(</span>
-<span id="cb3-2">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/105M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-3">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/106M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-4">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/107M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-5">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/109M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-6">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/239M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-7">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/240M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-8">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/241M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-9">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/242M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-10">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/269M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-11">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/270M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-12">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/271M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-13">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/272M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-14">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/69M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-15">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/70M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-16">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/71M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-17">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/72M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-18">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/78M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-19">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/79M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-20">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/80M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-21">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/81M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-22">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/92M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-23">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/94M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
-<span id="cb3-24">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"~/github/project-mytilus-methylation/data/95M.CpG_report.merged_CpG_evidence.cov"</span></span>
-<span id="cb3-25">) <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#Put all .bam files into a list for analysis.</span></span></code></pre></div>
-<p>Create a methylKit object with 2x coverage</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">myobj_23 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">methRead</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">location =</span> analysisFilescov, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">sample.id =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"105M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"106M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"107M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"109M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"239M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"240M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"241M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"242M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"269M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"270M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"271M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"272M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"69M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"70M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"71M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"72M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"78M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"79M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"80M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"81M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"92M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"94M"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"95M"</span>), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">assembly =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Mt"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">pipeline =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bismarkCoverage"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">context=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"CpG"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mincov=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">treatment =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>))</span></code></pre></div>
-<p>Filter methylKit object for 5x coverage</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">filtered.myobj<span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filterByCoverage</span>(myobj_23,<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">lo.count=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">5</span>,<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">lo.perc=</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">NULL</span>,</span>
-<span id="cb5-2">                                       <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">hi.count=</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">NULL</span>,<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">hi.perc=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">98</span>)</span></code></pre></div>
-<p>Unite methylKit object such that need data for 10 samples per group.</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">meth_filter<span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">=</span>methylKit<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">unite</span>(filtered.myobj, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">min.per.group=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span>L, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">destrand=</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span></code></pre></div>
-<p>Visualize the data</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">clusterSamples</span>(meth_filter, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">dist=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"correlation"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">method=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ward"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">plot=</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span>)</span>
-<span id="cb7-2"> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">PCASamples</span>(meth_filter)</span></code></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation____RStudio_Server_2024-12-24_07-39-59.png" class="img-fluid figure-img"></p>
-<figcaption>cluster</figcaption>
-</figure>
-</div>
-<p>Find Differences</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">myDiff<span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">calculateDiffMeth</span>(meth_filter,<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mc.cores=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">24</span>)</span></code></pre></div>
-<p>Get DMLs at 55% Difference</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># get all diffentially methylated bases</span></span>
-<span id="cb9-2">myDiff_1055p<span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">getMethylDiff</span>(myDiff,<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">difference=</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">55</span>,<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">qvalue=</span><span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.01</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">write.table</span>(myDiff_1055p, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">file =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/11-methylkit-klone/myDiff_1055p.tab"</span>)</span></code></pre></div>
-<p>Convert to Bedgraph</p>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Input and output file names</span></span>
-<span id="cb11-2"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">INPUT_FILE</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/11-methylkit-klone/myDiff_1055p.tab"</span></span>
-<span id="cb11-3"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">OUTPUT_FILE</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/12-IGV/myDiff1055p.bedgraph"</span></span>
-<span id="cb11-4"></span>
-<span id="cb11-5"></span>
-<span id="cb11-6"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Write the BEDGRAPH header</span></span>
-<span id="cb11-7"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"track type=bedGraph name=</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">MethDiff</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> description=</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">Methylation difference data</span><span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\"</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb11-8"></span>
-<span id="cb11-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Process the input file to remove quotes and convert it to BEDGRAPH format</span></span>
-<span id="cb11-10"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'NR &gt; 1 {gsub(/"/, "", $2); print $2 "\t" $3-1 "\t" $4 "\t" $8}'</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$INPUT_FILE</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&gt;</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb11-11"></span>
-<span id="cb11-12"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Conversion complete. Output saved to </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
-<pre><code>track type=bedGraph name="MethDiff" description="Methylation difference data"
-NC_086373.1 90626337    90626340    56.3226247436774
-NC_086373.1 105503508   105503511   -57.8638497652582
-NC_086374.1 34742950    34742953    58.2670906200318
-NC_086375.1 31938078    31938081    -60.6923802783675
-NC_086375.1 43581687    43581690    58.1981981981982
-NC_086375.1 90876603    90876606    55.8823529411765
-NC_086376.1 5631155 5631158 58.9955022488756
-NC_086378.1 6633120 6633123 -55.241935483871
-NC_086379.1 1603829 1603832 -60.822949869603
-NC_086379.1 47961733    47961736    56.4495530012771
-NC_086379.1 64017639    64017642    -63.5951772013153
-NC_086379.1 64017774    64017777    -59.1351928466569
-NC_086381.1 21212099    21212102    -56.0704607046071
-NC_086382.1 25952233    25952236    -55.8318584070797
-NC_086382.1 36708760    36708763    -56.5044858523119
-NC_086386.1 17736432    17736435    -58.4235938927313</code></pre>
-<p>Using IGV for some visualization!</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/mm.gif" class="img-fluid figure-img"></p>
-<figcaption>merry</figcaption>
-</figure>
-</div>
-<p>Intersecting BEDGRAPH with GFF files to get gene information of where DMLs are located.</p>
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Input files</span></span>
-<span id="cb13-2"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">BEDGRAPH</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/12-IGV/myDiff1055p.bedgraph"</span></span>
-<span id="cb13-3"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">GFF_DIR</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/12-IGV"</span></span>
-<span id="cb13-4"></span>
-<span id="cb13-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Output directory for intersect results</span></span>
-<span id="cb13-6"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">OUTPUT_DIR</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/14-intersectbed/"</span></span>
-<span id="cb13-7"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-p</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$OUTPUT_DIR</span></span>
-<span id="cb13-8"></span>
-<span id="cb13-9"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Loop through all GFF files in the directory</span></span>
-<span id="cb13-10"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> GFF <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$GFF_DIR</span>/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.gff<span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">do</span></span>
-<span id="cb13-11">    <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">BASENAME</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$GFF</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> .gff<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb13-12">    <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">OUTPUT_FILE</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$OUTPUT_DIR</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${BASENAME}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">_intersect.bed"</span></span>
-<span id="cb13-13">    </span>
-<span id="cb13-14">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Intersecting </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$BEDGRAPH</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> with </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$GFF</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">..."</span></span>
-<span id="cb13-15">    <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">bedtools</span> intersect <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb13-16">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-loj</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb13-17">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-a</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$BEDGRAPH</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb13-18">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-b</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$GFF</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb13-19">    </span>
-<span id="cb13-20">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Result saved to </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb13-21"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">done</span></span>
-<span id="cb13-22"></span>
-<span id="cb13-23"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"All intersections completed!"</span></span></code></pre></div>
-<p>TLDR</p>
-<ol type="1">
-<li><p><strong>LOC134690221</strong>: <strong>GRAM domain-containing protein 4-like</strong></p>
-<p>• <strong>Methylation status</strong>: Hypermethylated (+56.32).</p>
-<p>• <strong>Function</strong>: Involved in membrane-associated processes like signaling or vesicle trafficking.</p></li>
-<li><p><strong>LOC134695637</strong>: <strong>Otoferlin-like</strong></p>
-<p>• <strong>Methylation status</strong>: Hypomethylated (-57.86).</p>
-<p>• <strong>Function</strong>: Plays a role in vesicle-mediated transport and sensory signaling.</p></li>
-<li><p><strong>LOC134707074</strong>: <strong>Receptor-type tyrosine-protein phosphatase N2-like</strong></p>
-<p>• <strong>Methylation status</strong>: Hypermethylated (+58.27).</p>
-<p>• <strong>Function</strong>: Regulates cell signaling pathways affecting growth and differentiation.</p></li>
-<li><p><strong>LOC134711256</strong>: <strong>Cancer-related nucleoside-triphosphatase homolog</strong></p>
-<p>• <strong>Methylation status</strong>:</p>
-<p>• Hypomethylated (-60.69).</p>
-<p>• Hypermethylated (+58.20).</p>
-<p>• <strong>Function</strong>: Involved in DNA/RNA metabolism and stress responses.</p></li>
-<li><p><strong>LOC134712818</strong>: <strong>Uncharacterized protein</strong></p>
-<p>• <strong>Methylation status</strong>: Hypermethylated (+55.88).</p>
-<p>• <strong>Function</strong>: Unknown.</p></li>
-<li><p><strong>LOC134714536</strong>: <strong>Coatomer subunit epsilon-like</strong></p>
-<p>• <strong>Methylation status</strong>: Hypermethylated (+58.99).</p>
-<p>• <strong>Function</strong>: Key player in intracellular vesicle trafficking.</p></li>
-<li><p><strong>LOC134720671</strong>: <strong>Roundabout homolog 1-like</strong></p>
-<p>• <strong>Methylation status</strong>: Hypomethylated (-55.24).</p>
-<p>• <strong>Function</strong>: Guides axon growth and cell migration.</p></li>
-<li><p><strong>LOC134724475</strong>: <strong>Uncharacterized protein</strong></p>
-<p>• <strong>Methylation status</strong>: Hypomethylated (-60.82).</p>
-<p>• <strong>Function</strong>: Unknown.</p></li>
-<li><p><strong>LOC134725187</strong>: <strong>Membrane protein BRI3-like</strong></p>
-<p>• <strong>Methylation status</strong>:</p>
-<p>• Hypermethylated (+56.45).</p>
-<p>• Hypomethylated (-63.60, -59.14).</p>
-<p>• <strong>Function</strong>: Participates in signaling and membrane dynamics.</p></li>
-<li><p><strong>LOC134685297</strong>: <strong>Tumor protein p53-inducible protein 11-like</strong></p>
-<p>• <strong>Methylation status</strong>: Hypomethylated (-56.07).</p>
-<p>• <strong>Function</strong>: Responds to cellular stress, regulates apoptosis, and growth arrest.</p></li>
-<li><p><strong>LOC134687110</strong>: <strong>Alpha-ketoglutarate-dependent dioxygenase alkB homolog 3-like</strong></p>
-<p>• <strong>Methylation status</strong>: Hypomethylated (-55.83).</p>
-<p>• <strong>Function</strong>: Modifies nucleic acids or lipids, involved in repair and metabolism.</p></li>
-<li><p><strong>LOC134687290</strong>: <strong>Mitogen-activated protein kinase kinase kinase 5-like</strong></p>
-<p>• <strong>Methylation status</strong>: Hypomethylated (-56.50).</p>
-<p>• <strong>Function</strong>: Key regulator of stress response and cellular signaling.</p></li>
-</ol>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/dml.gif" class="img-fluid figure-img"></p>
-<figcaption>dml</figcaption>
-</figure>
-</div>
-<blockquote class="blockquote">
-<p>Pollution impacts DNA methylation in mussels as an adaptive or maladaptive response to environmental stress. This epigenetic flexibility allows mussels to fine-tune gene expression for survival, repair, and detoxification under polluted conditions. However, prolonged or excessive changes can lead to impaired growth, reproduction, or transgenerational effects, ultimately affecting mussel populations and ecosystem health.</p>
-</blockquote>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>mytilus</category>
-  <category>methylation</category>
-  <category>methylkit</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/36-merry/</guid>
-  <pubDate>Thu, 19 Dec 2024 08:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Userssr320Desktopigv_session.xml_2024-12-24_07-26-36.png" medium="image" type="image/png"/>
 </item>
 <item>
   <title>Hip Hip Array</title>
