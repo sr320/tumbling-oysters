@@ -1,0 +1,277 @@
+---
+title: "We wish you a Merry Mytilus!"
+description: "DMLs on PAHs"
+categories: [mytilus, methylation, methylkit]
+#citation: 
+date: 12-19-2024
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Userssr320Desktopigv_session.xml_2024-12-24_07-26-36.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+![merry](http://gannet.fish.washington.edu/seashell/snaps/mm.gif)
+
+Following Bismark alignment took data through methylkit to identify DMLs.
+
+In case methyKit needs an installation
+
+``` r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("methylKit")
+```
+
+Used cov files to import into methylkit
+
+``` bash
+wget -r \
+--no-directories --no-parent \
+-P ../data/ \
+-A "*cov" https://gannet.fish.washington.edu/seashell/bu-github/project-mytilus-methylation/output/09-meth-quant/
+```
+
+Get a list of said files
+
+``` r
+analysisFilescov <- list(
+  "~/github/project-mytilus-methylation/data/105M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/106M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/107M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/109M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/239M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/240M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/241M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/242M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/269M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/270M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/271M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/272M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/69M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/70M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/71M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/72M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/78M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/79M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/80M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/81M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/92M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/94M.CpG_report.merged_CpG_evidence.cov",
+  "~/github/project-mytilus-methylation/data/95M.CpG_report.merged_CpG_evidence.cov"
+) #Put all .bam files into a list for analysis.
+```
+
+Create a methylKit object with 2x coverage
+
+``` r
+myobj_23 = methRead(location = analysisFilescov, sample.id = list("105M", "106M", "107M", "109M", "239M", "240M", "241M", "242M", "269M", "270M", "271M", "272M", "69M", "70M", "71M", "72M", "78M", "79M", "80M", "81M", "92M", "94M", "95M"), assembly = "Mt", pipeline = "bismarkCoverage", context="CpG", mincov=2, treatment = c(0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1))
+```
+
+Filter methylKit object for 5x coverage
+
+``` r
+filtered.myobj=filterByCoverage(myobj_23,lo.count=5,lo.perc=NULL,
+                                       hi.count=NULL,hi.perc=98)
+```
+
+Unite methylKit object such that need data for 10 samples per group.
+
+``` r
+meth_filter=methylKit::unite(filtered.myobj, min.per.group=10L, destrand=FALSE)
+```
+
+Visualize the data
+
+``` r
+ clusterSamples(meth_filter, dist="correlation", method="ward", plot=TRUE)
+ PCASamples(meth_filter)
+```
+
+![cluster](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation____RStudio_Server_2024-12-24_07-39-59.png)
+
+Find Differences
+
+``` r
+myDiff=calculateDiffMeth(meth_filter,mc.cores=24)
+```
+
+Get DMLs at 55% Difference
+
+``` r
+# get all diffentially methylated bases
+myDiff_1055p=getMethylDiff(myDiff,difference=55,qvalue=0.01)
+```
+
+``` r
+write.table(myDiff_1055p, file = "../output/11-methylkit-klone/myDiff_1055p.tab")
+```
+
+Convert to Bedgraph
+
+``` bash
+# Input and output file names
+INPUT_FILE="../output/11-methylkit-klone/myDiff_1055p.tab"
+OUTPUT_FILE="../output/12-IGV/myDiff1055p.bedgraph"
+
+
+# Write the BEDGRAPH header
+echo "track type=bedGraph name=\"MethDiff\" description=\"Methylation difference data\"" > "$OUTPUT_FILE"
+
+# Process the input file to remove quotes and convert it to BEDGRAPH format
+awk 'NR > 1 {gsub(/"/, "", $2); print $2 "\t" $3-1 "\t" $4 "\t" $8}' "$INPUT_FILE" >> "$OUTPUT_FILE"
+
+echo "Conversion complete. Output saved to $OUTPUT_FILE"
+```
+
+```         
+track type=bedGraph name="MethDiff" description="Methylation difference data"
+NC_086373.1 90626337    90626340    56.3226247436774
+NC_086373.1 105503508   105503511   -57.8638497652582
+NC_086374.1 34742950    34742953    58.2670906200318
+NC_086375.1 31938078    31938081    -60.6923802783675
+NC_086375.1 43581687    43581690    58.1981981981982
+NC_086375.1 90876603    90876606    55.8823529411765
+NC_086376.1 5631155 5631158 58.9955022488756
+NC_086378.1 6633120 6633123 -55.241935483871
+NC_086379.1 1603829 1603832 -60.822949869603
+NC_086379.1 47961733    47961736    56.4495530012771
+NC_086379.1 64017639    64017642    -63.5951772013153
+NC_086379.1 64017774    64017777    -59.1351928466569
+NC_086381.1 21212099    21212102    -56.0704607046071
+NC_086382.1 25952233    25952236    -55.8318584070797
+NC_086382.1 36708760    36708763    -56.5044858523119
+NC_086386.1 17736432    17736435    -58.4235938927313
+```
+
+Using IGV for some visualization!
+
+![merry](http://gannet.fish.washington.edu/seashell/snaps/mm.gif)
+
+Intersecting BEDGRAPH with GFF files to get gene information of where DMLs are located.
+
+``` bash
+# Input files
+BEDGRAPH="../output/12-IGV/myDiff1055p.bedgraph"
+GFF_DIR="../output/12-IGV"
+
+# Output directory for intersect results
+OUTPUT_DIR="../output/14-intersectbed/"
+mkdir -p $OUTPUT_DIR
+
+# Loop through all GFF files in the directory
+for GFF in $GFF_DIR/*.gff; do
+    BASENAME=$(basename "$GFF" .gff)
+    OUTPUT_FILE="$OUTPUT_DIR/${BASENAME}_intersect.bed"
+    
+    echo "Intersecting $BEDGRAPH with $GFF..."
+    bedtools intersect \
+    -loj \
+    -a "$BEDGRAPH" \
+    -b "$GFF" > "$OUTPUT_FILE"
+    
+    echo "Result saved to $OUTPUT_FILE"
+done
+
+echo "All intersections completed!"
+```
+
+TLDR
+
+1.	**LOC134690221**: **GRAM domain-containing protein 4-like**
+
+	•	**Methylation status**: Hypermethylated (+56.32).
+
+	•	**Function**: Involved in membrane-associated processes like signaling or vesicle trafficking.
+
+2.	**LOC134695637**: **Otoferlin-like**
+
+	•	**Methylation status**: Hypomethylated (-57.86).
+
+	•	**Function**: Plays a role in vesicle-mediated transport and sensory signaling.
+
+3.	**LOC134707074**: **Receptor-type tyrosine-protein phosphatase N2-like**
+
+	•	**Methylation status**: Hypermethylated (+58.27).
+
+	•	**Function**: Regulates cell signaling pathways affecting growth and differentiation.
+
+4.	**LOC134711256**: **Cancer-related nucleoside-triphosphatase homolog**
+
+	•	**Methylation status**:
+
+	•	Hypomethylated (-60.69).
+
+	•	Hypermethylated (+58.20).
+
+	•	**Function**: Involved in DNA/RNA metabolism and stress responses.
+
+5.	**LOC134712818**: **Uncharacterized protein**
+
+	•	**Methylation status**: Hypermethylated (+55.88).
+
+	•	**Function**: Unknown.
+
+6.	**LOC134714536**: **Coatomer subunit epsilon-like**
+
+	•	**Methylation status**: Hypermethylated (+58.99).
+
+	•	**Function**: Key player in intracellular vesicle trafficking.
+
+7.	**LOC134720671**: **Roundabout homolog 1-like**
+
+	•	**Methylation status**: Hypomethylated (-55.24).
+
+	•	**Function**: Guides axon growth and cell migration.
+
+8.	**LOC134724475**: **Uncharacterized protein**
+
+	•	**Methylation status**: Hypomethylated (-60.82).
+
+	•	**Function**: Unknown.
+
+9.	**LOC134725187**: **Membrane protein BRI3-like**
+
+	•	**Methylation status**:
+
+	•	Hypermethylated (+56.45).
+
+	•	Hypomethylated (-63.60, -59.14).
+
+	•	**Function**: Participates in signaling and membrane dynamics.
+
+10.	**LOC134685297**: **Tumor protein p53-inducible protein 11-like**
+
+	•	**Methylation status**: Hypomethylated (-56.07).
+
+	•	**Function**: Responds to cellular stress, regulates apoptosis, and growth arrest.
+
+11.	**LOC134687110**: **Alpha-ketoglutarate-dependent dioxygenase alkB homolog 3-like**
+
+	•	**Methylation status**: Hypomethylated (-55.83).
+
+	•	**Function**: Modifies nucleic acids or lipids, involved in repair and metabolism.
+
+12.	**LOC134687290**: **Mitogen-activated protein kinase kinase kinase 5-like**
+
+	•	**Methylation status**: Hypomethylated (-56.50).
+
+	•	**Function**: Key regulator of stress response and cellular signaling.
+
+![dml](http://gannet.fish.washington.edu/seashell/snaps/dml.gif)
+
+
+> Pollution impacts DNA methylation in mussels as an adaptive or maladaptive response to environmental stress. This epigenetic flexibility allows mussels to fine-tune gene expression for survival, repair, and detoxification under polluted conditions. However, prolonged or excessive changes can lead to impaired growth, reproduction, or transgenerational effects, ultimately affecting mussel populations and ecosystem health.

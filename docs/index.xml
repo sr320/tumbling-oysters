@@ -762,6 +762,705 @@ font-style: inherit;">\</span></span>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation__RStudio_Server_2024-12-20_04-34-37.png" medium="image" type="image/png"/>
 </item>
 <item>
+  <title>We wish you a Merry Mytilus!</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/36-merry/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/mm.gif" class="img-fluid figure-img"></p>
+<figcaption>merry</figcaption>
+</figure>
+</div>
+<p>Following Bismark alignment took data through methylkit to identify DMLs.</p>
+<p>In case methyKit needs an installation</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> (<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">requireNamespace</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BiocManager"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">quietly =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>))</span>
+<span id="cb1-2">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install.packages</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BiocManager"</span>)</span>
+<span id="cb1-3"></span>
+<span id="cb1-4">BiocManager<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"methylKit"</span>)</span></code></pre></div>
+<p>Used cov files to import into methylkit</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wget</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-r</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-2">--no-directories <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--no-parent</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-3">-P ../data/ <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-4">-A <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*cov"</span> https://gannet.fish.washington.edu/seashell/bu-github/project-mytilus-methylation/output/09-meth-quant/</span></code></pre></div>
+<p>Get a list of said files</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">analysisFilescov <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(</span>
+<span id="cb3-2">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/105M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-3">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/106M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-4">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/107M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-5">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/109M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-6">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/239M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-7">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/240M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-8">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/241M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-9">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/242M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-10">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/269M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-11">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/270M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-12">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/271M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-13">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/272M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-14">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/69M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-15">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/70M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-16">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/71M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-17">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/72M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-18">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/78M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-19">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/79M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-20">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/80M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-21">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/81M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-22">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/92M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-23">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/94M.CpG_report.merged_CpG_evidence.cov"</span>,</span>
+<span id="cb3-24">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"~/github/project-mytilus-methylation/data/95M.CpG_report.merged_CpG_evidence.cov"</span></span>
+<span id="cb3-25">) <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#Put all .bam files into a list for analysis.</span></span></code></pre></div>
+<p>Create a methylKit object with 2x coverage</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">myobj_23 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">methRead</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">location =</span> analysisFilescov, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sample.id =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"105M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"106M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"107M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"109M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"239M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"240M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"241M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"242M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"269M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"270M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"271M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"272M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"69M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"70M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"71M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"72M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"78M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"79M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"80M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"81M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"92M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"94M"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"95M"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">assembly =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Mt"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pipeline =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bismarkCoverage"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">context=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CpG"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mincov=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">treatment =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>))</span></code></pre></div>
+<p>Filter methylKit object for 5x coverage</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">filtered.myobj<span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filterByCoverage</span>(myobj_23,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lo.count=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lo.perc=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>,</span>
+<span id="cb5-2">                                       <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">hi.count=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span>,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">hi.perc=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">98</span>)</span></code></pre></div>
+<p>Unite methylKit object such that need data for 10 samples per group.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">meth_filter<span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span>methylKit<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">unite</span>(filtered.myobj, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">min.per.group=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>L, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">destrand=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span></code></pre></div>
+<p>Visualize the data</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">clusterSamples</span>(meth_filter, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">dist=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"correlation"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">method=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ward"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot=</span><span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb7-2"> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">PCASamples</span>(meth_filter)</span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation____RStudio_Server_2024-12-24_07-39-59.png" class="img-fluid figure-img"></p>
+<figcaption>cluster</figcaption>
+</figure>
+</div>
+<p>Find Differences</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">myDiff<span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">calculateDiffMeth</span>(meth_filter,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mc.cores=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">24</span>)</span></code></pre></div>
+<p>Get DMLs at 55% Difference</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># get all diffentially methylated bases</span></span>
+<span id="cb9-2">myDiff_1055p<span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">=</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">getMethylDiff</span>(myDiff,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">difference=</span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">55</span>,<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">qvalue=</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.01</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">write.table</span>(myDiff_1055p, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">file =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/11-methylkit-klone/myDiff_1055p.tab"</span>)</span></code></pre></div>
+<p>Convert to Bedgraph</p>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Input and output file names</span></span>
+<span id="cb11-2"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">INPUT_FILE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/11-methylkit-klone/myDiff_1055p.tab"</span></span>
+<span id="cb11-3"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUTPUT_FILE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/12-IGV/myDiff1055p.bedgraph"</span></span>
+<span id="cb11-4"></span>
+<span id="cb11-5"></span>
+<span id="cb11-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Write the BEDGRAPH header</span></span>
+<span id="cb11-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"track type=bedGraph name=</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">MethDiff</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> description=</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">Methylation difference data</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\"</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb11-8"></span>
+<span id="cb11-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Process the input file to remove quotes and convert it to BEDGRAPH format</span></span>
+<span id="cb11-10"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'NR &gt; 1 {gsub(/"/, "", $2); print $2 "\t" $3-1 "\t" $4 "\t" $8}'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$INPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb11-11"></span>
+<span id="cb11-12"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Conversion complete. Output saved to </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span></code></pre></div>
+<pre><code>track type=bedGraph name="MethDiff" description="Methylation difference data"
+NC_086373.1 90626337    90626340    56.3226247436774
+NC_086373.1 105503508   105503511   -57.8638497652582
+NC_086374.1 34742950    34742953    58.2670906200318
+NC_086375.1 31938078    31938081    -60.6923802783675
+NC_086375.1 43581687    43581690    58.1981981981982
+NC_086375.1 90876603    90876606    55.8823529411765
+NC_086376.1 5631155 5631158 58.9955022488756
+NC_086378.1 6633120 6633123 -55.241935483871
+NC_086379.1 1603829 1603832 -60.822949869603
+NC_086379.1 47961733    47961736    56.4495530012771
+NC_086379.1 64017639    64017642    -63.5951772013153
+NC_086379.1 64017774    64017777    -59.1351928466569
+NC_086381.1 21212099    21212102    -56.0704607046071
+NC_086382.1 25952233    25952236    -55.8318584070797
+NC_086382.1 36708760    36708763    -56.5044858523119
+NC_086386.1 17736432    17736435    -58.4235938927313</code></pre>
+<p>Using IGV for some visualization!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/mm.gif" class="img-fluid figure-img"></p>
+<figcaption>merry</figcaption>
+</figure>
+</div>
+<p>Intersecting BEDGRAPH with GFF files to get gene information of where DMLs are located.</p>
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Input files</span></span>
+<span id="cb13-2"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">BEDGRAPH</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/12-IGV/myDiff1055p.bedgraph"</span></span>
+<span id="cb13-3"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">GFF_DIR</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/12-IGV"</span></span>
+<span id="cb13-4"></span>
+<span id="cb13-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Output directory for intersect results</span></span>
+<span id="cb13-6"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUTPUT_DIR</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/14-intersectbed/"</span></span>
+<span id="cb13-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_DIR</span></span>
+<span id="cb13-8"></span>
+<span id="cb13-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Loop through all GFF files in the directory</span></span>
+<span id="cb13-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> GFF <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$GFF_DIR</span>/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.gff<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb13-11">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">BASENAME</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$GFF</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> .gff<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb13-12">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUTPUT_FILE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_DIR</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${BASENAME}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_intersect.bed"</span></span>
+<span id="cb13-13">    </span>
+<span id="cb13-14">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Intersecting </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$BEDGRAPH</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> with </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$GFF</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">..."</span></span>
+<span id="cb13-15">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">bedtools</span> intersect <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb13-16">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-loj</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb13-17">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-a</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$BEDGRAPH</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb13-18">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-b</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$GFF</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb13-19">    </span>
+<span id="cb13-20">    <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Result saved to </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$OUTPUT_FILE</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb13-21"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span>
+<span id="cb13-22"></span>
+<span id="cb13-23"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"All intersections completed!"</span></span></code></pre></div>
+<p>TLDR</p>
+<ol type="1">
+<li><p><strong>LOC134690221</strong>: <strong>GRAM domain-containing protein 4-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypermethylated (+56.32).</p>
+<p>• <strong>Function</strong>: Involved in membrane-associated processes like signaling or vesicle trafficking.</p></li>
+<li><p><strong>LOC134695637</strong>: <strong>Otoferlin-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-57.86).</p>
+<p>• <strong>Function</strong>: Plays a role in vesicle-mediated transport and sensory signaling.</p></li>
+<li><p><strong>LOC134707074</strong>: <strong>Receptor-type tyrosine-protein phosphatase N2-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypermethylated (+58.27).</p>
+<p>• <strong>Function</strong>: Regulates cell signaling pathways affecting growth and differentiation.</p></li>
+<li><p><strong>LOC134711256</strong>: <strong>Cancer-related nucleoside-triphosphatase homolog</strong></p>
+<p>• <strong>Methylation status</strong>:</p>
+<p>• Hypomethylated (-60.69).</p>
+<p>• Hypermethylated (+58.20).</p>
+<p>• <strong>Function</strong>: Involved in DNA/RNA metabolism and stress responses.</p></li>
+<li><p><strong>LOC134712818</strong>: <strong>Uncharacterized protein</strong></p>
+<p>• <strong>Methylation status</strong>: Hypermethylated (+55.88).</p>
+<p>• <strong>Function</strong>: Unknown.</p></li>
+<li><p><strong>LOC134714536</strong>: <strong>Coatomer subunit epsilon-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypermethylated (+58.99).</p>
+<p>• <strong>Function</strong>: Key player in intracellular vesicle trafficking.</p></li>
+<li><p><strong>LOC134720671</strong>: <strong>Roundabout homolog 1-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-55.24).</p>
+<p>• <strong>Function</strong>: Guides axon growth and cell migration.</p></li>
+<li><p><strong>LOC134724475</strong>: <strong>Uncharacterized protein</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-60.82).</p>
+<p>• <strong>Function</strong>: Unknown.</p></li>
+<li><p><strong>LOC134725187</strong>: <strong>Membrane protein BRI3-like</strong></p>
+<p>• <strong>Methylation status</strong>:</p>
+<p>• Hypermethylated (+56.45).</p>
+<p>• Hypomethylated (-63.60, -59.14).</p>
+<p>• <strong>Function</strong>: Participates in signaling and membrane dynamics.</p></li>
+<li><p><strong>LOC134685297</strong>: <strong>Tumor protein p53-inducible protein 11-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-56.07).</p>
+<p>• <strong>Function</strong>: Responds to cellular stress, regulates apoptosis, and growth arrest.</p></li>
+<li><p><strong>LOC134687110</strong>: <strong>Alpha-ketoglutarate-dependent dioxygenase alkB homolog 3-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-55.83).</p>
+<p>• <strong>Function</strong>: Modifies nucleic acids or lipids, involved in repair and metabolism.</p></li>
+<li><p><strong>LOC134687290</strong>: <strong>Mitogen-activated protein kinase kinase kinase 5-like</strong></p>
+<p>• <strong>Methylation status</strong>: Hypomethylated (-56.50).</p>
+<p>• <strong>Function</strong>: Key regulator of stress response and cellular signaling.</p></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/dml.gif" class="img-fluid figure-img"></p>
+<figcaption>dml</figcaption>
+</figure>
+</div>
+<blockquote class="blockquote">
+<p>Pollution impacts DNA methylation in mussels as an adaptive or maladaptive response to environmental stress. This epigenetic flexibility allows mussels to fine-tune gene expression for survival, repair, and detoxification under polluted conditions. However, prolonged or excessive changes can lead to impaired growth, reproduction, or transgenerational effects, ultimately affecting mussel populations and ecosystem health.</p>
+</blockquote>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>mytilus</category>
+  <category>methylation</category>
+  <category>methylkit</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/36-merry/</guid>
+  <pubDate>Thu, 19 Dec 2024 08:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Userssr320Desktopigv_session.xml_2024-12-24_07-26-36.png" medium="image" type="image/png"/>
+</item>
+<item>
   <title>Hip Hip Array</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/33-bismark-array/</link>
@@ -4584,543 +5283,6 @@ font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx ../data/n
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/</guid>
   <pubDate>Thu, 23 May 2024 07:00:00 GMT</pubDate>
   <media:content url="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Getting appropriate IDs for Gene, Transcripts</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/10-hisat-deseq2/DEGlist.tab</span></code></pre></div>
-<pre><code>"baseMean"  "log2FoldChange"    "lfcSE" "stat"  "pvalue"    "padj"
-"gene-abce1|abce1"  262.700269478681    0.105952784879971   0.0281220392741257  3.76760674598215    0.000164820070819158    0.00169579580885594
-"gene-si:dkey-6i22.5|si:dkey-6i22.5"    23.1818150225127    -0.27199275490447   0.0723746042802814  -3.75812424274041   0.000171191878435429    0.00174456130354749
-"gene-LOC132463139|LOC132463139"    264.894726704886    0.294505009896922   0.0596592538711384  4.93645144361076    7.95568331237438e-07    2.12004635637234e-05
-"gene-prkaa1|prkaa1"    3214.61285704688    -0.126782734464496  0.0340426269133444  -3.72423475976815   0.000195908561479354    0.00193395624569665
-"gene-snx27a|snx27a"    1220.23705269789    -0.0630710658454225 0.01399905805089    -4.50537926310069   6.62545018246717e-06    0.000125962116117261
-"gene-LOC132467924|LOC132467924"    197.522767123278    0.0945071207278742  0.032030373339586   2.9505469613454 0.00317211817956902 0.0171388805882921
-"gene-LOC132462420|LOC132462420"    713.695192687075    -0.134317843644132  0.0311548193019831  -4.31130228495925   1.62295854600018e-05    0.00026130311652756
-"gene-copa|copa"    1141.65308019589    0.0553273042877379  0.0180028215560976  3.07325738442364    0.00211735779654983 0.0125618143711436
-"gene-LOC132461740|LOC132461740"    2138.07063376679    0.125918081978082   0.0341318095843598  3.68917099654104    0.000224985969638598    0.00216220282509821</code></pre>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1</span></code></pre></div>
-<pre><code>cds_from_genomic.fna
-GCF_031168955.1_ASM3116895v1_genomic.fna
-genomic.gff
-genomic.gtf
-protein.faa
-rna.fna
-sequence_report.jsonl</code></pre>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span></span></code></pre></div>
-<pre><code>==&gt; /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/cds_from_genomic.fna &lt;==
-&gt;lcl|NC_082382.1_cds_XP_059916776.1_1 [gene=rereb] [db_xref=GeneID:132464430] [protein=arginine-glutamic acid dipeptide repeats protein isoform X1] [protein_id=XP_059916776.1] [location=join(44883..44908,45901..45949,46305..46429,50198..50297,50452..50550,50685..50765,50865..51018,51179..51271,57813..58012,59841..60005,64360..64470,67157..68541,70221..70425,70825..71635,72380..72517,72610..72790,75074..75107)] [gbkey=CDS]
-ATGGACGACCTCTTCAGTCCGCGGAGGAGCTTGAACAGCACCCAAGGGGAGATACGAGTGGGACCAAGTCACCAGGCCAA
-GCTTCCCGAGCTGCAGCCACGGTCAGCCCCTAGCCTCCAGACTCAGACGGAGAGCGAGGAGCTGGTGTGGACCCCGGGAG
-TCAATGACTGTGATCTACTCATGTACCTGAGAGCGGCAAGGAGCATGGCAGCGTTTGCAGGGATGTGTGATGGCGGCTCG
-ACGGAGGATGGGTGCCTGGCGGCGTCCCGTGATGACACCACTCTCAACGCACTGAACATGTTGCATGCCAGCCATTACGA
-TGCAGCCAAAGCTCTCCAGCATCTGGTGAAGAAACCAGTTCCAAAGCTGATTGAGAAGTGCTGGTCAGAGGACGATGTGA
-AACGCTTCATCAAAGGCCTTAGGCTTTACGGCAAGAACTTCTTCCGCATTCGAAAAGAGCTTCTGCCCAGCAAAAAGACG
-GGTGAGCTGATCACGTTCTACTACCACTGGAAGAAGACGCCGGAGGCCTCAGGAACCAGAGCCTATCGCCAGCACCGTCG
-CCAGCCATCTTCACGCAAGGCTAAGACCCGGTCAGCCACGGCCCCCGTCAGCACGCCGTCCCGGTCCCACTCACTGGACA
-TGAGCTCCGCCAGTGAGGATGACATGGAAAGTGAAGACAGTGAACAAGACTTGAAGCGGTCCACCTGCAGCCACTGTGGC
-
-==&gt; /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/GCF_031168955.1_ASM3116895v1_genomic.fna &lt;==
-&gt;NC_082382.1 Gadus macrocephalus chromosome 1, ASM3116895v1
-CAGACCTCCAATAGAGAGCTGCTCCCCCTTCGCACAAAGCCGCTGCTGGTGAATGCTCGAAGCGTTGTGTGATTGAATCG
-CTTTAATGCCGTTCCATGTCACGTTGATCGTTTTTTTGCACAACGAGCAAAAAGCTTCCCGGTCATTTCCCATCACGGGT
-TTCAGCCAGTCTTTAAATGTCGGGTCGTCAACCCATGTTTGCGAaaacttgcatttacccattcTCTCATAGAGCCAGAA
-ACTCAGCCGTACAGAACTCTGAGGGGAAAAGGCGGAAAATGTTGctggtgttacaccgaattctgtgacccaccgaaaag
-tgtggcCCCAGGGGGTGcagttgcacattttctgcaacatgcacgtgtgcattataacaaaaaacataaataaaacataa
-gatctctggtgggtctttctttttttgatactaacattaattctaaacactattttacacagtagcctatactaggaaat
-gctcaaaggtaaatcagcagAATTTAACcatgactgtagctttttatgggtaaagaagcaacggtgaaggacccTACTAA
-ACGCccgtctgtaaaatgctaatcaaatcaatcaaatgtatttattaagcacctttaataaaaaggtaattggttggggg
-gagatgttatgttttatgtatgtttttgtcatgcctgtctacgcttcaaactcgtgcatattgcagtaaatatgcaacag
-
-==&gt; /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gff &lt;==
-##gff-version 3
-#!gff-spec-version 1.21
-#!processor NCBI annotwriter
-#!genome-build ASM3116895v1
-#!genome-build-accession NCBI_Assembly:GCF_031168955.1
-#!annotation-date 09/26/2023
-#!annotation-source NCBI RefSeq GCF_031168955.1-RS_2023_09
-##sequence-region NC_082382.1 1 26289739
-##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=80720
-NC_082382.1 RefSeq  region  1   26289739    .   +   .   ID=NC_082382.1:1..26289739;Dbxref=taxon:80720;Name=1;chromosome=1;gbkey=Src;genome=chromosome;mol_type=genomic DNA
-
-==&gt; /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gtf &lt;==
-#gtf-version 2.2
-#!genome-build ASM3116895v1
-#!genome-build-accession NCBI_Assembly:GCF_031168955.1
-#!annotation-date 09/26/2023
-#!annotation-source NCBI RefSeq GCF_031168955.1-RS_2023_09
-NC_082382.1 Gnomon  gene    7826    12944   .   +   .   gene_id "LOC132464423"; transcript_id ""; db_xref "GeneID:132464423"; description "uncharacterized LOC132464423"; gbkey "Gene"; gene "LOC132464423"; gene_biotype "lncRNA"; 
-NC_082382.1 Gnomon  transcript  7826    12944   .   +   .   gene_id "LOC132464423"; transcript_id "XR_009527261.1"; db_xref "GeneID:132464423"; experiment "COORDINATES: polyA evidence [ECO:0006239]"; gbkey "ncRNA"; gene "LOC132464423"; product "uncharacterized LOC132464423"; transcript_biotype "lnc_RNA"; 
-NC_082382.1 Gnomon  exon    7826    8896    .   +   .   gene_id "LOC132464423"; transcript_id "XR_009527261.1"; db_xref "GeneID:132464423"; experiment "COORDINATES: polyA evidence [ECO:0006239]"; gene "LOC132464423"; product "uncharacterized LOC132464423"; transcript_biotype "lnc_RNA"; exon_number "1"; 
-NC_082382.1 Gnomon  exon    12398   12944   .   +   .   gene_id "LOC132464423"; transcript_id "XR_009527261.1"; db_xref "GeneID:132464423"; experiment "COORDINATES: polyA evidence [ECO:0006239]"; gene "LOC132464423"; product "uncharacterized LOC132464423"; transcript_biotype "lnc_RNA"; exon_number "2"; 
-NC_082382.1 Gnomon  gene    44750   76860   .   +   .   gene_id "rereb"; transcript_id ""; db_xref "GeneID:132464430"; description "arginine-glutamic acid dipeptide (RE) repeats b"; gbkey "Gene"; gene "rereb"; gene_biotype "protein_coding"; 
-
-==&gt; /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/protein.faa &lt;==
-&gt;XP_059891391.1 putative helicase MOV-10 [Gadus macrocephalus]
-MVTTLFSASRLVTEGIPPGFYSHIFVDEAGQPAEPEGVIPLAGLLDPKRGQVVLAGDPKQLGPIVKSPLAKKHGLGVSML
-ERLMELNVYKKTEETGYNERFITKLLRNYRSHGRLLTIPNELFYESELQVWADKDIRNSLCEWKHLPSKGFPLIFHEVTG
-RMRREDNASLFNASLFNEDEVAILMQYLKALLEDVPPEDIGLIAPYRKQVERINKALKIEFPRNTAKLKVCTVDAFQGEE
-KRVILLSTVRSTSRDPRPPSSVGFLADPKRFNVAMTRAQALLIVAGNSEALTKDRIWSRFIEYCKEHGGYTKTMTTD
-&gt;XP_059891392.1 uncharacterized protein LOC132445431 isoform X1 [Gadus macrocephalus]
-MSGTQLNLLWVVAQQLMPGTWTEETGLDIEGVPQQLYGIDCGVFMVMYSWYITMDAHFDFNVLDMPHLRRWWCKLLLDNY
-GIEGCGKRFCHFTQEGHQMVNGLLAPVFRVTRKRKVLTKADDVFLKDTIEAAAWCQLQTFTDHVSLPMVIGVEGAEQQAL
-LAELKSVDRSCPEESLNRIEPFQFFFNSKKDYEMFCVEMFDRRKLKVFAYWE
-&gt;XP_059891393.1 uncharacterized protein LOC132445431 isoform X1 [Gadus macrocephalus]
-
-==&gt; /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/rna.fna &lt;==
-&gt;XM_060035408.1 PREDICTED: Gadus macrocephalus putative helicase MOV-10 (LOC132473465), mRNA
-AGTTCAATTGCAACTGGGTAGAGGGCGGCATCTATATCCCCGATAAAGAAGAGCTGGAGAAGCATAAAATCATGGTCACC
-ACCCTTTTCTCCGCTTCAAGGCTGGTTACGGAAGGCATCCCTCCAGGCTTTTACAGCCATATCTTTGTTGACGAGGCAGG
-ACAACCTGCAGAGCCTGAAGGGGTTATCCCCCTGGCAGGCCTACTGGACCCAAAGCGTGGCCAGGTAGTGTTGGCAGGAG
-ACCCCAAACAGTTGGGCCCCATCGTCAAATCCCCCCTAGCCAAGAAGCATGGACTTGGTGTATCAATGCTGGAGCGTCTG
-ATGGAGTTGAATGTGTACAAAAAGACAGAGGAAACGGGGTACAACGAGCGTTTCATCACCAAGCTGCTGAGGAACTACAG
-GTCTCATGGCAGACTTCTAACGATCCCAAATGAGCTGTTCTACGAGAGCGAACTCCAGGTGTGGGCCGATAAGGATATCC
-GCAACTCCTTATGTGAATGGAAGCACCTTCCCAGCAAGGGATTCCCGCTGATCTTCCATGAGGTCACTGGACGCATGCGT
-CGCGAGGACAACGCCTCACTGTTCAACGCCTCACTGTTCAACGAAGACGAGGTGGCGATTCTAATGCAGTATCTGAAAGC
-ACTGTTGGAAGATGTCCCCCCAGAAGACATAGGCCTCATTGCCCCATACAGGAAACAAGTGGAGAGGATCAACAAGGCTC
-
-==&gt; /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/sequence_report.jsonl &lt;==
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"1","gcCount":"11966204","gcPercent":45.5,"genbankAccession":"CP133525.1","length":26289739,"refseqAccession":"NC_082382.1","role":"assembled-molecule","sequenceName":"1"}
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"2","gcCount":"10889746","gcPercent":46.0,"genbankAccession":"CP133526.1","length":23805147,"refseqAccession":"NC_082383.1","role":"assembled-molecule","sequenceName":"2"}
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"3","gcCount":"12260317","gcPercent":45.5,"genbankAccession":"CP133527.1","length":26984552,"refseqAccession":"NC_082384.1","role":"assembled-molecule","sequenceName":"3"}
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"4","gcCount":"15920082","gcPercent":45.5,"genbankAccession":"CP133528.1","length":35077496,"refseqAccession":"NC_082385.1","role":"assembled-molecule","sequenceName":"4"}
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"5","gcCount":"10179291","gcPercent":46.0,"genbankAccession":"CP133529.1","length":22175970,"refseqAccession":"NC_082386.1","role":"assembled-molecule","sequenceName":"5"}
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"6","gcCount":"12603262","gcPercent":45.0,"genbankAccession":"CP133530.1","length":27900680,"refseqAccession":"NC_082387.1","role":"assembled-molecule","sequenceName":"6"}
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"7","gcCount":"12814946","gcPercent":45.5,"genbankAccession":"CP133531.1","length":28186669,"refseqAccession":"NC_082388.1","role":"assembled-molecule","sequenceName":"7"}
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"8","gcCount":"10854035","gcPercent":45.5,"genbankAccession":"CP133532.1","length":23760065,"refseqAccession":"NC_082389.1","role":"assembled-molecule","sequenceName":"8"}
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"9","gcCount":"10660006","gcPercent":45.5,"genbankAccession":"CP133533.1","length":23393856,"refseqAccession":"NC_082390.1","role":"assembled-molecule","sequenceName":"9"}
-{"assemblyAccession":"GCF_031168955.1","assemblyUnit":"Primary Assembly","assignedMoleculeLocationType":"Chromosome","chrName":"10","gcCount":"10758777","gcPercent":45.5,"genbankAccession":"CP133534.1","length":23728004,"refseqAccession":"NC_082391.1","role":"assembled-molecule","sequenceName":"10"}</code></pre>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cat</span> /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/rna.fna <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-20</span></span></code></pre></div>
-<pre><code>&gt;XM_060035408.1 PREDICTED: Gadus macrocephalus putative helicase MOV-10 (LOC132473465), mRNA
-&gt;XM_060035409.1 PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X2, mRNA
-&gt;XM_060035410.1 PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X3, mRNA
-&gt;XM_060035411.1 PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X4, mRNA
-&gt;XM_060035412.1 PREDICTED: Gadus macrocephalus ATP-sensitive inward rectifier potassium channel 12-like (LOC132475957), transcript variant X2, mRNA
-&gt;XM_060035413.1 PREDICTED: Gadus macrocephalus F-box only protein 41-like (LOC132445432), transcript variant X1, mRNA
-&gt;XM_060035414.1 PREDICTED: Gadus macrocephalus F-box only protein 41-like (LOC132445432), transcript variant X2, mRNA
-&gt;XM_060035415.1 PREDICTED: Gadus macrocephalus F-box only protein 41-like (LOC132445432), transcript variant X3, mRNA
-&gt;XM_060035416.1 PREDICTED: Gadus macrocephalus Kv channel-interacting protein 4-like (LOC132445433), mRNA
-&gt;XM_060035417.1 PREDICTED: Gadus macrocephalus RNA binding motif protein 46 (rbm46), mRNA
-&gt;XM_060035418.1 PREDICTED: Gadus macrocephalus elongation factor 1-alpha-like (LOC132445437), mRNA
-&gt;XM_060035419.1 PREDICTED: Gadus macrocephalus zona pellucida sperm-binding protein 3-like (LOC132445439), transcript variant X1, mRNA
-&gt;XM_060035420.1 PREDICTED: Gadus macrocephalus zona pellucida sperm-binding protein 3-like (LOC132445439), transcript variant X2, mRNA
-&gt;XM_060035421.1 PREDICTED: Gadus macrocephalus zona pellucida sperm-binding protein 3-like (LOC132445439), transcript variant X3, mRNA
-&gt;XM_060035422.1 PREDICTED: Gadus macrocephalus zona pellucida sperm-binding protein 3-like (LOC132445439), transcript variant X4, mRNA
-&gt;XM_060035423.1 PREDICTED: Gadus macrocephalus uncharacterized LOC132445438 (LOC132445438), mRNA
-&gt;XM_060035424.1 PREDICTED: Gadus macrocephalus UFM1-specific peptidase 1 (non-functional) (ufsp1), mRNA
-&gt;XM_060035425.1 PREDICTED: Gadus macrocephalus HAUS augmin-like complex, subunit 4 (haus4), mRNA
-&gt;XM_060035426.1 PREDICTED: Gadus macrocephalus endonuclease domain-containing 1 protein-like (LOC132445442), mRNA
-&gt;XM_060035427.1 PREDICTED: Gadus macrocephalus KH and NYN domain containing (khnyn), transcript variant X1, mRNA</code></pre>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cat</span> /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/protein.faa <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-20</span></span></code></pre></div>
-<pre><code>&gt;XP_059891391.1 putative helicase MOV-10 [Gadus macrocephalus]
-&gt;XP_059891392.1 uncharacterized protein LOC132445431 isoform X1 [Gadus macrocephalus]
-&gt;XP_059891393.1 uncharacterized protein LOC132445431 isoform X1 [Gadus macrocephalus]
-&gt;XP_059891394.1 uncharacterized protein LOC132445431 isoform X2 [Gadus macrocephalus]
-&gt;XP_059891395.1 ATP-sensitive inward rectifier potassium channel 12-like [Gadus macrocephalus]
-&gt;XP_059891396.1 F-box only protein 41-like isoform X1 [Gadus macrocephalus]
-&gt;XP_059891397.1 F-box only protein 41-like isoform X1 [Gadus macrocephalus]
-&gt;XP_059891398.1 F-box only protein 41-like isoform X2 [Gadus macrocephalus]
-&gt;XP_059891399.1 Kv channel-interacting protein 4-like [Gadus macrocephalus]
-&gt;XP_059891400.1 probable RNA-binding protein 46 [Gadus macrocephalus]
-&gt;XP_059891401.1 elongation factor 1-alpha-like [Gadus macrocephalus]
-&gt;XP_059891402.1 zona pellucida sperm-binding protein 3-like isoform X1 [Gadus macrocephalus]
-&gt;XP_059891403.1 zona pellucida sperm-binding protein 3-like isoform X2 [Gadus macrocephalus]
-&gt;XP_059891404.1 zona pellucida sperm-binding protein 3-like isoform X3 [Gadus macrocephalus]
-&gt;XP_059891405.1 zona pellucida sperm-binding protein 3-like isoform X4 [Gadus macrocephalus]
-&gt;XP_059891406.1 uncharacterized protein LOC132445438 [Gadus macrocephalus]
-&gt;XP_059891407.1 inactive Ufm1-specific protease 1 [Gadus macrocephalus]
-&gt;XP_059891408.1 HAUS augmin-like complex subunit 4 [Gadus macrocephalus]
-&gt;XP_059891409.1 endonuclease domain-containing 1 protein-like [Gadus macrocephalus]
-&gt;XP_059891410.1 protein KHNYN isoform X1 [Gadus macrocephalus]</code></pre>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cat</span> /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/cds_from_genomic.fna <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-20</span></span></code></pre></div>
-<pre><code>&gt;lcl|NC_082382.1_cds_XP_059916776.1_1 [gene=rereb] [db_xref=GeneID:132464430] [protein=arginine-glutamic acid dipeptide repeats protein isoform X1] [protein_id=XP_059916776.1] [location=join(44883..44908,45901..45949,46305..46429,50198..50297,50452..50550,50685..50765,50865..51018,51179..51271,57813..58012,59841..60005,64360..64470,67157..68541,70221..70425,70825..71635,72380..72517,72610..72790,75074..75107)] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916797.1_2 [gene=rereb] [db_xref=GeneID:132464430] [protein=arginine-glutamic acid dipeptide repeats protein isoform X3] [protein_id=XP_059916797.1] [location=join(44883..44908,45901..45949,46305..46429,50198..50297,50452..50550,50685..50765,50865..51018,51179..51271,57813..58012,59841..60005,64363..64470,67157..68541,70221..70425,70825..71635,72380..72517,72610..72790,75074..75107)] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916784.1_3 [gene=rereb] [db_xref=GeneID:132464430] [protein=arginine-glutamic acid dipeptide repeats protein isoform X2] [protein_id=XP_059916784.1] [location=join(44883..44908,45901..45949,46305..46429,50198..50297,50452..50550,50685..50765,50865..51018,51179..51271,57813..58012,59841..60005,64360..64470,67157..68541,70221..70425,70825..71635,72380..72517,72610..72824)] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916809.1_4 [gene=LOC132464448] [db_xref=GeneID:132464448] [protein=uncharacterized protein LOC132464448 isoform X1] [protein_id=XP_059916809.1] [location=complement(join(73693..74042,77417..77494,77632..77748,77849..81089))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916817.1_5 [gene=LOC132464448] [db_xref=GeneID:132464448] [protein=uncharacterized protein LOC132464448 isoform X1] [protein_id=XP_059916817.1] [location=complement(join(73693..74042,77417..77494,77632..77748,77849..81089))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916826.1_6 [gene=LOC132464448] [db_xref=GeneID:132464448] [protein=uncharacterized protein LOC132464448 isoform X2] [protein_id=XP_059916826.1] [location=complement(join(77409..77494,77632..77748,77849..81089))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916845.1_7 [gene=c1h1orf159] [db_xref=GeneID:132464464] [protein=uncharacterized protein C1orf159 homolog isoform X2] [protein_id=XP_059916845.1] [location=complement(join(84432..84529,86056..86080,86194..86222,86358..86492,86861..86917,87015..87089,87396..87480,87569..87640))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916837.1_8 [gene=c1h1orf159] [db_xref=GeneID:132464464] [protein=uncharacterized protein C1orf159 homolog isoform X1] [protein_id=XP_059916837.1] [location=complement(join(84432..84529,86056..86080,86194..86222,86358..86492,86861..86917,87015..87110,87396..87480,87569..87640))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916912.1_9 [gene=LOC132464512] [db_xref=GeneID:132464512] [protein=interactor of HORMAD1 protein 1 isoform X1] [protein_id=XP_059916912.1] [location=join(89542..89597,89694..89853,90272..90414,90506..90554,90635..90719,90936..91051,91144..91884)] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916921.1_10 [gene=LOC132464512] [db_xref=GeneID:132464512] [protein=interactor of HORMAD1 protein 1 isoform X2] [protein_id=XP_059916921.1] [location=join(89542..89597,89694..89853,90272..90414,90506..90554,90635..90719,90936..91051,91455..91589)] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916891.1_11 [gene=kbtbd12] [db_xref=GeneID:132464496] [protein=kelch repeat and BTB domain-containing protein 12] [protein_id=XP_059916891.1] [location=complement(join(93437..93609,93716..93913,94092..94242,94443..94713,94861..95927))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916878.1_12 [gene=slc26a6l] [db_xref=GeneID:132464487] [protein=solute carrier family 26 member 6, like] [protein_id=XP_059916878.1] [location=join(97328..97467,97814..97953,98103..98213,100474..100652,100734..100898,101117..101269,101590..101672,101775..101922,102014..102127,102477..102554,103021..103116,103219..103325,103612..103681,109717..109809,109881..109991,110106..110519,110797..110851,111554..111699,111813..111839)] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916903.1_13 [gene=p4htmb] [db_xref=GeneID:132464503] [protein=transmembrane prolyl 4-hydroxylase] [protein_id=XP_059916903.1] [location=complement(join(112626..112840,113209..113332,113541..113631,114059..114244,115325..115487,116890..116986,117200..117390,117893..117974,118090..118410))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916864.1_14 [gene=LOC132464480] [db_xref=GeneID:132464480] [protein=myosin heavy chain, fast skeletal muscle] [protein_id=XP_059916864.1] [location=complement(join(122587..122607,123965..124096,124184..124279,126315..126419,126521..126691,126795..126920,127002..127205,127296..127604,127685..127809,127921..128086,128350..128533,128618..128814,128912..129030,129513..129639,130320..130709,130818..130908,130999..131144,131239..131415,131501..131743,131835..132090,132191..132327,132658..132781,132877..132994,133088..133175,133447..133517,133638..133944,134045..134215,134305..134454,134559..134677,134788..134926,135009..135112,135215..135313,135399..135462,135588..135680,135910..136021,136108..136135,136222..136378,136466..136609,136692..136892))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916933.1_15 [gene=LOC132464525] [db_xref=GeneID:132464525] [protein=myosin heavy chain, fast skeletal muscle-like] [protein_id=XP_059916933.1] [location=join(153117..153317,153556..153699,153787..153943,154043..154070,154153..154267,154358..154450,154539..154602,154685..154783,154873..154976,155217..155355,155593..155711,155820..155969,156067..156237,156323..156626,156798..156871,157253..157340,157460..157577,157666..157789,157872..158008,158111..158366,158455..158697,158791..158967,159089..159234,159323..159413,159492..159881,159990..160116,160207..160325,160414..160610,160695..160878,160963..161128,161226..161350,162086..162394,162475..162678,162787..162912,163111..163281,163366..163470,163922..164017,164101..164232,164422..164439)] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916964.1_16 [gene=LOC132464531] [db_xref=GeneID:132464531] [protein=voltage-dependent calcium channel subunit alpha-2/delta-2-like isoform X3] [protein_id=XP_059916964.1] [location=complement(join(180132..180233,181028..181110,183052..183161,183261..183384,183509..183564,183720..183772,183890..184042,184199..184270,185008..185055,185149..185240,185511..185606,188185..188288,188730..188792,189575..189665,189750..189847,189930..189990,190342..190418,190502..190563,192548..192619,192718..192789,193007..193081,193164..193238,193854..193919,194949..195038,195185..195234,195861..195939,196052..196162,196346..196507,196633..196732,198661..198711,199050..199107,199192..199323,199445..199580,199751..199795,216033..216114,226287..226408))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916955.1_17 [gene=LOC132464531] [db_xref=GeneID:132464531] [protein=voltage-dependent calcium channel subunit alpha-2/delta-2-like isoform X2] [protein_id=XP_059916955.1] [location=complement(join(180132..180233,181028..181110,183052..183161,183261..183384,183509..183564,183720..183772,183890..184042,184199..184270,185008..185055,185149..185240,185511..185606,188185..188288,188730..188792,189575..189665,189750..189847,189930..189990,190342..190418,190502..190563,192548..192619,192718..192789,193007..193081,193164..193238,193854..193919,194949..195038,195185..195234,195861..195939,196052..196162,196346..196507,196633..196732,198661..198711,199050..199107,199192..199323,199445..199580,210281..210340,210659..210775,216033..216114,226287..226408))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916945.1_18 [gene=LOC132464531] [db_xref=GeneID:132464531] [protein=voltage-dependent calcium channel subunit alpha-2/delta-2-like isoform X1] [protein_id=XP_059916945.1] [location=complement(join(180132..180233,181028..181110,183052..183161,183261..183384,183509..183564,183720..183772,183890..184042,184199..184270,185008..185055,185149..185240,185511..185606,188185..188288,188730..188792,189575..189665,189750..189847,189930..189990,190342..190418,190502..190563,192548..192619,192718..192789,193007..193081,193164..193238,193854..193919,194949..195038,195185..195234,195861..195939,196052..196162,196346..196507,196633..196732,198661..198711,199050..199107,199192..199323,199445..199580,199751..199795,210281..210340,210659..210775,216033..216114,226287..226408))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059916988.1_19 [gene=LOC132464555] [db_xref=GeneID:132464555] [protein=aminoacylase-1A-like] [protein_id=XP_059916988.1] [location=complement(join(228757..228933,231338..231398,231518..231597,231677..231745,233158..233302,239422..239471,239589..239662,239750..239806,240427..240516,240637..240713,242007..242101,242190..242294,242402..242466,243332..243464))] [gbkey=CDS]
-&gt;lcl|NC_082382.1_cds_XP_059917028.1_20 [gene=abhd14a] [db_xref=GeneID:132464582] [protein=protein ABHD14A] [protein_id=XP_059917028.1] [location=complement(join(245995..246177,247432..247667,248014..248129,248241..248500))] [gbkey=CDS]</code></pre>
-<p>Blast RNA fasta</p>
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"></span>
-<span id="cb13-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> ../data</span>
-<span id="cb13-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">curl</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-O</span> https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz</span>
-<span id="cb13-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mv</span> uniprot_sprot.fasta.gz uniprot_sprot_r2024_02.fasta.gz</span>
-<span id="cb13-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">gunzip</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-k</span> uniprot_sprot_r2024_02.fasta.gz</span></code></pre></div>
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"></span>
-<span id="cb14-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> ../data</span>
-<span id="cb14-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">curl</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-O</span> https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz</span>
-<span id="cb14-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mv</span> uniprot_sprot.fasta.gz uniprot_sprot_r2024_02.fasta.gz</span>
-<span id="cb14-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">gunzip</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-k</span> uniprot_sprot_r2024_02.fasta.gz</span></code></pre></div>
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> ../blastdb</span>
-<span id="cb15-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/ncbi-blast-2.11.0+/bin/makeblastdb</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb15-3">-in ../data/uniprot_sprot_r2024_02.fasta <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb15-4">-dbtype prot <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb15-5">-out ../blastdb/uniprot_sprot_r2024_02</span></code></pre></div>
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/blastx</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb16-2">-query ../data/ncbi_dataset/data/GCF_031168955.1/rna.fna <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb16-3">-db ../blastdb/uniprot_sprot_r2024_02 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb16-4">-out ../output/11-annotation/PcodRNA_uniprot_blastx.tab <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb16-5">-evalue 1E-20 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb16-6">-num_threads 30 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb16-7">-max_target_seqs 1 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb16-8">-outfmt 6</span></code></pre></div>
-<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/11-annotation/PcodRNA_uniprot_blastx.tab</span></code></pre></div>
-<pre><code>XM_060035408.1  sp|Q1LXK4|M10B1_DANRE   50.575  348 153 5   6   1004    623 966 3.85e-97    321
-XM_060035412.1  sp|F1NHE9|KCJ12_CHICK   63.014  365 110 2   1513    2607    45  384 1.17e-135   426
-XM_060035413.1  sp|Q8TF61|FBX41_HUMAN   53.644  343 153 2   1643    2665    534 872 2.62e-98    331
-XM_060035414.1  sp|Q8TF61|FBX41_HUMAN   53.644  343 153 2   1630    2652    534 872 2.42e-98    331
-XM_060035415.1  sp|Q8TF61|FBX41_HUMAN   53.644  343 153 2   1573    2595    534 872 1.65e-98    331
-XM_060035416.1  sp|Q8HYN7|KCIP4_MACFA   87.037  108 14  0   16  339 143 250 2.04e-59    205
-XM_060035417.1  sp|Q08BH5|RBM46_DANRE   76.014  296 66  2   25  909 1   292 3.41e-139   420
-XM_060035418.1  sp|P08736|EF1A1_DROME   93.519  108 7   0   4   327 1   108 5.61e-67    213
-XM_060035419.1  sp|P97708|ZP3_RAT   33.618  351 202 9   181 1182    37  373 2.03e-45    167
-XM_060035420.1  sp|P97708|ZP3_RAT   33.333  351 202 10  181 1179    37  373 4.82e-43    161</code></pre>
-<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1">blast <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/11-annotation/PcodRNA_uniprot_blastx.tab"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\t</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">header =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span>(blast)</span></code></pre></div>
-<pre><code>              V1                    V2     V3  V4  V5 V6   V7   V8  V9 V10
-1 XM_060035408.1 sp|Q1LXK4|M10B1_DANRE 50.575 348 153  5    6 1004 623 966
-2 XM_060035412.1 sp|F1NHE9|KCJ12_CHICK 63.014 365 110  2 1513 2607  45 384
-3 XM_060035413.1 sp|Q8TF61|FBX41_HUMAN 53.644 343 153  2 1643 2665 534 872
-4 XM_060035414.1 sp|Q8TF61|FBX41_HUMAN 53.644 343 153  2 1630 2652 534 872
-5 XM_060035415.1 sp|Q8TF61|FBX41_HUMAN 53.644 343 153  2 1573 2595 534 872
-6 XM_060035416.1 sp|Q8HYN7|KCIP4_MACFA 87.037 108  14  0   16  339 143 250
-        V11 V12
-1  3.85e-97 321
-2 1.17e-135 426
-3  2.62e-98 331
-4  2.42e-98 331
-5  1.65e-98 331
-6  2.04e-59 205</code></pre>
-<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cat</span> /home/shared/8TB_HDD_03/sr320/github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/rna.fna <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-2</span></span></code></pre></div>
-<pre><code>&gt;XM_060035408.1 PREDICTED: Gadus macrocephalus putative helicase MOV-10 (LOC132473465), mRNA
-&gt;XM_060035409.1 PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X2, mRNA</code></pre>
-<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">perl</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-e</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'$count=0; $len=0; while(&lt;&gt;) {s/\r?\n//; s/\t/ /g; if (s/^&gt;//) { if ($. != 1) {print "\n"} s/ |$/\t/; $count++; $_ .= "\t";} else {s/ //g; $len += length($_)} print $_;} print "\n"; warn "\nConverted $count FASTA records in $. lines to tabular format\nTotal sequence length: $len\n\n";'</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb24-2">../data/ncbi_dataset/data/GCF_031168955.1/rna.fna  <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/11-annotation/GCF_031168955.1_rna.tab </span></code></pre></div>
-<div class="sourceCode" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/11-annotation/GCF_031168955.1_rna.tab</span></code></pre></div>
-<pre><code>XM_060035408.1  PREDICTED: Gadus macrocephalus putative helicase MOV-10 (LOC132473465), mRNA    AGTTCAATTGCAACTGGGTAGAGGGCGGCATCTATATCCCCGATAAAGAAGAGCTGGAGAAGCATAAAATCATGGTCACCACCCTTTTCTCCGCTTCAAGGCTGGTTACGGAAGGCATCCCTCCAGGCTTTTACAGCCATATCTTTGTTGACGAGGCAGGACAACCTGCAGAGCCTGAAGGGGTTATCCCCCTGGCAGGCCTACTGGACCCAAAGCGTGGCCAGGTAGTGTTGGCAGGAGACCCCAAACAGTTGGGCCCCATCGTCAAATCCCCCCTAGCCAAGAAGCATGGACTTGGTGTATCAATGCTGGAGCGTCTGATGGAGTTGAATGTGTACAAAAAGACAGAGGAAACGGGGTACAACGAGCGTTTCATCACCAAGCTGCTGAGGAACTACAGGTCTCATGGCAGACTTCTAACGATCCCAAATGAGCTGTTCTACGAGAGCGAACTCCAGGTGTGGGCCGATAAGGATATCCGCAACTCCTTATGTGAATGGAAGCACCTTCCCAGCAAGGGATTCCCGCTGATCTTCCATGAGGTCACTGGACGCATGCGTCGCGAGGACAACGCCTCACTGTTCAACGCCTCACTGTTCAACGAAGACGAGGTGGCGATTCTAATGCAGTATCTGAAAGCACTGTTGGAAGATGTCCCCCCAGAAGACATAGGCCTCATTGCCCCATACAGGAAACAAGTGGAGAGGATCAACAAGGCTCTTAAGATCGAGTTCCCCAGAAACACAGCAAAGTTAAAGGTTTGCACAGTGGACGCGTTTCAGGGCGAGGAGAAGCGGGTGATTCTGCTGTCCACAGTGAGAAGCACCAGCCGGGACCCCAGACCCCCCTCCTCCGTGGGGTTCCTTGCTGACCCCAAGAGGTTCAACGTGGCCATGACCCGCGCCCAAGCCCTGTTGATCGTGGCGGGGAACTCAGAGGCGCTGACAAAGGACAGGATTTGGAGCAGGTTCATCGAGTACTGCAAAGAACACGGAGGTTACACCAAGACCATGACCACCGATTGACGTGCATGCACGGACACATACGCACACTGACAACCACACTCACGTACACACATACAACCTCCGCACACACACACACACACACACACACAAACACACACATACACCTTCTCCACACAAAATGATATTAAGGACTAAAAACCTCACATTTTATTTGACATTGTTGCATCAGCCTATTAGAGGAGAATTTTTTTGACCATTAGGCCTTCCCATCGTTGTGATGGAAAATCTATCATAATCATAAAGTTTTTCGTTTTGAACTTAGGTTTTGTTTACTATTCCGTGTTTGTTCTTGCCGTCCTGCTCTCCTTCGGGGTCATCTAAAATGTAAACCTTTGTGGTTGATGATGTAATCTGTTCTCACTCTGTTCCTGTGTTATCTTCTGTTGATTTGGGCCTGTTCCACGACCCTGGGGAGCTTCAGGAAACAAAGGGTTACATGGCACGGACGCGACCCCTTATTTATGACATCCTGAGGAACTTCAATCAATAGATTACCATCTGGTTAACAAAGGCTTTTGGTTTATTGGGGGACAGCTGCCCTCAAGAACCCAATCTAAGTGTATAAGAACTCCTGACTTAGCCACTTTAGAGTATGAAGTAAGACACAGGGCAAACTCCCATCTGAGGCCTCAAATTACTGTAGTGTATGCCTGTTTTATTGTTTTTTGATGCATGTTGTGATGTATCTTTGTTCGTACTTTTATTACAAATATATAGGACCACCAATTGCCTAAAA
-XM_060035409.1  PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X2, mRNA TTCCTGGTCCTCTCAATATTGCTGATATCATAACCAGAGGGGCCAGTCCTCAAGACCTGGATGAAAGTTCAGAATGGCAGAACGGACCAACATTCTTGAAGCTACCAGTGGATGAGTGGCCAGTTAAATCTGCCAAAGAGTTGGTGATGGCTGCCAGAGACGGTGTCAACAGATTACAGAAGAAAGCGTTTGTTGCTGCACTGACCCGAGCACAAGCCAAGGCACAACTGCTGCCGGATCCAAAGGATACTGACACGCAGAAGCCTTCTGAACTAAAGCAAGACCAGGAACCAACTCAGACCCAAACACAACCAAAGAGGCCACCAGCAGGATCAACTGTCCAAGAACTGGTGGATGTCAAGCGGTTCAGTAACCTAAGCCGACTTGTCAAAACAGTTGCCTGGATCCGGAGAGCAGCAAGGATGTTCATGAAAGGGAACAAGCGAACTGCAAACAATCCAAAGTGGGAGGCAGTGTCGTTTTCAAAAGTCATCTCAGTGACAGAGAGGGAAGACGCCCTAAAAGACATCTTCCTTGCGGCACAGCAAAGTGCATCCTTCCCAAGCACAACCACAGACAGGCTGGTGGTGTACAGAGACCAAGAGACTGGATTGTTGGTCTGTGGGGGTCGTGTGCAGATCTTCAATGAAGATAAAGTTGCTGTCCCCATCTTGCCTTACGAAGCCTGGGTGTCGACACTGTTAGCACGAGAAGCCCACGAGGAGAACCACGATGGAGTGGCCGGGACCTTGCTCAAGATGAGAAGAAGAGCATGGGTCGTGAAAGGTCGGAGAATTGCTCAAAAAGTGGTCGAAAACTGCATGTTCTGCAGGAAAACTAAAGCAAAAAGATGCCAGCAAATAATGGGTGATCTACCTCCAGAGAGGACAGAACCAGCTGCCCCATTCCACTACACAACAGTCGACCTCTTCGGACCCTACCAAGTCAGGGATGATGTAAAGAAAAGAGTGTCACTGAAGGTTTGGGGAATTGTGTTTTGTTGCATGGCCTCCAGAGCTATTCACACCGAGCTGGTGAACTCTCAGTCCACAGAGAGTTTTCTGTTTGCCTACCAGAGGTTCACAGCACTAAGAGGTCATCCAAAGAAAATCTGGTCAGATCCTGGGACCAACTTCATTGGGGCTAAGCCAGTCCTAGAAGAACAGTACCGATTCTTTGCCAATCTTGACAAAGCTACCCTGGAGGAGAGAGCTGCCAAGGATGGCACAGAATGGTCGTGGAAGATTCAACCAGCCGATTCTCCACACCGGAATGGTGCCGCAGAAGCTGCTGTGCGCATTGTCAAGAGAGCACTGCAGAGTCTTGGAGGAGAGTCCGGCCTAAGTTGGAGTGAATTCCAAACAACTCTCTACACGGCTGCCAATCTTGCAAATGAAAGACCAATTGACGCCAGGACACAGAGCCGAGAAGACAGCGTCCAGTTCATCACTCCTAACTGTCTCCTGCTCGGACGAGCATCACAGGGTGGAGATGTCAGAACATTCGACTTCAGTGACTATCCCTACAAAAGGCTTAAAGAAATGCAAGCGCAAGTTAACAAGTTCTGGAGGAACTGGAGTCAACTTGCTGGTCCTAACTTATTCGTAAGGAACAAATGGCATACCGCCAAGAGAAATGTCGCAGTCGGGGACATCGTCTGGATGGCGGACCAAAACGCCCTTAGGGGTCAGTTCAGGATTGCAAGAGTGGTTAGCGTCAACTCGGACAGCAAAGGAGTTGTGAGGGACGTCAATGTCAGAACCTTCCCAAGCTACCCCGTTCCTGTCACAAGGCCTACCGGAGCAAAAGTAAGTCACCGAACATCTAAGAAATTCAAAGAAAAGATCCCAGCAGCAGTTCTTCACAGAGACGTAAGGCGACTAGTGATCTTGCTTCCCACCGAAGAACAGAACTAAACATCTGACCCAAGTTGCTCCTGTAACATGCGACCTCCCAGGTGTCTCCACTGGAAGGTCGAGTGGGAGGTGTGAAGTCAACTTGGAAAATCCCTGCTGGATATGAAGGGGTTAATATGCAACGCCGACTGACAGCTGGGGGAATCCCTCCTCAGAGCGTTACCTGGGAAATCCACGTCATTGCGTCACCTTACCGGAAAGGACAGAAAGGGGAAGAGAGACTCTTTCAGGAAACGCCAGTTGCAAACAAATCAGACAGCGTTCGGTCCAGCAGCAGCAAAGCTGCGCTAGAGAACTTGGAAAAAGCAGCGCTGGTACAGCCATAAAAAGCCTGGAGAAACGGCCGGTTTTTTACCTTGCAGTATACCTAGCAGTTTACCACTTGCAACCCACTTACAACTGTACCCACAATACCTACCTGCTACAACTTACCTGTACCTGTGAAAATACAAAAAGAAAAGTAAAGAGGAGTTAAAGAAGGAAAACCGTGTGGTCATTGCATGAGTGGAACCCAGTTAAACCTCCTATGGGTTGTTGCGCAACAATTGATGCCTGGCACCTGGACCGAGGAGACTGGCTTGGACATTGAGGGTGTTCCACAACAACTATATGGCATCGACTGTGGAGTCTTTATGGTCATGTACTCCTGGTACATTACCATGGACGCACACTTCGATTTCAACGTTTTGGATATGCCTCATCTCAGGAGGTGGTGGTGCAAGCTCCTTTTGGACAACTACGGGATTGAAGGATGTGGCAAAAGATTCTGTCATTTCACCCAAGAAGGACACCAGATGGTGAATGGACTCCTGGCACCGGTGTTCCGGGTAACACGGAAGCGGAAGGTTTTGACCAAGGCAGATGATGTTTTCCTGAAGGACACAATTGAGGCAGCAGCATGGTGCCAGTTGCAGACCTTCACCGACCACGTTTCTCTCCCGATGGTCATTGGGGTGGAAGGTGCAGAGCAGCAGGCATTGTTAGCAGAGCTGAAATCCGTTGACCGCAGTTGCCCGGAAGAAAGCCTAAACAGGATTGAACCGTTCCAGTTCTTCTTCAATTCAAAGAAGGACTACGAAATGTTCTGTGTGGAGATGTTTGACCGGAGAAAGCTGAAAGTGTTTGCTTATTGGGAGTAGCGACATTTTACCCATTGTTTTAATTGAACTGGGGGACCGGGGGCCGATTCTTTATGTTATCATTTATATAACCAGTTCTAAAACCATTTTCATTTGTCTTTATAAATAAAATGATGTC
-XM_060035410.1  PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X3, mRNA CAGAATTCATGAAAATATGCTTAGACATTAAAAACTATTAATAATATTTATATTTATATTTATATATTTATAAGTATTTAAATGCATATATGAAAAACATGTTTGTATTTACTATTTCATTCTGCACTGCATTTACTGTAGTTATTTTTGGTTTCTTTAAAGGTTTTTTACCTTGCAGTATACCTAGCAGTTTACCACTTGCAACCCACTTACAACTGTACCCACAATACCTACCTGCTACAACTTACCTGTACCTGTGAAAATACAAAAAGAAAAGTAAAGAGGAGTTAAAGAAGGAAAACCGTGTGGTCATTGCATGAGTGGAACCCAGTTAAACCTCCTATGGGTTGTTGCGCAACAATTGATGCCTGGCACCTGGACCGAGGAGACTGGCTTGGACATTGAGGGTGTTCCACAACAACTATATGGCATCGACTGTGGAGTCTTTATGGTCATGTACTCCTGGTACATTACCATGGACGCACACTTCGATTTCAACGTTTTGGATATGCCTCATCTCAGGAGGTGGTGGTGCAAGCTCCTTTTGGACAACTACGGGATTGAAGGATGTGGCAAAAGATTCTGTCATTTCACCCAAGAAGGACACCAGATGGTGAATGGACTCCTGGCACCGGTGTTCCGGGTAACACGGAAGCGGAAGGTTTTGACCAAGGCAGATGATGTTTTCCTGAAGGACACAATTGAGGCAGCAGCATGGTGCCAGTTGCAGACCTTCACCGACCACGTTTCTCTCCCGATGGTCATTGGGGTGGAAGGTGCAGAGCAGCAGGCATTGTTAGCAGAGCTGAAATCCGTTGACCGCAGTTGCCCGGAAGAAAGCCTAAACAGGATTGAACCGTTCCAGTTCTTCTTCAATTCAAAGAAGGACTACGAAATGTTCTGTGTGGAGATGTTTGACCGGAGAAAGCTGAAAGTGTTTGCTTATTGGGAGTAGCGACATTTTACCCATTGTTTTAATTGAACTGGGGGACCGGGGGCCGATTCTTTATGTTATCATTTATATAACCAGTTCTAAAACCATTTTCATTTGTCTTTATAAATAAAATGATGTC
-XM_060035411.1  PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X4, mRNA CCCTGCTGTAAGTATTTCTTTCTTAAAGGTACAACATGTCTCTGGCCCGCCGAGTGTCATTGTAGGCCTACTTGTAAATGAAAATTAAAGCTTTCTATGGTGATTAACTTGTCTATTCTAGGTGGGAAACGCTTGTTTGCACTTGGTCAAGGAGATGGCCGAACATCAAGGAAAATATGTATTTCTTCTTGACCTCCACATCCCCCCAACATGGCTCCAATCGCCAAATTCAGATCATCTGCGCAGCTTTCCAGTTGACATCACCACCATGGATGCAGTGATTGTCCCACTGTGGACACCAGGGCATTTTCTGCTTAGTGGTTGTTGCGCAACAATTGATGCCTGGCACCTGGACCGAGGAGACTGGCTTGGACATTGAGGGTGTTCCACAACAACTATATGGCATCGACTGTGGAGTCTTTATGGTCATGTACTCCTGGTACATTACCATGGACGCACACTTCGATTTCAACGTTTTGGATATGCCTCATCTCAGGAGGTGGTGGTGCAAGCTCCTTTTGGACAACTACGGGATTGAAGGATGTGGCAAAAGATTCTGTCATTTCACCCAAGAAGGACACCAGATGGTGAATGGACTCCTGGCACCGGTGTTCCGGGTAACACGGAAGCGGAAGGTTTTGACCAAGGCAGATGATGTTTTCCTGAAGGACACAATTGAGGCAGCAGCATGGTGCCAGTTGCAGACCTTCACCGACCACGTTTCTCTCCCGATGGTCATTGGGGTGGAAGGTGCAGAGCAGCAGGCATTGTTAGCAGAGCTGAAATCCGTTGACCGCAGTTGCCCGGAAGAAAGCCTAAACAGGATTGAACCGTTCCAGTTCTTCTTCAATTCAAAGAAGGACTACGAAATGTTCTGTGTGGAGATGTTTGACCGGAGAAAGCTGAAAGTGTTTGCTTATTGGGAGTAGCGACATTTTACCCATTGTTTTAATTGAACTGGGGGACCGGGGGCCGATTCTTTATGTTATCATTTATATAACCAGTTCTAAAACCATTTTCATTTGTCTTTATAAATAAAATGATGTC
-XM_060035412.1  PREDICTED: Gadus macrocephalus ATP-sensitive inward rectifier potassium channel 12-like (LOC132475957), transcript variant X2, mRNA AAGCGTTGTGTGTCGCTGAAGCAACATCCAGTGCCAGGTCTGACTGAAGCTAGCTGGTTAGCATAGCTGACCTATGTATGCTTTGTATGCATTATGAGCGTTAGCCTAAAGGGTAACAGCAGTAATCTGGTCTGATTACAGGCTATTTATAAATCTCTCCCCTCGACCCCAAACTAACCTCGCTGACCACTAGCAGCAGGATCTGAACCATTTTTCCCTTTTCACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACAGTTTCTATATTGATCGAAAATGGAGGCTCTGGAAACACCTTTAACTCTGTTTCTCTGTTTCAAACTGTGAAATAGGGAGGTCTTTTAGGAGAGGAGAAGGGGGAGGTGTGAGTGGAAGAGGAGGAGAGGGGTGGAAAGAGAAAGAGGGAAAGGTGAGTTCTGGAGGAGTAGAGGATTAGAAGAAGGCCTTCAGGTCCCCATGCTAGTGCGGTGAGGTGAGGGAGCAGGGGGATGGCAGGAGGAGTAAGAGGCTGCATCATGCAGTCCACCCCTTGCAGCACTAGAACCTCCTCCTCTGCCCTTCTGATCCAGTGGAACAACGAGGTGATGATCTACCAGCCAACCGTGACCCTGCCTCCACGAGCCTACGGAATGAGACATGTTTTGATGCAGGTTATGAGAGTTCGGACTTCGGATGAACACATATAAACCGTCTCTCAACTCCTCTGGCCCCCCTCTTCTTACCTCTCCTCTCCTCCCTTCCCATCACCCACCATCACCGCCTTCTCTTCACAGGAGATGGACACAGCAGATCTGACTGGACAGAGCACATCTCCTCCTCCCCTCCTCCTATGGGATTGCGCTGGTGTGGGGGGTGGAGGACAAAGTTCCTCTCCTCTCCGCCTCCACCCCTCCTACTATAGAGTTGTGCTGGTGTGTAGGACAGAGTTAACAGACAGGATTACAGCCAGAGGACGGCAGAGGCAGTGAAGGAGAAAATAAAGGATTTTCTCAGAGGAGGGAAAGCCAAGGAAAGATTGACCAAACAGAACTCTGGGAGAATGAACATGGAACCTTTGAGCTGAACTGAAGCAGAGTGATTTCGACCTTAGCAAGTCAGCGTTTGGACAGGTATAACGCTGGTCTGTGGTGCTAGGGGGCTGACCAGGGCCACCGGGGCCCCTGTGTCCAGAGCGTGGTGCCTGGGAGCCACTGCCAGGGGTGATGGGAACAAGACGATCCAGCAGGTTCAGCCTGGCGTCCGTCGTCCTCCAAGAAGACGAGCACCGTAAGGTCTCCAGCCAGGGTCTCCTGAACGGCCACGACTCCCCGCCGCGCTCCTCCACCACCTCCTCCTTGGCCACCGGCGGGAGGGAGGAGGAGCAGCAGCGGGGAGGGATGAGCGGCTCCAGCGTCCGGGGGGGCCCGACGCGGGGCCCCTCCGGACCGCCGCGGAGCCGCTTCGTGAAGAAGAGCGGCCACTGCAACGTGGCGTTCAGCAACCTGGAGGACCGGAGCCAGCGCTACCTGGCCGACCTCTTCACCACCTGCGTGGACGTCCGCTGGCGCCACCTGCTGCTGCTCTTCTGCGTCAGCTTCCTGCTCTCCTGGCTCTTCTTCGGGCTCGTCTTCTACCTGGTGTCCCTGGCCCACGGGGACTTCCAGGACCCGTCTGACGTGTCGCCGGCGGGAGCGACCCAGGGCCCGGGGGGCCGGAGGGAGCGCACGCCGTGCCTCCTCCACGTGCACGGCCTCCTGGGCGCGCTCCTGTTCTCCATGGAGACCCAGACCACCATCGGCTACGGCTGGCGCTGCGTGACGGAGGAGTGCCCGGTGGCCGTGGCGACGGTGGTGGTGCAGTCGGTCGTGGGCTGCATCCTCGACTCCTTCATGATCGGCACCATCATGGCCAAGATGGCGCGGCCCAAGAAGCGGAACCAGACGCTGATGTTCTCGCGGAACGCCGTGATCGCGCTGCGCGACGGCCGGCTCTGCCTCATGTGGCGGGTGGGGAACCTGCGGCACTCGCACATCGTGGAGGCCCACGTGCGCGCCCAGCTCCTCCGGCCCTACGTCACGGAGGAGGGCGAGTTCGTCCCCCTGGAGCAGATGGACCTCAACGTGGGCTACGACGACGGCACCGACCGCATCTTCCTCGTGTCGCCGCTCGTCATCGTCCACGAGATCGACAAGGACAGCCCGCTGTACTCGCTGAGCCGGGCCGACCTGGAGGCGGAGCACTTTGAGATCGTGGTCATCCTCGAGGGCATGGTGGAGGCTACGGCCATGTCCACCCAGTTCCGCAGCTCCTACCTGGCCCGCGAGGTCTTCTGGGGCCACCGCTTCGAGCCCGTGATCTGCGAGGACCGCGACCGCTACAGGGTGGACTACGCGCGCTTCCACCAGACCTACGAGGTGCCGTCCACGCCGCACCTCAGCGCCAAGGAGCTGGACGAGGCCGCCAGCCGGCCCCCCTCCGCCAGGACGACGCGACCGCCACCGTCGGCCAAGGAGGCGCCGAGCTCGTTCTGCTACGACAACGAGGTGGCGCTGATCTGCGGCGAGGACGACGACGAAGACGATGACGACGACGAGAACGACATCTTTGACTTGCGCCGGACACTGTCGTCGCCGGGGGGGAGGCGGGAGGAGAGGAGGACCTCGGTGACCGTGGACCTCCCGAAGGCGGGACAGGACTCGGCTGCCTTGACAACGGGCCGCCAGAGCTTGATGTGCGTGCTGGACATGGACAACCACCAGAGGGAGTTCGATATGCTGCAGACGGCAATTCCGCTCGATCCGCAGTCCTACAAGAGCGAGCAGGAGATGTAGAGGTCTGAGGGACACTGGACGGGGAAGACTGCTCGGGGGTTGTTCTCAGCCTTGCTTCTGTTGGTTGATGTTTGGGGTTGGAGAGTGGGACATATCTATTTTACTGTATGGTGGAGAAACTAGAAAACGGATTGATTATTAAACCACGATGAGCCGTATTGAGGCAGTGGTCATTCAAGAAATGAAATTTTGCTGAGAAGTGAACTTGATTCCGACTGAATAGTCATTCTCCATCACATAAAAACCTCATGACAACAACATTAAGACAAGATACACATGACGGTTGTCTGACTAATGCTCAAATGCTCCTCTATTTCCAAGTCCCTGAGAGGCCAAAATGTGAGGACTGAAAACCGTTGTTCTTGAACTTGAATGTGTGATGATTCTGTGTTTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTCTCTTCTTCAAATTGCTATTATATTAATATTTTAGTTTTCTTGAGGGTTACAAATATTCAGGTAGTACAAATTGCTAAACATCCACATTAAGCACAACAATAACTTGATGTTGATCATATCATGAGAGCACAGTCACTTTGCTATCATGACAGATGCTACTGTTATGGTTTAGTATTGATTTTTGATATAGCATACTACTGTAAGTGCTCACTAATGTCCCTGCTTATGCACAAAGCCCGGGTTGAGAAGCCTATTTCTGACCAAATGCTTAAAATAAAAAATTACAAAGCACTTTAATTGTTATTGTTAATAAATATTTACACAAATTAACACCCTATAGAAAAAAAATGTTAGGTGACGGCGATGGAGTTTTCAGACCTCTAGTGCCCTCTATTGGTGGTGAGGATTAACTGCTTATTTGTGTTGGTTGGAGAAAATCAGGAAATACACTTCACACAGCAGCTGTGTACAGCAGCTGGACAGACGGCTTTTAACCAGAAGACAGGGGTTGTTTTTGTTATTTGATTTGCTTCAGTGCCGCGAGCACGAGCCTATGGCCCATTTCCCCAGGACAGCTCACTTTAGTTACCCATTAATAGAATAGACAATATGTGATGTTAATAGAATGGATTGATCAGAAGTATCGCGATGTTAACTTTGGGGTCAGAACTACAGACAGCAAAAATAGGTCAGGGCCGACTATCATCAAATTGTTTTGGCTGAAGTCACACACAAAGTATCAATCAG
-XM_060035413.1  PREDICTED: Gadus macrocephalus F-box only protein 41-like (LOC132445432), transcript variant X1, mRNA   AGGTCACGTGCGCCACGTCATTAGCACGCTGCACGGCCACAGCGTGCGGAGAGTTTTACCGGAGGGAGGGATGATGTAGCACGCGGGCCAGTCGGTTGACAGTTCTCTGCTTGGCTCGGCTCTAAGAGACACGGCCGTACCGGAGTGGACCTGAATACCGTGCATCCAGGCCAGACAGGGTGCGGATATATGGGCGAATCATCTAATGAATTAGTGAATTAAGCCAGCAGGCCGACGGTCTAAATTCTGGTCGGGTGGTGCTCGGCGGTTAAGGCAGAAGTTTTTACACCGGATAATATCGACTCCATTCCGCGGTGGAATCACAGGGTTGTCGTGAAGGTGCTGGTGCTGGAGCATGCTGGTAGCAGCAGCTGACCAGACCTTCTCATGTCCAGGCTGTGGATCAGAAGGGACCTTCAACTCCGTCCTGGACCTCCAAAACCACCTGGTCAACACACACACCTATCAGACCCTGCTCGGTCTATCCAAGGTGCGTGCCAGGAGCTCTACACCAGGGTTCCTCCTGCGCCTCCCTGGTCCGACTGTCTCCCAGGGACAGAGCTCCTCCCTGGGCATGGAGTCCACCAGAGACCCCCTGCCTCTGGCCGGTCTGGACCTGGCCTCCTCCACCGCCTCCACCCAGCTTCTCAGGGTGATGTTAGGGGCCGCAGGAGGATCTTCTCTGGGAGTCCCCCAGGACCCCTCCAGGGCTCTGGCTCTGCCTAGCCCTACAGGCCTCACATCCACTGCCTTTTTAGCTCTGGAGGACCATATAGGCCTCAGGAGGAGCCTGGGGCTGGAGTTGGGGTATCCCCCAGTGGAGTGCTTCTCCGTGGGGCCAGGCCTGGAAGAAAGACTAGAGCTGAGGCTGGACATGCAGGTGGCCACCGCCGTAGCCGAGTTGGAGGAGAGGGTGAGGGGGCGTGTCCATCACCTGAAGGCGGAGCTACAGGAAAGAGAGGCGGAGCTAGAGCGAGAGAGGAGGAAGGGAGAACGTCTCGTGAGAGAGAAGGACGAAGTGGAGGAGAGAGCGGCGTACCTGTCCAGACAGGCTTCCATAGCCATGGAGATGATGGAGGGAGTAAAGCGAGAACTGAAGGGCAAAGAGGACGAACTGGCCAAACGAAAACAGGATATGCATCAGGTGCAGGTGTTCCTGAGAGATACAGCAGAGAAGGAGGCAGAAGCTAAAATGAAACTACAGATGTTTATGGAGTCGTTACTCGATCGAGCCGACCATGCAGAGAGACAGCTGCTGCAGATCGCACCCGGTCACACGCACCCGCAACGACACGTACACACACCGATGTACACACACACTCCGGGACACACACACAGAGGTGTCTCCTCACCTGTGTGGGGTCGCGCAGGGCGGAGCTTGGATGGCAGTGTGGAGGACATGCTTGGAGCCAGGTCGCCGGTAACCATGGCAACTCAGAGGAGTTACAGTGTTTCTGGATCTTATAGACTTGGAGACCAACTCTACAACCACCATCCATACAACGACTGGGCTGGAGGGAACCGCTGGGTGAACAGCTACCATCGTTACCACAGTACCGAGGAGGAGAAGGAGGAGGAAGAGGATGACGAAGACGACGAGGAGCAGATATGGAACACACCTGAGATGATAAGACGGACTGCTGCACCAGATTTGTCTCCCTCCTCTAATGGTTGCCATAGCACCCATTGCCTGGGGGTGGAGACTCTACGGTTGAGGGCGGGGCTTTTTTGTGTCTTCCCATATTTGGACGTTGCTTCCCTGCTGCATGCGGCTGAGGTGTGCACTGATTGGAGGTGCGTTGCTAGGCACCCGGCTGTATGGACACGCCTACTTCTGGAGAACGTCACGGTGTCCACCAAGTTCCTGGTCACCCTGTCTCAGTGGTGTACACAGACCCGGTCCCTGGTTCTGAAGAACCTGAGAGGCAGAACCAGACGACCTGGAGAGAGCAGAGAGGACTACCAGACCCTCAAACGGGGCTGCCTGGAGGAAGGGGTGGAGGCTGTCTTGCGCTCAGCGGGGGGCAGTCTGCTCTACCTGTCTGTCTGTCAGTGTTCCAATGTGCTGACAGACAGGTCCCTGTGGCTGGCCAGCTGCTACTCCCCCAACCTACACACCATCACGTACAGGAGTCCCGGTGAGGGGGTGGGTCAGGAGGTCTTGTGGGCGCTGGGAGCCGGCTGCAGAACCATAGCTCACATGAAGTTCACCCCCCTAAACCCCAGCCAGCAGCCTCATCGCCTTGGCAACCGTAGCCTGCAGACCATCGGTCGGTGTTGGCCGGACCTGCGCTCCCTCAGCGTGGGCGGGGCCGGGTGTGGCACTCAGGGATTGGCTGCTGTGGTGCGCAGCTGTGTGTGTCTATTAGAGCTGGAGTTGGAGTGCGTTTCAAAGGTCGACCTGAAGGTGGCGACAGAGCTCTGTAATAACGGACTCACCAACTTGGAGACTTTGACGTTGACGCACACTGCCATCACTGAGGAAGCTATACTGCACTTTCAAAGTAAATGTGTTAATCTCAGGTCCATGGTGGTGCTGATGAGGAAGAGTCATGCTAACGAAGGTTCGCTTGAGGAGGACAGCGTGTTCAGAGATAACCTGGAGGCTCTTAAGGTTCTAACCCGGTCTCCAGGTCTTTGTGGCATCCTGCAGGTCAAAGAAGAATACTGAACTCTTCAAAACACGCACACGCACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACGACAATCGGTTATCAATGATAAGTGTAATAAATGTCTTGTTTCTA
-XM_060035414.1  PREDICTED: Gadus macrocephalus F-box only protein 41-like (LOC132445432), transcript variant X2, mRNA   AGGTCACGTGCGCCACGTCATTAGCACGCTGCACGGCCACAGCGTGCGGAGAGTTTTACCGGAGGGAGGGATGATGTAGCACGCGGGCCAGTCGGTTGACAGTTCTCTGCTTGGCTCGGCTCTAAGAGACACGGCCGTACCGGAGTGGACCTGAATACCGTGCATCCAGGCCAGACAGGGTGCGGATATATGGGCGAATCATCTAATGAATTAGTGAATTAAGCCAGCAGGCCGACGGTCTAAATTCTGGTCGGGTGGTGCTCGGCGGTTAAGGCAGAAGTTTTTACACCGGATAATATCGACTCCATTCCGCGGTGGAATCACAGGTGCTGGTGCTGGAGCATGCTGGTAGCAGCAGCTGACCAGACCTTCTCATGTCCAGGCTGTGGATCAGAAGGGACCTTCAACTCCGTCCTGGACCTCCAAAACCACCTGGTCAACACACACACCTATCAGACCCTGCTCGGTCTATCCAAGGTGCGTGCCAGGAGCTCTACACCAGGGTTCCTCCTGCGCCTCCCTGGTCCGACTGTCTCCCAGGGACAGAGCTCCTCCCTGGGCATGGAGTCCACCAGAGACCCCCTGCCTCTGGCCGGTCTGGACCTGGCCTCCTCCACCGCCTCCACCCAGCTTCTCAGGGTGATGTTAGGGGCCGCAGGAGGATCTTCTCTGGGAGTCCCCCAGGACCCCTCCAGGGCTCTGGCTCTGCCTAGCCCTACAGGCCTCACATCCACTGCCTTTTTAGCTCTGGAGGACCATATAGGCCTCAGGAGGAGCCTGGGGCTGGAGTTGGGGTATCCCCCAGTGGAGTGCTTCTCCGTGGGGCCAGGCCTGGAAGAAAGACTAGAGCTGAGGCTGGACATGCAGGTGGCCACCGCCGTAGCCGAGTTGGAGGAGAGGGTGAGGGGGCGTGTCCATCACCTGAAGGCGGAGCTACAGGAAAGAGAGGCGGAGCTAGAGCGAGAGAGGAGGAAGGGAGAACGTCTCGTGAGAGAGAAGGACGAAGTGGAGGAGAGAGCGGCGTACCTGTCCAGACAGGCTTCCATAGCCATGGAGATGATGGAGGGAGTAAAGCGAGAACTGAAGGGCAAAGAGGACGAACTGGCCAAACGAAAACAGGATATGCATCAGGTGCAGGTGTTCCTGAGAGATACAGCAGAGAAGGAGGCAGAAGCTAAAATGAAACTACAGATGTTTATGGAGTCGTTACTCGATCGAGCCGACCATGCAGAGAGACAGCTGCTGCAGATCGCACCCGGTCACACGCACCCGCAACGACACGTACACACACCGATGTACACACACACTCCGGGACACACACACAGAGGTGTCTCCTCACCTGTGTGGGGTCGCGCAGGGCGGAGCTTGGATGGCAGTGTGGAGGACATGCTTGGAGCCAGGTCGCCGGTAACCATGGCAACTCAGAGGAGTTACAGTGTTTCTGGATCTTATAGACTTGGAGACCAACTCTACAACCACCATCCATACAACGACTGGGCTGGAGGGAACCGCTGGGTGAACAGCTACCATCGTTACCACAGTACCGAGGAGGAGAAGGAGGAGGAAGAGGATGACGAAGACGACGAGGAGCAGATATGGAACACACCTGAGATGATAAGACGGACTGCTGCACCAGATTTGTCTCCCTCCTCTAATGGTTGCCATAGCACCCATTGCCTGGGGGTGGAGACTCTACGGTTGAGGGCGGGGCTTTTTTGTGTCTTCCCATATTTGGACGTTGCTTCCCTGCTGCATGCGGCTGAGGTGTGCACTGATTGGAGGTGCGTTGCTAGGCACCCGGCTGTATGGACACGCCTACTTCTGGAGAACGTCACGGTGTCCACCAAGTTCCTGGTCACCCTGTCTCAGTGGTGTACACAGACCCGGTCCCTGGTTCTGAAGAACCTGAGAGGCAGAACCAGACGACCTGGAGAGAGCAGAGAGGACTACCAGACCCTCAAACGGGGCTGCCTGGAGGAAGGGGTGGAGGCTGTCTTGCGCTCAGCGGGGGGCAGTCTGCTCTACCTGTCTGTCTGTCAGTGTTCCAATGTGCTGACAGACAGGTCCCTGTGGCTGGCCAGCTGCTACTCCCCCAACCTACACACCATCACGTACAGGAGTCCCGGTGAGGGGGTGGGTCAGGAGGTCTTGTGGGCGCTGGGAGCCGGCTGCAGAACCATAGCTCACATGAAGTTCACCCCCCTAAACCCCAGCCAGCAGCCTCATCGCCTTGGCAACCGTAGCCTGCAGACCATCGGTCGGTGTTGGCCGGACCTGCGCTCCCTCAGCGTGGGCGGGGCCGGGTGTGGCACTCAGGGATTGGCTGCTGTGGTGCGCAGCTGTGTGTGTCTATTAGAGCTGGAGTTGGAGTGCGTTTCAAAGGTCGACCTGAAGGTGGCGACAGAGCTCTGTAATAACGGACTCACCAACTTGGAGACTTTGACGTTGACGCACACTGCCATCACTGAGGAAGCTATACTGCACTTTCAAAGTAAATGTGTTAATCTCAGGTCCATGGTGGTGCTGATGAGGAAGAGTCATGCTAACGAAGGTTCGCTTGAGGAGGACAGCGTGTTCAGAGATAACCTGGAGGCTCTTAAGGTTCTAACCCGGTCTCCAGGTCTTTGTGGCATCCTGCAGGTCAAAGAAGAATACTGAACTCTTCAAAACACGCACACGCACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACGACAATCGGTTATCAATGATAAGTGTAATAAATGTCTTGTTTCTA
-XM_060035415.1  PREDICTED: Gadus macrocephalus F-box only protein 41-like (LOC132445432), transcript variant X3, mRNA   GGTCACGTGCGCCACGTCATTAGCACGCTGCACGGCCACAGCGTGCGGAGAGTTTTACCGGAGGGAGGGATGATGTAGCACGCGGGCCAGTCGGTTGACAGTTCTCTGCTTGGCTCGGCTCTAAGAGACACGGCCGTACCGGAGTGGACCTGAATACCGTGCATCCAGGCCAGACAGGGTGCGGATATATGGGCGAATCATCTAATGAATTAGTGAATTAAGCCAGCAGGCCGACGGTCTAAATTCTGGTCGGGTGGTGCTCGGCGGTTAAGGCAGAAGTTTTTACACCGGATAATATCGACTCCATTCCGCGGTGGAATCACAGGCTGTGGATCAGAAGGGACCTTCAACTCCGTCCTGGACCTCCAAAACCACCTGGTCAACACACACACCTATCAGACCCTGCTCGGTCTATCCAAGGTGCGTGCCAGGAGCTCTACACCAGGGTTCCTCCTGCGCCTCCCTGGTCCGACTGTCTCCCAGGGACAGAGCTCCTCCCTGGGCATGGAGTCCACCAGAGACCCCCTGCCTCTGGCCGGTCTGGACCTGGCCTCCTCCACCGCCTCCACCCAGCTTCTCAGGGTGATGTTAGGGGCCGCAGGAGGATCTTCTCTGGGAGTCCCCCAGGACCCCTCCAGGGCTCTGGCTCTGCCTAGCCCTACAGGCCTCACATCCACTGCCTTTTTAGCTCTGGAGGACCATATAGGCCTCAGGAGGAGCCTGGGGCTGGAGTTGGGGTATCCCCCAGTGGAGTGCTTCTCCGTGGGGCCAGGCCTGGAAGAAAGACTAGAGCTGAGGCTGGACATGCAGGTGGCCACCGCCGTAGCCGAGTTGGAGGAGAGGGTGAGGGGGCGTGTCCATCACCTGAAGGCGGAGCTACAGGAAAGAGAGGCGGAGCTAGAGCGAGAGAGGAGGAAGGGAGAACGTCTCGTGAGAGAGAAGGACGAAGTGGAGGAGAGAGCGGCGTACCTGTCCAGACAGGCTTCCATAGCCATGGAGATGATGGAGGGAGTAAAGCGAGAACTGAAGGGCAAAGAGGACGAACTGGCCAAACGAAAACAGGATATGCATCAGGTGCAGGTGTTCCTGAGAGATACAGCAGAGAAGGAGGCAGAAGCTAAAATGAAACTACAGATGTTTATGGAGTCGTTACTCGATCGAGCCGACCATGCAGAGAGACAGCTGCTGCAGATCGCACCCGGTCACACGCACCCGCAACGACACGTACACACACCGATGTACACACACACTCCGGGACACACACACAGAGGTGTCTCCTCACCTGTGTGGGGTCGCGCAGGGCGGAGCTTGGATGGCAGTGTGGAGGACATGCTTGGAGCCAGGTCGCCGGTAACCATGGCAACTCAGAGGAGTTACAGTGTTTCTGGATCTTATAGACTTGGAGACCAACTCTACAACCACCATCCATACAACGACTGGGCTGGAGGGAACCGCTGGGTGAACAGCTACCATCGTTACCACAGTACCGAGGAGGAGAAGGAGGAGGAAGAGGATGACGAAGACGACGAGGAGCAGATATGGAACACACCTGAGATGATAAGACGGACTGCTGCACCAGATTTGTCTCCCTCCTCTAATGGTTGCCATAGCACCCATTGCCTGGGGGTGGAGACTCTACGGTTGAGGGCGGGGCTTTTTTGTGTCTTCCCATATTTGGACGTTGCTTCCCTGCTGCATGCGGCTGAGGTGTGCACTGATTGGAGGTGCGTTGCTAGGCACCCGGCTGTATGGACACGCCTACTTCTGGAGAACGTCACGGTGTCCACCAAGTTCCTGGTCACCCTGTCTCAGTGGTGTACACAGACCCGGTCCCTGGTTCTGAAGAACCTGAGAGGCAGAACCAGACGACCTGGAGAGAGCAGAGAGGACTACCAGACCCTCAAACGGGGCTGCCTGGAGGAAGGGGTGGAGGCTGTCTTGCGCTCAGCGGGGGGCAGTCTGCTCTACCTGTCTGTCTGTCAGTGTTCCAATGTGCTGACAGACAGGTCCCTGTGGCTGGCCAGCTGCTACTCCCCCAACCTACACACCATCACGTACAGGAGTCCCGGTGAGGGGGTGGGTCAGGAGGTCTTGTGGGCGCTGGGAGCCGGCTGCAGAACCATAGCTCACATGAAGTTCACCCCCCTAAACCCCAGCCAGCAGCCTCATCGCCTTGGCAACCGTAGCCTGCAGACCATCGGTCGGTGTTGGCCGGACCTGCGCTCCCTCAGCGTGGGCGGGGCCGGGTGTGGCACTCAGGGATTGGCTGCTGTGGTGCGCAGCTGTGTGTGTCTATTAGAGCTGGAGTTGGAGTGCGTTTCAAAGGTCGACCTGAAGGTGGCGACAGAGCTCTGTAATAACGGACTCACCAACTTGGAGACTTTGACGTTGACGCACACTGCCATCACTGAGGAAGCTATACTGCACTTTCAAAGTAAATGTGTTAATCTCAGGTCCATGGTGGTGCTGATGAGGAAGAGTCATGCTAACGAAGGTTCGCTTGAGGAGGACAGCGTGTTCAGAGATAACCTGGAGGCTCTTAAGGTTCTAACCCGGTCTCCAGGTCTTTGTGGCATCCTGCAGGTCAAAGAAGAATACTGAACTCTTCAAAACACGCACACGCACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACGACAATCGGTTATCAATGATAAGTGTAATAAATGTCTTGTTTCTA
-XM_060035416.1  PREDICTED: Gadus macrocephalus Kv channel-interacting protein 4-like (LOC132445433), mRNA   TCTTGTTTCAAACGTCAGGATTTCGTCATGGGCCTCTCGATCCTCCTGAGGGGAACCATCACGGAGAAGCTCAACTGGGCCTTCAACCTGTACGACATCAACAAGGACGGCTACATCACCAAAGAGGAAATGCTGGACATCATGAAGGCGATCTACGACATGATGGGGAAGTGCACGTATCCGGTGCTCAAAGAGGAGACACCGCATCAACACGTGGAGATATTCTTCCAGAAAATGGATAAGAACAAAGACGGCGTGGTCACCATCGATGAGTTCATCGACTGTTGCCAAAATGACGATAACATCATGCGGTCGATGCATCTGTTTGAAAACGTCATCTAAACCGTGGAGATGATATGACCGCCGAGGCTATGGTGGGGGGGGGGGACGCCGTCGTGGTCTTCATCCTCATAATCTTCACCCGGGCTCCACTCTGCCCGGTCTGGACTGTAGGGAGCAGACCCACGTTTCAACGTTTCACGCCCACTCGGTGGAAGCAGTCTCAAAATGACATTCTATTAATAATTAACATTTCTAGATCAATGTTCAACACTTTGTTTCATTCCTGAATGGTACACGTGTTGCCTGGGAGGAATACCTTTCACAACAAGGAATAATTACTATGTTTACGGTCACATTGTGTTTCTTTGCAAGCGATAACCCGGGTCAGCTTTCAGCATTATTGACCGAGGAGTTTTATCACTAAGATGAGTGTGTAGTTTGAGAACAAGAGTCATAGCAAGAGATTATTTATTTTTCTGTTGGCCGTAGTATTTGCTTTGAAGGATCAAAATCACTGTGATATAATCCATTCATAATTAACATTAAGGAAATAACTAACGATTATCCTATTGATTTTATATTTGAAACTCAGTTTCCGTCAGAGTTTCAACGTTTCTGGAACATTCTTACCATAAGTTACACGATGTGGTCTGTACCGTGTTCCCCAAAGTGAGCATTCACAGAACTTAGATTGTACAATTTTTCATATTGTACATATTACAGATGATTTAATTGCTTTAGATAAAAACCTCTATGAAAAACTTTTGAACTTTATTCGTGTTTACTTGCCAACTAGAAGGAGACCGCGCAGAAATTGTGTGAAATCAGACCTTTCAATTCTAACTTTATCAACAGAAGCACAGGGATACATATAAATATATATTTACCATGAGTATAAAATTAAACAATATCTTAACCAGAGATAGGCTGCTTTCAATGTTTTTCATTTAATCTGATGTGTATTACCTTGATGCATACTTTCCGTAATTCCTCTATGAGTTTCAAAAGGGTTCATTTTGCTGTTTTTCCCCCGAAAGGCAATGGCTTGAGTTTATTTATATGGCATTGTTGCCATTGGTTAATCGATTGCCAGTTGTACAGTATTACAAGCGATTATCTTACAGCCTTTTTAAATGTTGGCTACACATACTTATTTGCGTGTTTTAGTGAGAGTGTTGTTTGAACGATTGTTTTCAGTCAGTCTCTTACTATGTGGTAGTTTGTATAGGTCTCTTTCGATCTTGGGTAAATGTGCTTTTGGCCCCTCTCATCCTTTTTCCTTGCCATGTTGGTATGGAGTACTAATCCGAGCAGAAGGCCTGCTGGCTAAACCTTTACTTTATTTAATACTTGATCTTAACAGTTGACAAATGGCCCTCTGTCTCAATTAGAAAACTGTATTCATATAATTTAGATACCAGCTGTGTTGGTTCTTACAAATGCTTTTAACCACGAAAAGTTAGTTTTTAGGAAATGCAAACAGATAAAACGCTACATTAATTTCTGAATGAGGCATGCTCGTTATTGATTAAGCATGCATTTCCCTTTTGAGAGGAGTACTTGAAATTGTGTTTCTGAGCAGAGGCAACGTGTTCATTGTTAAGTCAAAAGAGATGACTCGTCTTTTTCATTGCGTTGTTTTGTTTTGTTTTTTATGCCTTGACCCTTACGGAAATGTAAATTTGATCAACACATCTCTATTTAAAAATTTGATATGTATTTGTGTTTGTCTGAGAAAATGGTTGAATATACTACGGCTGGTGTTTCATCCCATGACTTTCATGTAAGACTGTTTTGGAAATCAAAACATTTCTGGAGGTGGTACATTTAAATATTTTATCATAATACTTTGCGCCTGGTTTGTTAACTCATTTACAAAATATTTTCAGGCTGGACAATTTCTTGATAAGGGACTCATTACCAATCAGAAATAGTTGTATAACCACATTTGTCGATATTTTTTTCTAGTTCAGCCCCTCACATGATACTATTTTGCCCTAACAACATTTGTTGGTTTGGGCCTGGGGTTATTCAAGAAAAAACAATTAAAACAGAAACAAAACTG
-XM_060035417.1  PREDICTED: Gadus macrocephalus RNA binding motif protein 46 (rbm46), mRNA   GCCATAACGGAGCGGGACTGTGGTATGGACACCAACCAGGCAGTGCCCGTAGAGGTGGCGCTCCTGGAGCTCATGAAGAAGACCGGATACAGCATGATGCAGGAGAACGGCCAGCGCAAGTACGGCCCACCCCCAGGTTGGGACGGCCCGCCCCCGCCCAGGGGCAGCGAGGTGTTTGTCGGGAAGATTCCCAGGGACATGTATGAGGATGAGCTGGTGCCCGTGTTCGAGAAGGCCGGCTACATCTACACATTCAGACTCATGATGGAGTTCAGCGGAGAGAACCGCGGCTATGCCTTCGTAATGTACACCAAAAGAGAGATGGCGCAGAAGGCCATCCACATGCTGGATAACTATGAGATCCGACCGGGGAAGTACATCGGAGTGTGCGTGAGTCTGGACAACTGCCGTCTCTTTGTGGGCTCACTTCCCAAAGACAAGAACAAAGAGGAGATAATGGAGGAGATGAAGAAGGTAACAGAGGGAGTTGTGGATGTCATAGTGTATCCCAGTGCTACTGATAAGAACAGGAACAGAGGCTTCGCCTTTGTAGAGTACGAGTCCCACAAGGCTGCAGCAATGGCCCGCAGGAAACTCATACCAGAATCACTACAGCTGTGGGGCCTCAACATCCAGGTGGACTGGGCGGAGCCGGAGAAGGACGTGGATGAGGAGACCATGCAGCGCGTCAGGGTCCTATACGTGCGTAACCTGATGCTGAGCACCAGCGAGGAGACCCTGCAGGAGGCGTTCTCCTGCGTGCGCCCCGGCTCAGTGGAGCGCGTGAAGAAGCTGACGGACTACGCCTTCGTCCACTACCGCAGCCGGCAGGACGCGCTGGACGCCCTGCGCCTCATGAACGGCACGCTCATCGACGGCGCCCTGGTCACCGTGTCCCTGGCCAAGCCCGCGGCGGGCAGGGACGGAGGCGGCGCCGCGTGGAGGCACGGCGGCGGCGGCGGGAACCGAGGCTACGTGGGGAGGAACCCTGCCATGGCGGGGGGAGGCAGAGGAGGCGGAGACGGCCTGTTTCTGTTTCAGCGCGAGAACGGAGGAGTGGAGGGGAGGAGGTGCACCACCCCGGGGCCTCTCGGCCTTCTGCCGGCATGCCTGGGAAGCCCCGTGTACCTCGGTGGAGCAGGAGGGTCGGGAGATGGGGCTCAGAGGGTGTTCCCCCTCCCTCCGGGTACGCCCCTCTCCCCAAGCAGCCTGCAAGCCCTGAAGCCCTACCAGATGTCCAGTTACGTCAGCCTCCTGGAACACTTCTGCTATCTGCATTCTTGGAGCCCTCCAGACTACTACCTCTTCTCCACCCCTGGGCCCAAGATACTGCTAATATTTAAGGTGGTGCTGGTCTCTACCCAGAACAGCTACTTGCCAGACAAGCTGTGTGCTCTGGTGGAGGATGCAAGGGAGCTGGCTGCACAGCACGCACTCTGGAGCCTAGACGGTTCCTGGCTGTCTGGTGATAATGGTCCTGGTTCTCCAGCCCCCCTCTCTCCCCCTCTAAGTGCTGTTGGGGTGGGCTACAGCTCTAGAGCCTTGACCCCCTGTTTTACCTCCCCGTACCCCAACTCGTCCCTCTCTCCCCCGCTGCCCTCCCTCTCCCAAATCTACGCCCCCCTGCCGTCCCCCTTCTACTGACGGAACACCTGCGCTTGGTTGAGAGAGGAGAGAGACAGGAGGAGAACAGAGAGAGAGGAGACCAGGAGAGGGCCAGATGAAGAGAGCAAAGAGGGAGACCGGGGGAGAGACACAGGAGGAAAGCAGACGAAGAGAGAGAGAGAGAGGTTACAGAGAACATGAGAGAGAGAGAGAGAGGAGAGAAGACCCTACAGTGACCCGTGACTATTTCTCTCTCCCGTATTCAGGCAGAACAGTAGAGAGGGGGAGAGCCAAACGTTTTTATTGTGTGCTTTTCTGTGTGTTCCATGCATGCCGTTGTTGAGGTTATTGTTTGTCTTTTGAACCTTTTTTGTTCCGCCTTGATTGTGAAAAATGAATACTGTTTCTAACGTA</code></pre>
-<div class="sourceCode" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1">rnatab <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/11-annotation/GCF_031168955.1_rna.tab"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\t</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">header =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">row.names=</span><span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">NULL</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span>(rnatab)</span></code></pre></div>
-<pre><code>              V1
-1 XM_060035408.1
-2 XM_060035409.1
-3 XM_060035410.1
-4 XM_060035411.1
-5 XM_060035412.1
-6 XM_060035413.1
-                                                                                                                                   V2
-1                                                        PREDICTED: Gadus macrocephalus putative helicase MOV-10 (LOC132473465), mRNA
-2                             PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X2, mRNA
-3                             PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X3, mRNA
-4                             PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X4, mRNA
-5 PREDICTED: Gadus macrocephalus ATP-sensitive inward rectifier potassium channel 12-like (LOC132475957), transcript variant X2, mRNA
-6                               PREDICTED: Gadus macrocephalus F-box only protein 41-like (LOC132445432), transcript variant X1, mRNA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  V3
-1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  AGTTCAATTGCAACTGGGTAGAGGGCGGCATCTATATCCCCGATAAAGAAGAGCTGGAGAAGCATAAAATCATGGTCACCACCCTTTTCTCCGCTTCAAGGCTGGTTACGGAAGGCATCCCTCCAGGCTTTTACAGCCATATCTTTGTTGACGAGGCAGGACAACCTGCAGAGCCTGAAGGGGTTATCCCCCTGGCAGGCCTACTGGACCCAAAGCGTGGCCAGGTAGTGTTGGCAGGAGACCCCAAACAGTTGGGCCCCATCGTCAAATCCCCCCTAGCCAAGAAGCATGGACTTGGTGTATCAATGCTGGAGCGTCTGATGGAGTTGAATGTGTACAAAAAGACAGAGGAAACGGGGTACAACGAGCGTTTCATCACCAAGCTGCTGAGGAACTACAGGTCTCATGGCAGACTTCTAACGATCCCAAATGAGCTGTTCTACGAGAGCGAACTCCAGGTGTGGGCCGATAAGGATATCCGCAACTCCTTATGTGAATGGAAGCACCTTCCCAGCAAGGGATTCCCGCTGATCTTCCATGAGGTCACTGGACGCATGCGTCGCGAGGACAACGCCTCACTGTTCAACGCCTCACTGTTCAACGAAGACGAGGTGGCGATTCTAATGCAGTATCTGAAAGCACTGTTGGAAGATGTCCCCCCAGAAGACATAGGCCTCATTGCCCCATACAGGAAACAAGTGGAGAGGATCAACAAGGCTCTTAAGATCGAGTTCCCCAGAAACACAGCAAAGTTAAAGGTTTGCACAGTGGACGCGTTTCAGGGCGAGGAGAAGCGGGTGATTCTGCTGTCCACAGTGAGAAGCACCAGCCGGGACCCCAGACCCCCCTCCTCCGTGGGGTTCCTTGCTGACCCCAAGAGGTTCAACGTGGCCATGACCCGCGCCCAAGCCCTGTTGATCGTGGCGGGGAACTCAGAGGCGCTGACAAAGGACAGGATTTGGAGCAGGTTCATCGAGTACTGCAAAGAACACGGAGGTTACACCAAGACCATGACCACCGATTGACGTGCATGCACGGACACATACGCACACTGACAACCACACTCACGTACACACATACAACCTCCGCACACACACACACACACACACACACAAACACACACATACACCTTCTCCACACAAAATGATATTAAGGACTAAAAACCTCACATTTTATTTGACATTGTTGCATCAGCCTATTAGAGGAGAATTTTTTTGACCATTAGGCCTTCCCATCGTTGTGATGGAAAATCTATCATAATCATAAAGTTTTTCGTTTTGAACTTAGGTTTTGTTTACTATTCCGTGTTTGTTCTTGCCGTCCTGCTCTCCTTCGGGGTCATCTAAAATGTAAACCTTTGTGGTTGATGATGTAATCTGTTCTCACTCTGTTCCTGTGTTATCTTCTGTTGATTTGGGCCTGTTCCACGACCCTGGGGAGCTTCAGGAAACAAAGGGTTACATGGCACGGACGCGACCCCTTATTTATGACATCCTGAGGAACTTCAATCAATAGATTACCATCTGGTTAACAAAGGCTTTTGGTTTATTGGGGGACAGCTGCCCTCAAGAACCCAATCTAAGTGTATAAGAACTCCTGACTTAGCCACTTTAGAGTATGAAGTAAGACACAGGGCAAACTCCCATCTGAGGCCTCAAATTACTGTAGTGTATGCCTGTTTTATTGTTTTTTGATGCATGTTGTGATGTATCTTTGTTCGTACTTTTATTACAAATATATAGGACCACCAATTGCCTAAAA
-2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              TTCCTGGTCCTCTCAATATTGCTGATATCATAACCAGAGGGGCCAGTCCTCAAGACCTGGATGAAAGTTCAGAATGGCAGAACGGACCAACATTCTTGAAGCTACCAGTGGATGAGTGGCCAGTTAAATCTGCCAAAGAGTTGGTGATGGCTGCCAGAGACGGTGTCAACAGATTACAGAAGAAAGCGTTTGTTGCTGCACTGACCCGAGCACAAGCCAAGGCACAACTGCTGCCGGATCCAAAGGATACTGACACGCAGAAGCCTTCTGAACTAAAGCAAGACCAGGAACCAACTCAGACCCAAACACAACCAAAGAGGCCACCAGCAGGATCAACTGTCCAAGAACTGGTGGATGTCAAGCGGTTCAGTAACCTAAGCCGACTTGTCAAAACAGTTGCCTGGATCCGGAGAGCAGCAAGGATGTTCATGAAAGGGAACAAGCGAACTGCAAACAATCCAAAGTGGGAGGCAGTGTCGTTTTCAAAAGTCATCTCAGTGACAGAGAGGGAAGACGCCCTAAAAGACATCTTCCTTGCGGCACAGCAAAGTGCATCCTTCCCAAGCACAACCACAGACAGGCTGGTGGTGTACAGAGACCAAGAGACTGGATTGTTGGTCTGTGGGGGTCGTGTGCAGATCTTCAATGAAGATAAAGTTGCTGTCCCCATCTTGCCTTACGAAGCCTGGGTGTCGACACTGTTAGCACGAGAAGCCCACGAGGAGAACCACGATGGAGTGGCCGGGACCTTGCTCAAGATGAGAAGAAGAGCATGGGTCGTGAAAGGTCGGAGAATTGCTCAAAAAGTGGTCGAAAACTGCATGTTCTGCAGGAAAACTAAAGCAAAAAGATGCCAGCAAATAATGGGTGATCTACCTCCAGAGAGGACAGAACCAGCTGCCCCATTCCACTACACAACAGTCGACCTCTTCGGACCCTACCAAGTCAGGGATGATGTAAAGAAAAGAGTGTCACTGAAGGTTTGGGGAATTGTGTTTTGTTGCATGGCCTCCAGAGCTATTCACACCGAGCTGGTGAACTCTCAGTCCACAGAGAGTTTTCTGTTTGCCTACCAGAGGTTCACAGCACTAAGAGGTCATCCAAAGAAAATCTGGTCAGATCCTGGGACCAACTTCATTGGGGCTAAGCCAGTCCTAGAAGAACAGTACCGATTCTTTGCCAATCTTGACAAAGCTACCCTGGAGGAGAGAGCTGCCAAGGATGGCACAGAATGGTCGTGGAAGATTCAACCAGCCGATTCTCCACACCGGAATGGTGCCGCAGAAGCTGCTGTGCGCATTGTCAAGAGAGCACTGCAGAGTCTTGGAGGAGAGTCCGGCCTAAGTTGGAGTGAATTCCAAACAACTCTCTACACGGCTGCCAATCTTGCAAATGAAAGACCAATTGACGCCAGGACACAGAGCCGAGAAGACAGCGTCCAGTTCATCACTCCTAACTGTCTCCTGCTCGGACGAGCATCACAGGGTGGAGATGTCAGAACATTCGACTTCAGTGACTATCCCTACAAAAGGCTTAAAGAAATGCAAGCGCAAGTTAACAAGTTCTGGAGGAACTGGAGTCAACTTGCTGGTCCTAACTTATTCGTAAGGAACAAATGGCATACCGCCAAGAGAAATGTCGCAGTCGGGGACATCGTCTGGATGGCGGACCAAAACGCCCTTAGGGGTCAGTTCAGGATTGCAAGAGTGGTTAGCGTCAACTCGGACAGCAAAGGAGTTGTGAGGGACGTCAATGTCAGAACCTTCCCAAGCTACCCCGTTCCTGTCACAAGGCCTACCGGAGCAAAAGTAAGTCACCGAACATCTAAGAAATTCAAAGAAAAGATCCCAGCAGCAGTTCTTCACAGAGACGTAAGGCGACTAGTGATCTTGCTTCCCACCGAAGAACAGAACTAAACATCTGACCCAAGTTGCTCCTGTAACATGCGACCTCCCAGGTGTCTCCACTGGAAGGTCGAGTGGGAGGTGTGAAGTCAACTTGGAAAATCCCTGCTGGATATGAAGGGGTTAATATGCAACGCCGACTGACAGCTGGGGGAATCCCTCCTCAGAGCGTTACCTGGGAAATCCACGTCATTGCGTCACCTTACCGGAAAGGACAGAAAGGGGAAGAGAGACTCTTTCAGGAAACGCCAGTTGCAAACAAATCAGACAGCGTTCGGTCCAGCAGCAGCAAAGCTGCGCTAGAGAACTTGGAAAAAGCAGCGCTGGTACAGCCATAAAAAGCCTGGAGAAACGGCCGGTTTTTTACCTTGCAGTATACCTAGCAGTTTACCACTTGCAACCCACTTACAACTGTACCCACAATACCTACCTGCTACAACTTACCTGTACCTGTGAAAATACAAAAAGAAAAGTAAAGAGGAGTTAAAGAAGGAAAACCGTGTGGTCATTGCATGAGTGGAACCCAGTTAAACCTCCTATGGGTTGTTGCGCAACAATTGATGCCTGGCACCTGGACCGAGGAGACTGGCTTGGACATTGAGGGTGTTCCACAACAACTATATGGCATCGACTGTGGAGTCTTTATGGTCATGTACTCCTGGTACATTACCATGGACGCACACTTCGATTTCAACGTTTTGGATATGCCTCATCTCAGGAGGTGGTGGTGCAAGCTCCTTTTGGACAACTACGGGATTGAAGGATGTGGCAAAAGATTCTGTCATTTCACCCAAGAAGGACACCAGATGGTGAATGGACTCCTGGCACCGGTGTTCCGGGTAACACGGAAGCGGAAGGTTTTGACCAAGGCAGATGATGTTTTCCTGAAGGACACAATTGAGGCAGCAGCATGGTGCCAGTTGCAGACCTTCACCGACCACGTTTCTCTCCCGATGGTCATTGGGGTGGAAGGTGCAGAGCAGCAGGCATTGTTAGCAGAGCTGAAATCCGTTGACCGCAGTTGCCCGGAAGAAAGCCTAAACAGGATTGAACCGTTCCAGTTCTTCTTCAATTCAAAGAAGGACTACGAAATGTTCTGTGTGGAGATGTTTGACCGGAGAAAGCTGAAAGTGTTTGCTTATTGGGAGTAGCGACATTTTACCCATTGTTTTAATTGAACTGGGGGACCGGGGGCCGATTCTTTATGTTATCATTTATATAACCAGTTCTAAAACCATTTTCATTTGTCTTTATAAATAAAATGATGTC
-3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  CAGAATTCATGAAAATATGCTTAGACATTAAAAACTATTAATAATATTTATATTTATATTTATATATTTATAAGTATTTAAATGCATATATGAAAAACATGTTTGTATTTACTATTTCATTCTGCACTGCATTTACTGTAGTTATTTTTGGTTTCTTTAAAGGTTTTTTACCTTGCAGTATACCTAGCAGTTTACCACTTGCAACCCACTTACAACTGTACCCACAATACCTACCTGCTACAACTTACCTGTACCTGTGAAAATACAAAAAGAAAAGTAAAGAGGAGTTAAAGAAGGAAAACCGTGTGGTCATTGCATGAGTGGAACCCAGTTAAACCTCCTATGGGTTGTTGCGCAACAATTGATGCCTGGCACCTGGACCGAGGAGACTGGCTTGGACATTGAGGGTGTTCCACAACAACTATATGGCATCGACTGTGGAGTCTTTATGGTCATGTACTCCTGGTACATTACCATGGACGCACACTTCGATTTCAACGTTTTGGATATGCCTCATCTCAGGAGGTGGTGGTGCAAGCTCCTTTTGGACAACTACGGGATTGAAGGATGTGGCAAAAGATTCTGTCATTTCACCCAAGAAGGACACCAGATGGTGAATGGACTCCTGGCACCGGTGTTCCGGGTAACACGGAAGCGGAAGGTTTTGACCAAGGCAGATGATGTTTTCCTGAAGGACACAATTGAGGCAGCAGCATGGTGCCAGTTGCAGACCTTCACCGACCACGTTTCTCTCCCGATGGTCATTGGGGTGGAAGGTGCAGAGCAGCAGGCATTGTTAGCAGAGCTGAAATCCGTTGACCGCAGTTGCCCGGAAGAAAGCCTAAACAGGATTGAACCGTTCCAGTTCTTCTTCAATTCAAAGAAGGACTACGAAATGTTCTGTGTGGAGATGTTTGACCGGAGAAAGCTGAAAGTGTTTGCTTATTGGGAGTAGCGACATTTTACCCATTGTTTTAATTGAACTGGGGGACCGGGGGCCGATTCTTTATGTTATCATTTATATAACCAGTTCTAAAACCATTTTCATTTGTCTTTATAAATAAAATGATGTC
-4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            CCCTGCTGTAAGTATTTCTTTCTTAAAGGTACAACATGTCTCTGGCCCGCCGAGTGTCATTGTAGGCCTACTTGTAAATGAAAATTAAAGCTTTCTATGGTGATTAACTTGTCTATTCTAGGTGGGAAACGCTTGTTTGCACTTGGTCAAGGAGATGGCCGAACATCAAGGAAAATATGTATTTCTTCTTGACCTCCACATCCCCCCAACATGGCTCCAATCGCCAAATTCAGATCATCTGCGCAGCTTTCCAGTTGACATCACCACCATGGATGCAGTGATTGTCCCACTGTGGACACCAGGGCATTTTCTGCTTAGTGGTTGTTGCGCAACAATTGATGCCTGGCACCTGGACCGAGGAGACTGGCTTGGACATTGAGGGTGTTCCACAACAACTATATGGCATCGACTGTGGAGTCTTTATGGTCATGTACTCCTGGTACATTACCATGGACGCACACTTCGATTTCAACGTTTTGGATATGCCTCATCTCAGGAGGTGGTGGTGCAAGCTCCTTTTGGACAACTACGGGATTGAAGGATGTGGCAAAAGATTCTGTCATTTCACCCAAGAAGGACACCAGATGGTGAATGGACTCCTGGCACCGGTGTTCCGGGTAACACGGAAGCGGAAGGTTTTGACCAAGGCAGATGATGTTTTCCTGAAGGACACAATTGAGGCAGCAGCATGGTGCCAGTTGCAGACCTTCACCGACCACGTTTCTCTCCCGATGGTCATTGGGGTGGAAGGTGCAGAGCAGCAGGCATTGTTAGCAGAGCTGAAATCCGTTGACCGCAGTTGCCCGGAAGAAAGCCTAAACAGGATTGAACCGTTCCAGTTCTTCTTCAATTCAAAGAAGGACTACGAAATGTTCTGTGTGGAGATGTTTGACCGGAGAAAGCTGAAAGTGTTTGCTTATTGGGAGTAGCGACATTTTACCCATTGTTTTAATTGAACTGGGGGACCGGGGGCCGATTCTTTATGTTATCATTTATATAACCAGTTCTAAAACCATTTTCATTTGTCTTTATAAATAAAATGATGTC
-5 AAGCGTTGTGTGTCGCTGAAGCAACATCCAGTGCCAGGTCTGACTGAAGCTAGCTGGTTAGCATAGCTGACCTATGTATGCTTTGTATGCATTATGAGCGTTAGCCTAAAGGGTAACAGCAGTAATCTGGTCTGATTACAGGCTATTTATAAATCTCTCCCCTCGACCCCAAACTAACCTCGCTGACCACTAGCAGCAGGATCTGAACCATTTTTCCCTTTTCACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACAGTTTCTATATTGATCGAAAATGGAGGCTCTGGAAACACCTTTAACTCTGTTTCTCTGTTTCAAACTGTGAAATAGGGAGGTCTTTTAGGAGAGGAGAAGGGGGAGGTGTGAGTGGAAGAGGAGGAGAGGGGTGGAAAGAGAAAGAGGGAAAGGTGAGTTCTGGAGGAGTAGAGGATTAGAAGAAGGCCTTCAGGTCCCCATGCTAGTGCGGTGAGGTGAGGGAGCAGGGGGATGGCAGGAGGAGTAAGAGGCTGCATCATGCAGTCCACCCCTTGCAGCACTAGAACCTCCTCCTCTGCCCTTCTGATCCAGTGGAACAACGAGGTGATGATCTACCAGCCAACCGTGACCCTGCCTCCACGAGCCTACGGAATGAGACATGTTTTGATGCAGGTTATGAGAGTTCGGACTTCGGATGAACACATATAAACCGTCTCTCAACTCCTCTGGCCCCCCTCTTCTTACCTCTCCTCTCCTCCCTTCCCATCACCCACCATCACCGCCTTCTCTTCACAGGAGATGGACACAGCAGATCTGACTGGACAGAGCACATCTCCTCCTCCCCTCCTCCTATGGGATTGCGCTGGTGTGGGGGGTGGAGGACAAAGTTCCTCTCCTCTCCGCCTCCACCCCTCCTACTATAGAGTTGTGCTGGTGTGTAGGACAGAGTTAACAGACAGGATTACAGCCAGAGGACGGCAGAGGCAGTGAAGGAGAAAATAAAGGATTTTCTCAGAGGAGGGAAAGCCAAGGAAAGATTGACCAAACAGAACTCTGGGAGAATGAACATGGAACCTTTGAGCTGAACTGAAGCAGAGTGATTTCGACCTTAGCAAGTCAGCGTTTGGACAGGTATAACGCTGGTCTGTGGTGCTAGGGGGCTGACCAGGGCCACCGGGGCCCCTGTGTCCAGAGCGTGGTGCCTGGGAGCCACTGCCAGGGGTGATGGGAACAAGACGATCCAGCAGGTTCAGCCTGGCGTCCGTCGTCCTCCAAGAAGACGAGCACCGTAAGGTCTCCAGCCAGGGTCTCCTGAACGGCCACGACTCCCCGCCGCGCTCCTCCACCACCTCCTCCTTGGCCACCGGCGGGAGGGAGGAGGAGCAGCAGCGGGGAGGGATGAGCGGCTCCAGCGTCCGGGGGGGCCCGACGCGGGGCCCCTCCGGACCGCCGCGGAGCCGCTTCGTGAAGAAGAGCGGCCACTGCAACGTGGCGTTCAGCAACCTGGAGGACCGGAGCCAGCGCTACCTGGCCGACCTCTTCACCACCTGCGTGGACGTCCGCTGGCGCCACCTGCTGCTGCTCTTCTGCGTCAGCTTCCTGCTCTCCTGGCTCTTCTTCGGGCTCGTCTTCTACCTGGTGTCCCTGGCCCACGGGGACTTCCAGGACCCGTCTGACGTGTCGCCGGCGGGAGCGACCCAGGGCCCGGGGGGCCGGAGGGAGCGCACGCCGTGCCTCCTCCACGTGCACGGCCTCCTGGGCGCGCTCCTGTTCTCCATGGAGACCCAGACCACCATCGGCTACGGCTGGCGCTGCGTGACGGAGGAGTGCCCGGTGGCCGTGGCGACGGTGGTGGTGCAGTCGGTCGTGGGCTGCATCCTCGACTCCTTCATGATCGGCACCATCATGGCCAAGATGGCGCGGCCCAAGAAGCGGAACCAGACGCTGATGTTCTCGCGGAACGCCGTGATCGCGCTGCGCGACGGCCGGCTCTGCCTCATGTGGCGGGTGGGGAACCTGCGGCACTCGCACATCGTGGAGGCCCACGTGCGCGCCCAGCTCCTCCGGCCCTACGTCACGGAGGAGGGCGAGTTCGTCCCCCTGGAGCAGATGGACCTCAACGTGGGCTACGACGACGGCACCGACCGCATCTTCCTCGTGTCGCCGCTCGTCATCGTCCACGAGATCGACAAGGACAGCCCGCTGTACTCGCTGAGCCGGGCCGACCTGGAGGCGGAGCACTTTGAGATCGTGGTCATCCTCGAGGGCATGGTGGAGGCTACGGCCATGTCCACCCAGTTCCGCAGCTCCTACCTGGCCCGCGAGGTCTTCTGGGGCCACCGCTTCGAGCCCGTGATCTGCGAGGACCGCGACCGCTACAGGGTGGACTACGCGCGCTTCCACCAGACCTACGAGGTGCCGTCCACGCCGCACCTCAGCGCCAAGGAGCTGGACGAGGCCGCCAGCCGGCCCCCCTCCGCCAGGACGACGCGACCGCCACCGTCGGCCAAGGAGGCGCCGAGCTCGTTCTGCTACGACAACGAGGTGGCGCTGATCTGCGGCGAGGACGACGACGAAGACGATGACGACGACGAGAACGACATCTTTGACTTGCGCCGGACACTGTCGTCGCCGGGGGGGAGGCGGGAGGAGAGGAGGACCTCGGTGACCGTGGACCTCCCGAAGGCGGGACAGGACTCGGCTGCCTTGACAACGGGCCGCCAGAGCTTGATGTGCGTGCTGGACATGGACAACCACCAGAGGGAGTTCGATATGCTGCAGACGGCAATTCCGCTCGATCCGCAGTCCTACAAGAGCGAGCAGGAGATGTAGAGGTCTGAGGGACACTGGACGGGGAAGACTGCTCGGGGGTTGTTCTCAGCCTTGCTTCTGTTGGTTGATGTTTGGGGTTGGAGAGTGGGACATATCTATTTTACTGTATGGTGGAGAAACTAGAAAACGGATTGATTATTAAACCACGATGAGCCGTATTGAGGCAGTGGTCATTCAAGAAATGAAATTTTGCTGAGAAGTGAACTTGATTCCGACTGAATAGTCATTCTCCATCACATAAAAACCTCATGACAACAACATTAAGACAAGATACACATGACGGTTGTCTGACTAATGCTCAAATGCTCCTCTATTTCCAAGTCCCTGAGAGGCCAAAATGTGAGGACTGAAAACCGTTGTTCTTGAACTTGAATGTGTGATGATTCTGTGTTTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTCTCTTCTTCAAATTGCTATTATATTAATATTTTAGTTTTCTTGAGGGTTACAAATATTCAGGTAGTACAAATTGCTAAACATCCACATTAAGCACAACAATAACTTGATGTTGATCATATCATGAGAGCACAGTCACTTTGCTATCATGACAGATGCTACTGTTATGGTTTAGTATTGATTTTTGATATAGCATACTACTGTAAGTGCTCACTAATGTCCCTGCTTATGCACAAAGCCCGGGTTGAGAAGCCTATTTCTGACCAAATGCTTAAAATAAAAAATTACAAAGCACTTTAATTGTTATTGTTAATAAATATTTACACAAATTAACACCCTATAGAAAAAAAATGTTAGGTGACGGCGATGGAGTTTTCAGACCTCTAGTGCCCTCTATTGGTGGTGAGGATTAACTGCTTATTTGTGTTGGTTGGAGAAAATCAGGAAATACACTTCACACAGCAGCTGTGTACAGCAGCTGGACAGACGGCTTTTAACCAGAAGACAGGGGTTGTTTTTGTTATTTGATTTGCTTCAGTGCCGCGAGCACGAGCCTATGGCCCATTTCCCCAGGACAGCTCACTTTAGTTACCCATTAATAGAATAGACAATATGTGATGTTAATAGAATGGATTGATCAGAAGTATCGCGATGTTAACTTTGGGGTCAGAACTACAGACAGCAAAAATAGGTCAGGGCCGACTATCATCAAATTGTTTTGGCTGAAGTCACACACAAAGTATCAATCAG
-6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       AGGTCACGTGCGCCACGTCATTAGCACGCTGCACGGCCACAGCGTGCGGAGAGTTTTACCGGAGGGAGGGATGATGTAGCACGCGGGCCAGTCGGTTGACAGTTCTCTGCTTGGCTCGGCTCTAAGAGACACGGCCGTACCGGAGTGGACCTGAATACCGTGCATCCAGGCCAGACAGGGTGCGGATATATGGGCGAATCATCTAATGAATTAGTGAATTAAGCCAGCAGGCCGACGGTCTAAATTCTGGTCGGGTGGTGCTCGGCGGTTAAGGCAGAAGTTTTTACACCGGATAATATCGACTCCATTCCGCGGTGGAATCACAGGGTTGTCGTGAAGGTGCTGGTGCTGGAGCATGCTGGTAGCAGCAGCTGACCAGACCTTCTCATGTCCAGGCTGTGGATCAGAAGGGACCTTCAACTCCGTCCTGGACCTCCAAAACCACCTGGTCAACACACACACCTATCAGACCCTGCTCGGTCTATCCAAGGTGCGTGCCAGGAGCTCTACACCAGGGTTCCTCCTGCGCCTCCCTGGTCCGACTGTCTCCCAGGGACAGAGCTCCTCCCTGGGCATGGAGTCCACCAGAGACCCCCTGCCTCTGGCCGGTCTGGACCTGGCCTCCTCCACCGCCTCCACCCAGCTTCTCAGGGTGATGTTAGGGGCCGCAGGAGGATCTTCTCTGGGAGTCCCCCAGGACCCCTCCAGGGCTCTGGCTCTGCCTAGCCCTACAGGCCTCACATCCACTGCCTTTTTAGCTCTGGAGGACCATATAGGCCTCAGGAGGAGCCTGGGGCTGGAGTTGGGGTATCCCCCAGTGGAGTGCTTCTCCGTGGGGCCAGGCCTGGAAGAAAGACTAGAGCTGAGGCTGGACATGCAGGTGGCCACCGCCGTAGCCGAGTTGGAGGAGAGGGTGAGGGGGCGTGTCCATCACCTGAAGGCGGAGCTACAGGAAAGAGAGGCGGAGCTAGAGCGAGAGAGGAGGAAGGGAGAACGTCTCGTGAGAGAGAAGGACGAAGTGGAGGAGAGAGCGGCGTACCTGTCCAGACAGGCTTCCATAGCCATGGAGATGATGGAGGGAGTAAAGCGAGAACTGAAGGGCAAAGAGGACGAACTGGCCAAACGAAAACAGGATATGCATCAGGTGCAGGTGTTCCTGAGAGATACAGCAGAGAAGGAGGCAGAAGCTAAAATGAAACTACAGATGTTTATGGAGTCGTTACTCGATCGAGCCGACCATGCAGAGAGACAGCTGCTGCAGATCGCACCCGGTCACACGCACCCGCAACGACACGTACACACACCGATGTACACACACACTCCGGGACACACACACAGAGGTGTCTCCTCACCTGTGTGGGGTCGCGCAGGGCGGAGCTTGGATGGCAGTGTGGAGGACATGCTTGGAGCCAGGTCGCCGGTAACCATGGCAACTCAGAGGAGTTACAGTGTTTCTGGATCTTATAGACTTGGAGACCAACTCTACAACCACCATCCATACAACGACTGGGCTGGAGGGAACCGCTGGGTGAACAGCTACCATCGTTACCACAGTACCGAGGAGGAGAAGGAGGAGGAAGAGGATGACGAAGACGACGAGGAGCAGATATGGAACACACCTGAGATGATAAGACGGACTGCTGCACCAGATTTGTCTCCCTCCTCTAATGGTTGCCATAGCACCCATTGCCTGGGGGTGGAGACTCTACGGTTGAGGGCGGGGCTTTTTTGTGTCTTCCCATATTTGGACGTTGCTTCCCTGCTGCATGCGGCTGAGGTGTGCACTGATTGGAGGTGCGTTGCTAGGCACCCGGCTGTATGGACACGCCTACTTCTGGAGAACGTCACGGTGTCCACCAAGTTCCTGGTCACCCTGTCTCAGTGGTGTACACAGACCCGGTCCCTGGTTCTGAAGAACCTGAGAGGCAGAACCAGACGACCTGGAGAGAGCAGAGAGGACTACCAGACCCTCAAACGGGGCTGCCTGGAGGAAGGGGTGGAGGCTGTCTTGCGCTCAGCGGGGGGCAGTCTGCTCTACCTGTCTGTCTGTCAGTGTTCCAATGTGCTGACAGACAGGTCCCTGTGGCTGGCCAGCTGCTACTCCCCCAACCTACACACCATCACGTACAGGAGTCCCGGTGAGGGGGTGGGTCAGGAGGTCTTGTGGGCGCTGGGAGCCGGCTGCAGAACCATAGCTCACATGAAGTTCACCCCCCTAAACCCCAGCCAGCAGCCTCATCGCCTTGGCAACCGTAGCCTGCAGACCATCGGTCGGTGTTGGCCGGACCTGCGCTCCCTCAGCGTGGGCGGGGCCGGGTGTGGCACTCAGGGATTGGCTGCTGTGGTGCGCAGCTGTGTGTGTCTATTAGAGCTGGAGTTGGAGTGCGTTTCAAAGGTCGACCTGAAGGTGGCGACAGAGCTCTGTAATAACGGACTCACCAACTTGGAGACTTTGACGTTGACGCACACTGCCATCACTGAGGAAGCTATACTGCACTTTCAAAGTAAATGTGTTAATCTCAGGTCCATGGTGGTGCTGATGAGGAAGAGTCATGCTAACGAAGGTTCGCTTGAGGAGGACAGCGTGTTCAGAGATAACCTGGAGGCTCTTAAGGTTCTAACCCGGTCTCCAGGTCTTTGTGGCATCCTGCAGGTCAAAGAAGAATACTGAACTCTTCAAAACACGCACACGCACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACGACAATCGGTTATCAATGATAAGTGTAATAAATGTCTTGTTTCTA</code></pre>
-<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(stringr)</span>
-<span id="cb30-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(dplyr)</span></code></pre></div>
-<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">rnatabID <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> rnatab <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">geneID =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_extract</span>(V2, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">(([^)]+)</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">)(?=,)"</span>)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">geneID =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_replace_all</span>(geneID, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">(|</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">)"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>))</span></code></pre></div>
-<div class="sourceCode" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span>(rnatabID)</span></code></pre></div>
-<pre><code>              V1
-1 XM_060035408.1
-2 XM_060035409.1
-3 XM_060035410.1
-4 XM_060035411.1
-5 XM_060035412.1
-6 XM_060035413.1
-                                                                                                                                   V2
-1                                                        PREDICTED: Gadus macrocephalus putative helicase MOV-10 (LOC132473465), mRNA
-2                             PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X2, mRNA
-3                             PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X3, mRNA
-4                             PREDICTED: Gadus macrocephalus uncharacterized LOC132445431 (LOC132445431), transcript variant X4, mRNA
-5 PREDICTED: Gadus macrocephalus ATP-sensitive inward rectifier potassium channel 12-like (LOC132475957), transcript variant X2, mRNA
-6                               PREDICTED: Gadus macrocephalus F-box only protein 41-like (LOC132445432), transcript variant X1, mRNA
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  V3
-1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  AGTTCAATTGCAACTGGGTAGAGGGCGGCATCTATATCCCCGATAAAGAAGAGCTGGAGAAGCATAAAATCATGGTCACCACCCTTTTCTCCGCTTCAAGGCTGGTTACGGAAGGCATCCCTCCAGGCTTTTACAGCCATATCTTTGTTGACGAGGCAGGACAACCTGCAGAGCCTGAAGGGGTTATCCCCCTGGCAGGCCTACTGGACCCAAAGCGTGGCCAGGTAGTGTTGGCAGGAGACCCCAAACAGTTGGGCCCCATCGTCAAATCCCCCCTAGCCAAGAAGCATGGACTTGGTGTATCAATGCTGGAGCGTCTGATGGAGTTGAATGTGTACAAAAAGACAGAGGAAACGGGGTACAACGAGCGTTTCATCACCAAGCTGCTGAGGAACTACAGGTCTCATGGCAGACTTCTAACGATCCCAAATGAGCTGTTCTACGAGAGCGAACTCCAGGTGTGGGCCGATAAGGATATCCGCAACTCCTTATGTGAATGGAAGCACCTTCCCAGCAAGGGATTCCCGCTGATCTTCCATGAGGTCACTGGACGCATGCGTCGCGAGGACAACGCCTCACTGTTCAACGCCTCACTGTTCAACGAAGACGAGGTGGCGATTCTAATGCAGTATCTGAAAGCACTGTTGGAAGATGTCCCCCCAGAAGACATAGGCCTCATTGCCCCATACAGGAAACAAGTGGAGAGGATCAACAAGGCTCTTAAGATCGAGTTCCCCAGAAACACAGCAAAGTTAAAGGTTTGCACAGTGGACGCGTTTCAGGGCGAGGAGAAGCGGGTGATTCTGCTGTCCACAGTGAGAAGCACCAGCCGGGACCCCAGACCCCCCTCCTCCGTGGGGTTCCTTGCTGACCCCAAGAGGTTCAACGTGGCCATGACCCGCGCCCAAGCCCTGTTGATCGTGGCGGGGAACTCAGAGGCGCTGACAAAGGACAGGATTTGGAGCAGGTTCATCGAGTACTGCAAAGAACACGGAGGTTACACCAAGACCATGACCACCGATTGACGTGCATGCACGGACACATACGCACACTGACAACCACACTCACGTACACACATACAACCTCCGCACACACACACACACACACACACACAAACACACACATACACCTTCTCCACACAAAATGATATTAAGGACTAAAAACCTCACATTTTATTTGACATTGTTGCATCAGCCTATTAGAGGAGAATTTTTTTGACCATTAGGCCTTCCCATCGTTGTGATGGAAAATCTATCATAATCATAAAGTTTTTCGTTTTGAACTTAGGTTTTGTTTACTATTCCGTGTTTGTTCTTGCCGTCCTGCTCTCCTTCGGGGTCATCTAAAATGTAAACCTTTGTGGTTGATGATGTAATCTGTTCTCACTCTGTTCCTGTGTTATCTTCTGTTGATTTGGGCCTGTTCCACGACCCTGGGGAGCTTCAGGAAACAAAGGGTTACATGGCACGGACGCGACCCCTTATTTATGACATCCTGAGGAACTTCAATCAATAGATTACCATCTGGTTAACAAAGGCTTTTGGTTTATTGGGGGACAGCTGCCCTCAAGAACCCAATCTAAGTGTATAAGAACTCCTGACTTAGCCACTTTAGAGTATGAAGTAAGACACAGGGCAAACTCCCATCTGAGGCCTCAAATTACTGTAGTGTATGCCTGTTTTATTGTTTTTTGATGCATGTTGTGATGTATCTTTGTTCGTACTTTTATTACAAATATATAGGACCACCAATTGCCTAAAA
-2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              TTCCTGGTCCTCTCAATATTGCTGATATCATAACCAGAGGGGCCAGTCCTCAAGACCTGGATGAAAGTTCAGAATGGCAGAACGGACCAACATTCTTGAAGCTACCAGTGGATGAGTGGCCAGTTAAATCTGCCAAAGAGTTGGTGATGGCTGCCAGAGACGGTGTCAACAGATTACAGAAGAAAGCGTTTGTTGCTGCACTGACCCGAGCACAAGCCAAGGCACAACTGCTGCCGGATCCAAAGGATACTGACACGCAGAAGCCTTCTGAACTAAAGCAAGACCAGGAACCAACTCAGACCCAAACACAACCAAAGAGGCCACCAGCAGGATCAACTGTCCAAGAACTGGTGGATGTCAAGCGGTTCAGTAACCTAAGCCGACTTGTCAAAACAGTTGCCTGGATCCGGAGAGCAGCAAGGATGTTCATGAAAGGGAACAAGCGAACTGCAAACAATCCAAAGTGGGAGGCAGTGTCGTTTTCAAAAGTCATCTCAGTGACAGAGAGGGAAGACGCCCTAAAAGACATCTTCCTTGCGGCACAGCAAAGTGCATCCTTCCCAAGCACAACCACAGACAGGCTGGTGGTGTACAGAGACCAAGAGACTGGATTGTTGGTCTGTGGGGGTCGTGTGCAGATCTTCAATGAAGATAAAGTTGCTGTCCCCATCTTGCCTTACGAAGCCTGGGTGTCGACACTGTTAGCACGAGAAGCCCACGAGGAGAACCACGATGGAGTGGCCGGGACCTTGCTCAAGATGAGAAGAAGAGCATGGGTCGTGAAAGGTCGGAGAATTGCTCAAAAAGTGGTCGAAAACTGCATGTTCTGCAGGAAAACTAAAGCAAAAAGATGCCAGCAAATAATGGGTGATCTACCTCCAGAGAGGACAGAACCAGCTGCCCCATTCCACTACACAACAGTCGACCTCTTCGGACCCTACCAAGTCAGGGATGATGTAAAGAAAAGAGTGTCACTGAAGGTTTGGGGAATTGTGTTTTGTTGCATGGCCTCCAGAGCTATTCACACCGAGCTGGTGAACTCTCAGTCCACAGAGAGTTTTCTGTTTGCCTACCAGAGGTTCACAGCACTAAGAGGTCATCCAAAGAAAATCTGGTCAGATCCTGGGACCAACTTCATTGGGGCTAAGCCAGTCCTAGAAGAACAGTACCGATTCTTTGCCAATCTTGACAAAGCTACCCTGGAGGAGAGAGCTGCCAAGGATGGCACAGAATGGTCGTGGAAGATTCAACCAGCCGATTCTCCACACCGGAATGGTGCCGCAGAAGCTGCTGTGCGCATTGTCAAGAGAGCACTGCAGAGTCTTGGAGGAGAGTCCGGCCTAAGTTGGAGTGAATTCCAAACAACTCTCTACACGGCTGCCAATCTTGCAAATGAAAGACCAATTGACGCCAGGACACAGAGCCGAGAAGACAGCGTCCAGTTCATCACTCCTAACTGTCTCCTGCTCGGACGAGCATCACAGGGTGGAGATGTCAGAACATTCGACTTCAGTGACTATCCCTACAAAAGGCTTAAAGAAATGCAAGCGCAAGTTAACAAGTTCTGGAGGAACTGGAGTCAACTTGCTGGTCCTAACTTATTCGTAAGGAACAAATGGCATACCGCCAAGAGAAATGTCGCAGTCGGGGACATCGTCTGGATGGCGGACCAAAACGCCCTTAGGGGTCAGTTCAGGATTGCAAGAGTGGTTAGCGTCAACTCGGACAGCAAAGGAGTTGTGAGGGACGTCAATGTCAGAACCTTCCCAAGCTACCCCGTTCCTGTCACAAGGCCTACCGGAGCAAAAGTAAGTCACCGAACATCTAAGAAATTCAAAGAAAAGATCCCAGCAGCAGTTCTTCACAGAGACGTAAGGCGACTAGTGATCTTGCTTCCCACCGAAGAACAGAACTAAACATCTGACCCAAGTTGCTCCTGTAACATGCGACCTCCCAGGTGTCTCCACTGGAAGGTCGAGTGGGAGGTGTGAAGTCAACTTGGAAAATCCCTGCTGGATATGAAGGGGTTAATATGCAACGCCGACTGACAGCTGGGGGAATCCCTCCTCAGAGCGTTACCTGGGAAATCCACGTCATTGCGTCACCTTACCGGAAAGGACAGAAAGGGGAAGAGAGACTCTTTCAGGAAACGCCAGTTGCAAACAAATCAGACAGCGTTCGGTCCAGCAGCAGCAAAGCTGCGCTAGAGAACTTGGAAAAAGCAGCGCTGGTACAGCCATAAAAAGCCTGGAGAAACGGCCGGTTTTTTACCTTGCAGTATACCTAGCAGTTTACCACTTGCAACCCACTTACAACTGTACCCACAATACCTACCTGCTACAACTTACCTGTACCTGTGAAAATACAAAAAGAAAAGTAAAGAGGAGTTAAAGAAGGAAAACCGTGTGGTCATTGCATGAGTGGAACCCAGTTAAACCTCCTATGGGTTGTTGCGCAACAATTGATGCCTGGCACCTGGACCGAGGAGACTGGCTTGGACATTGAGGGTGTTCCACAACAACTATATGGCATCGACTGTGGAGTCTTTATGGTCATGTACTCCTGGTACATTACCATGGACGCACACTTCGATTTCAACGTTTTGGATATGCCTCATCTCAGGAGGTGGTGGTGCAAGCTCCTTTTGGACAACTACGGGATTGAAGGATGTGGCAAAAGATTCTGTCATTTCACCCAAGAAGGACACCAGATGGTGAATGGACTCCTGGCACCGGTGTTCCGGGTAACACGGAAGCGGAAGGTTTTGACCAAGGCAGATGATGTTTTCCTGAAGGACACAATTGAGGCAGCAGCATGGTGCCAGTTGCAGACCTTCACCGACCACGTTTCTCTCCCGATGGTCATTGGGGTGGAAGGTGCAGAGCAGCAGGCATTGTTAGCAGAGCTGAAATCCGTTGACCGCAGTTGCCCGGAAGAAAGCCTAAACAGGATTGAACCGTTCCAGTTCTTCTTCAATTCAAAGAAGGACTACGAAATGTTCTGTGTGGAGATGTTTGACCGGAGAAAGCTGAAAGTGTTTGCTTATTGGGAGTAGCGACATTTTACCCATTGTTTTAATTGAACTGGGGGACCGGGGGCCGATTCTTTATGTTATCATTTATATAACCAGTTCTAAAACCATTTTCATTTGTCTTTATAAATAAAATGATGTC
-3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  CAGAATTCATGAAAATATGCTTAGACATTAAAAACTATTAATAATATTTATATTTATATTTATATATTTATAAGTATTTAAATGCATATATGAAAAACATGTTTGTATTTACTATTTCATTCTGCACTGCATTTACTGTAGTTATTTTTGGTTTCTTTAAAGGTTTTTTACCTTGCAGTATACCTAGCAGTTTACCACTTGCAACCCACTTACAACTGTACCCACAATACCTACCTGCTACAACTTACCTGTACCTGTGAAAATACAAAAAGAAAAGTAAAGAGGAGTTAAAGAAGGAAAACCGTGTGGTCATTGCATGAGTGGAACCCAGTTAAACCTCCTATGGGTTGTTGCGCAACAATTGATGCCTGGCACCTGGACCGAGGAGACTGGCTTGGACATTGAGGGTGTTCCACAACAACTATATGGCATCGACTGTGGAGTCTTTATGGTCATGTACTCCTGGTACATTACCATGGACGCACACTTCGATTTCAACGTTTTGGATATGCCTCATCTCAGGAGGTGGTGGTGCAAGCTCCTTTTGGACAACTACGGGATTGAAGGATGTGGCAAAAGATTCTGTCATTTCACCCAAGAAGGACACCAGATGGTGAATGGACTCCTGGCACCGGTGTTCCGGGTAACACGGAAGCGGAAGGTTTTGACCAAGGCAGATGATGTTTTCCTGAAGGACACAATTGAGGCAGCAGCATGGTGCCAGTTGCAGACCTTCACCGACCACGTTTCTCTCCCGATGGTCATTGGGGTGGAAGGTGCAGAGCAGCAGGCATTGTTAGCAGAGCTGAAATCCGTTGACCGCAGTTGCCCGGAAGAAAGCCTAAACAGGATTGAACCGTTCCAGTTCTTCTTCAATTCAAAGAAGGACTACGAAATGTTCTGTGTGGAGATGTTTGACCGGAGAAAGCTGAAAGTGTTTGCTTATTGGGAGTAGCGACATTTTACCCATTGTTTTAATTGAACTGGGGGACCGGGGGCCGATTCTTTATGTTATCATTTATATAACCAGTTCTAAAACCATTTTCATTTGTCTTTATAAATAAAATGATGTC
-4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            CCCTGCTGTAAGTATTTCTTTCTTAAAGGTACAACATGTCTCTGGCCCGCCGAGTGTCATTGTAGGCCTACTTGTAAATGAAAATTAAAGCTTTCTATGGTGATTAACTTGTCTATTCTAGGTGGGAAACGCTTGTTTGCACTTGGTCAAGGAGATGGCCGAACATCAAGGAAAATATGTATTTCTTCTTGACCTCCACATCCCCCCAACATGGCTCCAATCGCCAAATTCAGATCATCTGCGCAGCTTTCCAGTTGACATCACCACCATGGATGCAGTGATTGTCCCACTGTGGACACCAGGGCATTTTCTGCTTAGTGGTTGTTGCGCAACAATTGATGCCTGGCACCTGGACCGAGGAGACTGGCTTGGACATTGAGGGTGTTCCACAACAACTATATGGCATCGACTGTGGAGTCTTTATGGTCATGTACTCCTGGTACATTACCATGGACGCACACTTCGATTTCAACGTTTTGGATATGCCTCATCTCAGGAGGTGGTGGTGCAAGCTCCTTTTGGACAACTACGGGATTGAAGGATGTGGCAAAAGATTCTGTCATTTCACCCAAGAAGGACACCAGATGGTGAATGGACTCCTGGCACCGGTGTTCCGGGTAACACGGAAGCGGAAGGTTTTGACCAAGGCAGATGATGTTTTCCTGAAGGACACAATTGAGGCAGCAGCATGGTGCCAGTTGCAGACCTTCACCGACCACGTTTCTCTCCCGATGGTCATTGGGGTGGAAGGTGCAGAGCAGCAGGCATTGTTAGCAGAGCTGAAATCCGTTGACCGCAGTTGCCCGGAAGAAAGCCTAAACAGGATTGAACCGTTCCAGTTCTTCTTCAATTCAAAGAAGGACTACGAAATGTTCTGTGTGGAGATGTTTGACCGGAGAAAGCTGAAAGTGTTTGCTTATTGGGAGTAGCGACATTTTACCCATTGTTTTAATTGAACTGGGGGACCGGGGGCCGATTCTTTATGTTATCATTTATATAACCAGTTCTAAAACCATTTTCATTTGTCTTTATAAATAAAATGATGTC
-5 AAGCGTTGTGTGTCGCTGAAGCAACATCCAGTGCCAGGTCTGACTGAAGCTAGCTGGTTAGCATAGCTGACCTATGTATGCTTTGTATGCATTATGAGCGTTAGCCTAAAGGGTAACAGCAGTAATCTGGTCTGATTACAGGCTATTTATAAATCTCTCCCCTCGACCCCAAACTAACCTCGCTGACCACTAGCAGCAGGATCTGAACCATTTTTCCCTTTTCACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACAGTTTCTATATTGATCGAAAATGGAGGCTCTGGAAACACCTTTAACTCTGTTTCTCTGTTTCAAACTGTGAAATAGGGAGGTCTTTTAGGAGAGGAGAAGGGGGAGGTGTGAGTGGAAGAGGAGGAGAGGGGTGGAAAGAGAAAGAGGGAAAGGTGAGTTCTGGAGGAGTAGAGGATTAGAAGAAGGCCTTCAGGTCCCCATGCTAGTGCGGTGAGGTGAGGGAGCAGGGGGATGGCAGGAGGAGTAAGAGGCTGCATCATGCAGTCCACCCCTTGCAGCACTAGAACCTCCTCCTCTGCCCTTCTGATCCAGTGGAACAACGAGGTGATGATCTACCAGCCAACCGTGACCCTGCCTCCACGAGCCTACGGAATGAGACATGTTTTGATGCAGGTTATGAGAGTTCGGACTTCGGATGAACACATATAAACCGTCTCTCAACTCCTCTGGCCCCCCTCTTCTTACCTCTCCTCTCCTCCCTTCCCATCACCCACCATCACCGCCTTCTCTTCACAGGAGATGGACACAGCAGATCTGACTGGACAGAGCACATCTCCTCCTCCCCTCCTCCTATGGGATTGCGCTGGTGTGGGGGGTGGAGGACAAAGTTCCTCTCCTCTCCGCCTCCACCCCTCCTACTATAGAGTTGTGCTGGTGTGTAGGACAGAGTTAACAGACAGGATTACAGCCAGAGGACGGCAGAGGCAGTGAAGGAGAAAATAAAGGATTTTCTCAGAGGAGGGAAAGCCAAGGAAAGATTGACCAAACAGAACTCTGGGAGAATGAACATGGAACCTTTGAGCTGAACTGAAGCAGAGTGATTTCGACCTTAGCAAGTCAGCGTTTGGACAGGTATAACGCTGGTCTGTGGTGCTAGGGGGCTGACCAGGGCCACCGGGGCCCCTGTGTCCAGAGCGTGGTGCCTGGGAGCCACTGCCAGGGGTGATGGGAACAAGACGATCCAGCAGGTTCAGCCTGGCGTCCGTCGTCCTCCAAGAAGACGAGCACCGTAAGGTCTCCAGCCAGGGTCTCCTGAACGGCCACGACTCCCCGCCGCGCTCCTCCACCACCTCCTCCTTGGCCACCGGCGGGAGGGAGGAGGAGCAGCAGCGGGGAGGGATGAGCGGCTCCAGCGTCCGGGGGGGCCCGACGCGGGGCCCCTCCGGACCGCCGCGGAGCCGCTTCGTGAAGAAGAGCGGCCACTGCAACGTGGCGTTCAGCAACCTGGAGGACCGGAGCCAGCGCTACCTGGCCGACCTCTTCACCACCTGCGTGGACGTCCGCTGGCGCCACCTGCTGCTGCTCTTCTGCGTCAGCTTCCTGCTCTCCTGGCTCTTCTTCGGGCTCGTCTTCTACCTGGTGTCCCTGGCCCACGGGGACTTCCAGGACCCGTCTGACGTGTCGCCGGCGGGAGCGACCCAGGGCCCGGGGGGCCGGAGGGAGCGCACGCCGTGCCTCCTCCACGTGCACGGCCTCCTGGGCGCGCTCCTGTTCTCCATGGAGACCCAGACCACCATCGGCTACGGCTGGCGCTGCGTGACGGAGGAGTGCCCGGTGGCCGTGGCGACGGTGGTGGTGCAGTCGGTCGTGGGCTGCATCCTCGACTCCTTCATGATCGGCACCATCATGGCCAAGATGGCGCGGCCCAAGAAGCGGAACCAGACGCTGATGTTCTCGCGGAACGCCGTGATCGCGCTGCGCGACGGCCGGCTCTGCCTCATGTGGCGGGTGGGGAACCTGCGGCACTCGCACATCGTGGAGGCCCACGTGCGCGCCCAGCTCCTCCGGCCCTACGTCACGGAGGAGGGCGAGTTCGTCCCCCTGGAGCAGATGGACCTCAACGTGGGCTACGACGACGGCACCGACCGCATCTTCCTCGTGTCGCCGCTCGTCATCGTCCACGAGATCGACAAGGACAGCCCGCTGTACTCGCTGAGCCGGGCCGACCTGGAGGCGGAGCACTTTGAGATCGTGGTCATCCTCGAGGGCATGGTGGAGGCTACGGCCATGTCCACCCAGTTCCGCAGCTCCTACCTGGCCCGCGAGGTCTTCTGGGGCCACCGCTTCGAGCCCGTGATCTGCGAGGACCGCGACCGCTACAGGGTGGACTACGCGCGCTTCCACCAGACCTACGAGGTGCCGTCCACGCCGCACCTCAGCGCCAAGGAGCTGGACGAGGCCGCCAGCCGGCCCCCCTCCGCCAGGACGACGCGACCGCCACCGTCGGCCAAGGAGGCGCCGAGCTCGTTCTGCTACGACAACGAGGTGGCGCTGATCTGCGGCGAGGACGACGACGAAGACGATGACGACGACGAGAACGACATCTTTGACTTGCGCCGGACACTGTCGTCGCCGGGGGGGAGGCGGGAGGAGAGGAGGACCTCGGTGACCGTGGACCTCCCGAAGGCGGGACAGGACTCGGCTGCCTTGACAACGGGCCGCCAGAGCTTGATGTGCGTGCTGGACATGGACAACCACCAGAGGGAGTTCGATATGCTGCAGACGGCAATTCCGCTCGATCCGCAGTCCTACAAGAGCGAGCAGGAGATGTAGAGGTCTGAGGGACACTGGACGGGGAAGACTGCTCGGGGGTTGTTCTCAGCCTTGCTTCTGTTGGTTGATGTTTGGGGTTGGAGAGTGGGACATATCTATTTTACTGTATGGTGGAGAAACTAGAAAACGGATTGATTATTAAACCACGATGAGCCGTATTGAGGCAGTGGTCATTCAAGAAATGAAATTTTGCTGAGAAGTGAACTTGATTCCGACTGAATAGTCATTCTCCATCACATAAAAACCTCATGACAACAACATTAAGACAAGATACACATGACGGTTGTCTGACTAATGCTCAAATGCTCCTCTATTTCCAAGTCCCTGAGAGGCCAAAATGTGAGGACTGAAAACCGTTGTTCTTGAACTTGAATGTGTGATGATTCTGTGTTTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTGTCTCTTCTTCAAATTGCTATTATATTAATATTTTAGTTTTCTTGAGGGTTACAAATATTCAGGTAGTACAAATTGCTAAACATCCACATTAAGCACAACAATAACTTGATGTTGATCATATCATGAGAGCACAGTCACTTTGCTATCATGACAGATGCTACTGTTATGGTTTAGTATTGATTTTTGATATAGCATACTACTGTAAGTGCTCACTAATGTCCCTGCTTATGCACAAAGCCCGGGTTGAGAAGCCTATTTCTGACCAAATGCTTAAAATAAAAAATTACAAAGCACTTTAATTGTTATTGTTAATAAATATTTACACAAATTAACACCCTATAGAAAAAAAATGTTAGGTGACGGCGATGGAGTTTTCAGACCTCTAGTGCCCTCTATTGGTGGTGAGGATTAACTGCTTATTTGTGTTGGTTGGAGAAAATCAGGAAATACACTTCACACAGCAGCTGTGTACAGCAGCTGGACAGACGGCTTTTAACCAGAAGACAGGGGTTGTTTTTGTTATTTGATTTGCTTCAGTGCCGCGAGCACGAGCCTATGGCCCATTTCCCCAGGACAGCTCACTTTAGTTACCCATTAATAGAATAGACAATATGTGATGTTAATAGAATGGATTGATCAGAAGTATCGCGATGTTAACTTTGGGGTCAGAACTACAGACAGCAAAAATAGGTCAGGGCCGACTATCATCAAATTGTTTTGGCTGAAGTCACACACAAAGTATCAATCAG
-6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       AGGTCACGTGCGCCACGTCATTAGCACGCTGCACGGCCACAGCGTGCGGAGAGTTTTACCGGAGGGAGGGATGATGTAGCACGCGGGCCAGTCGGTTGACAGTTCTCTGCTTGGCTCGGCTCTAAGAGACACGGCCGTACCGGAGTGGACCTGAATACCGTGCATCCAGGCCAGACAGGGTGCGGATATATGGGCGAATCATCTAATGAATTAGTGAATTAAGCCAGCAGGCCGACGGTCTAAATTCTGGTCGGGTGGTGCTCGGCGGTTAAGGCAGAAGTTTTTACACCGGATAATATCGACTCCATTCCGCGGTGGAATCACAGGGTTGTCGTGAAGGTGCTGGTGCTGGAGCATGCTGGTAGCAGCAGCTGACCAGACCTTCTCATGTCCAGGCTGTGGATCAGAAGGGACCTTCAACTCCGTCCTGGACCTCCAAAACCACCTGGTCAACACACACACCTATCAGACCCTGCTCGGTCTATCCAAGGTGCGTGCCAGGAGCTCTACACCAGGGTTCCTCCTGCGCCTCCCTGGTCCGACTGTCTCCCAGGGACAGAGCTCCTCCCTGGGCATGGAGTCCACCAGAGACCCCCTGCCTCTGGCCGGTCTGGACCTGGCCTCCTCCACCGCCTCCACCCAGCTTCTCAGGGTGATGTTAGGGGCCGCAGGAGGATCTTCTCTGGGAGTCCCCCAGGACCCCTCCAGGGCTCTGGCTCTGCCTAGCCCTACAGGCCTCACATCCACTGCCTTTTTAGCTCTGGAGGACCATATAGGCCTCAGGAGGAGCCTGGGGCTGGAGTTGGGGTATCCCCCAGTGGAGTGCTTCTCCGTGGGGCCAGGCCTGGAAGAAAGACTAGAGCTGAGGCTGGACATGCAGGTGGCCACCGCCGTAGCCGAGTTGGAGGAGAGGGTGAGGGGGCGTGTCCATCACCTGAAGGCGGAGCTACAGGAAAGAGAGGCGGAGCTAGAGCGAGAGAGGAGGAAGGGAGAACGTCTCGTGAGAGAGAAGGACGAAGTGGAGGAGAGAGCGGCGTACCTGTCCAGACAGGCTTCCATAGCCATGGAGATGATGGAGGGAGTAAAGCGAGAACTGAAGGGCAAAGAGGACGAACTGGCCAAACGAAAACAGGATATGCATCAGGTGCAGGTGTTCCTGAGAGATACAGCAGAGAAGGAGGCAGAAGCTAAAATGAAACTACAGATGTTTATGGAGTCGTTACTCGATCGAGCCGACCATGCAGAGAGACAGCTGCTGCAGATCGCACCCGGTCACACGCACCCGCAACGACACGTACACACACCGATGTACACACACACTCCGGGACACACACACAGAGGTGTCTCCTCACCTGTGTGGGGTCGCGCAGGGCGGAGCTTGGATGGCAGTGTGGAGGACATGCTTGGAGCCAGGTCGCCGGTAACCATGGCAACTCAGAGGAGTTACAGTGTTTCTGGATCTTATAGACTTGGAGACCAACTCTACAACCACCATCCATACAACGACTGGGCTGGAGGGAACCGCTGGGTGAACAGCTACCATCGTTACCACAGTACCGAGGAGGAGAAGGAGGAGGAAGAGGATGACGAAGACGACGAGGAGCAGATATGGAACACACCTGAGATGATAAGACGGACTGCTGCACCAGATTTGTCTCCCTCCTCTAATGGTTGCCATAGCACCCATTGCCTGGGGGTGGAGACTCTACGGTTGAGGGCGGGGCTTTTTTGTGTCTTCCCATATTTGGACGTTGCTTCCCTGCTGCATGCGGCTGAGGTGTGCACTGATTGGAGGTGCGTTGCTAGGCACCCGGCTGTATGGACACGCCTACTTCTGGAGAACGTCACGGTGTCCACCAAGTTCCTGGTCACCCTGTCTCAGTGGTGTACACAGACCCGGTCCCTGGTTCTGAAGAACCTGAGAGGCAGAACCAGACGACCTGGAGAGAGCAGAGAGGACTACCAGACCCTCAAACGGGGCTGCCTGGAGGAAGGGGTGGAGGCTGTCTTGCGCTCAGCGGGGGGCAGTCTGCTCTACCTGTCTGTCTGTCAGTGTTCCAATGTGCTGACAGACAGGTCCCTGTGGCTGGCCAGCTGCTACTCCCCCAACCTACACACCATCACGTACAGGAGTCCCGGTGAGGGGGTGGGTCAGGAGGTCTTGTGGGCGCTGGGAGCCGGCTGCAGAACCATAGCTCACATGAAGTTCACCCCCCTAAACCCCAGCCAGCAGCCTCATCGCCTTGGCAACCGTAGCCTGCAGACCATCGGTCGGTGTTGGCCGGACCTGCGCTCCCTCAGCGTGGGCGGGGCCGGGTGTGGCACTCAGGGATTGGCTGCTGTGGTGCGCAGCTGTGTGTGTCTATTAGAGCTGGAGTTGGAGTGCGTTTCAAAGGTCGACCTGAAGGTGGCGACAGAGCTCTGTAATAACGGACTCACCAACTTGGAGACTTTGACGTTGACGCACACTGCCATCACTGAGGAAGCTATACTGCACTTTCAAAGTAAATGTGTTAATCTCAGGTCCATGGTGGTGCTGATGAGGAAGAGTCATGCTAACGAAGGTTCGCTTGAGGAGGACAGCGTGTTCAGAGATAACCTGGAGGCTCTTAAGGTTCTAACCCGGTCTCCAGGTCTTTGTGGCATCCTGCAGGTCAAAGAAGAATACTGAACTCTTCAAAACACGCACACGCACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACACGACAATCGGTTATCAATGATAAGTGTAATAAATGTCTTGTTTCTA
-        geneID
-1 LOC132473465
-2 LOC132445431
-3 LOC132445431
-4 LOC132445431
-5 LOC132475957
-6 LOC132445432</code></pre>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>R</category>
-  <category>blast</category>
-  <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-16-cod_ids/</guid>
-  <pubDate>Tue, 21 May 2024 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2024-05-22_16-21-39.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
