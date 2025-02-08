@@ -10,7 +10,545 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.5.57</generator>
-<lastBuildDate>Tue, 24 Dec 2024 08:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 08 Feb 2025 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Apul Time Series Methylation</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/37-Apul-meth/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Here we take the first set of time series methylation data to CpG level percent methylation.</p>
+<section id="data-was-trimmed" class="level1">
+<h1>Data was trimmed</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notebook
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://robertslab.github.io/sams-notebook/posts/2025/2025-01-02-Trimming---A.pulchra-WGBS-with-fastp-FastQC-and-MultiQC-on-Raven/" class="uri">https://robertslab.github.io/sams-notebook/posts/2025/2025-01-02-Trimming---A.pulchra-WGBS-with-fastp-FastQC-and-MultiQC-on-Raven/</a></p>
+</div>
+</div>
+<p>To reproduce the trimming and quality control (QC) of <em>Acropora pulchra</em> Whole Genome Bisulfite Sequencing (WGBS) data, obtain the raw FastQ files and use <strong>fastp</strong> to trim <strong>25bp from the 5’ end</strong> while removing adapters, polyG, and polyA sequences; if errors occur, attempt repair with <strong>BBTools’ repair.sh</strong> before re-trimming. Evaluate trimmed reads with <strong>FastQC</strong>, then summarize results using <strong>MultiQC</strong>. The complete workflow, including commands and scripts, is available in the project repository, and output files can be accessed <a href="https://gannet.fish.washington.edu/gitrepos/urol-e5/timeseries_molecular/D-Apul/output/01.20-D-Apul-WGBS-trimming-fastp-FastQC-MultiQC/">here</a>.</p>
+</section>
+<section id="reads-were-aligned" class="level1">
+<h1>Reads were aligned</h1>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Notebook
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="https://robertslab.github.io/sams-notebook/posts/2025/2025-01-02-Bismark-Alignments---A.pulchra-Trimmed-Reads-Using-Bismark-on-Hyak/" class="uri">https://robertslab.github.io/sams-notebook/posts/2025/2025-01-02-Bismark-Alignments---A.pulchra-Trimmed-Reads-Using-Bismark-on-Hyak/</a></p>
+</div>
+</div>
+<p>To align <em>Acropora pulchra</em> WGBS reads using <strong>Bismark</strong> on the <strong>Hyak</strong> cluster, trimmed FastQ files were prepared, and a <strong>fastq_pairs.txt</strong> file was generated. The alignment process was initiated by submitting a SLURM array job using sbatch –array=1-$(wc -l &lt; ../output/01.20-D-Apul-WGBS-trimming-fastp-FastQC-MultiQC/fastq_pairs.txt) 02.20-D-Apul-WGBS-alignment-SLURM-job.sh, which allowed each node to process a unique FastQ pair. The job script (02.20-D-Apul-WGBS-alignment-SLURM_array-bismark.sh) configured directories, allocated computational resources (bismark_threads=5), extracted FastQ filenames, and executed <strong>Bismark</strong> with <strong>Bowtie2</strong> using the parameters –score_min L,0,-0.6 –non_directional –gzip -p 5. The SLURM script (02.20-D-Apul-WGBS-alignment-SLURM-job.sh) defined job parameters (#SBATCH –cpus-per-task=20 –mem=100G –time=72:00:00) and executed the containerized Bismark workflow via <strong>Apptainer</strong>.</p>
+</section>
+<section id="taking-bams-to-tables" class="level1">
+<h1>Taking BAMS to tables</h1>
+<section id="deduplicated" class="level2">
+<h2 class="anchored" data-anchor-id="deduplicated">Deduplicated</h2>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> /gscratch/srlab/sam/gitrepos/urol-e5/timeseries_molecular/D-Apul/output/02.20-D-Apul-WGBS-alignment-SLURM_array-bismark/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> 1 basename <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-s</span> _R1_001.fastp-trim_bismark_bt2_pe.bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">parallel</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-j</span> 8 deduplicate_bismark <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-4">--bam <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-5">--paired <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-6">--output_dir ../output/15-Apul-bismark <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-7">/gscratch/srlab/sam/gitrepos/urol-e5/timeseries_molecular/D-Apul/output/02.20-D-Apul-WGBS-alignment-SLURM_array-bismark//{}_R1_001.fastp-trim_bismark_bt2_pe.bam</span></code></pre></div>
+</section>
+<section id="sorted" class="level2">
+<h2 class="anchored" data-anchor-id="sorted">Sorted</h2>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> ../output/15-Apul-bismark/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>deduplicated.bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> basename <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-s</span> _R1_001.fastp-trim_bismark_bt2_pe.deduplicated.bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I{}</span> samtools <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-4">sort <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--threads</span> 24 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-5">../output/15-Apul-bismark/{}_R1_001.fastp-trim_bismark_bt2_pe.deduplicated.bam <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-6">-o ../output/15-Apul-bismark/{}.sorted.bam</span></code></pre></div>
+</section>
+<section id="methylation-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="methylation-extraction">Methylation Extraction</h2>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> ../output/15-Apul-bismark/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>deduplicated.bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> 1 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-I{}</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-2">bismark_methylation_extractor <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--bedGraph</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--counts</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--comprehensive</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--merge_non_CpG</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-3">--multicore 24 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--buffer_size</span> 75% <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--output</span> ../output/15-Apul-bismark <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"{}"</span></span></code></pre></div>
+</section>
+<section id="methylation-call" class="level2">
+<h2 class="anchored" data-anchor-id="methylation-call">Methylation call</h2>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> ../output/15-Apul-bismark/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>deduplicated.bismark.cov.gz <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> 1 basename <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-s</span> _pe.deduplicated.bismark.cov.gz <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">parallel</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-j</span> 24 coverage2cytosine <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-4">--genome_folder /gscratch/srlab/sam/gitrepos/urol-e5/timeseries_molecular/D-Apul/data/ <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-5">-o ../output/15-Apul-bismark/{} <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-6">--merge_CpG <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-7">--zero_based <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-8">../output/15-Apul-bismark/{}_pe.deduplicated.bismark.cov.gz</span></code></pre></div>
+</section>
+<section id="rename-cov-files" class="level2">
+<h2 class="anchored" data-anchor-id="rename-cov-files">Rename cov files</h2>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Read the CSV file and create an associative array - hand edited 3 filenames first</span></span>
+<span id="cb5-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">declare</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-A</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample_map</span></span>
+<span id="cb5-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">while</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">IFS</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>, <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">read</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-r</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">col1</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample_name</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">col3</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">col4</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">azenta_sample_name</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">col6</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb5-4">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample_map</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$azenta_sample_name</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sample_name</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb5-5"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span> ../../M-multi-species/data/e5_DNA_Azenta_metadata.csv</span>
+<span id="cb5-6"></span>
+<span id="cb5-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ../output/15.5-Apul-bismark/</span>
+<span id="cb5-8"></span>
+<span id="cb5-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Iterate over all *.cov files and rename them</span></span>
+<span id="cb5-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> file <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.cov<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb5-11">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract the portion before the first underscore</span></span>
+<span id="cb5-12">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">prefix</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%%</span>_<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb5-13">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">if</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">[[</span> <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">-n</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_map</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$prefix</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">]];</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">then</span></span>
+<span id="cb5-14">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">new_file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">//</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$prefix</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample_map</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$prefix</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb5-15">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mv</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$file</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$new_file</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb5-16">  <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">fi</span></span>
+<span id="cb5-17"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+</section>
+<section id="made-bedgraph" class="level2">
+<h2 class="anchored" data-anchor-id="made-bedgraph">Made bedgraph</h2>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ../output/15.5-Apul-bismark/</span>
+<span id="cb6-2"></span>
+<span id="cb6-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> f <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>merged_CpG_evidence.cov</span>
+<span id="cb6-4"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb6-5">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">STEM</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${f}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> _R1_001.fastp-trim_bismark_bt2.CpG_report.merged_CpG_evidence.cov<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb6-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cat</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${f}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-F</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">$'</span><span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\t</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BEGIN {OFS = FS} {if ($5+$6 &gt;= 10) {print $1, $2, $3, $4}}'</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-7">  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${STEM}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_10x.bedgraph</span>
+<span id="cb6-8"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+</section>
+<section id="created-modified-tables" class="level2">
+<h2 class="anchored" data-anchor-id="created-modified-tables">Created modified tables</h2>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> file <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ../output/15.5-Apul-bismark/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>10x.bedgraph<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb7-2">    <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'{print "CpG_"_$1"_"$2, $4}'</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$file</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${file</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%</span>.bedgraph<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">_processed.txt"</span></span>
+<span id="cb7-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_httpsgannet.fish.washington.eduseashellbu-githubtimeseries_molecularD-Apuloutput15.5-Apul-bismarkACR-139-TP2_10x_proc_2025-02-08_05-03-16.png" class="img-fluid"></p>
+<p>Now there are files for each of the Apul samples @ <a href="https://gannet.fish.washington.edu/seashell/bu-github/timeseries_molecular/D-Apul/output/15.5-Apul-bismark/" class="uri">https://gannet.fish.washington.edu/seashell/bu-github/timeseries_molecular/D-Apul/output/15.5-Apul-bismark/</a></p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+ ]]></description>
+  <category>e5</category>
+  <category>methylation</category>
+  <category>coral</category>
+  <category>bismark</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/37-Apul-meth/</guid>
+  <pubDate>Sat, 08 Feb 2025 08:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_urol-e5timeseries_molecular_2025-02-08_04-42-58.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>We wish you a Merry Mytilus!</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -5234,55 +5772,6 @@ sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/</code></pre>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/</guid>
   <pubDate>Mon, 27 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_DALLE_2024-05-26_10.56.50_-_Create_an_artistic_and_detailed_illustration_representing_the_concept_of_automated_scripting_in_a__2024-05-26_10-57-06.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Working with IGV</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Need to index genome</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx ../data/ncbi_dataset/data/GCF_031168955.1/GCF_031168955.1_ASM3116895v1_genomic.fna</span></code></pre></div>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx ../data/ncbi_dataset/data/GCF_031168955.1/GCF_031168955.1_ASM3116895v1_genomic.fa</span></code></pre></div>
-<p>start of IGV (save as xml)</p>
-<pre><code>&lt;Session genome="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/GCF_031168955.1_ASM3116895v1_genomic.fa" hasGeneTrack="false" hasSequenceTrack="true" locus="NC_082382.1:6171230-6590510" version="8"&gt;
-    &lt;Resources&gt;
-        &lt;Resource path="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gff" type="gff"/&gt;
-        &lt;Resource path="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gtf" type="gtf"/&gt;
-    &lt;/Resources&gt;
-    &lt;Panel height="807" name="FeaturePanel" width="1500"&gt;
-        &lt;Track attributeKey="Reference sequence" clazz="org.broad.igv.track.SequenceTrack" fontSize="10" id="Reference sequence" name="Reference sequence" sequenceTranslationStrandValue="POSITIVE" shouldShowTranslation="false" visible="true"/&gt;
-        &lt;Track attributeKey="genomic.gtf" clazz="org.broad.igv.track.FeatureTrack" fontSize="10" groupByStrand="false" id="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gtf" name="genomic.gtf" visible="true"/&gt;
-        &lt;Track attributeKey="genomic.gff" clazz="org.broad.igv.track.FeatureTrack" fontSize="10" groupByStrand="false" id="https://gannet.fish.washington.edu/seashell/bu-github/project-cod-temperature/data/ncbi_dataset/data/GCF_031168955.1/genomic.gff" name="genomic.gff" visible="true"/&gt;
-    &lt;/Panel&gt;
-    &lt;PanelLayout dividerFractions="0.007334963325183374"/&gt;
-    &lt;HiddenAttributes&gt;
-        &lt;Attribute name="DATA FILE"/&gt;
-        &lt;Attribute name="DATA TYPE"/&gt;
-        &lt;Attribute name="NAME"/&gt;
-    &lt;/HiddenAttributes&gt;
-&lt;/Session&gt;</code></pre>
-<p><img src="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" class="img-fluid"></p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>R</category>
-  <category>igv</category>
-  <category>cod</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-17-igv/</guid>
-  <pubDate>Thu, 23 May 2024 07:00:00 GMT</pubDate>
-  <media:content url="https://gannet.fish.washington.edu/seashell/snaps/IGV_2024-05-24_10-33-08.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
