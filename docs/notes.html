@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,12 +70,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-69d87467896a330188e7f833fde9423c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-3b85e4d4982b0db94155cfe949b08200.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -173,12 +173,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<p>February 15, 2025</p>
+<pre><code>Bowtie 2 seems to be working fine (tested command '/home/shared/bowtie2-2.4.4-linux-x86_64/bowtie2 --version' [2.4.4])
+Output format is BAM (default)
+Alignments will be written out in BAM format. Samtools found here: '/usr/bin/samtools'
+Reference genome folder provided is ../data/    (absolute path is '/home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/data/)'
+FastQ format assumed (by default)
+Attention: using more than 4 cores per alignment thread has been reported to have diminishing returns. If possible try to limit -p to a value of 4
+Each Bowtie 2 instance is going to be run with 10 threads. Please monitor performance closely and tune down if necessary!
+
+Input files to be analysed (in current folder '/home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/code'):
+../data/22-Apul-meth/ACR-140-TP2_R1.fastp-trim.fq.gz
+../data/22-Apul-meth/ACR-140-TP2_R2.fastp-trim.fq.gz
+Library is assumed to be strand-specific (directional), alignments to strands complementary to the original top or bottom strands will be ignored (i.e. not performed!)
+Output will be written into the directory: /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/22-Apul-methylation/
+Setting parallelization to single-threaded (default)
+
+Summary of all aligner options: -q --score-min L,0,-1.0 -p 10 --reorder --ignore-quals --no-mixed --no-discordant --dovetail --maxins 500
+Current working directory is: /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/code
+
+Now reading in and storing sequence information of the genome specified in: /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/data/
+
+Single-core mode: setting pid to 1
+
+Paired-end alignments will be performed
+=======================================
+
+---
+
+
+253164476 reads; of these:
+  253164476 (100.00%) were paired; of these:
+    252724097 (99.83%) aligned concordantly 0 times
+    215631 (0.09%) aligned concordantly exactly 1 time
+    224748 (0.09%) aligned concordantly &gt;1 times
+0.17% overall alignment rate
+253164476 reads; of these:
+  253164476 (100.00%) were paired; of these:
+    252721074 (99.82%) aligned concordantly 0 times
+    210210 (0.08%) aligned concordantly exactly 1 time
+    233192 (0.09%) aligned concordantly &gt;1 times
+0.18% overall alignment rate
+Processed 253164476 sequences in total</code></pre>
 <p>December 6, 2024. OK didn’t do much analysis today but did decide that the next focus is going to be to take Chris nutation samples. We run them hopefully with the new next flow pipeline, but that’ll be ready to see if unit directional alignment fixes the odd CG ratio thing</p>
 <p>Relavant Species info</p>
 <p>Based on the differences in life history, ecology, and biology between Acropora pulchra, Pocillopora meandrina, and Pocillopora tuahiniensis, we would expect differences in their gene regulatory mechanisms. Here’s why: • Different Symbiotic Strategies and Environmental Sensitivity: The sources highlight that these species have distinct symbiotic strategies, with A. pulchra being a horizontal transmitter and both Pocillopora species being vertical transmitters. Additionally, A. pulchra is generally considered more sensitive to environmental change. These differences likely require distinct gene regulatory mechanisms to manage the acquisition, maintenance, and potential stress responses associated with their symbionts. ◦ A. pulchra needs to regulate genes involved in recognizing and incorporating symbionts from the environment, while the Pocillopora species need to regulate genes for the inheritance of symbionts. ◦ The higher environmental sensitivity of A. pulchra suggests that its gene regulatory mechanisms may be more responsive to environmental stressors, leading to differential gene expression patterns compared to the Pocillopora species. • Symbiont Community Composition: Each species associates with different dominant Symbiodiniaceae species and profiles. This variation in symbiont partners is likely to influence host gene expression, as different symbionts may produce different signaling molecules or metabolites that interact with host gene regulatory pathways. ◦ For example, the sources found that symbiont community composition was significantly related to host physiology in Porites. This suggests that the specific types of symbionts present can influence host gene expression patterns. • Cryptic Diversity and Holobiont Identity: The sources emphasize the presence of cryptic diversity within the Pocillopora genus and the importance of considering holobiont identity. Even within the same species, different host haplotypes can exhibit distinct physiological responses and associate with different symbiont communities. This suggests potential genetic differences in gene regulatory mechanisms between holobionts. • Physiological Differences: The sources detail significant physiological differences between these species, indicating that their gene regulatory mechanisms must be tuned to support their distinct physiological needs. ◦ For example, the sources note that Porites corals, with their thicker tissues, have higher overall physiological rates compared to Acropora and Pocillopora. This would necessitate differences in the regulation of genes involved in metabolic processes, growth, and calcification. • Morphological Differences: The sources describe differences in tissue structure, with Acropora and Porites having perforate tissues and Pocillopora having imperforate tissues. These morphological differences could influence the microenvironment experienced by the coral host and its symbionts, potentially leading to differences in gene expression patterns. ◦ For example, perforate tissues might allow for greater exchange of nutrients and gases, which could affect metabolic processes and the regulation of related genes. Overall, the sources provide strong evidence that the different life histories, ecologies, symbiont communities, and physiologies of Acropora pulchra, Pocillopora meandrina, and Pocillopora tuahiniensis are likely associated with differences in their gene regulatory mechanisms. Further research, specifically focusing on gene expression analysis across these species, would be needed to confirm and explore the specific nature of these differences.</p>
 <hr>
 <p>quarto render</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*.qmd"</span> <span class="at">-mtime</span> <span class="at">-1</span> <span class="at">-exec</span> quarto render {} <span class="dt">\;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-name</span> <span class="st">"*.qmd"</span> <span class="at">-mtime</span> <span class="at">-1</span> <span class="at">-exec</span> quarto render {} <span class="dt">\;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <hr>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -417,8 +459,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -529,7 +569,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
