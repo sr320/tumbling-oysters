@@ -5,7 +5,7 @@ execute:
   echo: false  # Do not show code in the output
 ---
 
-February 15, 2025
+## February 15, 2025
 
 ```
 Bowtie 2 seems to be working fine (tested command '/home/shared/bowtie2-2.4.4-linux-x86_64/bowtie2 --version' [2.4.4])
@@ -55,7 +55,7 @@ Processed 253164476 sequences in total
 
 
 
-December 6, 2024.
+## December 6, 2024.
 
 OK didn’t do much analysis today but did decide that the next focus is going to be to take Chris nutation samples. We run them hopefully with the new next flow pipeline, but that’ll be ready to see if unit directional alignment fixes the odd CG ratio thing
 
