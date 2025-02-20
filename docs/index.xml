@@ -10,7 +10,582 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Sat, 08 Feb 2025 08:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 19 Feb 2025 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Please Klone me</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/38-klone/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Let’s get everyone up an running with Klone and RStudio.</p>
+<section id="log-in" class="level1">
+<h1>Log in</h1>
+<pre class="{bash}"><code>sr320@Stevens-MacBook-Air-184 ~ % ssh sr320@klone.hyak.uw.edu
+(sr320@klone.hyak.uw.edu) Password: 
+(sr320@klone.hyak.uw.edu) Duo two-factor login for sr320
+
+Enter a passcode or select one of the following options:
+
+ 1. Duo Push to XXX-XXX-3626
+ 2. Duo Push to iOS
+ 3. Phone call to XXX-XXX-3626
+
+Passcode or option (1-3): 1</code></pre>
+</section>
+<section id="cd-to-srlab-directory" class="level1">
+<h1>CD to srlab directory</h1>
+<pre class="{bash}"><code>cd /gscratch/srlab/
+</code></pre>
+<p>Create user directory in srlab (if not present)</p>
+<pre class="{bash}"><code>mkdir sr320</code></pre>
+</section>
+<section id="add-containers-to-your-local-directory" class="level1">
+<h1>Add containers to your local directory</h1>
+<pre><code>-rwxr-xr-x 1 samwhite all   3311583232 2024-12-04 srlab-bioinformatics-container-09dfcb2.sif
+-rwxrwxr-x 1 samwhite srlab 2985074688 2024-10-17 srlab-bioinformatics-container-2bd5d44.sif
+-rwxr-xr-x 1 samwhite all   3008335872 2024-11-06 srlab-bioinformatics-container-586bf21.sif
+-rwxr-xr-x 1 samwhite all   3008442368 2024-11-07 srlab-bioinformatics-container-f4142f4.sif
+-rwxr-xr-x 1 samwhite all   3380895744 2025-01-04 srlab-R4.4-bioinformatics-container-703094b.sif</code></pre>
+<p>Specifically <code>srlab-R4.4-bioinformatics-container-703094b.sif</code></p>
+<pre class="{bash}"><code>#within user directory
+cp ../containers/srlab-R4.4-bioinformatics-container-703094b.sif . </code></pre>
+<p>[^1]</p>
+</section>
+<section id="generate-slurm" class="level1">
+<h1>Generate SLURM</h1>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Users should add the following line in&nbsp;<code>~/.Renviron</code>. If you don’t have a&nbsp;<code>~/.Renviron</code>, you can create it like this:&nbsp;<code>touch ~/.Renviron</code></p>
+<pre><code>-   `R_LIBS_USER`&nbsp;in&nbsp;`~/.Renviron`. Example:
+
+    ```         
+    cat ~/.Renviron 
+    # Set local library installation path
+    R_LIBS_USER=/gscratch/srlab/${USER}/R_libs_apptainer
+    ```</code></pre>
+</div>
+</div>
+<p>In summary, this configuration directs R to install and access packages from a custom directory rather than the system-wide library, which is especially useful in shared or containerized environments.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><p>User needs to set/change the following in the SLURM script before starting script:</p>
+<ul>
+<li><p><code>#SBATCH --time=02:00:00</code></p></li>
+<li><p><code>#SBATCH --mem=20G</code></p></li>
+<li><p><code>--chdir=/gscratch/scrubbed/${USER}/&lt;add_rest_of_path&gt;</code></p></li>
+<li><p><code>RSTUDIO_SIF="srlab-bioinformatics-container-2bd5d44.sif" # UPDATE THIS LINE</code></p></li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="copy-slurm-job-script" class="level1">
+<h1>Copy SLURM JOB SCRIPT</h1>
+<pre class="{bash}"><code>cp ../sr320/rstudio-server.job .</code></pre>
+<p>Open</p>
+<pre><code>nano rstudio-server.job</code></pre>
+<pre class="{bash}"><code>#!/bin/sh
+
+#SBATCH --job-name=rstudio-server
+#SBATCH --account=srlab
+#SBATCH --partition=cpu-g2-mem2x #update this line - use hyakalloc to find partitions you can use
+#SBATCH --time=15-08:00:00
+#SBATCH --ntasks=1              # Number of tasks
+#SBATCH --cpus-per-task=12     # Increased threads from 4 to 8
+#SBATCH --nodes=1
+#SBATCH --mem=100G
+#SBATCH --signal=USR2
+#SBATCH --output=%x_%j.out
+## Specify the working directory for this job
+#SBATCH --chdir=/gscratch/srlab/sr320
+
+# This script will request a single CPU with four threads with 20GB of RAM for 2 hours. 
+# You can adjust --time, --nodes, --ntasks, and --mem above to adjust these settings for your session.
+
+# --output=%x_%j.out creates a output file called rstudio-server_NNNNNNNN.out 
+# where the %x is short hand for --job-name above and the N's are an 8-digit 
+# jobID assigned by SLURM when our job is submitted.
+
+RSTUDIO_CWD="/gscratch/srlab/sr320" # UPDATE THIS LINE
+RSTUDIO_SIF="srlab-R4.4-bioinformatics-container-703094b.sif" # UPDATE THIS LINE
+
+
+# Create temp directory for ephemeral content to bind-mount in the container
+RSTUDIO_TMP=$(/usr/bin/python3 -c 'import tempfile; print(tempfile.mkdtemp())')
+
+mkdir -p -m 700 \
+        ${RSTUDIO_TMP}/run \
+        ${RSTUDIO_TMP}/tmp \
+        ${RSTUDIO_TMP}/var/lib/rstudio-server
+
+cat &gt; ${RSTUDIO_TMP}/database.conf &lt;&lt;END
+provider=sqlite
+directory=/var/lib/rstudio-server
+END
+
+# Set OMP_NUM_THREADS to prevent OpenBLAS (and any other OpenMP-enhanced
+# libraries used by R) from spawning more threads than the number of processors
+# allocated to the job.
+#
+# Set R_LIBS_USER to a path specific to rocker/rstudio to avoid conflicts with
+# personal libraries from any R installation in the host environment
+
+cat &gt; ${RSTUDIO_TMP}/rsession.sh &lt;&lt;END
+#!/bin/sh
+
+export OMP_NUM_THREADS=${SLURM_JOB_CPUS_PER_NODE}
+export R_LIBS_USER=${RSTUDIO_CWD}/R
+exec /usr/lib/rstudio-server/bin/rsession "\${@}"
+END
+
+chmod +x ${RSTUDIO_TMP}/rsession.sh
+
+export APPTAINER_BIND="${RSTUDIO_CWD}:${RSTUDIO_CWD},/gscratch:/gscratch,${RSTUDIO_TMP}/run:/run,${RSTUDIO_TMP}/tmp:/tmp,${RSTUDIO_TMP}/database.conf:/etc/rstudio/database.conf,${RSTUDIO_TMP}/rsession.sh:/etc/rstudio/rsession.sh,${RSTUDIO_TMP}/var/lib/rstudio-server:/var/lib/rstudio-server"
+
+# Do not suspend idle sessions.
+# Alternative to setting session-timeout-minutes=0 in /etc/rstudio/rsession.conf
+export APPTAINERENV_RSTUDIO_SESSION_TIMEOUT=0
+
+export APPTAINERENV_USER=$(id -un)
+export APPTAINERENV_PASSWORD=$(openssl rand -base64 15)
+
+# get unused socket per https://unix.stackexchange.com/a/132524
+# tiny race condition between the python &amp; apptainer commands
+readonly PORT=$(/mmfs1/sw/pyenv/versions/3.9.5/bin/python -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+cat 1&gt;&amp;2 &lt;&lt;END
+1. SSH tunnel from your workstation using the following command:
+
+   ssh -N -L 8787:${HOSTNAME}:${PORT} ${APPTAINERENV_USER}@klone.hyak.uw.edu
+
+   and point your web browser to http://localhost:8787
+
+2. log in to RStudio Server using the following credentials:
+
+   user: ${APPTAINERENV_USER}
+   password: ${APPTAINERENV_PASSWORD}
+
+When done using RStudio Server, terminate the job by:
+
+1. Exit the RStudio Session ("power" button in the top right corner of the RStudio window)
+2. Issue the following command on the login node:
+
+      scancel -f ${SLURM_JOB_ID}
+END
+
+source /etc/bashrc
+module load apptainer
+
+apptainer exec --cleanenv --home ${RSTUDIO_CWD} ${RSTUDIO_CWD}/${RSTUDIO_SIF} \
+    rserver --www-port ${PORT} \
+            --auth-none=0 \
+            --auth-pam-helper-path=pam-helper \
+            --auth-stay-signed-in-days=30 \
+            --auth-timeout-minutes=0 \
+            --rsession-path=/etc/rstudio/rsession.sh \
+            --server-user=${APPTAINERENV_USER}
+
+APPTAINER_EXIT_CODE=$?
+echo "rserver exited $APPTAINER_EXIT_CODE" 1&gt;&amp;2
+exit $APPTAINER_EXIT_CODE
+</code></pre>
+</section>
+<section id="make-relevant-edits-for-slurm" class="level1">
+<h1>Make relevant edits for slurm</h1>
+</section>
+<section id="run" class="level1">
+<h1>Run</h1>
+<pre class="{bash}"><code>sbatch rstudio-server.job
+
+
+
+
+
+
+-   Example script uses the following Apptainer container image:&nbsp;`srlab-bioinformatics-container-2bd5d44.sif`.
+
+[sr320@klone-login03 containers]$ cat /gscratch/srlab/gitrepos/RobertsLab/code/apptainer_definition_files/srlab-bioinformatics-container.def
+# NOTE:
+# To use RepeatMasker with this container, RepeatMasker must be installed on the local computer in the following location:
+#
+# /gscratch/srlab/programs/RepeatMasker
+# 
+# RepeatMasker must be configured on the local computer prior to running via this container.
+# The container expects the following files:
+#
+# /gscratch/srlab/programs/RepeatMasker/Libraries/famdb/dfam38_full.0.h5
+# /gscratch/srlab/programs/RepeatMasker/Libraries/famdb/rmlib.config
+
+
+Bootstrap: docker
+From: rocker/rstudio:4.4.1
+%files
+    # Load file with R package installation commands in to container at /tmp
+    # Expects file called "r_packages_installs.R" to be in current directory.
+    r_packages_installs.R /tmp/
+
+%setup
+
+
+%environment
+    ### Set program locations/versions for system PATH ###
+    programs_location="/srlab/programs"
+    bismark_version="0.24.2"
+    bowtie2_version="2.5.4"
+    diamond_version="2.1.9"
+    fastp_version="0.23.4"
+    fastqc_version="0.12.1"
+    gffcompare_version="gffcompare-0.12.6"
+    hisat2_version="2.2.1"
+    kallisto_version="0.51.1"
+    miniforge_version="24.7.1-0"
+    multiqc_version="1.24.1"
+    ncbi_blast_version="2.16.0"
+    ncbi_datasets_version="13.34.0"
+    repeatmasker_version="4.1.7-p1"
+    rmblast_version="2.14.1"
+    salmon_version="1.10.0"
+    samtools_version="1.20"
+    stringtie_version="2.2.1"
+    trimmomatic_version="0.39"
+
+    mamba_envs_dir="${programs_location}/miniforge3-${miniforge_version}/envs"
+
+    ######################################################
+
+    export LC_ALL=C
+    
+    ### Set container system PATH ###
+    PATH="/usr/local/sbin:\
+/usr/local/bin:\
+/usr/sbin:\
+/usr/bin:\
+/sbin:\
+/bin:\
+${programs_location}:\
+${programs_location}/Bismark-${bismark_version}:\
+${programs_location}/bowtie2-${bowtie2_version}-sra-linux-x86_64:\
+${programs_location}/fastqc-${fastqc_version}:\
+${programs_location}/${gffcompare_version}:\
+${programs_location}/hisat2-${hisat2_version}:\
+${programs_location}/kallisto-${kallisto_version}/build/src:\
+${programs_location}/miniforge3-${miniforge_version}/bin:\
+${mamba_envs_dir}/multiqc_env/bin:\
+${programs_location}/ncbi-blast-${ncbi_blast_version}+/bin:\
+${programs_location}/ncbi-datasets-${ncbi_datasets_version}:\
+${programs_location}/RepeatMasker:\
+${programs_location}/rmblast-${rmblast_version}/bin:\
+${programs_location}/salmon-latest_linux_x86_64/bin:\
+${programs_location}/samtools-${samtools_version}:\
+${programs_location}/stringtie-${stringtie_version}.Linux_x86_64:\
+${programs_location}/Trimmomatic-${trimmomatic_version}:\
+${programs_location}/trf409.linux64"
+    ######################################################
+
+
+%post
+    # Install common/base libraries/dependencies
+    apt update &amp;&amp; \
+    apt install -y --no-install-recommends \
+    apt-utils \
+    aptitude \
+    automake \
+    build-essential \
+    bzip2 \
+    cmake \
+    coreutils \
+    curl \
+    debconf \
+    default-jdk \
+    dialog \
+    emboss \
+    gcc-multilib \
+    gdebi-core \
+    gfortran \
+    git \
+    gobjc++ \
+    hmmer \
+    htop \
+    infernal \
+    libapparmor1 \
+    libbz2-dev \
+    libc6 \
+    libcurl4-openssl-dev \
+    libedit2 \
+    libfontconfig1 \
+    liblzma-dev \
+    libncurses5-dev \
+    libncurses-dev \
+    libncursesw5-dev \
+    libpango1.0-dev \
+    libpng-dev \
+    libreadline-dev \
+    libsm6 \
+    libsparsehash-dev \
+    libssl-dev \
+    liburi-escape-xs-perl \
+    liburi-perl \
+    libxml2 \
+    libxrender1 \
+    libz-dev \
+    libbz2-dev \
+    liblzma-dev \
+    libxt6 \
+    libxtst6 \
+    libzmq3-dev \
+    locales \
+    locales-all \
+    man \
+    nano \
+    ncurses-dev \
+    net-tools \
+    openssh-client \
+    parallel \
+    pkg-config \
+    psmisc \
+    python3 \
+    python-setuptools \
+    rsync \
+    ruby \
+    software-properties-common \
+    sqlite3 \
+    sudo \
+    texinfo \
+    tree \
+    unzip \
+    wget \
+    xorg-dev \
+    zlib1g-dev
+
+    # Run R package installation script file
+    Rscript /tmp/r_packages_installs.R
+
+    ########## Set program versions ##########
+
+    bedtools_version="v2.31.0"
+    bismark_version="0.24.2"
+    bowtie2_version="2.5.4"
+    diamond_version="2.1.9"
+    fastp_version="0.23.4"
+    fastqc_version="0.12.1"
+    gffcompare_version="gffcompare-0.12.6"
+    hisat2_version="2.2.1"
+    kallisto_version="0.51.1"
+    miniforge_version="24.7.1-0"
+    multiqc_version="1.24.1"
+    ncbi_blast_version="2.16.0"
+    ncbi_datasets_version="16.34.0"
+    repeatmasker_version="4.1.7-p1"
+    rmblast_version="2.14.1"
+    salmon_version="1.10.0"
+    stringtie_version="2.2.1"
+    samtools_version="1.20"
+    trimmomatic_version="0.39"
+
+    ##########################################
+    
+
+    
+    # Set threads for faster builds
+    threads="40"
+
+    # Make programs directory
+    mkdir --parents /srlab/programs
+
+    # Change to installation directory
+    cd /srlab/programs
+
+    #Install Miniforge (Conda/Mamba)
+    wget https://github.com/conda-forge/miniforge/releases/download/${miniforge_version}/Miniforge3-${miniforge_version}-Linux-x86_64.sh
+    bash Miniforge3-${miniforge_version}-Linux-x86_64.sh -b -p ./miniforge3-${miniforge_version}
+
+    export PATH="$PATH:/srlab/programs/miniforge3-${miniforge_version}/bin"
+
+    mamba init
+    . ./miniforge3-${miniforge_version}/etc/profile.d/conda.sh
+
+    rm Miniforge3-${miniforge_version}-Linux-x86_64.sh
+
+
+    ## Configure conda channels
+    conda config --add channels defaults
+    conda config --add channels bioconda
+    conda config --add channels conda-forge
+    conda config --set channel_priority strict
+
+    # Install bedtools
+    wget https://github.com/arq5x/bedtools2/releases/download/${bedtools_version}/bedtools.static
+    mv bedtools.static bedtools
+    chmod a+x bedtools
+
+    # Install Bismark
+    wget https://github.com/FelixKrueger/Bismark/archive/refs/tags/v${bismark_version}.zip
+    unzip v${bismark_version}.zip
+    rm v${bismark_version}.zip
+
+    # Install bowtie2
+    wget https://github.com/BenLangmead/bowtie2/releases/download/v${bowtie2_version}/bowtie2-${bowtie2_version}-sra-linux-x86_64.zip
+    unzip bowtie2-${bowtie2_version}-sra-linux-x86_64.zip
+    rm bowtie2-${bowtie2_version}-sra-linux-x86_64.zip
+
+    # Install DIAMOND BLAST
+    wget https://github.com/bbuchfink/diamond/releases/download/v${diamond_version}/diamond-linux64.tar.gz
+    tar -xzvf diamond-linux64.tar.gz
+    rm diamond-linux64.tar.gz
+
+    # Install fastp
+    wget http://opengene.org/fastp/fastp.${fastp_version}
+    mv fastp.${fastp_version} fastp
+    chmod a+x ./fastp
+
+    # Install FastQC
+    wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v${fastqc_version}.zip
+    unzip fastqc_v${fastqc_version}.zip
+    mv FastQC fastqc-${fastqc_version}
+    rm fastqc_v${fastqc_version}.zip
+
+
+    # Install gffcompare
+    wget http://ccb.jhu.edu/software/stringtie/dl/${gffcompare_version}.Linux_x86_64.tar.gz
+    tar -xzvf ${gffcompare_version}.Linux_x86_64.tar.gz
+    rm ${gffcompare_version}.Linux_x86_64.tar.gz
+
+
+    # Install HISAT2
+    wget https://github.com/DaehwanKimLab/hisat2/archive/refs/tags/v${hisat2_version}.tar.gz
+    tar -xzvf v${hisat2_version}.tar.gz
+    cd hisat2-${hisat2_version}
+    make -j ${threads}
+    cd -
+    rm v${hisat2_version}.tar.gz
+
+    # Install kallisto
+    wget https://github.com/pachterlab/kallisto/archive/refs/tags/v${kallisto_version}.tar.gz
+    tar -xzvf v${kallisto_version}.tar.gz
+    cd kallisto-${kallisto_version}
+    mkdir build
+    cd build
+    cmake ..
+    make
+    cd /srlab/programs
+    rm v${kallisto_version}.tar.gz
+
+
+    # Install MultiQC
+    mamba create -n multiqc_env multiqc=1.24.1
+
+    # Install NCBI datasets
+    mkdir --parents ncbi-datasets-v${ncbi_datasets_version}
+
+    cd ncbi-datasets-v${ncbi_datasets_version}
+    
+    wget https://github.com/ncbi/datasets/releases/download/v16.34.0/linux-amd64.cli.package.zip \
+    &amp;&amp; unzip linux-amd64.cli.package.zip \
+    &amp;&amp; rm linux-amd64.cli.package.zip
+
+    cd /srlab/programs
+
+    # Install NCBI BLAST
+    wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${ncbi_blast_version}/ncbi-blast-${ncbi_blast_version}+-x64-linux.tar.gz \
+    &amp;&amp; tar -zxvpf ncbi-blast-${ncbi_blast_version}+-x64-linux.tar.gz \
+    &amp;&amp; rm ncbi-blast-${ncbi_blast_version}+-x64-linux.tar.gz
+
+    # RepeatMasker conda environment with Python3 and h5py using mamba
+    mamba create -n repeatmasker-env python=3.8 h5py -y
+
+    # Install RepeatMasker
+    wget https://www.repeatmasker.org/RepeatMasker/RepeatMasker-${repeatmasker_version}.tar.gz
+    tar -xzvf RepeatMasker-${repeatmasker_version}.tar.gz
+    rm RepeatMasker-${repeatmasker_version}.tar.gz
+
+    ## Remove default RepeatMasker DB
+    rm /srlab/programs/RepeatMasker/Libraries/famdb/*
+
+    # Set up symlinks to RepeatMasker files on Klone
+    ln -s /gscratch/srlab/programs/RepeatMasker/Libraries/famdb/dfam38_full.0.h5 /srlab/programs/RepeatMasker/Libraries/famdb/dfam38_full.0.h5
+    ln -s /gscratch/srlab/programs/RepeatMasker/Libraries/famdb/rmlib.config /srlab/programs/RepeatMasker/Libraries/famdb/rmlib.config
+
+    # Install RMBLAST
+    wget https://www.repeatmasker.org/rmblast/rmblast-${rmblast_version}+-x64-linux.tar.gz
+    tar -xzvf rmblast-${rmblast_version}+-x64-linux.tar.gz
+    rm rmblast-${rmblast_version}+-x64-linux.tar.gz
+
+    # Install salmon
+    wget https://github.com/COMBINE-lab/salmon/releases/download/v${salmon_version}/salmon-${salmon_version}_linux_x86_64.tar.gz
+    tar -xzvf salmon-${salmon_version}_linux_x86_64.tar.gz
+    rm salmon-${salmon_version}_linux_x86_64.tar.gz
+
+    # Install samtools
+    wget https://github.com/samtools/samtools/releases/download/${samtools_version}/samtools-${samtools_version}.tar.bz2
+    tar -xjvf samtools-${samtools_version}.tar.bz2
+    cd samtools-${samtools_version}
+    ./configure
+    make -j ${threads}
+    cd -
+    rm samtools-${samtools_version}.tar.bz2
+
+    # Install trimmomatic
+    wget http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-${trimmomatic_version}.zip
+    unzip Trimmomatic-${trimmomatic_version}.zip
+    chmod +x -R Trimmomatic-${trimmomatic_version}
+    rm Trimmomatic-${trimmomatic_version}.zip
+
+
+    # Install StringTie
+    wget http://ccb.jhu.edu/software/stringtie/dl/stringtie-${stringtie_version}.Linux_x86_64.tar.gz
+    tar -xzvf stringtie-${stringtie_version}.Linux_x86_64.tar.gz
+    rm stringtie-${stringtie_version}.Linux_x86_64.tar.gz
+
+
+
+    # Install TRF
+    wget https://github.com/Benson-Genomics-Lab/TRF/releases/download/v4.09.1/trf409.linux64
+    chmod +x trf409.linux64
+
+
+
+
+%labels
+    Author Sam White
+    Version v0.0.5
+    
+
+%help
+    This is an Apptainer definition file for an Ubuntu container containing bioinformatics software for the Roberts Lab.</code></pre>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>hyak</category>
+  <category>hpc</category>
+  <category>rstudio</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/38-klone/</guid>
+  <pubDate>Wed, 19 Feb 2025 08:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_sr320__sr320klone-login03__ssh_klone.hyak.uw.edu__9830_2025-02-20_09-08-29.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Apul Time Series Methylation</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -5367,411 +5942,6 @@ font-style: inherit;">&gt; ../analyses/10-hisat-deseq2/{}_hisat.stdout 2&gt; ../
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-19-xarg/</guid>
   <pubDate>Mon, 27 May 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-05-26_11-52-26.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>That escalated quickly</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-TLDR
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Everyday at 7am my raven repos are synced to gannet and a system report is generated: <a href="https://gannet.fish.washington.edu/seashell/bu-github/system_report.txt" class="uri">https://gannet.fish.washington.edu/seashell/bu-github/system_report.txt</a></p>
-</div>
-</div>
-<p>It all started with the fact that I needed to be better at syncing raven repos to gannet (to save big files).</p>
-<p>so I started with a simple rsync command</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-ghr.sh
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<pre><code>#!/bin/bash
-
-cd /home/shared/8TB_HDD_01/sr320/github/
-
-rsync -avz . \
-sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/</code></pre>
-</div>
-</div>
-<p>I saved this then had to make it executable with <code>chmod +x ghr.sh</code></p>
-<p>then I ran it with <code>./ghr.sh</code> and it worked, prompting me for my password. Boy was I proud. The days of copying code and pasting in my terminal were over.</p>
-<p>But could I do better? I am running a script lets get some system info so when I run the script I can have something fun to look at? So with a little chatgpt help</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-ghr.sh
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<pre><code>#!/bin/bash
-
-df -h | grep -E "/dev/sd[abdef]1"
-
-echo ""
-echo "Percent CPUs cranking?"
-
-mpstat 1 1 | awk '/Average:/ {print 100 - $12 "%"}'
-
-echo ""
-echo "Winners"
-
-ps aux | awk '{arr[$1]+=$3; mem[$1]+=$4} END {for (i in arr) {print i, arr[i], mem[i]"%"} }' | sort -nrk2 | head -n 5
-
-echo ""
-echo "How much memory being used?"
-
-free | awk '/Mem:/ {printf "%.2f%\n", $3/$2 * 100}'
-
-echo ""
-echo "Where is my Memory?"
-
-ps aux --sort=-%mem | awk '{printf "%s\t%s\t%.2f%\n", $1, $11, $4}' | head -n 5
-
-cd /home/shared/8TB_HDD_01/sr320/github/
-
-rsync -avz . \
-sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/</code></pre>
-</div>
-</div>
-<p>Now that I everytime I would run the script I would get the following before it asked be for a password.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<pre><code>/dev/sda1       916G   15M  870G   1% /media/1TB_ext_SSD01
-/dev/sdb1       916G   12K  870G   1% /media/1TB_ext_SSD02
-/dev/sde1       7.3T  4.2T  2.8T  61% /home/shared/8TB_HDD_01
-/dev/sdf1       7.3T  4.7T  2.3T  68% /home/shared/8TB_HDD_02
-/dev/sdd1       7.3T  3.1T  3.9T  45% /home/shared/8TB_HDD_03
-
-Percent CPUs cranking?
-45.01%
-
-Winners
-sr320 2061.8 0.9%
-davnoor 20.2 0.7%
-ece9 12.4 0.1%
-shedurk+ 11.8 0.7%
-gracele+ 9.6 2.8%
-
-How much memory being used?
-6.32%
-
-Where is my Memory?
-USER    COMMAND 0.00%
-gracele+    /usr/lib/rstudio-server/bin/rsession    2.80%
-davnoor /usr/lib/rstudio-server/bin/rsession    0.70%
-shedurk+    /usr/lib/rstudio-server/bin/rsession    0.70%
-sr320   /home/shared/hisat2-2.2.1/hisat2-align-s    0.70%</code></pre>
-</div>
-</div>
-</div>
-<p>Ok this was bettr, but then I said to myself, I should log this. So I created a new script.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-status.sh
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<pre><code>#!/bin/bash
-
-# Temporary file for holding the new report
-temp_file="temp_system_report.txt"
-
-# Start of new report block
-echo "---------------------------------------------------" &gt;&gt; $temp_file
-echo "Report generated on: $(date)" &gt; $temp_file
-echo "---------------------------------------------------" &gt;&gt; $temp_file
-
-echo "Free Space" &gt;&gt; $temp_file
-df -h | grep -E "/dev/sd[abdef]1" &gt;&gt; $temp_file
-
-echo "" &gt;&gt; $temp_file
-echo "Percent CPUs cranking?" &gt;&gt; $temp_file
-mpstat 1 1 | awk '/Average:/ {print 100 - $12 "%"}' &gt;&gt; $temp_file
-
-echo "" &gt;&gt; $temp_file
-echo "Winners (Top 5 CPU Users)" &gt;&gt; $temp_file
-ps aux | awk '{arr[$1]+=$3; mem[$1]+=$4} END {for (i in arr) {print i, arr[i], mem[i]"%"} }' | sort -nrk2 | head -n 5 &gt;&gt; $temp_file
-
-echo "" &gt;&gt; $temp_file
-echo "How much memory being used?" &gt;&gt; $temp_file
-free | awk '/Mem:/ {printf "%.2f%\n", $3/$2 * 100}' &gt;&gt; $temp_file
-
-echo "" &gt;&gt; $temp_file
-echo "Where is my Memory? (Top 5 Memory Users)" &gt;&gt; $temp_file
-ps aux --sort=-%mem | awk '{printf "%s\t%s\t%.2f%\n", $1, $11, $4}' | head -n 5 &gt;&gt; $temp_file
-
-echo "---------------------------------------------------" &gt;&gt; $temp_file
-
-
-# Check if the main report file exists
-report_file="system_report.txt"
-if [ -f "$report_file" ]; then
-    # Append the old report to the new report
-    cat $report_file &gt;&gt; $temp_file
-    # Replace the old report with the new one
-    mv $temp_file $report_file
-else
-    # Rename temp file as the report file if report doesn't exist
-    mv $temp_file $report_file
-fi
-
-echo "Updated report has been saved to $report_file."</code></pre>
-</div>
-</div>
-<p>I had to make this execeutable with <code>chmod +x status.sh</code> and then I ran it with <code>./status.sh</code> and it worked. I had a new file <code>system_report.txt</code> that had the system info, prepending itself.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<pre><code>Report generated on: Sun May 26 06:40:35 PDT 2024
----------------------------------------------------
-Free Space
-/dev/sda1       916G   15M  870G   1% /media/1TB_ext_SSD01
-/dev/sdb1       916G   12K  870G   1% /media/1TB_ext_SSD02
-/dev/sde1       7.3T  4.2T  2.8T  61% /home/shared/8TB_HDD_01
-/dev/sdf1       7.3T  4.7T  2.3T  68% /home/shared/8TB_HDD_02
-/dev/sdd1       7.3T  3.0T  3.9T  44% /home/shared/8TB_HDD_03
-
-Percent CPUs cranking?
-46%
-
-Winners (Top 5 CPU Users)
-sr320 1543.1 7.7%
-davnoor 20.2 0.7%
-ece9 12.4 0.1%
-shedurk+ 11.8 0.7%
-gracele+ 9.6 2.8%
-
-How much memory being used?
-13.04%
-
-Where is my Memory? (Top 5 Memory Users)
-USER    COMMAND 0.00%
-sr320   java    7.50%
-gracele+    /usr/lib/rstudio-server/bin/rsession    2.80%
-davnoor /usr/lib/rstudio-server/bin/rsession    0.70%
-shedurk+    /usr/lib/rstudio-server/bin/rsession    0.70%
----------------------------------------------------
-Report generated on: Sun May 26 06:39:37 PDT 2024
----------------------------------------------------
-Free Space
-/dev/sda1       916G   15M  870G   1% /media/1TB_ext_SSD01
-/dev/sdb1       916G   12K  870G   1% /media/1TB_ext_SSD02
-/dev/sde1       7.3T  4.2T  2.8T  61% /home/shared/8TB_HDD_01
-/dev/sdf1       7.3T  4.7T  2.3T  68% /home/shared/8TB_HDD_02
-/dev/sdd1       7.3T  3.0T  3.9T  44% /home/shared/8TB_HDD_03
-
-Percent CPUs cranking?
-53.85%
-
-Winners (Top 5 CPU Users)
-sr320 1507 7.7%
-davnoor 20.2 0.7%
-ece9 12.4 0.1%
-shedurk+ 11.8 0.7%
-gracele+ 9.6 2.8%
-
-How much memory being used?
-13.03%
-
-Where is my Memory? (Top 5 Memory Users)
-USER    COMMAND 0.00%
-sr320   java    7.50%
-gracele+    /usr/lib/rstudio-server/bin/rsession    2.80%
-davnoor /usr/lib/rstudio-server/bin/rsession    0.70%
-shedurk+    /usr/lib/rstudio-server/bin/rsession    0.70%</code></pre>
-</div>
-</div>
-</div>
-<p>Then I thought this is something everyone is dying to see.</p>
-<p>So I went onto modify <code>ghr.sh</code>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-ghr.sh
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<pre><code>#!/bin/bash
-
-df -h | grep -E "/dev/sd[abdef]1"
-
-echo ""
-echo "Percent CPUs cranking?"
-
-mpstat 1 1 | awk '/Average:/ {print 100 - $12 "%"}'
-
-echo ""
-echo "Winners"
-
-ps aux | awk '{arr[$1]+=$3; mem[$1]+=$4} END {for (i in arr) {print i, arr[i], mem[i]"%"} }' | sort -nrk2 | head -n 5
-
-echo ""
-echo "How much memory being used?"
-
-free | awk '/Mem:/ {printf "%.2f%\n", $3/$2 * 100}'
-
-echo ""
-echo "Where is my Memory?"
-
-ps aux --sort=-%mem | awk '{printf "%s\t%s\t%.2f%\n", $1, $11, $4}' | head -n 5
-
-/home/shared/8TB_HDD_03/sr320/github/status.sh
-
-
-rsync -avz /home/shared/8TB_HDD_03/sr320/github/ \
---exclude='*.sam' \
-sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/
-
-
-#cd /home/shared/8TB_HDD_01/sr320/github/
-
-#rsync -avz . \
-#sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/
-
-df -h | grep -E "/dev/sd[abdef]1"
-
-echo ""
-echo "Percent CPUs cranking?"
-
-mpstat 1 1 | awk '/Average:/ {print 100 - $12 "%"}'
-
-echo ""
-echo "Winners"
-
-ps aux | awk '{arr[$1]+=$3; mem[$1]+=$4} END {for (i in arr) {print i, arr[i], mem[i]"%"} }' | sort -nrk2 | head -n 5
-
-echo ""
-echo "How much memory being used?"
-
-free | awk '/Mem:/ {printf "%.2f%\n", $3/$2 * 100}'
-
-echo ""
-echo "Where is my Memory?"
-
-ps aux --sort=-%mem | awk '{printf "%s\t%s\t%.2f%\n", $1, $11, $4}' | head -n 5</code></pre>
-</div>
-</div>
-<p>Now when I run <code>./ghr.sh</code> I get the system info and then it runs the <code>status.sh</code> script and then it rsyncs the files to gannet. (note I got a little fancy and added an exclude for <code>*.sam</code> files).</p>
-<p>I was still entering my password, so I added my public key to gannet and now I can run this without a password.</p>
-<p>on raven to generate a key.</p>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<pre><code>ssh-keygen -t rsa -b 2048</code></pre>
-</div>
-</div>
-</div>
-<p>Then to add to destination server</p>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<pre><code>ssh-copy-id sr320@gannet.fish.washington.edu</code></pre>
-</div>
-</div>
-</div>
-<p>so my <code>rsync</code> command now looks like this</p>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<pre><code>rsync -avz -e ssh /home/shared/8TB_HDD_03/sr320/github/ \
---exclude='*.sam' \
-sr320@gannet.fish.washington.edu:/volume2/web/seashell/bu-github/</code></pre>
-</div>
-</div>
-</div>
-<p>Getting somewhere, but I still had to run this manually. So I thought I should run this every day, so I added it to my crontab with <code>crontab -e</code>.</p>
-<p>To do this I edited my crontab with <code>crontab -e</code> and added the following line.</p>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<pre><code>EDITOR=nano crontab -e</code></pre>
-</div>
-</div>
-</div>
-<p>Then I added the following line to run the script every day at 7:00 am.</p>
-<div class="callout callout-style-simple callout-tip no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<pre><code>0 7 * * * /home/shared/8TB_HDD_03/sr320/github/ghr.sh &gt; /home/shared/8TB_HDD_03/sr320/github/ghr.log</code></pre>
-</div>
-</div>
-</div>
-<p>What this does is run the <code>ghr.sh</code> script every day at 7:00 am and saves the output to a file called <code>ghr.log</code> in the same directory as the script.</p>
-<p>My hope was that as above this would write a system report then rsync the files to gannet. It works but the system report is not finished before rsync starts. I thought to myself good enough</p>
-<div class="callout callout-style-simple callout-warning">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p><strong>But as I was writing this post copilot finished my sentence to tell me to add <code>sleep</code> command!</strong></p>
-</div>
-</div>
-</div>
-<p>so I did.</p>
-<p>The moral of this story is that I started with a simple rsync command, then I added some system info to the script, then I made a script to log the system info, then I added the system info script to the rsync script, then I added my public key to gannet, then was happy (Copilot wrote this last sentence).</p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>cron</category>
-  <category>rsync</category>
-  <category>log</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-18-cron/</guid>
-  <pubDate>Mon, 27 May 2024 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_DALLE_2024-05-26_10.56.50_-_Create_an_artistic_and_detailed_illustration_representing_the_concept_of_automated_scripting_in_a__2024-05-26_10-57-06.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
