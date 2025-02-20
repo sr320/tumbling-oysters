@@ -23,6 +23,19 @@ format:
     code-overflow: wrap
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code analyses
+)
+```
+
 Let's get everyone up an running with Klone and RStudio.
 
 # Log in
@@ -71,7 +84,7 @@ Specifically `srlab-R4.4-bioinformatics-container-703094b.sif`
 cp ../containers/srlab-R4.4-bioinformatics-container-703094b.sif . 
 ```
 
-[^1]
+
 
 
 
@@ -80,36 +93,43 @@ cp ../containers/srlab-R4.4-bioinformatics-container-703094b.sif .
 ::: callout-warning
 Users should add the following line in `~/.Renviron`. If you don't have a `~/.Renviron`, you can create it like this: `touch ~/.Renviron`
 
-````         
+      
 -   `R_LIBS_USER` in `~/.Renviron`. Example:
 
-    ```         
-    cat ~/.Renviron 
-    # Set local library installation path
-    R_LIBS_USER=/gscratch/srlab/${USER}/R_libs_apptainer
-    ```
-````
+```{bash}         
+cat ~/.Renviron
+# Set local library installation path
+R_LIBS_USER=/gscratch/srlab/${USER}/R_libs_apptainer
+```
+
 :::
 
-In summary, this configuration directs R to install and access packages from a custom directory rather than the system-wide library, which is especially useful in shared or containerized environments.
+This configuration directs R to install and access packages from a custom directory rather than the system-wide library, which is especially useful in shared or containerized environments.
 
-::: callout-warning
--   User needs to set/change the following in the SLURM script before starting script:
 
-    -   `#SBATCH --time=02:00:00`
-
-    -   `#SBATCH --mem=20G`
-
-    -   `--chdir=/gscratch/scrubbed/${USER}/<add_rest_of_path>`
-
-    -   `RSTUDIO_SIF="srlab-bioinformatics-container-2bd5d44.sif" # UPDATE THIS LINE`
-:::
 
 # Copy SLURM JOB SCRIPT
 
 ```{bash}
 cp ../sr320/rstudio-server.job .
 ```
+
+
+::: callout-warning
+-   User needs to (maybe) set/change the following in the SLURM script before starting script:
+
+    -    `#SBATCH --partition=`
+    
+    -   `#SBATCH --time=`
+
+    -   `#SBATCH --mem=`
+
+    -   `--chdir=`
+    
+    -   `RSTUDIO_CWD="/gscratch/srlab/sr320" # UPDATE THIS LINE`
+    
+    -   `RSTUDIO_SIF="srlab-R4.4-bioinformatics-container-703094b.sif" # UPDATE THIS LINE`
+:::
 
 Open
 
@@ -224,21 +244,31 @@ exit $APPTAINER_EXIT_CODE
 
 ```
 
-# Make relevant edits for slurm
+
 
 # Run
 
 ```{bash}
 sbatch rstudio-server.job
+```
 
 
 
+# Footnotes
 
+```
+srlab-bioinformatics-container-<git commit hash>.sif: A "catch-all" container which holds most of the commonly used bioinformatics software
+used by the Roberts Lab. The <git commit hash> is taken from the definition file used to construct the container. The definition file can be found at
+/gscratch/srlab/gitrepos/RobertsLab/code/apptainer_definition_files/srlab-bioinformatics-container.def.
+```
 
+## Definition File
 
--   Example script uses the following Apptainer container image: `srlab-bioinformatics-container-2bd5d44.sif`.
-
+```{bash}
 [sr320@klone-login03 containers]$ cat /gscratch/srlab/gitrepos/RobertsLab/code/apptainer_definition_files/srlab-bioinformatics-container.def
+```
+
+```{bash}
 # NOTE:
 # To use RepeatMasker with this container, RepeatMasker must be installed on the local computer in the following location:
 #
