@@ -87,9 +87,6 @@ cp ../containers/srlab-R4.4-bioinformatics-container-703094b.sif .
 
 
 
-
-# Generate SLURM
-
 ::: callout-warning
 Users should add the following line in `~/.Renviron`. If you don't have a `~/.Renviron`, you can create it like this: `touch ~/.Renviron`
 
@@ -108,7 +105,7 @@ This configuration directs R to install and access packages from a custom direct
 
 
 
-# Copy SLURM JOB SCRIPT
+# SLURM JOB SCRIPT
 
 ```{bash}
 cp ../sr320/rstudio-server.job .
@@ -118,22 +115,49 @@ cp ../sr320/rstudio-server.job .
 ::: callout-warning
 -   User needs to (maybe) set/change the following in the SLURM script before starting script:
 
-    -    `#SBATCH --partition=`
+    -   `#SBATCH --partition=`
     
     -   `#SBATCH --time=`
+    
+    -   `#SBATCH --cpus-per-task=`
 
     -   `#SBATCH --mem=`
 
-    -   `--chdir=`
+    -   `#SBATCH --chdir=`
     
     -   `RSTUDIO_CWD="/gscratch/srlab/sr320" # UPDATE THIS LINE`
     
     -   `RSTUDIO_SIF="srlab-R4.4-bioinformatics-container-703094b.sif" # UPDATE THIS LINE`
 :::
 
+
+## Partition Options 
+
+`cpu-g2-mem2x` or `ckpt`
+```{bash}
+[sr320@klone-login03 containers]$ hyakalloc
+       Account resources available to user: sr320        
+╭─────────┬──────────────┬──────┬────────┬──────┬───────╮
+│ Account │    Partition │ CPUs │ Memory │ GPUs │       │
+├─────────┼──────────────┼──────┼────────┼──────┼───────┤
+│   srlab │ cpu-g2-mem2x │   32 │   490G │    0 │ TOTAL │
+│         │              │   12 │   100G │    0 │ USED  │
+│         │              │   20 │   390G │    0 │ FREE  │
+╰─────────┴──────────────┴──────┴────────┴──────┴───────╯
+ Checkpoint Resources  
+╭───────┬──────┬──────╮
+│       │ CPUs │ GPUs │
+├───────┼──────┼──────┤
+│ Idle: │ 4557 │  148 │
+╰───────┴──────┴──────╯
+```
+
+
+
+
 Open
 
-```         
+```{bash}        
 nano rstudio-server.job
 ```
 
@@ -252,6 +276,30 @@ exit $APPTAINER_EXIT_CODE
 sbatch rstudio-server.job
 ```
 
+
+# Folllow Instructions in output file to connect to RStudio.
+
+eg
+
+```{bash}
+1. SSH tunnel from your workstation using the following command:
+
+   ssh -N -L 8787:n3263:56093 sr320@klone.hyak.uw.edu
+
+   and point your web browser to http://localhost:8787
+
+2. log in to RStudio Server using the following credentials:
+
+   user: sr320
+   password: PDQlr876755PgP3g37c
+
+When done using RStudio Server, terminate the job by:
+
+1. Exit the RStudio Session ("power" button in the top right corner of the RStudio window)
+2. Issue the following command on the login node:
+
+      scancel -f 24359989
+```      
 
 
 # Footnotes

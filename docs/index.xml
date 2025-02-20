@@ -109,9 +109,6 @@ font-style: inherit;">#within user directory</span></span>
 background-color: null;
 font-style: inherit;">cp</span> ../containers/srlab-R4.4-bioinformatics-container-703094b.sif . </span></code></pre></div>
 </div>
-</section>
-<section id="generate-slurm" class="level1">
-<h1>Generate SLURM</h1>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -145,8 +142,8 @@ font-style: inherit;">${USER}</span>/R_libs_apptainer</span></code></pre></div>
 </div>
 <p>This configuration directs R to install and access packages from a custom directory rather than the system-wide library, which is especially useful in shared or containerized environments.</p>
 </section>
-<section id="copy-slurm-job-script" class="level1">
-<h1>Copy SLURM JOB SCRIPT</h1>
+<section id="slurm-job-script" class="level1">
+<h1>SLURM JOB SCRIPT</h1>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="fu" style="color: #4758AB;
 background-color: null;
@@ -167,76 +164,131 @@ Warning
 <ul>
 <li><p><code>#SBATCH --partition=</code></p></li>
 <li><p><code>#SBATCH --time=</code></p></li>
+<li><p><code>#SBATCH --cpus-per-task=</code></p></li>
 <li><p><code>#SBATCH --mem=</code></p></li>
-<li><p><code>--chdir=</code></p></li>
+<li><p><code>#SBATCH --chdir=</code></p></li>
 <li><p><code>RSTUDIO_CWD="/gscratch/srlab/sr320" # UPDATE THIS LINE</code></p></li>
 <li><p><code>RSTUDIO_SIF="srlab-R4.4-bioinformatics-container-703094b.sif" # UPDATE THIS LINE</code></p></li>
 </ul></li>
 </ul>
 </div>
 </div>
-<p>Open</p>
-<pre><code>nano rstudio-server.job</code></pre>
+<section id="partition-options" class="level2">
+<h2 class="anchored" data-anchor-id="partition-options">Partition Options</h2>
+<p><code>cpu-g2-mem2x</code> or <code>ckpt</code></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">[sr320@klone-login03</span> containers]$ hyakalloc</span>
+<span id="cb8-2">       <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Account</span> resources available to user: sr320        </span>
+<span id="cb8-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">╭─────────┬──────────────┬──────┬────────┬──────┬───────╮</span></span>
+<span id="cb8-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span> Account │    Partition │ CPUs │ Memory │ GPUs │       │</span>
+<span id="cb8-5"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├─────────┼──────────────┼──────┼────────┼──────┼───────┤</span></span>
+<span id="cb8-6"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>   srlab │ cpu-g2-mem2x │   32 │   490G │    0 │ TOTAL │</span>
+<span id="cb8-7"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>         │              │   12 │   100G │    0 │ USED  │</span>
+<span id="cb8-8"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>         │              │   20 │   390G │    0 │ FREE  │</span>
+<span id="cb8-9"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">╰─────────┴──────────────┴──────┴────────┴──────┴───────╯</span></span>
+<span id="cb8-10"> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Checkpoint</span> Resources  </span>
+<span id="cb8-11"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">╭───────┬──────┬──────╮</span></span>
+<span id="cb8-12"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span>       │ CPUs │ GPUs │</span>
+<span id="cb8-13"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">├───────┼──────┼──────┤</span></span>
+<span id="cb8-14"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">│</span> Idle: │ 4557 │  148 │</span>
+<span id="cb8-15"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">╰───────┴──────┴──────╯</span></span></code></pre></div>
+</div>
+<p>Open</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">nano</span> rstudio-server.job</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#!/bin/sh</span></span>
-<span id="cb9-2"></span>
-<span id="cb9-3"><span class="co" style="color: #5E5E5E;
+<span id="cb10-2"></span>
+<span id="cb10-3"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --job-name=rstudio-server</span></span>
-<span id="cb9-4"><span class="co" style="color: #5E5E5E;
+<span id="cb10-4"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --account=srlab</span></span>
-<span id="cb9-5"><span class="co" style="color: #5E5E5E;
+<span id="cb10-5"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --partition=cpu-g2-mem2x #update this line - use hyakalloc to find partitions you can use</span></span>
-<span id="cb9-6"><span class="co" style="color: #5E5E5E;
+<span id="cb10-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --time=15-08:00:00</span></span>
-<span id="cb9-7"><span class="co" style="color: #5E5E5E;
+<span id="cb10-7"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --ntasks=1              # Number of tasks</span></span>
-<span id="cb9-8"><span class="co" style="color: #5E5E5E;
+<span id="cb10-8"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --cpus-per-task=12     # Increased threads from 4 to 8</span></span>
-<span id="cb9-9"><span class="co" style="color: #5E5E5E;
+<span id="cb10-9"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --nodes=1</span></span>
-<span id="cb9-10"><span class="co" style="color: #5E5E5E;
+<span id="cb10-10"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --mem=100G</span></span>
-<span id="cb9-11"><span class="co" style="color: #5E5E5E;
+<span id="cb10-11"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --signal=USR2</span></span>
-<span id="cb9-12"><span class="co" style="color: #5E5E5E;
+<span id="cb10-12"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --output=%x_%j.out</span></span>
-<span id="cb9-13"><span class="co" style="color: #5E5E5E;
+<span id="cb10-13"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">## Specify the working directory for this job</span></span>
-<span id="cb9-14"><span class="co" style="color: #5E5E5E;
+<span id="cb10-14"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#SBATCH --chdir=/gscratch/srlab/sr320</span></span>
-<span id="cb9-15"></span>
-<span id="cb9-16"><span class="co" style="color: #5E5E5E;
+<span id="cb10-15"></span>
+<span id="cb10-16"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># This script will request a single CPU with four threads with 20GB of RAM for 2 hours. </span></span>
-<span id="cb9-17"><span class="co" style="color: #5E5E5E;
+<span id="cb10-17"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># You can adjust --time, --nodes, --ntasks, and --mem above to adjust these settings for your session.</span></span>
-<span id="cb9-18"></span>
-<span id="cb9-19"><span class="co" style="color: #5E5E5E;
+<span id="cb10-18"></span>
+<span id="cb10-19"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># --output=%x_%j.out creates a output file called rstudio-server_NNNNNNNN.out </span></span>
-<span id="cb9-20"><span class="co" style="color: #5E5E5E;
+<span id="cb10-20"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># where the %x is short hand for --job-name above and the N's are an 8-digit </span></span>
-<span id="cb9-21"><span class="co" style="color: #5E5E5E;
+<span id="cb10-21"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># jobID assigned by SLURM when our job is submitted.</span></span>
-<span id="cb9-22"></span>
-<span id="cb9-23"><span class="va" style="color: #111111;
+<span id="cb10-22"></span>
+<span id="cb10-23"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">RSTUDIO_CWD</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -245,7 +297,7 @@ background-color: null;
 font-style: inherit;">"/gscratch/srlab/sr320"</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># UPDATE THIS LINE</span></span>
-<span id="cb9-24"><span class="va" style="color: #111111;
+<span id="cb10-24"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">RSTUDIO_SIF</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -254,12 +306,12 @@ background-color: null;
 font-style: inherit;">"srlab-R4.4-bioinformatics-container-703094b.sif"</span> <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># UPDATE THIS LINE</span></span>
-<span id="cb9-25"></span>
-<span id="cb9-26"></span>
-<span id="cb9-27"><span class="co" style="color: #5E5E5E;
+<span id="cb10-25"></span>
+<span id="cb10-26"></span>
+<span id="cb10-27"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Create temp directory for ephemeral content to bind-mount in the container</span></span>
-<span id="cb9-28"><span class="va" style="color: #111111;
+<span id="cb10-28"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">RSTUDIO_TMP</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -274,8 +326,8 @@ background-color: null;
 font-style: inherit;">'import tempfile; print(tempfile.mkdtemp())'</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">)</span></span>
-<span id="cb9-29"></span>
-<span id="cb9-30"><span class="fu" style="color: #4758AB;
+<span id="cb10-29"></span>
+<span id="cb10-30"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -284,21 +336,21 @@ background-color: null;
 font-style: inherit;">-m</span> 700 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-31">        <span class="va" style="color: #111111;
+<span id="cb10-31">        <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${RSTUDIO_TMP}</span>/run <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-32">        <span class="va" style="color: #111111;
+<span id="cb10-32">        <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${RSTUDIO_TMP}</span>/tmp <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-33">        <span class="va" style="color: #111111;
+<span id="cb10-33">        <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${RSTUDIO_TMP}</span>/var/lib/rstudio-server</span>
-<span id="cb9-34"></span>
-<span id="cb9-35"><span class="fu" style="color: #4758AB;
+<span id="cb10-34"></span>
+<span id="cb10-35"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cat</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -307,36 +359,36 @@ background-color: null;
 font-style: inherit;">${RSTUDIO_TMP}</span>/database.conf <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;&lt;END</span></span>
-<span id="cb9-36"><span class="st" style="color: #20794D;
+<span id="cb10-36"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">provider=sqlite</span></span>
-<span id="cb9-37"><span class="st" style="color: #20794D;
+<span id="cb10-37"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">directory=/var/lib/rstudio-server</span></span>
-<span id="cb9-38"><span class="op" style="color: #5E5E5E;
+<span id="cb10-38"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">END</span></span>
-<span id="cb9-39"></span>
-<span id="cb9-40"><span class="co" style="color: #5E5E5E;
+<span id="cb10-39"></span>
+<span id="cb10-40"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Set OMP_NUM_THREADS to prevent OpenBLAS (and any other OpenMP-enhanced</span></span>
-<span id="cb9-41"><span class="co" style="color: #5E5E5E;
+<span id="cb10-41"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># libraries used by R) from spawning more threads than the number of processors</span></span>
-<span id="cb9-42"><span class="co" style="color: #5E5E5E;
+<span id="cb10-42"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># allocated to the job.</span></span>
-<span id="cb9-43"><span class="co" style="color: #5E5E5E;
+<span id="cb10-43"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#</span></span>
-<span id="cb9-44"><span class="co" style="color: #5E5E5E;
+<span id="cb10-44"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Set R_LIBS_USER to a path specific to rocker/rstudio to avoid conflicts with</span></span>
-<span id="cb9-45"><span class="co" style="color: #5E5E5E;
+<span id="cb10-45"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># personal libraries from any R installation in the host environment</span></span>
-<span id="cb9-46"></span>
-<span id="cb9-47"><span class="fu" style="color: #4758AB;
+<span id="cb10-46"></span>
+<span id="cb10-47"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cat</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -345,40 +397,40 @@ background-color: null;
 font-style: inherit;">${RSTUDIO_TMP}</span>/rsession.sh <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;&lt;END</span></span>
-<span id="cb9-48"><span class="st" style="color: #20794D;
+<span id="cb10-48"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">#!/bin/sh</span></span>
-<span id="cb9-49"></span>
-<span id="cb9-50"><span class="st" style="color: #20794D;
+<span id="cb10-49"></span>
+<span id="cb10-50"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">export OMP_NUM_THREADS=</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${SLURM_JOB_CPUS_PER_NODE}</span></span>
-<span id="cb9-51"><span class="st" style="color: #20794D;
+<span id="cb10-51"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">export R_LIBS_USER=</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${RSTUDIO_CWD}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/R</span></span>
-<span id="cb9-52"><span class="st" style="color: #20794D;
+<span id="cb10-52"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">exec /usr/lib/rstudio-server/bin/rsession "</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\$</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">{@}"</span></span>
-<span id="cb9-53"><span class="op" style="color: #5E5E5E;
+<span id="cb10-53"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">END</span></span>
-<span id="cb9-54"></span>
-<span id="cb9-55"><span class="fu" style="color: #4758AB;
+<span id="cb10-54"></span>
+<span id="cb10-55"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">chmod</span> +x <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${RSTUDIO_TMP}</span>/rsession.sh</span>
-<span id="cb9-56"></span>
-<span id="cb9-57"><span class="bu" style="color: null;
+<span id="cb10-56"></span>
+<span id="cb10-57"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">export</span> <span class="va" style="color: #111111;
 background-color: null;
@@ -415,22 +467,22 @@ background-color: null;
 font-style: inherit;">${RSTUDIO_TMP}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/var/lib/rstudio-server:/var/lib/rstudio-server"</span></span>
-<span id="cb9-58"></span>
-<span id="cb9-59"><span class="co" style="color: #5E5E5E;
+<span id="cb10-58"></span>
+<span id="cb10-59"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Do not suspend idle sessions.</span></span>
-<span id="cb9-60"><span class="co" style="color: #5E5E5E;
+<span id="cb10-60"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Alternative to setting session-timeout-minutes=0 in /etc/rstudio/rsession.conf</span></span>
-<span id="cb9-61"><span class="bu" style="color: null;
+<span id="cb10-61"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">export</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">APPTAINERENV_RSTUDIO_SESSION_TIMEOUT</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>0</span>
-<span id="cb9-62"></span>
-<span id="cb9-63"><span class="bu" style="color: null;
+<span id="cb10-62"></span>
+<span id="cb10-63"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">export</span> <span class="va" style="color: #111111;
 background-color: null;
@@ -445,7 +497,7 @@ background-color: null;
 font-style: inherit;">-un</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">)</span></span>
-<span id="cb9-64"><span class="bu" style="color: null;
+<span id="cb10-64"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">export</span> <span class="va" style="color: #111111;
 background-color: null;
@@ -460,14 +512,14 @@ background-color: null;
 font-style: inherit;">-base64</span> 15<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">)</span></span>
-<span id="cb9-65"></span>
-<span id="cb9-66"><span class="co" style="color: #5E5E5E;
+<span id="cb10-65"></span>
+<span id="cb10-66"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># get unused socket per https://unix.stackexchange.com/a/132524</span></span>
-<span id="cb9-67"><span class="co" style="color: #5E5E5E;
+<span id="cb10-67"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># tiny race condition between the python &amp; apptainer commands</span></span>
-<span id="cb9-68"><span class="bu" style="color: null;
+<span id="cb10-68"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">readonly</span> <span class="va" style="color: #111111;
 background-color: null;
@@ -484,7 +536,7 @@ background-color: null;
 font-style: inherit;">'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()'</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">)</span></span>
-<span id="cb9-69"><span class="fu" style="color: #4758AB;
+<span id="cb10-69"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cat</span> <span class="dv" style="color: #AD0000;
 background-color: null;
@@ -495,11 +547,11 @@ background-color: null;
 font-style: inherit;">2</span> <span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">&lt;&lt;END</span></span>
-<span id="cb9-70"><span class="st" style="color: #20794D;
+<span id="cb10-70"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">1. SSH tunnel from your workstation using the following command:</span></span>
-<span id="cb9-71"></span>
-<span id="cb9-72"><span class="st" style="color: #20794D;
+<span id="cb10-71"></span>
+<span id="cb10-72"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">   ssh -N -L 8787:</span><span class="va" style="color: #111111;
 background-color: null;
@@ -514,54 +566,54 @@ background-color: null;
 font-style: inherit;">${APPTAINERENV_USER}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">@klone.hyak.uw.edu</span></span>
-<span id="cb9-73"></span>
-<span id="cb9-74"><span class="st" style="color: #20794D;
+<span id="cb10-73"></span>
+<span id="cb10-74"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">   and point your web browser to http://localhost:8787</span></span>
-<span id="cb9-75"></span>
-<span id="cb9-76"><span class="st" style="color: #20794D;
+<span id="cb10-75"></span>
+<span id="cb10-76"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">2. log in to RStudio Server using the following credentials:</span></span>
-<span id="cb9-77"></span>
-<span id="cb9-78"><span class="st" style="color: #20794D;
+<span id="cb10-77"></span>
+<span id="cb10-78"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">   user: </span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${APPTAINERENV_USER}</span></span>
-<span id="cb9-79"><span class="st" style="color: #20794D;
+<span id="cb10-79"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">   password: </span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${APPTAINERENV_PASSWORD}</span></span>
-<span id="cb9-80"></span>
-<span id="cb9-81"><span class="st" style="color: #20794D;
+<span id="cb10-80"></span>
+<span id="cb10-81"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">When done using RStudio Server, terminate the job by:</span></span>
-<span id="cb9-82"></span>
-<span id="cb9-83"><span class="st" style="color: #20794D;
+<span id="cb10-82"></span>
+<span id="cb10-83"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">1. Exit the RStudio Session ("power" button in the top right corner of the RStudio window)</span></span>
-<span id="cb9-84"><span class="st" style="color: #20794D;
+<span id="cb10-84"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">2. Issue the following command on the login node:</span></span>
-<span id="cb9-85"></span>
-<span id="cb9-86"><span class="st" style="color: #20794D;
+<span id="cb10-85"></span>
+<span id="cb10-86"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">      scancel -f </span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${SLURM_JOB_ID}</span></span>
-<span id="cb9-87"><span class="op" style="color: #5E5E5E;
+<span id="cb10-87"><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">END</span></span>
-<span id="cb9-88"></span>
-<span id="cb9-89"><span class="bu" style="color: null;
+<span id="cb10-88"></span>
+<span id="cb10-89"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">source</span> /etc/bashrc</span>
-<span id="cb9-90"><span class="ex" style="color: null;
+<span id="cb10-90"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">module</span> load apptainer</span>
-<span id="cb9-91"></span>
-<span id="cb9-92"><span class="ex" style="color: null;
+<span id="cb10-91"></span>
+<span id="cb10-92"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">apptainer</span> exec <span class="at" style="color: #657422;
 background-color: null;
@@ -576,64 +628,64 @@ background-color: null;
 font-style: inherit;">${RSTUDIO_SIF}</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-93">    rserver <span class="at" style="color: #657422;
+<span id="cb10-93">    rserver <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--www-port</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${PORT}</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-94">            <span class="at" style="color: #657422;
+<span id="cb10-94">            <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--auth-none</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>0 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-95">            <span class="at" style="color: #657422;
+<span id="cb10-95">            <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--auth-pam-helper-path</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>pam-helper <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-96">            <span class="at" style="color: #657422;
+<span id="cb10-96">            <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--auth-stay-signed-in-days</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>30 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-97">            <span class="at" style="color: #657422;
+<span id="cb10-97">            <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--auth-timeout-minutes</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>0 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-98">            <span class="at" style="color: #657422;
+<span id="cb10-98">            <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--rsession-path</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>/etc/rstudio/rsession.sh <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb9-99">            <span class="at" style="color: #657422;
+<span id="cb10-99">            <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--server-user</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${APPTAINERENV_USER}</span></span>
-<span id="cb9-100"></span>
-<span id="cb9-101"><span class="va" style="color: #111111;
+<span id="cb10-100"></span>
+<span id="cb10-101"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">APPTAINER_EXIT_CODE</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$?</span></span>
-<span id="cb9-102"><span class="bu" style="color: null;
+<span id="cb10-102"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
 background-color: null;
@@ -648,19 +700,76 @@ background-color: null;
 font-style: inherit;">&gt;&amp;</span><span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span></span>
-<span id="cb9-103"><span class="bu" style="color: null;
+<span id="cb10-103"><span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">exit</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$APPTAINER_EXIT_CODE</span></span></code></pre></div>
 </div>
 </section>
+</section>
 <section id="run" class="level1">
 <h1>Run</h1>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">sbatch</span> rstudio-server.job</span></code></pre></div>
+</div>
+</section>
+<section id="folllow-instructions-in-output-file-to-connect-to-rstudio." class="level1">
+<h1>Folllow Instructions in output file to connect to RStudio.</h1>
+<p>eg</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">1.</span> SSH tunnel from your workstation using the following command:</span>
+<span id="cb12-2"></span>
+<span id="cb12-3">   <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ssh</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-N</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-L</span> 8787:n3263:56093 sr320@klone.hyak.uw.edu</span>
+<span id="cb12-4"></span>
+<span id="cb12-5">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">and</span> point your web browser to http://localhost:8787</span>
+<span id="cb12-6"></span>
+<span id="cb12-7"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">2.</span> log in to RStudio Server using the following credentials:</span>
+<span id="cb12-8"></span>
+<span id="cb12-9">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">user:</span> sr320</span>
+<span id="cb12-10">   <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">password:</span> PDQlr876755PgP3g37c</span>
+<span id="cb12-11"></span>
+<span id="cb12-12"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">When</span> done using RStudio Server, terminate the job by:</span>
+<span id="cb12-13"></span>
+<span id="cb12-14"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">1.</span> Exit the RStudio Session <span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"power"</span> button in the top right corner of the RStudio window<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">)</span></span>
+<span id="cb12-15"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">2.</span> Issue the following command on the login node:</span>
+<span id="cb12-16"></span>
+<span id="cb12-17">      <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">scancel</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-f</span> 24359989</span></code></pre></div>
 </div>
 </section>
 <section id="footnotes" class="level1">
@@ -671,214 +780,214 @@ used by the Roberts Lab. The &lt;git commit hash&gt; is taken from the definitio
 <section id="definition-file" class="level2">
 <h2 class="anchored" data-anchor-id="definition-file">Definition File</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="ex" style="color: null;
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">[sr320@klone-login03</span> containers]$ cat /gscratch/srlab/gitrepos/RobertsLab/code/apptainer_definition_files/srlab-bioinformatics-container.def</span></code></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="co" style="color: #5E5E5E;
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># </span><span class="al" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">NOTE</span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">:</span></span>
-<span id="cb13-2"><span class="co" style="color: #5E5E5E;
+<span id="cb15-2"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># To use RepeatMasker with this container, RepeatMasker must be installed on the local computer in the following location:</span></span>
-<span id="cb13-3"><span class="co" style="color: #5E5E5E;
+<span id="cb15-3"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#</span></span>
-<span id="cb13-4"><span class="co" style="color: #5E5E5E;
+<span id="cb15-4"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># /gscratch/srlab/programs/RepeatMasker</span></span>
-<span id="cb13-5"><span class="co" style="color: #5E5E5E;
+<span id="cb15-5"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># </span></span>
-<span id="cb13-6"><span class="co" style="color: #5E5E5E;
+<span id="cb15-6"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># RepeatMasker must be configured on the local computer prior to running via this container.</span></span>
-<span id="cb13-7"><span class="co" style="color: #5E5E5E;
+<span id="cb15-7"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># The container expects the following files:</span></span>
-<span id="cb13-8"><span class="co" style="color: #5E5E5E;
+<span id="cb15-8"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#</span></span>
-<span id="cb13-9"><span class="co" style="color: #5E5E5E;
+<span id="cb15-9"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># /gscratch/srlab/programs/RepeatMasker/Libraries/famdb/dfam38_full.0.h5</span></span>
-<span id="cb13-10"><span class="co" style="color: #5E5E5E;
+<span id="cb15-10"><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># /gscratch/srlab/programs/RepeatMasker/Libraries/famdb/rmlib.config</span></span>
-<span id="cb13-11"></span>
-<span id="cb13-12"></span>
-<span id="cb13-13"><span class="ex" style="color: null;
+<span id="cb15-11"></span>
+<span id="cb15-12"></span>
+<span id="cb15-13"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Bootstrap:</span> docker</span>
-<span id="cb13-14"><span class="ex" style="color: null;
+<span id="cb15-14"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">From:</span> rocker/rstudio:4.4.1</span>
-<span id="cb13-15"><span class="ex" style="color: null;
+<span id="cb15-15"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">%files</span></span>
-<span id="cb13-16">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-16">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Load file with R package installation commands in to container at /tmp</span></span>
-<span id="cb13-17">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-17">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Expects file called "r_packages_installs.R" to be in current directory.</span></span>
-<span id="cb13-18">    <span class="ex" style="color: null;
+<span id="cb15-18">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">r_packages_installs.R</span> /tmp/</span>
-<span id="cb13-19"></span>
-<span id="cb13-20"><span class="ex" style="color: null;
+<span id="cb15-19"></span>
+<span id="cb15-20"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">%setup</span></span>
-<span id="cb13-21"></span>
-<span id="cb13-22"></span>
-<span id="cb13-23"><span class="ex" style="color: null;
+<span id="cb15-21"></span>
+<span id="cb15-22"></span>
+<span id="cb15-23"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">%environment</span></span>
-<span id="cb13-24">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-24">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">### Set program locations/versions for system PATH </span><span class="al" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">###</span></span>
-<span id="cb13-25">    <span class="va" style="color: #111111;
+<span id="cb15-25">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">programs_location</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"/srlab/programs"</span></span>
-<span id="cb13-26">    <span class="va" style="color: #111111;
+<span id="cb15-26">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">bismark_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.24.2"</span></span>
-<span id="cb13-27">    <span class="va" style="color: #111111;
+<span id="cb15-27">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">bowtie2_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.5.4"</span></span>
-<span id="cb13-28">    <span class="va" style="color: #111111;
+<span id="cb15-28">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">diamond_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.1.9"</span></span>
-<span id="cb13-29">    <span class="va" style="color: #111111;
+<span id="cb15-29">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">fastp_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.23.4"</span></span>
-<span id="cb13-30">    <span class="va" style="color: #111111;
+<span id="cb15-30">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">fastqc_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.12.1"</span></span>
-<span id="cb13-31">    <span class="va" style="color: #111111;
+<span id="cb15-31">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">gffcompare_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"gffcompare-0.12.6"</span></span>
-<span id="cb13-32">    <span class="va" style="color: #111111;
+<span id="cb15-32">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">hisat2_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.2.1"</span></span>
-<span id="cb13-33">    <span class="va" style="color: #111111;
+<span id="cb15-33">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">kallisto_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.51.1"</span></span>
-<span id="cb13-34">    <span class="va" style="color: #111111;
+<span id="cb15-34">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">miniforge_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"24.7.1-0"</span></span>
-<span id="cb13-35">    <span class="va" style="color: #111111;
+<span id="cb15-35">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">multiqc_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"1.24.1"</span></span>
-<span id="cb13-36">    <span class="va" style="color: #111111;
+<span id="cb15-36">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">ncbi_blast_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.16.0"</span></span>
-<span id="cb13-37">    <span class="va" style="color: #111111;
+<span id="cb15-37">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">ncbi_datasets_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"13.34.0"</span></span>
-<span id="cb13-38">    <span class="va" style="color: #111111;
+<span id="cb15-38">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">repeatmasker_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"4.1.7-p1"</span></span>
-<span id="cb13-39">    <span class="va" style="color: #111111;
+<span id="cb15-39">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">rmblast_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.14.1"</span></span>
-<span id="cb13-40">    <span class="va" style="color: #111111;
+<span id="cb15-40">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">salmon_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"1.10.0"</span></span>
-<span id="cb13-41">    <span class="va" style="color: #111111;
+<span id="cb15-41">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">samtools_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"1.20"</span></span>
-<span id="cb13-42">    <span class="va" style="color: #111111;
+<span id="cb15-42">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">stringtie_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.2.1"</span></span>
-<span id="cb13-43">    <span class="va" style="color: #111111;
+<span id="cb15-43">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">trimmomatic_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.39"</span></span>
-<span id="cb13-44"></span>
-<span id="cb13-45">    <span class="va" style="color: #111111;
+<span id="cb15-44"></span>
+<span id="cb15-45">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">mamba_envs_dir</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -893,25 +1002,25 @@ background-color: null;
 font-style: inherit;">${miniforge_version}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/envs"</span></span>
-<span id="cb13-46"></span>
-<span id="cb13-47">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-46"></span>
+<span id="cb15-47">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">######################################################</span></span>
-<span id="cb13-48"></span>
-<span id="cb13-49">    <span class="bu" style="color: null;
+<span id="cb15-48"></span>
+<span id="cb15-49">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">export</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">LC_ALL</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span>C</span>
-<span id="cb13-50">    </span>
-<span id="cb13-51">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-50">    </span>
+<span id="cb15-51">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">### Set container system PATH </span><span class="al" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">###</span></span>
-<span id="cb13-52">    <span class="va" style="color: #111111;
+<span id="cb15-52">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">PATH</span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -920,39 +1029,39 @@ background-color: null;
 font-style: inherit;">"/usr/local/sbin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-53"><span class="st" style="color: #20794D;
+<span id="cb15-53"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/usr/local/bin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-54"><span class="st" style="color: #20794D;
+<span id="cb15-54"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/usr/sbin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-55"><span class="st" style="color: #20794D;
+<span id="cb15-55"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/usr/bin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-56"><span class="st" style="color: #20794D;
+<span id="cb15-56"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/sbin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-57"><span class="st" style="color: #20794D;
+<span id="cb15-57"><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/bin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-58"><span class="va" style="color: #111111;
+<span id="cb15-58"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-59"><span class="va" style="color: #111111;
+<span id="cb15-59"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -963,7 +1072,7 @@ background-color: null;
 font-style: inherit;">:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-60"><span class="va" style="color: #111111;
+<span id="cb15-60"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -974,7 +1083,7 @@ background-color: null;
 font-style: inherit;">-sra-linux-x86_64:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-61"><span class="va" style="color: #111111;
+<span id="cb15-61"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -985,7 +1094,7 @@ background-color: null;
 font-style: inherit;">:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-62"><span class="va" style="color: #111111;
+<span id="cb15-62"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -996,7 +1105,7 @@ background-color: null;
 font-style: inherit;">:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-63"><span class="va" style="color: #111111;
+<span id="cb15-63"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -1007,7 +1116,7 @@ background-color: null;
 font-style: inherit;">:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-64"><span class="va" style="color: #111111;
+<span id="cb15-64"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -1018,7 +1127,7 @@ background-color: null;
 font-style: inherit;">/build/src:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-65"><span class="va" style="color: #111111;
+<span id="cb15-65"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -1029,14 +1138,14 @@ background-color: null;
 font-style: inherit;">/bin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-66"><span class="va" style="color: #111111;
+<span id="cb15-66"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${mamba_envs_dir}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/multiqc_env/bin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-67"><span class="va" style="color: #111111;
+<span id="cb15-67"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -1047,7 +1156,7 @@ background-color: null;
 font-style: inherit;">+/bin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-68"><span class="va" style="color: #111111;
+<span id="cb15-68"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -1058,14 +1167,14 @@ background-color: null;
 font-style: inherit;">:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-69"><span class="va" style="color: #111111;
+<span id="cb15-69"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/RepeatMasker:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-70"><span class="va" style="color: #111111;
+<span id="cb15-70"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -1076,14 +1185,14 @@ background-color: null;
 font-style: inherit;">/bin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-71"><span class="va" style="color: #111111;
+<span id="cb15-71"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/salmon-latest_linux_x86_64/bin:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-72"><span class="va" style="color: #111111;
+<span id="cb15-72"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -1094,7 +1203,7 @@ background-color: null;
 font-style: inherit;">:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-73"><span class="va" style="color: #111111;
+<span id="cb15-73"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -1105,7 +1214,7 @@ background-color: null;
 font-style: inherit;">.Linux_x86_64:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-74"><span class="va" style="color: #111111;
+<span id="cb15-74"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
@@ -1116,23 +1225,23 @@ background-color: null;
 font-style: inherit;">:</span><span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-75"><span class="va" style="color: #111111;
+<span id="cb15-75"><span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${programs_location}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/trf409.linux64"</span></span>
-<span id="cb13-76">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-76">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">######################################################</span></span>
-<span id="cb13-77"></span>
-<span id="cb13-78"></span>
-<span id="cb13-79"><span class="ex" style="color: null;
+<span id="cb15-77"></span>
+<span id="cb15-78"></span>
+<span id="cb15-79"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">%post</span></span>
-<span id="cb13-80">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-80">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install common/base libraries/dependencies</span></span>
-<span id="cb13-81">    <span class="ex" style="color: null;
+<span id="cb15-81">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">apt</span> update <span class="kw" style="color: #003B4F;
 background-color: null;
@@ -1140,7 +1249,7 @@ font-weight: bold;
 font-style: inherit;">&amp;&amp;</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-82">    <span class="ex" style="color: null;
+<span id="cb15-82">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">apt</span> install <span class="at" style="color: #657422;
 background-color: null;
@@ -1149,401 +1258,401 @@ background-color: null;
 font-style: inherit;">--no-install-recommends</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-83">    apt-utils <span class="dt" style="color: #AD0000;
+<span id="cb15-83">    apt-utils <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-84">    aptitude <span class="dt" style="color: #AD0000;
+<span id="cb15-84">    aptitude <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-85">    automake <span class="dt" style="color: #AD0000;
+<span id="cb15-85">    automake <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-86">    build-essential <span class="dt" style="color: #AD0000;
+<span id="cb15-86">    build-essential <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-87">    bzip2 <span class="dt" style="color: #AD0000;
+<span id="cb15-87">    bzip2 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-88">    cmake <span class="dt" style="color: #AD0000;
+<span id="cb15-88">    cmake <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-89">    coreutils <span class="dt" style="color: #AD0000;
+<span id="cb15-89">    coreutils <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-90">    curl <span class="dt" style="color: #AD0000;
+<span id="cb15-90">    curl <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-91">    debconf <span class="dt" style="color: #AD0000;
+<span id="cb15-91">    debconf <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-92">    default-jdk <span class="dt" style="color: #AD0000;
+<span id="cb15-92">    default-jdk <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-93">    dialog <span class="dt" style="color: #AD0000;
+<span id="cb15-93">    dialog <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-94">    emboss <span class="dt" style="color: #AD0000;
+<span id="cb15-94">    emboss <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-95">    gcc-multilib <span class="dt" style="color: #AD0000;
+<span id="cb15-95">    gcc-multilib <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-96">    gdebi-core <span class="dt" style="color: #AD0000;
+<span id="cb15-96">    gdebi-core <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-97">    gfortran <span class="dt" style="color: #AD0000;
+<span id="cb15-97">    gfortran <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-98">    git <span class="dt" style="color: #AD0000;
+<span id="cb15-98">    git <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-99">    gobjc++ <span class="dt" style="color: #AD0000;
+<span id="cb15-99">    gobjc++ <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-100">    hmmer <span class="dt" style="color: #AD0000;
+<span id="cb15-100">    hmmer <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-101">    htop <span class="dt" style="color: #AD0000;
+<span id="cb15-101">    htop <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-102">    infernal <span class="dt" style="color: #AD0000;
+<span id="cb15-102">    infernal <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-103">    libapparmor1 <span class="dt" style="color: #AD0000;
+<span id="cb15-103">    libapparmor1 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-104">    libbz2-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-104">    libbz2-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-105">    libc6 <span class="dt" style="color: #AD0000;
+<span id="cb15-105">    libc6 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-106">    libcurl4-openssl-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-106">    libcurl4-openssl-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-107">    libedit2 <span class="dt" style="color: #AD0000;
+<span id="cb15-107">    libedit2 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-108">    libfontconfig1 <span class="dt" style="color: #AD0000;
+<span id="cb15-108">    libfontconfig1 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-109">    liblzma-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-109">    liblzma-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-110">    libncurses5-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-110">    libncurses5-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-111">    libncurses-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-111">    libncurses-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-112">    libncursesw5-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-112">    libncursesw5-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-113">    libpango1.0-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-113">    libpango1.0-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-114">    libpng-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-114">    libpng-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-115">    libreadline-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-115">    libreadline-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-116">    libsm6 <span class="dt" style="color: #AD0000;
+<span id="cb15-116">    libsm6 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-117">    libsparsehash-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-117">    libsparsehash-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-118">    libssl-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-118">    libssl-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-119">    liburi-escape-xs-perl <span class="dt" style="color: #AD0000;
+<span id="cb15-119">    liburi-escape-xs-perl <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-120">    liburi-perl <span class="dt" style="color: #AD0000;
+<span id="cb15-120">    liburi-perl <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-121">    libxml2 <span class="dt" style="color: #AD0000;
+<span id="cb15-121">    libxml2 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-122">    libxrender1 <span class="dt" style="color: #AD0000;
+<span id="cb15-122">    libxrender1 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-123">    libz-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-123">    libz-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-124">    libbz2-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-124">    libbz2-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-125">    liblzma-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-125">    liblzma-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-126">    libxt6 <span class="dt" style="color: #AD0000;
+<span id="cb15-126">    libxt6 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-127">    libxtst6 <span class="dt" style="color: #AD0000;
+<span id="cb15-127">    libxtst6 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-128">    libzmq3-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-128">    libzmq3-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-129">    locales <span class="dt" style="color: #AD0000;
+<span id="cb15-129">    locales <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-130">    locales-all <span class="dt" style="color: #AD0000;
+<span id="cb15-130">    locales-all <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-131">    man <span class="dt" style="color: #AD0000;
+<span id="cb15-131">    man <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-132">    nano <span class="dt" style="color: #AD0000;
+<span id="cb15-132">    nano <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-133">    ncurses-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-133">    ncurses-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-134">    net-tools <span class="dt" style="color: #AD0000;
+<span id="cb15-134">    net-tools <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-135">    openssh-client <span class="dt" style="color: #AD0000;
+<span id="cb15-135">    openssh-client <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-136">    parallel <span class="dt" style="color: #AD0000;
+<span id="cb15-136">    parallel <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-137">    pkg-config <span class="dt" style="color: #AD0000;
+<span id="cb15-137">    pkg-config <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-138">    psmisc <span class="dt" style="color: #AD0000;
+<span id="cb15-138">    psmisc <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-139">    python3 <span class="dt" style="color: #AD0000;
+<span id="cb15-139">    python3 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-140">    python-setuptools <span class="dt" style="color: #AD0000;
+<span id="cb15-140">    python-setuptools <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-141">    rsync <span class="dt" style="color: #AD0000;
+<span id="cb15-141">    rsync <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-142">    ruby <span class="dt" style="color: #AD0000;
+<span id="cb15-142">    ruby <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-143">    software-properties-common <span class="dt" style="color: #AD0000;
+<span id="cb15-143">    software-properties-common <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-144">    sqlite3 <span class="dt" style="color: #AD0000;
+<span id="cb15-144">    sqlite3 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-145">    sudo <span class="dt" style="color: #AD0000;
+<span id="cb15-145">    sudo <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-146">    texinfo <span class="dt" style="color: #AD0000;
+<span id="cb15-146">    texinfo <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-147">    tree <span class="dt" style="color: #AD0000;
+<span id="cb15-147">    tree <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-148">    unzip <span class="dt" style="color: #AD0000;
+<span id="cb15-148">    unzip <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-149">    wget <span class="dt" style="color: #AD0000;
+<span id="cb15-149">    wget <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-150">    xorg-dev <span class="dt" style="color: #AD0000;
+<span id="cb15-150">    xorg-dev <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-151">    zlib1g-dev</span>
-<span id="cb13-152"></span>
-<span id="cb13-153">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-151">    zlib1g-dev</span>
+<span id="cb15-152"></span>
+<span id="cb15-153">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Run R package installation script file</span></span>
-<span id="cb13-154">    <span class="ex" style="color: null;
+<span id="cb15-154">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Rscript</span> /tmp/r_packages_installs.R</span>
-<span id="cb13-155"></span>
-<span id="cb13-156">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-155"></span>
+<span id="cb15-156">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">########## Set program versions ##########</span></span>
-<span id="cb13-157"></span>
-<span id="cb13-158">    <span class="va" style="color: #111111;
+<span id="cb15-157"></span>
+<span id="cb15-158">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">bedtools_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"v2.31.0"</span></span>
-<span id="cb13-159">    <span class="va" style="color: #111111;
+<span id="cb15-159">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">bismark_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.24.2"</span></span>
-<span id="cb13-160">    <span class="va" style="color: #111111;
+<span id="cb15-160">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">bowtie2_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.5.4"</span></span>
-<span id="cb13-161">    <span class="va" style="color: #111111;
+<span id="cb15-161">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">diamond_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.1.9"</span></span>
-<span id="cb13-162">    <span class="va" style="color: #111111;
+<span id="cb15-162">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">fastp_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.23.4"</span></span>
-<span id="cb13-163">    <span class="va" style="color: #111111;
+<span id="cb15-163">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">fastqc_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.12.1"</span></span>
-<span id="cb13-164">    <span class="va" style="color: #111111;
+<span id="cb15-164">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">gffcompare_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"gffcompare-0.12.6"</span></span>
-<span id="cb13-165">    <span class="va" style="color: #111111;
+<span id="cb15-165">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">hisat2_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.2.1"</span></span>
-<span id="cb13-166">    <span class="va" style="color: #111111;
+<span id="cb15-166">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">kallisto_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.51.1"</span></span>
-<span id="cb13-167">    <span class="va" style="color: #111111;
+<span id="cb15-167">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">miniforge_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"24.7.1-0"</span></span>
-<span id="cb13-168">    <span class="va" style="color: #111111;
+<span id="cb15-168">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">multiqc_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"1.24.1"</span></span>
-<span id="cb13-169">    <span class="va" style="color: #111111;
+<span id="cb15-169">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">ncbi_blast_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.16.0"</span></span>
-<span id="cb13-170">    <span class="va" style="color: #111111;
+<span id="cb15-170">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">ncbi_datasets_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"16.34.0"</span></span>
-<span id="cb13-171">    <span class="va" style="color: #111111;
+<span id="cb15-171">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">repeatmasker_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"4.1.7-p1"</span></span>
-<span id="cb13-172">    <span class="va" style="color: #111111;
+<span id="cb15-172">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">rmblast_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.14.1"</span></span>
-<span id="cb13-173">    <span class="va" style="color: #111111;
+<span id="cb15-173">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">salmon_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"1.10.0"</span></span>
-<span id="cb13-174">    <span class="va" style="color: #111111;
+<span id="cb15-174">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">stringtie_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"2.2.1"</span></span>
-<span id="cb13-175">    <span class="va" style="color: #111111;
+<span id="cb15-175">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">samtools_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"1.20"</span></span>
-<span id="cb13-176">    <span class="va" style="color: #111111;
+<span id="cb15-176">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">trimmomatic_version</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"0.39"</span></span>
-<span id="cb13-177"></span>
-<span id="cb13-178">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-177"></span>
+<span id="cb15-178">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">##########################################</span></span>
-<span id="cb13-179">    </span>
-<span id="cb13-180"></span>
-<span id="cb13-181">    </span>
-<span id="cb13-182">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-179">    </span>
+<span id="cb15-180"></span>
+<span id="cb15-181">    </span>
+<span id="cb15-182">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Set threads for faster builds</span></span>
-<span id="cb13-183">    <span class="va" style="color: #111111;
+<span id="cb15-183">    <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">threads</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"40"</span></span>
-<span id="cb13-184"></span>
-<span id="cb13-185">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-184"></span>
+<span id="cb15-185">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Make programs directory</span></span>
-<span id="cb13-186">    <span class="fu" style="color: #4758AB;
+<span id="cb15-186">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--parents</span> /srlab/programs</span>
-<span id="cb13-187"></span>
-<span id="cb13-188">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-187"></span>
+<span id="cb15-188">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Change to installation directory</span></span>
-<span id="cb13-189">    <span class="bu" style="color: null;
+<span id="cb15-189">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> /srlab/programs</span>
-<span id="cb13-190"></span>
-<span id="cb13-191">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-190"></span>
+<span id="cb15-191">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">#Install Miniforge (Conda/Mamba)</span></span>
-<span id="cb13-192">    <span class="fu" style="color: #4758AB;
+<span id="cb15-192">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/conda-forge/miniforge/releases/download/<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${miniforge_version}</span>/Miniforge3-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${miniforge_version}</span>-Linux-x86_64.sh</span>
-<span id="cb13-193">    <span class="fu" style="color: #4758AB;
+<span id="cb15-193">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">bash</span> Miniforge3-<span class="va" style="color: #111111;
 background-color: null;
@@ -1554,8 +1663,8 @@ background-color: null;
 font-style: inherit;">-p</span> ./miniforge3-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${miniforge_version}</span></span>
-<span id="cb13-194"></span>
-<span id="cb13-195">    <span class="bu" style="color: null;
+<span id="cb15-194"></span>
+<span id="cb15-195">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">export</span> <span class="va" style="color: #111111;
 background-color: null;
@@ -1572,291 +1681,291 @@ background-color: null;
 font-style: inherit;">${miniforge_version}</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">/bin"</span></span>
-<span id="cb13-196"></span>
-<span id="cb13-197">    <span class="ex" style="color: null;
+<span id="cb15-196"></span>
+<span id="cb15-197">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">mamba</span> init</span>
-<span id="cb13-198">    <span class="bu" style="color: null;
+<span id="cb15-198">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">.</span> ./miniforge3-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${miniforge_version}</span>/etc/profile.d/conda.sh</span>
-<span id="cb13-199"></span>
-<span id="cb13-200">    <span class="fu" style="color: #4758AB;
+<span id="cb15-199"></span>
+<span id="cb15-200">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> Miniforge3-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${miniforge_version}</span>-Linux-x86_64.sh</span>
-<span id="cb13-201"></span>
-<span id="cb13-202">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-201"></span>
+<span id="cb15-202">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">## Configure conda channels</span></span>
-<span id="cb13-203">    <span class="ex" style="color: null;
+<span id="cb15-203">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">conda</span> config <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--add</span> channels defaults</span>
-<span id="cb13-204">    <span class="ex" style="color: null;
+<span id="cb15-204">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">conda</span> config <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--add</span> channels bioconda</span>
-<span id="cb13-205">    <span class="ex" style="color: null;
+<span id="cb15-205">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">conda</span> config <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--add</span> channels conda-forge</span>
-<span id="cb13-206">    <span class="ex" style="color: null;
+<span id="cb15-206">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">conda</span> config <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--set</span> channel_priority strict</span>
-<span id="cb13-207"></span>
-<span id="cb13-208">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-207"></span>
+<span id="cb15-208">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install bedtools</span></span>
-<span id="cb13-209">    <span class="fu" style="color: #4758AB;
+<span id="cb15-209">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/arq5x/bedtools2/releases/download/<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${bedtools_version}</span>/bedtools.static</span>
-<span id="cb13-210">    <span class="fu" style="color: #4758AB;
+<span id="cb15-210">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mv</span> bedtools.static bedtools</span>
-<span id="cb13-211">    <span class="fu" style="color: #4758AB;
+<span id="cb15-211">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">chmod</span> a+x bedtools</span>
-<span id="cb13-212"></span>
-<span id="cb13-213">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-212"></span>
+<span id="cb15-213">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install Bismark</span></span>
-<span id="cb13-214">    <span class="fu" style="color: #4758AB;
+<span id="cb15-214">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/FelixKrueger/Bismark/archive/refs/tags/v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${bismark_version}</span>.zip</span>
-<span id="cb13-215">    <span class="fu" style="color: #4758AB;
+<span id="cb15-215">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">unzip</span> v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${bismark_version}</span>.zip</span>
-<span id="cb13-216">    <span class="fu" style="color: #4758AB;
+<span id="cb15-216">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${bismark_version}</span>.zip</span>
-<span id="cb13-217"></span>
-<span id="cb13-218">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-217"></span>
+<span id="cb15-218">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install bowtie2</span></span>
-<span id="cb13-219">    <span class="fu" style="color: #4758AB;
+<span id="cb15-219">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/BenLangmead/bowtie2/releases/download/v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${bowtie2_version}</span>/bowtie2-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${bowtie2_version}</span>-sra-linux-x86_64.zip</span>
-<span id="cb13-220">    <span class="fu" style="color: #4758AB;
+<span id="cb15-220">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">unzip</span> bowtie2-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${bowtie2_version}</span>-sra-linux-x86_64.zip</span>
-<span id="cb13-221">    <span class="fu" style="color: #4758AB;
+<span id="cb15-221">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> bowtie2-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${bowtie2_version}</span>-sra-linux-x86_64.zip</span>
-<span id="cb13-222"></span>
-<span id="cb13-223">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-222"></span>
+<span id="cb15-223">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install DIAMOND BLAST</span></span>
-<span id="cb13-224">    <span class="fu" style="color: #4758AB;
+<span id="cb15-224">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/bbuchfink/diamond/releases/download/v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${diamond_version}</span>/diamond-linux64.tar.gz</span>
-<span id="cb13-225">    <span class="fu" style="color: #4758AB;
+<span id="cb15-225">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">tar</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-xzvf</span> diamond-linux64.tar.gz</span>
-<span id="cb13-226">    <span class="fu" style="color: #4758AB;
+<span id="cb15-226">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> diamond-linux64.tar.gz</span>
-<span id="cb13-227"></span>
-<span id="cb13-228">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-227"></span>
+<span id="cb15-228">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install fastp</span></span>
-<span id="cb13-229">    <span class="fu" style="color: #4758AB;
+<span id="cb15-229">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> http://opengene.org/fastp/fastp.<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${fastp_version}</span></span>
-<span id="cb13-230">    <span class="fu" style="color: #4758AB;
+<span id="cb15-230">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mv</span> fastp.<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${fastp_version}</span> fastp</span>
-<span id="cb13-231">    <span class="fu" style="color: #4758AB;
+<span id="cb15-231">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">chmod</span> a+x ./fastp</span>
-<span id="cb13-232"></span>
-<span id="cb13-233">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-232"></span>
+<span id="cb15-233">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install FastQC</span></span>
-<span id="cb13-234">    <span class="fu" style="color: #4758AB;
+<span id="cb15-234">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${fastqc_version}</span>.zip</span>
-<span id="cb13-235">    <span class="fu" style="color: #4758AB;
+<span id="cb15-235">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">unzip</span> fastqc_v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${fastqc_version}</span>.zip</span>
-<span id="cb13-236">    <span class="fu" style="color: #4758AB;
+<span id="cb15-236">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mv</span> FastQC fastqc-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${fastqc_version}</span></span>
-<span id="cb13-237">    <span class="fu" style="color: #4758AB;
+<span id="cb15-237">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> fastqc_v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${fastqc_version}</span>.zip</span>
-<span id="cb13-238"></span>
-<span id="cb13-239">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-238"></span>
+<span id="cb15-239">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install gffcompare</span></span>
-<span id="cb13-240">    <span class="fu" style="color: #4758AB;
+<span id="cb15-240">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> http://ccb.jhu.edu/software/stringtie/dl/<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${gffcompare_version}</span>.Linux_x86_64.tar.gz</span>
-<span id="cb13-241">    <span class="fu" style="color: #4758AB;
+<span id="cb15-241">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">tar</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-xzvf</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${gffcompare_version}</span>.Linux_x86_64.tar.gz</span>
-<span id="cb13-242">    <span class="fu" style="color: #4758AB;
+<span id="cb15-242">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${gffcompare_version}</span>.Linux_x86_64.tar.gz</span>
-<span id="cb13-243"></span>
-<span id="cb13-244">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-243"></span>
+<span id="cb15-244">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install HISAT2</span></span>
-<span id="cb13-245">    <span class="fu" style="color: #4758AB;
+<span id="cb15-245">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/DaehwanKimLab/hisat2/archive/refs/tags/v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${hisat2_version}</span>.tar.gz</span>
-<span id="cb13-246">    <span class="fu" style="color: #4758AB;
+<span id="cb15-246">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">tar</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-xzvf</span> v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${hisat2_version}</span>.tar.gz</span>
-<span id="cb13-247">    <span class="bu" style="color: null;
+<span id="cb15-247">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> hisat2-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${hisat2_version}</span></span>
-<span id="cb13-248">    <span class="fu" style="color: #4758AB;
+<span id="cb15-248">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">make</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-j</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${threads}</span></span>
-<span id="cb13-249">    <span class="bu" style="color: null;
+<span id="cb15-249">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-</span></span>
-<span id="cb13-250">    <span class="fu" style="color: #4758AB;
+<span id="cb15-250">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${hisat2_version}</span>.tar.gz</span>
-<span id="cb13-251"></span>
-<span id="cb13-252">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-251"></span>
+<span id="cb15-252">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install kallisto</span></span>
-<span id="cb13-253">    <span class="fu" style="color: #4758AB;
+<span id="cb15-253">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/pachterlab/kallisto/archive/refs/tags/v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${kallisto_version}</span>.tar.gz</span>
-<span id="cb13-254">    <span class="fu" style="color: #4758AB;
+<span id="cb15-254">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">tar</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-xzvf</span> v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${kallisto_version}</span>.tar.gz</span>
-<span id="cb13-255">    <span class="bu" style="color: null;
+<span id="cb15-255">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> kallisto-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${kallisto_version}</span></span>
-<span id="cb13-256">    <span class="fu" style="color: #4758AB;
+<span id="cb15-256">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mkdir</span> build</span>
-<span id="cb13-257">    <span class="bu" style="color: null;
+<span id="cb15-257">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> build</span>
-<span id="cb13-258">    <span class="fu" style="color: #4758AB;
+<span id="cb15-258">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">cmake</span> ..</span>
-<span id="cb13-259">    <span class="fu" style="color: #4758AB;
+<span id="cb15-259">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">make</span></span>
-<span id="cb13-260">    <span class="bu" style="color: null;
+<span id="cb15-260">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> /srlab/programs</span>
-<span id="cb13-261">    <span class="fu" style="color: #4758AB;
+<span id="cb15-261">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${kallisto_version}</span>.tar.gz</span>
-<span id="cb13-262"></span>
-<span id="cb13-263">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-262"></span>
+<span id="cb15-263">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install MultiQC</span></span>
-<span id="cb13-264">    <span class="ex" style="color: null;
+<span id="cb15-264">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">mamba</span> create <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-n</span> multiqc_env multiqc=1.24.1</span>
-<span id="cb13-265"></span>
-<span id="cb13-266">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-265"></span>
+<span id="cb15-266">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install NCBI datasets</span></span>
-<span id="cb13-267">    <span class="fu" style="color: #4758AB;
+<span id="cb15-267">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">--parents</span> ncbi-datasets-v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${ncbi_datasets_version}</span></span>
-<span id="cb13-268"></span>
-<span id="cb13-269">    <span class="bu" style="color: null;
+<span id="cb15-268"></span>
+<span id="cb15-269">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> ncbi-datasets-v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${ncbi_datasets_version}</span></span>
-<span id="cb13-270">    </span>
-<span id="cb13-271">    <span class="fu" style="color: #4758AB;
+<span id="cb15-270">    </span>
+<span id="cb15-271">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/ncbi/datasets/releases/download/v16.34.0/linux-amd64.cli.package.zip <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-272">    <span class="kw" style="color: #003B4F;
+<span id="cb15-272">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">&amp;&amp;</span> <span class="fu" style="color: #4758AB;
@@ -1864,21 +1973,21 @@ background-color: null;
 font-style: inherit;">unzip</span> linux-amd64.cli.package.zip <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-273">    <span class="kw" style="color: #003B4F;
+<span id="cb15-273">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">&amp;&amp;</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> linux-amd64.cli.package.zip</span>
-<span id="cb13-274"></span>
-<span id="cb13-275">    <span class="bu" style="color: null;
+<span id="cb15-274"></span>
+<span id="cb15-275">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> /srlab/programs</span>
-<span id="cb13-276"></span>
-<span id="cb13-277">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-276"></span>
+<span id="cb15-277">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install NCBI BLAST</span></span>
-<span id="cb13-278">    <span class="fu" style="color: #4758AB;
+<span id="cb15-278">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/<span class="va" style="color: #111111;
 background-color: null;
@@ -1887,7 +1996,7 @@ background-color: null;
 font-style: inherit;">${ncbi_blast_version}</span>+-x64-linux.tar.gz <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-279">    <span class="kw" style="color: #003B4F;
+<span id="cb15-279">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">&amp;&amp;</span> <span class="fu" style="color: #4758AB;
@@ -1899,7 +2008,7 @@ background-color: null;
 font-style: inherit;">${ncbi_blast_version}</span>+-x64-linux.tar.gz <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-280">    <span class="kw" style="color: #003B4F;
+<span id="cb15-280">    <span class="kw" style="color: #003B4F;
 background-color: null;
 font-weight: bold;
 font-style: inherit;">&amp;&amp;</span> <span class="fu" style="color: #4758AB;
@@ -1907,224 +2016,224 @@ background-color: null;
 font-style: inherit;">rm</span> ncbi-blast-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${ncbi_blast_version}</span>+-x64-linux.tar.gz</span>
-<span id="cb13-281"></span>
-<span id="cb13-282">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-281"></span>
+<span id="cb15-282">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># RepeatMasker conda environment with Python3 and h5py using mamba</span></span>
-<span id="cb13-283">    <span class="ex" style="color: null;
+<span id="cb15-283">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">mamba</span> create <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-n</span> repeatmasker-env python=3.8 h5py <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-y</span></span>
-<span id="cb13-284"></span>
-<span id="cb13-285">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-284"></span>
+<span id="cb15-285">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install RepeatMasker</span></span>
-<span id="cb13-286">    <span class="fu" style="color: #4758AB;
+<span id="cb15-286">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://www.repeatmasker.org/RepeatMasker/RepeatMasker-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${repeatmasker_version}</span>.tar.gz</span>
-<span id="cb13-287">    <span class="fu" style="color: #4758AB;
+<span id="cb15-287">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">tar</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-xzvf</span> RepeatMasker-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${repeatmasker_version}</span>.tar.gz</span>
-<span id="cb13-288">    <span class="fu" style="color: #4758AB;
+<span id="cb15-288">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> RepeatMasker-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${repeatmasker_version}</span>.tar.gz</span>
-<span id="cb13-289"></span>
-<span id="cb13-290">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-289"></span>
+<span id="cb15-290">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">## Remove default RepeatMasker DB</span></span>
-<span id="cb13-291">    <span class="fu" style="color: #4758AB;
+<span id="cb15-291">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> /srlab/programs/RepeatMasker/Libraries/famdb/<span class="pp" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">*</span></span>
-<span id="cb13-292"></span>
-<span id="cb13-293">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-292"></span>
+<span id="cb15-293">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Set up symlinks to RepeatMasker files on Klone</span></span>
-<span id="cb13-294">    <span class="fu" style="color: #4758AB;
+<span id="cb15-294">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ln</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-s</span> /gscratch/srlab/programs/RepeatMasker/Libraries/famdb/dfam38_full.0.h5 /srlab/programs/RepeatMasker/Libraries/famdb/dfam38_full.0.h5</span>
-<span id="cb13-295">    <span class="fu" style="color: #4758AB;
+<span id="cb15-295">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">ln</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-s</span> /gscratch/srlab/programs/RepeatMasker/Libraries/famdb/rmlib.config /srlab/programs/RepeatMasker/Libraries/famdb/rmlib.config</span>
-<span id="cb13-296"></span>
-<span id="cb13-297">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-296"></span>
+<span id="cb15-297">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install RMBLAST</span></span>
-<span id="cb13-298">    <span class="fu" style="color: #4758AB;
+<span id="cb15-298">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://www.repeatmasker.org/rmblast/rmblast-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${rmblast_version}</span>+-x64-linux.tar.gz</span>
-<span id="cb13-299">    <span class="fu" style="color: #4758AB;
+<span id="cb15-299">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">tar</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-xzvf</span> rmblast-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${rmblast_version}</span>+-x64-linux.tar.gz</span>
-<span id="cb13-300">    <span class="fu" style="color: #4758AB;
+<span id="cb15-300">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> rmblast-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${rmblast_version}</span>+-x64-linux.tar.gz</span>
-<span id="cb13-301"></span>
-<span id="cb13-302">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-301"></span>
+<span id="cb15-302">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install salmon</span></span>
-<span id="cb13-303">    <span class="fu" style="color: #4758AB;
+<span id="cb15-303">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/COMBINE-lab/salmon/releases/download/v<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${salmon_version}</span>/salmon-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${salmon_version}</span>_linux_x86_64.tar.gz</span>
-<span id="cb13-304">    <span class="fu" style="color: #4758AB;
+<span id="cb15-304">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">tar</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-xzvf</span> salmon-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${salmon_version}</span>_linux_x86_64.tar.gz</span>
-<span id="cb13-305">    <span class="fu" style="color: #4758AB;
+<span id="cb15-305">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> salmon-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${salmon_version}</span>_linux_x86_64.tar.gz</span>
-<span id="cb13-306"></span>
-<span id="cb13-307">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-306"></span>
+<span id="cb15-307">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install samtools</span></span>
-<span id="cb13-308">    <span class="fu" style="color: #4758AB;
+<span id="cb15-308">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/samtools/samtools/releases/download/<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${samtools_version}</span>/samtools-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${samtools_version}</span>.tar.bz2</span>
-<span id="cb13-309">    <span class="fu" style="color: #4758AB;
+<span id="cb15-309">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">tar</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-xjvf</span> samtools-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${samtools_version}</span>.tar.bz2</span>
-<span id="cb13-310">    <span class="bu" style="color: null;
+<span id="cb15-310">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> samtools-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${samtools_version}</span></span>
-<span id="cb13-311">    <span class="ex" style="color: null;
+<span id="cb15-311">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">./configure</span></span>
-<span id="cb13-312">    <span class="fu" style="color: #4758AB;
+<span id="cb15-312">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">make</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-j</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${threads}</span></span>
-<span id="cb13-313">    <span class="bu" style="color: null;
+<span id="cb15-313">    <span class="bu" style="color: null;
 background-color: null;
 font-style: inherit;">cd</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-</span></span>
-<span id="cb13-314">    <span class="fu" style="color: #4758AB;
+<span id="cb15-314">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> samtools-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${samtools_version}</span>.tar.bz2</span>
-<span id="cb13-315"></span>
-<span id="cb13-316">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-315"></span>
+<span id="cb15-316">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install trimmomatic</span></span>
-<span id="cb13-317">    <span class="fu" style="color: #4758AB;
+<span id="cb15-317">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${trimmomatic_version}</span>.zip</span>
-<span id="cb13-318">    <span class="fu" style="color: #4758AB;
+<span id="cb15-318">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">unzip</span> Trimmomatic-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${trimmomatic_version}</span>.zip</span>
-<span id="cb13-319">    <span class="fu" style="color: #4758AB;
+<span id="cb15-319">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">chmod</span> +x <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-R</span> Trimmomatic-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${trimmomatic_version}</span></span>
-<span id="cb13-320">    <span class="fu" style="color: #4758AB;
+<span id="cb15-320">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> Trimmomatic-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${trimmomatic_version}</span>.zip</span>
-<span id="cb13-321"></span>
-<span id="cb13-322">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-321"></span>
+<span id="cb15-322">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install StringTie</span></span>
-<span id="cb13-323">    <span class="fu" style="color: #4758AB;
+<span id="cb15-323">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> http://ccb.jhu.edu/software/stringtie/dl/stringtie-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${stringtie_version}</span>.Linux_x86_64.tar.gz</span>
-<span id="cb13-324">    <span class="fu" style="color: #4758AB;
+<span id="cb15-324">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">tar</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-xzvf</span> stringtie-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${stringtie_version}</span>.Linux_x86_64.tar.gz</span>
-<span id="cb13-325">    <span class="fu" style="color: #4758AB;
+<span id="cb15-325">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">rm</span> stringtie-<span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">${stringtie_version}</span>.Linux_x86_64.tar.gz</span>
-<span id="cb13-326"></span>
-<span id="cb13-327">    <span class="co" style="color: #5E5E5E;
+<span id="cb15-326"></span>
+<span id="cb15-327">    <span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Install TRF</span></span>
-<span id="cb13-328">    <span class="fu" style="color: #4758AB;
+<span id="cb15-328">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">wget</span> https://github.com/Benson-Genomics-Lab/TRF/releases/download/v4.09.1/trf409.linux64</span>
-<span id="cb13-329">    <span class="fu" style="color: #4758AB;
+<span id="cb15-329">    <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">chmod</span> +x trf409.linux64</span>
-<span id="cb13-330"></span>
-<span id="cb13-331"></span>
-<span id="cb13-332"></span>
-<span id="cb13-333"></span>
-<span id="cb13-334"><span class="ex" style="color: null;
+<span id="cb15-330"></span>
+<span id="cb15-331"></span>
+<span id="cb15-332"></span>
+<span id="cb15-333"></span>
+<span id="cb15-334"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">%labels</span></span>
-<span id="cb13-335">    <span class="ex" style="color: null;
+<span id="cb15-335">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Author</span> Sam White</span>
-<span id="cb13-336">    <span class="ex" style="color: null;
+<span id="cb15-336">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">Version</span> v0.0.5</span>
-<span id="cb13-337">    </span>
-<span id="cb13-338"></span>
-<span id="cb13-339"><span class="ex" style="color: null;
+<span id="cb15-337">    </span>
+<span id="cb15-338"></span>
+<span id="cb15-339"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">%help</span></span>
-<span id="cb13-340">    <span class="ex" style="color: null;
+<span id="cb15-340">    <span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">This</span> is an Apptainer definition file for an Ubuntu container containing bioinformatics software for the Roberts Lab.</span></code></pre></div>
 </div>
