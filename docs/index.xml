@@ -109,6 +109,7 @@ font-style: inherit;">#within user directory</span></span>
 background-color: null;
 font-style: inherit;">cp</span> ../containers/srlab-R4.4-bioinformatics-container-703094b.sif . </span></code></pre></div>
 </div>
+<p>See Footnotes for more information on containers.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -206,7 +207,14 @@ background-color: null;
 font-style: inherit;">╰─────────┴──────────────┴──────┴────────┴──────┴───────╯</span></span>
 <span id="cb8-10"> <span class="ex" style="color: null;
 background-color: null;
-font-style: inherit;">Checkpoint</span> Resources  </span>
+font-style: inherit;">Checkpoint</span> Resources  <span class="er" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">ckpt</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">)</span></span>
 <span id="cb8-11"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">╭───────┬──────┬──────╮</span></span>

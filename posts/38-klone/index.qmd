@@ -84,7 +84,7 @@ Specifically `srlab-R4.4-bioinformatics-container-703094b.sif`
 cp ../containers/srlab-R4.4-bioinformatics-container-703094b.sif . 
 ```
 
-
+See Footnotes for more information on containers.
 
 
 ::: callout-warning
@@ -144,7 +144,7 @@ cp ../sr320/rstudio-server.job .
 │         │              │   12 │   100G │    0 │ USED  │
 │         │              │   20 │   390G │    0 │ FREE  │
 ╰─────────┴──────────────┴──────┴────────┴──────┴───────╯
- Checkpoint Resources  
+ Checkpoint Resources  (ckpt)
 ╭───────┬──────┬──────╮
 │       │ CPUs │ GPUs │
 ├───────┼──────┼──────┤
