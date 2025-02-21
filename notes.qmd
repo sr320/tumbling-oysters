@@ -5,21 +5,47 @@ execute:
   echo: false  # Do not show code in the output
 ---
 
+# February 21, 2025
+
+**Why These Class Codes for lncRNA Discovery?**\*\*\*\*
+
+1.  **Intergenic lncRNAs (lincRNAs)** → **Class code "u"**\*\*\*\*
+
+• They exist **outside** known protein-coding genes.
+
+• Tend to be truly **novel transcripts**.
+
+2.  **Intronic lncRNAs** → **Class code "i"**\*\*\*\*
+
+• These are found **inside introns** of known genes.
+
+• Some intronic lncRNAs are **functional** and could be regulatory.
+
+3.  **Antisense lncRNAs** → **Class code "x"**\*\*\*\*
+
+• Found on the **opposite strand** of known genes.
+
+• Might regulate **sense-strand transcription**.
+
+4.  **Potential lncRNAs Overlapping Known Genes** → **Class code "o"**\*\*\*\*
+
+• Need further filtering to ensure they are **not protein-coding isoforms**.
+
 # Research Notes: February 20, 2025
 
 Today provided several valuable insights across multiple marine science domains:
 
-
-
 From seminar, learned about novel approaches to enhancing resilience in commercially important species. Key points:
 
-	•	Integration of multiple OMICS technologies (metabolomics, proteomics, transcriptomics) for comprehensive analysis
-	•	Successful application in various species:
-	•	Green-lipped mussels (summer mortality resistance)
-	•	Pacific oysters (viral infection response)
-	•	Chinook salmon (feed efficiency optimization)
-	•	Geoduck cultivation
-	•	Abalone heat wave resilience
+```         
+•   Integration of multiple OMICS technologies (metabolomics, proteomics, transcriptomics) for comprehensive analysis
+•   Successful application in various species:
+•   Green-lipped mussels (summer mortality resistance)
+•   Pacific oysters (viral infection response)
+•   Chinook salmon (feed efficiency optimization)
+•   Geoduck cultivation
+•   Abalone heat wave resilience
+```
 
 Particularly interesting: The development of encapsulated feed technology for abalone, showing promising results in both land-based and open-water aquaculture systems.
 
@@ -27,38 +53,41 @@ Oyster Genetics Analysis
 
 Data analysis session with Benjamin revealed interesting patterns:
 
-	•	Observed distinct differences in copy number variance between diploid and triploid oysters
-	•	Potential implications for stress response mechanisms
-	•	New insights into gene loss patterns
+```         
+•   Observed distinct differences in copy number variance between diploid and triploid oysters
+•   Potential implications for stress response mechanisms
+•   New insights into gene loss patterns
+```
 
 Phage Therapy Applications
 
 Emerging therapeutic approach for aquaculture diseases:
 
-	•	Discussion with Scripps collaborators highlighted potential applications for oyster pathogens
-	•	Integration with existing disease management strategies
-	•	Possibility for targeted bacterial control in aquaculture settings
+```         
+•   Discussion with Scripps collaborators highlighted potential applications for oyster pathogens
+•   Integration with existing disease management strategies
+•   Possibility for targeted bacterial control in aquaculture settings
+```
 
 Future Directions
 
-	•	Further investigation needed on specific genes involved in stress response
-	•	Potential for combining phage therapy with resilience enhancement strategies
-	•	Cross-disciplinary applications of OMICS technologies in aquaculture
+```         
+•   Further investigation needed on specific genes involved in stress response
+•   Potential for combining phage therapy with resilience enhancement strategies
+•   Cross-disciplinary applications of OMICS technologies in aquaculture
+```
 
 Note: Planning follow-up collaborative work with Scripps Institution of Oceanography to expand phage therapy research.
 
 This synthesis of today’s learnings highlights the increasing convergence of molecular techniques, traditional aquaculture, and innovative therapeutic approaches in marine science. The integration of these methods could provide new solutions for industry challenges.
 
-
-
-
 ## February 15, 2025
 
-```
+```         
 Bowtie 2 seems to be working fine (tested command '/home/shared/bowtie2-2.4.4-linux-x86_64/bowtie2 --version' [2.4.4])
 Output format is BAM (default)
 Alignments will be written out in BAM format. Samtools found here: '/usr/bin/samtools'
-Reference genome folder provided is ../data/	(absolute path is '/home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/data/)'
+Reference genome folder provided is ../data/    (absolute path is '/home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/data/)'
 FastQ format assumed (by default)
 Attention: using more than 4 cores per alignment thread has been reported to have diminishing returns. If possible try to limit -p to a value of 4
 Each Bowtie 2 instance is going to be run with 10 threads. Please monitor performance closely and tune down if necessary!
@@ -70,7 +99,7 @@ Library is assumed to be strand-specific (directional), alignments to strands co
 Output will be written into the directory: /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/22-Apul-methylation/
 Setting parallelization to single-threaded (default)
 
-Summary of all aligner options:	-q --score-min L,0,-1.0 -p 10 --reorder --ignore-quals --no-mixed --no-discordant --dovetail --maxins 500
+Summary of all aligner options: -q --score-min L,0,-1.0 -p 10 --reorder --ignore-quals --no-mixed --no-discordant --dovetail --maxins 500
 Current working directory is: /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/code
 
 Now reading in and storing sequence information of the genome specified in: /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/data/
@@ -97,10 +126,6 @@ Paired-end alignments will be performed
 0.18% overall alignment rate
 Processed 253164476 sequences in total
 ```
-
-
-
-
 
 ## December 6, 2024.
 
