@@ -87,23 +87,6 @@ cp ../containers/srlab-R4.4-bioinformatics-container-703094b.sif .
 See Footnotes for more information on containers.
 
 
-::: callout-warning
-Users should add the following line in `~/.Renviron`. If you don't have a `~/.Renviron`, you can create it like this: `touch ~/.Renviron`
-
-      
--   `R_LIBS_USER` in `~/.Renviron`. Example:
-
-```{bash}         
-cat ~/.Renviron
-# Set local library installation path
-R_LIBS_USER=/gscratch/srlab/${USER}/R_libs_apptainer
-```
-
-:::
-
-This configuration directs R to install and access packages from a custom directory rather than the system-wide library, which is especially useful in shared or containerized environments.
-
-
 
 # SLURM JOB SCRIPT
 
