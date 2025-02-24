@@ -33,7 +33,7 @@ jobs:
           YAML_LINE=$(awk '/^---$/ {count++; if (count == 2) {print NR; exit}}' "$FILE")
 
           # Insert the note after the YAML header
-          awk -v line=$YAML_LINE -v text="\n## Note ($TIMESTAMP)\n\n$NOTE\n\n" '
+          awk -v line=$YAML_LINE -v text="$(printf "\n## Note (%s)\n\n%s\n\n" "$TIMESTAMP" "$NOTE")" '
           {print} NR == line {print text}
           ' "$FILE" > temp.qmd && mv temp.qmd "$FILE"
 
