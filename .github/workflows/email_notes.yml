@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false  # Ensures it does not use default GitHub Actions token
 
       - name: Authenticate GitHub CLI
         run: |
