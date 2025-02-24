@@ -5,6 +5,11 @@ execute:
   echo: false  # Do not show code in the output
 ---
 
+## Note (2025-02-24 15:19:18)
+
+awk -v line= -v text=
+## Note () '
+
 ## Note (2025-02-24 13:58:36)
 
 What is the best way to save time writing ✍️ science notebook posts?
