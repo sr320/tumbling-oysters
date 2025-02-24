@@ -31,8 +31,12 @@ jobs:
           # Find the end of YAML header (--- separator)
           YAML_LINE=$(awk '/^---$/ {count++; if (count == 2) {print NR; exit}}' "$FILE")
 
+          # Ensure safe handling of special characters
+          SAFE_NOTE=$(printf "%q" "$NOTE")
+          SAFE_TIMESTAMP=$(printf "%q" "$TIMESTAMP")
+
           # Insert the note after the YAML header
-          awk -v line="$YAML_LINE" -v text="\n## Note (${TIMESTAMP})\n\n${NOTE}\n\n" '
+          awk -v line="$YAML_LINE" -v text="\n## Note (${SAFE_TIMESTAMP})\n\n${SAFE_NOTE}\n\n" '
           {print} NR == line {print text}
           ' "$FILE" > temp.qmd && mv temp.qmd "$FILE"
 
