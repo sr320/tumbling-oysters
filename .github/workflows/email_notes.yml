@@ -54,14 +54,16 @@ jobs:
           echo 'R_LIBS_USER="~/R/library"' >> ~/.Renviron
           Rscript -e 'install.packages(c("rmarkdown", "knitr"), repos="http://cran.rstudio.com/", lib="~/R/library")'
 
-      - name: Render Quarto document
+      - name: Render Quarto document to `docs/`
         env:
           R_LIBS_USER: ~/R/library
         run: |
-          quarto render notes.qmd
+          mkdir -p docs
+          quarto render notes.qmd --to html --output-dir docs
 
       - name: Commit and Push Changes
         run: |
-          git add notes.qmd notes.html
-          git commit -m "Added new note from email and rendered Quarto" || echo "No changes to commit"
+          git add notes.qmd
+          [ -f docs/notes.html ] && git add docs/notes.html  # Only add if it exists
+          git commit -m "Added new note from email and rendered Quarto to docs/" || echo "No changes to commit"
           git push origin main
