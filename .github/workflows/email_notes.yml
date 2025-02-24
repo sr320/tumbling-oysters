@@ -49,11 +49,15 @@ jobs:
           rm quarto-1.3.450-linux-amd64.deb
           quarto --version
 
-      - name: Install R Packages (if needed)
+      - name: Install R Packages in User-Writable Directory
         run: |
-          Rscript -e 'install.packages(c("rmarkdown", "knitr"), repos="http://cran.rstudio.com/")'
+          mkdir -p ~/R/library
+          echo 'R_LIBS_USER="~/R/library"' >> ~/.Renviron
+          Rscript -e 'install.packages(c("rmarkdown", "knitr"), repos="http://cran.rstudio.com/", lib="~/R/library")'
 
       - name: Render Quarto document
+        env:
+          R_LIBS_USER: ~/R/library
         run: |
           quarto render notes.qmd
 
