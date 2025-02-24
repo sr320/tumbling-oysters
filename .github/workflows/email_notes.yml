@@ -1,4 +1,4 @@
-name: Email Notes to GitHub (Insert Below YAML & Render Quarto)
+name: Email Notes to GitHub (Insert Below YAML)
 
 on:
   repository_dispatch:
@@ -26,48 +26,19 @@ jobs:
 
           # Set timezone to Pacific Time (PST/PDT depending on daylight saving)
           export TZ="America/Los_Angeles"
+    
           TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
           # Find the end of YAML header (--- separator)
           YAML_LINE=$(awk '/^---$/ {count++; if (count == 2) {print NR; exit}}' "$FILE")
 
-          # Ensure safe handling of special characters
-          SAFE_NOTE=$(printf "%q" "$NOTE")
-          SAFE_TIMESTAMP=$(printf "%q" "$TIMESTAMP")
-
           # Insert the note after the YAML header
-          awk -v line="$YAML_LINE" -v text="\n## Note (${SAFE_TIMESTAMP})\n\n${SAFE_NOTE}\n\n" '
+          awk -v line=$YAML_LINE -v text="\n## Note ($TIMESTAMP)\n\n$NOTE\n\n" '
           {print} NR == line {print text}
           ' "$FILE" > temp.qmd && mv temp.qmd "$FILE"
-
-      - name: Install R
-        run: |
-          sudo apt update
-          sudo apt install -y r-base
-
-      - name: Install Quarto
-        run: |
-          wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.3.450/quarto-1.3.450-linux-amd64.deb
-          sudo dpkg -i quarto-1.3.450-linux-amd64.deb
-          rm quarto-1.3.450-linux-amd64.deb
-          quarto --version
-
-      - name: Install R Packages in User-Writable Directory
-        run: |
-          mkdir -p ~/R/library
-          echo 'R_LIBS_USER="~/R/library"' >> ~/.Renviron
-          Rscript -e 'install.packages(c("rmarkdown", "knitr"), repos="http://cran.rstudio.com/", lib="~/R/library")'
-
-      - name: Render Quarto document to `docs/`
-        env:
-          R_LIBS_USER: ~/R/library
-        run: |
-          mkdir -p docs
-          quarto render notes.qmd --to html --output-dir docs
 
       - name: Commit and Push Changes
         run: |
           git add notes.qmd
-          [ -f docs/notes.html ] && git add docs/notes.html  # Only add if it exists
-          git commit -m "Added new note from email and rendered Quarto to docs/" || echo "No changes to commit"
+          git commit -m "Added new note from email" || echo "No changes to commit"
           git push origin main
