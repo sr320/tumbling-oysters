@@ -11,15 +11,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Authenticate and Push Changes
+      - name: Authenticate GitHub CLI
         run: |
-        git config --global user.email "sr320@uw.edu"
-        git config --global user.name "github-actions[bot]"
-        git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/sr320/tumbling-oysters.git
-        git add notes.qmd
-        git commit -m "Added new note from email" || echo "No changes to commit"
-        git push origin main
-    
+          git config --global user.email "sr320@uw.edu"
+          git config --global user.name "github-actions[bot]"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/sr320/tumbling-oysters.git
+
       - name: Insert note below YAML header
         run: |
           FILE="notes.qmd"
@@ -34,7 +31,7 @@ jobs:
           {print} NR == line {print text}
           ' "$FILE" > temp.qmd && mv temp.qmd "$FILE"
 
-      - name: Commit and push changes
+      - name: Commit and Push Changes
         run: |
           git add notes.qmd
           git commit -m "Added new note from email" || echo "No changes to commit"
