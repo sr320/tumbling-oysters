@@ -23,6 +23,10 @@ jobs:
         run: |
           FILE="notes.qmd"
           NOTE="${{ github.event.client_payload.note }}"
+
+          # Set timezone to Pacific Time (PST/PDT depending on daylight saving)
+          export TZ="America/Los_Angeles"
+    
           TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
           # Find the end of YAML header (--- separator)
