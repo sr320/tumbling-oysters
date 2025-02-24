@@ -18,28 +18,22 @@ jobs:
           git config --global user.email "sr320@uw.edu"
           git config --global user.name "github-actions[bot]"
           git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/sr320/tumbling-oysters.git
-
       - name: Insert note below YAML header
         run: |
           FILE="notes.qmd"
           NOTE="${{ github.event.client_payload.note }}"
-
           # Set timezone to Pacific Time (PST/PDT depending on daylight saving)
           export TZ="America/Los_Angeles"
+    
           TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
 
           # Find the end of YAML header (--- separator)
           YAML_LINE=$(awk '/^---$/ {count++; if (count == 2) {print NR; exit}}' "$FILE")
 
-          # Use proper escaping to avoid syntax errors
-          SAFE_NOTE=$(echo "$NOTE" | sed 's/"/\\"/g')  # Escape double quotes
-          SAFE_TIMESTAMP=$(echo "$TIMESTAMP" | sed 's/"/\\"/g')
-
           # Insert the note after the YAML header
-          awk -v line="$YAML_LINE" -v text="\n## Note (${SAFE_TIMESTAMP})\n\n${SAFE_NOTE}\n\n" '
+          awk -v line=$YAML_LINE -v text="\n## Note ($TIMESTAMP)\n\n$NOTE\n\n" '
           {print} NR == line {print text}
           ' "$FILE" > temp.qmd && mv temp.qmd "$FILE"
-
       - name: Commit and Push Changes
         run: |
           git add notes.qmd
