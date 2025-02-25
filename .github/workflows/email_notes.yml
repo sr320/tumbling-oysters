@@ -37,8 +37,11 @@ jobs:
           {print} NR == line {print text}
           ' "$FILE" > temp.qmd && mv temp.qmd "$FILE"
 
+          cp notes.qmd docs/notes.txt
+
       - name: Commit and Push Changes
         run: |
           git add notes.qmd
+          git add docs/notes.txt
           git commit -m "Added new note from phone" || echo "No changes to commit"
           git push origin main
