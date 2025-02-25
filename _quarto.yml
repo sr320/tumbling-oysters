@@ -12,7 +12,9 @@ website:
       - icon: github
         href: https://github.com/sr320
       - icon: newspaper
-        href: notes.qmd 
+        href: notes.qmd
+      - icon: fa-pen-to-square
+        href: notes.txt
 
 format:
   html:
