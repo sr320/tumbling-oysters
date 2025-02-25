@@ -173,9 +173,78 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="note-2025-02-24-192504" class="level2">
+<h2 class="anchored" data-anchor-id="note-2025-02-24-192504">Note (2025-02-24 19:25:04)</h2>
+<p>From phone to render</p>
+</section>
+<section id="note-2025-02-24-184104" class="level2">
+<h2 class="anchored" data-anchor-id="note-2025-02-24-184104">Note (2025-02-24 18:41:04)</h2>
+</section>
+<section id="install-r" class="level1">
+<h1>Install R</h1>
+<p>sudo apt update sudo apt install -y r-base</p>
+</section>
+<section id="install-quarto" class="level1">
+<h1>Install Quarto</h1>
+<p>wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.3.450/quarto-1.3.450-linux-amd64.deb sudo dpkg -i quarto-1.3.450-linux-amd64.deb rm quarto-1.3.450-linux-amd64.deb quarto –version # Verify installation</p>
+</section>
+<section id="install-r-packages-in-a-user-writable-directory" class="level1">
+<h1>Install R Packages in a User-Writable Directory</h1>
+<p>mkdir -p ~/R/library echo ‘R_LIBS_USER=~/R/library’ &gt;&gt; ~/.Renviron Rscript -e ‘install.packages(c(rmarkdown, knitr), repos=http://cran.rstudio.com/, lib=~/R/library)’</p>
+</section>
+<section id="render-quarto-document-to-docs" class="level1">
+<h1>Render Quarto document to docs/</h1>
+<p>export R_LIBS_USER=~/R/library # Ensure R finds the installed packages mkdir -p docs # Ensure docs/ exists before rendering quarto render notes.qmd –to html –output-dir docs</p>
+<section id="note-2025-02-24-172026" class="level2">
+<h2 class="anchored" data-anchor-id="note-2025-02-24-172026">Note (2025-02-24 17:20:26)</h2>
+<p><img src="https://www.dropbox.com/scl/fi/p6ctzennhqj8tmimuatrc/2014-10-22-12.46.39.jpg?rlkey=jpqcgnyeqwq06w5bmew2c20of&amp;st=pocdidap&amp;dl=1" class="img-fluid"></p>
+</section>
+<section id="note-2025-02-24-162807" class="level2">
+<h2 class="anchored" data-anchor-id="note-2025-02-24-162807">Note (2025-02-24 16:28:07)</h2>
+</section>
+</section>
+<section id="tasks" class="level1">
+<h1>Tasks</h1>
+<ol type="1">
+<li>Email Matt about triploid oysters.</li>
+<li>Review Arianna’s proposal.</li>
+<li>Review Eva’s proposal.</li>
+<li>Send an email to EarthLab.</li>
+</ol>
+<section id="note-2025-02-24-161250" class="level2">
+<h2 class="anchored" data-anchor-id="note-2025-02-24-161250">Note (2025-02-24 16:12:50)</h2>
+<p>Started my morning with a burst of productivity! 🚀 Spent several hours creating something I’m really excited about - an automated system for my notebook posts. Finally figured out how to use iOS shortcuts with GitHub to make posting updates a breeze. It’s amazing how a morning of coding can make life so much easier. Already used it to post about Sam’s DNA extraction and Ariana’s work.</p>
+<p>By midday, found myself troubleshooting with some colleagues. Someone was having issues with file management in Raven - you know how these technical hiccups can be. Helped sort that out while discussing plans for time series methods and methylation analysis. It’s satisfying when you can help others get unstuck.</p>
+<p>The afternoon brought a fascinating research meeting about our three-species analysis project. We dove deep into differential expression analysis and gene ontology work. The team’s making good progress, though we need to secure some additional funding for sequencing. The Wildlife Diseases Conference abstract deadline is coming up on March 1st - always keeping us on our toes!</p>
+<p>Later in the day, had a lengthy session reviewing a scientific paper. Spent quite a bit of time fine-tuning the visualizations for symbiont-host interactions. Also tackled some grant management tasks - budgets, personnel, supplies, you name it. Earthlab and BIMS funding discussions always keep things interesting.</p>
+<p>Note to self: Yesterday’s impromptu Seattle trip without a raincoat was not my brightest moment! 🌧️ Got soaked and learned my lesson - need to start checking the weather forecast more regularly.</p>
+<p>Looking ahead, we’ve got some exciting projects in the pipeline - Yellow Island sampling, biomarker analysis, and that trip to plan for. Never a dull moment!</p>
+<p>Today was one of those full but satisfying days. The new automated notebook system might be my favorite achievement - it’s the little things that make work life smoother, isn’t it?</p>
+</section>
+<section id="note-2025-02-24-135836" class="level2">
+<h2 class="anchored" data-anchor-id="note-2025-02-24-135836">Note (2025-02-24 13:58:36)</h2>
+<p>What is the best way to save time writing ✍️ science notebook posts?</p>
+<ol type="1">
+<li><p>Organize Your Thoughts: Before you start writing, have a clear outline of the content you want to share. This will help you write in a streamlined manner and avoid wasting time changing things later.</p></li>
+<li><p>Use Templates: If you often write about similar topics, consider creating a template that includes all the sections you typically include. This way, you won’t need to start from scratch each time.</p></li>
+<li><p>Write Regularly: The more you do it, the quicker you’ll get. Regular practice will help you familiarize with scientific language and structure, thus speeding up your process.</p></li>
+<li><p>Use Technology: Make use of science writing software tools, plagiarism checkers and grammar correction software to assist in creating quality content quickly.</p></li>
+<li><p>Write First, Edit Later: Avoid editing as you write. Instead, focus on getting all your ideas down first. Once you’ve finished, you can review what you’ve written and make necessary changes.</p></li>
+<li><p>Use Visuals: It often takes less time to explain complex scientific concepts using images, graphs, or charts.</p></li>
+<li><p>Break Down Complex Ideas: Instead of spending time writing lengthy explanations, break complex ideas down into simpler ones. This will make your posts easier to understand and quicker to write.</p></li>
+<li><p>Reuse Content: If you’ve written about a topic in the past, it’s okay to reuse some of that content. Just make sure to update any outdated information.</p></li>
+<li><p>Set Time Limits: Determine how much time you want to spend on each post. This will help you stay focused and avoid wasting time on unnecessary details.</p></li>
+<li><p>Delegate: If there are too many tasks on your plate, consider delegating. A collaborator or an assistant can help with research, editing, or even writing portions of the post.</p></li>
+</ol>
+</section>
+<section id="note-2025-02-24-131408" class="level2">
+<h2 class="anchored" data-anchor-id="note-2025-02-24-131408">Note (2025-02-24 13:14:08)</h2>
+<p>Is my time zone correct?</p>
+</section>
+</section>
 <section id="february-21-2025" class="level1">
 <h1>February 21, 2025</h1>
-<p><strong>Why These Class Codes for lncRNA Discovery?</strong>****</p>
+<p>ffs <strong>Why These Class Codes for lncRNA Discovery?</strong>****</p>
 <ol type="1">
 <li><strong>Intergenic lncRNAs (lincRNAs)</strong> → <strong>Class code “u”</strong>****</li>
 </ol>
