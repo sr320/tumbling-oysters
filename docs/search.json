@@ -1019,7 +1019,7 @@
     "href": "posts/39-lncRNA/index.html#setup",
     "title": "lncRNA Discovery Pipeline",
     "section": "Setup",
-    "text": "Setup\n#Variables\n\nmkdir -p \"${DATA_DIR}\"\nmkdir -p \"${OUTPUT_DIR}\""
+    "text": "Setup\n\nknitr::opts_chunk$set(\n  echo = TRUE,         # Display code chunks\n  eval = FALSE,        # Avoid automatic execution\n  warning = FALSE,     # Hide warnings\n  message = FALSE,     # Hide messages\n  fig.width = 6,       # Set default plot width\n  fig.height = 4,      # Set default plot height\n  fig.align = \"center\", # Center align plots\n  comment = \"\"         # Prevents '##' in output\n)"
   },
   {
     "objectID": "posts/39-lncRNA/index.html#data-acquisition",
