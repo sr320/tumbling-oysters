@@ -396,49 +396,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(<span class="at">src=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html"</span>, <span class="at">width=</span><span class="st">"100%"</span>, <span class="at">height=</span><span class="st">"600px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<iframe src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html" width="100%" height="600px"></iframe>
 </div>
 </div>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(htmltools)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tags<span class="sc">$</span><span class="fu">iframe</span>(<span class="at">src=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html"</span>, <span class="at">width=</span><span class="st">"100%"</span>, <span class="at">height=</span><span class="st">"600px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<iframe src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html" width="100%" height="600px">
-</iframe>
 <section id="deduplication" class="level2">
 <h2 class="anchored" data-anchor-id="deduplication">Deduplication</h2>
 <p>Notebook 14</p>
 <p>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/<span class="pp">*</span>.bam <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> .bam <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 8 /home/shared/Bismark-0.24.0/deduplicate_bismark <span class="dt">\</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>--bam <span class="dt">\</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>--paired <span class="dt">\</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>--output_dir /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/{}.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/<span class="pp">*</span>.bam <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> .bam <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 8 /home/shared/Bismark-0.24.0/deduplicate_bismark <span class="dt">\</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>--bam <span class="dt">\</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>--paired <span class="dt">\</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>--output_dir /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/{}.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="methylation-extraction" class="level2">
 <h2 class="anchored" data-anchor-id="methylation-extraction">Methylation Extraction</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bam <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-n</span> 1 <span class="at">-I{}</span> /home/shared/Bismark-0.24.0/bismark_methylation_extractor <span class="at">--bedGraph</span> <span class="at">--counts</span> <span class="at">--comprehensive</span> <span class="at">--merge_non_CpG</span> <span class="at">--multicore</span> 48 <span class="at">--buffer_size</span> 75% <span class="dt">\</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>--output /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>{} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bam <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-n</span> 1 <span class="at">-I{}</span> /home/shared/Bismark-0.24.0/bismark_methylation_extractor <span class="at">--bedGraph</span> <span class="at">--counts</span> <span class="at">--comprehensive</span> <span class="at">--merge_non_CpG</span> <span class="at">--multicore</span> 48 <span class="at">--buffer_size</span> 75% <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>--output /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>{} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="methylation-calls" class="level2">
 <h2 class="anchored" data-anchor-id="methylation-calls">Methylation Calls</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> _pe.deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 48 /home/shared/Bismark-0.24.0/coverage2cytosine <span class="dt">\</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>--genome_folder /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/data/Haws-10 <span class="dt">\</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>-o /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{} <span class="dt">\</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>--merge_CpG <span class="dt">\</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>--zero_based <span class="dt">\</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{}_pe.deduplicated.bismark.cov.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> _pe.deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 48 /home/shared/Bismark-0.24.0/coverage2cytosine <span class="dt">\</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>--genome_folder /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/data/Haws-10 <span class="dt">\</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>-o /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{} <span class="dt">\</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>--merge_CpG <span class="dt">\</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>--zero_based <span class="dt">\</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{}_pe.deduplicated.bismark.cov.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">View MultiQC Report</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(<span class="at">src=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/multiqc_report.html"</span>, <span class="at">width=</span><span class="st">"100%"</span>, <span class="at">height=</span><span class="st">"600px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<iframe src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/multiqc_report.html" width="100%" height="600px"></iframe>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="output" class="level2">
@@ -1546,327 +1556,330 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a><span class="ex">:::</span> panel-tabset</span>
 <span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a><span class="co">### View MultiQC Report</span></span>
 <span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a><span class="ex">htmltools::tags</span><span class="va">$iframe</span><span class="er">(</span><span class="va">src</span><span class="op">=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html"</span>, <span class="va">width</span><span class="op">=</span><span class="st">"100%"</span>, <span class="va">height</span><span class="op">=</span><span class="st">"600px"</span><span class="kw">)</span></span>
-<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a><span class="ex">:::</span></span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span><span class="dt">{r</span><span class="op">,</span><span class="dt">eval=TRUE}</span></span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a><span class="ex">htmltools::tags</span><span class="va">$iframe</span><span class="er">(</span><span class="va">src</span><span class="op">=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html"</span>, <span class="va">width</span><span class="op">=</span><span class="st">"100%"</span>, <span class="va">height</span><span class="op">=</span><span class="st">"600px"</span><span class="kw">)</span></span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a><span class="ex">:::</span></span>
+<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a><span class="co">## Deduplication</span></span>
 <span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a><span class="ex">library</span><span class="er">(</span><span class="ex">htmltools</span><span class="kw">)</span></span>
-<span id="cb15-240"><a href="#cb15-240" aria-hidden="true" tabindex="-1"></a><span class="ex">tags</span><span class="va">$iframe</span><span class="er">(</span><span class="va">src</span><span class="op">=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html"</span>, <span class="va">width</span><span class="op">=</span><span class="st">"100%"</span>, <span class="va">height</span><span class="op">=</span><span class="st">"600px"</span><span class="kw">)</span></span>
-<span id="cb15-241"><a href="#cb15-241" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>iframe <span class="va">src</span><span class="op">=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html"</span> <span class="va">width</span><span class="op">=</span><span class="st">"100%"</span> <span class="va">height</span><span class="op">=</span><span class="st">"600px"</span><span class="op">&gt;</span></span>
-<span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-245"><a href="#cb15-245" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>/iframe<span class="op">&gt;</span></span>
-<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a><span class="co">## Deduplication</span></span>
-<span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a><span class="ex">Notebook</span> 14</span>
-<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10</span></span>
-<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-255"><a href="#cb15-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
-<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/<span class="pp">*</span>.bam <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> .bam <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 8 /home/shared/Bismark-0.24.0/deduplicate_bismark <span class="dt">\</span></span>
-<span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a>--bam <span class="dt">\</span></span>
-<span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a>--paired <span class="dt">\</span></span>
-<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a>--output_dir /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
-<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/{}.bam</span>
-<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb15-264"><a href="#cb15-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-265"><a href="#cb15-265" aria-hidden="true" tabindex="-1"></a><span class="co">## Methylation Extraction</span></span>
-<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
-<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bam <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-n</span> 1 <span class="at">-I{}</span> /home/shared/Bismark-0.24.0/bismark_methylation_extractor <span class="at">--bedGraph</span> <span class="at">--counts</span> <span class="at">--comprehensive</span> <span class="at">--merge_non_CpG</span> <span class="at">--multicore</span> 48 <span class="at">--buffer_size</span> 75% <span class="dt">\</span></span>
-<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a>--output /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
-<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a>{} </span>
-<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-275"><a href="#cb15-275" aria-hidden="true" tabindex="-1"></a><span class="co">## Methylation Calls</span></span>
+<span id="cb15-236"><a href="#cb15-236" aria-hidden="true" tabindex="-1"></a><span class="ex">Notebook</span> 14</span>
+<span id="cb15-237"><a href="#cb15-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-238"><a href="#cb15-238" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10</span></span>
+<span id="cb15-239"><a href="#cb15-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-242"><a href="#cb15-242" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb15-243"><a href="#cb15-243" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/<span class="pp">*</span>.bam <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb15-244"><a href="#cb15-244" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> .bam <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb15-245"><a href="#cb15-245" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 8 /home/shared/Bismark-0.24.0/deduplicate_bismark <span class="dt">\</span></span>
+<span id="cb15-246"><a href="#cb15-246" aria-hidden="true" tabindex="-1"></a>--bam <span class="dt">\</span></span>
+<span id="cb15-247"><a href="#cb15-247" aria-hidden="true" tabindex="-1"></a>--paired <span class="dt">\</span></span>
+<span id="cb15-248"><a href="#cb15-248" aria-hidden="true" tabindex="-1"></a>--output_dir /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
+<span id="cb15-249"><a href="#cb15-249" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/{}.bam</span>
+<span id="cb15-250"><a href="#cb15-250" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
+<span id="cb15-251"><a href="#cb15-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-252"><a href="#cb15-252" aria-hidden="true" tabindex="-1"></a><span class="co">## Methylation Extraction</span></span>
+<span id="cb15-253"><a href="#cb15-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-256"><a href="#cb15-256" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb15-257"><a href="#cb15-257" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bam <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-n</span> 1 <span class="at">-I{}</span> /home/shared/Bismark-0.24.0/bismark_methylation_extractor <span class="at">--bedGraph</span> <span class="at">--counts</span> <span class="at">--comprehensive</span> <span class="at">--merge_non_CpG</span> <span class="at">--multicore</span> 48 <span class="at">--buffer_size</span> 75% <span class="dt">\</span></span>
+<span id="cb15-258"><a href="#cb15-258" aria-hidden="true" tabindex="-1"></a>--output /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
+<span id="cb15-259"><a href="#cb15-259" aria-hidden="true" tabindex="-1"></a>{} </span>
+<span id="cb15-260"><a href="#cb15-260" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
+<span id="cb15-261"><a href="#cb15-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-262"><a href="#cb15-262" aria-hidden="true" tabindex="-1"></a><span class="co">## Methylation Calls</span></span>
+<span id="cb15-263"><a href="#cb15-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-266"><a href="#cb15-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb15-267"><a href="#cb15-267" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb15-268"><a href="#cb15-268" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> _pe.deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb15-269"><a href="#cb15-269" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 48 /home/shared/Bismark-0.24.0/coverage2cytosine <span class="dt">\</span></span>
+<span id="cb15-270"><a href="#cb15-270" aria-hidden="true" tabindex="-1"></a>--genome_folder /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/data/Haws-10 <span class="dt">\</span></span>
+<span id="cb15-271"><a href="#cb15-271" aria-hidden="true" tabindex="-1"></a>-o /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{} <span class="dt">\</span></span>
+<span id="cb15-272"><a href="#cb15-272" aria-hidden="true" tabindex="-1"></a>--merge_CpG <span class="dt">\</span></span>
+<span id="cb15-273"><a href="#cb15-273" aria-hidden="true" tabindex="-1"></a>--zero_based <span class="dt">\</span></span>
+<span id="cb15-274"><a href="#cb15-274" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{}_pe.deduplicated.bismark.cov.gz</span>
+<span id="cb15-275"><a href="#cb15-275" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
 <span id="cb15-276"><a href="#cb15-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-279"><a href="#cb15-279" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
-<span id="cb15-280"><a href="#cb15-280" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb15-281"><a href="#cb15-281" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> _pe.deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb15-282"><a href="#cb15-282" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 48 /home/shared/Bismark-0.24.0/coverage2cytosine <span class="dt">\</span></span>
-<span id="cb15-283"><a href="#cb15-283" aria-hidden="true" tabindex="-1"></a>--genome_folder /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/data/Haws-10 <span class="dt">\</span></span>
-<span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a>-o /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{} <span class="dt">\</span></span>
-<span id="cb15-285"><a href="#cb15-285" aria-hidden="true" tabindex="-1"></a>--merge_CpG <span class="dt">\</span></span>
-<span id="cb15-286"><a href="#cb15-286" aria-hidden="true" tabindex="-1"></a>--zero_based <span class="dt">\</span></span>
-<span id="cb15-287"><a href="#cb15-287" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{}_pe.deduplicated.bismark.cov.gz</span>
-<span id="cb15-288"><a href="#cb15-288" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-<span id="cb15-289"><a href="#cb15-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-290"><a href="#cb15-290" aria-hidden="true" tabindex="-1"></a><span class="co">## output</span></span>
-<span id="cb15-291"><a href="#cb15-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-292"><a href="#cb15-292" aria-hidden="true" tabindex="-1"></a><span class="ex">https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/</span></span>
-<span id="cb15-293"><a href="#cb15-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-294"><a href="#cb15-294" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span>         </span>
-<span id="cb15-295"><a href="#cb15-295" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_10_pe.deduplicated.txt</span></span>
-<span id="cb15-296"><a href="#cb15-296" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_11_pe.deduplicated.txt</span></span>
-<span id="cb15-297"><a href="#cb15-297" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_12_pe.deduplicated.txt</span></span>
-<span id="cb15-298"><a href="#cb15-298" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_13_pe.deduplicated.txt</span></span>
-<span id="cb15-299"><a href="#cb15-299" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_14_pe.deduplicated.txt</span></span>
-<span id="cb15-300"><a href="#cb15-300" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_15_pe.deduplicated.txt</span></span>
-<span id="cb15-301"><a href="#cb15-301" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_16_pe.deduplicated.txt</span></span>
-<span id="cb15-302"><a href="#cb15-302" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_17_pe.deduplicated.txt</span></span>
-<span id="cb15-303"><a href="#cb15-303" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_18_pe.deduplicated.txt</span></span>
-<span id="cb15-304"><a href="#cb15-304" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_19_pe.deduplicated.txt</span></span>
-<span id="cb15-305"><a href="#cb15-305" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_1_pe.deduplicated.txt</span></span>
-<span id="cb15-306"><a href="#cb15-306" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_20_pe.deduplicated.txt</span></span>
-<span id="cb15-307"><a href="#cb15-307" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_21_pe.deduplicated.txt</span></span>
-<span id="cb15-308"><a href="#cb15-308" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_22_pe.deduplicated.txt</span></span>
-<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_23_pe.deduplicated.txt</span></span>
-<span id="cb15-310"><a href="#cb15-310" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_24_pe.deduplicated.txt</span></span>
-<span id="cb15-311"><a href="#cb15-311" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_2_pe.deduplicated.txt</span></span>
-<span id="cb15-312"><a href="#cb15-312" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_3_pe.deduplicated.txt</span></span>
-<span id="cb15-313"><a href="#cb15-313" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_4_pe.deduplicated.txt</span></span>
-<span id="cb15-314"><a href="#cb15-314" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_5_pe.deduplicated.txt</span></span>
-<span id="cb15-315"><a href="#cb15-315" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_6_pe.deduplicated.txt</span></span>
-<span id="cb15-316"><a href="#cb15-316" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_7_pe.deduplicated.txt</span></span>
-<span id="cb15-317"><a href="#cb15-317" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_8_pe.deduplicated.txt</span></span>
-<span id="cb15-318"><a href="#cb15-318" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_9_pe.deduplicated.txt</span></span>
-<span id="cb15-319"><a href="#cb15-319" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_10_pe.deduplicated.txt</span></span>
-<span id="cb15-320"><a href="#cb15-320" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_11_pe.deduplicated.txt</span></span>
-<span id="cb15-321"><a href="#cb15-321" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_12_pe.deduplicated.txt</span></span>
-<span id="cb15-322"><a href="#cb15-322" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_13_pe.deduplicated.txt</span></span>
-<span id="cb15-323"><a href="#cb15-323" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_14_pe.deduplicated.txt</span></span>
-<span id="cb15-324"><a href="#cb15-324" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_15_pe.deduplicated.txt</span></span>
-<span id="cb15-325"><a href="#cb15-325" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_16_pe.deduplicated.txt</span></span>
-<span id="cb15-326"><a href="#cb15-326" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_17_pe.deduplicated.txt</span></span>
-<span id="cb15-327"><a href="#cb15-327" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_18_pe.deduplicated.txt</span></span>
-<span id="cb15-328"><a href="#cb15-328" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_19_pe.deduplicated.txt</span></span>
-<span id="cb15-329"><a href="#cb15-329" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_1_pe.deduplicated.txt</span></span>
-<span id="cb15-330"><a href="#cb15-330" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_20_pe.deduplicated.txt</span></span>
-<span id="cb15-331"><a href="#cb15-331" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_21_pe.deduplicated.txt</span></span>
-<span id="cb15-332"><a href="#cb15-332" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_22_pe.deduplicated.txt</span></span>
-<span id="cb15-333"><a href="#cb15-333" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_23_pe.deduplicated.txt</span></span>
-<span id="cb15-334"><a href="#cb15-334" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_24_pe.deduplicated.txt</span></span>
-<span id="cb15-335"><a href="#cb15-335" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_2_pe.deduplicated.txt</span></span>
-<span id="cb15-336"><a href="#cb15-336" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_3_pe.deduplicated.txt</span></span>
-<span id="cb15-337"><a href="#cb15-337" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_4_pe.deduplicated.txt</span></span>
-<span id="cb15-338"><a href="#cb15-338" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_5_pe.deduplicated.txt</span></span>
-<span id="cb15-339"><a href="#cb15-339" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_6_pe.deduplicated.txt</span></span>
-<span id="cb15-340"><a href="#cb15-340" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_7_pe.deduplicated.txt</span></span>
-<span id="cb15-341"><a href="#cb15-341" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_8_pe.deduplicated.txt</span></span>
-<span id="cb15-342"><a href="#cb15-342" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_9_pe.deduplicated.txt</span></span>
-<span id="cb15-343"><a href="#cb15-343" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-344"><a href="#cb15-344" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10.CpG_report.txt</span></span>
-<span id="cb15-345"><a href="#cb15-345" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10.cytosine_context_summary.txt</span></span>
-<span id="cb15-346"><a href="#cb15-346" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated.bam</span></span>
-<span id="cb15-347"><a href="#cb15-347" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-348"><a href="#cb15-348" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-349"><a href="#cb15-349" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-350"><a href="#cb15-350" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-351"><a href="#cb15-351" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplication_report.txt</span></span>
-<span id="cb15-352"><a href="#cb15-352" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-353"><a href="#cb15-353" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11.CpG_report.txt</span></span>
-<span id="cb15-354"><a href="#cb15-354" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11.cytosine_context_summary.txt</span></span>
-<span id="cb15-355"><a href="#cb15-355" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated.bam</span></span>
-<span id="cb15-356"><a href="#cb15-356" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-357"><a href="#cb15-357" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-358"><a href="#cb15-358" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-359"><a href="#cb15-359" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-360"><a href="#cb15-360" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplication_report.txt</span></span>
-<span id="cb15-361"><a href="#cb15-361" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-362"><a href="#cb15-362" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12.CpG_report.txt</span></span>
-<span id="cb15-363"><a href="#cb15-363" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12.cytosine_context_summary.txt</span></span>
-<span id="cb15-364"><a href="#cb15-364" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated.bam</span></span>
-<span id="cb15-365"><a href="#cb15-365" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-366"><a href="#cb15-366" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-367"><a href="#cb15-367" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-368"><a href="#cb15-368" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-369"><a href="#cb15-369" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplication_report.txt</span></span>
-<span id="cb15-370"><a href="#cb15-370" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-371"><a href="#cb15-371" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13.CpG_report.txt</span></span>
-<span id="cb15-372"><a href="#cb15-372" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13.cytosine_context_summary.txt</span></span>
-<span id="cb15-373"><a href="#cb15-373" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated.bam</span></span>
-<span id="cb15-374"><a href="#cb15-374" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-375"><a href="#cb15-375" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-376"><a href="#cb15-376" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-377"><a href="#cb15-377" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-378"><a href="#cb15-378" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplication_report.txt</span></span>
-<span id="cb15-379"><a href="#cb15-379" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-380"><a href="#cb15-380" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14.CpG_report.txt</span></span>
-<span id="cb15-381"><a href="#cb15-381" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14.cytosine_context_summary.txt</span></span>
-<span id="cb15-382"><a href="#cb15-382" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated.bam</span></span>
-<span id="cb15-383"><a href="#cb15-383" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-384"><a href="#cb15-384" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-385"><a href="#cb15-385" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-386"><a href="#cb15-386" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-387"><a href="#cb15-387" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplication_report.txt</span></span>
-<span id="cb15-388"><a href="#cb15-388" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-389"><a href="#cb15-389" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15.CpG_report.txt</span></span>
-<span id="cb15-390"><a href="#cb15-390" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15.cytosine_context_summary.txt</span></span>
-<span id="cb15-391"><a href="#cb15-391" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated.bam</span></span>
-<span id="cb15-392"><a href="#cb15-392" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-393"><a href="#cb15-393" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-394"><a href="#cb15-394" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-395"><a href="#cb15-395" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-396"><a href="#cb15-396" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplication_report.txt</span></span>
-<span id="cb15-397"><a href="#cb15-397" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-398"><a href="#cb15-398" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16.CpG_report.txt</span></span>
-<span id="cb15-399"><a href="#cb15-399" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16.cytosine_context_summary.txt</span></span>
-<span id="cb15-400"><a href="#cb15-400" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated.bam</span></span>
-<span id="cb15-401"><a href="#cb15-401" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-402"><a href="#cb15-402" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-403"><a href="#cb15-403" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-404"><a href="#cb15-404" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-405"><a href="#cb15-405" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplication_report.txt</span></span>
-<span id="cb15-406"><a href="#cb15-406" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-407"><a href="#cb15-407" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17.CpG_report.txt</span></span>
-<span id="cb15-408"><a href="#cb15-408" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17.cytosine_context_summary.txt</span></span>
-<span id="cb15-409"><a href="#cb15-409" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated.bam</span></span>
-<span id="cb15-410"><a href="#cb15-410" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-411"><a href="#cb15-411" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-412"><a href="#cb15-412" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-413"><a href="#cb15-413" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-414"><a href="#cb15-414" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplication_report.txt</span></span>
-<span id="cb15-415"><a href="#cb15-415" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-416"><a href="#cb15-416" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18.CpG_report.txt</span></span>
-<span id="cb15-417"><a href="#cb15-417" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18.cytosine_context_summary.txt</span></span>
-<span id="cb15-418"><a href="#cb15-418" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated.bam</span></span>
-<span id="cb15-419"><a href="#cb15-419" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-420"><a href="#cb15-420" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-421"><a href="#cb15-421" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-422"><a href="#cb15-422" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-423"><a href="#cb15-423" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplication_report.txt</span></span>
-<span id="cb15-424"><a href="#cb15-424" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-425"><a href="#cb15-425" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19.CpG_report.txt</span></span>
-<span id="cb15-426"><a href="#cb15-426" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19.cytosine_context_summary.txt</span></span>
-<span id="cb15-427"><a href="#cb15-427" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated.bam</span></span>
-<span id="cb15-428"><a href="#cb15-428" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-429"><a href="#cb15-429" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-430"><a href="#cb15-430" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-431"><a href="#cb15-431" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-432"><a href="#cb15-432" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplication_report.txt</span></span>
-<span id="cb15-433"><a href="#cb15-433" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-434"><a href="#cb15-434" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1.CpG_report.txt</span></span>
-<span id="cb15-435"><a href="#cb15-435" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1.cytosine_context_summary.txt</span></span>
-<span id="cb15-436"><a href="#cb15-436" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated.bam</span></span>
-<span id="cb15-437"><a href="#cb15-437" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-438"><a href="#cb15-438" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-439"><a href="#cb15-439" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-440"><a href="#cb15-440" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-441"><a href="#cb15-441" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplication_report.txt</span></span>
-<span id="cb15-442"><a href="#cb15-442" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-443"><a href="#cb15-443" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20.CpG_report.txt</span></span>
-<span id="cb15-444"><a href="#cb15-444" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20.cytosine_context_summary.txt</span></span>
-<span id="cb15-445"><a href="#cb15-445" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated.bam</span></span>
-<span id="cb15-446"><a href="#cb15-446" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-447"><a href="#cb15-447" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-448"><a href="#cb15-448" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-449"><a href="#cb15-449" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-450"><a href="#cb15-450" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplication_report.txt</span></span>
-<span id="cb15-451"><a href="#cb15-451" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-452"><a href="#cb15-452" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21.CpG_report.txt</span></span>
-<span id="cb15-453"><a href="#cb15-453" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21.cytosine_context_summary.txt</span></span>
-<span id="cb15-454"><a href="#cb15-454" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated.bam</span></span>
-<span id="cb15-455"><a href="#cb15-455" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-456"><a href="#cb15-456" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-457"><a href="#cb15-457" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-458"><a href="#cb15-458" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-459"><a href="#cb15-459" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplication_report.txt</span></span>
-<span id="cb15-460"><a href="#cb15-460" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-461"><a href="#cb15-461" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22.CpG_report.txt</span></span>
-<span id="cb15-462"><a href="#cb15-462" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22.cytosine_context_summary.txt</span></span>
-<span id="cb15-463"><a href="#cb15-463" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated.bam</span></span>
-<span id="cb15-464"><a href="#cb15-464" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-465"><a href="#cb15-465" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-466"><a href="#cb15-466" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-467"><a href="#cb15-467" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-468"><a href="#cb15-468" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplication_report.txt</span></span>
-<span id="cb15-469"><a href="#cb15-469" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-470"><a href="#cb15-470" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23.CpG_report.txt</span></span>
-<span id="cb15-471"><a href="#cb15-471" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23.cytosine_context_summary.txt</span></span>
-<span id="cb15-472"><a href="#cb15-472" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated.bam</span></span>
-<span id="cb15-473"><a href="#cb15-473" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-474"><a href="#cb15-474" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-475"><a href="#cb15-475" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-476"><a href="#cb15-476" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-477"><a href="#cb15-477" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplication_report.txt</span></span>
-<span id="cb15-478"><a href="#cb15-478" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-479"><a href="#cb15-479" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24.CpG_report.txt</span></span>
-<span id="cb15-480"><a href="#cb15-480" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24.cytosine_context_summary.txt</span></span>
-<span id="cb15-481"><a href="#cb15-481" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated.bam</span></span>
-<span id="cb15-482"><a href="#cb15-482" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-483"><a href="#cb15-483" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-484"><a href="#cb15-484" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-485"><a href="#cb15-485" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-486"><a href="#cb15-486" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplication_report.txt</span></span>
-<span id="cb15-487"><a href="#cb15-487" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-488"><a href="#cb15-488" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2.CpG_report.txt</span></span>
-<span id="cb15-489"><a href="#cb15-489" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2.cytosine_context_summary.txt</span></span>
-<span id="cb15-490"><a href="#cb15-490" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated.bam</span></span>
-<span id="cb15-491"><a href="#cb15-491" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-492"><a href="#cb15-492" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-493"><a href="#cb15-493" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-494"><a href="#cb15-494" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-495"><a href="#cb15-495" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplication_report.txt</span></span>
-<span id="cb15-496"><a href="#cb15-496" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-497"><a href="#cb15-497" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3.CpG_report.txt</span></span>
-<span id="cb15-498"><a href="#cb15-498" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3.cytosine_context_summary.txt</span></span>
-<span id="cb15-499"><a href="#cb15-499" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated.bam</span></span>
-<span id="cb15-500"><a href="#cb15-500" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-501"><a href="#cb15-501" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-502"><a href="#cb15-502" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-503"><a href="#cb15-503" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-504"><a href="#cb15-504" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplication_report.txt</span></span>
-<span id="cb15-505"><a href="#cb15-505" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-506"><a href="#cb15-506" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4.CpG_report.txt</span></span>
-<span id="cb15-507"><a href="#cb15-507" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4.cytosine_context_summary.txt</span></span>
-<span id="cb15-508"><a href="#cb15-508" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated.bam</span></span>
-<span id="cb15-509"><a href="#cb15-509" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-510"><a href="#cb15-510" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-511"><a href="#cb15-511" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-512"><a href="#cb15-512" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-513"><a href="#cb15-513" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplication_report.txt</span></span>
-<span id="cb15-514"><a href="#cb15-514" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-515"><a href="#cb15-515" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5.CpG_report.txt</span></span>
-<span id="cb15-516"><a href="#cb15-516" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5.cytosine_context_summary.txt</span></span>
-<span id="cb15-517"><a href="#cb15-517" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated.bam</span></span>
-<span id="cb15-518"><a href="#cb15-518" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-519"><a href="#cb15-519" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-520"><a href="#cb15-520" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-521"><a href="#cb15-521" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-522"><a href="#cb15-522" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplication_report.txt</span></span>
-<span id="cb15-523"><a href="#cb15-523" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-524"><a href="#cb15-524" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6.CpG_report.txt</span></span>
-<span id="cb15-525"><a href="#cb15-525" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6.cytosine_context_summary.txt</span></span>
-<span id="cb15-526"><a href="#cb15-526" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated.bam</span></span>
-<span id="cb15-527"><a href="#cb15-527" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-528"><a href="#cb15-528" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-529"><a href="#cb15-529" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-530"><a href="#cb15-530" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-531"><a href="#cb15-531" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplication_report.txt</span></span>
-<span id="cb15-532"><a href="#cb15-532" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-533"><a href="#cb15-533" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7.CpG_report.txt</span></span>
-<span id="cb15-534"><a href="#cb15-534" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7.cytosine_context_summary.txt</span></span>
-<span id="cb15-535"><a href="#cb15-535" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated.bam</span></span>
-<span id="cb15-536"><a href="#cb15-536" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-537"><a href="#cb15-537" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-538"><a href="#cb15-538" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-539"><a href="#cb15-539" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-540"><a href="#cb15-540" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplication_report.txt</span></span>
-<span id="cb15-541"><a href="#cb15-541" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-542"><a href="#cb15-542" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8.CpG_report.txt</span></span>
-<span id="cb15-543"><a href="#cb15-543" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8.cytosine_context_summary.txt</span></span>
-<span id="cb15-544"><a href="#cb15-544" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated.bam</span></span>
-<span id="cb15-545"><a href="#cb15-545" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-546"><a href="#cb15-546" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-547"><a href="#cb15-547" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-548"><a href="#cb15-548" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-549"><a href="#cb15-549" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplication_report.txt</span></span>
-<span id="cb15-550"><a href="#cb15-550" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9.CpG_report.merged_CpG_evidence.cov</span></span>
-<span id="cb15-551"><a href="#cb15-551" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9.CpG_report.txt</span></span>
-<span id="cb15-552"><a href="#cb15-552" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9.cytosine_context_summary.txt</span></span>
-<span id="cb15-553"><a href="#cb15-553" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated.bam</span></span>
-<span id="cb15-554"><a href="#cb15-554" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated.bedGraph.gz</span></span>
-<span id="cb15-555"><a href="#cb15-555" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated.bismark.cov.gz</span></span>
-<span id="cb15-556"><a href="#cb15-556" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated.M-bias.txt</span></span>
-<span id="cb15-557"><a href="#cb15-557" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated_splitting_report.txt</span></span>
-<span id="cb15-558"><a href="#cb15-558" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplication_report.txt</span></span>
-<span id="cb15-559"><a href="#cb15-559" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
+<span id="cb15-277"><a href="#cb15-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-278"><a href="#cb15-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-279"><a href="#cb15-279" aria-hidden="true" tabindex="-1"></a><span class="ex">:::</span> panel-tabset</span>
+<span id="cb15-280"><a href="#cb15-280" aria-hidden="true" tabindex="-1"></a><span class="co">### View MultiQC Report</span></span>
+<span id="cb15-281"><a href="#cb15-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-282"><a href="#cb15-282" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span><span class="dt">{r</span><span class="op">,</span><span class="dt">eval=TRUE}</span></span>
+<span id="cb15-283"><a href="#cb15-283" aria-hidden="true" tabindex="-1"></a><span class="ex">htmltools::tags</span><span class="va">$iframe</span><span class="er">(</span><span class="va">src</span><span class="op">=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/multiqc_report.html"</span>, <span class="va">width</span><span class="op">=</span><span class="st">"100%"</span>, <span class="va">height</span><span class="op">=</span><span class="st">"600px"</span><span class="kw">)</span></span>
+<span id="cb15-284"><a href="#cb15-284" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
+<span id="cb15-285"><a href="#cb15-285" aria-hidden="true" tabindex="-1"></a><span class="ex">:::</span></span>
+<span id="cb15-286"><a href="#cb15-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-287"><a href="#cb15-287" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-288"><a href="#cb15-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-289"><a href="#cb15-289" aria-hidden="true" tabindex="-1"></a><span class="co">## output</span></span>
+<span id="cb15-290"><a href="#cb15-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-291"><a href="#cb15-291" aria-hidden="true" tabindex="-1"></a><span class="ex">https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/</span></span>
+<span id="cb15-292"><a href="#cb15-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-293"><a href="#cb15-293" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span>         </span>
+<span id="cb15-294"><a href="#cb15-294" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_10_pe.deduplicated.txt</span></span>
+<span id="cb15-295"><a href="#cb15-295" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_11_pe.deduplicated.txt</span></span>
+<span id="cb15-296"><a href="#cb15-296" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_12_pe.deduplicated.txt</span></span>
+<span id="cb15-297"><a href="#cb15-297" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_13_pe.deduplicated.txt</span></span>
+<span id="cb15-298"><a href="#cb15-298" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_14_pe.deduplicated.txt</span></span>
+<span id="cb15-299"><a href="#cb15-299" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_15_pe.deduplicated.txt</span></span>
+<span id="cb15-300"><a href="#cb15-300" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_16_pe.deduplicated.txt</span></span>
+<span id="cb15-301"><a href="#cb15-301" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_17_pe.deduplicated.txt</span></span>
+<span id="cb15-302"><a href="#cb15-302" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_18_pe.deduplicated.txt</span></span>
+<span id="cb15-303"><a href="#cb15-303" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_19_pe.deduplicated.txt</span></span>
+<span id="cb15-304"><a href="#cb15-304" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_1_pe.deduplicated.txt</span></span>
+<span id="cb15-305"><a href="#cb15-305" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_20_pe.deduplicated.txt</span></span>
+<span id="cb15-306"><a href="#cb15-306" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_21_pe.deduplicated.txt</span></span>
+<span id="cb15-307"><a href="#cb15-307" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_22_pe.deduplicated.txt</span></span>
+<span id="cb15-308"><a href="#cb15-308" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_23_pe.deduplicated.txt</span></span>
+<span id="cb15-309"><a href="#cb15-309" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_24_pe.deduplicated.txt</span></span>
+<span id="cb15-310"><a href="#cb15-310" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_2_pe.deduplicated.txt</span></span>
+<span id="cb15-311"><a href="#cb15-311" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_3_pe.deduplicated.txt</span></span>
+<span id="cb15-312"><a href="#cb15-312" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_4_pe.deduplicated.txt</span></span>
+<span id="cb15-313"><a href="#cb15-313" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_5_pe.deduplicated.txt</span></span>
+<span id="cb15-314"><a href="#cb15-314" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_6_pe.deduplicated.txt</span></span>
+<span id="cb15-315"><a href="#cb15-315" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_7_pe.deduplicated.txt</span></span>
+<span id="cb15-316"><a href="#cb15-316" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_8_pe.deduplicated.txt</span></span>
+<span id="cb15-317"><a href="#cb15-317" aria-hidden="true" tabindex="-1"></a><span class="ex">CpG_context_zr3644_9_pe.deduplicated.txt</span></span>
+<span id="cb15-318"><a href="#cb15-318" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_10_pe.deduplicated.txt</span></span>
+<span id="cb15-319"><a href="#cb15-319" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_11_pe.deduplicated.txt</span></span>
+<span id="cb15-320"><a href="#cb15-320" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_12_pe.deduplicated.txt</span></span>
+<span id="cb15-321"><a href="#cb15-321" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_13_pe.deduplicated.txt</span></span>
+<span id="cb15-322"><a href="#cb15-322" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_14_pe.deduplicated.txt</span></span>
+<span id="cb15-323"><a href="#cb15-323" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_15_pe.deduplicated.txt</span></span>
+<span id="cb15-324"><a href="#cb15-324" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_16_pe.deduplicated.txt</span></span>
+<span id="cb15-325"><a href="#cb15-325" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_17_pe.deduplicated.txt</span></span>
+<span id="cb15-326"><a href="#cb15-326" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_18_pe.deduplicated.txt</span></span>
+<span id="cb15-327"><a href="#cb15-327" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_19_pe.deduplicated.txt</span></span>
+<span id="cb15-328"><a href="#cb15-328" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_1_pe.deduplicated.txt</span></span>
+<span id="cb15-329"><a href="#cb15-329" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_20_pe.deduplicated.txt</span></span>
+<span id="cb15-330"><a href="#cb15-330" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_21_pe.deduplicated.txt</span></span>
+<span id="cb15-331"><a href="#cb15-331" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_22_pe.deduplicated.txt</span></span>
+<span id="cb15-332"><a href="#cb15-332" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_23_pe.deduplicated.txt</span></span>
+<span id="cb15-333"><a href="#cb15-333" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_24_pe.deduplicated.txt</span></span>
+<span id="cb15-334"><a href="#cb15-334" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_2_pe.deduplicated.txt</span></span>
+<span id="cb15-335"><a href="#cb15-335" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_3_pe.deduplicated.txt</span></span>
+<span id="cb15-336"><a href="#cb15-336" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_4_pe.deduplicated.txt</span></span>
+<span id="cb15-337"><a href="#cb15-337" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_5_pe.deduplicated.txt</span></span>
+<span id="cb15-338"><a href="#cb15-338" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_6_pe.deduplicated.txt</span></span>
+<span id="cb15-339"><a href="#cb15-339" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_7_pe.deduplicated.txt</span></span>
+<span id="cb15-340"><a href="#cb15-340" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_8_pe.deduplicated.txt</span></span>
+<span id="cb15-341"><a href="#cb15-341" aria-hidden="true" tabindex="-1"></a><span class="ex">Non_CpG_context_zr3644_9_pe.deduplicated.txt</span></span>
+<span id="cb15-342"><a href="#cb15-342" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-343"><a href="#cb15-343" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10.CpG_report.txt</span></span>
+<span id="cb15-344"><a href="#cb15-344" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10.cytosine_context_summary.txt</span></span>
+<span id="cb15-345"><a href="#cb15-345" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated.bam</span></span>
+<span id="cb15-346"><a href="#cb15-346" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-347"><a href="#cb15-347" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-348"><a href="#cb15-348" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-349"><a href="#cb15-349" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-350"><a href="#cb15-350" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_10_pe.deduplication_report.txt</span></span>
+<span id="cb15-351"><a href="#cb15-351" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-352"><a href="#cb15-352" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11.CpG_report.txt</span></span>
+<span id="cb15-353"><a href="#cb15-353" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11.cytosine_context_summary.txt</span></span>
+<span id="cb15-354"><a href="#cb15-354" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated.bam</span></span>
+<span id="cb15-355"><a href="#cb15-355" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-356"><a href="#cb15-356" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-357"><a href="#cb15-357" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-358"><a href="#cb15-358" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-359"><a href="#cb15-359" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_11_pe.deduplication_report.txt</span></span>
+<span id="cb15-360"><a href="#cb15-360" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-361"><a href="#cb15-361" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12.CpG_report.txt</span></span>
+<span id="cb15-362"><a href="#cb15-362" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12.cytosine_context_summary.txt</span></span>
+<span id="cb15-363"><a href="#cb15-363" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated.bam</span></span>
+<span id="cb15-364"><a href="#cb15-364" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-365"><a href="#cb15-365" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-366"><a href="#cb15-366" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-367"><a href="#cb15-367" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-368"><a href="#cb15-368" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_12_pe.deduplication_report.txt</span></span>
+<span id="cb15-369"><a href="#cb15-369" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-370"><a href="#cb15-370" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13.CpG_report.txt</span></span>
+<span id="cb15-371"><a href="#cb15-371" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13.cytosine_context_summary.txt</span></span>
+<span id="cb15-372"><a href="#cb15-372" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated.bam</span></span>
+<span id="cb15-373"><a href="#cb15-373" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-374"><a href="#cb15-374" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-375"><a href="#cb15-375" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-376"><a href="#cb15-376" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-377"><a href="#cb15-377" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_13_pe.deduplication_report.txt</span></span>
+<span id="cb15-378"><a href="#cb15-378" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-379"><a href="#cb15-379" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14.CpG_report.txt</span></span>
+<span id="cb15-380"><a href="#cb15-380" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14.cytosine_context_summary.txt</span></span>
+<span id="cb15-381"><a href="#cb15-381" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated.bam</span></span>
+<span id="cb15-382"><a href="#cb15-382" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-383"><a href="#cb15-383" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-384"><a href="#cb15-384" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-385"><a href="#cb15-385" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-386"><a href="#cb15-386" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_14_pe.deduplication_report.txt</span></span>
+<span id="cb15-387"><a href="#cb15-387" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-388"><a href="#cb15-388" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15.CpG_report.txt</span></span>
+<span id="cb15-389"><a href="#cb15-389" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15.cytosine_context_summary.txt</span></span>
+<span id="cb15-390"><a href="#cb15-390" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated.bam</span></span>
+<span id="cb15-391"><a href="#cb15-391" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-392"><a href="#cb15-392" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-393"><a href="#cb15-393" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-394"><a href="#cb15-394" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-395"><a href="#cb15-395" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_15_pe.deduplication_report.txt</span></span>
+<span id="cb15-396"><a href="#cb15-396" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-397"><a href="#cb15-397" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16.CpG_report.txt</span></span>
+<span id="cb15-398"><a href="#cb15-398" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16.cytosine_context_summary.txt</span></span>
+<span id="cb15-399"><a href="#cb15-399" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated.bam</span></span>
+<span id="cb15-400"><a href="#cb15-400" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-401"><a href="#cb15-401" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-402"><a href="#cb15-402" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-403"><a href="#cb15-403" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-404"><a href="#cb15-404" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_16_pe.deduplication_report.txt</span></span>
+<span id="cb15-405"><a href="#cb15-405" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-406"><a href="#cb15-406" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17.CpG_report.txt</span></span>
+<span id="cb15-407"><a href="#cb15-407" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17.cytosine_context_summary.txt</span></span>
+<span id="cb15-408"><a href="#cb15-408" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated.bam</span></span>
+<span id="cb15-409"><a href="#cb15-409" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-410"><a href="#cb15-410" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-411"><a href="#cb15-411" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-412"><a href="#cb15-412" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-413"><a href="#cb15-413" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_17_pe.deduplication_report.txt</span></span>
+<span id="cb15-414"><a href="#cb15-414" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-415"><a href="#cb15-415" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18.CpG_report.txt</span></span>
+<span id="cb15-416"><a href="#cb15-416" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18.cytosine_context_summary.txt</span></span>
+<span id="cb15-417"><a href="#cb15-417" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated.bam</span></span>
+<span id="cb15-418"><a href="#cb15-418" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-419"><a href="#cb15-419" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-420"><a href="#cb15-420" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-421"><a href="#cb15-421" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-422"><a href="#cb15-422" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_18_pe.deduplication_report.txt</span></span>
+<span id="cb15-423"><a href="#cb15-423" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-424"><a href="#cb15-424" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19.CpG_report.txt</span></span>
+<span id="cb15-425"><a href="#cb15-425" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19.cytosine_context_summary.txt</span></span>
+<span id="cb15-426"><a href="#cb15-426" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated.bam</span></span>
+<span id="cb15-427"><a href="#cb15-427" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-428"><a href="#cb15-428" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-429"><a href="#cb15-429" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-430"><a href="#cb15-430" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-431"><a href="#cb15-431" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_19_pe.deduplication_report.txt</span></span>
+<span id="cb15-432"><a href="#cb15-432" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-433"><a href="#cb15-433" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1.CpG_report.txt</span></span>
+<span id="cb15-434"><a href="#cb15-434" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1.cytosine_context_summary.txt</span></span>
+<span id="cb15-435"><a href="#cb15-435" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated.bam</span></span>
+<span id="cb15-436"><a href="#cb15-436" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-437"><a href="#cb15-437" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-438"><a href="#cb15-438" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-439"><a href="#cb15-439" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-440"><a href="#cb15-440" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_1_pe.deduplication_report.txt</span></span>
+<span id="cb15-441"><a href="#cb15-441" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-442"><a href="#cb15-442" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20.CpG_report.txt</span></span>
+<span id="cb15-443"><a href="#cb15-443" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20.cytosine_context_summary.txt</span></span>
+<span id="cb15-444"><a href="#cb15-444" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated.bam</span></span>
+<span id="cb15-445"><a href="#cb15-445" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-446"><a href="#cb15-446" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-447"><a href="#cb15-447" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-448"><a href="#cb15-448" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-449"><a href="#cb15-449" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_20_pe.deduplication_report.txt</span></span>
+<span id="cb15-450"><a href="#cb15-450" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-451"><a href="#cb15-451" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21.CpG_report.txt</span></span>
+<span id="cb15-452"><a href="#cb15-452" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21.cytosine_context_summary.txt</span></span>
+<span id="cb15-453"><a href="#cb15-453" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated.bam</span></span>
+<span id="cb15-454"><a href="#cb15-454" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-455"><a href="#cb15-455" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-456"><a href="#cb15-456" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-457"><a href="#cb15-457" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-458"><a href="#cb15-458" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_21_pe.deduplication_report.txt</span></span>
+<span id="cb15-459"><a href="#cb15-459" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-460"><a href="#cb15-460" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22.CpG_report.txt</span></span>
+<span id="cb15-461"><a href="#cb15-461" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22.cytosine_context_summary.txt</span></span>
+<span id="cb15-462"><a href="#cb15-462" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated.bam</span></span>
+<span id="cb15-463"><a href="#cb15-463" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-464"><a href="#cb15-464" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-465"><a href="#cb15-465" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-466"><a href="#cb15-466" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-467"><a href="#cb15-467" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_22_pe.deduplication_report.txt</span></span>
+<span id="cb15-468"><a href="#cb15-468" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-469"><a href="#cb15-469" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23.CpG_report.txt</span></span>
+<span id="cb15-470"><a href="#cb15-470" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23.cytosine_context_summary.txt</span></span>
+<span id="cb15-471"><a href="#cb15-471" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated.bam</span></span>
+<span id="cb15-472"><a href="#cb15-472" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-473"><a href="#cb15-473" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-474"><a href="#cb15-474" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-475"><a href="#cb15-475" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-476"><a href="#cb15-476" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_23_pe.deduplication_report.txt</span></span>
+<span id="cb15-477"><a href="#cb15-477" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-478"><a href="#cb15-478" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24.CpG_report.txt</span></span>
+<span id="cb15-479"><a href="#cb15-479" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24.cytosine_context_summary.txt</span></span>
+<span id="cb15-480"><a href="#cb15-480" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated.bam</span></span>
+<span id="cb15-481"><a href="#cb15-481" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-482"><a href="#cb15-482" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-483"><a href="#cb15-483" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-484"><a href="#cb15-484" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-485"><a href="#cb15-485" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_24_pe.deduplication_report.txt</span></span>
+<span id="cb15-486"><a href="#cb15-486" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-487"><a href="#cb15-487" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2.CpG_report.txt</span></span>
+<span id="cb15-488"><a href="#cb15-488" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2.cytosine_context_summary.txt</span></span>
+<span id="cb15-489"><a href="#cb15-489" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated.bam</span></span>
+<span id="cb15-490"><a href="#cb15-490" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-491"><a href="#cb15-491" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-492"><a href="#cb15-492" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-493"><a href="#cb15-493" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-494"><a href="#cb15-494" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_2_pe.deduplication_report.txt</span></span>
+<span id="cb15-495"><a href="#cb15-495" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-496"><a href="#cb15-496" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3.CpG_report.txt</span></span>
+<span id="cb15-497"><a href="#cb15-497" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3.cytosine_context_summary.txt</span></span>
+<span id="cb15-498"><a href="#cb15-498" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated.bam</span></span>
+<span id="cb15-499"><a href="#cb15-499" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-500"><a href="#cb15-500" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-501"><a href="#cb15-501" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-502"><a href="#cb15-502" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-503"><a href="#cb15-503" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_3_pe.deduplication_report.txt</span></span>
+<span id="cb15-504"><a href="#cb15-504" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-505"><a href="#cb15-505" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4.CpG_report.txt</span></span>
+<span id="cb15-506"><a href="#cb15-506" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4.cytosine_context_summary.txt</span></span>
+<span id="cb15-507"><a href="#cb15-507" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated.bam</span></span>
+<span id="cb15-508"><a href="#cb15-508" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-509"><a href="#cb15-509" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-510"><a href="#cb15-510" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-511"><a href="#cb15-511" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-512"><a href="#cb15-512" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_4_pe.deduplication_report.txt</span></span>
+<span id="cb15-513"><a href="#cb15-513" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-514"><a href="#cb15-514" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5.CpG_report.txt</span></span>
+<span id="cb15-515"><a href="#cb15-515" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5.cytosine_context_summary.txt</span></span>
+<span id="cb15-516"><a href="#cb15-516" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated.bam</span></span>
+<span id="cb15-517"><a href="#cb15-517" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-518"><a href="#cb15-518" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-519"><a href="#cb15-519" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-520"><a href="#cb15-520" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-521"><a href="#cb15-521" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_5_pe.deduplication_report.txt</span></span>
+<span id="cb15-522"><a href="#cb15-522" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-523"><a href="#cb15-523" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6.CpG_report.txt</span></span>
+<span id="cb15-524"><a href="#cb15-524" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6.cytosine_context_summary.txt</span></span>
+<span id="cb15-525"><a href="#cb15-525" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated.bam</span></span>
+<span id="cb15-526"><a href="#cb15-526" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-527"><a href="#cb15-527" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-528"><a href="#cb15-528" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-529"><a href="#cb15-529" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-530"><a href="#cb15-530" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_6_pe.deduplication_report.txt</span></span>
+<span id="cb15-531"><a href="#cb15-531" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-532"><a href="#cb15-532" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7.CpG_report.txt</span></span>
+<span id="cb15-533"><a href="#cb15-533" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7.cytosine_context_summary.txt</span></span>
+<span id="cb15-534"><a href="#cb15-534" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated.bam</span></span>
+<span id="cb15-535"><a href="#cb15-535" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-536"><a href="#cb15-536" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-537"><a href="#cb15-537" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-538"><a href="#cb15-538" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-539"><a href="#cb15-539" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_7_pe.deduplication_report.txt</span></span>
+<span id="cb15-540"><a href="#cb15-540" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-541"><a href="#cb15-541" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8.CpG_report.txt</span></span>
+<span id="cb15-542"><a href="#cb15-542" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8.cytosine_context_summary.txt</span></span>
+<span id="cb15-543"><a href="#cb15-543" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated.bam</span></span>
+<span id="cb15-544"><a href="#cb15-544" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-545"><a href="#cb15-545" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-546"><a href="#cb15-546" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-547"><a href="#cb15-547" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-548"><a href="#cb15-548" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_8_pe.deduplication_report.txt</span></span>
+<span id="cb15-549"><a href="#cb15-549" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9.CpG_report.merged_CpG_evidence.cov</span></span>
+<span id="cb15-550"><a href="#cb15-550" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9.CpG_report.txt</span></span>
+<span id="cb15-551"><a href="#cb15-551" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9.cytosine_context_summary.txt</span></span>
+<span id="cb15-552"><a href="#cb15-552" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated.bam</span></span>
+<span id="cb15-553"><a href="#cb15-553" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated.bedGraph.gz</span></span>
+<span id="cb15-554"><a href="#cb15-554" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated.bismark.cov.gz</span></span>
+<span id="cb15-555"><a href="#cb15-555" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated.M-bias.txt</span></span>
+<span id="cb15-556"><a href="#cb15-556" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated_splitting_report.txt</span></span>
+<span id="cb15-557"><a href="#cb15-557" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplication_report.txt</span></span>
+<span id="cb15-558"><a href="#cb15-558" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

@@ -1140,40 +1140,19 @@ background-color: null;
 font-style: inherit;">height=</span><span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"600px"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<iframe src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html" width="100%" height="600px"></iframe>
 </div>
 </div>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(htmltools)</span>
-<span id="cb10-2">tags<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">iframe</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">src=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">width=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"100%"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">height=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"600px"</span>)</span></code></pre></div>
 </div>
-<iframe src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html" width="100%" height="600px">
-</iframe>
 <section id="deduplication" class="level2">
 <h2 class="anchored" data-anchor-id="deduplication">Deduplication</h2>
 <p>Notebook 14</p>
 <p>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/<span class="pp" style="color: #AD0000;
 background-color: null;
@@ -1183,7 +1162,7 @@ font-weight: bold;
 font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb11-2"><span class="fu" style="color: #4758AB;
+<span id="cb10-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -1195,29 +1174,29 @@ font-weight: bold;
 font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb11-3"><span class="ex" style="color: null;
+<span id="cb10-3"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">parallel</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-j</span> 8 /home/shared/Bismark-0.24.0/deduplicate_bismark <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb11-4">--bam <span class="dt" style="color: #AD0000;
+<span id="cb10-4">--bam <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb11-5">--paired <span class="dt" style="color: #AD0000;
+<span id="cb10-5">--paired <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb11-6">--output_dir /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt" style="color: #AD0000;
+<span id="cb10-6">--output_dir /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb11-7">/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/{}.bam</span></code></pre></div>
+<span id="cb10-7">/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/{}.bam</span></code></pre></div>
 </div>
 </section>
 <section id="methylation-extraction" class="level2">
 <h2 class="anchored" data-anchor-id="methylation-extraction">Methylation Extraction</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp" style="color: #AD0000;
 background-color: null;
@@ -1245,16 +1224,16 @@ background-color: null;
 font-style: inherit;">--buffer_size</span> 75% <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb12-2">--output /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt" style="color: #AD0000;
+<span id="cb11-2">--output /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb12-3">{} </span></code></pre></div>
+<span id="cb11-3">{} </span></code></pre></div>
 </div>
 </section>
 <section id="methylation-calls" class="level2">
 <h2 class="anchored" data-anchor-id="methylation-calls">Methylation Calls</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="fu" style="color: #4758AB;
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp" style="color: #AD0000;
 background-color: null;
@@ -1264,7 +1243,7 @@ font-weight: bold;
 font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-2"><span class="fu" style="color: #4758AB;
+<span id="cb12-2"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
 background-color: null;
@@ -1276,26 +1255,57 @@ font-weight: bold;
 font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-3"><span class="ex" style="color: null;
+<span id="cb12-3"><span class="ex" style="color: null;
 background-color: null;
 font-style: inherit;">parallel</span> <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">-j</span> 48 /home/shared/Bismark-0.24.0/coverage2cytosine <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-4">--genome_folder /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/data/Haws-10 <span class="dt" style="color: #AD0000;
+<span id="cb12-4">--genome_folder /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/data/Haws-10 <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-5">-o /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{} <span class="dt" style="color: #AD0000;
+<span id="cb12-5">-o /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{} <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-6">--merge_CpG <span class="dt" style="color: #AD0000;
+<span id="cb12-6">--merge_CpG <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-7">--zero_based <span class="dt" style="color: #AD0000;
+<span id="cb12-7">--zero_based <span class="dt" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">\</span></span>
-<span id="cb13-8">/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{}_pe.deduplicated.bismark.cov.gz</span></code></pre></div>
+<span id="cb12-8">/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{}_pe.deduplicated.bismark.cov.gz</span></code></pre></div>
+</div>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs"><li class="nav-item"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" aria-controls="tabset-2-1" aria-selected="true">View MultiQC Report</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" aria-labelledby="tabset-2-1-tab">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">htmltools<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span>tags<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">iframe</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">src=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/multiqc_report.html"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">width=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"100%"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">height=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"600px"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<iframe src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/multiqc_report.html" width="100%" height="600px"></iframe>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="output" class="level2">

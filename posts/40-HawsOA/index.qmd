@@ -217,19 +217,10 @@ done
 ::: panel-tabset
 ### View MultiQC Report
 
-```{r}
+```{r,eval=TRUE}
 htmltools::tags$iframe(src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html", width="100%", height="600px")
 ```
 :::
-
-```{r}
-library(htmltools)
-tags$iframe(src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html", width="100%", height="600px")
-```
-
-<iframe src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html" width="100%" height="600px">
-
-</iframe>
 
 ## Deduplication
 
@@ -267,6 +258,18 @@ parallel -j 48 /home/shared/Bismark-0.24.0/coverage2cytosine \
 --zero_based \
 /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{}_pe.deduplicated.bismark.cov.gz
 ```
+
+
+
+::: panel-tabset
+### View MultiQC Report
+
+```{r,eval=TRUE}
+htmltools::tags$iframe(src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/multiqc_report.html", width="100%", height="600px")
+```
+:::
+
+
 
 ## output
 
