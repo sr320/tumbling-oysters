@@ -1191,8 +1191,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
 <span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>This lab notebook documents the process of identifying long non-coding RNAs (lncRNAs) from RNA-seq data. The pipeline includes data acquisition, genome alignment, transcript assembly, filtering, and classification.</span>
 <span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setup</span></span>
@@ -1210,391 +1210,361 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
 <span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a><span class="fu"># Variables</span></span>
 <span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a><span class="fu"># Variables</span></span>
-<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=TRUE}</span></span>
-<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a><span class="in"># Global R options</span></span>
-<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(echo = TRUE)</span></span>
-<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="in"># Define key paths and tool directories</span></span>
-<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a><span class="in"> </span></span>
-<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a><span class="in">DATA_DIR &lt;- "../data/01-lncRNA"</span></span>
-<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT_DIR &lt;- "../output/01-lncRNA"</span></span>
-<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="in">THREADS &lt;- "42"</span></span>
-<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="in">FASTQ_SOURCE &lt;- "https://gannet.fish.washington.edu/Atumefaciens/20230519-E5_coral-fastqc-fastp-multiqc-RNAseq/P_meandrina/trimmed/"</span></span>
-<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a><span class="in">FASTQ_SUFFIX &lt;- "fastq.gz"</span></span>
-<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_SOURCE &lt;- "https://owl.fish.washington.edu/halfshell/genomic-databank/Pocillopora_meandrina_HIv1.assembly.fasta"</span></span>
-<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a><span class="in">GTF_SOURCE &lt;- "https://raw.githubusercontent.com/urol-e5/timeseries_molecular/d5f546705e3df40558eeaa5c18b122c79d2f4453/F-Ptua/data/Pocillopora_meandrina_HIv1.genes-validated.gtf"</span></span>
-<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a><span class="in">GFF_SOURCE &lt;- "https://gannet.fish.washington.edu/seashell/bu-github/deep-dive-expression/F-Ptuh/data/Pocillopora_meandrina_HIv1.genes-validated.gff3"</span></span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=TRUE}</span></span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a><span class="in"># Global R options</span></span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(echo = TRUE)</span></span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a><span class="in"># Define key paths and tool directories</span></span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a><span class="in"> </span></span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="in">DATA_DIR &lt;- "../data/01-lncRNA"</span></span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a><span class="in">OUTPUT_DIR &lt;- "../output/01-lncRNA"</span></span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a><span class="in">THREADS &lt;- "42"</span></span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="in">FASTQ_SOURCE &lt;- "https://gannet.fish.washington.edu/Atumefaciens/20230519-E5_coral-fastqc-fastp-multiqc-RNAseq/P_meandrina/trimmed/"</span></span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a><span class="in">FASTQ_SUFFIX &lt;- "fastq.gz"</span></span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_SOURCE &lt;- "https://owl.fish.washington.edu/halfshell/genomic-databank/Pocillopora_meandrina_HIv1.assembly.fasta"</span></span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a><span class="in">GTF_SOURCE &lt;- "https://raw.githubusercontent.com/urol-e5/timeseries_molecular/d5f546705e3df40558eeaa5c18b122c79d2f4453/F-Ptua/data/Pocillopora_meandrina_HIv1.genes-validated.gtf"</span></span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a><span class="in">GFF_SOURCE &lt;- "https://gannet.fish.washington.edu/seashell/bu-github/deep-dive-expression/F-Ptuh/data/Pocillopora_meandrina_HIv1.genes-validated.gff3"</span></span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a><span class="in">GFFPATTERN &lt;- 'class_code "u"|class_code "x"|class_code "o"|class_code "i"'</span></span>
 <span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a><span class="in">GFFPATTERN &lt;- 'class_code "u"|class_code "x"|class_code "o"|class_code "i"'</span></span>
-<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a><span class="in">#RAVEN</span></span>
-<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a><span class="in">HISAT2_DIR &lt;- "/home/shared/hisat2-2.2.1/"</span></span>
-<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a><span class="in">SAMTOOLS_DIR &lt;- "/home/shared/samtools-1.12/"</span></span>
-<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a><span class="in">STRINGTIE_DIR &lt;- "/home/shared/stringtie-2.2.1.Linux_x86_64"</span></span>
-<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="in">GFFCOMPARE_DIR &lt;- "/home/shared/gffcompare-0.12.6.Linux_x86_64"</span></span>
-<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a><span class="in">BEDTOOLS_DIR &lt;- "/home/shared/bedtools2/bin"</span></span>
-<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a><span class="in">CPC2_DIR &lt;- "/home/shared/CPC2_standalone-1.0.1"</span></span>
-<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a><span class="in">CONDA_PATH &lt;- "/opt/anaconda/anaconda3/bin/conda"</span></span>
-<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a><span class="in">#KLONE</span></span>
-<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a><span class="in"># HISAT2_DIR &lt;- ""</span></span>
-<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a><span class="in"># SAMTOOLS_DIR &lt;- ""</span></span>
-<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a><span class="in"># STRINGTIE_DIR &lt;- ""</span></span>
-<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a><span class="in"># GFFCOMPARE_DIR &lt;- "/srlab/programs/gffcompare-0.12.6.Linux_x86_64/"</span></span>
-<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a><span class="in"># BEDTOOLS_DIR &lt;- ""</span></span>
-<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a><span class="in"># CPC2_DIR &lt;- "/srlab/programs/CPC2_standalone-1.0.1/bin/"</span></span>
-<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a><span class="in"># CONDA_PATH &lt;- ""</span></span>
-<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_FASTA &lt;- file.path(DATA_DIR, "genome.fasta")</span></span>
-<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_GTF &lt;- file.path(DATA_DIR, "genome.gtf")</span></span>
-<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_GFF &lt;- file.path(DATA_DIR, "genome.gff")</span></span>
-<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a><span class="in">FASTQ_DIR &lt;- file.path(DATA_DIR, "fastq")</span></span>
-<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_INDEX &lt;- file.path(OUTPUT_DIR, "genome.index")</span></span>
-<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a><span class="in"># Export these as environment variables for bash chunks.</span></span>
-<span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a><span class="in">Sys.setenv(</span></span>
-<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a><span class="in">  THREADS = THREADS,</span></span>
-<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a><span class="in">  DATA_DIR = DATA_DIR,</span></span>
-<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a><span class="in">  FASTQ_SOURCE = FASTQ_SOURCE,</span></span>
-<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a><span class="in">  FASTQ_SUFFIX = FASTQ_SUFFIX,</span></span>
-<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a><span class="in">  OUTPUT_DIR = OUTPUT_DIR,</span></span>
-<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_SOURCE = GENOME_SOURCE,</span></span>
-<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a><span class="in">  GTF_SOURCE = GTF_SOURCE,</span></span>
-<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a><span class="in">  GFF_SOURCE = GFF_SOURCE,</span></span>
-<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a><span class="in">  HISAT2_DIR = HISAT2_DIR,</span></span>
-<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a><span class="in">  SAMTOOLS_DIR = SAMTOOLS_DIR,</span></span>
-<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a><span class="in">  STRINGTIE_DIR = STRINGTIE_DIR,</span></span>
-<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a><span class="in">  GFFCOMPARE_DIR = GFFCOMPARE_DIR,</span></span>
-<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a><span class="in">  BEDTOOLS_DIR = BEDTOOLS_DIR,</span></span>
-<span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a><span class="in">  CPC2_DIR = CPC2_DIR,</span></span>
-<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a><span class="in">  CONDA_PATH = CONDA_PATH,</span></span>
-<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_FASTA = GENOME_FASTA,</span></span>
-<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_GTF = GENOME_GTF,</span></span>
-<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_GFF = GENOME_GFF,</span></span>
-<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a><span class="in">  FASTQ_DIR = FASTQ_DIR,</span></span>
-<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_INDEX = GENOME_INDEX</span></span>
-<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a><span class="in">```{r mkdir, engine='bash'}</span></span>
-<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a><span class="in">mkdir -p "${DATA_DIR}"</span></span>
-<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a><span class="in">mkdir -p "${OUTPUT_DIR}"</span></span>
-<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a><span class="in">#RAVEN</span></span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a><span class="in">HISAT2_DIR &lt;- "/home/shared/hisat2-2.2.1/"</span></span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a><span class="in">SAMTOOLS_DIR &lt;- "/home/shared/samtools-1.12/"</span></span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a><span class="in">STRINGTIE_DIR &lt;- "/home/shared/stringtie-2.2.1.Linux_x86_64"</span></span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a><span class="in">GFFCOMPARE_DIR &lt;- "/home/shared/gffcompare-0.12.6.Linux_x86_64"</span></span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a><span class="in">BEDTOOLS_DIR &lt;- "/home/shared/bedtools2/bin"</span></span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="in">CPC2_DIR &lt;- "/home/shared/CPC2_standalone-1.0.1"</span></span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a><span class="in">CONDA_PATH &lt;- "/opt/anaconda/anaconda3/bin/conda"</span></span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a><span class="in">#KLONE</span></span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a><span class="in"># HISAT2_DIR &lt;- ""</span></span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a><span class="in"># SAMTOOLS_DIR &lt;- ""</span></span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a><span class="in"># STRINGTIE_DIR &lt;- ""</span></span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a><span class="in"># GFFCOMPARE_DIR &lt;- "/srlab/programs/gffcompare-0.12.6.Linux_x86_64/"</span></span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a><span class="in"># BEDTOOLS_DIR &lt;- ""</span></span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a><span class="in"># CPC2_DIR &lt;- "/srlab/programs/CPC2_standalone-1.0.1/bin/"</span></span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a><span class="in"># CONDA_PATH &lt;- ""</span></span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_FASTA &lt;- file.path(DATA_DIR, "genome.fasta")</span></span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_GTF &lt;- file.path(DATA_DIR, "genome.gtf")</span></span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_GFF &lt;- file.path(DATA_DIR, "genome.gff")</span></span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a><span class="in">FASTQ_DIR &lt;- file.path(DATA_DIR, "fastq")</span></span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a><span class="in">GENOME_INDEX &lt;- file.path(OUTPUT_DIR, "genome.index")</span></span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a><span class="in"># Export these as environment variables for bash chunks.</span></span>
+<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a><span class="in">Sys.setenv(</span></span>
+<span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a><span class="in">  THREADS = THREADS,</span></span>
+<span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a><span class="in">  DATA_DIR = DATA_DIR,</span></span>
+<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a><span class="in">  FASTQ_SOURCE = FASTQ_SOURCE,</span></span>
+<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a><span class="in">  FASTQ_SUFFIX = FASTQ_SUFFIX,</span></span>
+<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a><span class="in">  OUTPUT_DIR = OUTPUT_DIR,</span></span>
+<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_SOURCE = GENOME_SOURCE,</span></span>
+<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a><span class="in">  GTF_SOURCE = GTF_SOURCE,</span></span>
+<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a><span class="in">  GFF_SOURCE = GFF_SOURCE,</span></span>
+<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a><span class="in">  HISAT2_DIR = HISAT2_DIR,</span></span>
+<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a><span class="in">  SAMTOOLS_DIR = SAMTOOLS_DIR,</span></span>
+<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a><span class="in">  STRINGTIE_DIR = STRINGTIE_DIR,</span></span>
+<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a><span class="in">  GFFCOMPARE_DIR = GFFCOMPARE_DIR,</span></span>
+<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a><span class="in">  BEDTOOLS_DIR = BEDTOOLS_DIR,</span></span>
+<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a><span class="in">  CPC2_DIR = CPC2_DIR,</span></span>
+<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a><span class="in">  CONDA_PATH = CONDA_PATH,</span></span>
+<span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_FASTA = GENOME_FASTA,</span></span>
+<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_GTF = GENOME_GTF,</span></span>
+<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_GFF = GENOME_GFF,</span></span>
+<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a><span class="in">  FASTQ_DIR = FASTQ_DIR,</span></span>
+<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a><span class="in">  GENOME_INDEX = GENOME_INDEX</span></span>
+<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
+<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r mkdir, engine='bash'}</span></span>
+<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a><span class="in">mkdir -p "${DATA_DIR}"</span></span>
+<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a><span class="in">mkdir -p "${OUTPUT_DIR}"</span></span>
+<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a><span class="fu"># Download Genome and Reads for Hisat</span></span>
+<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r grab fastq, engine='bash'}</span></span>
 <span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a><span class="fu"># Download Genome and Reads for Hisat</span></span>
-<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-128"><a href="#cb28-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r grab fastq, engine='bash'}</span></span>
-<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a><span class="in">wget -nv -r \</span></span>
-<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a><span class="in">--no-directories --no-parent \</span></span>
-<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a><span class="in">-P ${FASTQ_DIR} \</span></span>
-<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a><span class="in">-A "*${FASTQ_SUFFIX}" ${FASTQ_SOURCE}</span></span>
-<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ls, engine='bash'}</span></span>
-<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a><span class="in">ls ${FASTQ_DIR}</span></span>
+<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a><span class="in">wget -nv -r \</span></span>
+<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a><span class="in">--no-directories --no-parent \</span></span>
+<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a><span class="in">-P ${FASTQ_DIR} \</span></span>
+<span id="cb28-128"><a href="#cb28-128" aria-hidden="true" tabindex="-1"></a><span class="in">-A "*${FASTQ_SUFFIX}" ${FASTQ_SOURCE}</span></span>
+<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ls, engine='bash'}</span></span>
+<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a><span class="in">ls ${FASTQ_DIR}</span></span>
+<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fasta, engine='bash'}</span></span>
+<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a><span class="in">curl -o "${GENOME_FASTA}" "${GENOME_SOURCE}"</span></span>
 <span id="cb28-138"><a href="#cb28-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-139"><a href="#cb28-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-140"><a href="#cb28-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-141"><a href="#cb28-141" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fasta, engine='bash'}</span></span>
+<span id="cb28-140"><a href="#cb28-140" aria-hidden="true" tabindex="-1"></a><span class="in">```{r gtf, engine='bash'}</span></span>
+<span id="cb28-141"><a href="#cb28-141" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-142"><a href="#cb28-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a><span class="in">curl -o "${GENOME_FASTA}" "${GENOME_SOURCE}"</span></span>
+<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a><span class="in">curl -o "${GENOME_GTF}" "${GTF_SOURCE}"</span></span>
 <span id="cb28-144"><a href="#cb28-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-145"><a href="#cb28-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r gtf, engine='bash'}</span></span>
+<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a><span class="in">```{r gff, engine='bash'}</span></span>
 <span id="cb28-147"><a href="#cb28-147" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-148"><a href="#cb28-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a><span class="in">curl -o "${GENOME_GTF}" "${GTF_SOURCE}"</span></span>
+<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a><span class="in">curl -o "${GENOME_GFF}" "${GFF_SOURCE}"</span></span>
 <span id="cb28-150"><a href="#cb28-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-151"><a href="#cb28-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a><span class="in">```{r gff, engine='bash'}</span></span>
-<span id="cb28-154"><a href="#cb28-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-155"><a href="#cb28-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-156"><a href="#cb28-156" aria-hidden="true" tabindex="-1"></a><span class="in">curl -o "${GENOME_GFF}" "${GFF_SOURCE}"</span></span>
-<span id="cb28-157"><a href="#cb28-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-158"><a href="#cb28-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-159"><a href="#cb28-159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r file check, engine='bash'}</span></span>
-<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a><span class="in">output_fasta=$(head -1 "${GENOME_FASTA}")</span></span>
-<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a><span class="in">output_gff=$(head -2 "${GENOME_GFF}")</span></span>
-<span id="cb28-162"><a href="#cb28-162" aria-hidden="true" tabindex="-1"></a><span class="in">output_gtf=$(head -1 "${GENOME_GTF}")</span></span>
-<span id="cb28-163"><a href="#cb28-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-164"><a href="#cb28-164" aria-hidden="true" tabindex="-1"></a><span class="in">if [[ "$output_fasta" == *html* || "$output_gff" == *html* || "$output_gtf" == *html* ]]; then</span></span>
-<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a><span class="in">    echo "FAIL - FFS you downloaded a HTML not and genome feature file!"</span></span>
-<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a><span class="in">else</span></span>
-<span id="cb28-167"><a href="#cb28-167" aria-hidden="true" tabindex="-1"></a><span class="in">    echo "$output_fasta"</span></span>
-<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a><span class="in">    echo "$output_gff"</span></span>
-<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a><span class="in">    echo "$output_gtf"</span></span>
-<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a><span class="in">fi</span></span>
-<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a><span class="in">```{r file check, engine='bash'}</span></span>
+<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a><span class="in">output_fasta=$(head -1 "${GENOME_FASTA}")</span></span>
+<span id="cb28-154"><a href="#cb28-154" aria-hidden="true" tabindex="-1"></a><span class="in">output_gff=$(head -2 "${GENOME_GFF}")</span></span>
+<span id="cb28-155"><a href="#cb28-155" aria-hidden="true" tabindex="-1"></a><span class="in">output_gtf=$(head -1 "${GENOME_GTF}")</span></span>
+<span id="cb28-156"><a href="#cb28-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-157"><a href="#cb28-157" aria-hidden="true" tabindex="-1"></a><span class="in">if [[ "$output_fasta" == *html* || "$output_gff" == *html* || "$output_gtf" == *html* ]]; then</span></span>
+<span id="cb28-158"><a href="#cb28-158" aria-hidden="true" tabindex="-1"></a><span class="in">    echo "FAIL - FFS you downloaded a HTML not and genome feature file!"</span></span>
+<span id="cb28-159"><a href="#cb28-159" aria-hidden="true" tabindex="-1"></a><span class="in">else</span></span>
+<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a><span class="in">    echo "$output_fasta"</span></span>
+<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a><span class="in">    echo "$output_gff"</span></span>
+<span id="cb28-162"><a href="#cb28-162" aria-hidden="true" tabindex="-1"></a><span class="in">    echo "$output_gtf"</span></span>
+<span id="cb28-163"><a href="#cb28-163" aria-hidden="true" tabindex="-1"></a><span class="in">fi</span></span>
+<span id="cb28-164"><a href="#cb28-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a><span class="fu"># HISAT</span></span>
+<span id="cb28-167"><a href="#cb28-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, engine='bash'}</span></span>
+<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a><span class="in">"${HISAT2_DIR}hisat2_extract_exons.py" "${GENOME_GTF}" &gt; "${OUTPUT_DIR}/exon.txt"</span></span>
+<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a><span class="in">"${HISAT2_DIR}hisat2_extract_splice_sites.py" "${GENOME_GTF}" &gt; "${OUTPUT_DIR}/splice_sites.txt"</span></span>
 <span id="cb28-172"><a href="#cb28-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-174"><a href="#cb28-174" aria-hidden="true" tabindex="-1"></a><span class="fu"># HISAT</span></span>
-<span id="cb28-175"><a href="#cb28-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-176"><a href="#cb28-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, engine='bash'}</span></span>
-<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a><span class="in">"${HISAT2_DIR}hisat2_extract_exons.py" "${GENOME_GTF}" &gt; "${OUTPUT_DIR}/exon.txt"</span></span>
-<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a><span class="in">"${HISAT2_DIR}hisat2_extract_splice_sites.py" "${GENOME_GTF}" &gt; "${OUTPUT_DIR}/splice_sites.txt"</span></span>
-<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-174"><a href="#cb28-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-175"><a href="#cb28-175" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, engine='bash'}</span></span>
+<span id="cb28-176"><a href="#cb28-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a><span class="in">"${HISAT2_DIR}hisat2-build" \</span></span>
+<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a><span class="in">  -p "${THREADS}" \</span></span>
+<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a><span class="in">  "${GENOME_FASTA}" \</span></span>
+<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a><span class="in">  "${GENOME_INDEX}" \</span></span>
+<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a><span class="in">  --exon "${OUTPUT_DIR}/exon.txt" \</span></span>
+<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a><span class="in">  --ss "${OUTPUT_DIR}/splice_sites.txt" \</span></span>
+<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a><span class="in">  2&gt; "${OUTPUT_DIR}/hisat2-build_stats.txt"</span></span>
 <span id="cb28-184"><a href="#cb28-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, engine='bash'}</span></span>
+<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-186"><a href="#cb28-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-187"><a href="#cb28-187" aria-hidden="true" tabindex="-1"></a><span class="in">"${HISAT2_DIR}hisat2-build" \</span></span>
-<span id="cb28-188"><a href="#cb28-188" aria-hidden="true" tabindex="-1"></a><span class="in">  -p "${THREADS}" \</span></span>
-<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a><span class="in">  "${GENOME_FASTA}" \</span></span>
-<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a><span class="in">  "${GENOME_INDEX}" \</span></span>
-<span id="cb28-191"><a href="#cb28-191" aria-hidden="true" tabindex="-1"></a><span class="in">  --exon "${OUTPUT_DIR}/exon.txt" \</span></span>
-<span id="cb28-192"><a href="#cb28-192" aria-hidden="true" tabindex="-1"></a><span class="in">  --ss "${OUTPUT_DIR}/splice_sites.txt" \</span></span>
-<span id="cb28-193"><a href="#cb28-193" aria-hidden="true" tabindex="-1"></a><span class="in">  2&gt; "${OUTPUT_DIR}/hisat2-build_stats.txt"</span></span>
-<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-196"><a href="#cb28-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-197"><a href="#cb28-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-198"><a href="#cb28-198" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-199"><a href="#cb28-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-200"><a href="#cb28-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-203"><a href="#cb28-203" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
-<span id="cb28-204"><a href="#cb28-204" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over every file ending in .fastq.gz that contains "_R2_"</span></span>
-<span id="cb28-205"><a href="#cb28-205" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r2 <span class="kw">in</span> <span class="st">"</span><span class="va">${FASTQ_DIR}</span><span class="st">"</span>/<span class="pp">*</span>_R2_<span class="pp">*</span>.<span class="st">"</span><span class="va">${FASTQ_SUFFIX}</span><span class="st">"</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the basename (filename without path)</span></span>
-<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a>    <span class="va">base</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$r2</span><span class="st">"</span><span class="va">)</span></span>
-<span id="cb28-208"><a href="#cb28-208" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb28-209"><a href="#cb28-209" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Derive a sample name by taking everything before "_R2_"</span></span>
-<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a>    <span class="va">sample</span><span class="op">=</span><span class="st">"</span><span class="va">${base</span><span class="op">%%</span>_R2_<span class="pp">*</span><span class="va">}</span><span class="st">"</span></span>
-<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Construct the corresponding R1 filename by replacing "_R2_" with "_R1_"</span></span>
-<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a>    <span class="va">r1</span><span class="op">=</span><span class="st">"</span><span class="va">${r2</span><span class="op">/</span><span class="ss">_R2_</span><span class="op">/</span>_R1_<span class="va">}</span><span class="st">"</span></span>
-<span id="cb28-214"><a href="#cb28-214" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb28-215"><a href="#cb28-215" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the output SAM file name using the sample name</span></span>
-<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a>    <span class="va">output</span><span class="op">=</span><span class="st">"</span><span class="va">${OUTPUT_DIR}</span><span class="st">/</span><span class="va">${sample}</span><span class="st">.sam"</span></span>
-<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Run hisat2 with the paired-end files</span></span>
-<span id="cb28-219"><a href="#cb28-219" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">${HISAT2_DIR}</span><span class="st">hisat2"</span> <span class="dt">\</span></span>
-<span id="cb28-220"><a href="#cb28-220" aria-hidden="true" tabindex="-1"></a>      <span class="at">-x</span> <span class="st">"</span><span class="va">${GENOME_INDEX}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a>      <span class="at">-p</span> <span class="st">"</span><span class="va">${THREADS}</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a>      <span class="at">-1</span> <span class="st">"</span><span class="va">$r1</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a>      <span class="at">-2</span> <span class="st">"</span><span class="va">$r2</span><span class="st">"</span> <span class="dt">\</span></span>
-<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a>      <span class="at">-S</span> <span class="st">"</span><span class="va">$output</span><span class="st">"</span></span>
-<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
-<span id="cb28-226"><a href="#cb28-226" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-227"><a href="#cb28-227" aria-hidden="true" tabindex="-1"></a><span class="fu">## convert SAM to BAM</span></span>
-<span id="cb28-228"><a href="#cb28-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-229"><a href="#cb28-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a><span class="in">```{r convertSAM, engine='bash'}</span></span>
-<span id="cb28-231"><a href="#cb28-231" aria-hidden="true" tabindex="-1"></a><span class="in">for samfile in "${OUTPUT_DIR}/${sample}"*.sam; do</span></span>
-<span id="cb28-232"><a href="#cb28-232" aria-hidden="true" tabindex="-1"></a><span class="in">  bamfile="${samfile%.sam}.bam"</span></span>
-<span id="cb28-233"><a href="#cb28-233" aria-hidden="true" tabindex="-1"></a><span class="in">  sorted_bamfile="${samfile%.sam}.sorted.bam"</span></span>
-<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb28-235"><a href="#cb28-235" aria-hidden="true" tabindex="-1"></a><span class="in">  # Convert SAM to BAM</span></span>
-<span id="cb28-236"><a href="#cb28-236" aria-hidden="true" tabindex="-1"></a><span class="in">  "${SAMTOOLS_DIR}samtools" view -bS -@ "${THREADS}" "$samfile" &gt; "$bamfile"</span></span>
-<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a><span class="in">  # Sort BAM</span></span>
-<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a><span class="in">  "${SAMTOOLS_DIR}samtools" sort -@ "${THREADS}" "$bamfile" -o "$sorted_bamfile"</span></span>
-<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
-<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a><span class="in">  # Index sorted BAM</span></span>
-<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a><span class="in">  "${SAMTOOLS_DIR}samtools" index -@ "${THREADS}" "$sorted_bamfile"</span></span>
-<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a><span class="in">done</span></span>
+<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash}</span></span>
+<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over every file ending in .fastq.gz that contains "_R2_"</span></span>
+<span id="cb28-191"><a href="#cb28-191" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> r2 <span class="kw">in</span> <span class="st">"</span><span class="va">${FASTQ_DIR}</span><span class="st">"</span>/<span class="pp">*</span>_R2_<span class="pp">*</span>.<span class="st">"</span><span class="va">${FASTQ_SUFFIX}</span><span class="st">"</span><span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb28-192"><a href="#cb28-192" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the basename (filename without path)</span></span>
+<span id="cb28-193"><a href="#cb28-193" aria-hidden="true" tabindex="-1"></a>    <span class="va">base</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">$r2</span><span class="st">"</span><span class="va">)</span></span>
+<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Derive a sample name by taking everything before "_R2_"</span></span>
+<span id="cb28-196"><a href="#cb28-196" aria-hidden="true" tabindex="-1"></a>    <span class="va">sample</span><span class="op">=</span><span class="st">"</span><span class="va">${base</span><span class="op">%%</span>_R2_<span class="pp">*</span><span class="va">}</span><span class="st">"</span></span>
+<span id="cb28-197"><a href="#cb28-197" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-198"><a href="#cb28-198" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Construct the corresponding R1 filename by replacing "_R2_" with "_R1_"</span></span>
+<span id="cb28-199"><a href="#cb28-199" aria-hidden="true" tabindex="-1"></a>    <span class="va">r1</span><span class="op">=</span><span class="st">"</span><span class="va">${r2</span><span class="op">/</span><span class="ss">_R2_</span><span class="op">/</span>_R1_<span class="va">}</span><span class="st">"</span></span>
+<span id="cb28-200"><a href="#cb28-200" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-201"><a href="#cb28-201" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the output SAM file name using the sample name</span></span>
+<span id="cb28-202"><a href="#cb28-202" aria-hidden="true" tabindex="-1"></a>    <span class="va">output</span><span class="op">=</span><span class="st">"</span><span class="va">${OUTPUT_DIR}</span><span class="st">/</span><span class="va">${sample}</span><span class="st">.sam"</span></span>
+<span id="cb28-203"><a href="#cb28-203" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb28-204"><a href="#cb28-204" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Run hisat2 with the paired-end files</span></span>
+<span id="cb28-205"><a href="#cb28-205" aria-hidden="true" tabindex="-1"></a>    <span class="st">"</span><span class="va">${HISAT2_DIR}</span><span class="st">hisat2"</span> <span class="dt">\</span></span>
+<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a>      <span class="at">-x</span> <span class="st">"</span><span class="va">${GENOME_INDEX}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a>      <span class="at">-p</span> <span class="st">"</span><span class="va">${THREADS}</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb28-208"><a href="#cb28-208" aria-hidden="true" tabindex="-1"></a>      <span class="at">-1</span> <span class="st">"</span><span class="va">$r1</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb28-209"><a href="#cb28-209" aria-hidden="true" tabindex="-1"></a>      <span class="at">-2</span> <span class="st">"</span><span class="va">$r2</span><span class="st">"</span> <span class="dt">\</span></span>
+<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a>      <span class="at">-S</span> <span class="st">"</span><span class="va">$output</span><span class="st">"</span></span>
+<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span>
+<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-214"><a href="#cb28-214" aria-hidden="true" tabindex="-1"></a><span class="fu">## convert SAM to BAM</span></span>
+<span id="cb28-215"><a href="#cb28-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r convertSAM, engine='bash'}</span></span>
+<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a><span class="in">for samfile in "${OUTPUT_DIR}/${sample}"*.sam; do</span></span>
+<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a><span class="in">  bamfile="${samfile%.sam}.bam"</span></span>
+<span id="cb28-219"><a href="#cb28-219" aria-hidden="true" tabindex="-1"></a><span class="in">  sorted_bamfile="${samfile%.sam}.sorted.bam"</span></span>
+<span id="cb28-220"><a href="#cb28-220" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a><span class="in">  # Convert SAM to BAM</span></span>
+<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a><span class="in">  "${SAMTOOLS_DIR}samtools" view -bS -@ "${THREADS}" "$samfile" &gt; "$bamfile"</span></span>
+<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a><span class="in">  # Sort BAM</span></span>
+<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a><span class="in">  "${SAMTOOLS_DIR}samtools" sort -@ "${THREADS}" "$bamfile" -o "$sorted_bamfile"</span></span>
+<span id="cb28-226"><a href="#cb28-226" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-227"><a href="#cb28-227" aria-hidden="true" tabindex="-1"></a><span class="in">  # Index sorted BAM</span></span>
+<span id="cb28-228"><a href="#cb28-228" aria-hidden="true" tabindex="-1"></a><span class="in">  "${SAMTOOLS_DIR}samtools" index -@ "${THREADS}" "$sorted_bamfile"</span></span>
+<span id="cb28-229"><a href="#cb28-229" aria-hidden="true" tabindex="-1"></a><span class="in">done</span></span>
+<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-231"><a href="#cb28-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-232"><a href="#cb28-232" aria-hidden="true" tabindex="-1"></a><span class="fu"># StringTie</span></span>
+<span id="cb28-233"><a href="#cb28-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a>StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF (Gene Transfer Format) files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples–an important step in creating a canonical list of lncRNAs across all samples included in the pipeline.</span>
+<span id="cb28-235"><a href="#cb28-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-236"><a href="#cb28-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stringtie, engine='bash'}</span></span>
+<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a><span class="in">find "${OUTPUT_DIR}" -name "*sorted.bam" \</span></span>
+<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a><span class="in">| xargs -n 1 basename -s .sorted.bam | xargs -I{} \</span></span>
+<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a><span class="in">"${STRINGTIE_DIR}stringtie" \</span></span>
+<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a><span class="in">-p "${THREADS}" \</span></span>
+<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a><span class="in">-G "${GENOME_GFF}" \</span></span>
+<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a><span class="in">-o "${OUTPUT_DIR}/{}.gtf" \</span></span>
+<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a><span class="in">"${OUTPUT_DIR}/{}.sorted.bam"</span></span>
 <span id="cb28-244"><a href="#cb28-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-245"><a href="#cb28-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-248"><a href="#cb28-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-249"><a href="#cb28-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a><span class="fu"># StringTie</span></span>
-<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a>StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF (Gene Transfer Format) files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples–an important step in creating a canonical list of lncRNAs across all samples included in the pipeline.</span>
+<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a><span class="in">```{r merge, engine='bash'}</span></span>
+<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a><span class="in">"${STRINGTIE_DIR}stringtie" \</span></span>
+<span id="cb28-248"><a href="#cb28-248" aria-hidden="true" tabindex="-1"></a><span class="in">--merge \</span></span>
+<span id="cb28-249"><a href="#cb28-249" aria-hidden="true" tabindex="-1"></a><span class="in">-G "${GENOME_GFF}" \</span></span>
+<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a><span class="in">-o "${OUTPUT_DIR}/stringtie_merged.gtf" \</span></span>
+<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a><span class="in">"${OUTPUT_DIR}/"*.gtf</span></span>
+<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-253"><a href="#cb28-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-254"><a href="#cb28-254" aria-hidden="true" tabindex="-1"></a><span class="in">```{r stringtie, engine='bash'}</span></span>
-<span id="cb28-255"><a href="#cb28-255" aria-hidden="true" tabindex="-1"></a><span class="in">find "${OUTPUT_DIR}" -name "*sorted.bam" \</span></span>
-<span id="cb28-256"><a href="#cb28-256" aria-hidden="true" tabindex="-1"></a><span class="in">| xargs -n 1 basename -s .sorted.bam | xargs -I{} \</span></span>
-<span id="cb28-257"><a href="#cb28-257" aria-hidden="true" tabindex="-1"></a><span class="in">"${STRINGTIE_DIR}stringtie" \</span></span>
-<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a><span class="in">-p "${THREADS}" \</span></span>
-<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a><span class="in">-G "${GENOME_GFF}" \</span></span>
-<span id="cb28-260"><a href="#cb28-260" aria-hidden="true" tabindex="-1"></a><span class="in">-o "${OUTPUT_DIR}/{}.gtf" \</span></span>
-<span id="cb28-261"><a href="#cb28-261" aria-hidden="true" tabindex="-1"></a><span class="in">"${OUTPUT_DIR}/{}.sorted.bam"</span></span>
-<span id="cb28-262"><a href="#cb28-262" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-263"><a href="#cb28-263" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-254"><a href="#cb28-254" aria-hidden="true" tabindex="-1"></a>#GFFCOMPARE</span>
+<span id="cb28-255"><a href="#cb28-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-256"><a href="#cb28-256" aria-hidden="true" tabindex="-1"></a><span class="al">![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_687474703a2f2f67616e6e65742e666973682e77617368696e67746f6e2e6564752f7365617368656c6c2f736e6170732f323032332d31312d30335f30392d3_2024-12-20_04-02-37.png)</span></span>
+<span id="cb28-257"><a href="#cb28-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a><span class="in">```{r gffcomp, engine='bash'}</span></span>
+<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a><span class="in">"${GFFCOMPARE_DIR}gffcompare" \</span></span>
+<span id="cb28-260"><a href="#cb28-260" aria-hidden="true" tabindex="-1"></a><span class="in">-r "${GENOME_GFF}" \</span></span>
+<span id="cb28-261"><a href="#cb28-261" aria-hidden="true" tabindex="-1"></a><span class="in">-o "${OUTPUT_DIR}/gffcompare_merged" \</span></span>
+<span id="cb28-262"><a href="#cb28-262" aria-hidden="true" tabindex="-1"></a><span class="in">"${OUTPUT_DIR}/stringtie_merged.gtf"</span></span>
+<span id="cb28-263"><a href="#cb28-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-264"><a href="#cb28-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-265"><a href="#cb28-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-266"><a href="#cb28-266" aria-hidden="true" tabindex="-1"></a><span class="in">```{r merge, engine='bash'}</span></span>
-<span id="cb28-267"><a href="#cb28-267" aria-hidden="true" tabindex="-1"></a><span class="in">"${STRINGTIE_DIR}stringtie" \</span></span>
-<span id="cb28-268"><a href="#cb28-268" aria-hidden="true" tabindex="-1"></a><span class="in">--merge \</span></span>
-<span id="cb28-269"><a href="#cb28-269" aria-hidden="true" tabindex="-1"></a><span class="in">-G "${GENOME_GFF}" \</span></span>
-<span id="cb28-270"><a href="#cb28-270" aria-hidden="true" tabindex="-1"></a><span class="in">-o "${OUTPUT_DIR}/stringtie_merged.gtf" \</span></span>
-<span id="cb28-271"><a href="#cb28-271" aria-hidden="true" tabindex="-1"></a><span class="in">"${OUTPUT_DIR}/"*.gtf</span></span>
-<span id="cb28-272"><a href="#cb28-272" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-273"><a href="#cb28-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-274"><a href="#cb28-274" aria-hidden="true" tabindex="-1"></a>#GFFCOMPARE</span>
-<span id="cb28-275"><a href="#cb28-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-276"><a href="#cb28-276" aria-hidden="true" tabindex="-1"></a><span class="al">![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_687474703a2f2f67616e6e65742e666973682e77617368696e67746f6e2e6564752f7365617368656c6c2f736e6170732f323032332d31312d30335f30392d3_2024-12-20_04-02-37.png)</span></span>
-<span id="cb28-277"><a href="#cb28-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-278"><a href="#cb28-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-279"><a href="#cb28-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-280"><a href="#cb28-280" aria-hidden="true" tabindex="-1"></a><span class="in">```{r gffcomp, engine='bash'}</span></span>
-<span id="cb28-281"><a href="#cb28-281" aria-hidden="true" tabindex="-1"></a><span class="in">"${GFFCOMPARE_DIR}gffcompare" \</span></span>
-<span id="cb28-282"><a href="#cb28-282" aria-hidden="true" tabindex="-1"></a><span class="in">-r "${GENOME_GFF}" \</span></span>
-<span id="cb28-283"><a href="#cb28-283" aria-hidden="true" tabindex="-1"></a><span class="in">-o "${OUTPUT_DIR}/gffcompare_merged" \</span></span>
-<span id="cb28-284"><a href="#cb28-284" aria-hidden="true" tabindex="-1"></a><span class="in">"${OUTPUT_DIR}/stringtie_merged.gtf"</span></span>
-<span id="cb28-285"><a href="#cb28-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-265"><a href="#cb28-265" aria-hidden="true" tabindex="-1"></a><span class="in">```{r viewgff, engine='bash'}</span></span>
+<span id="cb28-266"><a href="#cb28-266" aria-hidden="true" tabindex="-1"></a><span class="in">head -1 "${OUTPUT_DIR}"/gffcompare_merged*</span></span>
+<span id="cb28-267"><a href="#cb28-267" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-268"><a href="#cb28-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-269"><a href="#cb28-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{r gff filter, engine='bash'}</span></span>
+<span id="cb28-270"><a href="#cb28-270" aria-hidden="true" tabindex="-1"></a><span class="in">awk '$3 == "transcript" &amp;&amp; $1 !~ /^#/' "${OUTPUT_DIR}/gffcompare_merged.annotated.gtf" | \</span></span>
+<span id="cb28-271"><a href="#cb28-271" aria-hidden="true" tabindex="-1"></a><span class="in">grep -E "${GFFPATTERN}" | \</span></span>
+<span id="cb28-272"><a href="#cb28-272" aria-hidden="true" tabindex="-1"></a><span class="in">awk '($5 - $4 &gt; 199) || ($4 - $5 &gt; 199)' &gt; "${OUTPUT_DIR}/lncRNA_candidates.gtf"</span></span>
+<span id="cb28-273"><a href="#cb28-273" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-274"><a href="#cb28-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-275"><a href="#cb28-275" aria-hidden="true" tabindex="-1"></a><span class="fu"># Bedtools</span></span>
+<span id="cb28-276"><a href="#cb28-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-277"><a href="#cb28-277" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fasta2, engine='bash'}</span></span>
+<span id="cb28-278"><a href="#cb28-278" aria-hidden="true" tabindex="-1"></a><span class="in">"${BEDTOOLS_DIR}"bedtools getfasta \</span></span>
+<span id="cb28-279"><a href="#cb28-279" aria-hidden="true" tabindex="-1"></a><span class="in">-fi "${GENOME_FASTA}" \</span></span>
+<span id="cb28-280"><a href="#cb28-280" aria-hidden="true" tabindex="-1"></a><span class="in">-bed "${OUTPUT_DIR}/lncRNA_candidates.gtf" \</span></span>
+<span id="cb28-281"><a href="#cb28-281" aria-hidden="true" tabindex="-1"></a><span class="in">-fo "${OUTPUT_DIR}/lncRNA_candidates.fasta" \</span></span>
+<span id="cb28-282"><a href="#cb28-282" aria-hidden="true" tabindex="-1"></a><span class="in">-name -split</span></span>
+<span id="cb28-283"><a href="#cb28-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-284"><a href="#cb28-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-285"><a href="#cb28-285" aria-hidden="true" tabindex="-1"></a>#CPC2</span>
 <span id="cb28-286"><a href="#cb28-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-287"><a href="#cb28-287" aria-hidden="true" tabindex="-1"></a><span class="in">```{r viewgff, engine='bash'}</span></span>
-<span id="cb28-288"><a href="#cb28-288" aria-hidden="true" tabindex="-1"></a><span class="in">head -1 "${OUTPUT_DIR}"/gffcompare_merged*</span></span>
-<span id="cb28-289"><a href="#cb28-289" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-290"><a href="#cb28-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-291"><a href="#cb28-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-292"><a href="#cb28-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-293"><a href="#cb28-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r gff filter, engine='bash'}</span></span>
-<span id="cb28-294"><a href="#cb28-294" aria-hidden="true" tabindex="-1"></a><span class="in">awk '$3 == "transcript" &amp;&amp; $1 !~ /^#/' "${OUTPUT_DIR}/gffcompare_merged.annotated.gtf" | \</span></span>
-<span id="cb28-295"><a href="#cb28-295" aria-hidden="true" tabindex="-1"></a><span class="in">grep -E "${GFFPATTERN}" | \</span></span>
-<span id="cb28-296"><a href="#cb28-296" aria-hidden="true" tabindex="-1"></a><span class="in">awk '($5 - $4 &gt; 199) || ($4 - $5 &gt; 199)' &gt; "${OUTPUT_DIR}/lncRNA_candidates.gtf"</span></span>
-<span id="cb28-297"><a href="#cb28-297" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-298"><a href="#cb28-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-299"><a href="#cb28-299" aria-hidden="true" tabindex="-1"></a><span class="fu"># Bedtools</span></span>
-<span id="cb28-300"><a href="#cb28-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-301"><a href="#cb28-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fasta2, engine='bash'}</span></span>
-<span id="cb28-302"><a href="#cb28-302" aria-hidden="true" tabindex="-1"></a><span class="in">"${BEDTOOLS_DIR}"bedtools getfasta \</span></span>
-<span id="cb28-303"><a href="#cb28-303" aria-hidden="true" tabindex="-1"></a><span class="in">-fi "${GENOME_FASTA}" \</span></span>
-<span id="cb28-304"><a href="#cb28-304" aria-hidden="true" tabindex="-1"></a><span class="in">-bed "${OUTPUT_DIR}/lncRNA_candidates.gtf" \</span></span>
-<span id="cb28-305"><a href="#cb28-305" aria-hidden="true" tabindex="-1"></a><span class="in">-fo "${OUTPUT_DIR}/lncRNA_candidates.fasta" \</span></span>
-<span id="cb28-306"><a href="#cb28-306" aria-hidden="true" tabindex="-1"></a><span class="in">-name -split</span></span>
-<span id="cb28-307"><a href="#cb28-307" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-308"><a href="#cb28-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-309"><a href="#cb28-309" aria-hidden="true" tabindex="-1"></a>#CPC2</span>
-<span id="cb28-310"><a href="#cb28-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-287"><a href="#cb28-287" aria-hidden="true" tabindex="-1"></a><span class="in">```{r cpc2, engine='bash'}</span></span>
+<span id="cb28-288"><a href="#cb28-288" aria-hidden="true" tabindex="-1"></a><span class="in">eval "$(/opt/anaconda/anaconda3/bin/conda shell.bash hook)"</span></span>
+<span id="cb28-289"><a href="#cb28-289" aria-hidden="true" tabindex="-1"></a><span class="in">python "${CPC2_DIR}"CPC2.py \</span></span>
+<span id="cb28-290"><a href="#cb28-290" aria-hidden="true" tabindex="-1"></a><span class="in">-i "${OUTPUT_DIR}/lncRNA_candidates.fasta" \</span></span>
+<span id="cb28-291"><a href="#cb28-291" aria-hidden="true" tabindex="-1"></a><span class="in">-o "${OUTPUT_DIR}/CPC2"</span></span>
+<span id="cb28-292"><a href="#cb28-292" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-293"><a href="#cb28-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-294"><a href="#cb28-294" aria-hidden="true" tabindex="-1"></a>Filter</span>
+<span id="cb28-295"><a href="#cb28-295" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-296"><a href="#cb28-296" aria-hidden="true" tabindex="-1"></a><span class="in">```{r filCPC, engine='bash'}</span></span>
+<span id="cb28-297"><a href="#cb28-297" aria-hidden="true" tabindex="-1"></a><span class="in">awk '$8 == "noncoding" {print $1}' "${OUTPUT_DIR}/CPC2.txt" &gt; "${OUTPUT_DIR}/noncoding_transcripts_ids.txt"</span></span>
+<span id="cb28-298"><a href="#cb28-298" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-299"><a href="#cb28-299" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-300"><a href="#cb28-300" aria-hidden="true" tabindex="-1"></a>Subsetting fasta</span>
+<span id="cb28-301"><a href="#cb28-301" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-302"><a href="#cb28-302" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ssfasta, engine='bash'}</span></span>
+<span id="cb28-303"><a href="#cb28-303" aria-hidden="true" tabindex="-1"></a><span class="in">"${SAMTOOLS_DIR}samtools" faidx "${OUTPUT_DIR}/lncRNA_candidates.fasta" \</span></span>
+<span id="cb28-304"><a href="#cb28-304" aria-hidden="true" tabindex="-1"></a><span class="in">-r "${OUTPUT_DIR}/noncoding_transcripts_ids.txt" \</span></span>
+<span id="cb28-305"><a href="#cb28-305" aria-hidden="true" tabindex="-1"></a><span class="in">&gt; "${OUTPUT_DIR}/lncRNA.fasta"</span></span>
+<span id="cb28-306"><a href="#cb28-306" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-307"><a href="#cb28-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-308"><a href="#cb28-308" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, engine='bash'}</span></span>
+<span id="cb28-309"><a href="#cb28-309" aria-hidden="true" tabindex="-1"></a><span class="in">head -2 "${OUTPUT_DIR}/lncRNA.fasta"</span></span>
+<span id="cb28-310"><a href="#cb28-310" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-311"><a href="#cb28-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-312"><a href="#cb28-312" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-313"><a href="#cb28-313" aria-hidden="true" tabindex="-1"></a><span class="in">```{r cpc2, engine='bash'}</span></span>
-<span id="cb28-314"><a href="#cb28-314" aria-hidden="true" tabindex="-1"></a><span class="in">eval "$(/opt/anaconda/anaconda3/bin/conda shell.bash hook)"</span></span>
-<span id="cb28-315"><a href="#cb28-315" aria-hidden="true" tabindex="-1"></a><span class="in">python "${CPC2_DIR}"CPC2.py \</span></span>
-<span id="cb28-316"><a href="#cb28-316" aria-hidden="true" tabindex="-1"></a><span class="in">-i "${OUTPUT_DIR}/lncRNA_candidates.fasta" \</span></span>
-<span id="cb28-317"><a href="#cb28-317" aria-hidden="true" tabindex="-1"></a><span class="in">-o "${OUTPUT_DIR}/CPC2"</span></span>
-<span id="cb28-318"><a href="#cb28-318" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-319"><a href="#cb28-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-320"><a href="#cb28-320" aria-hidden="true" tabindex="-1"></a>Filter</span>
-<span id="cb28-321"><a href="#cb28-321" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-322"><a href="#cb28-322" aria-hidden="true" tabindex="-1"></a><span class="in">```{r filCPC, engine='bash'}</span></span>
-<span id="cb28-323"><a href="#cb28-323" aria-hidden="true" tabindex="-1"></a><span class="in">awk '$8 == "noncoding" {print $1}' "${OUTPUT_DIR}/CPC2.txt" &gt; "${OUTPUT_DIR}/noncoding_transcripts_ids.txt"</span></span>
-<span id="cb28-324"><a href="#cb28-324" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-325"><a href="#cb28-325" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-326"><a href="#cb28-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-327"><a href="#cb28-327" aria-hidden="true" tabindex="-1"></a>Subsetting fasta</span>
-<span id="cb28-328"><a href="#cb28-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-329"><a href="#cb28-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r ssfasta, engine='bash'}</span></span>
-<span id="cb28-330"><a href="#cb28-330" aria-hidden="true" tabindex="-1"></a><span class="in">"${SAMTOOLS_DIR}samtools" faidx "${OUTPUT_DIR}/lncRNA_candidates.fasta" \</span></span>
-<span id="cb28-331"><a href="#cb28-331" aria-hidden="true" tabindex="-1"></a><span class="in">-r "${OUTPUT_DIR}/noncoding_transcripts_ids.txt" \</span></span>
-<span id="cb28-332"><a href="#cb28-332" aria-hidden="true" tabindex="-1"></a><span class="in">&gt; "${OUTPUT_DIR}/lncRNA.fasta"</span></span>
-<span id="cb28-333"><a href="#cb28-333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-334"><a href="#cb28-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-335"><a href="#cb28-335" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, engine='bash'}</span></span>
-<span id="cb28-336"><a href="#cb28-336" aria-hidden="true" tabindex="-1"></a><span class="in">head -2 "${OUTPUT_DIR}/lncRNA.fasta"</span></span>
-<span id="cb28-337"><a href="#cb28-337" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-338"><a href="#cb28-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-339"><a href="#cb28-339" aria-hidden="true" tabindex="-1"></a><span class="in">```{r lncRNAgtf, engine='bash'}</span></span>
-<span id="cb28-340"><a href="#cb28-340" aria-hidden="true" tabindex="-1"></a><span class="in"># Define input and output file paths using the OUTPUT_DIR variable</span></span>
-<span id="cb28-341"><a href="#cb28-341" aria-hidden="true" tabindex="-1"></a><span class="in">input="${OUTPUT_DIR}/noncoding_transcripts_ids.txt"</span></span>
-<span id="cb28-342"><a href="#cb28-342" aria-hidden="true" tabindex="-1"></a><span class="in">output="${OUTPUT_DIR}/lncRNA.bed"</span></span>
-<span id="cb28-343"><a href="#cb28-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-344"><a href="#cb28-344" aria-hidden="true" tabindex="-1"></a><span class="in"># Process each line of the input file</span></span>
-<span id="cb28-345"><a href="#cb28-345" aria-hidden="true" tabindex="-1"></a><span class="in">while IFS= read -r line; do</span></span>
-<span id="cb28-346"><a href="#cb28-346" aria-hidden="true" tabindex="-1"></a><span class="in">    # Remove "transcript::" from the line</span></span>
-<span id="cb28-347"><a href="#cb28-347" aria-hidden="true" tabindex="-1"></a><span class="in">    line="${line//transcript::/}"</span></span>
-<span id="cb28-348"><a href="#cb28-348" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb28-349"><a href="#cb28-349" aria-hidden="true" tabindex="-1"></a><span class="in">    # Split the line by ':' to get the chromosome and position string</span></span>
-<span id="cb28-350"><a href="#cb28-350" aria-hidden="true" tabindex="-1"></a><span class="in">    IFS=':' read -r chromosome pos &lt;&lt;&lt; "$line"</span></span>
-<span id="cb28-351"><a href="#cb28-351" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb28-352"><a href="#cb28-352" aria-hidden="true" tabindex="-1"></a><span class="in">    # Split the position string by '-' to separate start and end positions</span></span>
-<span id="cb28-353"><a href="#cb28-353" aria-hidden="true" tabindex="-1"></a><span class="in">    IFS='-' read -r start end &lt;&lt;&lt; "$pos"</span></span>
-<span id="cb28-354"><a href="#cb28-354" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb28-355"><a href="#cb28-355" aria-hidden="true" tabindex="-1"></a><span class="in">    # Convert the start position to 0-based by subtracting 1</span></span>
-<span id="cb28-356"><a href="#cb28-356" aria-hidden="true" tabindex="-1"></a><span class="in">    start=$((start - 1))</span></span>
-<span id="cb28-357"><a href="#cb28-357" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
-<span id="cb28-358"><a href="#cb28-358" aria-hidden="true" tabindex="-1"></a><span class="in">    # Write the chromosome, updated start, and end positions to the output file (tab-separated)</span></span>
-<span id="cb28-359"><a href="#cb28-359" aria-hidden="true" tabindex="-1"></a><span class="in">    printf "%s\t%s\t%s\n" "$chromosome" "$start" "$end"</span></span>
-<span id="cb28-360"><a href="#cb28-360" aria-hidden="true" tabindex="-1"></a><span class="in">done &lt; "$input" &gt; "$output"</span></span>
-<span id="cb28-361"><a href="#cb28-361" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-362"><a href="#cb28-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-363"><a href="#cb28-363" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, engine='bash'}</span></span>
-<span id="cb28-364"><a href="#cb28-364" aria-hidden="true" tabindex="-1"></a><span class="in">head -1 "${OUTPUT_DIR}/lncRNA.gtf"</span></span>
-<span id="cb28-365"><a href="#cb28-365" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-366"><a href="#cb28-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-367"><a href="#cb28-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-368"><a href="#cb28-368" aria-hidden="true" tabindex="-1"></a><span class="in">```{r renamegtf, engine='bash'}</span></span>
-<span id="cb28-369"><a href="#cb28-369" aria-hidden="true" tabindex="-1"></a><span class="in">awk 'BEGIN{OFS="\t"; count=1} {printf "%s\t.\tlncRNA\t%d\t%d\t.\t+\t.\tgene_id \"lncRNA_%03d\";\n", $1, $2, $3, count++;}' "${OUTPUT_DIR}/lncRNA.bed" \</span></span>
-<span id="cb28-370"><a href="#cb28-370" aria-hidden="true" tabindex="-1"></a><span class="in">&gt; "${OUTPUT_DIR}/lncRNA.gtf"</span></span>
-<span id="cb28-371"><a href="#cb28-371" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb28-372"><a href="#cb28-372" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-373"><a href="#cb28-373" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary Table</span></span>
-<span id="cb28-374"><a href="#cb28-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-375"><a href="#cb28-375" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-376"><a href="#cb28-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-377"><a href="#cb28-377" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary, engine='bash'}</span></span>
-<span id="cb28-378"><a href="#cb28-378" aria-hidden="true" tabindex="-1"></a><span class="in">tf_file="${OUTPUT_DIR}/lncRNA.gtf"</span></span>
-<span id="cb28-379"><a href="#cb28-379" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-380"><a href="#cb28-380" aria-hidden="true" tabindex="-1"></a><span class="in">awk '</span></span>
-<span id="cb28-381"><a href="#cb28-381" aria-hidden="true" tabindex="-1"></a><span class="in">BEGIN {</span></span>
-<span id="cb28-382"><a href="#cb28-382" aria-hidden="true" tabindex="-1"></a><span class="in">    total_entries = 0;</span></span>
-<span id="cb28-383"><a href="#cb28-383" aria-hidden="true" tabindex="-1"></a><span class="in">    min_length = 1e9;</span></span>
-<span id="cb28-384"><a href="#cb28-384" aria-hidden="true" tabindex="-1"></a><span class="in">    max_length = 0;</span></span>
-<span id="cb28-385"><a href="#cb28-385" aria-hidden="true" tabindex="-1"></a><span class="in">    sum_length = 0;</span></span>
-<span id="cb28-386"><a href="#cb28-386" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb28-387"><a href="#cb28-387" aria-hidden="true" tabindex="-1"></a><span class="in"># Skip comment lines</span></span>
-<span id="cb28-388"><a href="#cb28-388" aria-hidden="true" tabindex="-1"></a><span class="in">/^#/ { next }</span></span>
-<span id="cb28-389"><a href="#cb28-389" aria-hidden="true" tabindex="-1"></a><span class="in">{</span></span>
-<span id="cb28-390"><a href="#cb28-390" aria-hidden="true" tabindex="-1"></a><span class="in">    if (NF &lt; 9) next;</span></span>
-<span id="cb28-391"><a href="#cb28-391" aria-hidden="true" tabindex="-1"></a><span class="in">    total_entries++;</span></span>
-<span id="cb28-392"><a href="#cb28-392" aria-hidden="true" tabindex="-1"></a><span class="in">    start = $4;</span></span>
-<span id="cb28-393"><a href="#cb28-393" aria-hidden="true" tabindex="-1"></a><span class="in">    end = $5;</span></span>
-<span id="cb28-394"><a href="#cb28-394" aria-hidden="true" tabindex="-1"></a><span class="in">    gene_length = end - start + 1;</span></span>
-<span id="cb28-395"><a href="#cb28-395" aria-hidden="true" tabindex="-1"></a><span class="in">    if (gene_length &lt; min_length) min_length = gene_length;</span></span>
-<span id="cb28-396"><a href="#cb28-396" aria-hidden="true" tabindex="-1"></a><span class="in">    if (gene_length &gt; max_length) max_length = gene_length;</span></span>
-<span id="cb28-397"><a href="#cb28-397" aria-hidden="true" tabindex="-1"></a><span class="in">    sum_length += gene_length;</span></span>
-<span id="cb28-398"><a href="#cb28-398" aria-hidden="true" tabindex="-1"></a><span class="in">    feature[$3]++;</span></span>
-<span id="cb28-399"><a href="#cb28-399" aria-hidden="true" tabindex="-1"></a><span class="in">    chrom[$1]++;</span></span>
-<span id="cb28-400"><a href="#cb28-400" aria-hidden="true" tabindex="-1"></a><span class="in">    # Use two-argument match() and then extract the gene_id manually.</span></span>
-<span id="cb28-401"><a href="#cb28-401" aria-hidden="true" tabindex="-1"></a><span class="in">    if (match($9, /gene_id "[^"]+"/)) {</span></span>
-<span id="cb28-402"><a href="#cb28-402" aria-hidden="true" tabindex="-1"></a><span class="in">        gene_str = substr($9, RSTART, RLENGTH);</span></span>
-<span id="cb28-403"><a href="#cb28-403" aria-hidden="true" tabindex="-1"></a><span class="in">        # Remove the "gene_id " prefix and the quotes.</span></span>
-<span id="cb28-404"><a href="#cb28-404" aria-hidden="true" tabindex="-1"></a><span class="in">        gsub(/gene_id "/, "", gene_str);</span></span>
-<span id="cb28-405"><a href="#cb28-405" aria-hidden="true" tabindex="-1"></a><span class="in">        gsub(/"/, "", gene_str);</span></span>
-<span id="cb28-406"><a href="#cb28-406" aria-hidden="true" tabindex="-1"></a><span class="in">        genes[gene_str] = 1;</span></span>
-<span id="cb28-407"><a href="#cb28-407" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
-<span id="cb28-408"><a href="#cb28-408" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb28-409"><a href="#cb28-409" aria-hidden="true" tabindex="-1"></a><span class="in">END {</span></span>
-<span id="cb28-410"><a href="#cb28-410" aria-hidden="true" tabindex="-1"></a><span class="in">    avg_length = (total_entries &gt; 0) ? sum_length / total_entries : 0;</span></span>
-<span id="cb28-411"><a href="#cb28-411" aria-hidden="true" tabindex="-1"></a><span class="in">    unique_gene_count = 0;</span></span>
-<span id="cb28-412"><a href="#cb28-412" aria-hidden="true" tabindex="-1"></a><span class="in">    for (g in genes)</span></span>
-<span id="cb28-413"><a href="#cb28-413" aria-hidden="true" tabindex="-1"></a><span class="in">        unique_gene_count++;</span></span>
-<span id="cb28-414"><a href="#cb28-414" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Basic GTF File Statistics:";</span></span>
-<span id="cb28-415"><a href="#cb28-415" aria-hidden="true" tabindex="-1"></a><span class="in">    print "--------------------------";</span></span>
-<span id="cb28-416"><a href="#cb28-416" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Total entries:      " total_entries;</span></span>
-<span id="cb28-417"><a href="#cb28-417" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Unique genes:       " unique_gene_count;</span></span>
-<span id="cb28-418"><a href="#cb28-418" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Min gene length:    " min_length;</span></span>
-<span id="cb28-419"><a href="#cb28-419" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Max gene length:    " max_length;</span></span>
-<span id="cb28-420"><a href="#cb28-420" aria-hidden="true" tabindex="-1"></a><span class="in">    printf("Average gene length: %.2f\n", avg_length);</span></span>
-<span id="cb28-421"><a href="#cb28-421" aria-hidden="true" tabindex="-1"></a><span class="in">    print "\nFeature counts:";</span></span>
-<span id="cb28-422"><a href="#cb28-422" aria-hidden="true" tabindex="-1"></a><span class="in">    for (f in feature) {</span></span>
-<span id="cb28-423"><a href="#cb28-423" aria-hidden="true" tabindex="-1"></a><span class="in">        print "  " f ": " feature[f];</span></span>
-<span id="cb28-424"><a href="#cb28-424" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
-<span id="cb28-425"><a href="#cb28-425" aria-hidden="true" tabindex="-1"></a><span class="in">    print "\nChromosome counts:";</span></span>
-<span id="cb28-426"><a href="#cb28-426" aria-hidden="true" tabindex="-1"></a><span class="in">    for (c in chrom) {</span></span>
-<span id="cb28-427"><a href="#cb28-427" aria-hidden="true" tabindex="-1"></a><span class="in">        print "  " c ": " chrom[c];</span></span>
-<span id="cb28-428"><a href="#cb28-428" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
-<span id="cb28-429"><a href="#cb28-429" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
-<span id="cb28-430"><a href="#cb28-430" aria-hidden="true" tabindex="-1"></a><span class="in">' "$tf_file"</span></span>
-<span id="cb28-431"><a href="#cb28-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-312"><a href="#cb28-312" aria-hidden="true" tabindex="-1"></a><span class="in">```{r lncRNAgtf, engine='bash'}</span></span>
+<span id="cb28-313"><a href="#cb28-313" aria-hidden="true" tabindex="-1"></a><span class="in"># Define input and output file paths using the OUTPUT_DIR variable</span></span>
+<span id="cb28-314"><a href="#cb28-314" aria-hidden="true" tabindex="-1"></a><span class="in">input="${OUTPUT_DIR}/noncoding_transcripts_ids.txt"</span></span>
+<span id="cb28-315"><a href="#cb28-315" aria-hidden="true" tabindex="-1"></a><span class="in">output="${OUTPUT_DIR}/lncRNA.bed"</span></span>
+<span id="cb28-316"><a href="#cb28-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-317"><a href="#cb28-317" aria-hidden="true" tabindex="-1"></a><span class="in"># Process each line of the input file</span></span>
+<span id="cb28-318"><a href="#cb28-318" aria-hidden="true" tabindex="-1"></a><span class="in">while IFS= read -r line; do</span></span>
+<span id="cb28-319"><a href="#cb28-319" aria-hidden="true" tabindex="-1"></a><span class="in">    # Remove "transcript::" from the line</span></span>
+<span id="cb28-320"><a href="#cb28-320" aria-hidden="true" tabindex="-1"></a><span class="in">    line="${line//transcript::/}"</span></span>
+<span id="cb28-321"><a href="#cb28-321" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb28-322"><a href="#cb28-322" aria-hidden="true" tabindex="-1"></a><span class="in">    # Split the line by ':' to get the chromosome and position string</span></span>
+<span id="cb28-323"><a href="#cb28-323" aria-hidden="true" tabindex="-1"></a><span class="in">    IFS=':' read -r chromosome pos &lt;&lt;&lt; "$line"</span></span>
+<span id="cb28-324"><a href="#cb28-324" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb28-325"><a href="#cb28-325" aria-hidden="true" tabindex="-1"></a><span class="in">    # Split the position string by '-' to separate start and end positions</span></span>
+<span id="cb28-326"><a href="#cb28-326" aria-hidden="true" tabindex="-1"></a><span class="in">    IFS='-' read -r start end &lt;&lt;&lt; "$pos"</span></span>
+<span id="cb28-327"><a href="#cb28-327" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb28-328"><a href="#cb28-328" aria-hidden="true" tabindex="-1"></a><span class="in">    # Convert the start position to 0-based by subtracting 1</span></span>
+<span id="cb28-329"><a href="#cb28-329" aria-hidden="true" tabindex="-1"></a><span class="in">    start=$((start - 1))</span></span>
+<span id="cb28-330"><a href="#cb28-330" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb28-331"><a href="#cb28-331" aria-hidden="true" tabindex="-1"></a><span class="in">    # Write the chromosome, updated start, and end positions to the output file (tab-separated)</span></span>
+<span id="cb28-332"><a href="#cb28-332" aria-hidden="true" tabindex="-1"></a><span class="in">    printf "%s\t%s\t%s\n" "$chromosome" "$start" "$end"</span></span>
+<span id="cb28-333"><a href="#cb28-333" aria-hidden="true" tabindex="-1"></a><span class="in">done &lt; "$input" &gt; "$output"</span></span>
+<span id="cb28-334"><a href="#cb28-334" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-335"><a href="#cb28-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-336"><a href="#cb28-336" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, engine='bash'}</span></span>
+<span id="cb28-337"><a href="#cb28-337" aria-hidden="true" tabindex="-1"></a><span class="in">head -1 "${OUTPUT_DIR}/lncRNA.gtf"</span></span>
+<span id="cb28-338"><a href="#cb28-338" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-339"><a href="#cb28-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-340"><a href="#cb28-340" aria-hidden="true" tabindex="-1"></a><span class="in">```{r renamegtf, engine='bash'}</span></span>
+<span id="cb28-341"><a href="#cb28-341" aria-hidden="true" tabindex="-1"></a><span class="in">awk 'BEGIN{OFS="\t"; count=1} {printf "%s\t.\tlncRNA\t%d\t%d\t.\t+\t.\tgene_id \"lncRNA_%03d\";\n", $1, $2, $3, count++;}' "${OUTPUT_DIR}/lncRNA.bed" \</span></span>
+<span id="cb28-342"><a href="#cb28-342" aria-hidden="true" tabindex="-1"></a><span class="in">&gt; "${OUTPUT_DIR}/lncRNA.gtf"</span></span>
+<span id="cb28-343"><a href="#cb28-343" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb28-344"><a href="#cb28-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-345"><a href="#cb28-345" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary Table</span></span>
+<span id="cb28-346"><a href="#cb28-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-347"><a href="#cb28-347" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summary, engine='bash'}</span></span>
+<span id="cb28-348"><a href="#cb28-348" aria-hidden="true" tabindex="-1"></a><span class="in">tf_file="${OUTPUT_DIR}/lncRNA.gtf"</span></span>
+<span id="cb28-349"><a href="#cb28-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-350"><a href="#cb28-350" aria-hidden="true" tabindex="-1"></a><span class="in">awk '</span></span>
+<span id="cb28-351"><a href="#cb28-351" aria-hidden="true" tabindex="-1"></a><span class="in">BEGIN {</span></span>
+<span id="cb28-352"><a href="#cb28-352" aria-hidden="true" tabindex="-1"></a><span class="in">    total_entries = 0;</span></span>
+<span id="cb28-353"><a href="#cb28-353" aria-hidden="true" tabindex="-1"></a><span class="in">    min_length = 1e9;</span></span>
+<span id="cb28-354"><a href="#cb28-354" aria-hidden="true" tabindex="-1"></a><span class="in">    max_length = 0;</span></span>
+<span id="cb28-355"><a href="#cb28-355" aria-hidden="true" tabindex="-1"></a><span class="in">    sum_length = 0;</span></span>
+<span id="cb28-356"><a href="#cb28-356" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb28-357"><a href="#cb28-357" aria-hidden="true" tabindex="-1"></a><span class="in"># Skip comment lines</span></span>
+<span id="cb28-358"><a href="#cb28-358" aria-hidden="true" tabindex="-1"></a><span class="in">/^#/ { next }</span></span>
+<span id="cb28-359"><a href="#cb28-359" aria-hidden="true" tabindex="-1"></a><span class="in">{</span></span>
+<span id="cb28-360"><a href="#cb28-360" aria-hidden="true" tabindex="-1"></a><span class="in">    if (NF &lt; 9) next;</span></span>
+<span id="cb28-361"><a href="#cb28-361" aria-hidden="true" tabindex="-1"></a><span class="in">    total_entries++;</span></span>
+<span id="cb28-362"><a href="#cb28-362" aria-hidden="true" tabindex="-1"></a><span class="in">    start = $4;</span></span>
+<span id="cb28-363"><a href="#cb28-363" aria-hidden="true" tabindex="-1"></a><span class="in">    end = $5;</span></span>
+<span id="cb28-364"><a href="#cb28-364" aria-hidden="true" tabindex="-1"></a><span class="in">    gene_length = end - start + 1;</span></span>
+<span id="cb28-365"><a href="#cb28-365" aria-hidden="true" tabindex="-1"></a><span class="in">    if (gene_length &lt; min_length) min_length = gene_length;</span></span>
+<span id="cb28-366"><a href="#cb28-366" aria-hidden="true" tabindex="-1"></a><span class="in">    if (gene_length &gt; max_length) max_length = gene_length;</span></span>
+<span id="cb28-367"><a href="#cb28-367" aria-hidden="true" tabindex="-1"></a><span class="in">    sum_length += gene_length;</span></span>
+<span id="cb28-368"><a href="#cb28-368" aria-hidden="true" tabindex="-1"></a><span class="in">    feature[$3]++;</span></span>
+<span id="cb28-369"><a href="#cb28-369" aria-hidden="true" tabindex="-1"></a><span class="in">    chrom[$1]++;</span></span>
+<span id="cb28-370"><a href="#cb28-370" aria-hidden="true" tabindex="-1"></a><span class="in">    # Use two-argument match() and then extract the gene_id manually.</span></span>
+<span id="cb28-371"><a href="#cb28-371" aria-hidden="true" tabindex="-1"></a><span class="in">    if (match($9, /gene_id "[^"]+"/)) {</span></span>
+<span id="cb28-372"><a href="#cb28-372" aria-hidden="true" tabindex="-1"></a><span class="in">        gene_str = substr($9, RSTART, RLENGTH);</span></span>
+<span id="cb28-373"><a href="#cb28-373" aria-hidden="true" tabindex="-1"></a><span class="in">        # Remove the "gene_id " prefix and the quotes.</span></span>
+<span id="cb28-374"><a href="#cb28-374" aria-hidden="true" tabindex="-1"></a><span class="in">        gsub(/gene_id "/, "", gene_str);</span></span>
+<span id="cb28-375"><a href="#cb28-375" aria-hidden="true" tabindex="-1"></a><span class="in">        gsub(/"/, "", gene_str);</span></span>
+<span id="cb28-376"><a href="#cb28-376" aria-hidden="true" tabindex="-1"></a><span class="in">        genes[gene_str] = 1;</span></span>
+<span id="cb28-377"><a href="#cb28-377" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb28-378"><a href="#cb28-378" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb28-379"><a href="#cb28-379" aria-hidden="true" tabindex="-1"></a><span class="in">END {</span></span>
+<span id="cb28-380"><a href="#cb28-380" aria-hidden="true" tabindex="-1"></a><span class="in">    avg_length = (total_entries &gt; 0) ? sum_length / total_entries : 0;</span></span>
+<span id="cb28-381"><a href="#cb28-381" aria-hidden="true" tabindex="-1"></a><span class="in">    unique_gene_count = 0;</span></span>
+<span id="cb28-382"><a href="#cb28-382" aria-hidden="true" tabindex="-1"></a><span class="in">    for (g in genes)</span></span>
+<span id="cb28-383"><a href="#cb28-383" aria-hidden="true" tabindex="-1"></a><span class="in">        unique_gene_count++;</span></span>
+<span id="cb28-384"><a href="#cb28-384" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Basic GTF File Statistics:";</span></span>
+<span id="cb28-385"><a href="#cb28-385" aria-hidden="true" tabindex="-1"></a><span class="in">    print "--------------------------";</span></span>
+<span id="cb28-386"><a href="#cb28-386" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Total entries:      " total_entries;</span></span>
+<span id="cb28-387"><a href="#cb28-387" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Unique genes:       " unique_gene_count;</span></span>
+<span id="cb28-388"><a href="#cb28-388" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Min gene length:    " min_length;</span></span>
+<span id="cb28-389"><a href="#cb28-389" aria-hidden="true" tabindex="-1"></a><span class="in">    print "Max gene length:    " max_length;</span></span>
+<span id="cb28-390"><a href="#cb28-390" aria-hidden="true" tabindex="-1"></a><span class="in">    printf("Average gene length: %.2f\n", avg_length);</span></span>
+<span id="cb28-391"><a href="#cb28-391" aria-hidden="true" tabindex="-1"></a><span class="in">    print "\nFeature counts:";</span></span>
+<span id="cb28-392"><a href="#cb28-392" aria-hidden="true" tabindex="-1"></a><span class="in">    for (f in feature) {</span></span>
+<span id="cb28-393"><a href="#cb28-393" aria-hidden="true" tabindex="-1"></a><span class="in">        print "  " f ": " feature[f];</span></span>
+<span id="cb28-394"><a href="#cb28-394" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb28-395"><a href="#cb28-395" aria-hidden="true" tabindex="-1"></a><span class="in">    print "\nChromosome counts:";</span></span>
+<span id="cb28-396"><a href="#cb28-396" aria-hidden="true" tabindex="-1"></a><span class="in">    for (c in chrom) {</span></span>
+<span id="cb28-397"><a href="#cb28-397" aria-hidden="true" tabindex="-1"></a><span class="in">        print "  " c ": " chrom[c];</span></span>
+<span id="cb28-398"><a href="#cb28-398" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb28-399"><a href="#cb28-399" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb28-400"><a href="#cb28-400" aria-hidden="true" tabindex="-1"></a><span class="in">' "$tf_file"</span></span>
+<span id="cb28-401"><a href="#cb28-401" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

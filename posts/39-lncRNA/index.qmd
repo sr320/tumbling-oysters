@@ -23,8 +23,8 @@ format:
     code-overflow: wrap
 ---
 
-
 ## Overview
+
 This lab notebook documents the process of identifying long non-coding RNAs (lncRNAs) from RNA-seq data. The pipeline includes data acquisition, genome alignment, transcript assembly, filtering, and classification.
 
 ## Setup
@@ -41,8 +41,6 @@ knitr::opts_chunk$set(
   comment = ""         # Prevents '##' in output
 )
 ```
-
-
 
 # Variables
 
@@ -115,13 +113,10 @@ Sys.setenv(
 )
 ```
 
-
 ```{r mkdir, engine='bash'}
 mkdir -p "${DATA_DIR}"
 mkdir -p "${OUTPUT_DIR}"
 ```
-
-
 
 # Download Genome and Reads for Hisat
 
@@ -137,7 +132,6 @@ wget -nv -r \
 ls ${FASTQ_DIR}
 ```
 
-
 ```{r fasta, engine='bash'}
 
 curl -o "${GENOME_FASTA}" "${GENOME_SOURCE}"
@@ -148,7 +142,6 @@ curl -o "${GENOME_FASTA}" "${GENOME_SOURCE}"
 
 curl -o "${GENOME_GTF}" "${GTF_SOURCE}"
 ```
-
 
 ```{r gff, engine='bash'}
 
@@ -170,7 +163,6 @@ else
 fi
 ```
 
-
 # HISAT
 
 ```{r, engine='bash'}
@@ -179,8 +171,6 @@ fi
 "${HISAT2_DIR}hisat2_extract_splice_sites.py" "${GENOME_GTF}" > "${OUTPUT_DIR}/splice_sites.txt"
 
 ```
-
-
 
 ```{r, engine='bash'}
 
@@ -193,10 +183,6 @@ fi
   2> "${OUTPUT_DIR}/hisat2-build_stats.txt"
 
 ```
-
-
-
-
 
 ```{bash}
 # Loop over every file ending in .fastq.gz that contains "_R2_"
@@ -222,8 +208,8 @@ for r2 in "${FASTQ_DIR}"/*_R2_*."${FASTQ_SUFFIX}"; do
       -S "$output"
 done
 ```
-## convert SAM to BAM
 
+## convert SAM to BAM
 
 ```{r convertSAM, engine='bash'}
 for samfile in "${OUTPUT_DIR}/${sample}"*.sam; do
@@ -241,10 +227,6 @@ for samfile in "${OUTPUT_DIR}/${sample}"*.sam; do
 done
 ```
 
-
-
-
-
 # StringTie
 
 StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF (Gene Transfer Format) files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples–an important step in creating a canonical list of lncRNAs across all samples included in the pipeline.
@@ -259,8 +241,6 @@ find "${OUTPUT_DIR}" -name "*sorted.bam" \
 "${OUTPUT_DIR}/{}.sorted.bam"
 ```
 
-
-
 ```{r merge, engine='bash'}
 "${STRINGTIE_DIR}stringtie" \
 --merge \
@@ -273,8 +253,6 @@ find "${OUTPUT_DIR}" -name "*sorted.bam" \
 
 ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_687474703a2f2f67616e6e65742e666973682e77617368696e67746f6e2e6564752f7365617368656c6c2f736e6170732f323032332d31312d30335f30392d3_2024-12-20_04-02-37.png)
 
-
-
 ```{r gffcomp, engine='bash'}
 "${GFFCOMPARE_DIR}gffcompare" \
 -r "${GENOME_GFF}" \
@@ -285,8 +263,6 @@ find "${OUTPUT_DIR}" -name "*sorted.bam" \
 ```{r viewgff, engine='bash'}
 head -1 "${OUTPUT_DIR}"/gffcompare_merged*
 ```
-
-
 
 ```{r gff filter, engine='bash'}
 awk '$3 == "transcript" && $1 !~ /^#/' "${OUTPUT_DIR}/gffcompare_merged.annotated.gtf" | \
@@ -306,8 +282,6 @@ awk '($5 - $4 > 199) || ($4 - $5 > 199)' > "${OUTPUT_DIR}/lncRNA_candidates.gtf"
 
 #CPC2
 
-
-
 ```{r cpc2, engine='bash'}
 eval "$(/opt/anaconda/anaconda3/bin/conda shell.bash hook)"
 python "${CPC2_DIR}"CPC2.py \
@@ -320,7 +294,6 @@ Filter
 ```{r filCPC, engine='bash'}
 awk '$8 == "noncoding" {print $1}' "${OUTPUT_DIR}/CPC2.txt" > "${OUTPUT_DIR}/noncoding_transcripts_ids.txt"
 ```
-
 
 Subsetting fasta
 
@@ -362,15 +335,12 @@ done < "$input" > "$output"
 head -1 "${OUTPUT_DIR}/lncRNA.gtf"
 ```
 
-
 ```{r renamegtf, engine='bash'}
 awk 'BEGIN{OFS="\t"; count=1} {printf "%s\t.\tlncRNA\t%d\t%d\t.\t+\t.\tgene_id \"lncRNA_%03d\";\n", $1, $2, $3, count++;}' "${OUTPUT_DIR}/lncRNA.bed" \
 > "${OUTPUT_DIR}/lncRNA.gtf"
 ```
 
 # Summary Table
-
-
 
 ```{r summary, engine='bash'}
 tf_file="${OUTPUT_DIR}/lncRNA.gtf"
@@ -427,4 +397,3 @@ END {
 }
 ' "$tf_file"
 ```
-
