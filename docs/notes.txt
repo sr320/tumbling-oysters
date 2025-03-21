@@ -5,68 +5,6 @@ execute:
   echo: false  # Do not show code in the output
 ---
 
-## Note (2025-03-04 06:59:36)
-
-| 62-7174 | CLIMATE RESILIENCE | CC100950 CoEnv | Aquatic and Fishery Sciences (SAFS) - R&E | PG107267 | GR014587 | FD200 | RS100077 | FN111 |
-
-## Note (2025-03-01 11:45:01)
-
-Get the Peve time series methylation array, stuff in a notebook
-
-## Note (2025-03-01 08:14:36)
-
-Run deep expression on symbiont
-
-## Note (2025-02-28 12:40:04)
-
-https://gannet.fish.washington.edu/spartina/project-oyster-oa/Haws/
-
-## Note (2025-02-28 07:40:26)
-
-One thing that I really want to get done, let's put it on a to do item and maybe if we search for to do it'll come up, but I'd like to develop some research retrospective to come up on my website to look at kind of past effort and and summarize in particularly if we're not there, they're not active areas you know I'm thinking Olympia oyster I just changed that I'm also thinking active efforts to might be might be valued #todo
-
-\<!— block assistant —\> Develop a research retrospective section on my website:
-
-1.  Plan where to incorporate the section on the website, consider where it can be easily accessed and seen.
-2.  Begin to gather and compile the information for past projects, focusing on non-active ones like the Olympia oyster.
-3.  Write thorough summaries of each project, detailing the process, findings, and why the project ended or is currently inactive.
-4.  Design the website section to be engaging and easy to understand.
-5.  Build out ‘active efforts’ section as well, keeping it updated with current projects and research.
-6.  Once the section is ready, test for usability and functionality.
-7.  Upload and monitor the performance of the new section.
-8.  Consider promoting the new section through various channels to ensure it catches the attention of site visitors.
-
-This could be a great way to showcase past achievements and pursuits. It could also aid in sparking interest in currently active projects. #todo \<!— endblock —\>
-
-## Note (2025-02-28 06:36:47)
-
-Goal today is getting e5 lncrna discovery pipeline up.
-
-## Note (2025-02-25 16:45:09)
-
-My Afternoon
-
-```         
-•   I met with the research administration team to discuss my grants
-•   I need to carefully manage my budgets for grants ending this summer
-•   I’m still waiting to hear back from NSF about a no-cost extension
-•   I’m having some challenges finding postdocs to hire
-•   Around 3:15 PM, I had a discussion about my course and research
-•   We talked about the effectiveness of online vs. in-person recitations
-```
-
-## Note (2025-02-25 16:25:35)
-
-Today I did not do much coding- class stuff and admin meetings
-
-## Note (2025-02-24 20:05:58)
-
-I am done for now
-
-## Note (2025-02-24 19:51:44)
-
-docs/notes.txt
-
 ## Note (2025-02-24 19:50:12)
 
 OK, can I get a QMD file to a text file?
@@ -78,20 +16,24 @@ From phone to render
 ## Note (2025-02-24 18:41:04)
 
 # Install R
-
-sudo apt update sudo apt install -y r-base
+sudo apt update
+sudo apt install -y r-base
 
 # Install Quarto
-
-wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.3.450/quarto-1.3.450-linux-amd64.deb sudo dpkg -i quarto-1.3.450-linux-amd64.deb rm quarto-1.3.450-linux-amd64.deb quarto --version \# Verify installation
+wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.3.450/quarto-1.3.450-linux-amd64.deb
+sudo dpkg -i quarto-1.3.450-linux-amd64.deb
+rm quarto-1.3.450-linux-amd64.deb
+quarto --version  # Verify installation
 
 # Install R Packages in a User-Writable Directory
-
-mkdir -p \~/R/library echo 'R_LIBS_USER=\~/R/library' \>\> \~/.Renviron Rscript -e 'install.packages(c(rmarkdown, knitr), repos=http://cran.rstudio.com/, lib=\~/R/library)'
+mkdir -p ~/R/library
+echo 'R_LIBS_USER=~/R/library' >> ~/.Renviron
+Rscript -e 'install.packages(c(rmarkdown, knitr), repos=http://cran.rstudio.com/, lib=~/R/library)'
 
 # Render Quarto document to docs/
-
-export R_LIBS_USER=\~/R/library \# Ensure R finds the installed packages mkdir -p docs \# Ensure docs/ exists before rendering quarto render notes.qmd --to html --output-dir docs
+export R_LIBS_USER=~/R/library  # Ensure R finds the installed packages
+mkdir -p docs  # Ensure docs/ exists before rendering
+quarto render notes.qmd --to html --output-dir docs
 
 ## Note (2025-02-24 17:20:26)
 
@@ -101,10 +43,10 @@ export R_LIBS_USER=\~/R/library \# Ensure R finds the installed packages mkdir -
 
 # Tasks
 
-1.  Email Matt about triploid oysters.
-2.  Review Arianna's proposal.
-3.  Review Eva's proposal.
-4.  Send an email to EarthLab.
+1. Email Matt about triploid oysters.
+2. Review Arianna's proposal.
+3. Review Eva's proposal.
+4. Send an email to EarthLab.
 
 ## Note (2025-02-24 16:12:50)
 
