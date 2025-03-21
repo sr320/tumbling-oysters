@@ -104,7 +104,7 @@ This assessment compares the genomic assemblies and annotations of three coral s
 
 -   **Gene Count:** Peve has the highest number of predicted genes, followed by Apul and Ptuh.
 -   **Annotation Features:** Apul includes tRNA annotations, which are absent in Peve and Ptuh. This suggests a more comprehensive annotation in Apul.
--   **Unique Sources:** Different gene prediction tools were used—Apul (funannotate), Peve (Gmove), Ptuh (AUGUSTUS)—which may affect gene count and features.
+-   **Unique Sources:** Different gene prediction tools were used---Apul (funannotate), Peve (Gmove), Ptuh (AUGUSTUS)---which may affect gene count and features.
 
 #### **Gene Length and Total Bases**
 
@@ -145,7 +145,7 @@ This assessment compares the genomic assemblies and annotations of three coral s
 
 **Recommendation:** For comparative genomics and evolutionary studies, researchers should consider the differences in assembly quality and annotation methods. Standardizing gene prediction tools and reannotating genomes where necessary could enhance the reliability of cross-species comparisons.
 
----
+------------------------------------------------------------------------
 
 data:
 
