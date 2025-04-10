@@ -432,6 +432,1229 @@ font-style: inherit;">head</span> ../output/25-Apul-epimods-blast/Mach-blastp-Ap
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_23_GO_Annoations_2025-04-10_12-36-18.png" medium="image" type="image/png"/>
 </item>
 <item>
+  <title>Getting to GO with Phenotype</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/41-Apul-GO/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="go-annotations" class="level1">
+<h1>GO Annotations</h1>
+<p>Steven Roberts 2025-03-21</p>
+<ul>
+<li>Variables</li>
+<li>Aerobic respiration (GO:0009060)</li>
+<li>Oxidative phosphorylation (GO:0006119)</li>
+<li>Canonical glycolysis (GO:0061621)</li>
+<li>Tricarboxylic Acid Cycle (GO:0006099)</li>
+<li>Summary of blast hits</li>
+</ul>
+<p>Want to start with grabbing protein with specific GOs</p>
+<p>see also https://www.ebi.ac.uk/QuickGO/annotations</p>
+</section>
+<section id="variables" class="level1">
+<h1>Variables</h1>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Global R options</span></span>
+<span id="cb1-2">knitr<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span>opts_chunk<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">set</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">echo =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define key paths and tool directories</span></span>
+<span id="cb1-5"> </span>
+<span id="cb1-6">OUT_DIR <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/27-Apul-pheno-annot/"</span></span>
+<span id="cb1-7">evalue <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"1E-20"</span></span>
+<span id="cb1-8">fasta <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/Apulchra-genome.pep.faa"</span></span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Export these as environment variables for bash chunks.</span></span>
+<span id="cb1-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Sys.setenv</span>(</span>
+<span id="cb1-12">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">OUT_DIR =</span> OUT_DIR,</span>
+<span id="cb1-13">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">evalue =</span> evalue,</span>
+<span id="cb1-14">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fasta =</span>fasta</span>
+<span id="cb1-15">)</span></code></pre></div>
+</section>
+<section id="aerobic-respiration-go0009060" class="level1">
+<h1>Aerobic respiration (GO:0009060)</h1>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">GO</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0009060"</span></span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-H</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Accept: text/plain"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://rest.uniprot.org/uniprotkb/stream?format=fasta&amp;query=%28%28go%3A"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%29%29+AND+%28reviewed%3Atrue%29"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb2-4"></span>
+<span id="cb2-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb2-6"></span>
+<span id="cb2-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Proteins"</span></span>
+<span id="cb2-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&gt;"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb2-9"></span>
+<span id="cb2-10"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/makeblastdb</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-11">-in <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-12">-dbtype prot <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-13">-out <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb2-14"></span>
+<span id="cb2-15"></span>
+<span id="cb2-16"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/blastp</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-17">-query <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fasta</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-18">-db <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-19">-out <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-20">-evalue <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${evalue}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-21">-num_threads 42 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-22">-max_target_seqs 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-23">-max_hsps 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-24">-outfmt 6 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-25">2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>blast_warnings<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.txt</span>
+<span id="cb2-26"></span>
+<span id="cb2-27"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab</span>
+<span id="cb2-28"></span>
+<span id="cb2-29"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of hits"</span></span>
+<span id="cb2-30"></span>
+<span id="cb2-31"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab</span></code></pre></div>
+<pre><code>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+100  673k    0  673k    0     0   378k      0 --:--:--  0:00:01 --:--:--  377k
+100 2157k    0 2157k    0     0   768k      0 --:--:--  0:00:02 --:--:--  768k
+100 3305k    0 3305k    0     0   868k      0 --:--:--  0:00:03 --:--:--  868k
+100 4953k    0 4953k    0     0  1015k      0 --:--:--  0:00:04 --:--:-- 1015k
+100 5219k    0 5219k    0     0  1064k      0 --:--:--  0:00:04 --:--:-- 1346k
+&gt;sp|A0A096P8D3|IDH_OSTTA Isocitrate dehydrogenase (NAD(+)), mitochondrial OS=Ostreococcus tauri OX=70448 GN=IDH PE=1 SV=1
+MTRVERGRVLARAIERAVAHRASARRWTTTTRTPAWMVTGWMGGRGVDRSTAMTRFERCG
+STASSKITAAPMVYVRGEEMTAYVMDLIRSRWIEPRVDVGGWETFDLRAKNRDDTEDRVL
+RDVIEAGKRIKAIFKEPTVTPTADQVKRLGLRKSWGSPNGAMRRGWNGITISRDTIHIDG
+VELGYKKPVLFERHAVGGEYSAGYKNVGKGKLTTTFTPSEGPDAGKTVVVDEREIVDEEA
+AVVTYHNPYDNVHDLARFFFGRCLEAKVTPYVVTKKTVFKWQEPFWQIMRTVFDEEFKAQ
+FVAAGVMKEGEELVHLLSDAATMKLVQWRQGGFGMAAHNYDGDVLTDELAQVHKSPGFIT
+SNLVGVHEDGTLIKEFEASHGTVADMDEARLRGEETSLNPLGMVEGLIGAMNHAADVHNI
+DRDRTHAFTTKMRTVIHQLFREGKGTRDLCGPSGLTTEQFIDAVAERLDA
+&gt;sp|A0A0D2Y5A7|ODP2_FUSO4 Dihydrolipoyllysine-residue acetyltransferase component of pyruvate dehydrogenase complex, mitochondrial OS=Fusarium oxysporum f. sp. lycopersici (strain 4287 / CBS 123668 / FGSC 9935 / NRRL 34936) OX=426428 GN=LAT1 PE=1 SV=1
+Number of Proteins
+10978
+
+
+Building a new DB, current time: 03/21/2025 12:49:44
+New DB name:   /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/27-Apul-pheno-annot/SwissProt-GO:0009060
+New DB title:  ../output/27-Apul-pheno-annot/SwissProt-GO:0009060.fa
+Sequence type: Protein
+Deleted existing Protein BLAST database named /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/27-Apul-pheno-annot/SwissProt-GO:0009060
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 10978 sequences in 0.179029 seconds.
+
+
+FUN_000047-T1   sp|Q757N1|H3_EREGS  88.971  136 15  0   4   139 1   136 2.14e-86    246
+FUN_000049-T1   sp|Q757N1|H3_EREGS  92.079  101 8   0   1   101 1   101 1.61e-63    190
+FUN_000051-T1   sp|Q757N1|H3_EREGS  92.079  101 8   0   1   101 1   101 1.61e-63    190
+FUN_000053-T1   sp|Q757N1|H3_EREGS  92.079  101 8   0   1   101 1   101 1.61e-63    190
+FUN_000055-T1   sp|Q757N1|H3_EREGS  92.079  101 8   0   1   101 1   101 1.61e-63    190
+FUN_000057-T1   sp|Q757N1|H3_EREGS  92.079  101 8   0   1   101 1   101 1.61e-63    190
+FUN_000059-T1   sp|Q757N1|H3_EREGS  92.079  101 8   0   1   101 1   101 1.61e-63    190
+FUN_000061-T1   sp|Q757N1|H3_EREGS  92.079  101 8   0   1   101 1   101 1.61e-63    190
+FUN_000063-T1   sp|Q757N1|H3_EREGS  92.079  101 8   0   1   101 1   101 1.61e-63    190
+FUN_000065-T1   sp|Q757N1|H3_EREGS  88.971  136 15  0   4   139 1   136 2.14e-86    246
+Number of hits
+616 ../output/27-Apul-pheno-annot/Apul_blastp-GO:0009060_out.tab</code></pre>
+</section>
+<section id="oxidative-phosphorylation-go0006119" class="level1">
+<h1>Oxidative phosphorylation (GO:0006119)</h1>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">GO</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0006119"</span></span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-H</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Accept: text/plain"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://rest.uniprot.org/uniprotkb/stream?format=fasta&amp;query=%28%28go%3A"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%29%29+AND+%28reviewed%3Atrue%29"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb4-4"></span>
+<span id="cb4-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb4-6"></span>
+<span id="cb4-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Proteins"</span></span>
+<span id="cb4-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&gt;"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb4-9"></span>
+<span id="cb4-10"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/makeblastdb</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-11">-in <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-12">-dbtype prot <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-13">-out <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb4-14"></span>
+<span id="cb4-15"></span>
+<span id="cb4-16"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/blastp</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-17">-query <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fasta</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-18">-db <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-19">-out <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-20">-evalue <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${evalue}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-21">-num_threads 42 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-22">-max_target_seqs 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-23">-max_hsps 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-24">-outfmt 6 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-25">2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>blast_warnings<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.txt</span>
+<span id="cb4-26"></span>
+<span id="cb4-27"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab</span>
+<span id="cb4-28"></span>
+<span id="cb4-29"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of hits"</span></span>
+<span id="cb4-30"></span>
+<span id="cb4-31"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab</span></code></pre></div>
+<pre><code>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  479k    0  479k    0     0   285k      0 --:--:--  0:00:01 --:--:--  285k
+100 2632k    0 2632k    0     0   969k      0 --:--:--  0:00:02 --:--:--  969k
+100 2675k    0 2675k    0     0   984k      0 --:--:--  0:00:02 --:--:--  983k
+&gt;sp|A0A1D8PHA3|CYT1_CANAL Cytochrome b-c1 complex catalytic subunit, mitochondrial OS=Candida albicans (strain SC5314 / ATCC MYA-2876) OX=237561 GN=CYT1 PE=1 SV=1
+MFRTAYKTMNQSMVQKFIAGGVGVTGLTASYLLYQDSMTADAMTAAEHGLHPPAYNWPHN
+GMFETFDHASIRRGFQVYREVCAACHSLDRIAWRNLVGVSHTTSEAKAMAEELEYDDEPD
+DEGKPRKRPGKLADYIPGPYENEQAARAANQGAYPPDLSLIVKARHGGSDYIFSLLTGYP
+DEPPAGVVLPEGSNYNPYFPGGAIAMGRVLFDDLVEYEDGTPATTSQMAKDVSTFLNWAS
+EPEHDDRKKWGLKALVVLSSLYLLSIWVKRFKWTPIKNRKFRFDPPKK
+&gt;sp|A0A1D8PJX3|RIP1_CANAL Cytochrome b-c1 complex subunit Rieske, mitochondrial OS=Candida albicans (strain SC5314 / ATCC MYA-2876) OX=237561 GN=RIP1 PE=1 SV=1
+MSSLAFRTLRNGLGLKSSVRALSTTTTTLSNYQQPDYSSYLNNKSGQGSRNFTYFMVGSM
+GLLSAAGAKSTVEAFLSSFAASADVLAMAKVEVKLGAIPEGKNVIIKWQGKPVFIRHRTA
+DEIEEANQVDIKTLRDPQNDADRVKKPEWLIMLGICTHLGCVPIGEAGDFGGWFCPCHGS
+Number of Proteins
+6140
+
+
+Building a new DB, current time: 03/21/2025 12:50:54
+New DB name:   /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/27-Apul-pheno-annot/SwissProt-GO:0006119
+New DB title:  ../output/27-Apul-pheno-annot/SwissProt-GO:0006119.fa
+Sequence type: Protein
+Deleted existing Protein BLAST database named /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/27-Apul-pheno-annot/SwissProt-GO:0006119
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 6140 sequences in 0.103551 seconds.
+
+
+FUN_000943-T1   sp|Q791V5|MTCH2_MOUSE   41.549  284 162 2   24  305 8   289 2.00e-80    243
+FUN_000977-T1   sp|Q6XHB2|ROCO4_DICDI   30.035  283 163 10  589 848 1023    1293    6.93e-28    119
+FUN_001181-T1   sp|O52683|HYDA_THEMA    29.902  408 237 17  115 515 184 549 5.65e-40    151
+FUN_001463-T1   sp|Q6XHB2|ROCO4_DICDI   27.059  340 219 14  1552    1876    954 1279    1.37e-23    107
+FUN_001483-T1   sp|Q6CFT7|ATPB_YARLI    25.301  415 280 10  45  448 52  447 3.17e-29    117
+FUN_001648-T1   sp|P24539|AT5F1_HUMAN   39.691  194 108 3   15  207 62  247 2.52e-38    130
+FUN_001648-T2   sp|P24539|AT5F1_HUMAN   40.314  191 105 3   47  236 62  244 2.48e-38    131
+FUN_003901-T1   sp|P29410|KAD2_RAT  34.314  204 105 5   30  204 20  223 9.03e-29    105
+FUN_004027-T1   sp|Q05752|NDUA7_BOVIN   53.947  76  34  1   1   75  1   76  6.67e-23    83.2
+FUN_004095-T1   sp|Q6XHB2|ROCO4_DICDI   28.975  283 175 10  37  301 1015    1289    2.80e-21    96.3
+Number of hits
+130 ../output/27-Apul-pheno-annot/Apul_blastp-GO:0006119_out.tab</code></pre>
+</section>
+<section id="canonical-glycolysis-go0061621" class="level1">
+<h1>Canonical glycolysis (GO:0061621)</h1>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">GO</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0061621"</span></span>
+<span id="cb6-2"></span>
+<span id="cb6-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-H</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Accept: text/plain"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://rest.uniprot.org/uniprotkb/stream?format=fasta&amp;query=%28%28go%3A"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%29%29+AND+%28reviewed%3Atrue%29"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb6-4"></span>
+<span id="cb6-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb6-6"></span>
+<span id="cb6-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Proteins"</span></span>
+<span id="cb6-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&gt;"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb6-9"></span>
+<span id="cb6-10"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/makeblastdb</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-11">-in <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-12">-dbtype prot <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-13">-out <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb6-14"></span>
+<span id="cb6-15"></span>
+<span id="cb6-16"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/blastp</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-17">-query <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fasta</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-18">-db <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-19">-out <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-20">-evalue <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${evalue}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-21">-num_threads 42 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-22">-max_target_seqs 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-23">-max_hsps 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-24">-outfmt 6 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-25">2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>blast_warnings<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.txt</span>
+<span id="cb6-26"></span>
+<span id="cb6-27"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab</span>
+<span id="cb6-28"></span>
+<span id="cb6-29"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of hits"</span></span>
+<span id="cb6-30"></span>
+<span id="cb6-31"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab</span></code></pre></div>
+<pre><code>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+100  208k    0  208k    0     0   117k      0 --:--:--  0:00:01 --:--:--  117k
+&gt;sp|A1A4J1|PFKAL_BOVIN ATP-dependent 6-phosphofructokinase, liver type OS=Bos taurus OX=9913 GN=PFKL PE=2 SV=1
+MASVDLEKLRTTGAGKAIGVLTSGGDAQGMNAAVRAVTRMGIYVGAKVFLIYEGYEGLVE
+GGENIKQANWLSVSNIIQLGGTVIGSARCKAFTTREGRRAAAYNLVQRGITNLCVIGGDG
+SLTGANIFRSEWGSLLEELVSEGKISEGTAQTYSHLNIAGLVGSIDNDFCGTDMTIGTDS
+ALHRIMEVIDAITTTAQSHQRTFVLEVMGRHCGYLALVSALASGADWLFIPEAPPEDGWE
+NFMCERLGETRSRGSRLNIIIIAEGAIDRNGKPISSRYVKDLVVQRLGFDTRVTVLGHVQ
+RGGTPSAFDRILSSKMGMEAVMALLEATPDTPACVVSLSGNQSVRLPLMECVQMTKEVQK
+AMDEKRFDEAIQLRGGSFENNWNIYKLLSHQKISKEKTNFSLAILNVGAPAAGMNAAVRS
+AVRSGISQGHTVYVVHDGFEGLAKNQVQEVSWHDVAGWLGRGGSMLGTKRTLPKGFMEKI
+VENIRLHNIHALLVIGGFEAYEGVLQLVEARGRYEELCIVMCVIPATISNNVPGTDFSLG
+Number of Proteins
+394
+
+
+Building a new DB, current time: 03/21/2025 12:51:31
+New DB name:   /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/27-Apul-pheno-annot/SwissProt-GO:0061621
+New DB title:  ../output/27-Apul-pheno-annot/SwissProt-GO:0061621.fa
+Sequence type: Protein
+Deleted existing Protein BLAST database named /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/27-Apul-pheno-annot/SwissProt-GO:0061621
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 394 sequences in 0.0159671 seconds.
+
+
+FUN_005030-T1   sp|P85037|FOXK1_HUMAN   51.000  100 48  1   95  194 302 400 4.38e-26    103
+FUN_005036-T1   sp|P42128|FOXK1_MOUSE   48.454  97  50  0   30  126 290 386 1.70e-27    105
+FUN_005159-T1   sp|Q3UCQ1|FOXK2_MOUSE   52.041  98  45  1   95  190 247 344 7.57e-28    108
+FUN_008233-T1   sp|Q7ZX03|FOXK2_XENLA   43.066  137 75  1   37  173 188 321 1.35e-33    125
+FUN_009301-T1   sp|Q867C9|PFKAM_HORSE   58.634  776 300 4   70  833 13  779 0.0 935
+FUN_010519-T1   sp|P00940|TPIS_CHICK    69.672  244 74  0   3   246 4   247 1.09e-126   353
+FUN_012871-T1   sp|P00940|TPIS_CHICK    69.672  244 74  0   3   246 4   247 1.09e-126   353
+FUN_013147-T1   sp|Q7ZX03|FOXK2_XENLA   46.939  98  50  1   143 238 215 312 3.77e-24    96.3
+FUN_013305-T1   sp|P42128|FOXK1_MOUSE   42.202  109 61  1   47  153 287 395 2.42e-22    86.7
+FUN_015434-T1   sp|P05064|ALDOA_MOUSE   72.269  357 97  1   5   359 8   364 0.0 528
+Number of hits
+37 ../output/27-Apul-pheno-annot/Apul_blastp-GO:0061621_out.tab</code></pre>
+</section>
+<section id="tricarboxylic-acid-cycle-go0006099" class="level1">
+<h1>Tricarboxylic Acid Cycle (GO:0006099)</h1>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">GO</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0006099"</span></span>
+<span id="cb8-2"></span>
+<span id="cb8-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-H</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Accept: text/plain"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://rest.uniprot.org/uniprotkb/stream?format=fasta&amp;query=%28%28go%3A"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"%29%29+AND+%28reviewed%3Atrue%29"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb8-4"></span>
+<span id="cb8-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb8-6"></span>
+<span id="cb8-7"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of Proteins"</span></span>
+<span id="cb8-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grep</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"&gt;"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa</span>
+<span id="cb8-9"></span>
+<span id="cb8-10"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/makeblastdb</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-11">-in <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.fa <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-12">-dbtype prot <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-13">-out <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb8-14"></span>
+<span id="cb8-15"></span>
+<span id="cb8-16"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/blastp</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-17">-query <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fasta</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-18">-db <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>SwissProt-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-19">-out <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-20">-evalue <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${evalue}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-21">-num_threads 42 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-22">-max_target_seqs 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-23">-max_hsps 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-24">-outfmt 6 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb8-25">2<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>blast_warnings<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>.txt</span>
+<span id="cb8-26"></span>
+<span id="cb8-27"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab</span>
+<span id="cb8-28"></span>
+<span id="cb8-29"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Number of hits"</span></span>
+<span id="cb8-30"></span>
+<span id="cb8-31"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>Apul_blastp-GO:<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${GO}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>_out.tab</span></code></pre></div>
+<pre><code>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 31776    0 31776    0     0  26928      0 --:--:--  0:00:01 --:--:-- 26906
+100 1726k    0 1726k    0     0   889k      0 --:--:--  0:00:01 --:--:--  889k
+&gt;sp|A0A096P8D3|IDH_OSTTA Isocitrate dehydrogenase (NAD(+)), mitochondrial OS=Ostreococcus tauri OX=70448 GN=IDH PE=1 SV=1
+MTRVERGRVLARAIERAVAHRASARRWTTTTRTPAWMVTGWMGGRGVDRSTAMTRFERCG
+STASSKITAAPMVYVRGEEMTAYVMDLIRSRWIEPRVDVGGWETFDLRAKNRDDTEDRVL
+RDVIEAGKRIKAIFKEPTVTPTADQVKRLGLRKSWGSPNGAMRRGWNGITISRDTIHIDG
+VELGYKKPVLFERHAVGGEYSAGYKNVGKGKLTTTFTPSEGPDAGKTVVVDEREIVDEEA
+AVVTYHNPYDNVHDLARFFFGRCLEAKVTPYVVTKKTVFKWQEPFWQIMRTVFDEEFKAQ
+FVAAGVMKEGEELVHLLSDAATMKLVQWRQGGFGMAAHNYDGDVLTDELAQVHKSPGFIT
+SNLVGVHEDGTLIKEFEASHGTVADMDEARLRGEETSLNPLGMVEGLIGAMNHAADVHNI
+DRDRTHAFTTKMRTVIHQLFREGKGTRDLCGPSGLTTEQFIDAVAERLDA
+&gt;sp|A0A3Q0KQY7|FUMC_SCHMA Fumarate hydratase OS=Schistosoma mansoni OX=6183 GN=Smp_158240 PE=1 SV=2
+Number of Proteins
+2837
+
+
+Building a new DB, current time: 03/21/2025 12:51:40
+New DB name:   /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/27-Apul-pheno-annot/SwissProt-GO:0006099
+New DB title:  ../output/27-Apul-pheno-annot/SwissProt-GO:0006099.fa
+Sequence type: Protein
+Deleted existing Protein BLAST database named /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/27-Apul-pheno-annot/SwissProt-GO:0006099
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 2837 sequences in 0.0586021 seconds.
+
+
+FUN_000960-T1   sp|P21399|ACOHC_HUMAN   70.588  867 255 0   24  890 21  887 0.0 1312
+FUN_001356-T1   sp|A0QMB9|GABD1_MYCA1   30.787  445 291 4   79  508 7   449 5.73e-62    214
+FUN_003898-T1   sp|Q9V0D5|MDH_PYRAB 41.694  307 173 3   6   310 7   309 2.54e-71    224
+FUN_003899-T1   sp|Q9V0D5|MDH_PYRAB 37.110  353 215 5   28  377 9   357 2.79e-73    229
+FUN_004736-T1   sp|Q9VWH4|IDH3A_DROME   72.892  332 89  1   40  371 47  377 0.0 514
+FUN_004752-T1   sp|A0QMB9|GABD1_MYCA1   34.848  462 284 6   426 879 3   455 5.01e-74    248
+FUN_006329-T1   sp|P09624|DLDH_YEAST    56.557  488 199 7   30  508 15  498 0.0 540
+FUN_006649-T1   sp|A4SFT4|MDH_CHLPM 36.093  302 182 4   24  322 2   295 4.65e-64    202
+FUN_006864-T1   sp|Q73TP5|GABD1_MYCPA   35.141  461 285 7   65  519 5   457 6.75e-76    244
+FUN_006864-T2   sp|Q73TP5|GABD1_MYCPA   35.141  461 285 7   65  519 5   457 2.18e-76    245
+Number of hits
+82 ../output/27-Apul-pheno-annot/Apul_blastp-GO:0006099_out.tab</code></pre>
+</section>
+<section id="summary-of-blast-hits" class="level1">
+<h1>Summary of blast hits</h1>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wc</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-l</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>tab</span></code></pre></div>
+<pre><code>   82 ../output/27-Apul-pheno-annot/Apul_blastp-GO:0006099_out.tab
+  130 ../output/27-Apul-pheno-annot/Apul_blastp-GO:0006119_out.tab
+  616 ../output/27-Apul-pheno-annot/Apul_blastp-GO:0009060_out.tab
+   37 ../output/27-Apul-pheno-annot/Apul_blastp-GO:0061621_out.tab
+  865 total</code></pre>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>e5</category>
+  <category>GO</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/41-Apul-GO/</guid>
+  <pubDate>Fri, 21 Mar 2025 04:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2025-03-21_12-56-06.png" medium="image" type="image/png"/>
+</item>
+<item>
   <title>OA OA OA</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/40-HawsOA/</link>
@@ -10645,136 +11868,6 @@ font-style: inherit;">head</span>(annot_tab)</span></code></pre></div>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</guid>
   <pubDate>Sat, 15 Jun 2024 04:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2024-06-15_17-21-46.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Spring Cleaning</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>We went out to the hatchery twice this week to clean up inventory and get prepped for spawning. We tagged a long for the second commercial spawn of the year.</p>
-<section id="new-bags" class="level1">
-<h1>New bags</h1>
-<p>On the near 10-holers there were 5 bags that were fouled and likely our PH stocks</p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-15-13.png" class="img-fluid" style="width:50.0%"></p>
-<p>In A there were two bags re-labelled with White Tags: 31 and 2.</p>
-<p>In B there were two bags re-labelled with White Tags: 13 and 17. 13 had blue tie wraps on top and bottom (and black on top). 17 had black tie wrap at top. It is assummed blue are BLUE.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-21-35.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>bluewraps</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-22-38.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>clean</figcaption>
-</figure>
-</div>
-<p>I also cleaned an additonal bag and labelled: White tag: 8</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-24-16.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption>bags-trays</figcaption>
-</figure>
-</div>
-<p>More inventory notes in <a href="https://ahuffmyer.github.io/ASH_Putnam_Lab_Notebook/Point-Whitney-Field-Day-June-12-2024/">Ariana’s Notebook</a>.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-TLDR: Ariana’s post
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The main activities included organizing and re-tagging oysters, setting up HUDL larval systems, and resetting temperature loggers.</p>
-<p>Key activities were categorized into various efforts:</p>
-<p>- <strong>Effort B to F</strong>: Oysters were moved and re-tagged using cattle tags and distributed across different upweller tanks.</p>
-<p>- <strong>Effort F</strong>: Special attention was given to broodstock received from USDA ARS, which were kept in adult bags and monitored.</p>
-<p>- <strong>LCO Project</strong>: Focused on moving spat from silos to bags in outdoor upwellers.</p>
-<p>The post also covered the setup of technical equipment and maintenance:</p>
-<p>- <strong>HUDL Systems</strong>: Installation included setting up air lines, cleaning HUDLs, and adjusting heaters to control water temperatures.</p>
-<p>- <strong>Weekly Measurements</strong>: Temperature, pH, and salinity of tanks were measured and recorded.</p>
-<p>- <strong>Logger Data</strong>: New Hobo Tidbit loggers were launched to collect temperature data.</p>
-<p>The work done on this field day was part of ongoing efforts to manage and monitor oyster populations effectively, with detailed data being recorded and made accessible via GitHub for further analysis. This reflects the thorough and organized approach to field research and data management in marine sciences.</p>
-</div>
-</div>
-</section>
-<section id="ph-stocks" class="level1">
-<h1>PH Stocks</h1>
-<p>Who is what?</p>
-<p>see also <a href="https://github.com/RobertsLab/resources/issues/1689" class="uri">https://github.com/RobertsLab/resources/issues/1689</a></p>
-<p>Five where “confirmed” with ploidy indicated but spelled out label.</p>
-<p>Orange = ? triploid<br>
-Pink = ?<br>
-Blue = ? Tetraploid<br>
-Yellow = F14 (2n) diploid<br>
-Dog [Putnam hobo] = F5 (2n)? triploid<br>
-Cat [very big, few] = F5 (3n)<br>
-Bird [Tank 3 hobo] = F13 (either 2n or 3n) triploid<br>
-Toad = F14 (3n)</p>
-</section>
-<section id="heath-trays" class="level1">
-<h1>Heath Trays</h1>
-<p>Five 2024 USDA family were placed in heath trays. (see pic above)</p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-33-15.png" class="img-fluid" style="width:50.0%"></p>
-</section>
-<section id="spawning" class="level1">
-<h1>Spawning</h1>
-<p>See <a href="https://ahuffmyer.github.io/ASH_Putnam_Lab_Notebook/Spawning-at-Point-Whitney-June-13-2024/">Ariana’s Notebook</a> for details.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-TLDR: Ariana’s post
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li><p><strong>Sexing Oysters</strong>:</p>
-<ul>
-<li>Oysters are opened and examined to determine their sex by observing the gonads under a microscope. The quality of eggs and sperm is assessed based on their appearance—good eggs are round and concentrated, while good sperm exhibit motility.</li>
-</ul></li>
-<li><p><strong>Preparing Eggs</strong>:</p>
-<ul>
-<li>Eggs are extracted from selected female oysters and placed into dishes without water to prevent premature activation. The eggs are then homogenized by hand in a bag and sieved through mesh screens to filter out debris. They are rinsed with warm seawater to clean and prepare them for fertilization.</li>
-</ul></li>
-<li><p><strong>Preparing Sperm</strong>:</p>
-<ul>
-<li>Sperm are collected by gently squeezing the gonads over a dish of warm seawater. The sperm solution is then filtered through a fine mesh to ensure an optimal and clean concentration for fertilization.</li>
-</ul></li>
-<li><p><strong>Fertilization Process</strong>:</p>
-<ul>
-<li>The prepared sperm and eggs are combined in buckets with warm seawater. The process is carefully controlled to maintain a suitable sperm to egg ratio, ensuring effective fertilization. After combining, the mixture is monitored for signs of successful fertilization, such as the appearance of polar bodies.</li>
-</ul></li>
-<li><p><strong>Transferring to Larval Tanks</strong>:</p>
-<ul>
-<li>The successfully fertilized eggs are then transferred into large larval tanks. Conditions in these tanks are meticulously controlled, including temperature and pH. Microbial growth is managed by adding EDTA, and the larvae are initially fed after one day of fertilization, with subsequent feeding scheduled based on developmental progress.</li>
-</ul></li>
-</ol>
-</div>
-</div>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-35-23.png" class="img-fluid" style="width:50.0%"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-36-36.png" class="img-fluid" style="width:50.0%" alt="eggs"></p>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>oyster</category>
-  <category>aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-22-PW/</guid>
-  <pubDate>Wed, 12 Jun 2024 04:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-15_10-12-18.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
