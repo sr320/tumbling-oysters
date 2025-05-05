@@ -10,7 +10,80 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Thu, 10 Apr 2025 04:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 05 May 2025 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Megan it</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/42-megan/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Taking Megan for a spin for Renee</p>
+<p>Read files</p>
+<pre class="{bash}"><code>ls /home/shared/16TB_HDD_01/fish546/renee/</code></pre>
+<pre><code>build
+F1B-KM40_merged.fastq.gz
+F1B-KM40_trimmed_R1_paired.fastq.gz
+F1B-KM40_trimmed_R1_unpaired.fastq.gz
+F1B-KM40_trimmed_R2_paired.fastq.gz
+F1B-KM40_trimmed_R2_unpaired.fastq.gz
+F2R-KM41_merged.fastq.gz
+F2R-KM41_trimmed_R1_paired.fastq.gz
+F2R-KM41_trimmed_R1_unpaired.fastq.gz
+F2R-KM41_trimmed_R2_paired.fastq.gz
+F2R-KM41_trimmed_R2_unpaired.fastq.gz
+fastp.html
+fastp.json
+md5checksums_metagenomes_2025.txt
+megahit
+raw-data
+Trimmomatic-0.39</code></pre>
+<section id="diamond-blast" class="level2">
+<h2 class="anchored" data-anchor-id="diamond-blast">Diamond blast</h2>
+<pre class="{bash}"><code>    /home/shared/diamond-2.1.8 blastx \
+    --db /home/shared/16TB_HDD_01/sam/databases/blastdbs/ncbi-nr-20250429.dmnd \
+    --query /home/shared/16TB_HDD_01/fish546/renee/F2R-KM41_merged.fastq.gz \
+    --out ../output/sr-blastx.daa \
+    --outfmt 100 \
+    --top 5 \
+    --block-size 15.0 \
+    --index-chunks 4 \
+    --threads 32</code></pre>
+</section>
+<section id="meganizer" class="level2">
+<h2 class="anchored" data-anchor-id="meganizer">Meganizer</h2>
+<pre class="{bash}"><code>    /home/shared/megan-6.24.20/tools/daa-meganizer \
+    --in ../output/sr-blastx.daa \
+    --threads 32 \
+    --mapDB ../data/megan-map-Feb2022.db</code></pre>
+</section>
+<section id="daa2rma" class="level2">
+<h2 class="anchored" data-anchor-id="daa2rma">daa2rma</h2>
+<pre class="{bash}"><code>/home/shared/megan-6.24.20/tools/daa2rma \
+--in ../output/sr-blastx.daa \
+--mapDB ../data/megan-map-Feb2022.db \
+--out ../output/sr-blastx-meganized.rma6 \
+--threads 40 2&gt;&amp;1 | tee --append ../output/daa2rma_log.txt
+</code></pre>
+<p>Open MEGAN on locally and looked at rda file</p>
+<p>pdf: <a href="http://gannet.fish.washington.edu/seashell/snaps/sr-blastx-meganized.pdf" class="uri">http://gannet.fish.washington.edu/seashell/snaps/sr-blastx-meganized.pdf</a></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/sr-blastx-meganized.png" class="img-fluid"></p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>eDNA</category>
+  <category>fish546</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/42-megan/</guid>
+  <pubDate>Mon, 05 May 2025 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_sr-blastx-meganized.rma6_-_MEGAN_Community_Edition_version_6.25.10_built_27_Jun_2024_2025-05-05_13-42-33.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Energy Stating</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -428,7 +501,7 @@ font-style: inherit;">head</span> ../output/25-Apul-epimods-blast/Mach-blastp-Ap
   <category>e5</category>
   <category>methylation</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/41-RI-coral/</guid>
-  <pubDate>Thu, 10 Apr 2025 04:00:00 GMT</pubDate>
+  <pubDate>Thu, 10 Apr 2025 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_23_GO_Annoations_2025-04-10_12-36-18.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -1651,7 +1724,7 @@ font-style: inherit;">*</span>tab</span></code></pre></div>
   <category>e5</category>
   <category>GO</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/41-Apul-GO/</guid>
-  <pubDate>Fri, 21 Mar 2025 04:00:00 GMT</pubDate>
+  <pubDate>Fri, 21 Mar 2025 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2025-03-21_12-56-06.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -3229,7 +3302,7 @@ zr3644_9_pe.deduplication_report.txt</code></pre>
   <category>oyster</category>
   <category>methylation</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/40-HawsOA/</guid>
-  <pubDate>Wed, 12 Mar 2025 04:00:00 GMT</pubDate>
+  <pubDate>Wed, 12 Mar 2025 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-oyster-oa__RStudio_Server_2025-02-28_18-24-54.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -5103,7 +5176,7 @@ font-style: inherit;">"</span></span></code></pre></div>
   <category>e5</category>
   <category>lncRNA)</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/39-lncRNA/</guid>
-  <pubDate>Fri, 28 Feb 2025 05:00:00 GMT</pubDate>
+  <pubDate>Fri, 28 Feb 2025 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2025-02-28_08-51-47.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -7320,7 +7393,7 @@ font-style: inherit;">This</span> is an Apptainer definition file for an Ubuntu 
   <category>hpc</category>
   <category>rstudio</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/38-klone/</guid>
-  <pubDate>Wed, 19 Feb 2025 05:00:00 GMT</pubDate>
+  <pubDate>Wed, 19 Feb 2025 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_sr320__sr320klone-login03__ssh_klone.hyak.uw.edu__9830_2025-02-20_09-08-29.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -7858,7 +7931,7 @@ font-style: inherit;">done</span></span></code></pre></div>
   <category>coral</category>
   <category>bismark</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/37-Apul-meth/</guid>
-  <pubDate>Sat, 08 Feb 2025 05:00:00 GMT</pubDate>
+  <pubDate>Sat, 08 Feb 2025 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_urol-e5timeseries_molecular_2025-02-08_04-42-58.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -8557,7 +8630,7 @@ font-style: inherit;">"All intersections completed!"</span></span></code></pre><
   <category>methylation</category>
   <category>methylkit</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/36-merry/</guid>
-  <pubDate>Tue, 24 Dec 2024 05:00:00 GMT</pubDate>
+  <pubDate>Tue, 24 Dec 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Userssr320Desktopigv_session.xml_2024-12-24_07-26-36.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -8955,7 +9028,7 @@ font-style: inherit;"># After running this script, 'output.bed' will contain the
   <category>e5</category>
   <category>lncRNA</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/34-Apul-lncRNA/</guid>
-  <pubDate>Fri, 20 Dec 2024 05:00:00 GMT</pubDate>
+  <pubDate>Fri, 20 Dec 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries_molecular__RStudio_Server_2024-12-20_03-51-09.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -9307,7 +9380,7 @@ font-style: inherit;">\</span></span>
   <category>methylation</category>
   <category>bismark</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/35-myt-meth/</guid>
-  <pubDate>Thu, 19 Dec 2024 05:00:00 GMT</pubDate>
+  <pubDate>Thu, 19 Dec 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation__RStudio_Server_2024-12-20_04-34-37.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -10389,7 +10462,7 @@ font-style: inherit;">done</span></span></code></pre></div>
   <category>methylation</category>
   <category>klone</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/33-bismark-array/</guid>
-  <pubDate>Wed, 20 Nov 2024 05:00:00 GMT</pubDate>
+  <pubDate>Wed, 20 Nov 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-11-21_17-51-28.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -10768,7 +10841,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
   <category>methylation</category>
   <category>klone</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/32-bismark-array/</guid>
-  <pubDate>Sun, 10 Nov 2024 05:00:00 GMT</pubDate>
+  <pubDate>Sun, 10 Nov 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation__RStudio_Server_2024-11-10_11-32-22.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -10934,7 +11007,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
  ]]></description>
   <category>e5</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/31-e5-genome-stats/</guid>
-  <pubDate>Sat, 05 Oct 2024 04:00:00 GMT</pubDate>
+  <pubDate>Sat, 05 Oct 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-10-05_13-39-55.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -10959,7 +11032,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
   <category>hisat</category>
   <category>annotation</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/30-hisat-annot/</guid>
-  <pubDate>Thu, 03 Oct 2024 04:00:00 GMT</pubDate>
+  <pubDate>Thu, 03 Oct 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-10-03_10-09-40.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -11005,7 +11078,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
   <category>oyster</category>
   <category>stress</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/29-prime/</guid>
-  <pubDate>Sat, 14 Sep 2024 04:00:00 GMT</pubDate>
+  <pubDate>Sat, 14 Sep 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-09-14_12-28-40.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -11040,7 +11113,7 @@ font-style: inherit;">fi</span></span></code></pre></div>
   <category>blast</category>
   <category>e5</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-28-go-gene/</guid>
-  <pubDate>Tue, 27 Aug 2024 04:00:00 GMT</pubDate>
+  <pubDate>Tue, 27 Aug 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2024-08-27_16-05-41.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -11332,7 +11405,7 @@ font-style: inherit;">head</span> ../output/20-Apul-gene-annotation/Apul-protein
   <category>blast</category>
   <category>e5</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/</guid>
-  <pubDate>Sun, 25 Aug 2024 04:00:00 GMT</pubDate>
+  <pubDate>Sun, 25 Aug 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap__in_UniProtKB_search_571864__UniProt_2024-08-23_16-18-03.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -11431,7 +11504,7 @@ TLDR: Kathleens’s post
   <category>oyster</category>
   <category>temperature</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/</guid>
-  <pubDate>Wed, 26 Jun 2024 04:00:00 GMT</pubDate>
+  <pubDate>Wed, 26 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-12-25.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -11474,7 +11547,7 @@ TLDR: Kathleens’s post
   <category>oyster</category>
   <category>temperature</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-25-oyster/</guid>
-  <pubDate>Thu, 20 Jun 2024 04:00:00 GMT</pubDate>
+  <pubDate>Thu, 20 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-06-21_12-20-56.png" medium="image" type="image/png"/>
 </item>
 <item>
@@ -11517,357 +11590,8 @@ TLDR: Kathleens’s post
   <category>oyster</category>
   <category>aquaculture</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-24-fd/</guid>
-  <pubDate>Mon, 17 Jun 2024 04:00:00 GMT</pubDate>
+  <pubDate>Mon, 17 Jun 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_ChatGPT_2024-06-17_10-21-36.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Repro Repro</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Using Swiss-Prot Repro subset..</p>
-<p>Based on the following GO Term</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_QuickGOTerm_GO0022414_2024-06-15_17-30-33.png" class="img-fluid figure-img"></p>
-<figcaption>GO:0022414</figcaption>
-</figure>
-</div>
-<p><a href="https://www.ebi.ac.uk/QuickGO/term/GO:0022414" class="uri">https://www.ebi.ac.uk/QuickGO/term/GO:0022414</a></p>
-<section id="make-blastdb" class="level1">
-<h1><strong>Make BlastDB</strong></h1>
-<p>(Would only be needed once)</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">curl</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-H</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Accept: text/plain"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"https://rest.uniprot.org/uniprotkb/stream?format=fasta&amp;query=%28%28go%3A0022414%29%29+AND+%28reviewed%3Atrue%29"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> ../data/SwissProt-GO:0022414.fa</span></code></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../data/SwissProt-GO:0022414.fa</span>
-<span id="cb2-2"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Number of Sequences"</span></span>
-<span id="cb2-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span> ../data/SwissProt-GO:0022414.fa </span></code></pre></div>
-</div>
-<pre><code>&gt;sp|A0A060A682|HAP2_TETTH Hapless 2 OS=Tetrahymena thermophila OX=5911 GN=HAP2 PE=1 SV=1
-MKFLAFGLIYFHFCILNRCEYITSSTIQKCYNSSNEPNNCSQKAVIVLSLENGQIANTEQ
-VVATLNQLSDSGVNKQLQNSFIFEVTKSPVTALFPLIYLQDFNSQPLEQVIATTLFSCKD
-GFYDSSPTCKFQYDSKGQKILDSQGYCCYCSLSDILGMGNDLSRGKVCYALNLGAGSATA
-HCLKFSPLWYSAFKIQQYQLYFEVNINIYTVDSQNQKNLKQTLKLSTSNPTMKSSDNSTI
-SKIIGTFTPTQPPADLSSYYLVKPSFPATDPRVLQGISSWMFVDKTMFTLDGTQCNKIGV
-SYSGFRQQSSSCSQPVGSCLQNQLENLYQSDLILLSQNKQPKYLLESQGNFNQVQFQGQT
-ILQQGLSGSASTLITIEIDAAQIKFVTNLGIGCISQCSINNFESHSGNGKLVALVQNQGN
-YSAEFVLGFNCSSNVQPIQGQKLFLTANQLYNFNCSVSVNSDISAINNNCTINLYDAIGN
-QLDSKNILFNTTSTNHTSNQGNNTGQQQSSQEYKSSQSCSDKCSSFWSFWCYFSAGCIKE
-Number of Sequences
-12309</code></pre>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/ncbi-blast-2.11.0+/bin/makeblastdb</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-2">-in ../data/SwissProt-GO:0022414.fa <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-3">-dbtype prot <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-4">-out ../blastdb/SwissProt-GO:0022414</span></code></pre></div>
-</div>
-</section>
-<section id="set-query" class="level1">
-<h1><strong>Set Query</strong></h1>
-<section id="set-fasta-as-variable" class="level2">
-<h2 class="anchored" data-anchor-id="set-fasta-as-variable"><strong>set fasta as variable</strong></h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">fasta</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../data/PO2457_Ostrea_lurida.protein.fasta"</span></span>
-<span id="cb5-2"></span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$fasta</span></span>
-<span id="cb5-4"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Number of Sequences"</span></span>
-<span id="cb5-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-c</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$fasta</span></span></code></pre></div>
-</div>
-<pre><code>&gt;ANN15860-RA
-MTDFGIYEVPVQTGVNHTTSSCALQCEIRTTCTLFRINKLTSECDFYNGGRYKTAIPVQGNQFYQKVPDSANCISGRDEWFPEYQKCIWIHMEALNHQEAKDRCESGGKIMMGAKDTTQIKSLMNLLDFKWIHVYALRVGQKSYEWFDGSSVSSTNWWCSDQPYEDSACLGVDLSMIHWCLAGGIDDIPCTDDRTFFCV
-&gt;ANN15859-RA
-MYLCKDFYAIMESSKGDDCENDEDACLQNPCPMDRNCTDLSPDEETAFGRGYNCTPCPSGYQDIDNKCEDLDECNNNSTNICDSFTQDCENTEGGYDCTCKTGYRKVGQTCHDIDECSESTSDCQQICTNSPGSFSCSCVVGHSLNSDNKNCTAQVTDICYDAGLSCEYTCDNSTGTFVCVCPSGYELESNGQNCTVVRGIRVRIGLQHPLACRKRRLNGAVIRMRLEKPRSRVTADIDECTRSVCSQACNNTIGSYSCFCFPGYSLNSDKTTCLACEAPYYGDNCGQVCRCGAGLESCDQVHGCLCLSGWTGTSCNLDIDECTANPAICGSDKICKNLQGSYTCNCREGFEKNGTECVDIDECTNADNNNCNEWTSMCQNTYGGYTCKCLTGYKKKISYYGEILDAFVCHDIDECALDTHDCAQTCTNADGGYHCGCQFGFVLADDRRSCERVSDIASLFPSLNCSYAYKENPSNTSAAYCFCENGYYLHPKDQQSCIDVNECQFYSDTYVVLNKCSNYYHRFTNCVNVPGSYQCTCPPVGFVLENDERTCAVCDGFHYGEDCKTPCNCGPGALTCDNLRGCQCKMGWAGSRCEADIDECSTGTLCTGTNQVCQNTPGSYQCICDTGYKAIRWGICIDIDECNTGTNPCSQVCTNTPGSYYCSCNTGFRLVGTSQCDDYDECSAPVSACDQVCVNTVGSYKCSCNPGFLLNSTTRTTCYSKTVCTNTTLNCSQQCGVNSGGSEYCFCNIGYTLNADGFSCDDRDECSPNPCSENCSQNAPGAGYTCSCSVGKKLDVDQRTCIDCDTGTYGLNCATNCSCNDQNTKSCDKVTGSCICKTGWEGTNCSSDINECLNKTICPSISNCFNNVGTYSCICPSGYSLIGGQCIECSSSTYGLNCGSSCSCKFIFTQSCNKQNGGCSCMFGRDAPNCRYDIGECFNPNTCNLNNSFCSEEPFPYMCICLKGYEYEKHSNGTCIDINECARGTSNCDKNAVCINTEGSFNCSCKSGFTGNGLTCTAALTTTQRVTPGDVTTQRVTPSDVTTQRVTPSGVTTQRVTPGDVTTQRVTPGDVTTPRVTPGDVTTPRVTPGYVTTQRVTPGDVTTTQVIPVDVTTPRVTPGDITTPRVTPGDITTLRVTPGDVTTPRVTPGDVTTLRVTPGDVTTPRVTPGDVTIPHFTPGVVTTQRVTPGDVTTPRVTPGDVITPRITSGDVTSSESVTTDTSTTPVTSQSTEVPTTYTPATGEALFSVSFTFSIDGKQDEKEAIQSEMLTALTALYTGRIKGFIKVILIDSRLGGLIGDHSVVTSSNTPVETRSDFTRTLNNLAKGALKITYNGTQYPVWAIAVADSTGNLQNVSVLVSSTVCQVFDTLNTCPRGQQCDDLDGIVQCRVIEINSKQDSLKVIVGLGVGIPLSFIVVLVLAIIWICYCRQKHKERYFSSKDDLDKTMHTDGFLISGIPTRIFSLGWRVPHALRNWGDDSSTSDVNERRGRRGRGFGNTYRGGRQLYSELIFNYRMMGNF
-&gt;ANN15862-RA
-MSVTYLKGLSTRYRNLTEKEIKRGDELVSVDISEENPTVLLRNVETSSRRIKEFSGKLEETMEKWSMAIEDKETQQGEHDKFSEISEVVFNLLAEANESSDQLVILEKTLQEHLATLKKPAEMTDPRLEQMIHLQSKMQEQILHFQELSLQQHRPGQVAVKLPKLELPTYNGDKIKFKEFWDAFDATVHKNPKLSNIEKFNYLRSKLIGPAHVAISGLSLSNENYDVAITILRDRFGDTQSVINKHYVELINTQCATNDTLSLRKLYDDLERHLRSLEALHQDVNQDVFISMITSKLPKETLLQLEIQKGPKGKWTVQKLRELLKGYITVKESSELQAASVAVHEDKHMTAEALVISTKESTIKHDRQTRRSEKSPMCTYCDGSHWTDECRRYRTIEDRKQRLKGKCFICLKSGHRSKECRVVKACYHCKQTGDHHRSLCPKKFTLRHRESTNTHLTEEVCRTSETPKRSTMSENSLLSSGDIVLMQTARTEVSNQCRENSEPARLLMDSGSQRTYITEKLADKLKLKTRITEKISLITFGAEKPKIVKTPKVSLTIKLKDGQYLSIEANVVPQITGTVQRKPIPKDVQERCQNIWKNLQLADTLPENFEDSTIDILVGSDYYLDLILPERIEIQRGFYLLASRLGWILTGRTQETFGREEQVMMITNGTLSLTEYCLHSAVDECIFTNSLDDFWNLEAIGIQDSPYTSDDERALENFNKTLKIEDNRYQVTWPWKEEFPELPENRELAFGRLKSLVHKLQRNPDLLHKYDDIIQDQCTRGIIEKIPSNHRETGVKHYIPHHAVVDLTKPTTKVRIVYDASAKTEHSHSSLNECLHRGPVMLHDLCGLLMRFRLKKIGIIADIEKAFLQIGLQEKDRNATRFFWLKDATNPTVEDNVQVYRFCRVPFGVISSPFLLAATVDHHLSSYNSETAENIRNNIYVDNVITGVDTIQEAEILYKEAKQIFGDISMNLRDWSSNAEEFHRFIPTEDQSARENLKILGLTWDLKEDVLTVPYQKSKTAPVTKREVLQRVASIFDPLGFFTPVTLKAKLFLQTLWQKNLEWDAPLTKEDIQEWKVIAADLVDIQYCQIPRYLGLSGEVSYRLLCFCDASAKAFATVVYLQLIDASSNICRLVFSKTRLAPTKQITMPRLELLAVLIGVRSMCFVENQLKLKISEKILWTDPQCVLHWIKTKKPLTVFVENRVKEIREKVDLELQYVTSADNPADIASRGIMAETLKDSMQWWNGPSWLTEKKSQWPVWNPSSNDIHSDAIESEYKKPRVMYEAKLLAGEGPPGYKDTCAEQKNPFDIDAERFSSFMKLIRVLAWIQRFIKKLKREKSACGPLTVEEMEEAKILLIKSIQNQNYTDVKSALIEKKRHNLVNQLGLTLDEDGIIRCIGRLGAAQLTEGARAPILLPKKNHVTDLLIDSYHRKSLHAGVSQTLSIVRQTYWIPQGRAEVRRVLRKCTVCKRHEGGPYRMPLMPPLPRKRVNESSPFTYTGVDYFGPIYVKANSGTKKVWVCLFTCLVVRSVHLELMQDMSTEEFLLGLRRFIARWGKPRQLISDNASQFKLASGVIEKAWSSTVSDVDVQSYVANEDMKWQFIVELAPWMGGFYERLIGVVKRCLRKTIGKLCLAFEQLRTLLAEAEAAVNSRPLVYVGDDINSNITLTPAHFLSLNPKIGISGCGEEENTEDPEYLPNISNAEVLLQTWKKGQKHLDAFWKAWRDDYLLSLRERTAYKLKEGRIQHCKEPQIDDVVLIKDDLPRGSWKIGRVCELRASQDGQIRSGKVLLPNKKTLNRPLNLLYPIECSKETENSDSEATKENQSTESDHGTVSGIESVTKPKSQPVLRETPDARPKRRSARRAEEKIKDWLNP
-&gt;ANN15865-RA
-MMALLDQEENNFIRAIFTIHAIAPKAVKRLFKNRHPDNGILTQELSAIKSDLMRTKGFPKHMAFLIFPSQGKHVNPDEFDLSVLIFLLQNFSNLPAPIKGWNTKPPITDSSEAADLTRIRLIRNDLAHNNDGKLKQSEFEVLWKELERVSIFRYLNFIIYLCAHGGCDRSAEDAYSSMAPDPAFASSKALGRLGEGVYDDELKNCKIATRENIDDMKRQVQELSDEIKFFEIATRENIDDMNTQVQGLREELQSPVPFNIRRDMLEEVEEWRKENEDFYETNFARNLHQAAAKEDFIMIIGEPGSGKTTTMHHIALKLNVEGGYDILPIQKPSEIKQYYSNNKRQVFVIDDAVGVHSLNDAMMREWEDLKPSLKRWKLLMINDFVKQSTKLTDPRNHVREMQEKHQCKILVSCRSFLTKTDAFPAFLREIEIVDAQNSRNRIGYLERQNIFATIFRTTRESIPLSKEIVMQYDSFPLLCRMCCSQGTIKPEVFFKRPFKHYFEEIDRMFHENKLSYFVLIFCLVFRCSFPDKPNSDTMEGFHSILDKCHLNQGTSYEEIRATILAMKDTYLRKVGEDEYDFYHIIIRDIIAYHFHSKSGLPILTKYGSDSFIRDRIRPKGPLPEDNPDDGYLIELKKDELSNFIERVCKNLMVKDWLVTFNSNFLPDAELEMHICKYLDRTNQFHSLLKRTNKHQSPNDLTKIQSYNRLLAALVDFPYKKTYQDIYHLRKEVLRPLTFIFWLIGFGWFEMFKAAFAISDTNITREIENSRHATLVLSALGGDEKMIRFINKSIVKSNSRCFICKTSAFLETFFVHCCNCPINHLSGFTIACIMGNGKVANYLKGILSYSADTEFDVSVLENFCTPKVGYLRHYRVSVMEIACNLGHMDMVCHFFKEKKLRIGTVKKSLLMACQNGQKDVFEFLLTEIPKDRFKDIDIRSLLKRSLYIASYFGHEMLVALLLERNVPVDTCDTSKRTPLLAASGRGHINVAKVLFSSGANVNSSDVFGWTPLKVACAKGYTEIVRLLLTNDDIILDDPNSDKCTSENRELPIRVTDEVSDTLLRRVFVSRTYNAILAVFPGYDLFPLFLASCNGHHEIVELLLSKGVSVDRTIEVGGIESSLTVASSNGYPKVVSLLLAHGASLYVEGSGRTALMSVCSSEGNSFNIIPNSVYRETDKYFLGDANHLEAVKEILSKDNSQQFLDTKDEEGMSALHFASLNCHSDIIDLLLVQNIEINTRNSSGITPLWLASKYDYPEIVSILVSHDADVNICSKDKHSPLWIACAERTEGYGLFDTVWTHGKVISMLLTKADIDSIGIENLTALNIACMKDDDELVSYLLSKGASIGNNLLLAFLQTHFKIAGLLILEKIRRL
-&gt;ANN15866-RA
-MLTPTRHLIPPLGTTNVRILYLNGEFLLDSLERIRERVPKFSSAVALVDFYARLTHTGKDYNCKWTEDLSIALQKPKPHRVVNLRHLCRLSINRSVPNTVTRTEMLGYLDKLPVSRHLKTYLKEYPYIH
-Number of Sequences
-33939</code></pre>
-</section>
-</section>
-<section id="blast" class="level1">
-<h1><strong>Blast</strong></h1>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">fasta</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../data/PO2457_Ostrea_lurida.protein.fasta"</span></span>
-<span id="cb7-2"></span>
-<span id="cb7-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/ncbi-blast-2.15.0+/bin/blastp</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-4">-query <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$fasta</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-5">-db ../blastdb/SwissProt-GO:0022414 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-6">-out ../output/04-repro-annot/blastout.tab <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-7">-evalue 1E-20 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-8">-num_threads 48 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-9">-max_target_seqs 1 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-10">-max_hsps 1 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-11">-outfmt 6</span></code></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/04-repro-annot/blastout.tab</span></code></pre></div>
-</div>
-<pre><code>ANN15859-RA sp|P07207|NOTCH_DROME   27.146  1072    523 60  96  1012    162 1130    5.83e-40    162
-ANN15865-RA sp|Q9VCA8|ANKHM_DROME   27.049  366 193 9   907 1269    2316    2610    1.97e-24    110
-ANN15898-RA sp|Q9Z0E8|S22A5_MOUSE   27.604  576 327 13  236 784 12  524 4.19e-57    204
-ANN15903-RA sp|Q9Z0E8|S22A5_MOUSE   29.242  554 337 11  16  545 2   524 1.16e-63    217
-ANN15914-RA sp|P49891|ST1E1_MOUSE   31.250  256 153 8   28  269 49  295 2.65e-26    103
-ANN04321-RA sp|O15455|TLR3_HUMAN    22.802  671 421 18  29  655 238 855 1.93e-26    114
-ANN04322-RA sp|P15620|ZN271_MOUSE   24.554  505 321 18  1022    1523    80  527 2.78e-26    114
-ANN04330-RA sp|O88572|LRP6_MOUSE    27.494  902 546 38  66  930 65  895 9.40e-60    226
-ANN04334-RA sp|P20241|NRG_DROME 25.049  507 314 23  299 765 26  506 2.24e-24    109
-ANN04339-RA sp|Q969R2|OSBP2_HUMAN   50.591  761 322 13  11  757 184 904 0.0 749</code></pre>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">wc</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-l</span> ../output/04-repro-annot/blastout.tab</span></code></pre></div>
-</div>
-<pre><code>4641 ../output/04-repro-annot/blastout.tab</code></pre>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tr</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'|'</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'\t'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> ../output/04-repro-annot/blastout.tab <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb12-2"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/04-repro-annot/blastout_sep.tab</span>
-<span id="cb12-3"></span>
-<span id="cb12-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-1</span> ../output/04-repro-annot/blastout_sep.tab</span></code></pre></div>
-</div>
-<pre><code>ANN15859-RA sp  P07207  NOTCH_DROME 27.146  1072    523 60  96  1012    162 1130    5.83e-40    162</code></pre>
-</section>
-<section id="download-swiss-prot-information" class="level1">
-<h1><strong>Download Swiss-Prot Information</strong></h1>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">curl</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-H</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Accept: text/plain; format=tsv"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"https://rest.uniprot.org/uniprotkb/stream?fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo_c%2Cgo%2Cgo_f%2Cgo_id&amp;format=tsv&amp;query=%28%28go%3A0022414%29%29+AND+%28reviewed%3Atrue%29"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> ../data/SwissProt-GO:0022414.tsv</span></code></pre></div>
-</div>
-</section>
-<section id="join-blast-with-go-info" class="level1">
-<h1><strong>Join blast with GO info</strong></h1>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">bltabl <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/04-repro-annot/blastout_sep.tab"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\t</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">header =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
-<span id="cb15-2"></span>
-<span id="cb15-3">spgo <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../data/SwissProt-GO:0022414.tsv"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\t</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">header =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span>)</span></code></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">annot_tab <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span></span>
-<span id="cb16-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">left_join</span>(bltabl, spgo,  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">by =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"V3"</span> <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">=</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Entry"</span>)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb16-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">select</span>(V1, V3, V13, Protein.names, Organism, Gene.Ontology..biological.process., Gene.Ontology.IDs)</span></code></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span>(annot_tab)</span></code></pre></div>
-</div>
-<pre><code>           V1     V3      V13
-1 ANN15859-RA P07207 5.83e-40
-2 ANN15865-RA Q9VCA8 1.97e-24
-3 ANN15898-RA Q9Z0E8 4.19e-57
-4 ANN15903-RA Q9Z0E8 1.16e-63
-5 ANN15914-RA P49891 2.65e-26
-6 ANN04321-RA O15455 1.93e-26
-                                                                                                                        Protein.names
-1                                             Neurogenic locus Notch protein [Cleaved into: Processed neurogenic locus Notch protein]
-2                  Ankyrin repeat and KH domain-containing protein mask (Multiple ankyrin repeat single KH domain-containing protein)
-3 Organic cation/carnitine transporter 2 (High-affinity sodium-dependent carnitine cotransporter) (Solute carrier family 22 member 5)
-4 Organic cation/carnitine transporter 2 (High-affinity sodium-dependent carnitine cotransporter) (Solute carrier family 22 member 5)
-5       Sulfotransferase 1E1 (ST1E1) (EC 2.8.2.4) (Estrogen sulfotransferase, testis isoform) (Sulfotransferase, estrogen-preferring)
-6                                                                                             Toll-like receptor 3 (CD antigen CD283)
-                             Organism
-1 Drosophila melanogaster (Fruit fly)
-2 Drosophila melanogaster (Fruit fly)
-3                Mus musculus (Mouse)
-4                Mus musculus (Mouse)
-5                Mus musculus (Mouse)
-6                Homo sapiens (Human)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Gene.Ontology..biological.process.
-1 actin filament organization [GO:0007015]; asymmetric cell division [GO:0008356]; axon guidance [GO:0007411]; border follicle cell migration [GO:0007298]; cell dedifferentiation [GO:0043697]; cell differentiation [GO:0030154]; cell fate commitment [GO:0045165]; chaeta development [GO:0022416]; chaeta morphogenesis [GO:0008407]; compartment boundary maintenance [GO:0060289]; compound eye development [GO:0048749]; compound eye morphogenesis [GO:0001745]; compound eye retinal cell programmed cell death [GO:0046667]; crystal cell differentiation [GO:0042688]; defense response to insect [GO:0002213]; determination of adult lifespan [GO:0008340]; dorsal appendage formation [GO:0046843]; dorsal closure [GO:0007391]; dorsal/ventral axis specification [GO:0009950]; embryonic hemopoiesis [GO:0035162]; epithelial cell proliferation involved in Malpighian tubule morphogenesis [GO:0061331]; epithelial cell type specification, open tracheal system [GO:0035153]; eye-antennal disc development [GO:0035214]; eye-antennal disc morphogenesis [GO:0007455]; female germ-line stem cell population maintenance [GO:0036099]; follicle cell of egg chamber development [GO:0030707]; follicle cell of egg chamber migration [GO:0007297]; follicle cell of egg chamber stalk formation [GO:0030713]; foregut morphogenesis [GO:0007440]; formation of a compartment boundary [GO:0060288]; germ-line stem cell population maintenance [GO:0030718]; germ-line stem-cell niche homeostasis [GO:0060250]; germarium-derived egg chamber formation [GO:0007293]; glial cell differentiation [GO:0010001]; glial cell fate determination [GO:0007403]; glial cell migration [GO:0008347]; hemocyte proliferation [GO:0035172]; imaginal disc-derived leg joint morphogenesis [GO:0016348]; imaginal disc-derived leg morphogenesis [GO:0007480]; imaginal disc-derived leg segmentation [GO:0036011]; imaginal disc-derived male genitalia morphogenesis [GO:0048803]; imaginal disc-derived wing margin morphogenesis [GO:0008587]; imaginal disc-derived wing morphogenesis [GO:0007476]; imaginal disc-derived wing vein specification [GO:0007474]; intestinal stem cell homeostasis [GO:0036335]; lamellocyte differentiation [GO:0035171]; larval lymph gland hemopoiesis [GO:0035167]; lateral inhibition [GO:0046331]; leg disc morphogenesis [GO:0007478]; long-term memory [GO:0007616]; lymph gland development [GO:0048542]; Malpighian tubule tip cell differentiation [GO:0061382]; mesoderm development [GO:0007498]; morphogenesis of an epithelial fold [GO:0060571]; motor neuron axon guidance [GO:0008045]; muscle cell cellular homeostasis [GO:0046716]; muscle cell fate determination [GO:0007521]; myoblast development [GO:0048627]; negative regulation of cell-cell adhesion mediated by cadherin [GO:2000048]; negative regulation of compound eye photoreceptor development [GO:0045316]; negative regulation of gene expression [GO:0010629]; negative regulation of lamellocyte differentiation [GO:0035204]; negative regulation of neurogenesis [GO:0050768]; negative regulation of Notch signaling pathway [GO:0045746]; nervous system process [GO:0050877]; neuroblast development [GO:0014019]; neuroblast fate determination [GO:0007400]; neuroblast fate specification [GO:0014018]; neuroblast proliferation [GO:0007405]; neuron fate determination [GO:0048664]; neuron fate specification [GO:0048665]; neuronal stem cell population maintenance [GO:0097150]; Notch signaling pathway [GO:0007219]; ommatidial rotation [GO:0016318]; oocyte localization involved in germarium-derived egg chamber formation [GO:0030720]; oogenesis [GO:0048477]; peripheral nervous system development [GO:0007422]; positive regulation of cell population proliferation [GO:0008284]; positive regulation of crystal cell differentiation [GO:0042691]; positive regulation of DNA-templated transcription [GO:0045893]; positive regulation of G1/S transition of mitotic cell cycle [GO:1900087]; positive regulation of gene expression [GO:0010628]; positive regulation of neuroblast proliferation [GO:0002052]; positive regulation of neuron apoptotic process [GO:0043525]; positive regulation of transcription by RNA polymerase II [GO:0045944]; R1/R6 cell differentiation [GO:0048052]; R3/R4 cell differentiation [GO:0048056]; R7 cell differentiation [GO:0045466]; regulation of cardioblast cell fate specification [GO:0042686]; regulation of cell differentiation [GO:0045595]; regulation of filopodium assembly [GO:0051489]; regulation of glycolytic process [GO:0006110]; regulation of growth [GO:0040008]; regulation of mitotic cell cycle [GO:0007346]; regulation of neuroblast proliferation [GO:1902692]; regulation of neurogenesis [GO:0050767]; regulation of stem cell division [GO:2000035]; response to symbiont [GO:0009608]; retinal cell programmed cell death [GO:0046666]; second mitotic wave involved in compound eye morphogenesis [GO:0016330]; sensory organ development [GO:0007423]; sensory organ precursor cell fate determination [GO:0016360]; stem cell differentiation [GO:0048863]; wing disc dorsal/ventral pattern formation [GO:0048190]; wing disc pattern formation [GO:0035222]
-2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            compound eye photoreceptor cell differentiation [GO:0001751]; dorsal appendage formation [GO:0046843]; flight [GO:0060361]; innate immune response [GO:0045087]; mitochondrion organization [GO:0007005]; negative regulation of autophagy of mitochondrion [GO:1903147]; negative regulation of establishment of blood-brain barrier [GO:0090212]; positive regulation of receptor signaling pathway via JAK-STAT [GO:0046427]; positive regulation of sevenless signaling pathway [GO:0045874]; positive regulation of transcription by RNA polymerase II [GO:0045944]; sarcomere organization [GO:0045214]; vascular endothelial growth factor receptor signaling pathway [GO:0048010]; wound healing, spreading of cells [GO:0044319]; wound healing, spreading of epidermal cells [GO:0035313]
-3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (R)-carnitine transmembrane transport [GO:1902270]; (R)-carnitine transport [GO:1900749]; adult heart development [GO:0007512]; carnitine metabolic process [GO:0009437]; carnitine transport [GO:0015879]; establishment of localization in cell [GO:0051649]; locomotory behavior [GO:0007626]; mitochondrion organization [GO:0007005]; quaternary ammonium group transport [GO:0015697]; reproductive structure development [GO:0048608]; response to tumor necrosis factor [GO:0034612]; response to type II interferon [GO:0034341]; sodium ion transport [GO:0006814]; transport across blood-brain barrier [GO:0150104]
-4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                (R)-carnitine transmembrane transport [GO:1902270]; (R)-carnitine transport [GO:1900749]; adult heart development [GO:0007512]; carnitine metabolic process [GO:0009437]; carnitine transport [GO:0015879]; establishment of localization in cell [GO:0051649]; locomotory behavior [GO:0007626]; mitochondrion organization [GO:0007005]; quaternary ammonium group transport [GO:0015697]; reproductive structure development [GO:0048608]; response to tumor necrosis factor [GO:0034612]; response to type II interferon [GO:0034341]; sodium ion transport [GO:0006814]; transport across blood-brain barrier [GO:0150104]
-5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 estrogen metabolic process [GO:0008210]; female pregnancy [GO:0007565]; sulfation [GO:0051923]
-6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                activation of NF-kappaB-inducing kinase activity [GO:0007250]; cellular response to exogenous dsRNA [GO:0071360]; cellular response to interferon-beta [GO:0035458]; cellular response to mechanical stimulus [GO:0071260]; cellular response to type II interferon [GO:0071346]; cellular response to virus [GO:0098586]; cellular response to xenobiotic stimulus [GO:0071466]; defense response to bacterium [GO:0042742]; defense response to virus [GO:0051607]; detection of virus [GO:0009597]; extrinsic apoptotic signaling pathway [GO:0097191]; hyperosmotic response [GO:0006972]; I-kappaB phosphorylation [GO:0007252]; inflammatory response to wounding [GO:0090594]; innate immune response [GO:0045087]; JNK cascade [GO:0007254]; male gonad development [GO:0008584]; microglial cell activation [GO:0001774]; necroptotic signaling pathway [GO:0097527]; negative regulation of osteoclast differentiation [GO:0045671]; positive regulation of angiogenesis [GO:0045766]; positive regulation of apoptotic process [GO:0043065]; positive regulation of canonical NF-kappaB signal transduction [GO:0043123]; positive regulation of chemokine production [GO:0032722]; positive regulation of cytokine production involved in inflammatory response [GO:1900017]; positive regulation of gene expression [GO:0010628]; positive regulation of inflammatory response [GO:0050729]; positive regulation of interferon-alpha production [GO:0032727]; positive regulation of interferon-beta production [GO:0032728]; positive regulation of interleukin-12 production [GO:0032735]; positive regulation of interleukin-6 production [GO:0032755]; positive regulation of interleukin-8 production [GO:0032757]; positive regulation of JNK cascade [GO:0046330]; positive regulation of macrophage cytokine production [GO:0060907]; positive regulation of non-canonical NF-kappaB signal transduction [GO:1901224]; positive regulation of transcription by RNA polymerase II [GO:0045944]; positive regulation of tumor necrosis factor production [GO:0032760]; positive regulation of type II interferon production [GO:0032729]; positive regulation of type III interferon production [GO:0034346]; regulation of dendritic cell cytokine production [GO:0002730]; response to dsRNA [GO:0043331]; response to exogenous dsRNA [GO:0043330]; signal transduction [GO:0007165]; toll-like receptor 3 signaling pathway [GO:0034138]; toll-like receptor signaling pathway [GO:0002224]; type III interferon production [GO:0034343]
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   Gene.Ontology.IDs
-1 GO:0001745; GO:0002052; GO:0002213; GO:0003682; GO:0003713; GO:0004888; GO:0005112; GO:0005509; GO:0005634; GO:0005654; GO:0005737; GO:0005768; GO:0005769; GO:0005770; GO:0005771; GO:0005783; GO:0005788; GO:0005796; GO:0005829; GO:0005886; GO:0005912; GO:0006110; GO:0007015; GO:0007219; GO:0007293; GO:0007297; GO:0007298; GO:0007346; GO:0007391; GO:0007400; GO:0007403; GO:0007405; GO:0007411; GO:0007422; GO:0007423; GO:0007440; GO:0007455; GO:0007474; GO:0007476; GO:0007478; GO:0007480; GO:0007498; GO:0007521; GO:0007616; GO:0008045; GO:0008284; GO:0008340; GO:0008347; GO:0008356; GO:0008407; GO:0008587; GO:0009608; GO:0009950; GO:0009986; GO:0010001; GO:0010628; GO:0010629; GO:0014018; GO:0014019; GO:0016020; GO:0016318; GO:0016324; GO:0016330; GO:0016348; GO:0016360; GO:0022416; GO:0030139; GO:0030154; GO:0030707; GO:0030713; GO:0030718; GO:0030720; GO:0032991; GO:0035035; GO:0035153; GO:0035162; GO:0035167; GO:0035171; GO:0035172; GO:0035204; GO:0035214; GO:0035222; GO:0036011; GO:0036099; GO:0036335; GO:0040008; GO:0042686; GO:0042688; GO:0042691; GO:0043525; GO:0043697; GO:0045165; GO:0045316; GO:0045466; GO:0045595; GO:0045746; GO:0045893; GO:0045944; GO:0046331; GO:0046666; GO:0046667; GO:0046716; GO:0046843; GO:0048052; GO:0048056; GO:0048190; GO:0048477; GO:0048542; GO:0048627; GO:0048664; GO:0048665; GO:0048749; GO:0048803; GO:0048863; GO:0050699; GO:0050767; GO:0050768; GO:0050877; GO:0051489; GO:0060250; GO:0060288; GO:0060289; GO:0060571; GO:0061331; GO:0061382; GO:0097150; GO:1900087; GO:1902692; GO:1990433; GO:2000035; GO:2000048
-2                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             GO:0001751; GO:0003723; GO:0005634; GO:0005737; GO:0005829; GO:0007005; GO:0019901; GO:0030018; GO:0031430; GO:0035313; GO:0044319; GO:0045087; GO:0045214; GO:0045874; GO:0045944; GO:0046427; GO:0046843; GO:0048010; GO:0060361; GO:0090212; GO:0090575; GO:1903147
-3                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     GO:0005524; GO:0005737; GO:0005829; GO:0005886; GO:0006814; GO:0007005; GO:0007512; GO:0007626; GO:0009437; GO:0009925; GO:0015199; GO:0015226; GO:0015293; GO:0015651; GO:0015697; GO:0015879; GO:0016020; GO:0016323; GO:0016324; GO:0031526; GO:0034341; GO:0034612; GO:0048608; GO:0051649; GO:0150104; GO:1900749; GO:1901235; GO:1902270
-4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     GO:0005524; GO:0005737; GO:0005829; GO:0005886; GO:0006814; GO:0007005; GO:0007512; GO:0007626; GO:0009437; GO:0009925; GO:0015199; GO:0015226; GO:0015293; GO:0015651; GO:0015697; GO:0015879; GO:0016020; GO:0016323; GO:0016324; GO:0031526; GO:0034341; GO:0034612; GO:0048608; GO:0051649; GO:0150104; GO:1900749; GO:1901235; GO:1902270
-5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             GO:0004062; GO:0004304; GO:0005496; GO:0005737; GO:0005829; GO:0007565; GO:0008146; GO:0008210; GO:0050294; GO:0051923
-6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             GO:0000139; GO:0001774; GO:0002224; GO:0002730; GO:0003725; GO:0004888; GO:0005615; GO:0005737; GO:0005765; GO:0005769; GO:0005789; GO:0005886; GO:0006972; GO:0007165; GO:0007250; GO:0007252; GO:0007254; GO:0008584; GO:0009597; GO:0010008; GO:0010628; GO:0016020; GO:0031012; GO:0032722; GO:0032727; GO:0032728; GO:0032729; GO:0032735; GO:0032755; GO:0032757; GO:0032760; GO:0034138; GO:0034343; GO:0034346; GO:0035458; GO:0036020; GO:0038023; GO:0038187; GO:0042742; GO:0042802; GO:0043065; GO:0043123; GO:0043330; GO:0043331; GO:0045087; GO:0045671; GO:0045766; GO:0045944; GO:0046330; GO:0050729; GO:0051607; GO:0060907; GO:0071260; GO:0071346; GO:0071360; GO:0071466; GO:0090594; GO:0097191; GO:0097527; GO:0098586; GO:1900017; GO:1901224</code></pre>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>blast</category>
-  <category>gene ontology</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-23-repro/</guid>
-  <pubDate>Sat, 15 Jun 2024 04:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2024-06-15_17-21-46.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
