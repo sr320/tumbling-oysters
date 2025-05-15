@@ -10,80 +10,7 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Mon, 05 May 2025 07:00:00 GMT</lastBuildDate>
-<item>
-  <title>Megan it</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/42-megan/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Taking Megan for a spin for Renee</p>
-<p>Read files</p>
-<pre class="{bash}"><code>ls /home/shared/16TB_HDD_01/fish546/renee/</code></pre>
-<pre><code>build
-F1B-KM40_merged.fastq.gz
-F1B-KM40_trimmed_R1_paired.fastq.gz
-F1B-KM40_trimmed_R1_unpaired.fastq.gz
-F1B-KM40_trimmed_R2_paired.fastq.gz
-F1B-KM40_trimmed_R2_unpaired.fastq.gz
-F2R-KM41_merged.fastq.gz
-F2R-KM41_trimmed_R1_paired.fastq.gz
-F2R-KM41_trimmed_R1_unpaired.fastq.gz
-F2R-KM41_trimmed_R2_paired.fastq.gz
-F2R-KM41_trimmed_R2_unpaired.fastq.gz
-fastp.html
-fastp.json
-md5checksums_metagenomes_2025.txt
-megahit
-raw-data
-Trimmomatic-0.39</code></pre>
-<section id="diamond-blast" class="level2">
-<h2 class="anchored" data-anchor-id="diamond-blast">Diamond blast</h2>
-<pre class="{bash}"><code>    /home/shared/diamond-2.1.8 blastx \
-    --db /home/shared/16TB_HDD_01/sam/databases/blastdbs/ncbi-nr-20250429.dmnd \
-    --query /home/shared/16TB_HDD_01/fish546/renee/F2R-KM41_merged.fastq.gz \
-    --out ../output/sr-blastx.daa \
-    --outfmt 100 \
-    --top 5 \
-    --block-size 15.0 \
-    --index-chunks 4 \
-    --threads 32</code></pre>
-</section>
-<section id="meganizer" class="level2">
-<h2 class="anchored" data-anchor-id="meganizer">Meganizer</h2>
-<pre class="{bash}"><code>    /home/shared/megan-6.24.20/tools/daa-meganizer \
-    --in ../output/sr-blastx.daa \
-    --threads 32 \
-    --mapDB ../data/megan-map-Feb2022.db</code></pre>
-</section>
-<section id="daa2rma" class="level2">
-<h2 class="anchored" data-anchor-id="daa2rma">daa2rma</h2>
-<pre class="{bash}"><code>/home/shared/megan-6.24.20/tools/daa2rma \
---in ../output/sr-blastx.daa \
---mapDB ../data/megan-map-Feb2022.db \
---out ../output/sr-blastx-meganized.rma6 \
---threads 40 2&gt;&amp;1 | tee --append ../output/daa2rma_log.txt
-</code></pre>
-<p>Open MEGAN on locally and looked at rda file</p>
-<p>pdf: <a href="http://gannet.fish.washington.edu/seashell/snaps/sr-blastx-meganized.pdf" class="uri">http://gannet.fish.washington.edu/seashell/snaps/sr-blastx-meganized.pdf</a></p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/sr-blastx-meganized.png" class="img-fluid"></p>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>eDNA</category>
-  <category>fish546</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/42-megan/</guid>
-  <pubDate>Mon, 05 May 2025 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_sr-blastx-meganized.rma6_-_MEGAN_Community_Edition_version_6.25.10_built_27_Jun_2024_2025-05-05_13-42-33.png" medium="image" type="image/png"/>
-</item>
+<lastBuildDate>Thu, 15 May 2025 07:00:00 GMT</lastBuildDate>
 <item>
   <title>CgG Intersect</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -418,6 +345,79 @@ ntLink_7    fuzznuc nucleotide_motif    303 304 2   +   .   ID=ntLink_7.12;note=
   <category>methylation</category>
   <category>e5</category>
   <guid>https://sr320.github.io/tumbling-oysters/posts/43-intersect/</guid>
+  <pubDate>Thu, 15 May 2025 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2025-05-15_07-08-12.png" medium="image" type="image/png"/>
+</item>
+<item>
+  <title>Megan it</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/42-megan/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Taking Megan for a spin for Renee</p>
+<p>Read files</p>
+<pre class="{bash}"><code>ls /home/shared/16TB_HDD_01/fish546/renee/</code></pre>
+<pre><code>build
+F1B-KM40_merged.fastq.gz
+F1B-KM40_trimmed_R1_paired.fastq.gz
+F1B-KM40_trimmed_R1_unpaired.fastq.gz
+F1B-KM40_trimmed_R2_paired.fastq.gz
+F1B-KM40_trimmed_R2_unpaired.fastq.gz
+F2R-KM41_merged.fastq.gz
+F2R-KM41_trimmed_R1_paired.fastq.gz
+F2R-KM41_trimmed_R1_unpaired.fastq.gz
+F2R-KM41_trimmed_R2_paired.fastq.gz
+F2R-KM41_trimmed_R2_unpaired.fastq.gz
+fastp.html
+fastp.json
+md5checksums_metagenomes_2025.txt
+megahit
+raw-data
+Trimmomatic-0.39</code></pre>
+<section id="diamond-blast" class="level2">
+<h2 class="anchored" data-anchor-id="diamond-blast">Diamond blast</h2>
+<pre class="{bash}"><code>    /home/shared/diamond-2.1.8 blastx \
+    --db /home/shared/16TB_HDD_01/sam/databases/blastdbs/ncbi-nr-20250429.dmnd \
+    --query /home/shared/16TB_HDD_01/fish546/renee/F2R-KM41_merged.fastq.gz \
+    --out ../output/sr-blastx.daa \
+    --outfmt 100 \
+    --top 5 \
+    --block-size 15.0 \
+    --index-chunks 4 \
+    --threads 32</code></pre>
+</section>
+<section id="meganizer" class="level2">
+<h2 class="anchored" data-anchor-id="meganizer">Meganizer</h2>
+<pre class="{bash}"><code>    /home/shared/megan-6.24.20/tools/daa-meganizer \
+    --in ../output/sr-blastx.daa \
+    --threads 32 \
+    --mapDB ../data/megan-map-Feb2022.db</code></pre>
+</section>
+<section id="daa2rma" class="level2">
+<h2 class="anchored" data-anchor-id="daa2rma">daa2rma</h2>
+<pre class="{bash}"><code>/home/shared/megan-6.24.20/tools/daa2rma \
+--in ../output/sr-blastx.daa \
+--mapDB ../data/megan-map-Feb2022.db \
+--out ../output/sr-blastx-meganized.rma6 \
+--threads 40 2&gt;&amp;1 | tee --append ../output/daa2rma_log.txt
+</code></pre>
+<p>Open MEGAN on locally and looked at rda file</p>
+<p>pdf: <a href="http://gannet.fish.washington.edu/seashell/snaps/sr-blastx-meganized.pdf" class="uri">http://gannet.fish.washington.edu/seashell/snaps/sr-blastx-meganized.pdf</a></p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/sr-blastx-meganized.png" class="img-fluid"></p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>eDNA</category>
+  <category>fish546</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/42-megan/</guid>
   <pubDate>Mon, 05 May 2025 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_sr-blastx-meganized.rma6_-_MEGAN_Community_Edition_version_6.25.10_built_27_Jun_2024_2025-05-05_13-42-33.png" medium="image" type="image/png"/>
 </item>
