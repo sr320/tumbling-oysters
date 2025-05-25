@@ -21,6 +21,7 @@ format:
     code-copy: true
     highlight-style: github
     code-overflow: wrap
+runtime: shiny
 ---
 
 
@@ -28,6 +29,8 @@ format:
 library(knitr)
 library(readr)
 library(DT)
+library(shiny)
+library(plotly)
 
 knitr::opts_chunk$set(
   echo = TRUE,         # Display code chunks
@@ -52,15 +55,75 @@ For Apul joined relavant blast matches to expression data.
 
 https://github.com/urol-e5/timeseries_molecular/blob/main/D-Apul/code/29-Apul-epimachine-exp.Rmd
 
-```{r}
+```{r, eval=FALSE}
 
 
 # Load CSV from GitHub
 url <- "https://raw.githubusercontent.com/urol-e5/timeseries_molecular/refs/heads/main/D-Apul/output/29-Apul-epimachine-exp/Apul-epimachine-expression.csv"
 epimachine_data <- read_csv(url)
 ```
-```{r}
+```{r, eval=FALSE}
 datatable(epimachine_data, options = list(pageLength = 10, searchHighlight = TRUE), filter = "top")
+```
+
+```{r, echo=FALSE}
+# Load CSV from GitHub
+url <- "https://raw.githubusercontent.com/urol-e5/timeseries_molecular/refs/heads/main/D-Apul/output/29-Apul-epimachine-exp/Apul-epimachine-expression.csv"
+df <- read_csv(url)
+
+# Select only V2, V1, and columns containing "ACR"
+acr_cols <- grep("ACR", names(df), value = TRUE)
+base_cols <- c("V2", "V1")
+all_cols <- c(base_cols, acr_cols)
+
+# Subset the data
+df_filtered <- df[, all_cols]
+
+# Reorder ACR columns by numeric TP suffix (e.g., ACR_TP1, ACR_TP2, ...)
+acr_ordered <- acr_cols[order(as.numeric(gsub("\\D", "", acr_cols)))]
+column_order <- c(base_cols, acr_ordered)
+df_filtered <- df_filtered[, column_order]
+
+# UI
+ui <- fluidPage(
+  titlePanel("ACR Expression (TP Ordered)"),
+  fluidRow(
+    column(6, DTOutput("table")),
+    column(6, plotlyOutput("plot"))
+  )
+)
+
+# Server
+server <- function(input, output, session) {
+  output$table <- renderDT({
+    datatable(df_filtered, selection = "single", options = list(scrollX = TRUE))
+  })
+
+  output$plot <- renderPlotly({
+    selected <- input$table_rows_selected
+    if (length(selected)) {
+      row_data <- df_filtered[selected, , drop = FALSE]
+
+      y_vals <- as.numeric(unlist(row_data[1, acr_ordered]))
+      x_vals <- factor(acr_ordered, levels = acr_ordered)
+
+      plot_ly(
+        x = x_vals,
+        y = y_vals,
+        type = "bar"
+      ) %>%
+        layout(
+          title = paste("ACR Expression for:", row_data$V2),
+          xaxis = list(title = "Timepoint"),
+          yaxis = list(title = "Expression Level")
+        )
+    }
+  })
+}
+
+# Run the app
+shinyApp(ui, server)
+
 ```
 
 
