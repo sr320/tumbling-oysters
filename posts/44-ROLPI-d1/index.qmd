@@ -55,16 +55,19 @@ For Apul joined relavant blast matches to expression data.
 
 https://github.com/urol-e5/timeseries_molecular/blob/main/D-Apul/code/29-Apul-epimachine-exp.Rmd
 
-```{r, eval=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 
 
 # Load CSV from GitHub
 url <- "https://raw.githubusercontent.com/urol-e5/timeseries_molecular/refs/heads/main/D-Apul/output/29-Apul-epimachine-exp/Apul-epimachine-expression.csv"
 epimachine_data <- read_csv(url)
 ```
-```{r, eval=FALSE}
+```{r, echo=FALSE, eval=FALSE}
 datatable(epimachine_data, options = list(pageLength = 10, searchHighlight = TRUE), filter = "top")
 ```
+
+_Select Gene for Expression Plot_ 
+
 
 ```{r, echo=FALSE}
 # Load CSV from GitHub
@@ -86,7 +89,7 @@ df_filtered <- df_filtered[, column_order]
 
 # UI
 ui <- fluidPage(
-  titlePanel("ACR Expression (TP Ordered)"),
+  titlePanel("Gene Expression (TP Ordered)"),
   fluidRow(
     column(6, DTOutput("table")),
     column(6, plotlyOutput("plot"))
@@ -125,5 +128,7 @@ server <- function(input, output, session) {
 shinyApp(ui, server)
 
 ```
+
+# CpG Methylation 
 
 
