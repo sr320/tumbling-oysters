@@ -21,7 +21,7 @@ format:
     code-copy: true
     highlight-style: github
     code-overflow: wrap
-runtime: shiny
+#runtime: shiny
 ---
 
 
@@ -55,14 +55,14 @@ For Apul joined relavant blast matches to expression data.
 
 https://github.com/urol-e5/timeseries_molecular/blob/main/D-Apul/code/29-Apul-epimachine-exp.Rmd
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE}
 
 
 # Load CSV from GitHub
 url <- "https://raw.githubusercontent.com/urol-e5/timeseries_molecular/refs/heads/main/D-Apul/output/29-Apul-epimachine-exp/Apul-epimachine-expression.csv"
 epimachine_data <- read_csv(url)
 ```
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE}
 datatable(epimachine_data, options = list(pageLength = 10, searchHighlight = TRUE), filter = "top")
 ```
 
@@ -134,5 +134,9 @@ shinyApp(ui, server)
 
 
 # CpG Methylation 
+
+Also looked at CpG Methylation in time-series data.
+
+Prior had 
 
 
