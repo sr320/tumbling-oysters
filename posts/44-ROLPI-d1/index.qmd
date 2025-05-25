@@ -1,0 +1,66 @@
+---
+title: "ROL-PI Day one"
+description: "Más citas, por favor"
+categories: [methylation, e5]
+#citation: 
+date: 05-24-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_EpigeneticsSimulationMS_-_Online_LaTeX_Editor_Overleaf_2025-05-25_07-13-14.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+---
+
+
+```{r setup, include=FALSE}
+library(knitr)
+library(readr)
+library(DT)
+
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = TRUE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+
+Day one. Much of time was spent on Epigenetic Simulation paper completion.
+
+Some coding completed. 
+
+# Epigenetic Machinery Expression
+
+For Apul joined relavant blast matches to expression data.
+
+https://github.com/urol-e5/timeseries_molecular/blob/main/D-Apul/code/29-Apul-epimachine-exp.Rmd
+
+```{r}
+
+
+# Load CSV from GitHub
+url <- "https://raw.githubusercontent.com/urol-e5/timeseries_molecular/refs/heads/main/D-Apul/output/29-Apul-epimachine-exp/Apul-epimachine-expression.csv"
+epimachine_data <- read_csv(url)
+```
+```{r}
+datatable(epimachine_data, options = list(pageLength = 10, searchHighlight = TRUE), filter = "top")
+```
+
+
