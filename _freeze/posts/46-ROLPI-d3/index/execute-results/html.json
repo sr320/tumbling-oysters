@@ -1,0 +1,15 @@
+{
+  "hash": "d5b59e134c6abaca781c221e71dd47f1",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"ROL-PI Day three\"\ndescription: \"Más sequence files to bismark, por favor\"\ncategories: [methylation, e5]\n#citation: \ndate: 05-26-2025\nimage: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Assess_WGBS_data_sample_numbers_by_species__Issue_34__urol-e5timeseries_molecular_2025-05-26_12-43-24.png # finding a good image\n\nauthor:\n  - name: Steven Roberts\n    url: \n    orcid: 0000-0001-8302-1138\n    affiliation: Professor, UW - School of Aquatic and Fishery Sciences\n    affiliation-url: https://robertslab.info\n  #url:  # self-defined\ndraft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!\nformat:\n  html:\n    code-fold: FALSE\n    code-tools: true\n    code-copy: true\n    highlight-style: github\n    code-overflow: wrap\n#runtime: shiny\n---\n\n\n\n\n\nDay three. Looking for missing files.. working on slides\n\nNarrowed down issue with missing \"WGBS\" files from Peve and Ptua to a possible error in wget Azenta named files.\n\nNeed to get full data sets for both species and run through Bismark.. and beyond..\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

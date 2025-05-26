@@ -1,0 +1,50 @@
+---
+title: "ROL-PI Day three"
+description: "Más sequence files to bismark, por favor"
+categories: [methylation, e5]
+#citation: 
+date: 05-26-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Assess_WGBS_data_sample_numbers_by_species__Issue_34__urol-e5timeseries_molecular_2025-05-26_12-43-24.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(readr)
+library(DT)
+library(shiny)
+library(plotly)
+
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+Day three. Looking for missing files.. working on slides
+
+Narrowed down issue with missing "WGBS" files from Peve and Ptua to a possible error in wget Azenta named files.
+
+Need to get full data sets for both species and run through Bismark.. and beyond..
