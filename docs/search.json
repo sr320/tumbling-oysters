@@ -1230,5 +1230,12 @@
     "title": "ROL-PI Day one",
     "section": "Filter data sets",
     "text": "Filter data sets\nOnly keep CpGs that have a non-zero value in all samples.\n\nfiltered_wgbs &lt;- merged_data %&gt;% filter(if_all(-CpG, ~ .x &gt; 0))\n\n# Ensure it's formatted as a data frame\nfiltered_wgbs &lt;- as.data.frame(filtered_wgbs)\n# Only keep the sample information in the column name. \ncolnames(filtered_wgbs) &lt;- gsub(\"^(.*?)_.*$\", \"\\\\1\", colnames(filtered_wgbs))\n# Set CpG IDs to rownames\nrownames(filtered_wgbs) &lt;- filtered_wgbs$CpG\nfiltered_wgbs &lt;- filtered_wgbs %&gt;% select(-CpG)\n\nnrow(merged_data)\nnrow(filtered_wgbs)\n\n[1] 9111633\n[1] 137292\nWe had 9111633 CpGs before filtering and have only 137292 after filtering.\n\nwrite.csv(filtered_wgbs, \"../output/05-Ptua-bismark-CG/filtered-WGBS-CpG-counts.csv\")"
+  },
+  {
+    "objectID": "posts/44-ROLPI-d1/index.html#apul",
+    "href": "posts/44-ROLPI-d1/index.html#apul",
+    "title": "ROL-PI Day one",
+    "section": "Apul",
+    "text": "Apul"
   }
 ]

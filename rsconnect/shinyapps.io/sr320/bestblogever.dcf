@@ -5,6 +5,11 @@ account: sr320
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 14820367
-bundleId:
+bundleId: 10339690
 url: https://sr320.shinyapps.io/bestblogever/
 version: 1
+quarto_version: 1.6.40
+quarto_engines: knitr, markdown, jupyter
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: _quarto.yml|.github/workflows/email_notes.yml|.RData|about.qmd|bin/rend.sh|daily.R|index.qmd|notes.qmd|notes.txt|profile.jpg|styles.css|_freeze|notes_cache|posts
