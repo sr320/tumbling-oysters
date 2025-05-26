@@ -12,6 +12,311 @@
 <generator>quarto-1.6.40</generator>
 <lastBuildDate>Fri, 23 May 2025 22:00:00 GMT</lastBuildDate>
 <item>
+  <title>ROL-PI Day two</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/45-ROLPI-d2/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Day two. Much of time was spent on Epigenetic Simulation then moving on to POISE model.</p>
+<p>Did some slide edits…</p>
+<p>And coding to figure out what caused the lack of CpG loci in Apul (TLDR::one bad sample)</p>
+<section id="trouble-shooting-apul" class="level1">
+<h1>Trouble shooting Apul</h1>
+<p>Went back to processed txt loci files (from 10x bedgraph).</p>
+<p>Found that 225-T1 was much smaller in line counts and we tracked down multiQC on bismark and found very bad alignment.</p>
+<p>To remedy, did merge as before.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#pull processed files from Gannet </span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Note: Unfortunately we can't use the `cache` feature to make this process more time efficient, as it doesn't support long vectors</span></span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define the base URL</span></span>
+<span id="cb1-5">base_url <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://gannet.fish.washington.edu/seashell/bu-github/timeseries_molecular/D-Apul/output/15.5-Apul-bismark/"</span></span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Read the HTML page</span></span>
+<span id="cb1-8">page <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_html</span>(base_url)</span>
+<span id="cb1-9"></span>
+<span id="cb1-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract links to files</span></span>
+<span id="cb1-11">file_links <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> page <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb1-12">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">html_nodes</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"a"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb1-13">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">html_attr</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"href"</span>)</span>
+<span id="cb1-14"></span>
+<span id="cb1-15"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Filter for files ending in "processed.txt"</span></span>
+<span id="cb1-16">processed_files <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> file_links[<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">grepl</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"processed</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.txt$"</span>, file_links)]</span>
+<span id="cb1-17"></span>
+<span id="cb1-18"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create full URLs</span></span>
+<span id="cb1-19">file_urls <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">paste0</span>(base_url, processed_files)</span>
+<span id="cb1-20"></span>
+<span id="cb1-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Function to read a file from URL</span></span>
+<span id="cb1-22">read_processed_file <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(url) {</span>
+<span id="cb1-23">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_table</span>(url, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col_types =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cols</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">.default =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"c"</span>))  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Read as character to avoid parsing issues</span></span>
+<span id="cb1-24">}</span>
+<span id="cb1-25"></span>
+<span id="cb1-26"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Import all processed files into a list</span></span>
+<span id="cb1-27">processed_data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lapply</span>(file_urls, read_processed_file)</span>
+<span id="cb1-28"></span>
+<span id="cb1-29"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Name the list elements by file name</span></span>
+<span id="cb1-30"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">names</span>(processed_data) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> processed_files</span>
+<span id="cb1-31"></span>
+<span id="cb1-32"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Print structure of imported data</span></span>
+<span id="cb1-33"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str</span>(processed_data)</span>
+<span id="cb1-34"></span>
+<span id="cb1-35"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add a header row that has "CpG" for the first column and "sample" for the second column, which will be populated by the file name </span></span>
+<span id="cb1-36"></span>
+<span id="cb1-37">processed_data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">Map</span>(<span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(df, filename) {</span>
+<span id="cb1-38">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(df) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CpG"</span>, filename)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Rename columns</span></span>
+<span id="cb1-39">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">return</span>(df)</span>
+<span id="cb1-40">}, processed_data, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">names</span>(processed_data))  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Use stored file names</span></span>
+<span id="cb1-41"></span>
+<span id="cb1-42"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#merge files together by "CpG"</span></span>
+<span id="cb1-43">merged_data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> purrr<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">reduce</span>(processed_data, full_join, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"CpG"</span>)</span>
+<span id="cb1-44"></span>
+<span id="cb1-45"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Print structure of final merged data</span></span>
+<span id="cb1-46"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str</span>(merged_data)</span></code></pre></div>
+</div>
+<p>Then changed things up.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">#remove 225-T1</span></span>
+<span id="cb2-2"></span>
+<span id="cb2-3">merged_data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> merged_data[, <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">!</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">names</span>(merged_data) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%in%</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ACR-225-TP1_10x_processed.txt"</span>)]</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Convert all columns (except "CpG") to numeric</span></span>
+<span id="cb3-2">merged_data <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> merged_data <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb3-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">across</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>CpG, as.numeric)) \</span></code></pre></div>
+</div>
+<p>Only keep CpGs that have a non-na value in all samples.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">filtered_wgbs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">na.omit</span>(merged_data)</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Ensure it's formatted as a data frame</span></span>
+<span id="cb4-4">filtered_wgbs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.data.frame</span>(filtered_wgbs)</span>
+<span id="cb4-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Only keep the sample information in the column name. </span></span>
+<span id="cb4-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(filtered_wgbs) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">gsub</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^(.*?)_.*$"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">1"</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(filtered_wgbs))</span>
+<span id="cb4-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Set CpG IDs to rownames</span></span>
+<span id="cb4-8"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rownames</span>(filtered_wgbs) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> filtered_wgbs<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>CpG</span>
+<span id="cb4-9">filtered_wgbs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> filtered_wgbs <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span>CpG)</span>
+<span id="cb4-10"></span>
+<span id="cb4-11"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">nrow</span>(merged_data)</span>
+<span id="cb4-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">nrow</span>(filtered_wgbs)</span></code></pre></div>
+</div>
+<p>We had 12,093,025 CpGs before filtering and have 96785 after filtering.</p>
+<hr>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>methylation</category>
+  <category>e5</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/45-ROLPI-d2/</guid>
+  <pubDate>Fri, 23 May 2025 22:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_EpigeneticsSimulationMS_-_Online_LaTeX_Editor_Overleaf_2025-05-25_07-13-14.png" medium="image" type="image/png"/>
+</item>
+<item>
   <title>ROL-PI Day one</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/44-ROLPI-d1/</link>
@@ -12748,105 +13053,6 @@ font-style: inherit;">head</span> ../output/20-Apul-gene-annotation/Apul-protein
   <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-27-go/</guid>
   <pubDate>Sat, 24 Aug 2024 22:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap__in_UniProtKB_search_571864__UniProt_2024-08-23_16-18-03.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Double header</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Did a Tuesday / Wednesday B2B. Tuesday - focused on finding Kathleen diploids and triploids.</p>
-<section id="ploidy" class="level2">
-<h2 class="anchored" data-anchor-id="ploidy">Ploidy</h2>
-<p>See <a href="https://shedurkin.github.io/Roberts-LabNotebook/posts/projects/pacific_oyster/2024_06_25_Point_Whitney.html">Kathleen’s post</a> for more details.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-TLDR: Kathleens’s post
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The experiment took place at Point Whitney, and involved selecting, counting, measuring, and segregating 200 oysters each from diploid and triploid groups into different treatment and control groups. The oysters ranged in size from 20mm to 60mm, and notable observations included size differences between the groups and instances of mortality and fused oysters.</p>
-<p>The oysters were separated into four treatment bags, two each for diploids and triploids, without individual tags but with identifiers on the bags to distinguish among treatment groups and controls. The stress hardening plan involves subjecting these oysters to elevated temperatures (35°C) for four-hour sessions, three times a week for two weeks, with the aim of studying their response to stress.</p>
-</div>
-</div>
-<p>On Wednesday, I exposed the treated cohorts to 35°C for 4 hours using right white tub. Oyster are outside in 3-holer.</p>
-</section>
-<section id="also-did-some-larvae-work." class="level2">
-<h2 class="anchored" data-anchor-id="also-did-some-larvae-work.">Also did some larvae work.</h2>
-<p>Tuesday 3PM I checked the parameter. They were only single digits, around two or five. The header tank was almost three-quarters full. What I did is I increased the flow water input into the three close uhddles. So now it’s a steady stream. Did not touch the flow of the water coming into the back three. And I doubled the pump rate. It was at 40 and now it is at 80. [water букetting] The other thing, I realized that if you increase the flow, the huddles cannot take it. While I didn’t clean the huddles, I decided for the top three that were getting the higher flow that I would change them out from 40 microns to 75 microns.</p>
-<p>Wednesday 11AM First row was now reading 50 on flourometer. Back row 2,2, 20. Went ahead and changed back to 75um filters. Noting flow rate is still different between front and back rows.</p>
-</section>
-<section id="k-seed-start" class="level2">
-<h2 class="anchored" data-anchor-id="k-seed-start">10k seed start</h2>
-<p>Seed were divided into 10 bags.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-26-59.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption>seed</figcaption>
-</figure>
-</div>
-<p>Plan is to do 5 treatments - Tagging on to Kathleens</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Bags</th>
-<th>Treatments</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>14 &amp; 18</td>
-<td>35C for 1hour</td>
-</tr>
-<tr class="even">
-<td></td>
-<td>Freshwater 1 hour</td>
-</tr>
-<tr class="odd">
-<td></td>
-<td></td>
-</tr>
-<tr class="even">
-<td></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td>control</td>
-</tr>
-</tbody>
-</table>
-<p>Bags stay in lagoon.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-31-57.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption>lagoon</figcaption>
-</figure>
-</div>
-</section>
-<section id="hatchery-planner" class="level2">
-<h2 class="anchored" data-anchor-id="hatchery-planner">Hatchery planner</h2>
-<p><a href="https://docs.google.com/spreadsheets/d/1CRWMH9Tk5LQFAhCYJin3_Epk1yLwI7kGytP3hRK2vZU/edit?usp=sharing">google-sheet</a></p>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>oyster</category>
-  <category>temperature</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/sr320-26-ploidy/</guid>
-  <pubDate>Tue, 25 Jun 2024 22:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-06-27_10-12-25.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
