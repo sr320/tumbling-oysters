@@ -21,7 +21,7 @@ format:
     code-copy: true
     highlight-style: github
     code-overflow: wrap
-runtime: shiny
+#runtime: shiny
 ---
 
 
@@ -462,11 +462,6 @@ write.csv(filtered_wgbs, "../output/05-Ptua-bismark-CG/filtered-WGBS-CpG-counts.
 
 
 # Why such a descepancy across species in number of filtered CpG?
-
-
-lets compare bismark output
-
-## Apul
 
 
 
