@@ -1,0 +1,861 @@
+---
+title: "The lncRNA repertoire of Ptuh"
+description: "that's hit"
+categories: [lncRNA, e5]
+#citation: 
+date: 06-21-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive-expression__RStudio_Server_2025-06-21_17-48-43.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(readr)
+library(DT)
+library(shiny)
+library(plotly)
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(c("Biostrings", "rtracklayer"))
+library(tidyverse)
+library(Biostrings)
+library(rtracklayer)
+
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+
+# TLDR 
+
+fasta - https://raw.githubusercontent.com/urol-e5/deep-dive-expression/refs/heads/main/F-Ptuh/output/17-Ptuh-lncRNA/Ptuh-lncRNA.fasta
+
+gtf - https://raw.githubusercontent.com/urol-e5/deep-dive-expression/refs/heads/main/F-Ptuh/output/17-Ptuh-lncRNA/Ptuh-lncRNA.gtf
+
+
+# file checks 
+
+
+```{r, eval=TRUE}
+
+# URLs
+bed_url <- "https://raw.githubusercontent.com/urol-e5/deep-dive-expression/refs/heads/main/F-Ptuh/output/17-Ptuh-lncRNA/lncRNA.bed"
+gtf_url <- "https://raw.githubusercontent.com/urol-e5/deep-dive-expression/refs/heads/main/F-Ptuh/output/17-Ptuh-lncRNA/lncRNA.gtf"
+fasta_url <- "https://raw.githubusercontent.com/urol-e5/deep-dive-expression/refs/heads/main/F-Ptuh/output/17-Ptuh-lncRNA/lncRNA.fasta"
+
+### BED file
+bed <- read_tsv(bed_url, col_names = c("chrom", "start", "end"))
+cat("BED file head:\n")
+print(head(bed))
+
+# Basic stats for BED
+bed$length <- bed$end - bed$start + 1
+cat("\nBED file stats:\n")
+cat("Number of features:", nrow(bed), "\n")
+cat("Mean length:", mean(bed$length), "\n")
+cat("Median length:", median(bed$length), "\n")
+
+### GTF file
+gtf <- import(gtf_url, format = "gtf")
+cat("\nGTF file head:\n")
+print(head(gtf))
+
+# Basic stats for GTF
+cat("\nGTF file stats:\n")
+cat("Number of entries:", length(gtf), "\n")
+cat("Unique feature types:", paste(unique(gtf$type), collapse = ", "), "\n")
+
+### FASTA file
+fasta <- readDNAStringSet(fasta_url)
+cat("\nFASTA file head:\n")
+print(head(names(fasta)))
+print(head(fasta[[1]]))
+
+# Basic stats for FASTA
+seq_lengths <- width(fasta)
+cat("\nFASTA file stats:\n")
+cat("Number of sequences:", length(fasta), "\n")
+cat("Mean sequence length:", mean(seq_lengths), "\n")
+cat("Median sequence length:", median(seq_lengths), "\n")
+```
+
+
+# Renaming fasta
+
+```{r}
+
+# File paths
+fasta_url <- "https://raw.githubusercontent.com/urol-e5/deep-dive-expression/refs/heads/main/F-Ptuh/output/17-Ptuh-lncRNA/lncRNA.fasta"
+gtf_url <- "https://raw.githubusercontent.com/urol-e5/deep-dive-expression/refs/heads/main/F-Ptuh/output/17-Ptuh-lncRNA/lncRNA.gtf"
+
+# Read in FASTA and GTF
+fasta <- readDNAStringSet(fasta_url)
+gtf <- import(gtf_url, format = "gtf")
+
+# Extract gene_id from GTF
+gene_ids <- sapply(mcols(gtf)$gene_id, function(x) gsub('"', '', x))  # remove quotes
+unique_gene_ids <- unique(gene_ids)
+
+# Generate new FASTA headers
+new_headers <- paste0("Ptuh_", unique_gene_ids)
+
+# Confirm lengths match
+if (length(fasta) != length(new_headers)) {
+  stop("Mismatch between number of FASTA sequences and GTF gene IDs.")
+}
+
+# Rename sequences
+names(fasta) <- new_headers
+
+# Write new FASTA
+writeXStringSet(fasta, filepath = "lncRNA_renamed.fasta", format = "fasta")
+
+cat("FASTA headers renamed and saved to lncRNA_renamed.fasta\n")
+```
+```{bash}
+grep ">" lncRNA_renamed.fasta | head 
+```
+
+```{r, eval=TRUE}
+
+# Read renamed FASTA and original GTF
+fasta <- readDNAStringSet("lncRNA_renamed.fasta")
+gtf <- import("https://raw.githubusercontent.com/urol-e5/deep-dive-expression/refs/heads/main/F-Ptuh/output/17-Ptuh-lncRNA/lncRNA.gtf", format = "gtf")
+
+# Extract gene IDs from GTF
+gtf_gene_ids <- unique(gsub('"', '', mcols(gtf)$gene_id))  # remove quotes
+
+# Extract IDs from FASTA headers
+fasta_headers <- names(fasta)
+fasta_gene_ids <- gsub("^Ptuh_", "", fasta_headers)
+
+# Compare
+all_match <- all(fasta_gene_ids %in% gtf_gene_ids) && all(gtf_gene_ids %in% fasta_gene_ids)
+
+if (all_match) {
+  cat("✅ FASTA headers match gene_ids in GTF exactly.\n")
+} else {
+  cat("❌ Mismatch found between FASTA headers and GTF gene_ids.\n")
+
+  # Optional: show what's missing
+  cat("\nIn FASTA but not GTF:\n")
+  print(setdiff(fasta_gene_ids, gtf_gene_ids))
+
+  cat("\nIn GTF but not FASTA:\n")
+  print(setdiff(gtf_gene_ids, fasta_gene_ids))
+}
+
+
+```
+
+```{r, eval=TRUE}
+# Read files
+fasta <- readDNAStringSet("lncRNA_renamed.fasta")
+gtf <- import("https://raw.githubusercontent.com/urol-e5/deep-dive-expression/refs/heads/main/F-Ptuh/output/17-Ptuh-lncRNA/lncRNA.gtf", format = "gtf")
+
+# Clean gene_id and extract relevant fields
+gtf_df <- as.data.frame(gtf)
+gtf_df$gene_id <- gsub('"', '', gtf_df$gene_id)
+gtf_summary <- gtf_df %>%
+  dplyr::select(seqnames, start, end, gene_id) %>%
+  dplyr::group_by(gene_id) %>%
+  dplyr::summarise(gtf_length = sum(end - start + 1), .groups = "drop")
+
+# Extract FASTA lengths
+fasta_df <- data.frame(
+  gene_id = gsub("^Ptuh_", "", names(fasta)),
+  fasta_length = width(fasta),
+  fasta_header = names(fasta)
+)
+
+# Join and compare
+merged <- dplyr::inner_join(gtf_summary, fasta_df, by = "gene_id")
+
+# Check consistency
+merged$length_match <- merged$gtf_length == merged$fasta_length
+
+# Display a few examples
+cat("🔍 Sample GTF vs FASTA length comparison:\n")
+print(head(merged[, c("fasta_header", "gtf_length", "fasta_length", "length_match")]), row.names = FALSE)
+
+# Overall match rate
+match_rate <- mean(merged$length_match)
+cat(sprintf("\n✅ Percent of exact matches: %.1f%%\n", 100 * match_rate))
+```
+
+
+---
+
+# Code
+
+``` bash
+# Global R options
+knitr::opts_chunk$set(echo = TRUE)
+
+# Define key paths and tool directories
+ 
+DATA_DIR <- "../data/17-Ptuh-lncRNA"
+OUTPUT_DIR <- "../output/17-Ptuh-lncRNA"
+THREADS <- "24"
+  
+FASTQ_SOURCE <- "https://gannet.fish.washington.edu/Atumefaciens/20230519-E5_coral-fastqc-fastp-multiqc-RNAseq/P_meandrina/trimmed/"
+FASTQ_SUFFIX <- "fastq.gz"
+GENOME_SOURCE <- "https://owl.fish.washington.edu/halfshell/genomic-databank/Pocillopora_meandrina_HIv1.assembly.fasta"
+
+
+GTF_SOURCE <- "https://raw.githubusercontent.com/urol-e5/timeseries_molecular/d5f546705e3df40558eeaa5c18b122c79d2f4453/F-Ptua/data/Pocillopora_meandrina_HIv1.genes-validated.gtf"
+GFF_SOURCE <- "https://gannet.fish.washington.edu/seashell/bu-github/deep-dive-expression/F-Ptuh/data/Pocillopora_meandrina_HIv1.genes-validated.gff3"
+
+GFFPATTERN <- 'class_code "u"|class_code "x"|class_code "o"|class_code "i"'
+
+#RAVEN
+# HISAT2_DIR <- "/home/shared/hisat2-2.2.1/"
+# SAMTOOLS_DIR <- "/home/shared/samtools-1.12/"
+# STRINGTIE_DIR <- "/home/shared/stringtie-2.2.1.Linux_x86_64"
+# GFFCOMPARE_DIR <- "/home/shared/gffcompare-0.12.6.Linux_x86_64"
+# BEDTOOLS_DIR <- "/home/shared/bedtools2/bin"
+# CPC2_DIR <- "/home/shared/CPC2_standalone-1.0.1"
+# CONDA_PATH <- "/opt/anaconda/anaconda3/bin/conda"
+
+#KLONE
+HISAT2_DIR <- ""
+SAMTOOLS_DIR <- ""
+STRINGTIE_DIR <- ""
+GFFCOMPARE_DIR <- "/srlab/programs/gffcompare-0.12.6.Linux_x86_64/"
+BEDTOOLS_DIR <- ""
+CPC2_DIR <- "/srlab/programs/CPC2_standalone-1.0.1/bin/"
+CONDA_PATH <- "/mmfs1/gscratch/srlab/nextflow/bin/miniforge/bin/conda"
+
+GENOME_FASTA <- file.path(DATA_DIR, "genome.fasta")
+GENOME_GTF <- file.path(DATA_DIR, "genome.gtf")
+GENOME_GFF <- file.path(DATA_DIR, "genome.gff")
+FASTQ_DIR <- file.path(DATA_DIR, "fastq")
+GENOME_INDEX <- file.path(OUTPUT_DIR, "genome.index")
+
+# Export these as environment variables for bash chunks.
+Sys.setenv(
+  THREADS = THREADS,
+  DATA_DIR = DATA_DIR,
+  FASTQ_SOURCE = FASTQ_SOURCE,
+  FASTQ_SUFFIX = FASTQ_SUFFIX,
+  OUTPUT_DIR = OUTPUT_DIR,
+  GENOME_SOURCE = GENOME_SOURCE,
+  GTF_SOURCE = GTF_SOURCE,
+  GFF_SOURCE = GFF_SOURCE,
+  HISAT2_DIR = HISAT2_DIR,
+  SAMTOOLS_DIR = SAMTOOLS_DIR,
+  STRINGTIE_DIR = STRINGTIE_DIR,
+  GFFCOMPARE_DIR = GFFCOMPARE_DIR,
+  BEDTOOLS_DIR = BEDTOOLS_DIR,
+  CPC2_DIR = CPC2_DIR,
+  CONDA_PATH = CONDA_PATH,
+  GENOME_FASTA = GENOME_FASTA,
+  GENOME_GTF = GENOME_GTF,
+  GENOME_GFF = GENOME_GFF,
+  FASTQ_DIR = FASTQ_DIR,
+  GENOME_INDEX = GENOME_INDEX,
+  GFFPATTERN = GFFPATTERN
+)
+```
+
+```{r,engine='bash'}
+mkdir -p "${DATA_DIR}"
+mkdir -p "${OUTPUT_DIR}"
+```
+
+
+```{r, engine='bash'}
+wget -nv -r \
+--no-directories --no-parent \
+-P ${FASTQ_DIR} \
+-A "*${FASTQ_SUFFIX}" ${FASTQ_SOURCE}
+```
+
+
+```{r ls, engine='bash'}
+ls ${FASTQ_DIR}
+```
+
+```
+RNA-POC-47-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-POC-47-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
+RNA-POC-48-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-POC-48-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
+RNA-POC-50-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-POC-50-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
+RNA-POC-53-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-POC-53-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
+RNA-POC-57-S1-TP2_R1_001.fastp-trim.20230519.fastq.gz
+RNA-POC-57-S1-TP2_R2_001.fastp-trim.20230519.fastq.gz
+```
+
+```{r fasta, engine='bash'}
+
+curl -o "${GENOME_FASTA}" "${GENOME_SOURCE}"
+```
+
+```{r gtf, engine='bash'}
+
+
+curl -o "${GENOME_GTF}" "${GTF_SOURCE}"
+```
+
+```{r gff, engine='bash'}
+
+
+curl -o "${GENOME_GFF}" "${GFF_SOURCE}"
+```
+
+```{r file check, engine='bash'}
+output_fasta=$(head -1 "${GENOME_FASTA}")
+output_gff=$(head -2 "${GENOME_GFF}")
+output_gtf=$(head -1 "${GENOME_GTF}")
+
+if [[ "$output_fasta" == *html* || "$output_gff" == *html* || "$output_gtf" == *html* ]]; then
+    echo "FAIL - FFS you downloaded a HTML not and genome feature file!"
+else
+    echo "$output_fasta"
+    echo "$output_gff"
+    echo "$output_gtf"
+fi
+```
+
+# HISAT
+
+```{r, engine='bash'}
+"${HISAT2_DIR}hisat2_extract_exons.py" "${GENOME_GTF}" > "${OUTPUT_DIR}/exon.txt"
+
+"${HISAT2_DIR}hisat2_extract_splice_sites.py" "${GENOME_GTF}" > "${OUTPUT_DIR}/splice_sites.txt"
+
+```
+
+```{r, engine='bash'}
+
+"${HISAT2_DIR}hisat2-build" \
+  -p "${THREADS}" \
+  "${GENOME_FASTA}" \
+  "${GENOME_INDEX}" \
+  --exon "${OUTPUT_DIR}/exon.txt" \
+  --ss "${OUTPUT_DIR}/splice_sites.txt" \
+  2> "${OUTPUT_DIR}/hisat2-build_stats.txt"
+
+```
+
+```{bash}
+# Loop over every file ending in .fastq.gz that contains "_R2_"
+for r2 in "${FASTQ_DIR}"/*_R2_*."${FASTQ_SUFFIX}"; do
+    # Get the basename (filename without path)
+    base=$(basename "$r2")
+    
+    # Derive a sample name by taking everything before "_R2_"
+    sample="${base%%_R2_*}"
+    
+    # Construct the corresponding R1 filename by replacing "_R2_" with "_R1_"
+    r1="${r2/_R2_/_R1_}"
+    
+    # Define the output SAM file name using the sample name
+    output="${OUTPUT_DIR}/${sample}.sam"
+    
+    # Run hisat2 with the paired-end files
+    "${HISAT2_DIR}hisat2" \
+      -x "${GENOME_INDEX}" \
+      -p "${THREADS}" \
+      -1 "$r1" \
+      -2 "$r2" \
+      -S "$output"
+done
+```
+
+## convert SAM to BAM
+
+```{r convertSAM, engine='bash'}
+for samfile in "${OUTPUT_DIR}/${sample}"*.sam; do
+  bamfile="${samfile%.sam}.bam"
+  sorted_bamfile="${samfile%.sam}.sorted.bam"
+  
+  # Convert SAM to BAM
+  "${SAMTOOLS_DIR}samtools" view -bS -@ "${THREADS}" "$samfile" > "$bamfile"
+  
+  # Sort BAM
+  "${SAMTOOLS_DIR}samtools" sort -@ "${THREADS}" "$bamfile" -o "$sorted_bamfile"
+  
+  # Index sorted BAM
+  "${SAMTOOLS_DIR}samtools" index -@ "${THREADS}" "$sorted_bamfile"
+done
+```
+
+# StringTie
+
+StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF (Gene Transfer Format) files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples–an important step in creating a canonical list of lncRNAs across all samples included in the pipeline.
+
+```{r stringtie, engine='bash'}
+find "${OUTPUT_DIR}" -name "*sorted.bam" \
+| xargs -n 1 basename -s .sorted.bam | xargs -I{} \
+"${STRINGTIE_DIR}stringtie" \
+-p "${THREADS}" \
+-G "${GENOME_GFF}" \
+-o "${OUTPUT_DIR}/{}.gtf" \
+"${OUTPUT_DIR}/{}.sorted.bam"
+```
+
+```{r, engine='bash'}
+head ${OUTPUT_DIR}/*.gtf
+```
+
+```{r, engine='bash'}
+wc -l ${OUTPUT_DIR}/*.gtf
+```
+
+```{r merge, engine='bash'}
+"${STRINGTIE_DIR}stringtie" \
+--merge \
+-G "${GENOME_GFF}" \
+-o "${OUTPUT_DIR}/stringtie_merged.gtf" \
+"${OUTPUT_DIR}/"*.gtf
+```
+
+```{r, engine='bash'}
+wc -l ${OUTPUT_DIR}/stringtie_merged.gtf
+```
+
+```{r, engine='bash'}
+head ${OUTPUT_DIR}/stringtie_merged.gtf
+```
+
+#GFFCOMPARE
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_687474703a2f2f67616e6e65742e666973682e77617368696e67746f6e2e6564752f7365617368656c6c2f736e6170732f323032332d31312d30335f30392d3_2024-12-20_04-02-37.png)
+
+
+
+
+```{r gffcomp, engine='bash'}
+"${GFFCOMPARE_DIR}gffcompare" \
+-r "${GENOME_GFF}" \
+-o "${OUTPUT_DIR}/gffcompare_merged" \
+"${OUTPUT_DIR}/stringtie_merged.gtf"
+```
+
+```{r viewgff, engine='bash'}
+head -4 "${OUTPUT_DIR}"/gffcompare_merged*
+```
+
+```{r viewgf, engine='bash'}
+wc -l "${OUTPUT_DIR}"/gffcompare_merged*
+```
+
+
+```{r, engine='bash'}
+echo "${GFFPATTERN}"
+echo "${OUTPUT_DIR}"
+```
+
+
+
+```{r gff filter, engine='bash'}
+awk '$3 == "transcript" && $1 !~ /^#/' "${OUTPUT_DIR}/gffcompare_merged.annotated.gtf" | \
+grep -E "${GFFPATTERN}" | \
+awk '($5 - $4 > 199) || ($4 - $5 > 199)' > "${OUTPUT_DIR}/lncRNA_candidates.gtf"
+```
+
+
+```{r, engine='bash'}
+head ${OUTPUT_DIR}/lncRNA_candidates.gtf
+```
+
+```{r, engine='bash'}
+wc -l ${OUTPUT_DIR}/lncRNA_candidates.gtf
+```
+
+```{r, engine='bash'}
+sort ../output/17-Ptuh-lncRNA/lncRNA_candidates.gtf | uniq -d
+```
+
+
+
+
+# Bedtools
+
+```{r fasta2, engine='bash'}
+"${BEDTOOLS_DIR}"bedtools getfasta \
+-fi "${GENOME_FASTA}" \
+-bed "${OUTPUT_DIR}/lncRNA_candidates.gtf" \
+-fo "${OUTPUT_DIR}/lncRNA_candidates.fasta" \
+-name -split
+```
+
+```{r, engine='bash'}
+head ${OUTPUT_DIR}/lncRNA_candidates.fasta
+```
+
+
+
+#CPC2
+
+```{bash}
+wget https://github.com/gao-lab/CPC2_standalone/archive/refs/tags/v1.0.1.zip
+```
+```{bash}
+unzip v1.0.1.zip
+```
+
+
+
+
+
+```{r, engine='bash'}
+eval "$(/mmfs1/gscratch/srlab/nextflow/bin/miniforge/bin/conda shell.bash hook)"
+conda activate /mmfs1/gscratch/srlab/nextflow/bin/miniforge/envs/nextflow  # replace with your actual env name
+python /mmfs1/gscratch/scrubbed/sr320/github/deep-dive-expression/F-Ptuh/code/CPC2_standalone-1.0.1/bin/CPC2.py \
+  -i "${OUTPUT_DIR}/lncRNA_candidates.fasta" \
+  -o "${OUTPUT_DIR}/CPC2"
+```
+
+
+
+Filter
+
+```{r filCPC, engine='bash'}
+awk '$8 == "noncoding" {print $1}' "${OUTPUT_DIR}/CPC2.txt" > "${OUTPUT_DIR}/noncoding_transcripts_ids.txt"
+```
+
+```{r, engine='bash'}
+head "${OUTPUT_DIR}/CPC2.txt"
+wc -l "${OUTPUT_DIR}/CPC2.txt"
+```
+
+```{r, engine='bash'}
+head "${OUTPUT_DIR}/noncoding_transcripts_ids.txt"
+wc -l "${OUTPUT_DIR}/noncoding_transcripts_ids.txt"
+```
+
+Subsetting fasta
+
+```{r ssfasta, engine='bash'}
+"${SAMTOOLS_DIR}samtools" faidx "${OUTPUT_DIR}/lncRNA_candidates.fasta" \
+-r "${OUTPUT_DIR}/noncoding_transcripts_ids.txt" \
+> "${OUTPUT_DIR}/lncRNA.fasta"
+```
+
+```{r, engine='bash'}
+head -2 "${OUTPUT_DIR}/lncRNA.fasta"
+grep -c ">" "${OUTPUT_DIR}/lncRNA.fasta"
+```
+
+
+
+
+
+
+```{r lncRNAgtf, engine='bash'}
+# Define input and output file paths using the OUTPUT_DIR variable
+input="${OUTPUT_DIR}/noncoding_transcripts_ids.txt"
+output="${OUTPUT_DIR}/lncRNA.bed"
+
+# Process each line of the input file
+while IFS= read -r line; do
+    # Remove "transcript::" from the line
+    line="${line//transcript::/}"
+    
+    # Split the line by ':' to get the chromosome and position string
+    IFS=':' read -r chromosome pos <<< "$line"
+    
+    # Split the position string by '-' to separate start and end positions
+    IFS='-' read -r start end <<< "$pos"
+    
+    # Convert the start position to 0-based by subtracting 1
+    start=$((start - 1))
+    
+    # Write the chromosome, updated start, and end positions to the output file (tab-separated)
+    printf "%s\t%s\t%s\n" "$chromosome" "$start" "$end"
+done < "$input" > "$output"
+```
+
+```{r, engine='bash'}
+head -1 "${OUTPUT_DIR}/lncRNA.bed"
+```
+
+```{r renamegtf, engine='bash'}
+awk 'BEGIN{OFS="\t"; count=1} {printf "%s\t.\tlncRNA\t%d\t%d\t.\t+\t.\tgene_id \"lncRNA_%03d\";\n", $1, $2, $3, count++;}' "${OUTPUT_DIR}/lncRNA.bed" \
+> "${OUTPUT_DIR}/lncRNA.gtf"
+```
+
+```{r, engine='bash'}
+head "${OUTPUT_DIR}/lncRNA.gtf"
+wc -l "${OUTPUT_DIR}/lncRNA.gtf"
+```
+
+
+
+# Summary Table
+
+```{r summary, engine='bash'}
+tf_file="${OUTPUT_DIR}/lncRNA.gtf"
+
+awk '
+BEGIN {
+    total_entries = 0;
+    min_length = 1e9;
+    max_length = 0;
+    sum_length = 0;
+}
+# Skip comment lines
+/^#/ { next }
+{
+    if (NF < 9) next;
+    total_entries++;
+    start = $4;
+    end = $5;
+    gene_length = end - start + 1;
+    if (gene_length < min_length) min_length = gene_length;
+    if (gene_length > max_length) max_length = gene_length;
+    sum_length += gene_length;
+    feature[$3]++;
+    chrom[$1]++;
+    # Use two-argument match() and then extract the gene_id manually.
+    if (match($9, /gene_id "[^"]+"/)) {
+        gene_str = substr($9, RSTART, RLENGTH);
+        # Remove the "gene_id " prefix and the quotes.
+        gsub(/gene_id "/, "", gene_str);
+        gsub(/"/, "", gene_str);
+        genes[gene_str] = 1;
+    }
+}
+END {
+    avg_length = (total_entries > 0) ? sum_length / total_entries : 0;
+    unique_gene_count = 0;
+    for (g in genes)
+        unique_gene_count++;
+    print "Basic GTF File Statistics:";
+    print "--------------------------";
+    print "Total entries:      " total_entries;
+    print "Unique genes:       " unique_gene_count;
+    print "Min gene length:    " min_length;
+    print "Max gene length:    " max_length;
+    printf("Average gene length: %.2f\n", avg_length);
+    print "\nFeature counts:";
+    for (f in feature) {
+        print "  " f ": " feature[f];
+    }
+    print "\nChromosome counts:";
+    for (c in chrom) {
+        print "  " c ": " chrom[c];
+    }
+}
+' "$tf_file"
+```
+
+
+```
+Basic GTF File Statistics:
+--------------------------
+Total entries:      16153
+Unique genes:       0
+Min gene length:    203
+Max gene length:    227016
+Average gene length: 3125.62
+
+Feature counts:
+  lncRNA: 16153
+
+Chromosome counts:
+  Pocillopora_meandrina_HIv1___xfSc0000447: 7
+  Pocillopora_meandrina_HIv1___xfSc0000094: 2
+  Pocillopora_meandrina_HIv1___Sc0000041: 71
+  Pocillopora_meandrina_HIv1___xfSc0000343: 7
+  Pocillopora_meandrina_HIv1___xfSc0000004: 3
+  Pocillopora_meandrina_HIv1___Sc0000011: 362
+  Pocillopora_meandrina_HIv1___xfSc0000812: 1
+  Pocillopora_meandrina_HIv1___xfSc0000081: 2
+  Pocillopora_meandrina_HIv1___Sc0000032: 132
+  Pocillopora_meandrina_HIv1___xpSc0001344: 1
+  Pocillopora_meandrina_HIv1___xpSc0001331: 1
+  Pocillopora_meandrina_HIv1___xfSc0001179: 1
+  Pocillopora_meandrina_HIv1___xfSc0000284: 2
+  Pocillopora_meandrina_HIv1___xfSc0000692: 3
+  Pocillopora_meandrina_HIv1___xfSc0000029: 2
+  Pocillopora_meandrina_HIv1___Sc0000052: 3
+  Pocillopora_meandrina_HIv1___xfSc0000145: 2
+  Pocillopora_meandrina_HIv1___Sc0000046: 28
+  Pocillopora_meandrina_HIv1___xfSc0000948: 1
+  Pocillopora_meandrina_HIv1___Sc0000025: 274
+  Pocillopora_meandrina_HIv1___xfSc0000477: 2
+  Pocillopora_meandrina_HIv1___Sc0000066: 1
+  Pocillopora_meandrina_HIv1___Sc0000039: 96
+  Pocillopora_meandrina_HIv1___xpSc0001280: 5
+  Pocillopora_meandrina_HIv1___xfSc0001170: 1
+  Pocillopora_meandrina_HIv1___xfSc0000212: 7
+  Pocillopora_meandrina_HIv1___xfSc0000007: 36
+  Pocillopora_meandrina_HIv1___Sc0000012: 457
+  Pocillopora_meandrina_HIv1___xfSc0000974: 1
+  Pocillopora_meandrina_HIv1___xfSc0000817: 1
+  Pocillopora_meandrina_HIv1___xfSc0000570: 1
+  Pocillopora_meandrina_HIv1___xfSc0000479: 2
+  Pocillopora_meandrina_HIv1___xfSc0000237: 2
+  Pocillopora_meandrina_HIv1___Sc0000068: 2
+  Pocillopora_meandrina_HIv1___Sc0000037: 101
+  Pocillopora_meandrina_HIv1___Sc0000003: 803
+  Pocillopora_meandrina_HIv1___xfSc0000428: 4
+  Pocillopora_meandrina_HIv1___xfSc0000059: 6
+  Pocillopora_meandrina_HIv1___Sc0000057: 5
+  Pocillopora_meandrina_HIv1___xfSc0000146: 5
+  Pocillopora_meandrina_HIv1___Sc0000045: 52
+  Pocillopora_meandrina_HIv1___Sc0000009: 729
+  Pocillopora_meandrina_HIv1___xfSc0000952: 1
+  Pocillopora_meandrina_HIv1___xfSc0000835: 2
+  Pocillopora_meandrina_HIv1___xfSc0000000: 71
+  Pocillopora_meandrina_HIv1___Sc0000015: 328
+  Pocillopora_meandrina_HIv1___xfSc0000716: 1
+  Pocillopora_meandrina_HIv1___Sc0000080: 2
+  Pocillopora_meandrina_HIv1___xfSc0000616: 1
+  Pocillopora_meandrina_HIv1___Sc0000034: 118
+  Pocillopora_meandrina_HIv1___xpSc0001290: 1
+  Pocillopora_meandrina_HIv1___xfSc0000527: 2
+  Pocillopora_meandrina_HIv1___xfSc0000206: 6
+  Pocillopora_meandrina_HIv1___Sc0000006: 561
+  Pocillopora_meandrina_HIv1___xpSc0001273: 29
+  Pocillopora_meandrina_HIv1___xfSc0000540: 4
+  Pocillopora_meandrina_HIv1___Sc0000058: 5
+  Pocillopora_meandrina_HIv1___Sc0000021: 290
+  Pocillopora_meandrina_HIv1___xfSc0000859: 2
+  Pocillopora_meandrina_HIv1___Sc0000040: 123
+  Pocillopora_meandrina_HIv1___xfSc0000890: 1
+  Pocillopora_meandrina_HIv1___xfSc0000836: 1
+  Pocillopora_meandrina_HIv1___xfSc0000555: 2
+  Pocillopora_meandrina_HIv1___xfSc0000003: 15
+  Pocillopora_meandrina_HIv1___Sc0000016: 448
+  Pocillopora_meandrina_HIv1___xfSc0000765: 5
+  Pocillopora_meandrina_HIv1___Sc0000033: 112
+  Pocillopora_meandrina_HIv1___Sc0000018: 348
+  Pocillopora_meandrina_HIv1___xfSc0000415: 2
+  Pocillopora_meandrina_HIv1___Sc0000053: 14
+  Pocillopora_meandrina_HIv1___xfSc0000436: 4
+  Pocillopora_meandrina_HIv1___xfSc0000205: 13
+  Pocillopora_meandrina_HIv1___Sc0000070: 2
+  Pocillopora_meandrina_HIv1___Sc0000049: 4
+  Pocillopora_meandrina_HIv1___Sc0000005: 551
+  Pocillopora_meandrina_HIv1___xpSc0001276: 1
+  Pocillopora_meandrina_HIv1___Sc0000024: 245
+  Pocillopora_meandrina_HIv1___Sc0000065: 2
+  Pocillopora_meandrina_HIv1___xpSc0001281: 4
+  Pocillopora_meandrina_HIv1___xfSc0000006: 13
+  Pocillopora_meandrina_HIv1___Sc0000013: 555
+  Pocillopora_meandrina_HIv1___xfSc0001237: 2
+  Pocillopora_meandrina_HIv1___xfSc0000612: 2
+  Pocillopora_meandrina_HIv1___xfSc0000168: 3
+  Pocillopora_meandrina_HIv1___xfSc0000083: 2
+  Pocillopora_meandrina_HIv1___Sc0000030: 198
+  Pocillopora_meandrina_HIv1___Sc0000002: 725
+  Pocillopora_meandrina_HIv1___xfSc0000175: 3
+  Pocillopora_meandrina_HIv1___Sc0000054: 1
+  Pocillopora_meandrina_HIv1___xfSc0000565: 2
+  Pocillopora_meandrina_HIv1___Sc0000044: 51
+  Pocillopora_meandrina_HIv1___Sc0000008: 538
+  Pocillopora_meandrina_HIv1___Sc0000027: 291
+  Pocillopora_meandrina_HIv1___xfSc0000840: 1
+  Pocillopora_meandrina_HIv1___xfSc0000596: 2
+  Pocillopora_meandrina_HIv1___Sc0000060: 1
+  Pocillopora_meandrina_HIv1___xfSc0000763: 1
+  Pocillopora_meandrina_HIv1___Sc0000035: 227
+  Pocillopora_meandrina_HIv1___xfSc0000968: 2
+  Pocillopora_meandrina_HIv1___Sc0000001: 883
+  Pocillopora_meandrina_HIv1___xpSc0001355: 1
+  Pocillopora_meandrina_HIv1___xfSc0000699: 2
+  Pocillopora_meandrina_HIv1___xfSc0000655: 4
+  Pocillopora_meandrina_HIv1___xfSc0000426: 7
+  Pocillopora_meandrina_HIv1___Sc0000020: 294
+  Pocillopora_meandrina_HIv1___xfSc0000621: 2
+  Pocillopora_meandrina_HIv1___xfSc0000445: 2
+  Pocillopora_meandrina_HIv1___xfSc0000074: 1
+  Pocillopora_meandrina_HIv1___Sc0000043: 60
+  Pocillopora_meandrina_HIv1___xfSc0000837: 1
+  Pocillopora_meandrina_HIv1___xfSc0000288: 5
+  Pocillopora_meandrina_HIv1___xfSc0000217: 5
+  Pocillopora_meandrina_HIv1___xfSc0000002: 34
+  Pocillopora_meandrina_HIv1___Sc0000017: 382
+  Pocillopora_meandrina_HIv1___Sc0000019: 291
+  Pocillopora_meandrina_HIv1___xfSc0000012: 7
+  Pocillopora_meandrina_HIv1___Sc0000029: 178
+  Pocillopora_meandrina_HIv1___xfSc0000886: 3
+  Pocillopora_meandrina_HIv1___xfSc0000868: 3
+  Pocillopora_meandrina_HIv1___xfSc0000824: 8
+  Pocillopora_meandrina_HIv1___xfSc0000583: 1
+  Pocillopora_meandrina_HIv1___Sc0000071: 2
+  Pocillopora_meandrina_HIv1___Sc0000004: 652
+  Pocillopora_meandrina_HIv1___xfSc0000704: 4
+  Pocillopora_meandrina_HIv1___xfSc0000469: 3
+  Pocillopora_meandrina_HIv1___xfSc0000223: 2
+  Pocillopora_meandrina_HIv1___xfSc0000195: 1
+  Pocillopora_meandrina_HIv1___xfSc0000021: 2
+  Pocillopora_meandrina_HIv1___Sc0000023: 213
+  Pocillopora_meandrina_HIv1___xfSc0000264: 3
+  Pocillopora_meandrina_HIv1___Sc0000010: 615
+  Pocillopora_meandrina_HIv1___xfSc0001122: 3
+  Pocillopora_meandrina_HIv1___xfSc0000811: 1
+  Pocillopora_meandrina_HIv1___Sc0000031: 185
+  Pocillopora_meandrina_HIv1___xfSc0000788: 5
+  Pocillopora_meandrina_HIv1___xfSc0000875: 1
+  Pocillopora_meandrina_HIv1___xfSc0000488: 7
+  Pocillopora_meandrina_HIv1___xfSc0000017: 2
+  Pocillopora_meandrina_HIv1___Sc0000055: 12
+  Pocillopora_meandrina_HIv1___xfSc0001011: 2
+  Pocillopora_meandrina_HIv1___xfSc0000092: 6
+  Pocillopora_meandrina_HIv1___Sc0000047: 22
+  Pocillopora_meandrina_HIv1___xfSc0000482: 4
+  Pocillopora_meandrina_HIv1___xfSc0000132: 4
+  Pocillopora_meandrina_HIv1___xfSc0000024: 2
+  Pocillopora_meandrina_HIv1___Sc0000026: 271
+  Pocillopora_meandrina_HIv1___xfSc0000995: 1
+  Pocillopora_meandrina_HIv1___Sc0000067: 2
+  Pocillopora_meandrina_HIv1___Sc0000038: 93
+  Pocillopora_meandrina_HIv1___xfSc0000642: 1
+  Pocillopora_meandrina_HIv1___xfSc0000376: 1
+  Pocillopora_meandrina_HIv1___Sc0000082: 3
+  Pocillopora_meandrina_HIv1___xfSc0000975: 3
+  Pocillopora_meandrina_HIv1___xfSc0000760: 2
+  Pocillopora_meandrina_HIv1___Sc0000069: 1
+  Pocillopora_meandrina_HIv1___Sc0000036: 124
+  Pocillopora_meandrina_HIv1___xfSc0000275: 1
+  Pocillopora_meandrina_HIv1___Sc0000000: 922
+  Pocillopora_meandrina_HIv1___xfSc0000199: 2
+  Pocillopora_meandrina_HIv1___xfSc0000058: 1
+  Pocillopora_meandrina_HIv1___xfSc0000014: 1
+  Pocillopora_meandrina_HIv1___xfSc0000725: 5
+  Pocillopora_meandrina_HIv1___Sc0000042: 68
+  Pocillopora_meandrina_HIv1___xfSc0000892: 1
+  Pocillopora_meandrina_HIv1___xfSc0000001: 67
+  Pocillopora_meandrina_HIv1___Sc0000014: 378
+  Pocillopora_meandrina_HIv1___xfSc0000262: 3
+  Pocillopora_meandrina_HIv1___xfSc0000228: 4
+  Pocillopora_meandrina_HIv1___Sc0000051: 13
+  Pocillopora_meandrina_HIv1___Sc0000028: 208
+  Pocillopora_meandrina_HIv1___xfSc0000885: 5
+  Pocillopora_meandrina_HIv1___xfSc0000272: 5
+  Pocillopora_meandrina_HIv1___Sc0000007: 643
+  Pocillopora_meandrina_HIv1___xfSc0000705: 1
+  Pocillopora_meandrina_HIv1___Sc0000022: 231
+```
