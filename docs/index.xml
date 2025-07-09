@@ -10,7 +10,487 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Sat, 21 Jun 2025 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 08 Jul 2025 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Cod alignment</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/48-cod-bwa/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="genome" class="level1">
+<h1>Genome</h1>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ../data</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">curl</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-O</span> https://owl.fish.washington.edu/halfshell/genomic-databank/GCF_031168955.1_ASM3116895v1_genomic.fna</span></code></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">bwa</span> index ../data/GCF_031168955.1_ASM3116895v1_genomic.fna</span></code></pre></div>
+</div>
+</section>
+<section id="reads---getting-on-raven" class="level1">
+<h1>Reads - getting on raven</h1>
+<p>ecotype</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> ../data/fastq-ecotype</span>
+<span id="cb3-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> ../data/fastq-ecotype</span>
+<span id="cb3-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">wget</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-r</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-np</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-nd</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-A</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*.gz"</span> https://owl.fish.washington.edu/nightingales/G_macrocephalus/30-1149634506/00_fastq/</span></code></pre></div>
+</div>
+</section>
+<section id="align" class="level1">
+<h1>Align</h1>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Path to reference genome (must be indexed with bwa index)</span></span>
+<span id="cb4-2"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">REFERENCE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/GCF_031168955.1_ASM3116895v1_genomic.fna"</span></span>
+<span id="cb4-3"></span>
+<span id="cb4-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Number of threads per BWA job</span></span>
+<span id="cb4-5"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">THREADS</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>42</span>
+<span id="cb4-6"></span>
+<span id="cb4-7"></span>
+<span id="cb4-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Directory containing fastq files</span></span>
+<span id="cb4-9"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">FASTQ_DIR</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/fastq-ecotype"</span></span>
+<span id="cb4-10"></span>
+<span id="cb4-11"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Output directory (you can change this)</span></span>
+<span id="cb4-12"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUT_DIR</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/14-BWA"</span></span>
+<span id="cb4-13"></span>
+<span id="cb4-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># File suffixes</span></span>
+<span id="cb4-15"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">R1_SUFFIX</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_R1_001.fastq.gz"</span></span>
+<span id="cb4-16"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">R2_SUFFIX</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"_R2_001.fastq.gz"</span></span>
+<span id="cb4-17"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUT_SUFFIX</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">".sam"</span></span>
+<span id="cb4-18"></span>
+<span id="cb4-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># -------------------------------</span></span>
+<span id="cb4-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># RUN BWA IN PARALLEL</span></span>
+<span id="cb4-21"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># -------------------------------</span></span>
+<span id="cb4-22"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Run loop</span></span>
+<span id="cb4-23"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> sample <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${FASTQ_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${R1_SUFFIX}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-n</span> 1 basename <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sed</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"s/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${R1_SUFFIX}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">//"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">sort</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-u</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb4-24">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">R1_FILE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${FASTQ_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}${R1_SUFFIX}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb4-25">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">R2_FILE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${FASTQ_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}${R2_SUFFIX}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb4-26">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUT_FILE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}${OUT_SUFFIX}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb4-27"></span>
+<span id="cb4-28">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Running BWA on </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">..."</span></span>
+<span id="cb4-29">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">bwa</span> mem <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-t</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${THREADS}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${REFERENCE}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${R1_FILE}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${R2_FILE}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_FILE}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb4-30"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+</div>
+</section>
+<section id="convert-sam-to-bam" class="level1">
+<h1>Convert SAM to BAM</h1>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"></span>
+<span id="cb5-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Directory containing .sam files</span></span>
+<span id="cb5-3"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">SAM_DIR</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/14-BWA"</span></span>
+<span id="cb5-4"></span>
+<span id="cb5-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Output directory (can be same as SAM_DIR or different)</span></span>
+<span id="cb5-6"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">OUT_DIR</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/14-BWA"</span>  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Change this if you want bams elsewhere</span></span>
+<span id="cb5-7"></span>
+<span id="cb5-8"></span>
+<span id="cb5-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Number of threads for sorting</span></span>
+<span id="cb5-10"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">THREADS</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>42</span>
+<span id="cb5-11"></span>
+<span id="cb5-12"></span>
+<span id="cb5-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Loop through all .sam files</span></span>
+<span id="cb5-14"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> sam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${SAM_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span>/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.sam<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb5-15">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get base name (e.g., sample1)</span></span>
+<span id="cb5-16">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sam}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> .sam<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb5-17"></span>
+<span id="cb5-18">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Define output file</span></span>
+<span id="cb5-19">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sorted_bam</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${OUT_DIR}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.sorted.bam"</span></span>
+<span id="cb5-20"></span>
+<span id="cb5-21">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Converting </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;"> to </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sorted_bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">..."</span></span>
+<span id="cb5-22"></span>
+<span id="cb5-23">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Convert and sort</span></span>
+<span id="cb5-24">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">samtools</span> view <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-@</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$THREADS</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-bS</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">samtools</span> sort <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-@</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$THREADS</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sorted_bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-</span></span>
+<span id="cb5-25"></span>
+<span id="cb5-26">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Index the sorted BAM</span></span>
+<span id="cb5-27">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">samtools</span> index <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sorted_bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb5-28"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+</div>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>cod</category>
+  <category>wgs</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/48-cod-bwa/</guid>
+  <pubDate>Tue, 08 Jul 2025 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2025-07-09_08-43-39.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>The lncRNA repertoire of Ptuh</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -15891,52 +16371,6 @@ font-style: inherit;">fi</span></span></code></pre></div>
   <guid>https://sr320.github.io/tumbling-oysters/posts/30-hisat-annot/</guid>
   <pubDate>Thu, 03 Oct 2024 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2024-10-03_10-09-40.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>re prime</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/29-prime/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Went out to hatchery to re prime what is left from 10k seed on Friday Sept 13th.</p>
-<p>Rinsed all bags with freshwater hose.</p>
-<p>Bags 56 and 66 then went into FW (5 gallon bucket) for two hours.</p>
-<p>47 and 30 were moved into white tank inside (far right). Water temperature 23C. (Lagoon is currently at 17C). Two heater set at 36 set to come on 11pm - 5am daily. Temperature profile is as follows.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_APEX_Fusion_2024-09-14_12-34-03.png" class="img-fluid figure-img"></p>
-<figcaption>Apex</figcaption>
-</figure>
-</div>
-<p>Bags 75 and 76 were placed in FW for two hours then moved into white tank described above.</p>
-<p>Bags 36/37 (controls) and 50/49 (immune) simply went back to lagoon.</p>
-<p>Still waiting for info on farm deployment but planning on going out Sunday and checking on water system (flow) and do freshwater immersions. Poly IC should arrive Monday.</p>
-<section id="update-sunday-sept-15th" class="level1">
-<h1>Update Sunday Sept 15th</h1>
-<p>Went out and did FW immersion (2 hours) on 75/76 and 56/66.</p>
-<p>Also snapped photos for documenting size and number of seed.</p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_IMG_6967.png_2024-09-15_18-49-37.png" class="img-fluid" alt="Bag 30"> Full size images</p>
-<ul>
-<li><p><a href="http://gannet.fish.washington.edu/seashell/snaps/IMG_6967.png">Bag 30a</a></p></li>
-<li><p><a href="http://gannet.fish.washington.edu/seashell/snaps/IMG_6968.png">Bag 30b</a></p></li>
-<li><p><a href="http://gannet.fish.washington.edu/seashell/snaps/IMG_6969.png">Bag 30c</a></p></li>
-</ul>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>oyster</category>
-  <category>stress</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/29-prime/</guid>
-  <pubDate>Sat, 14 Sep 2024 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2024-09-14_12-28-40.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>

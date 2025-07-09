@@ -1,0 +1,140 @@
+---
+title: "Cod alignment"
+description: "bwa"
+categories: [cod, wgs]
+#citation: 
+date: 07-08-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-cod-temperature__RStudio_Server_2025-07-09_08-43-39.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(readr)
+library(DT)
+library(shiny)
+library(plotly)
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(c("Biostrings", "rtracklayer"))
+library(tidyverse)
+library(Biostrings)
+library(rtracklayer)
+
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+# Genome
+
+```{bash}
+cd ../data
+
+curl -O https://owl.fish.washington.edu/halfshell/genomic-databank/GCF_031168955.1_ASM3116895v1_genomic.fna
+```
+
+```{bash}
+bwa index ../data/GCF_031168955.1_ASM3116895v1_genomic.fna
+```
+
+# Reads - getting on raven
+
+ecotype
+
+```{bash}
+mkdir -p ../data/fastq-ecotype
+cd ../data/fastq-ecotype
+wget -r -np -nd -A "*.gz" https://owl.fish.washington.edu/nightingales/G_macrocephalus/30-1149634506/00_fastq/
+```
+
+# Align
+
+```{bash}
+# Path to reference genome (must be indexed with bwa index)
+REFERENCE="../data/GCF_031168955.1_ASM3116895v1_genomic.fna"
+
+# Number of threads per BWA job
+THREADS=42
+
+
+# Directory containing fastq files
+FASTQ_DIR="../data/fastq-ecotype"
+
+# Output directory (you can change this)
+OUT_DIR="../output/14-BWA"
+
+# File suffixes
+R1_SUFFIX="_R1_001.fastq.gz"
+R2_SUFFIX="_R2_001.fastq.gz"
+OUT_SUFFIX=".sam"
+
+# -------------------------------
+# RUN BWA IN PARALLEL
+# -------------------------------
+# Run loop
+for sample in $(ls "${FASTQ_DIR}"/*"${R1_SUFFIX}" | xargs -n 1 basename | sed "s/${R1_SUFFIX}//" | sort -u); do
+  R1_FILE="${FASTQ_DIR}/${sample}${R1_SUFFIX}"
+  R2_FILE="${FASTQ_DIR}/${sample}${R2_SUFFIX}"
+  OUT_FILE="${OUT_DIR}/${sample}${OUT_SUFFIX}"
+
+  echo "Running BWA on ${sample}..."
+  bwa mem -t "${THREADS}" "${REFERENCE}" "${R1_FILE}" "${R2_FILE}" > "${OUT_FILE}"
+done
+```
+
+# Convert SAM to BAM
+
+```{bash}
+
+# Directory containing .sam files
+SAM_DIR="../output/14-BWA"
+
+# Output directory (can be same as SAM_DIR or different)
+OUT_DIR="../output/14-BWA"  # Change this if you want bams elsewhere
+
+
+# Number of threads for sorting
+THREADS=42
+
+
+# Loop through all .sam files
+for sam in "${SAM_DIR}"/*.sam; do
+  # Get base name (e.g., sample1)
+  sample=$(basename "${sam}" .sam)
+
+  # Define output file
+  sorted_bam="${OUT_DIR}/${sample}.sorted.bam"
+
+  echo "Converting $sam to $sorted_bam..."
+
+  # Convert and sort
+  samtools view -@ $THREADS -bS "$sam" | samtools sort -@ $THREADS -o "$sorted_bam" -
+
+  # Index the sorted BAM
+  samtools index "$sorted_bam"
+done
+```
