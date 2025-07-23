@@ -1,0 +1,81 @@
+---
+title: "Oyster Pickup and Cleaning"
+description: "Pt Whitney"
+categories: [oyster, aquaculture]
+#citation: 
+date: 07-23-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-18-25.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+library(readr)
+library(DT)
+library(shiny)
+library(plotly)
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(c("Biostrings", "rtracklayer"))
+library(tidyverse)
+library(Biostrings)
+library(rtracklayer)
+
+knitr::opts_chunk$set(
+  echo = TRUE,         # Display code chunks
+  eval = FALSE,         # Evaluate code chunks
+  warning = FALSE,     # Hide warnings
+  message = FALSE,     # Hide messages
+  fig.width = 6,       # Set plot width in inches
+  fig.height = 4,      # Set plot height in inches
+  fig.align = "center", # Align plots to the center
+  comment = ""         # Prevents appending '##' to beginning of lines in code output
+)
+```
+
+# Dock
+
+Inspected bags at dock. Retrieved one PolyIC and Control bag. This left two of each on dock. For all others replaced bags.
+
+Right Line
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-20-07.png)
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-23-07.png)
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-23-45.png)
+
+Left Line
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-21-07.png)
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-21-57.png)
+
+PolyIC Bags
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-22-34.png)
+
+|  |  |  |
+|----|----|----|
+| ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-27-55.png) | ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-28-16.png) | ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-28-46.png) |
+| ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-29-09.png) | ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-29-32.png) | ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-29-56.png) |
+| ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-30-15.png) | ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-30-36.png) | ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-30-58.png) |
+| ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-31-13.png) | ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-31-40.png) | ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Monosnap_2025-07-23_16-31-57.png) |
+
+# Heath Trays
