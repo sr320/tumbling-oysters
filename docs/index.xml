@@ -10,7 +10,513 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Wed, 23 Jul 2025 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 01 Aug 2025 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Getting on with Nanopore cDNA data</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/50-nano-cDNA/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Went in a few directions but will try to layout properly here. Experiment - 3 populations, 4 pooled (n=5) libraires - thus 20 individuals represented per population.</p>
+<section id="data-as-provided" class="level1">
+<h1>Data as provided</h1>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Screen_Capture_on_2025-08-01_at_17-36-23.gif" class="img-fluid"></p>
+</section>
+<section id="combining" class="level1">
+<h1>Combining</h1>
+<p>Here is an example from one species</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode01 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-name</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*.fastq.gz"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-print0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-0</span> zcat <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">gzip</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../output/02-RNAseq/Qui_barcode01_combined.fastq.gz</span>
+<span id="cb1-2"></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode01_1 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-name</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*.fastq.gz"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-print0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-0</span> zcat <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">gzip</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../output/02-RNAseq/Qui_barcode01_1_combined.fastq.gz</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode02_1 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-name</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*.fastq.gz"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-print0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-0</span> zcat <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">gzip</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../output/02-RNAseq/Qui_barcode02_1_combined.fastq.gz</span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">find</span> /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode12 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-name</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"*.fastq.gz"</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-print0</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-0</span> zcat <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">gzip</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../output/02-RNAseq/Qui_barcode12_combined.fastq.gz</span></code></pre></div>
+</section>
+<section id="align" class="level1">
+<h1>Align</h1>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">eval</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/opt/anaconda/anaconda3/bin/conda</span> shell.bash hook<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb2-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">conda</span> activate</span>
+<span id="cb2-3"></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Set number of threads</span></span>
+<span id="cb2-5"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">threads</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>42</span>
+<span id="cb2-6"></span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Set paths</span></span>
+<span id="cb2-8"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ref_genome</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/Och_HapA_assembly.fa"</span></span>
+<span id="cb2-9"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">input_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/02-RNAseq"</span></span>
+<span id="cb2-10"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">output_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/02-RNAseq"</span></span>
+<span id="cb2-11"></span>
+<span id="cb2-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Loop over each FASTQ file</span></span>
+<span id="cb2-13"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> fq <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${input_dir}</span>/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.fastq.gz<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb2-14">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract sample name (e.g., Pum_barcode02 from Pum_barcode02_combined.fastq.gz)</span></span>
+<span id="cb2-15">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fq</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> .fastq.gz<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb2-16"></span>
+<span id="cb2-17">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Processing </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sample</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">..."</span></span>
+<span id="cb2-18"></span>
+<span id="cb2-19">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Run minimap2 and samtools sort</span></span>
+<span id="cb2-20">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">minimap2</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-ax</span> splice <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-k14</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--MD</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-t</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$threads</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$ref_genome</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fq</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-21">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">samtools</span> sort <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-@</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$threads</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.sorted.bam"</span></span>
+<span id="cb2-22"></span>
+<span id="cb2-23">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Index the sorted BAM</span></span>
+<span id="cb2-24">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">samtools</span> index <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.sorted.bam"</span></span>
+<span id="cb2-25"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+</section>
+<section id="stringtie" class="level1">
+<h1>Stringtie</h1>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> ../output/02-RNAseq/stringtie_out</span>
+<span id="cb3-2"></span>
+<span id="cb3-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ../output/02-RNAseq/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>combined.sorted.bam<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb3-4">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> _combined.sorted.bam<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb3-5">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-6">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-L</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-7">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> ../output/02-RNAseq/stringtie_out/<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span>.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-8">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> 32 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-9">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-v</span></span>
+<span id="cb3-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span> ../output/02-RNAseq/stringtie_out/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.gtf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../output/02-RNAseq/stringtie_out/mergelist.txt</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--merge</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-L</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-G</span> ../data/GN.gene.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> ../output/02-RNAseq/stringtie_out/merged.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-7">    ../output/02-RNAseq/stringtie_out/mergelist.txt</span></code></pre></div>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> ../output/02-RNAseq/stringtie_quant</span>
+<span id="cb5-2"></span>
+<span id="cb5-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ../output/02-RNAseq/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>combined.sorted.bam<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb5-4">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> _combined.sorted.bam<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb5-5">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-6">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-L</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-7">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-e</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-8">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-B</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-9">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-G</span> ../output/02-RNAseq/stringtie_out/merged.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-10">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> ../output/02-RNAseq/stringtie_quant/<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span>.gtf</span>
+<span id="cb5-11"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> /home/shared/stringtie-2.2.1.Linux_x86_64/prepDE.py <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-2">-i ../output/02-RNAseq/stringtie_quant/samplelist.txt <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-3">-g ../output/02-RNAseq/stringtie_quant/gene_count_matrix.csv <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb6-4">-t ../output/02-RNAseq/stringtie_quant/transcript_count_matrix.csv</span></code></pre></div>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-01_17-48-48.png" class="img-fluid"></p>
+</section>
+<section id="next" class="level1">
+<h1>Next?</h1>
+<p>Normalize, QC?, Annotate (many are novel genes)</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>oyster</category>
+  <category>chile</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/50-nano-cDNA/</guid>
+  <pubDate>Fri, 01 Aug 2025 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-01_17-33-00.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Oyster Pickup and Cleaning</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -16250,172 +16756,6 @@ font-style: inherit;">fi</span></span></code></pre></div>
   <guid>https://sr320.github.io/tumbling-oysters/posts/32-bismark-array/</guid>
   <pubDate>Sun, 10 Nov 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation__RStudio_Server_2024-11-10_11-32-22.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Stats on e5 genomes</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/31-e5-genome-stats/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>This assessment compares the genomic assemblies and annotations of three coral species: <em>Acropora pulchra</em> (Apul), <em>Porites evermanni</em> (Peve), and <em>Pocillopora meandrina</em> (Ptuh). The analysis focuses on genome assembly metrics, gene annotation statistics, and potential biological implications.</p>
-<hr>
-<section id="genome-assembly-quality" class="level3">
-<h3 class="anchored" data-anchor-id="genome-assembly-quality"><strong>1. Genome Assembly Quality</strong></h3>
-<section id="number-of-sequences-and-contiguity" class="level4">
-<h4 class="anchored" data-anchor-id="number-of-sequences-and-contiguity"><strong>Number of Sequences and Contiguity</strong></h4>
-<ul>
-<li><strong>Apul (A. pulchra)</strong>
-<ul>
-<li><strong>Number of Sequences:</strong> 174</li>
-<li><strong>N50:</strong> 17,861,421 bp</li>
-<li><strong>L50:</strong> 10</li>
-<li><strong>Longest Sequence:</strong> 45,111,900 bp</li>
-</ul></li>
-<li><strong>Peve (P. evermanni)</strong>
-<ul>
-<li><strong>Number of Sequences:</strong> 8,186</li>
-<li><strong>N50:</strong> 171,385 bp</li>
-<li><strong>L50:</strong> 935</li>
-<li><strong>Longest Sequence:</strong> 1,802,771 bp</li>
-</ul></li>
-<li><strong>Ptuh (P. meandrina)</strong>
-<ul>
-<li><strong>Number of Sequences:</strong> 212</li>
-<li><strong>N50:</strong> 10,024,633 bp</li>
-<li><strong>L50:</strong> 13</li>
-<li><strong>Longest Sequence:</strong> 21,651,136 bp</li>
-</ul></li>
-</ul>
-<p><strong>Assessment:</strong></p>
-<ul>
-<li><strong>Assembly Contiguity:</strong> Apul exhibits the highest assembly contiguity, indicated by the lowest number of sequences and highest N50 value. Ptuh ranks second, while Peve has a more fragmented assembly with a significantly higher number of sequences and lower N50.</li>
-<li><strong>Sequence Length Distribution:</strong> Apul’s longest sequence is substantially longer than those of Peve and Ptuh, suggesting a more complete assembly.</li>
-</ul>
-</section>
-<section id="genome-size-and-gc-content" class="level4">
-<h4 class="anchored" data-anchor-id="genome-size-and-gc-content"><strong>Genome Size and GC Content</strong></h4>
-<ul>
-<li><strong>Total Genome Length:</strong>
-<ul>
-<li><strong>Peve:</strong> 603,805,388 bp</li>
-<li><strong>Apul:</strong> 518,313,916 bp</li>
-<li><strong>Ptuh:</strong> 376,579,914 bp</li>
-</ul></li>
-<li><strong>GC Content:</strong>
-<ul>
-<li><strong>Apul:</strong> 39.05%</li>
-<li><strong>Ptuh:</strong> 38.03%</li>
-<li><strong>Peve:</strong> 36.38%</li>
-</ul></li>
-</ul>
-<p><strong>Assessment:</strong></p>
-<ul>
-<li><strong>Genome Size Variability:</strong> Peve has the largest genome size but the most fragmented assembly, which may indicate repetitive elements or assembly challenges.</li>
-<li><strong>GC Content Consistency:</strong> All species have similar GC content, ranging from 36.38% to 39.05%, which is typical for coral genomes.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="gene-annotation-and-features" class="level3">
-<h3 class="anchored" data-anchor-id="gene-annotation-and-features"><strong>2. Gene Annotation and Features</strong></h3>
-<section id="gene-counts-and-features" class="level4">
-<h4 class="anchored" data-anchor-id="gene-counts-and-features"><strong>Gene Counts and Features</strong></h4>
-<ul>
-<li><strong>Apul:</strong>
-<ul>
-<li><strong>Total Genes:</strong> 36,447</li>
-<li><strong>Unique Features:</strong> 5 (exon, CDS, gene, mRNA, tRNA)</li>
-<li><strong>Total GFF Entries:</strong> 499,892</li>
-</ul></li>
-<li><strong>Peve:</strong>
-<ul>
-<li><strong>Total Genes:</strong> 40,389</li>
-<li><strong>Unique Features:</strong> 3 (CDS, mRNA, UTR)</li>
-<li><strong>Total GFF Entries:</strong> 286,807</li>
-</ul></li>
-<li><strong>Ptuh:</strong>
-<ul>
-<li><strong>Total Genes:</strong> 31,840</li>
-<li><strong>Unique Features:</strong> 3 (exon, CDS, transcript)</li>
-<li><strong>Total GFF Entries:</strong> 448,910</li>
-</ul></li>
-</ul>
-<p><strong>Assessment:</strong></p>
-<ul>
-<li><strong>Gene Count:</strong> Peve has the highest number of predicted genes, followed by Apul and Ptuh.</li>
-<li><strong>Annotation Features:</strong> Apul includes tRNA annotations, which are absent in Peve and Ptuh. This suggests a more comprehensive annotation in Apul.</li>
-<li><strong>Unique Sources:</strong> Different gene prediction tools were used—Apul (funannotate), Peve (Gmove), Ptuh (AUGUSTUS)—which may affect gene count and features.</li>
-</ul>
-</section>
-<section id="gene-length-and-total-bases" class="level4">
-<h4 class="anchored" data-anchor-id="gene-length-and-total-bases"><strong>Gene Length and Total Bases</strong></h4>
-<ul>
-<li><strong>Average Gene Length:</strong>
-<ul>
-<li><strong>Apul:</strong> 5,887.31 bp</li>
-<li><strong>Ptuh:</strong> 1,376.95 bp</li>
-<li><strong>Peve:</strong> 1,337.5 bp</li>
-</ul></li>
-<li><strong>Total Bases in Genes:</strong>
-<ul>
-<li><strong>Apul:</strong> 214,577,849 bp</li>
-<li><strong>Peve:</strong> 54,020,937 bp</li>
-<li><strong>Ptuh:</strong> 43,842,885 bp</li>
-</ul></li>
-</ul>
-<p><strong>Assessment:</strong></p>
-<ul>
-<li><strong>Gene Length:</strong> Apul’s average gene length is significantly longer than that of Peve and Ptuh, potentially indicating differences in gene structure, annotation methods, or biological variation.</li>
-<li><strong>Total Coding Sequence:</strong> Apul has a higher total base count in genes, which correlates with longer genes and may reflect a greater number of exons or longer intronic regions.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="biological-implications-and-considerations" class="level3">
-<h3 class="anchored" data-anchor-id="biological-implications-and-considerations"><strong>3. Biological Implications and Considerations</strong></h3>
-<ul>
-<li><strong>Assembly Quality Impact:</strong> The higher contiguity in Apul and Ptuh assemblies may lead to more accurate gene predictions and annotations compared to Peve.</li>
-<li><strong>Gene Prediction Tools:</strong> The use of different annotation tools can result in varying gene counts and features. Funannotate (Apul) provides tRNA annotations, suggesting a more thorough annotation pipeline.</li>
-<li><strong>Gene Length Variation:</strong> The discrepancy in average gene lengths might be due to:
-<ul>
-<li><strong>Biological Differences:</strong> Genuine differences in gene structure among species.</li>
-<li><strong>Annotation Strategies:</strong> Differences in handling of introns, UTRs, or alternative splicing events.</li>
-<li><strong>Prediction Algorithms:</strong> Varying sensitivity and specificity of gene prediction tools.</li>
-</ul></li>
-</ul>
-<hr>
-</section>
-<section id="conclusion" class="level3">
-<h3 class="anchored" data-anchor-id="conclusion"><strong>4. Conclusion</strong></h3>
-<ul>
-<li><strong>Best Assembly:</strong> <em>Acropora pulchra</em> (Apul) exhibits the most contiguous and comprehensive genome assembly and annotation among the three species.</li>
-<li><strong>Gene Annotation Depth:</strong> Apul’s inclusion of tRNA and longer gene lengths suggests a more detailed annotation, which could facilitate better functional genomics studies.</li>
-<li><strong>Areas for Improvement:</strong> Peve’s fragmented assembly and shorter gene lengths indicate potential areas for reassembly and reannotation to improve genomic resources.</li>
-</ul>
-<hr>
-<p><strong>Recommendation:</strong> For comparative genomics and evolutionary studies, researchers should consider the differences in assembly quality and annotation methods. Standardizing gene prediction tools and reannotating genomes where necessary could enhance the reliability of cross-species comparisons.</p>
-<hr>
-<p>data:</p>
-<ul>
-<li><p><a href="https://github.com/urol-e5/deep-dive-expression/blob/main/D-Apul/code/12-Apul-genome-explore.md" class="uri">https://github.com/urol-e5/deep-dive-expression/blob/main/D-Apul/code/12-Apul-genome-explore.md</a></p></li>
-<li><p><a href="https://github.com/urol-e5/deep-dive-expression/blob/main/E-Peve/code/04-Peve-genome-explore.md" class="uri">https://github.com/urol-e5/deep-dive-expression/blob/main/E-Peve/code/04-Peve-genome-explore.md</a></p></li>
-<li><p><a href="https://github.com/urol-e5/deep-dive-expression/blob/main/F-Ptuh/code/04-Ptuh-genome-explore.md" class="uri">https://github.com/urol-e5/deep-dive-expression/blob/main/F-Ptuh/code/04-Ptuh-genome-explore.md</a></p></li>
-</ul>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>e5</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/31-e5-genome-stats/</guid>
-  <pubDate>Sat, 05 Oct 2024 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2024-10-05_13-39-55.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>

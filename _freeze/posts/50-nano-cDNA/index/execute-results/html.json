@@ -1,0 +1,12 @@
+{
+  "hash": "327ed4a72881707decc9e1820d54d159",
+  "result": {
+    "engine": "jupyter",
+    "markdown": "---\ntitle: \"Getting on with Nanopore cDNA data\"\ndescription: \"Minion\"\ncategories: [oyster, chile]\n#citation: \ndate: 08-01-2025\nimage: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-01_17-33-00.png # finding a good image\n\nauthor:\n  - name: Steven Roberts\n    url: \n    orcid: 0000-0001-8302-1138\n    affiliation: Professor, UW - School of Aquatic and Fishery Sciences\n    affiliation-url: https://robertslab.info\n  #url:  # self-defined\ndraft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!\nformat:\n  html:\n    code-fold: FALSE\n    code-tools: true\n    code-copy: true\n    highlight-style: github\n    code-overflow: wrap\n#runtime: shiny\n---\n\n\nWent in a few directions but will try to layout properly here. Experiment - 3 populations, 4 pooled (n=5) libraires - thus 20 individuals represented per population.\n\n# Data as provided\n\n![](http://gannet.fish.washington.edu/seashell/snaps/Screen_Capture_on_2025-08-01_at_17-36-23.gif)\n\n# Combined\n\n\n\n```{bash}\nfind /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode01 -name \"*.fastq.gz\" -print0 | xargs -0 zcat | gzip > ../output/02-RNAseq/Qui_barcode01_combined.fastq.gz\n\nfind /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode01_1 -name \"*.fastq.gz\" -print0 | xargs -0 zcat | gzip > ../output/02-RNAseq/Qui_barcode01_1_combined.fastq.gz\n\nfind /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode02_1 -name \"*.fastq.gz\" -print0 | xargs -0 zcat | gzip > ../output/02-RNAseq/Qui_barcode02_1_combined.fastq.gz\n\nfind /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode12 -name \"*.fastq.gz\" -print0 | xargs -0 zcat | gzip > ../output/02-RNAseq/Qui_barcode12_combined.fastq.gz\n```\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
