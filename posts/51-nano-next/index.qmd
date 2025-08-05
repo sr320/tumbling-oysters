@@ -1,0 +1,219 @@
+---
+title: "Next leveling RNAseq"
+description: "Minion"
+categories: [oyster, chile]
+#citation: 
+date: 08-04-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-04_20-31-31.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+Started over with merged genome....
+
+# minimap2
+
+``` bash
+eval "$(/opt/anaconda/anaconda3/bin/conda shell.bash hook)"
+conda activate
+
+# Set number of threads
+threads=42
+
+# Set paths
+ref_genome="../data/merged_out.fasta.TBtools.fa"
+input_dir="../output/02-RNAseq"
+output_dir="../output/04-align-v1"
+
+# Loop over each FASTQ file
+for fq in ${input_dir}/*.fastq.gz; do
+  # Extract sample name (e.g., Pum_barcode02 from Pum_barcode02_combined.fastq.gz)
+  sample=$(basename "$fq" .fastq.gz)
+
+  echo "Processing $sample..."
+
+  # Run minimap2 and samtools sort
+  minimap2 -ax splice -k14 --MD -t $threads "$ref_genome" "$fq" | \
+    samtools sort -@ $threads -o "${output_dir}/${sample}.sorted.bam"
+
+  # Index the sorted BAM
+  samtools index "${output_dir}/${sample}.sorted.bam"
+done
+```
+
+# Stringtie
+
+
+
+``` bash
+mkdir -p ../output/04-align-v1/stringtie_out
+
+for bam in ../output/04-align-v1/*combined.sorted.bam; do
+    sample=$(basename "$bam" _combined.sorted.bam)
+    /home/shared/stringtie-2.2.1.Linux_x86_64/stringtie "$bam" \
+        -L \
+        -o ../output/04-align-v1/stringtie_out/${sample}.gtf \
+        -p 32 \
+        -v
+done
+```
+``` bash
+ls ../output/04-align-v1/stringtie_out/*.gtf > ../output/04-align-v1/stringtie_out/mergelist.txt
+
+/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie --merge \
+    -L \
+    -G ../data/GN.gene.gtf \
+    -o ../output/04-align-v1/stringtie_out/merged.gtf \
+    ../output/04-align-v1/stringtie_out/mergelist.txt
+```
+
+
+``` bash
+mkdir -p ../output/04-align-v1/stringtie_quant
+
+for bam in ../output/04-align-v1/*combined.sorted.bam; do
+    sample=$(basename "$bam" _combined.sorted.bam)
+    /home/shared/stringtie-2.2.1.Linux_x86_64/stringtie "$bam" \
+        -L \
+        -e \
+        -B \
+        -G ../output/04-align-v1/stringtie_out/merged.gtf \
+        -o ../output/04-align-v1/stringtie_quant/${sample}.gtf
+done
+```
+
+# matrix
+
+
+``` bash 
+python /home/shared/stringtie-2.2.1.Linux_x86_64/prepDE.py \
+-i ../output/04-align-v1/stringtie_quant/samplelist.txt \
+-g ../output/04-align-v1/stringtie_quant/gene_count_matrix.csv \
+-t ../output/04-align-v1/stringtie_quant/transcript_count_matrix.csv
+```
+## normalize matrix
+
+``` r
+library(DESeq2)
+
+# Load raw counts
+gene_counts <- read.csv("../output/04-align-v1/stringtie_quant/gene_count_matrix.csv", row.names = 1)
+
+# Make sample metadata
+sample_info <- data.frame(
+  row.names = colnames(gene_counts),
+  condition = c("A", "A", "A","A", "B", "B", "B","B","C","C", "C", "C")  # example
+)
+
+# DESeq2 object and normalization
+dds <- DESeqDataSetFromMatrix(countData = gene_counts, colData = sample_info, design = ~ condition)
+dds <- DESeq(dds)
+norm_counts <- counts(dds, normalized = TRUE)
+```
+
+# limma (differential expression)
+
+``` r 
+library(limma)
+library(tidyverse)
+
+# Prepare expression matrix (genes x samples)
+expr <- as.matrix(norm_counts)
+
+# Create design matrix
+group <- factor(case_when(
+  str_detect(colnames(expr), "^Pum") ~ "Pum",
+  str_detect(colnames(expr), "^Qui") ~ "Qui",
+  str_detect(colnames(expr), "^Rio") ~ "Rio"
+))
+
+design <- model.matrix(~ 0 + group)
+colnames(design) <- levels(group)
+
+# Fit linear model
+fit <- lmFit(expr, design)
+
+# Create contrast for all pairwise comparisons
+contrast_matrix <- makeContrasts(
+  Pum_vs_Qui = Pum - Qui,
+  Pum_vs_Rio = Pum - Rio,
+  Qui_vs_Rio = Qui - Rio,
+  levels = design
+)
+
+fit2 <- contrasts.fit(fit, contrast_matrix)
+fit2 <- eBayes(fit2)
+
+# Get top DE genes across comparisons
+top_table <- topTable(fit2, coef = "Qui_vs_Rio", number = 20)
+head(top_table)
+```
+
+## Get all Contrast 
+
+
+``` r 
+# Get all contrast names
+contrast_names <- colnames(fit2$contrasts)
+
+# Extract all DEGs per contrast
+deg_list <- lapply(contrast_names, function(contrast) {
+  tt <- topTable(fit2, coef = contrast, number = Inf, sort.by = "P")  # all genes
+  tt$gene_id <- rownames(tt)
+  tt$contrast <- contrast
+  tt
+})
+
+# Combine into one long data frame
+all_degs <- bind_rows(deg_list)
+```
+
+
+``` r 
+sig_degs %>%
+  count(contrast)
+```
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-04_20-37-58.png)
+``` r
+library(UpSetR)
+
+# Make DEG sets by contrast
+deg_sets <- sig_degs %>%
+  group_by(contrast) %>%
+  summarize(genes = list(gene_id)) %>%
+  deframe()
+
+upset(fromList(deg_sets), nsets = length(deg_sets), order.by = "freq")
+```
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-04_20-39-02.png)
+
+
+```{r, message=FALSE, warning=FALSE, error=FALSE, echo=FALSE}
+library(tidyverse)
+sig_degs_annotated <- read_csv("https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/04-align-v1/sig_degs_annotated.csv")
+sig_degs_annotated %>%
+  select(gene_id, contrast, starts_with("X")) %>%
+  knitr::kable(format = "markdown")
+```
+
+
+![Page 1](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/04-align-v1/DEG_boxplots_page_01.png)
+![Page 2](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/04-align-v1/DEG_boxplots_page_02.png)
+![Page 3](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/04-align-v1/DEG_boxplots_page_03.png)

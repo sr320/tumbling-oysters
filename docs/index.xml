@@ -10,7 +10,1759 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Fri, 01 Aug 2025 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 04 Aug 2025 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Next leveling RNAseq</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/51-nano-next/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Started over with merged genome….</p>
+<section id="minimap2" class="level1">
+<h1>minimap2</h1>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">eval</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/opt/anaconda/anaconda3/bin/conda</span> shell.bash hook<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span></span>
+<span id="cb1-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">conda</span> activate</span>
+<span id="cb1-3"></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Set number of threads</span></span>
+<span id="cb1-5"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">threads</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>42</span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Set paths</span></span>
+<span id="cb1-8"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ref_genome</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../data/merged_out.fasta.TBtools.fa"</span></span>
+<span id="cb1-9"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">input_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/02-RNAseq"</span></span>
+<span id="cb1-10"><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">output_dir</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/04-align-v1"</span></span>
+<span id="cb1-11"></span>
+<span id="cb1-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Loop over each FASTQ file</span></span>
+<span id="cb1-13"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> fq <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${input_dir}</span>/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.fastq.gz<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb1-14">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract sample name (e.g., Pum_barcode02 from Pum_barcode02_combined.fastq.gz)</span></span>
+<span id="cb1-15">  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fq</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> .fastq.gz<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb1-16"></span>
+<span id="cb1-17">  <span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Processing </span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$sample</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">..."</span></span>
+<span id="cb1-18"></span>
+<span id="cb1-19">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Run minimap2 and samtools sort</span></span>
+<span id="cb1-20">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">minimap2</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-ax</span> splice <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-k14</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--MD</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-t</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$threads</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$ref_genome</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$fq</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-21">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">samtools</span> sort <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-@</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$threads</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.sorted.bam"</span></span>
+<span id="cb1-22"></span>
+<span id="cb1-23">  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Index the sorted BAM</span></span>
+<span id="cb1-24">  <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">samtools</span> index <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">/</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">.sorted.bam"</span></span>
+<span id="cb1-25"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+</section>
+<section id="stringtie" class="level1">
+<h1>Stringtie</h1>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> ../output/04-align-v1/stringtie_out</span>
+<span id="cb2-2"></span>
+<span id="cb2-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ../output/04-align-v1/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>combined.sorted.bam<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb2-4">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> _combined.sorted.bam<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb2-5">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-6">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-L</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-7">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> ../output/04-align-v1/stringtie_out/<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span>.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-8">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> 32 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-9">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-v</span></span>
+<span id="cb2-10"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ls</span> ../output/04-align-v1/stringtie_out/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>.gtf <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../output/04-align-v1/stringtie_out/mergelist.txt</span>
+<span id="cb3-2"></span>
+<span id="cb3-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--merge</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-L</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-G</span> ../data/GN.gene.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> ../output/04-align-v1/stringtie_out/merged.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb3-7">    ../output/04-align-v1/stringtie_out/mergelist.txt</span></code></pre></div>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-p</span> ../output/04-align-v1/stringtie_quant</span>
+<span id="cb4-2"></span>
+<span id="cb4-3"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> bam <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> ../output/04-align-v1/<span class="pp" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">*</span>combined.sorted.bam<span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">do</span></span>
+<span id="cb4-4">    <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> _combined.sorted.bam<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span id="cb4-5">    <span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-6">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-L</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-7">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-e</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-8">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-B</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-9">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-G</span> ../output/04-align-v1/stringtie_out/merged.gtf <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb4-10">        <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-o</span> ../output/04-align-v1/stringtie_quant/<span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">${sample}</span>.gtf</span>
+<span id="cb4-11"><span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">done</span></span></code></pre></div>
+</section>
+<section id="matrix" class="level1">
+<h1>matrix</h1>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> /home/shared/stringtie-2.2.1.Linux_x86_64/prepDE.py <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-2">-i ../output/04-align-v1/stringtie_quant/samplelist.txt <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-3">-g ../output/04-align-v1/stringtie_quant/gene_count_matrix.csv <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb5-4">-t ../output/04-align-v1/stringtie_quant/transcript_count_matrix.csv</span></code></pre></div>
+<section id="normalize-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="normalize-matrix">normalize matrix</h2>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(DESeq2)</span>
+<span id="cb6-2"></span>
+<span id="cb6-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Load raw counts</span></span>
+<span id="cb6-4">gene_counts <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read.csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/04-align-v1/stringtie_quant/gene_count_matrix.csv"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">row.names =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb6-5"></span>
+<span id="cb6-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Make sample metadata</span></span>
+<span id="cb6-7">sample_info <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb6-8">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">row.names =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(gene_counts),</span>
+<span id="cb6-9">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">condition =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"A"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"B"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"C"</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># example</span></span>
+<span id="cb6-10">)</span>
+<span id="cb6-11"></span>
+<span id="cb6-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># DESeq2 object and normalization</span></span>
+<span id="cb6-13">dds <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">DESeqDataSetFromMatrix</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">countData =</span> gene_counts, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colData =</span> sample_info, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">design =</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> condition)</span>
+<span id="cb6-14">dds <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">DESeq</span>(dds)</span>
+<span id="cb6-15">norm_counts <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">counts</span>(dds, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">normalized =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>)</span></code></pre></div>
+</section>
+</section>
+<section id="limma-differential-expression" class="level1">
+<h1>limma (differential expression)</h1>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(limma)</span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb7-3"></span>
+<span id="cb7-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Prepare expression matrix (genes x samples)</span></span>
+<span id="cb7-5">expr <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">as.matrix</span>(norm_counts)</span>
+<span id="cb7-6"></span>
+<span id="cb7-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create design matrix</span></span>
+<span id="cb7-8">group <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">factor</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">case_when</span>(</span>
+<span id="cb7-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(expr), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^Pum"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Pum"</span>,</span>
+<span id="cb7-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(expr), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^Qui"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Qui"</span>,</span>
+<span id="cb7-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_detect</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(expr), <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^Rio"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Rio"</span></span>
+<span id="cb7-12">))</span>
+<span id="cb7-13"></span>
+<span id="cb7-14">design <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">model.matrix</span>(<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">~</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span> <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> group)</span>
+<span id="cb7-15"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(design) <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">levels</span>(group)</span>
+<span id="cb7-16"></span>
+<span id="cb7-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Fit linear model</span></span>
+<span id="cb7-18">fit <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lmFit</span>(expr, design)</span>
+<span id="cb7-19"></span>
+<span id="cb7-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Create contrast for all pairwise comparisons</span></span>
+<span id="cb7-21">contrast_matrix <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">makeContrasts</span>(</span>
+<span id="cb7-22">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Pum_vs_Qui =</span> Pum <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> Qui,</span>
+<span id="cb7-23">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Pum_vs_Rio =</span> Pum <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> Rio,</span>
+<span id="cb7-24">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">Qui_vs_Rio =</span> Qui <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> Rio,</span>
+<span id="cb7-25">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">levels =</span> design</span>
+<span id="cb7-26">)</span>
+<span id="cb7-27"></span>
+<span id="cb7-28">fit2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">contrasts.fit</span>(fit, contrast_matrix)</span>
+<span id="cb7-29">fit2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">eBayes</span>(fit2)</span>
+<span id="cb7-30"></span>
+<span id="cb7-31"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get top DE genes across comparisons</span></span>
+<span id="cb7-32">top_table <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">topTable</span>(fit2, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">coef =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Qui_vs_Rio"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">number =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20</span>)</span>
+<span id="cb7-33"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">head</span>(top_table)</span></code></pre></div>
+<section id="get-all-contrast" class="level2">
+<h2 class="anchored" data-anchor-id="get-all-contrast">Get all Contrast</h2>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Get all contrast names</span></span>
+<span id="cb8-2">contrast_names <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">colnames</span>(fit2<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>contrasts)</span>
+<span id="cb8-3"></span>
+<span id="cb8-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract all DEGs per contrast</span></span>
+<span id="cb8-5">deg_list <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">lapply</span>(contrast_names, <span class="cf" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span>(contrast) {</span>
+<span id="cb8-6">  tt <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">topTable</span>(fit2, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">coef =</span> contrast, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">number =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">Inf</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">sort.by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"P"</span>)  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># all genes</span></span>
+<span id="cb8-7">  tt<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>gene_id <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">rownames</span>(tt)</span>
+<span id="cb8-8">  tt<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span>contrast <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> contrast</span>
+<span id="cb8-9">  tt</span>
+<span id="cb8-10">})</span>
+<span id="cb8-11"></span>
+<span id="cb8-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Combine into one long data frame</span></span>
+<span id="cb8-13">all_degs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">bind_rows</span>(deg_list)</span></code></pre></div>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">sig_degs <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb9-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">count</span>(contrast)</span></code></pre></div>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-04_20-37-58.png" class="img-fluid"></p>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(UpSetR)</span>
+<span id="cb10-2"></span>
+<span id="cb10-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Make DEG sets by contrast</span></span>
+<span id="cb10-4">deg_sets <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> sig_degs <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb10-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">group_by</span>(contrast) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb10-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">summarize</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">genes =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(gene_id)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb10-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">deframe</span>()</span>
+<span id="cb10-8"></span>
+<span id="cb10-9"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">upset</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">fromList</span>(deg_sets), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">nsets =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">length</span>(deg_sets), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">order.by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"freq"</span>)</span></code></pre></div>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-04_20-39-02.png" class="img-fluid"></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 6%">
+<col style="width: 29%">
+<col style="width: 18%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 1%">
+<col style="width: 3%">
+<col style="width: 3%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 4%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">gene_id</th>
+<th style="text-align: left;">contrast</th>
+<th style="text-align: left;">X1</th>
+<th style="text-align: left;">X2</th>
+<th style="text-align: right;">X3</th>
+<th style="text-align: right;">X4</th>
+<th style="text-align: right;">X5</th>
+<th style="text-align: right;">X6</th>
+<th style="text-align: right;">X7</th>
+<th style="text-align: right;">X8</th>
+<th style="text-align: right;">X9</th>
+<th style="text-align: right;">X10</th>
+<th style="text-align: right;">X11</th>
+<th style="text-align: right;">X12</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.16036</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.28403</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.24262</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.5573</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">MSTRG.5573::Chromosome_1B:170312406-170333998(+)</td>
+<td style="text-align: left;">sp|Q5TZA2|CROCC_HUMAN</td>
+<td style="text-align: right;">48.0</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4152</td>
+<td style="text-align: right;">4439</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">77.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.5573</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">MSTRG.5573::Chromosome_1B:170312557-170362327(+)</td>
+<td style="text-align: left;">sp|Q5TZA2|CROCC_HUMAN</td>
+<td style="text-align: right;">48.0</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4001</td>
+<td style="text-align: right;">4288</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">77.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.6914</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.3067</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.6508</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.1953</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.29102</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.21000|GN016607.1</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.31664</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.5499</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.27106</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.19435</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.28904</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.26734</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">MSTRG.26734::Chromosome_7B:129126903-129127351(.)</td>
+<td style="text-align: left;">sp|Q9BXX0|EMIL2_HUMAN</td>
+<td style="text-align: right;">40.5</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">431</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">906</td>
+<td style="text-align: right;">977</td>
+<td style="text-align: right;">4.5e-06</td>
+<td style="text-align: right;">48.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.21022</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.30588</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.9920</td>
+<td style="text-align: left;">Pum_vs_Qui</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.6508</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.28403</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.3067</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.1953</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.17542</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.29102</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.25453</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.21000|GN016607.1</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.5075</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.5929</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">MSTRG.5929::Chromosome_1B:186679521-186686006(+)</td>
+<td style="text-align: left;">sp|Q6DIY8|M17L2_XENTR</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5682</td>
+<td style="text-align: right;">6266</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">196</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">124.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.31664</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.5499</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.27111</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.6115</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.26734</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">MSTRG.26734::Chromosome_7B:129126903-129127351(.)</td>
+<td style="text-align: left;">sp|Q9BXX0|EMIL2_HUMAN</td>
+<td style="text-align: right;">40.5</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">431</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">906</td>
+<td style="text-align: right;">977</td>
+<td style="text-align: right;">4.5e-06</td>
+<td style="text-align: right;">48.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.31461</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.18807</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.30588</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.2111</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.9920</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.21438</td>
+<td style="text-align: left;">Pum_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.27106</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.16036</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.24262</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.5573</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">MSTRG.5573::Chromosome_1B:170312406-170333998(+)</td>
+<td style="text-align: left;">sp|Q5TZA2|CROCC_HUMAN</td>
+<td style="text-align: right;">48.0</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4152</td>
+<td style="text-align: right;">4439</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">77.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.5573</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">MSTRG.5573::Chromosome_1B:170312557-170362327(+)</td>
+<td style="text-align: left;">sp|Q5TZA2|CROCC_HUMAN</td>
+<td style="text-align: right;">48.0</td>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4001</td>
+<td style="text-align: right;">4288</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">77.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.17542</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.25471</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">MSTRG.25471::Chromosome_7B:80510238-80537915(+)</td>
+<td style="text-align: left;">sp|A9ULZ2|BIR7B_XENLA</td>
+<td style="text-align: right;">32.6</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">10080</td>
+<td style="text-align: right;">10538</td>
+<td style="text-align: right;">154</td>
+<td style="text-align: right;">343</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">112.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.25471</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">MSTRG.25471::Chromosome_7B:80510238-80537915(+)</td>
+<td style="text-align: left;">sp|A9ULZ2|BIR7B_XENLA</td>
+<td style="text-align: right;">32.6</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">10080</td>
+<td style="text-align: right;">10538</td>
+<td style="text-align: right;">154</td>
+<td style="text-align: right;">343</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">112.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.24917</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.10366</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.25453</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.27117</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.5075</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.27111</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.24906</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.5929</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">MSTRG.5929::Chromosome_1B:186679521-186686006(+)</td>
+<td style="text-align: left;">sp|Q6DIY8|M17L2_XENTR</td>
+<td style="text-align: right;">38.4</td>
+<td style="text-align: right;">198</td>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5682</td>
+<td style="text-align: right;">6266</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">196</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">124.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MSTRG.6115</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">MSTRG.22169</td>
+<td style="text-align: left;">Qui_vs_Rio</td>
+<td style="text-align: left;">MSTRG.22169::Chromosome_6B:76312513-76318400(-)</td>
+<td style="text-align: left;">sp|Q8BFQ2|T229B_MOUSE</td>
+<td style="text-align: right;">60.9</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5323</td>
+<td style="text-align: right;">5787</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">163</td>
+<td style="text-align: right;">0.0e+00</td>
+<td style="text-align: right;">208.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/04-align-v1/DEG_boxplots_page_01.png" class="img-fluid" alt="Page 1"> <img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/04-align-v1/DEG_boxplots_page_02.png" class="img-fluid" alt="Page 2"> <img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/04-align-v1/DEG_boxplots_page_03.png" class="img-fluid" alt="Page 3"></p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+ ]]></description>
+  <category>oyster</category>
+  <category>chile</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/51-nano-next/</guid>
+  <pubDate>Mon, 04 Aug 2025 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-04_20-31-31.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Getting on with Nanopore cDNA data</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -16377,385 +18129,6 @@ font-style: inherit;">done</span></span></code></pre></div>
   <guid>https://sr320.github.io/tumbling-oysters/posts/33-bismark-array/</guid>
   <pubDate>Wed, 20 Nov 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MultiQC_Report_2024-11-21_17-51-28.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Running Bismark in SLURM Array for Methylation Analysis</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/32-bismark-array/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>This post discusses a two-part script for methylation analysis using Bismark, which is managed via SLURM on a high-performance computing (HPC) cluster. This workflow is designed to automate the analysis of large numbers of whole-genome bisulfite sequencing (WGBS) samples efficiently. The setup involves a SLURM script to submit jobs in an array format and a bash script that processes each sample with Bismark. While powerful, there are some potential points of complexity and pitfalls in this workflow, which may challenge new users or cause issues in large-scale executions.</p>
-<section id="slurm-job" class="level2">
-<h2 class="anchored" data-anchor-id="slurm-job">slurm job</h2>
-<pre class="shell"><code>#!/bin/sh
-
-#SBATCH --job-name=bismark_array          # Job name
-#SBATCH --output=%x_%A_%a.slurm.out             # Standard output and error log
-#SBATCH --error=%x_%A_%a.slurm.err              # Error log
-#SBATCH --account=srlab
-#SBATCH --partition=ckpt #update this line - use hyakalloc to find partitions you can use
-#SBATCH --time=01-02:00:00
-#SBATCH --ntasks=1                        # Run a single task
-#SBATCH --cpus-per-task=30                # Number of CPU cores per task
-#SBATCH --array=0-47                      # Array range (adjust based on the number of samples)
-#SBATCH --mem=100G                         # Memory per node
-#SBATCH --chdir=/gscratch/scrubbed/sr320/github/project-mytilus-methylation/output/02-bismark-klone-array
-
-
-
-# Execute Roberts Lab bioinformatics container
-# Binds home directory
-# Binds /gscratch directory
-# Directory bindings allow outputs to be written to the hard drive.
-apptainer exec \
---home "$PWD" \
---bind /mmfs1/home/ \
---bind /mmfs1/gscratch/ \
-/gscratch/srlab/sr320/srlab-bioinformatics-container-586bf21.sif \
-../../code/02.1.sh
-</code></pre>
-</section>
-<section id="bash-script" class="level2">
-<h2 class="anchored" data-anchor-id="bash-script">bash script</h2>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#!/bin/bash</span></span>
-<span id="cb2-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Set directories and files</span></span>
-<span id="cb2-3"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">reads_dir</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../../data/raw-wgbs/"</span></span>
-<span id="cb2-4"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">genome_folder</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../01-bismark-init/"</span></span>
-<span id="cb2-5"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">output_dir</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"."</span></span>
-<span id="cb2-6"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">checkpoint_file</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"completed_samples.log"</span></span>
-<span id="cb2-7"></span>
-<span id="cb2-8"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Create the checkpoint file if it doesn't exist</span></span>
-<span id="cb2-9"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">touch</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${checkpoint_file}</span></span>
-<span id="cb2-10"></span>
-<span id="cb2-11"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Get the list of sample files and corresponding sample names</span></span>
-<span id="cb2-12"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">files</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">(${reads_dir}</span><span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>_1.fastq.gz<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb2-13"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">file</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${files</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">[</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$SLURM_ARRAY_TASK_ID</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">]</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb2-14"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">sample_name</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$file</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"_1.fastq.gz"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb2-15"></span>
-<span id="cb2-16"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Check if the sample has already been processed</span></span>
-<span id="cb2-17"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-q</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"^</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">$"</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${checkpoint_file}</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">then</span></span>
-<span id="cb2-18">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> already processed. Skipping..."</span></span>
-<span id="cb2-19">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">exit</span> 0</span>
-<span id="cb2-20"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">fi</span></span>
-<span id="cb2-21"></span>
-<span id="cb2-22"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Define log files for stdout and stderr</span></span>
-<span id="cb2-23"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">stdout_log</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${output_dir}${sample_name}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">_stdout.log"</span></span>
-<span id="cb2-24"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">stderr_log</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${output_dir}${sample_name}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">_stderr.log"</span></span>
-<span id="cb2-25"></span>
-<span id="cb2-26"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Run Bismark for this sample</span></span>
-<span id="cb2-27"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">bismark</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-28">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-genome</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${genome_folder}</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-29">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-p</span> 30 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-30">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-score_min</span> L,0,-0.6 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-31">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--non_directional</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-32">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-u</span> 10000 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-33">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-1</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${reads_dir}${sample_name}</span>_1.fastq.gz <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-34">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-2</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${reads_dir}${sample_name}</span>_2.fastq.gz <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-35">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${output_dir}</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-36">    <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${stdout_log}</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${stderr_log}</span></span>
-<span id="cb2-37"></span>
-<span id="cb2-38"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Check if the command was successful</span></span>
-<span id="cb2-39"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">[</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$?</span> <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">-eq</span> 0 <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">]</span><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">then</span></span>
-<span id="cb2-40">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Append the sample name to the checkpoint file</span></span>
-<span id="cb2-41">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${sample_name}</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&gt;</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${checkpoint_file}</span></span>
-<span id="cb2-42">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> processed successfully."</span></span>
-<span id="cb2-43"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">else</span></span>
-<span id="cb2-44">    <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Sample </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${sample_name}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> failed. Check </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${stderr_log}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;"> for details."</span></span>
-<span id="cb2-45"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">fi</span></span></code></pre></div>
-</section>
-<section id="potential-pitfalls-and-tips" class="level2">
-<h2 class="anchored" data-anchor-id="potential-pitfalls-and-tips">Potential Pitfalls and Tips</h2>
-<ol type="1">
-<li><p>Managing Array Jobs in SLURM</p>
-<p>• Description: The SLURM array functionality (#SBATCH –array=0-47) is used to handle multiple samples. Each job in the array corresponds to a sample, allowing parallel processing, which is ideal for large datasets.</p>
-<p>• Potential Issue: Array indexing can be confusing and prone to errors. If the job array range (0-47) does not match the number of samples, it could result in missing or redundant processing. In addition, if the number of samples changes, the array range needs to be updated manually, which can be a source of mistakes.</p>
-<p>• Tip: Automate the array range based on sample count or add sanity checks to ensure the array indices match the actual sample count.</p></li>
-<li><p>Path Bindings and Containerized Execution</p>
-<p>• Description: The SLURM script calls an Apptainer container using apptainer exec with various paths bound (–home “$PWD” and –bind /mmfs1/home/ /mmfs1/gscratch/). This setup isolates the software environment, ensuring consistent software dependencies.</p>
-<p>• Potential Issue: If bindings aren’t set up correctly, the container might not be able to access necessary directories, causing runtime errors or failed output generation. It can also be difficult to debug path issues inside the container.</p>
-<p>• Tip: Double-check that all required directories (such as genome reference files or raw data folders) are accessible within the container. Testing path bindings on a single sample before running the full array can prevent widespread errors.</p></li>
-<li><p>Checkpoint System for Completed Samples</p>
-<p>• Description: The bash script uses a checkpointing system with completed_samples.log to track processed samples. Before processing, it checks if a sample is already in this log and skips it if so.</p>
-<p>• Potential Issue: If the script is interrupted (e.g., due to a timeout or node failure), samples that were partially processed will not appear in completed_samples.log, potentially leading to partial or corrupted outputs. Additionally, if a sample’s output log is manually edited or removed, the checkpoint will no longer match.</p>
-<p>• Tip: Regularly monitor completed_samples.log and the output logs to identify incomplete processing and re-run those samples if necessary. Implementing a more robust checkpointing system, such as one that verifies output file integrity, can also help.</p></li>
-<li><p>Memory and CPU Allocation</p>
-<p>• Description: The SLURM script requests 100 GB of memory and 30 CPU cores per task (–mem=100G and –cpus-per-task=30). These settings are essential for performance, particularly with WGBS, as Bismark can be resource-intensive.</p>
-<p>• Potential Issue: Memory and CPU requirements may vary based on sample size and cluster specifications. Allocating too many resources can lead to longer queue times or wasted computational power, whereas insufficient resources can cause job failures.</p>
-<p>• Tip: Start with smaller allocations to determine the minimum requirements for your dataset. Adjust based on real-time monitoring and optimize allocations to minimize queue times and reduce computation costs.</p></li>
-<li><p>Error Handling and Logging</p>
-<p>• Description: Standard output and error logs are generated for each sample (stdout_log and stderr_log). These logs are helpful for debugging if something goes wrong during processing.</p>
-<p>• Potential Issue: If logging paths are incorrectly set, or if log files are overwritten by subsequent runs, critical information may be lost. Additionally, having separate logs for each sample can generate a large number of files, which may be challenging to manage and monitor.</p>
-<p>• Tip: Consider implementing a log rotation system or consolidating logs for easier tracking. Reviewing the stderr_log periodically can help identify recurring issues before they impact large numbers of samples.</p></li>
-</ol>
-<p>Conclusion</p>
-<p>While this SLURM and bash script setup provides a scalable solution for methylation analysis, understanding these potential challenges is essential for successful execution. By managing SLURM arrays carefully, verifying path bindings, implementing a reliable checkpoint system, optimizing resource requests, and ensuring robust error logging, researchers can streamline this workflow and avoid common pitfalls.</p>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>methylation</category>
-  <category>klone</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/32-bismark-array/</guid>
-  <pubDate>Sun, 10 Nov 2024 08:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation__RStudio_Server_2024-11-10_11-32-22.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
