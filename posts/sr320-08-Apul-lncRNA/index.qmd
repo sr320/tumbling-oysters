@@ -1,6 +1,6 @@
 ---
 title: "Apul lncRNA Discovery"
-description: ""
+description: "Coral long non-coding RNA discovery and analysis"
 author:
   - name: Steven Roberts
     url: 
@@ -8,7 +8,7 @@ author:
     affiliation: Professor, UW - School of Aquatic and Fishery Sciences
     affiliation-url: https://robertslab.info
 date: 11-03-2023
-categories: [deepdive, R, lncrna, e5] # self-defined categories
+categories: [deepdive, R, lncRNA, e5] # self-defined categories
 #citation: 
   #url:  # self-defined
 image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_deep-dive__RStudio_Server_2023-11-03_06-26-50.png # finding a good image
