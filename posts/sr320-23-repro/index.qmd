@@ -1,7 +1,7 @@
 ---
 title: "Repro Repro"
 description: "Pipeline for Reproduction Annotation"
-categories: [blast, gene ontology] # self-defined categories
+categories: [blast, GO] # self-defined categories
 #citation: 
 date: 06-15-2024
 image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2024-06-15_17-21-46.png # finding a good image

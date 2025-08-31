@@ -1,6 +1,6 @@
 ---
 title: "Running Bismark in SLURM Array for Methylation Analysis"
-description: "checkmate"
+description: "Bismark array processing workflow"
 categories: [methylation, klone]
 #citation: 
 date: 11-10-2024
