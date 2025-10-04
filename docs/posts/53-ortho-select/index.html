@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Steven Roberts">
+<meta name="dcterms.date" content="2025-10-04">
+<meta name="description" content="Selecting orthologs based on metabolic and reproductive GO terms">
+
+<title>Ortholog Selection for Physiological Processes – Tumbling Oysters</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0348920b7671f696dc9078d39bff215e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed fullcontent quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = true;
+    const darkModeDefault = authorPrefersDark;
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Tumbling Oysters</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sr320"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../notes.html"> <i class="bi bi-newspaper" role="img">
+</i> 
+<span class="menu-text">Daily Notes</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="../../notes.txt"> <i class="bi bi-📝 Notes (TXT)" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Ortholog Selection for Physiological Processes</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          Selecting orthologs based on metabolic and reproductive GO terms
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">e5</div>
+                <div class="quarto-category">coral</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Steven Roberts <a href="https://orcid.org/0000-0001-8302-1138" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://robertslab.info">
+              Professor, UW - School of Aquatic and Fishery Sciences
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 4, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+<section id="ortho-select" class="level1">
+<h1>13-ortho-select</h1>
+<p>TLDR: <a href="https://github.com/urol-e5/timeseries_molecular/blob/main/M-multi-species/output/13-ortho-select/selected_orthologs.csv" class="uri">https://github.com/urol-e5/timeseries_molecular/blob/main/M-multi-species/output/13-ortho-select/selected_orthologs.csv</a></p>
+<section id="overview-of-annotated-orthologs" class="level2">
+<h2 class="anchored" data-anchor-id="overview-of-annotated-orthologs">Overview of Annotated Orthologs</h2>
+<p>First, let’s examine the annotated ortholog data from the previous analysis:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/11-orthology-analysis/ortholog_groups.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>group_id,apul,peve,ptua,type,avg_identity
+OG_00001,FUN_000185-T1,Peve_00037402,Pocillopora_meandrina_HIv1___RNAseq.g28886.t1,three_way,71.059
+OG_00002,FUN_000189-T1,Peve_00038462,Pocillopora_meandrina_HIv1___RNAseq.g28888.t3,three_way,68.72583333333334
+OG_00003,FUN_000190-T1,Peve_00038463,Pocillopora_meandrina_HIv1___RNAseq.g28889.t1,three_way,55.1975
+OG_00004,FUN_000191-T1,Peve_00038464,Pocillopora_meandrina_HIv1___RNAseq.g28890.t1,three_way,72.047
+OG_00005,FUN_000192-T1,Peve_00038466,Pocillopora_meandrina_HIv1___RNAseq.g28893.t1,three_way,81.15866666666666
+OG_00006,FUN_000193-T1,Peve_00038467,Pocillopora_meandrina_HIv1___RNAseq.g28894.t1,three_way,70.21933333333334
+OG_00007,FUN_000194-T1,Peve_00038470,Pocillopora_meandrina_HIv1___RNAseq.g28898.t1,three_way,77.11833333333334
+OG_00008,FUN_000195-T1,Peve_00038471,Pocillopora_meandrina_HIv1___RNAseq.g28899.t1,three_way,68.38
+OG_00009,FUN_000197-T1,Peve_00027182,Pocillopora_meandrina_HIv1___RNAseq.g28901.t1,three_way,56.498333333333335</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/11-orthology-analysis/ortholog_groups.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>18327 ../output/11-orthology-analysis/ortholog_groups.csv</code></pre>
+</section>
+<section id="annotated-orthologs" class="level2">
+<h2 class="anchored" data-anchor-id="annotated-orthologs">Annotated Orthologs</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>group_id,apul,peve,ptua,type,avg_identity,query,accession,id,reviewed,protein_name,organism,pident,length,evalue,bitscore,title,go_ids,go_bp,go_cc,go_mf,goslim_ids,goslim_names
+OG_00001,FUN_000185-T1,Peve_00037402,Pocillopora_meandrina_HIv1___RNAseq.g28886.t1,three_way,71.059,FUN_000185-T1,Q32LQ0,AMPE_BOVIN,,Glutamyl aminopeptidase (EAP) (EC 3.4.11.7) (Aminopeptidase A) (AP-A) (CD antigen CD249),Bos taurus (Bovine),41.5,881.0,1.4e-197,691.4,sp|Q32LQ0|AMPE_BOVIN Glutamyl aminopeptidase OS=Bos taurus OX=9913 GN=ENPEP PE=2 SV=1,GO:0003081; GO:0004177; GO:0004230; GO:0005615; GO:0005737; GO:0005886; GO:0006508; GO:0008217; GO:0008270; GO:0008283; GO:0016477; GO:0042277; GO:0043171; GO:0070006,cell migration [GO:0016477]; cell population proliferation [GO:0008283]; peptide catabolic process [GO:0043171]; proteolysis [GO:0006508]; regulation of blood pressure [GO:0008217]; regulation of systemic arterial blood pressure by renin-angiotensin [GO:0003081],cytoplasm [GO:0005737]; extracellular space [GO:0005615]; plasma membrane [GO:0005886],aminopeptidase activity [GO:0004177]; glutamyl aminopeptidase activity [GO:0004230]; metalloaminopeptidase activity [GO:0070006]; peptide binding [GO:0042277]; zinc ion binding [GO:0008270],GO:0003824; GO:0005615; GO:0005886; GO:0016787; GO:0048870; GO:0050886; GO:0140096,"catalytic activity; extracellular space; plasma membrane; hydrolase activity; cell motility; endocrine process; catalytic activity, acting on a protein"
+OG_00002,FUN_000189-T1,Peve_00038462,Pocillopora_meandrina_HIv1___RNAseq.g28888.t3,three_way,68.72583333333334,FUN_000189-T1,Q9DCT6,,,,,38.0,171.0,4.6e-18,92.8,sp|Q9DCT6|BAP18_MOUSE BPTF-associated chromatin complex component 1 OS=Mus musculus OX=10090 GN=Bacc1 PE=1 SV=1,,,,,,
+OG_00003,FUN_000190-T1,Peve_00038463,Pocillopora_meandrina_HIv1___RNAseq.g28889.t1,three_way,55.1975,,,,,,,,,,,,,,,,,
+OG_00004,FUN_000191-T1,Peve_00038464,Pocillopora_meandrina_HIv1___RNAseq.g28890.t1,three_way,72.047,FUN_000191-T1,Q95108,,,,,44.1,136.0,3.3e-29,129.4,"sp|Q95108|THIOM_BOVIN Thioredoxin, mitochondrial OS=Bos taurus OX=9913 GN=TXN2 PE=1 SV=2",,,,,,
+OG_00005,FUN_000192-T1,Peve_00038466,Pocillopora_meandrina_HIv1___RNAseq.g28893.t1,three_way,81.15866666666666,FUN_000192-T1,Q1LWX3,,,,,54.3,188.0,3.5e-53,209.5,sp|Q1LWX3|NTAQ1_DANRE Protein N-terminal glutamine amidohydrolase OS=Danio rerio OX=7955 GN=ntaq1 PE=2 SV=1,,,,,,
+OG_00006,FUN_000193-T1,Peve_00038467,Pocillopora_meandrina_HIv1___RNAseq.g28894.t1,three_way,70.21933333333334,FUN_000193-T1,Q5I0K7,,,,,53.2,158.0,3.4e-41,169.5,sp|Q5I0K7|ALG13_RAT UDP-N-acetylglucosamine transferase subunit ALG13 OS=Rattus norvegicus OX=10116 GN=Alg13 PE=1 SV=1,,,,,,
+OG_00007,FUN_000194-T1,Peve_00038470,Pocillopora_meandrina_HIv1___RNAseq.g28898.t1,three_way,77.11833333333334,FUN_000194-T1,P70182,,,,,60.2,447.0,3.4e-147,523.5,sp|P70182|PI51A_MOUSE Phosphatidylinositol 4-phosphate 5-kinase type-1 alpha OS=Mus musculus OX=10090 GN=Pip5k1a PE=1 SV=2,,,,,,
+OG_00008,FUN_000195-T1,Peve_00038471,Pocillopora_meandrina_HIv1___RNAseq.g28899.t1,three_way,68.38,FUN_000195-T1,B8D9S0,,,,,38.5,148.0,9e-19,95.1,sp|B8D9S0|FMT_BUCA5 Methionyl-tRNA formyltransferase OS=Buchnera aphidicola subsp. Acyrthosiphon pisum (strain 5A) OX=563178 GN=fmt PE=3 SV=1,,,,,,
+OG_00009,FUN_000197-T1,Peve_00027182,Pocillopora_meandrina_HIv1___RNAseq.g28901.t1,three_way,56.498333333333335,FUN_000197-T1,Q8TCT7,,,,,44.7,488.0,1.6e-89,331.6,sp|Q8TCT7|SPP2B_HUMAN Signal peptide peptidase-like 2B OS=Homo sapiens OX=9606 GN=SPPL2B PE=1 SV=2,,,,,,</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>18373 ../output/12-ortho-annot/ortholog_groups_annotated.csv</code></pre>
+</section>
+</section>
+<section id="physiology-based-selection" class="level1">
+<h1>Physiology Based Selection</h1>
+<section id="filter-for-specific-go-terms" class="level2">
+<h2 class="anchored" data-anchor-id="filter-for-specific-go-terms">Filter for Specific GO Terms</h2>
+<p>We’ll filter the annotated orthologs for genes involved in metabolic and stress-related processes that are relevant to coral physiology:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter orthologs for metabolic and stress-related processes</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Filtering for:"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Glycolysis (GO:0006096)"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Gluconeogenesis (GO:0006094)"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Lipolysis/lipid catabolism (GO:0016042)"</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Fatty acid beta oxidation (GO:0006635)"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Starvation (GO:0042594)"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Lipid biosynthesis (GO:0008610)"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Protein catabolic process (GO:0030163)"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Reproductive Process (GO:0022414)"</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create output directory if it doesn't exist</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../output/13-ortho-select</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract header</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-1</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv <span class="op">&gt;</span> ../output/13-ortho-select/selected_orthologs.csv</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for the specified GO terms and reproduction-related processes</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-E</span> <span class="st">'GO:0006096|GO:0006094|GO:0016042|GO:0006635|GO:0042594|GO:0008610|GO:0030163|GO:0022414'</span> <span class="dt">\</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  ../output/12-ortho-annot/ortholog_groups_annotated.csv <span class="dt">\</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;</span> ../output/13-ortho-select/selected_orthologs.csv</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Total orthologs selected:"</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/13-ortho-select/selected_orthologs.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Filtering for:
+- Glycolysis (GO:0006096)
+- Gluconeogenesis (GO:0006094)
+- Lipolysis/lipid catabolism (GO:0016042)
+- Fatty acid beta oxidation (GO:0006635)
+- Starvation (GO:0042594)
+- Lipid biosynthesis (GO:0008610)
+- Protein catabolic process (GO:0030163)
+- Reproductive Process (GO:0022414)
+
+Total orthologs selected:
+787 ../output/13-ortho-select/selected_orthologs.csv</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first few selected orthologs</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/13-ortho-select/selected_orthologs.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>group_id,apul,peve,ptua,type,avg_identity,query,accession,id,reviewed,protein_name,organism,pident,length,evalue,bitscore,title,go_ids,go_bp,go_cc,go_mf,goslim_ids,goslim_names
+OG_00044,FUN_000272-T1,Peve_00027798,Pocillopora_meandrina_HIv1___RNAseq.g28985.t1,three_way,70.59733333333334,FUN_000272-T1,O75031,HSF2B_HUMAN,,Heat shock factor 2-binding protein,Homo sapiens (Human),43.2,190.0,5.9e-32,139.0,sp|O75031|HSF2B_HUMAN Heat shock factor 2-binding protein OS=Homo sapiens OX=9606 GN=HSF2BP PE=1 SV=1,GO:0005654; GO:0005694; GO:0005829; GO:0006366; GO:0007141; GO:0007144; GO:0007283; GO:1990918,double-strand break repair involved in meiotic recombination [GO:1990918]; female meiosis I [GO:0007144]; male meiosis I [GO:0007141]; spermatogenesis [GO:0007283]; transcription by RNA polymerase II [GO:0006366],chromosome [GO:0005694]; cytosol [GO:0005829]; nucleoplasm [GO:0005654],,GO:0005654; GO:0005694; GO:0005829; GO:0006281; GO:0006351; GO:0022414; GO:0043226; GO:0140013,nucleoplasm; chromosome; cytosol; DNA repair; DNA-templated transcription; reproductive process; organelle; meiotic nuclear division
+OG_00086,FUN_000437-T1,Peve_00011193,Pocillopora_meandrina_HIv1___RNAseq.g2323.t1,three_way,77.881,FUN_000437-T1,F1MNN4,FBXW7_BOVIN,,F-box/WD repeat-containing protein 7 (F-box and WD-40 domain-containing protein 7),Bos taurus (Bovine),36.4,195.0,1.9999999999999998e-26,122.5,sp|F1MNN4|FBXW7_BOVIN F-box/WD repeat-containing protein 7 OS=Bos taurus OX=9913 GN=FBXW7 PE=1 SV=3,GO:0005634; GO:0005654; GO:0005694; GO:0005737; GO:0006281; GO:0006974; GO:0007062; GO:0010629; GO:0010992; GO:0019005; GO:0030332; GO:0031146; GO:0031398; GO:0031625; GO:0042752; GO:0042802; GO:0043130; GO:0043161; GO:0050816; GO:0050821; GO:0070374; GO:0070534; GO:0097027; GO:1901524; GO:1901800; GO:1903378; GO:1903955; GO:1990452; GO:1990756; GO:2000060; GO:2001205,DNA damage response [GO:0006974]; DNA repair [GO:0006281]; negative regulation of gene expression [GO:0010629]; negative regulation of osteoclast development [GO:2001205]; positive regulation of ERK1 and ERK2 cascade [GO:0070374]; positive regulation of oxidative stress-induced neuron intrinsic apoptotic signaling pathway [GO:1903378]; positive regulation of proteasomal protein catabolic process [GO:1901800]; positive regulation of protein targeting to mitochondrion [GO:1903955]; positive regulation of protein ubiquitination [GO:0031398]; positive regulation of ubiquitin-dependent protein catabolic process [GO:2000060]; proteasome-mediated ubiquitin-dependent protein catabolic process [GO:0043161]; protein K63-linked ubiquitination [GO:0070534]; protein stabilization [GO:0050821]; regulation of circadian rhythm [GO:0042752]; regulation of mitophagy [GO:1901524]; SCF-dependent proteasomal ubiquitin-dependent protein catabolic process [GO:0031146]; sister chromatid cohesion [GO:0007062]; ubiquitin recycling [GO:0010992],chromosome [GO:0005694]; cytoplasm [GO:0005737]; nucleoplasm [GO:0005654]; nucleus [GO:0005634]; Parkin-FBXW7-Cul1 ubiquitin ligase complex [GO:1990452]; SCF ubiquitin ligase complex [GO:0019005],cyclin binding [GO:0030332]; identical protein binding [GO:0042802]; phosphothreonine residue binding [GO:0050816]; ubiquitin binding [GO:0043130]; ubiquitin protein ligase binding [GO:0031625]; ubiquitin-like ligase-substrate adaptor activity [GO:1990756]; ubiquitin-protein transferase activator activity [GO:0097027],GO:0005634; GO:0005654; GO:0005694; GO:0006281; GO:0030163; GO:0043226; GO:0060090; GO:0098772,nucleus; nucleoplasm; chromosome; DNA repair; protein catabolic process; organelle; molecular adaptor activity; molecular function regulator activity
+OG_00107,FUN_000499-T1,Peve_00024155,Pocillopora_meandrina_HIv1___RNAseq.g2414.t1,three_way,82.06683333333332,FUN_000499-T1,Q14432,PDE3A_HUMAN,,"cGMP-inhibited 3',5'-cyclic phosphodiesterase 3A (EC 3.1.4.17) (Cyclic GMP-inhibited phosphodiesterase A) (CGI-PDE A) (cGMP-inhibited cAMP phosphodiesterase) (cGI-PDE)",Homo sapiens (Human),37.6,1034.0,2.2e-143,511.5,"sp|Q14432|PDE3A_HUMAN cGMP-inhibited 3',5'-cyclic phosphodiesterase 3A OS=Homo sapiens OX=9606 GN=PDE3A PE=1 SV=3",GO:0001556; GO:0004114; GO:0004115; GO:0004119; GO:0005829; GO:0006629; GO:0007186; GO:0009410; GO:0016020; GO:0019933; GO:0019934; GO:0030284; GO:0040020; GO:0043066; GO:0043116; GO:0043117; GO:0046872; GO:0047555; GO:0060282; GO:0060700; GO:0071321; GO:0071560; GO:0097190; GO:0099130; GO:0106072; GO:0141162,apoptotic signaling pathway [GO:0097190]; cAMP-mediated signaling [GO:0019933]; cellular response to cGMP [GO:0071321]; cellular response to transforming growth factor beta stimulus [GO:0071560]; cGMP-mediated signaling [GO:0019934]; G protein-coupled receptor signaling pathway [GO:0007186]; lipid metabolic process [GO:0006629]; negative regulation of adenylate cyclase-activating G protein-coupled receptor signaling pathway [GO:0106072]; negative regulation of apoptotic process [GO:0043066]; negative regulation of cAMP/PKA signal transduction [GO:0141162]; negative regulation of vascular permeability [GO:0043116]; oocyte maturation [GO:0001556]; positive regulation of oocyte development [GO:0060282]; positive regulation of vascular permeability [GO:0043117]; regulation of meiotic nuclear division [GO:0040020]; regulation of ribonuclease activity [GO:0060700]; response to xenobiotic stimulus [GO:0009410],cytosol [GO:0005829]; membrane [GO:0016020],"3',5'-cGMP-inhibited cyclic-nucleotide phosphodiesterase activity [GO:0004119]; 3',5'-cyclic-AMP phosphodiesterase activity [GO:0004115]; 3',5'-cyclic-GMP phosphodiesterase activity [GO:0047555]; 3',5'-cyclic-nucleotide phosphodiesterase activity [GO:0004114]; estrogen binding [GO:0099130]; metal ion binding [GO:0046872]; nuclear estrogen receptor activity [GO:0030284]",GO:0003013; GO:0003824; GO:0005829; GO:0006629; GO:0016787; GO:0022414; GO:0060089; GO:0140110,circulatory system process; catalytic activity; cytosol; lipid metabolic process; hydrolase activity; reproductive process; molecular transducer activity; transcription regulator activity
+OG_00142,FUN_000582-T1,Peve_00034702,Pocillopora_meandrina_HIv1___TS.g6501.t1,three_way,59.576166666666666,FUN_000582-T1,D2X8K2,PA2_CONGI,,Phospholipase A2 A2-actitoxin-Cgg2a (A2-AITX-Cgg2a) (EC 3.1.1.4) (CgPLA2) (Phosphatidylcholine 2-acylhydrolase),Condylactis gigantea (Giant Caribbean anemone) (Condylactis passiflora),43.7,119.0,3.5e-25,116.3,sp|D2X8K2|PA2_CONGI Phospholipase A2 A2-actitoxin-Cgg2a OS=Condylactis gigantea OX=47073 PE=1 SV=1,GO:0005509; GO:0005543; GO:0005576; GO:0006644; GO:0016042; GO:0042151; GO:0044398; GO:0044470; GO:0044522; GO:0047498; GO:0050482; GO:0090729,arachidonate secretion [GO:0050482]; lipid catabolic process [GO:0016042]; phospholipid metabolic process [GO:0006644]; venom-mediated edema in another organism [GO:0044398]; venom-mediated myocyte killing in another organism [GO:0044522]; venom-mediated suppression of blood coagulation [GO:0044470],extracellular region [GO:0005576]; nematocyst [GO:0042151],calcium ion binding [GO:0005509]; calcium-dependent phospholipase A2 activity [GO:0047498]; phospholipid binding [GO:0005543]; toxin activity [GO:0090729],GO:0003824; GO:0005576; GO:0006629; GO:0008289; GO:0016787; GO:0043226; GO:0090729,catalytic activity; extracellular region; lipid metabolic process; lipid binding; hydrolase activity; organelle; toxin activity
+OG_00192,FUN_000898-T1,Peve_00009741,Pocillopora_meandrina_HIv1___RNAseq.g29449.t1,three_way,80.12233333333333,FUN_000898-T1,O43903,GAS2_HUMAN,,Growth arrest-specific protein 2 (GAS-2),Homo sapiens (Human),42.6,256.0,1.3e-48,194.9,sp|O43903|GAS2_HUMAN Growth arrest-specific protein 2 OS=Homo sapiens OX=9606 GN=GAS2 PE=1 SV=1,GO:0001544; GO:0001547; GO:0001725; GO:0005829; GO:0005884; GO:0006915; GO:0008017; GO:0008360; GO:0008593; GO:0016020; GO:0030728; GO:0051015; GO:0051726; GO:0051764; GO:0071711,actin crosslink formation [GO:0051764]; antral ovarian follicle growth [GO:0001547]; apoptotic process [GO:0006915]; basement membrane organization [GO:0071711]; initiation of primordial ovarian follicle growth [GO:0001544]; ovulation [GO:0030728]; regulation of cell cycle [GO:0051726]; regulation of cell shape [GO:0008360]; regulation of Notch signaling pathway [GO:0008593],actin filament [GO:0005884]; cytosol [GO:0005829]; membrane [GO:0016020]; stress fiber [GO:0001725],actin filament binding [GO:0051015]; microtubule binding [GO:0008017],GO:0005829; GO:0008092; GO:0012501; GO:0022414; GO:0030198,cytosol; cytoskeletal protein binding; programmed cell death; reproductive process; extracellular matrix organization
+OG_00195,FUN_000905-T1,Peve_00009733,Pocillopora_meandrina_HIv1___RNAseq.g29456.t1,three_way,66.77466666666666,FUN_000905-T1,P70627,FOLH1_RAT,,Glutamate carboxypeptidase 2 (EC 3.4.17.21) (Folate hydrolase 1) (Folylpoly-gamma-glutamate carboxypeptidase) (FGCP) (Glutamate carboxypeptidase II) (GCPII) (Membrane glutamate carboxypeptidase) (mGCP) (N-acetylated-alpha-linked acidic dipeptidase I) (NAALADase I) (Prostate-specific membrane antigen homolog) (Pteroylpoly-gamma-glutamate carboxypeptidase),Rattus norvegicus (Rat),37.3,753.0,5.9e-130,466.5,sp|P70627|FOLH1_RAT Glutamate carboxypeptidase 2 OS=Rattus norvegicus OX=10116 GN=Folh1 PE=1 SV=1,GO:0004180; GO:0004181; GO:0005886; GO:0006508; GO:0006760; GO:0008233; GO:0009986; GO:0016020; GO:0016805; GO:0030163; GO:0043065; GO:0046872; GO:1904492; GO:1904493,folic acid-containing compound metabolic process [GO:0006760]; positive regulation of apoptotic process [GO:0043065]; protein catabolic process [GO:0030163]; proteolysis [GO:0006508],cell surface [GO:0009986]; membrane [GO:0016020]; plasma membrane [GO:0005886],Ac-Asp-Glu binding [GO:1904492]; carboxypeptidase activity [GO:0004180]; dipeptidase activity [GO:0016805]; metal ion binding [GO:0046872]; metallocarboxypeptidase activity [GO:0004181]; peptidase activity [GO:0008233]; tetrahydrofolyl-poly(glutamate) polymer binding [GO:1904493],GO:0003824; GO:0005886; GO:0006575; GO:0016787; GO:0030163; GO:0140096,"catalytic activity; plasma membrane; modified amino acid metabolic process; hydrolase activity; protein catabolic process; catalytic activity, acting on a protein"
+OG_00207,FUN_000926-T1,Peve_00009718,Pocillopora_meandrina_HIv1___RNAseq.g29467.t1,three_way,63.42333333333334,FUN_000926-T1,Q9R0N8,SYT6_MOUSE,,Synaptotagmin-6 (Synaptotagmin VI) (SytVI),Mus musculus (Mouse),29.5,319.0,9.1e-33,142.9,sp|Q9R0N8|SYT6_MOUSE Synaptotagmin-6 OS=Mus musculus OX=10090 GN=Syt6 PE=1 SV=2,GO:0001786; GO:0005544; GO:0005829; GO:0005886; GO:0007340; GO:0009898; GO:0016020; GO:0030672; GO:0042802; GO:0042803; GO:0046872; GO:0046982; GO:0048306; GO:0097038,acrosome reaction [GO:0007340],cytoplasmic side of plasma membrane [GO:0009898]; cytosol [GO:0005829]; membrane [GO:0016020]; perinuclear endoplasmic reticulum [GO:0097038]; plasma membrane [GO:0005886]; synaptic vesicle membrane [GO:0030672],calcium-dependent phospholipid binding [GO:0005544]; calcium-dependent protein binding [GO:0048306]; identical protein binding [GO:0042802]; metal ion binding [GO:0046872]; phosphatidylserine binding [GO:0001786]; protein heterodimerization activity [GO:0046982]; protein homodimerization activity [GO:0042803],GO:0005829; GO:0005886; GO:0008289; GO:0022414,cytosol; plasma membrane; lipid binding; reproductive process
+OG_00237,FUN_000992-T1,Peve_00004455,Pocillopora_meandrina_HIv1___RNAseq.g29194.t1,three_way,92.068,FUN_000992-T1,P82471,GNAQ_RAT,,Guanine nucleotide-binding protein G(q) subunit alpha (EC 3.6.5.-) (Guanine nucleotide-binding protein alpha-q),Rattus norvegicus (Rat),82.2,353.0,8.9e-169,594.3,sp|P82471|GNAQ_RAT Guanine nucleotide-binding protein G(q) subunit alpha OS=Rattus norvegicus OX=10116 GN=Gnaq PE=2 SV=2,GO:0001501; GO:0001508; GO:0001664; GO:0003924; GO:0003925; GO:0005096; GO:0005525; GO:0005737; GO:0005794; GO:0005834; GO:0005886; GO:0005901; GO:0007186; GO:0007189; GO:0007200; GO:0007206; GO:0007207; GO:0007208; GO:0007215; GO:0007218; GO:0007507; GO:0008217; GO:0009791; GO:0010543; GO:0016020; GO:0016322; GO:0021884; GO:0030234; GO:0030425; GO:0031683; GO:0031965; GO:0032024; GO:0034695; GO:0042711; GO:0042733; GO:0043066; GO:0043267; GO:0044297; GO:0044877; GO:0045634; GO:0046872; GO:0047391; GO:0048066; GO:0050821; GO:0060158; GO:0060828; GO:0086100; GO:0098793; GO:0099524; GO:1904888; GO:1990806,action potential [GO:0001508]; adenylate cyclase-activating G protein-coupled receptor signaling pathway [GO:0007189]; cranial skeletal system development [GO:1904888]; developmental pigmentation [GO:0048066]; embryonic digit morphogenesis [GO:0042733]; endothelin receptor signaling pathway [GO:0086100]; forebrain neuron development [GO:0021884]; G protein-coupled receptor signaling pathway [GO:0007186]; glutamate receptor signaling pathway [GO:0007215]; heart development [GO:0007507]; ligand-gated ion channel signaling pathway [GO:1990806]; maternal behavior [GO:0042711]; negative regulation of apoptotic process [GO:0043066]; negative regulation of potassium ion transport [GO:0043267]; neuron remodeling [GO:0016322]; neuropeptide signaling pathway [GO:0007218]; phospholipase C-activating dopamine receptor signaling pathway [GO:0060158]; phospholipase C-activating G protein-coupled acetylcholine receptor signaling pathway [GO:0007207]; phospholipase C-activating G protein-coupled glutamate receptor signaling pathway [GO:0007206]; phospholipase C-activating G protein-coupled receptor signaling pathway [GO:0007200]; phospholipase C-activating serotonin receptor signaling pathway [GO:0007208]; positive regulation of insulin secretion [GO:0032024]; post-embryonic development [GO:0009791]; protein stabilization [GO:0050821]; regulation of blood pressure [GO:0008217]; regulation of canonical Wnt signaling pathway [GO:0060828]; regulation of melanocyte differentiation [GO:0045634]; regulation of platelet activation [GO:0010543]; response to prostaglandin E [GO:0034695]; skeletal system development [GO:0001501],caveola [GO:0005901]; cell body [GO:0044297]; cytoplasm [GO:0005737]; dendrite [GO:0030425]; Golgi apparatus [GO:0005794]; heterotrimeric G-protein complex [GO:0005834]; membrane [GO:0016020]; nuclear membrane [GO:0031965]; plasma membrane [GO:0005886]; postsynaptic cytosol [GO:0099524]; presynapse [GO:0098793],alkylglycerophosphoethanolamine phosphodiesterase activity [GO:0047391]; enzyme regulator activity [GO:0030234]; G protein activity [GO:0003925]; G protein-coupled receptor binding [GO:0001664]; G-protein beta/gamma-subunit complex binding [GO:0031683]; GTP binding [GO:0005525]; GTPase activator activity [GO:0005096]; GTPase activity [GO:0003924]; metal ion binding [GO:0046872]; protein-containing complex binding [GO:0044877],GO:0003824; GO:0003924; GO:0005794; GO:0005829; GO:0005886; GO:0016787; GO:0022414; GO:0043226; GO:0048856; GO:0098772,catalytic activity; GTPase activity; Golgi apparatus; cytosol; plasma membrane; hydrolase activity; reproductive process; organelle; anatomical structure development; molecular function regulator activity
+OG_00248,FUN_001011-T1,Peve_00041060,Pocillopora_meandrina_HIv1___RNAseq.g29164.t1,three_way,70.763,FUN_001011-T1,Q6ZUX7,LHPL2_HUMAN,,LHFPL tetraspan subfamily member 2 protein (Lipoma HMGIC fusion partner-like 2 protein),Homo sapiens (Human),43.1,232.0,6.4e-43,175.6,sp|Q6ZUX7|LHPL2_HUMAN LHFPL tetraspan subfamily member 2 protein OS=Homo sapiens OX=9606 GN=LHFPL2 PE=1 SV=2,GO:0005886; GO:0007338; GO:0016020; GO:0031092; GO:0046545; GO:0046546; GO:1905516,development of primary female sexual characteristics [GO:0046545]; development of primary male sexual characteristics [GO:0046546]; positive regulation of fertilization [GO:1905516]; single fertilization [GO:0007338],membrane [GO:0016020]; plasma membrane [GO:0005886]; platelet alpha granule membrane [GO:0031092],,GO:0005886; GO:0022414,plasma membrane; reproductive process</code></pre>
+</section>
+<section id="summary-by-go-category" class="level2">
+<h2 class="anchored" data-anchor-id="summary-by-go-category">Summary by GO Category</h2>
+<p>Let’s examine how many orthologs were identified for each physiological process:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count orthologs by each GO category</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Glycolysis (GO:0006096) ==="</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0006096'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Gluconeogenesis (GO:0006094) ==="</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0006094'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Lipolysis/lipid catabolism (GO:0016042) ==="</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0016042'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Fatty acid beta oxidation (GO:0006635) ==="</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0006635'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Starvation (GO:0042594) ==="</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0042594'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Lipid biosynthesis (GO:0008610) ==="</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0008610'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Protein catabolic process (GO:0030163) ==="</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0030163'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Reproductive Process (GO:0022414) ==="</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0022414'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>=== Glycolysis (GO:0006096) ===
+10
+=== Gluconeogenesis (GO:0006094) ===
+13
+=== Lipolysis/lipid catabolism (GO:0016042) ===
+21
+=== Fatty acid beta oxidation (GO:0006635) ===
+22
+=== Starvation (GO:0042594) ===
+12
+=== Lipid biosynthesis (GO:0008610) ===
+7
+=== Protein catabolic process (GO:0030163) ===
+235
+=== Reproductive Process (GO:0022414) ===
+496</code></pre>
+</section>
+<section id="results-summary" class="level2">
+<h2 class="anchored" data-anchor-id="results-summary">Results Summary</h2>
+<p>From the 18,326 annotated ortholog groups, we selected <strong>787 orthologs</strong> that are involved in key physiological processes relevant to coral metabolism and reproduction:</p>
+<section id="metabolic-processes" class="level3">
+<h3 class="anchored" data-anchor-id="metabolic-processes">Metabolic Processes</h3>
+<ul>
+<li><strong>Glycolysis</strong>: 10 orthologs - Energy production through glucose breakdown</li>
+<li><strong>Gluconeogenesis</strong>: 13 orthologs - Glucose synthesis from non-carbohydrate sources</li>
+<li><strong>Lipolysis/Lipid catabolism</strong>: 21 orthologs - Breakdown of lipids for energy</li>
+<li><strong>Fatty acid beta oxidation</strong>: 22 orthologs - Oxidation of fatty acids in mitochondria</li>
+<li><strong>Lipid biosynthesis</strong>: 7 orthologs - Synthesis of new lipids</li>
+<li><strong>Starvation response</strong>: 12 orthologs - Cellular responses to nutrient deprivation</li>
+</ul>
+</section>
+<section id="protein-turnover" class="level3">
+<h3 class="anchored" data-anchor-id="protein-turnover">Protein Turnover</h3>
+<ul>
+<li><strong>Protein catabolic process</strong>: 235 orthologs - Protein degradation and recycling</li>
+</ul>
+</section>
+<section id="reproduction" class="level3">
+<h3 class="anchored" data-anchor-id="reproduction">Reproduction</h3>
+<ul>
+<li><strong>Reproductive processes</strong>: 496 orthologs - Genes involved in reproductive development and function</li>
+</ul>
+<p>These selected orthologs represent conserved genes across all three coral species that play crucial roles in: 1. <strong>Energy metabolism</strong> - particularly relevant for understanding coral responses to bleaching and thermal stress</p>
+<ol start="2" type="1">
+<li><p><strong>Lipid metabolism</strong> - important for energy storage and membrane maintenance</p></li>
+<li><p><strong>Reproduction</strong> - critical for understanding coral spawning and life cycle processes</p></li>
+<li><p><strong>Protein homeostasis</strong> - essential for cellular function and stress responses</p></li>
+</ol>
+<p>This filtered set of orthologs provides a focused gene list for downstream expression analysis, particularly for studies examining coral physiological responses to environmental stressors.</p>
+
+
+<!-- -->
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/sr320\.github\.io\/tumbling-oysters");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Ortholog Selection for Physiological Processes"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Selecting orthologs based on metabolic and reproductive GO terms"</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [e5, coral]</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation: </span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 10-04-2025</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MOSAiC_orthologs__Tumbling_Oysters_2025-08-31_08-16-09.png # finding a good image</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">    url: </span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: FALSE</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co">#runtime: shiny</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="fu"># 13-ortho-select</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>TLDR: <span class="ot">&lt;https://github.com/urol-e5/timeseries_molecular/blob/main/M-multi-species/output/13-ortho-select/selected_orthologs.csv&gt;</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview of Annotated Orthologs</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>First, let's examine the annotated ortholog data from the previous analysis:</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/11-orthology-analysis/ortholog_groups.csv</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="in">group_id,apul,peve,ptua,type,avg_identity</span></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00001,FUN_000185-T1,Peve_00037402,Pocillopora_meandrina_HIv1___RNAseq.g28886.t1,three_way,71.059</span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00002,FUN_000189-T1,Peve_00038462,Pocillopora_meandrina_HIv1___RNAseq.g28888.t3,three_way,68.72583333333334</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00003,FUN_000190-T1,Peve_00038463,Pocillopora_meandrina_HIv1___RNAseq.g28889.t1,three_way,55.1975</span></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00004,FUN_000191-T1,Peve_00038464,Pocillopora_meandrina_HIv1___RNAseq.g28890.t1,three_way,72.047</span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00005,FUN_000192-T1,Peve_00038466,Pocillopora_meandrina_HIv1___RNAseq.g28893.t1,three_way,81.15866666666666</span></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00006,FUN_000193-T1,Peve_00038467,Pocillopora_meandrina_HIv1___RNAseq.g28894.t1,three_way,70.21933333333334</span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00007,FUN_000194-T1,Peve_00038470,Pocillopora_meandrina_HIv1___RNAseq.g28898.t1,three_way,77.11833333333334</span></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00008,FUN_000195-T1,Peve_00038471,Pocillopora_meandrina_HIv1___RNAseq.g28899.t1,three_way,68.38</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00009,FUN_000197-T1,Peve_00027182,Pocillopora_meandrina_HIv1___RNAseq.g28901.t1,three_way,56.498333333333335</span></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/11-orthology-analysis/ortholog_groups.csv</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="in">18327 ../output/11-orthology-analysis/ortholog_groups.csv</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="fu">## Annotated Orthologs</span></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a><span class="in">group_id,apul,peve,ptua,type,avg_identity,query,accession,id,reviewed,protein_name,organism,pident,length,evalue,bitscore,title,go_ids,go_bp,go_cc,go_mf,goslim_ids,goslim_names</span></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00001,FUN_000185-T1,Peve_00037402,Pocillopora_meandrina_HIv1___RNAseq.g28886.t1,three_way,71.059,FUN_000185-T1,Q32LQ0,AMPE_BOVIN,,Glutamyl aminopeptidase (EAP) (EC 3.4.11.7) (Aminopeptidase A) (AP-A) (CD antigen CD249),Bos taurus (Bovine),41.5,881.0,1.4e-197,691.4,sp|Q32LQ0|AMPE_BOVIN Glutamyl aminopeptidase OS=Bos taurus OX=9913 GN=ENPEP PE=2 SV=1,GO:0003081; GO:0004177; GO:0004230; GO:0005615; GO:0005737; GO:0005886; GO:0006508; GO:0008217; GO:0008270; GO:0008283; GO:0016477; GO:0042277; GO:0043171; GO:0070006,cell migration [GO:0016477]; cell population proliferation [GO:0008283]; peptide catabolic process [GO:0043171]; proteolysis [GO:0006508]; regulation of blood pressure [GO:0008217]; regulation of systemic arterial blood pressure by renin-angiotensin [GO:0003081],cytoplasm [GO:0005737]; extracellular space [GO:0005615]; plasma membrane [GO:0005886],aminopeptidase activity [GO:0004177]; glutamyl aminopeptidase activity [GO:0004230]; metalloaminopeptidase activity [GO:0070006]; peptide binding [GO:0042277]; zinc ion binding [GO:0008270],GO:0003824; GO:0005615; GO:0005886; GO:0016787; GO:0048870; GO:0050886; GO:0140096,"catalytic activity; extracellular space; plasma membrane; hydrolase activity; cell motility; endocrine process; catalytic activity, acting on a protein"</span></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00002,FUN_000189-T1,Peve_00038462,Pocillopora_meandrina_HIv1___RNAseq.g28888.t3,three_way,68.72583333333334,FUN_000189-T1,Q9DCT6,,,,,38.0,171.0,4.6e-18,92.8,sp|Q9DCT6|BAP18_MOUSE BPTF-associated chromatin complex component 1 OS=Mus musculus OX=10090 GN=Bacc1 PE=1 SV=1,,,,,,</span></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00003,FUN_000190-T1,Peve_00038463,Pocillopora_meandrina_HIv1___RNAseq.g28889.t1,three_way,55.1975,,,,,,,,,,,,,,,,,</span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00004,FUN_000191-T1,Peve_00038464,Pocillopora_meandrina_HIv1___RNAseq.g28890.t1,three_way,72.047,FUN_000191-T1,Q95108,,,,,44.1,136.0,3.3e-29,129.4,"sp|Q95108|THIOM_BOVIN Thioredoxin, mitochondrial OS=Bos taurus OX=9913 GN=TXN2 PE=1 SV=2",,,,,,</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00005,FUN_000192-T1,Peve_00038466,Pocillopora_meandrina_HIv1___RNAseq.g28893.t1,three_way,81.15866666666666,FUN_000192-T1,Q1LWX3,,,,,54.3,188.0,3.5e-53,209.5,sp|Q1LWX3|NTAQ1_DANRE Protein N-terminal glutamine amidohydrolase OS=Danio rerio OX=7955 GN=ntaq1 PE=2 SV=1,,,,,,</span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00006,FUN_000193-T1,Peve_00038467,Pocillopora_meandrina_HIv1___RNAseq.g28894.t1,three_way,70.21933333333334,FUN_000193-T1,Q5I0K7,,,,,53.2,158.0,3.4e-41,169.5,sp|Q5I0K7|ALG13_RAT UDP-N-acetylglucosamine transferase subunit ALG13 OS=Rattus norvegicus OX=10116 GN=Alg13 PE=1 SV=1,,,,,,</span></span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00007,FUN_000194-T1,Peve_00038470,Pocillopora_meandrina_HIv1___RNAseq.g28898.t1,three_way,77.11833333333334,FUN_000194-T1,P70182,,,,,60.2,447.0,3.4e-147,523.5,sp|P70182|PI51A_MOUSE Phosphatidylinositol 4-phosphate 5-kinase type-1 alpha OS=Mus musculus OX=10090 GN=Pip5k1a PE=1 SV=2,,,,,,</span></span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00008,FUN_000195-T1,Peve_00038471,Pocillopora_meandrina_HIv1___RNAseq.g28899.t1,three_way,68.38,FUN_000195-T1,B8D9S0,,,,,38.5,148.0,9e-19,95.1,sp|B8D9S0|FMT_BUCA5 Methionyl-tRNA formyltransferase OS=Buchnera aphidicola subsp. Acyrthosiphon pisum (strain 5A) OX=563178 GN=fmt PE=3 SV=1,,,,,,</span></span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00009,FUN_000197-T1,Peve_00027182,Pocillopora_meandrina_HIv1___RNAseq.g28901.t1,three_way,56.498333333333335,FUN_000197-T1,Q8TCT7,,,,,44.7,488.0,1.6e-89,331.6,sp|Q8TCT7|SPP2B_HUMAN Signal peptide peptidase-like 2B OS=Homo sapiens OX=9606 GN=SPPL2B PE=1 SV=2,,,,,,</span></span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a><span class="in">18373 ../output/12-ortho-annot/ortholog_groups_annotated.csv</span></span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a><span class="fu"># Physiology Based Selection</span></span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Filter for Specific GO Terms</span></span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>We'll filter the annotated orthologs for genes involved in metabolic and stress-related processes that are relevant to coral physiology:</span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter orthologs for metabolic and stress-related processes</span></span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Filtering for:"</span></span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Glycolysis (GO:0006096)"</span></span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Gluconeogenesis (GO:0006094)"</span></span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Lipolysis/lipid catabolism (GO:0016042)"</span></span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Fatty acid beta oxidation (GO:0006635)"</span></span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Starvation (GO:0042594)"</span></span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Lipid biosynthesis (GO:0008610)"</span></span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Protein catabolic process (GO:0030163)"</span></span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Reproductive Process (GO:0022414)"</span></span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">""</span></span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Create output directory if it doesn't exist</span></span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../output/13-ortho-select</span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract header</span></span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-1</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv <span class="op">&gt;</span> ../output/13-ortho-select/selected_orthologs.csv</span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for the specified GO terms and reproduction-related processes</span></span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-E</span> <span class="st">'GO:0006096|GO:0006094|GO:0016042|GO:0006635|GO:0042594|GO:0008610|GO:0030163|GO:0022414'</span> <span class="dt">\</span></span>
+<span id="cb15-114"><a href="#cb15-114" aria-hidden="true" tabindex="-1"></a>  ../output/12-ortho-annot/ortholog_groups_annotated.csv <span class="dt">\</span></span>
+<span id="cb15-115"><a href="#cb15-115" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;</span> ../output/13-ortho-select/selected_orthologs.csv</span>
+<span id="cb15-116"><a href="#cb15-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-117"><a href="#cb15-117" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Total orthologs selected:"</span></span>
+<span id="cb15-118"><a href="#cb15-118" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/13-ortho-select/selected_orthologs.csv</span>
+<span id="cb15-119"><a href="#cb15-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-120"><a href="#cb15-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-121"><a href="#cb15-121" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb15-122"><a href="#cb15-122" aria-hidden="true" tabindex="-1"></a><span class="in">Filtering for:</span></span>
+<span id="cb15-123"><a href="#cb15-123" aria-hidden="true" tabindex="-1"></a><span class="in">- Glycolysis (GO:0006096)</span></span>
+<span id="cb15-124"><a href="#cb15-124" aria-hidden="true" tabindex="-1"></a><span class="in">- Gluconeogenesis (GO:0006094)</span></span>
+<span id="cb15-125"><a href="#cb15-125" aria-hidden="true" tabindex="-1"></a><span class="in">- Lipolysis/lipid catabolism (GO:0016042)</span></span>
+<span id="cb15-126"><a href="#cb15-126" aria-hidden="true" tabindex="-1"></a><span class="in">- Fatty acid beta oxidation (GO:0006635)</span></span>
+<span id="cb15-127"><a href="#cb15-127" aria-hidden="true" tabindex="-1"></a><span class="in">- Starvation (GO:0042594)</span></span>
+<span id="cb15-128"><a href="#cb15-128" aria-hidden="true" tabindex="-1"></a><span class="in">- Lipid biosynthesis (GO:0008610)</span></span>
+<span id="cb15-129"><a href="#cb15-129" aria-hidden="true" tabindex="-1"></a><span class="in">- Protein catabolic process (GO:0030163)</span></span>
+<span id="cb15-130"><a href="#cb15-130" aria-hidden="true" tabindex="-1"></a><span class="in">- Reproductive Process (GO:0022414)</span></span>
+<span id="cb15-131"><a href="#cb15-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-132"><a href="#cb15-132" aria-hidden="true" tabindex="-1"></a><span class="in">Total orthologs selected:</span></span>
+<span id="cb15-133"><a href="#cb15-133" aria-hidden="true" tabindex="-1"></a><span class="in">787 ../output/13-ortho-select/selected_orthologs.csv</span></span>
+<span id="cb15-134"><a href="#cb15-134" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-135"><a href="#cb15-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-136"><a href="#cb15-136" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb15-137"><a href="#cb15-137" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first few selected orthologs</span></span>
+<span id="cb15-138"><a href="#cb15-138" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/13-ortho-select/selected_orthologs.csv</span>
+<span id="cb15-139"><a href="#cb15-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-140"><a href="#cb15-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-141"><a href="#cb15-141" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb15-142"><a href="#cb15-142" aria-hidden="true" tabindex="-1"></a><span class="in">group_id,apul,peve,ptua,type,avg_identity,query,accession,id,reviewed,protein_name,organism,pident,length,evalue,bitscore,title,go_ids,go_bp,go_cc,go_mf,goslim_ids,goslim_names</span></span>
+<span id="cb15-143"><a href="#cb15-143" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00044,FUN_000272-T1,Peve_00027798,Pocillopora_meandrina_HIv1___RNAseq.g28985.t1,three_way,70.59733333333334,FUN_000272-T1,O75031,HSF2B_HUMAN,,Heat shock factor 2-binding protein,Homo sapiens (Human),43.2,190.0,5.9e-32,139.0,sp|O75031|HSF2B_HUMAN Heat shock factor 2-binding protein OS=Homo sapiens OX=9606 GN=HSF2BP PE=1 SV=1,GO:0005654; GO:0005694; GO:0005829; GO:0006366; GO:0007141; GO:0007144; GO:0007283; GO:1990918,double-strand break repair involved in meiotic recombination [GO:1990918]; female meiosis I [GO:0007144]; male meiosis I [GO:0007141]; spermatogenesis [GO:0007283]; transcription by RNA polymerase II [GO:0006366],chromosome [GO:0005694]; cytosol [GO:0005829]; nucleoplasm [GO:0005654],,GO:0005654; GO:0005694; GO:0005829; GO:0006281; GO:0006351; GO:0022414; GO:0043226; GO:0140013,nucleoplasm; chromosome; cytosol; DNA repair; DNA-templated transcription; reproductive process; organelle; meiotic nuclear division</span></span>
+<span id="cb15-144"><a href="#cb15-144" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00086,FUN_000437-T1,Peve_00011193,Pocillopora_meandrina_HIv1___RNAseq.g2323.t1,three_way,77.881,FUN_000437-T1,F1MNN4,FBXW7_BOVIN,,F-box/WD repeat-containing protein 7 (F-box and WD-40 domain-containing protein 7),Bos taurus (Bovine),36.4,195.0,1.9999999999999998e-26,122.5,sp|F1MNN4|FBXW7_BOVIN F-box/WD repeat-containing protein 7 OS=Bos taurus OX=9913 GN=FBXW7 PE=1 SV=3,GO:0005634; GO:0005654; GO:0005694; GO:0005737; GO:0006281; GO:0006974; GO:0007062; GO:0010629; GO:0010992; GO:0019005; GO:0030332; GO:0031146; GO:0031398; GO:0031625; GO:0042752; GO:0042802; GO:0043130; GO:0043161; GO:0050816; GO:0050821; GO:0070374; GO:0070534; GO:0097027; GO:1901524; GO:1901800; GO:1903378; GO:1903955; GO:1990452; GO:1990756; GO:2000060; GO:2001205,DNA damage response [GO:0006974]; DNA repair [GO:0006281]; negative regulation of gene expression [GO:0010629]; negative regulation of osteoclast development [GO:2001205]; positive regulation of ERK1 and ERK2 cascade [GO:0070374]; positive regulation of oxidative stress-induced neuron intrinsic apoptotic signaling pathway [GO:1903378]; positive regulation of proteasomal protein catabolic process [GO:1901800]; positive regulation of protein targeting to mitochondrion [GO:1903955]; positive regulation of protein ubiquitination [GO:0031398]; positive regulation of ubiquitin-dependent protein catabolic process [GO:2000060]; proteasome-mediated ubiquitin-dependent protein catabolic process [GO:0043161]; protein K63-linked ubiquitination [GO:0070534]; protein stabilization [GO:0050821]; regulation of circadian rhythm [GO:0042752]; regulation of mitophagy [GO:1901524]; SCF-dependent proteasomal ubiquitin-dependent protein catabolic process [GO:0031146]; sister chromatid cohesion [GO:0007062]; ubiquitin recycling [GO:0010992],chromosome [GO:0005694]; cytoplasm [GO:0005737]; nucleoplasm [GO:0005654]; nucleus [GO:0005634]; Parkin-FBXW7-Cul1 ubiquitin ligase complex [GO:1990452]; SCF ubiquitin ligase complex [GO:0019005],cyclin binding [GO:0030332]; identical protein binding [GO:0042802]; phosphothreonine residue binding [GO:0050816]; ubiquitin binding [GO:0043130]; ubiquitin protein ligase binding [GO:0031625]; ubiquitin-like ligase-substrate adaptor activity [GO:1990756]; ubiquitin-protein transferase activator activity [GO:0097027],GO:0005634; GO:0005654; GO:0005694; GO:0006281; GO:0030163; GO:0043226; GO:0060090; GO:0098772,nucleus; nucleoplasm; chromosome; DNA repair; protein catabolic process; organelle; molecular adaptor activity; molecular function regulator activity</span></span>
+<span id="cb15-145"><a href="#cb15-145" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00107,FUN_000499-T1,Peve_00024155,Pocillopora_meandrina_HIv1___RNAseq.g2414.t1,three_way,82.06683333333332,FUN_000499-T1,Q14432,PDE3A_HUMAN,,"cGMP-inhibited 3',5'-cyclic phosphodiesterase 3A (EC 3.1.4.17) (Cyclic GMP-inhibited phosphodiesterase A) (CGI-PDE A) (cGMP-inhibited cAMP phosphodiesterase) (cGI-PDE)",Homo sapiens (Human),37.6,1034.0,2.2e-143,511.5,"sp|Q14432|PDE3A_HUMAN cGMP-inhibited 3',5'-cyclic phosphodiesterase 3A OS=Homo sapiens OX=9606 GN=PDE3A PE=1 SV=3",GO:0001556; GO:0004114; GO:0004115; GO:0004119; GO:0005829; GO:0006629; GO:0007186; GO:0009410; GO:0016020; GO:0019933; GO:0019934; GO:0030284; GO:0040020; GO:0043066; GO:0043116; GO:0043117; GO:0046872; GO:0047555; GO:0060282; GO:0060700; GO:0071321; GO:0071560; GO:0097190; GO:0099130; GO:0106072; GO:0141162,apoptotic signaling pathway [GO:0097190]; cAMP-mediated signaling [GO:0019933]; cellular response to cGMP [GO:0071321]; cellular response to transforming growth factor beta stimulus [GO:0071560]; cGMP-mediated signaling [GO:0019934]; G protein-coupled receptor signaling pathway [GO:0007186]; lipid metabolic process [GO:0006629]; negative regulation of adenylate cyclase-activating G protein-coupled receptor signaling pathway [GO:0106072]; negative regulation of apoptotic process [GO:0043066]; negative regulation of cAMP/PKA signal transduction [GO:0141162]; negative regulation of vascular permeability [GO:0043116]; oocyte maturation [GO:0001556]; positive regulation of oocyte development [GO:0060282]; positive regulation of vascular permeability [GO:0043117]; regulation of meiotic nuclear division [GO:0040020]; regulation of ribonuclease activity [GO:0060700]; response to xenobiotic stimulus [GO:0009410],cytosol [GO:0005829]; membrane [GO:0016020],"3',5'-cGMP-inhibited cyclic-nucleotide phosphodiesterase activity [GO:0004119]; 3',5'-cyclic-AMP phosphodiesterase activity [GO:0004115]; 3',5'-cyclic-GMP phosphodiesterase activity [GO:0047555]; 3',5'-cyclic-nucleotide phosphodiesterase activity [GO:0004114]; estrogen binding [GO:0099130]; metal ion binding [GO:0046872]; nuclear estrogen receptor activity [GO:0030284]",GO:0003013; GO:0003824; GO:0005829; GO:0006629; GO:0016787; GO:0022414; GO:0060089; GO:0140110,circulatory system process; catalytic activity; cytosol; lipid metabolic process; hydrolase activity; reproductive process; molecular transducer activity; transcription regulator activity</span></span>
+<span id="cb15-146"><a href="#cb15-146" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00142,FUN_000582-T1,Peve_00034702,Pocillopora_meandrina_HIv1___TS.g6501.t1,three_way,59.576166666666666,FUN_000582-T1,D2X8K2,PA2_CONGI,,Phospholipase A2 A2-actitoxin-Cgg2a (A2-AITX-Cgg2a) (EC 3.1.1.4) (CgPLA2) (Phosphatidylcholine 2-acylhydrolase),Condylactis gigantea (Giant Caribbean anemone) (Condylactis passiflora),43.7,119.0,3.5e-25,116.3,sp|D2X8K2|PA2_CONGI Phospholipase A2 A2-actitoxin-Cgg2a OS=Condylactis gigantea OX=47073 PE=1 SV=1,GO:0005509; GO:0005543; GO:0005576; GO:0006644; GO:0016042; GO:0042151; GO:0044398; GO:0044470; GO:0044522; GO:0047498; GO:0050482; GO:0090729,arachidonate secretion [GO:0050482]; lipid catabolic process [GO:0016042]; phospholipid metabolic process [GO:0006644]; venom-mediated edema in another organism [GO:0044398]; venom-mediated myocyte killing in another organism [GO:0044522]; venom-mediated suppression of blood coagulation [GO:0044470],extracellular region [GO:0005576]; nematocyst [GO:0042151],calcium ion binding [GO:0005509]; calcium-dependent phospholipase A2 activity [GO:0047498]; phospholipid binding [GO:0005543]; toxin activity [GO:0090729],GO:0003824; GO:0005576; GO:0006629; GO:0008289; GO:0016787; GO:0043226; GO:0090729,catalytic activity; extracellular region; lipid metabolic process; lipid binding; hydrolase activity; organelle; toxin activity</span></span>
+<span id="cb15-147"><a href="#cb15-147" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00192,FUN_000898-T1,Peve_00009741,Pocillopora_meandrina_HIv1___RNAseq.g29449.t1,three_way,80.12233333333333,FUN_000898-T1,O43903,GAS2_HUMAN,,Growth arrest-specific protein 2 (GAS-2),Homo sapiens (Human),42.6,256.0,1.3e-48,194.9,sp|O43903|GAS2_HUMAN Growth arrest-specific protein 2 OS=Homo sapiens OX=9606 GN=GAS2 PE=1 SV=1,GO:0001544; GO:0001547; GO:0001725; GO:0005829; GO:0005884; GO:0006915; GO:0008017; GO:0008360; GO:0008593; GO:0016020; GO:0030728; GO:0051015; GO:0051726; GO:0051764; GO:0071711,actin crosslink formation [GO:0051764]; antral ovarian follicle growth [GO:0001547]; apoptotic process [GO:0006915]; basement membrane organization [GO:0071711]; initiation of primordial ovarian follicle growth [GO:0001544]; ovulation [GO:0030728]; regulation of cell cycle [GO:0051726]; regulation of cell shape [GO:0008360]; regulation of Notch signaling pathway [GO:0008593],actin filament [GO:0005884]; cytosol [GO:0005829]; membrane [GO:0016020]; stress fiber [GO:0001725],actin filament binding [GO:0051015]; microtubule binding [GO:0008017],GO:0005829; GO:0008092; GO:0012501; GO:0022414; GO:0030198,cytosol; cytoskeletal protein binding; programmed cell death; reproductive process; extracellular matrix organization</span></span>
+<span id="cb15-148"><a href="#cb15-148" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00195,FUN_000905-T1,Peve_00009733,Pocillopora_meandrina_HIv1___RNAseq.g29456.t1,three_way,66.77466666666666,FUN_000905-T1,P70627,FOLH1_RAT,,Glutamate carboxypeptidase 2 (EC 3.4.17.21) (Folate hydrolase 1) (Folylpoly-gamma-glutamate carboxypeptidase) (FGCP) (Glutamate carboxypeptidase II) (GCPII) (Membrane glutamate carboxypeptidase) (mGCP) (N-acetylated-alpha-linked acidic dipeptidase I) (NAALADase I) (Prostate-specific membrane antigen homolog) (Pteroylpoly-gamma-glutamate carboxypeptidase),Rattus norvegicus (Rat),37.3,753.0,5.9e-130,466.5,sp|P70627|FOLH1_RAT Glutamate carboxypeptidase 2 OS=Rattus norvegicus OX=10116 GN=Folh1 PE=1 SV=1,GO:0004180; GO:0004181; GO:0005886; GO:0006508; GO:0006760; GO:0008233; GO:0009986; GO:0016020; GO:0016805; GO:0030163; GO:0043065; GO:0046872; GO:1904492; GO:1904493,folic acid-containing compound metabolic process [GO:0006760]; positive regulation of apoptotic process [GO:0043065]; protein catabolic process [GO:0030163]; proteolysis [GO:0006508],cell surface [GO:0009986]; membrane [GO:0016020]; plasma membrane [GO:0005886],Ac-Asp-Glu binding [GO:1904492]; carboxypeptidase activity [GO:0004180]; dipeptidase activity [GO:0016805]; metal ion binding [GO:0046872]; metallocarboxypeptidase activity [GO:0004181]; peptidase activity [GO:0008233]; tetrahydrofolyl-poly(glutamate) polymer binding [GO:1904493],GO:0003824; GO:0005886; GO:0006575; GO:0016787; GO:0030163; GO:0140096,"catalytic activity; plasma membrane; modified amino acid metabolic process; hydrolase activity; protein catabolic process; catalytic activity, acting on a protein"</span></span>
+<span id="cb15-149"><a href="#cb15-149" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00207,FUN_000926-T1,Peve_00009718,Pocillopora_meandrina_HIv1___RNAseq.g29467.t1,three_way,63.42333333333334,FUN_000926-T1,Q9R0N8,SYT6_MOUSE,,Synaptotagmin-6 (Synaptotagmin VI) (SytVI),Mus musculus (Mouse),29.5,319.0,9.1e-33,142.9,sp|Q9R0N8|SYT6_MOUSE Synaptotagmin-6 OS=Mus musculus OX=10090 GN=Syt6 PE=1 SV=2,GO:0001786; GO:0005544; GO:0005829; GO:0005886; GO:0007340; GO:0009898; GO:0016020; GO:0030672; GO:0042802; GO:0042803; GO:0046872; GO:0046982; GO:0048306; GO:0097038,acrosome reaction [GO:0007340],cytoplasmic side of plasma membrane [GO:0009898]; cytosol [GO:0005829]; membrane [GO:0016020]; perinuclear endoplasmic reticulum [GO:0097038]; plasma membrane [GO:0005886]; synaptic vesicle membrane [GO:0030672],calcium-dependent phospholipid binding [GO:0005544]; calcium-dependent protein binding [GO:0048306]; identical protein binding [GO:0042802]; metal ion binding [GO:0046872]; phosphatidylserine binding [GO:0001786]; protein heterodimerization activity [GO:0046982]; protein homodimerization activity [GO:0042803],GO:0005829; GO:0005886; GO:0008289; GO:0022414,cytosol; plasma membrane; lipid binding; reproductive process</span></span>
+<span id="cb15-150"><a href="#cb15-150" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00237,FUN_000992-T1,Peve_00004455,Pocillopora_meandrina_HIv1___RNAseq.g29194.t1,three_way,92.068,FUN_000992-T1,P82471,GNAQ_RAT,,Guanine nucleotide-binding protein G(q) subunit alpha (EC 3.6.5.-) (Guanine nucleotide-binding protein alpha-q),Rattus norvegicus (Rat),82.2,353.0,8.9e-169,594.3,sp|P82471|GNAQ_RAT Guanine nucleotide-binding protein G(q) subunit alpha OS=Rattus norvegicus OX=10116 GN=Gnaq PE=2 SV=2,GO:0001501; GO:0001508; GO:0001664; GO:0003924; GO:0003925; GO:0005096; GO:0005525; GO:0005737; GO:0005794; GO:0005834; GO:0005886; GO:0005901; GO:0007186; GO:0007189; GO:0007200; GO:0007206; GO:0007207; GO:0007208; GO:0007215; GO:0007218; GO:0007507; GO:0008217; GO:0009791; GO:0010543; GO:0016020; GO:0016322; GO:0021884; GO:0030234; GO:0030425; GO:0031683; GO:0031965; GO:0032024; GO:0034695; GO:0042711; GO:0042733; GO:0043066; GO:0043267; GO:0044297; GO:0044877; GO:0045634; GO:0046872; GO:0047391; GO:0048066; GO:0050821; GO:0060158; GO:0060828; GO:0086100; GO:0098793; GO:0099524; GO:1904888; GO:1990806,action potential [GO:0001508]; adenylate cyclase-activating G protein-coupled receptor signaling pathway [GO:0007189]; cranial skeletal system development [GO:1904888]; developmental pigmentation [GO:0048066]; embryonic digit morphogenesis [GO:0042733]; endothelin receptor signaling pathway [GO:0086100]; forebrain neuron development [GO:0021884]; G protein-coupled receptor signaling pathway [GO:0007186]; glutamate receptor signaling pathway [GO:0007215]; heart development [GO:0007507]; ligand-gated ion channel signaling pathway [GO:1990806]; maternal behavior [GO:0042711]; negative regulation of apoptotic process [GO:0043066]; negative regulation of potassium ion transport [GO:0043267]; neuron remodeling [GO:0016322]; neuropeptide signaling pathway [GO:0007218]; phospholipase C-activating dopamine receptor signaling pathway [GO:0060158]; phospholipase C-activating G protein-coupled acetylcholine receptor signaling pathway [GO:0007207]; phospholipase C-activating G protein-coupled glutamate receptor signaling pathway [GO:0007206]; phospholipase C-activating G protein-coupled receptor signaling pathway [GO:0007200]; phospholipase C-activating serotonin receptor signaling pathway [GO:0007208]; positive regulation of insulin secretion [GO:0032024]; post-embryonic development [GO:0009791]; protein stabilization [GO:0050821]; regulation of blood pressure [GO:0008217]; regulation of canonical Wnt signaling pathway [GO:0060828]; regulation of melanocyte differentiation [GO:0045634]; regulation of platelet activation [GO:0010543]; response to prostaglandin E [GO:0034695]; skeletal system development [GO:0001501],caveola [GO:0005901]; cell body [GO:0044297]; cytoplasm [GO:0005737]; dendrite [GO:0030425]; Golgi apparatus [GO:0005794]; heterotrimeric G-protein complex [GO:0005834]; membrane [GO:0016020]; nuclear membrane [GO:0031965]; plasma membrane [GO:0005886]; postsynaptic cytosol [GO:0099524]; presynapse [GO:0098793],alkylglycerophosphoethanolamine phosphodiesterase activity [GO:0047391]; enzyme regulator activity [GO:0030234]; G protein activity [GO:0003925]; G protein-coupled receptor binding [GO:0001664]; G-protein beta/gamma-subunit complex binding [GO:0031683]; GTP binding [GO:0005525]; GTPase activator activity [GO:0005096]; GTPase activity [GO:0003924]; metal ion binding [GO:0046872]; protein-containing complex binding [GO:0044877],GO:0003824; GO:0003924; GO:0005794; GO:0005829; GO:0005886; GO:0016787; GO:0022414; GO:0043226; GO:0048856; GO:0098772,catalytic activity; GTPase activity; Golgi apparatus; cytosol; plasma membrane; hydrolase activity; reproductive process; organelle; anatomical structure development; molecular function regulator activity</span></span>
+<span id="cb15-151"><a href="#cb15-151" aria-hidden="true" tabindex="-1"></a><span class="in">OG_00248,FUN_001011-T1,Peve_00041060,Pocillopora_meandrina_HIv1___RNAseq.g29164.t1,three_way,70.763,FUN_001011-T1,Q6ZUX7,LHPL2_HUMAN,,LHFPL tetraspan subfamily member 2 protein (Lipoma HMGIC fusion partner-like 2 protein),Homo sapiens (Human),43.1,232.0,6.4e-43,175.6,sp|Q6ZUX7|LHPL2_HUMAN LHFPL tetraspan subfamily member 2 protein OS=Homo sapiens OX=9606 GN=LHFPL2 PE=1 SV=2,GO:0005886; GO:0007338; GO:0016020; GO:0031092; GO:0046545; GO:0046546; GO:1905516,development of primary female sexual characteristics [GO:0046545]; development of primary male sexual characteristics [GO:0046546]; positive regulation of fertilization [GO:1905516]; single fertilization [GO:0007338],membrane [GO:0016020]; plasma membrane [GO:0005886]; platelet alpha granule membrane [GO:0031092],,GO:0005886; GO:0022414,plasma membrane; reproductive process</span></span>
+<span id="cb15-152"><a href="#cb15-152" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-153"><a href="#cb15-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-154"><a href="#cb15-154" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary by GO Category</span></span>
+<span id="cb15-155"><a href="#cb15-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-156"><a href="#cb15-156" aria-hidden="true" tabindex="-1"></a>Let's examine how many orthologs were identified for each physiological process:</span>
+<span id="cb15-157"><a href="#cb15-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-158"><a href="#cb15-158" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb15-159"><a href="#cb15-159" aria-hidden="true" tabindex="-1"></a><span class="co"># Count orthologs by each GO category</span></span>
+<span id="cb15-160"><a href="#cb15-160" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Glycolysis (GO:0006096) ==="</span></span>
+<span id="cb15-161"><a href="#cb15-161" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0006096'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb15-162"><a href="#cb15-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-163"><a href="#cb15-163" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Gluconeogenesis (GO:0006094) ==="</span></span>
+<span id="cb15-164"><a href="#cb15-164" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0006094'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb15-165"><a href="#cb15-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-166"><a href="#cb15-166" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Lipolysis/lipid catabolism (GO:0016042) ==="</span></span>
+<span id="cb15-167"><a href="#cb15-167" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0016042'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb15-168"><a href="#cb15-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-169"><a href="#cb15-169" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Fatty acid beta oxidation (GO:0006635) ==="</span></span>
+<span id="cb15-170"><a href="#cb15-170" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0006635'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb15-171"><a href="#cb15-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-172"><a href="#cb15-172" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Starvation (GO:0042594) ==="</span></span>
+<span id="cb15-173"><a href="#cb15-173" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0042594'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb15-174"><a href="#cb15-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-175"><a href="#cb15-175" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Lipid biosynthesis (GO:0008610) ==="</span></span>
+<span id="cb15-176"><a href="#cb15-176" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0008610'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb15-177"><a href="#cb15-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-178"><a href="#cb15-178" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Protein catabolic process (GO:0030163) ==="</span></span>
+<span id="cb15-179"><a href="#cb15-179" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0030163'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb15-180"><a href="#cb15-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-181"><a href="#cb15-181" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Reproductive Process (GO:0022414) ==="</span></span>
+<span id="cb15-182"><a href="#cb15-182" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0022414'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
+<span id="cb15-183"><a href="#cb15-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-184"><a href="#cb15-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-185"><a href="#cb15-185" aria-hidden="true" tabindex="-1"></a><span class="in">```         </span></span>
+<span id="cb15-186"><a href="#cb15-186" aria-hidden="true" tabindex="-1"></a><span class="in">=== Glycolysis (GO:0006096) ===</span></span>
+<span id="cb15-187"><a href="#cb15-187" aria-hidden="true" tabindex="-1"></a><span class="in">10</span></span>
+<span id="cb15-188"><a href="#cb15-188" aria-hidden="true" tabindex="-1"></a><span class="in">=== Gluconeogenesis (GO:0006094) ===</span></span>
+<span id="cb15-189"><a href="#cb15-189" aria-hidden="true" tabindex="-1"></a><span class="in">13</span></span>
+<span id="cb15-190"><a href="#cb15-190" aria-hidden="true" tabindex="-1"></a><span class="in">=== Lipolysis/lipid catabolism (GO:0016042) ===</span></span>
+<span id="cb15-191"><a href="#cb15-191" aria-hidden="true" tabindex="-1"></a><span class="in">21</span></span>
+<span id="cb15-192"><a href="#cb15-192" aria-hidden="true" tabindex="-1"></a><span class="in">=== Fatty acid beta oxidation (GO:0006635) ===</span></span>
+<span id="cb15-193"><a href="#cb15-193" aria-hidden="true" tabindex="-1"></a><span class="in">22</span></span>
+<span id="cb15-194"><a href="#cb15-194" aria-hidden="true" tabindex="-1"></a><span class="in">=== Starvation (GO:0042594) ===</span></span>
+<span id="cb15-195"><a href="#cb15-195" aria-hidden="true" tabindex="-1"></a><span class="in">12</span></span>
+<span id="cb15-196"><a href="#cb15-196" aria-hidden="true" tabindex="-1"></a><span class="in">=== Lipid biosynthesis (GO:0008610) ===</span></span>
+<span id="cb15-197"><a href="#cb15-197" aria-hidden="true" tabindex="-1"></a><span class="in">7</span></span>
+<span id="cb15-198"><a href="#cb15-198" aria-hidden="true" tabindex="-1"></a><span class="in">=== Protein catabolic process (GO:0030163) ===</span></span>
+<span id="cb15-199"><a href="#cb15-199" aria-hidden="true" tabindex="-1"></a><span class="in">235</span></span>
+<span id="cb15-200"><a href="#cb15-200" aria-hidden="true" tabindex="-1"></a><span class="in">=== Reproductive Process (GO:0022414) ===</span></span>
+<span id="cb15-201"><a href="#cb15-201" aria-hidden="true" tabindex="-1"></a><span class="in">496</span></span>
+<span id="cb15-202"><a href="#cb15-202" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb15-203"><a href="#cb15-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-204"><a href="#cb15-204" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results Summary</span></span>
+<span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a>From the 18,326 annotated ortholog groups, we selected **787 orthologs** that are involved in key physiological processes relevant to coral metabolism and reproduction:</span>
+<span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a><span class="fu">### Metabolic Processes</span></span>
+<span id="cb15-209"><a href="#cb15-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-210"><a href="#cb15-210" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Glycolysis**: 10 orthologs - Energy production through glucose breakdown</span>
+<span id="cb15-211"><a href="#cb15-211" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gluconeogenesis**: 13 orthologs - Glucose synthesis from non-carbohydrate sources</span>
+<span id="cb15-212"><a href="#cb15-212" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Lipolysis/Lipid catabolism**: 21 orthologs - Breakdown of lipids for energy</span>
+<span id="cb15-213"><a href="#cb15-213" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Fatty acid beta oxidation**: 22 orthologs - Oxidation of fatty acids in mitochondria</span>
+<span id="cb15-214"><a href="#cb15-214" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Lipid biosynthesis**: 7 orthologs - Synthesis of new lipids</span>
+<span id="cb15-215"><a href="#cb15-215" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Starvation response**: 12 orthologs - Cellular responses to nutrient deprivation</span>
+<span id="cb15-216"><a href="#cb15-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-217"><a href="#cb15-217" aria-hidden="true" tabindex="-1"></a><span class="fu">### Protein Turnover</span></span>
+<span id="cb15-218"><a href="#cb15-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-219"><a href="#cb15-219" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Protein catabolic process**: 235 orthologs - Protein degradation and recycling</span>
+<span id="cb15-220"><a href="#cb15-220" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-221"><a href="#cb15-221" aria-hidden="true" tabindex="-1"></a><span class="fu">### Reproduction</span></span>
+<span id="cb15-222"><a href="#cb15-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-223"><a href="#cb15-223" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Reproductive processes**: 496 orthologs - Genes involved in reproductive development and function</span>
+<span id="cb15-224"><a href="#cb15-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-225"><a href="#cb15-225" aria-hidden="true" tabindex="-1"></a>These selected orthologs represent conserved genes across all three coral species that play crucial roles in: </span>
+<span id="cb15-226"><a href="#cb15-226" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>**Energy metabolism** - particularly relevant for understanding coral responses to bleaching and thermal stress </span>
+<span id="cb15-227"><a href="#cb15-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-228"><a href="#cb15-228" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>**Lipid metabolism** - important for energy storage and membrane maintenance </span>
+<span id="cb15-229"><a href="#cb15-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-230"><a href="#cb15-230" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>**Reproduction** - critical for understanding coral spawning and life cycle processes </span>
+<span id="cb15-231"><a href="#cb15-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Protein homeostasis** - essential for cellular function and stress responses</span>
+<span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a>This filtered set of orthologs provides a focused gene list for downstream expression analysis, particularly for studies examining coral physiological responses to environmental stressors.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
