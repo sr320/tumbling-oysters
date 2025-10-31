@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Steven Roberts">
-<meta name="dcterms.date" content="2024-10-05">
-<meta name="description" content="welcoming new pulcra">
+<meta name="dcterms.date" content="2025-10-27">
+<meta name="description" content="QC">
 
-<title>Stats on e5 genomes – Tumbling Oysters</title>
+<title>Lake Trout PacBio Data – Tumbling Oysters</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -152,14 +152,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Stats on e5 genomes</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">Lake Trout PacBio Data</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
         <div class="description">
-          welcoming new pulcra
+          QC
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">e5</div>
+                <div class="quarto-category">lake trout</div>
+                <div class="quarto-category">methylation</div>
               </div>
                   </div>
   </div>
@@ -186,7 +187,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 5, 2024</p>
+        <p class="date">October 27, 2025</p>
       </div>
     </div>
     
@@ -205,155 +206,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This assessment compares the genomic assemblies and annotations of three coral species: <em>Acropora pulchra</em> (Apul), <em>Porites evermanni</em> (Peve), and <em>Pocillopora meandrina</em> (Ptuh). The analysis focuses on genome assembly metrics, gene annotation statistics, and potential biological implications.</p>
+<p>PacBio data came from Wisconsin</p>
+<p>Raw data at <a href="https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/" class="uri">https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/</a></p>
+<p>have 4 lean and 4 siscowets</p>
+<p>they were run in three pools</p>
+<p>Pool 1.</p>
+<p>Lean FA047 bc2041 TATGATCACTGAGTAT.<br>
+Siscowet FA097 bc2071 CGAGTCTAGCGAGTAT.<br>
+Siscowet FA099 bc2072 TATCAGTAGTGAGTAT.</p>
+<p>Pool 2.</p>
+<p>Lean FA094 bc2069 TCTATGACATGAGTAT.<br>
+Lean FA095 bc2070 TACTGCTCACGAGTAT.<br>
+Siscowet FA100 bc2073 ATCACTAGTCGAGTAT.</p>
+<p>Pool 3.</p>
+<p>Lean FA092 - bc2068 ACTACGTGATGAGTAT.<br>
+Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.</p>
 <hr>
-<section id="genome-assembly-quality" class="level3">
-<h3 class="anchored" data-anchor-id="genome-assembly-quality"><strong>1. Genome Assembly Quality</strong></h3>
-<section id="number-of-sequences-and-contiguity" class="level4">
-<h4 class="anchored" data-anchor-id="number-of-sequences-and-contiguity"><strong>Number of Sequences and Contiguity</strong></h4>
-<ul>
-<li><strong>Apul (A. pulchra)</strong>
-<ul>
-<li><strong>Number of Sequences:</strong> 174</li>
-<li><strong>N50:</strong> 17,861,421 bp</li>
-<li><strong>L50:</strong> 10</li>
-<li><strong>Longest Sequence:</strong> 45,111,900 bp</li>
-</ul></li>
-<li><strong>Peve (P. evermanni)</strong>
-<ul>
-<li><strong>Number of Sequences:</strong> 8,186</li>
-<li><strong>N50:</strong> 171,385 bp</li>
-<li><strong>L50:</strong> 935</li>
-<li><strong>Longest Sequence:</strong> 1,802,771 bp</li>
-</ul></li>
-<li><strong>Ptuh (P. meandrina)</strong>
-<ul>
-<li><strong>Number of Sequences:</strong> 212</li>
-<li><strong>N50:</strong> 10,024,633 bp</li>
-<li><strong>L50:</strong> 13</li>
-<li><strong>Longest Sequence:</strong> 21,651,136 bp</li>
-</ul></li>
-</ul>
-<p><strong>Assessment:</strong></p>
-<ul>
-<li><strong>Assembly Contiguity:</strong> Apul exhibits the highest assembly contiguity, indicated by the lowest number of sequences and highest N50 value. Ptuh ranks second, while Peve has a more fragmented assembly with a significantly higher number of sequences and lower N50.</li>
-<li><strong>Sequence Length Distribution:</strong> Apul’s longest sequence is substantially longer than those of Peve and Ptuh, suggesting a more complete assembly.</li>
-</ul>
-</section>
-<section id="genome-size-and-gc-content" class="level4">
-<h4 class="anchored" data-anchor-id="genome-size-and-gc-content"><strong>Genome Size and GC Content</strong></h4>
-<ul>
-<li><strong>Total Genome Length:</strong>
-<ul>
-<li><strong>Peve:</strong> 603,805,388 bp</li>
-<li><strong>Apul:</strong> 518,313,916 bp</li>
-<li><strong>Ptuh:</strong> 376,579,914 bp</li>
-</ul></li>
-<li><strong>GC Content:</strong>
-<ul>
-<li><strong>Apul:</strong> 39.05%</li>
-<li><strong>Ptuh:</strong> 38.03%</li>
-<li><strong>Peve:</strong> 36.38%</li>
-</ul></li>
-</ul>
-<p><strong>Assessment:</strong></p>
-<ul>
-<li><strong>Genome Size Variability:</strong> Peve has the largest genome size but the most fragmented assembly, which may indicate repetitive elements or assembly challenges.</li>
-<li><strong>GC Content Consistency:</strong> All species have similar GC content, ranging from 36.38% to 39.05%, which is typical for coral genomes.</li>
-</ul>
+<p>The first two pools arrived as Bams, and Sam demultiplexed. <a href="https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/" class="uri">https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/</a></p>
+<p>The third pool arrived demultiplexed.</p>
+<p>Sam generated corresponding fastq files</p>
 <hr>
-</section>
-</section>
-<section id="gene-annotation-and-features" class="level3">
-<h3 class="anchored" data-anchor-id="gene-annotation-and-features"><strong>2. Gene Annotation and Features</strong></h3>
-<section id="gene-counts-and-features" class="level4">
-<h4 class="anchored" data-anchor-id="gene-counts-and-features"><strong>Gene Counts and Features</strong></h4>
-<ul>
-<li><strong>Apul:</strong>
-<ul>
-<li><strong>Total Genes:</strong> 36,447</li>
-<li><strong>Unique Features:</strong> 5 (exon, CDS, gene, mRNA, tRNA)</li>
-<li><strong>Total GFF Entries:</strong> 499,892</li>
-</ul></li>
-<li><strong>Peve:</strong>
-<ul>
-<li><strong>Total Genes:</strong> 40,389</li>
-<li><strong>Unique Features:</strong> 3 (CDS, mRNA, UTR)</li>
-<li><strong>Total GFF Entries:</strong> 286,807</li>
-</ul></li>
-<li><strong>Ptuh:</strong>
-<ul>
-<li><strong>Total Genes:</strong> 31,840</li>
-<li><strong>Unique Features:</strong> 3 (exon, CDS, transcript)</li>
-<li><strong>Total GFF Entries:</strong> 448,910</li>
-</ul></li>
-</ul>
-<p><strong>Assessment:</strong></p>
-<ul>
-<li><strong>Gene Count:</strong> Peve has the highest number of predicted genes, followed by Apul and Ptuh.</li>
-<li><strong>Annotation Features:</strong> Apul includes tRNA annotations, which are absent in Peve and Ptuh. This suggests a more comprehensive annotation in Apul.</li>
-<li><strong>Unique Sources:</strong> Different gene prediction tools were used—Apul (funannotate), Peve (Gmove), Ptuh (AUGUSTUS)—which may affect gene count and features.</li>
-</ul>
-</section>
-<section id="gene-length-and-total-bases" class="level4">
-<h4 class="anchored" data-anchor-id="gene-length-and-total-bases"><strong>Gene Length and Total Bases</strong></h4>
-<ul>
-<li><strong>Average Gene Length:</strong>
-<ul>
-<li><strong>Apul:</strong> 5,887.31 bp</li>
-<li><strong>Ptuh:</strong> 1,376.95 bp</li>
-<li><strong>Peve:</strong> 1,337.5 bp</li>
-</ul></li>
-<li><strong>Total Bases in Genes:</strong>
-<ul>
-<li><strong>Apul:</strong> 214,577,849 bp</li>
-<li><strong>Peve:</strong> 54,020,937 bp</li>
-<li><strong>Ptuh:</strong> 43,842,885 bp</li>
-</ul></li>
-</ul>
-<p><strong>Assessment:</strong></p>
-<ul>
-<li><strong>Gene Length:</strong> Apul’s average gene length is significantly longer than that of Peve and Ptuh, potentially indicating differences in gene structure, annotation methods, or biological variation.</li>
-<li><strong>Total Coding Sequence:</strong> Apul has a higher total base count in genes, which correlates with longer genes and may reflect a greater number of exons or longer intronic regions.</li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="biological-implications-and-considerations" class="level3">
-<h3 class="anchored" data-anchor-id="biological-implications-and-considerations"><strong>3. Biological Implications and Considerations</strong></h3>
-<ul>
-<li><strong>Assembly Quality Impact:</strong> The higher contiguity in Apul and Ptuh assemblies may lead to more accurate gene predictions and annotations compared to Peve.</li>
-<li><strong>Gene Prediction Tools:</strong> The use of different annotation tools can result in varying gene counts and features. Funannotate (Apul) provides tRNA annotations, suggesting a more thorough annotation pipeline.</li>
-<li><strong>Gene Length Variation:</strong> The discrepancy in average gene lengths might be due to:
-<ul>
-<li><strong>Biological Differences:</strong> Genuine differences in gene structure among species.</li>
-<li><strong>Annotation Strategies:</strong> Differences in handling of introns, UTRs, or alternative splicing events.</li>
-<li><strong>Prediction Algorithms:</strong> Varying sensitivity and specificity of gene prediction tools.</li>
-</ul></li>
-</ul>
-<hr>
-</section>
-<section id="conclusion" class="level3">
-<h3 class="anchored" data-anchor-id="conclusion"><strong>4. Conclusion</strong></h3>
-<ul>
-<li><strong>Best Assembly:</strong> <em>Acropora pulchra</em> (Apul) exhibits the most contiguous and comprehensive genome assembly and annotation among the three species.</li>
-<li><strong>Gene Annotation Depth:</strong> Apul’s inclusion of tRNA and longer gene lengths suggests a more detailed annotation, which could facilitate better functional genomics studies.</li>
-<li><strong>Areas for Improvement:</strong> Peve’s fragmented assembly and shorter gene lengths indicate potential areas for reassembly and reannotation to improve genomic resources.</li>
-</ul>
-<hr>
-<p><strong>Recommendation:</strong> For comparative genomics and evolutionary studies, researchers should consider the differences in assembly quality and annotation methods. Standardizing gene prediction tools and reannotating genomes where necessary could enhance the reliability of cross-species comparisons.</p>
-<hr>
-<p>data:</p>
-<ul>
-<li><p><a href="https://github.com/urol-e5/deep-dive-expression/blob/main/D-Apul/code/12-Apul-genome-explore.md" class="uri">https://github.com/urol-e5/deep-dive-expression/blob/main/D-Apul/code/12-Apul-genome-explore.md</a></p></li>
-<li><p><a href="https://github.com/urol-e5/deep-dive-expression/blob/main/E-Peve/code/04-Peve-genome-explore.md" class="uri">https://github.com/urol-e5/deep-dive-expression/blob/main/E-Peve/code/04-Peve-genome-explore.md</a></p></li>
-<li><p><a href="https://github.com/urol-e5/deep-dive-expression/blob/main/F-Ptuh/code/04-Ptuh-genome-explore.md" class="uri">https://github.com/urol-e5/deep-dive-expression/blob/main/F-Ptuh/code/04-Ptuh-genome-explore.md</a></p></li>
-</ul>
+<p>In transferring the fastq files to raven, those from Pool 3 seemed fine. Those from other pools ended abruptly.</p>
+<blockquote class="blockquote">
+<p>Your FASTQ is truncated mid-record. We can tell because after the last complete read, it immediately starts a new <span class="citation" data-cites="m84082_250614_101514_s4/76093130/ccs">@m84082_250614_101514_s4/76093130/ccs</span> record but there’s no “+” line or quality block following it.</p>
+</blockquote>
+<p>For those in Pool three just ran</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/opt/anaconda/anaconda3/envs/nanoplot_env/bin/NanoPlot</span> <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>-t 40 <span class="dt">\</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>--fastq ../data/pacbio-reads/fastq/m84082_251001_025627_s2.hifi_reads.bc2096.fastq <span class="dt">\</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>-o ../analyses/08-nanoplot/bc2096</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For those in pools 1 and 2 needed to a little bit of clean up.</p>
+<p>eg</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'BEGIN{RS="@"; ORS=""} NR&gt;1 { if (match($0, /\n\+/)) print "@" $0 }'</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070.fastq <span class="dt">\</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070--fixed.fast</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -968,162 +858,98 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Stats on E5 genomes"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Welcoming new Pulcra genome statistics"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [e5]</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation: </span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 10-05-2024</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> http://gannet.fish.washington.edu/seashell/snaps/2024-10-05_13-39-55.png # finding a good image</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    url: </span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: FALSE</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="in">  echo = TRUE,         # Display code chunks</span></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="in">  eval = FALSE,         # Evaluate code chunks</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="in">  warning = FALSE,     # Hide warnings</span></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="in">  message = FALSE,     # Hide messages</span></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="in">  fig.width = 6,       # Set plot width in inches</span></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="in">  fig.height = 4,      # Set plot height in inches</span></span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="in">  fig.align = "center", # Align plots to the center</span></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="in">  comment = ""         # Prevents appending '##' to beginning of lines in code analyses</span></span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="in">)</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>This assessment compares the genomic assemblies and annotations of three coral species: *Acropora pulchra* (Apul), *Porites evermanni* (Peve), and *Pocillopora meandrina* (Ptuh). The analysis focuses on genome assembly metrics, gene annotation statistics, and potential biological implications.</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">### **1. Genome Assembly Quality**</span></span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Number of Sequences and Contiguity**</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Apul (A. pulchra)**</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Number of Sequences:** 174</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**N50:** 17,861,421 bp</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**L50:** 10</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Longest Sequence:** 45,111,900 bp</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Peve (P. evermanni)**</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Number of Sequences:** 8,186</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**N50:** 171,385 bp</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**L50:** 935</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Longest Sequence:** 1,802,771 bp</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Ptuh (P. meandrina)**</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Number of Sequences:** 212</span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**N50:** 10,024,633 bp</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**L50:** 13</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Longest Sequence:** 21,651,136 bp</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>**Assessment:**</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Assembly Contiguity:** Apul exhibits the highest assembly contiguity, indicated by the lowest number of sequences and highest N50 value. Ptuh ranks second, while Peve has a more fragmented assembly with a significantly higher number of sequences and lower N50.</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Sequence Length Distribution:** Apul's longest sequence is substantially longer than those of Peve and Ptuh, suggesting a more complete assembly.</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Genome Size and GC Content**</span></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Total Genome Length:**</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Peve:** 603,805,388 bp</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Apul:** 518,313,916 bp</span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Ptuh:** 376,579,914 bp</span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**GC Content:**</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Apul:** 39.05%</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Ptuh:** 38.03%</span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Peve:** 36.38%</span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>**Assessment:**</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Genome Size Variability:** Peve has the largest genome size but the most fragmented assembly, which may indicate repetitive elements or assembly challenges.</span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**GC Content Consistency:** All species have similar GC content, ranging from 36.38% to 39.05%, which is typical for coral genomes.</span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="fu">### **2. Gene Annotation and Features**</span></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Gene Counts and Features**</span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Apul:**</span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total Genes:** 36,447</span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Unique Features:** 5 (exon, CDS, gene, mRNA, tRNA)</span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total GFF Entries:** 499,892</span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Peve:**</span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total Genes:** 40,389</span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Unique Features:** 3 (CDS, mRNA, UTR)</span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total GFF Entries:** 286,807</span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Ptuh:**</span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total Genes:** 31,840</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Unique Features:** 3 (exon, CDS, transcript)</span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Total GFF Entries:** 448,910</span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>**Assessment:**</span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Count:** Peve has the highest number of predicted genes, followed by Apul and Ptuh.</span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Annotation Features:** Apul includes tRNA annotations, which are absent in Peve and Ptuh. This suggests a more comprehensive annotation in Apul.</span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Unique Sources:** Different gene prediction tools were used---Apul (funannotate), Peve (Gmove), Ptuh (AUGUSTUS)---which may affect gene count and features.</span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="fu">#### **Gene Length and Total Bases**</span></span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Average Gene Length:**</span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Apul:** 5,887.31 bp</span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Ptuh:** 1,376.95 bp</span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Peve:** 1,337.5 bp</span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Total Bases in Genes:**</span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Apul:** 214,577,849 bp</span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Peve:** 54,020,937 bp</span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Ptuh:** 43,842,885 bp</span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>**Assessment:**</span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Length:** Apul's average gene length is significantly longer than that of Peve and Ptuh, potentially indicating differences in gene structure, annotation methods, or biological variation.</span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Total Coding Sequence:** Apul has a higher total base count in genes, which correlates with longer genes and may reflect a greater number of exons or longer intronic regions.</span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="fu">### **3. Biological Implications and Considerations**</span></span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Assembly Quality Impact:** The higher contiguity in Apul and Ptuh assemblies may lead to more accurate gene predictions and annotations compared to Peve.</span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Prediction Tools:** The use of different annotation tools can result in varying gene counts and features. Funannotate (Apul) provides tRNA annotations, suggesting a more thorough annotation pipeline.</span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Length Variation:** The discrepancy in average gene lengths might be due to:</span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Biological Differences:** Genuine differences in gene structure among species.</span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Annotation Strategies:** Differences in handling of introns, UTRs, or alternative splicing events.</span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>**Prediction Algorithms:** Varying sensitivity and specificity of gene prediction tools.</span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="fu">### **4. Conclusion**</span></span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Best Assembly:** *Acropora pulchra* (Apul) exhibits the most contiguous and comprehensive genome assembly and annotation among the three species.</span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Gene Annotation Depth:** Apul's inclusion of tRNA and longer gene lengths suggests a more detailed annotation, which could facilitate better functional genomics studies.</span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Areas for Improvement:** Peve's fragmented assembly and shorter gene lengths indicate potential areas for reassembly and reannotation to improve genomic resources.</span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>**Recommendation:** For comparative genomics and evolutionary studies, researchers should consider the differences in assembly quality and annotation methods. Standardizing gene prediction tools and reannotating genomes where necessary could enhance the reliability of cross-species comparisons.</span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>data:</span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="ot">&lt;https://github.com/urol-e5/deep-dive-expression/blob/main/D-Apul/code/12-Apul-genome-explore.md&gt;</span></span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="ot">&lt;https://github.com/urol-e5/deep-dive-expression/blob/main/E-Peve/code/04-Peve-genome-explore.md&gt;</span></span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span><span class="ot">&lt;https://github.com/urol-e5/deep-dive-expression/blob/main/F-Ptuh/code/04-Ptuh-genome-explore.md&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Lake Trout PacBio Data"</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "QC"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [lake trout, methylation]</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation: </span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 10-27-2025</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MOSAiC_orthologs__Tumbling_Oysters_2025-08-31_08-16-09.png # finding a good image</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">    url: </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: FALSE</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#runtime: shiny</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>PacBio data came from Wisconsin</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>Raw data at </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/&gt;</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>have 4 lean and 4 siscowets</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>they were run in three pools</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>Pool 1.   </span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>Lean    FA047   bc2041  TATGATCACTGAGTAT.   </span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>Siscowet    FA097   bc2071  CGAGTCTAGCGAGTAT.   </span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>Siscowet    FA099   bc2072  TATCAGTAGTGAGTAT.   </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>Pool 2.     </span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>Lean    FA094   bc2069  TCTATGACATGAGTAT.   </span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>Lean    FA095   bc2070  TACTGCTCACGAGTAT.  </span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>Siscowet    FA100   bc2073  ATCACTAGTCGAGTAT.  </span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>Pool 3.    </span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>Lean   FA092 - bc2068 ACTACGTGATGAGTAT.  </span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.  </span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>The first two pools arrived as Bams, and Sam demultiplexed.</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/&gt;</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>The third pool arrived demultiplexed.</span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>Sam generated corresponding fastq files </span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>In transferring the fastq files to raven, those from Pool 3 seemed fine. Those from other pools ended abruptly. </span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; Your FASTQ is truncated mid-record.</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="at">&gt; We can tell because after the last complete read, it immediately starts a new @m84082_250614_101514_s4/76093130/ccs record but there’s no “+” line or quality block following it.</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>For those in Pool three just ran </span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="ex">/opt/anaconda/anaconda3/envs/nanoplot_env/bin/NanoPlot</span> <span class="dt">\</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>-t 40 <span class="dt">\</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>--fastq ../data/pacbio-reads/fastq/m84082_251001_025627_s2.hifi_reads.bc2096.fastq <span class="dt">\</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>-o ../analyses/08-nanoplot/bc2096</span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>For those in pools 1 and 2 needed to a little bit of clean up.</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a>eg </span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'BEGIN{RS="@"; ORS=""} NR&gt;1 { if (match($0, /\n\+/)) print "@" $0 }'</span> <span class="dt">\</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a>../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070.fastq <span class="dt">\</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070--fixed.fast</span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

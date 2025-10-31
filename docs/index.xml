@@ -9,14 +9,87 @@
 <link>https://sr320.github.io/tumbling-oysters/</link>
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.7.32</generator>
-<lastBuildDate>Sat, 04 Oct 2025 07:00:00 GMT</lastBuildDate>
+<generator>quarto-1.6.40</generator>
+<lastBuildDate>Mon, 27 Oct 2025 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Lake Trout PacBio Data</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/54-lake-trout-QC/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>PacBio data came from Wisconsin</p>
+<p>Raw data at <a href="https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/" class="uri">https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/</a></p>
+<p>have 4 lean and 4 siscowets</p>
+<p>they were run in three pools</p>
+<p>Pool 1.</p>
+<p>Lean FA047 bc2041 TATGATCACTGAGTAT.<br>
+Siscowet FA097 bc2071 CGAGTCTAGCGAGTAT.<br>
+Siscowet FA099 bc2072 TATCAGTAGTGAGTAT.</p>
+<p>Pool 2.</p>
+<p>Lean FA094 bc2069 TCTATGACATGAGTAT.<br>
+Lean FA095 bc2070 TACTGCTCACGAGTAT.<br>
+Siscowet FA100 bc2073 ATCACTAGTCGAGTAT.</p>
+<p>Pool 3.</p>
+<p>Lean FA092 - bc2068 ACTACGTGATGAGTAT.<br>
+Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.</p>
+<hr>
+<p>The first two pools arrived as Bams, and Sam demultiplexed. <a href="https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/" class="uri">https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/</a></p>
+<p>The third pool arrived demultiplexed.</p>
+<p>Sam generated corresponding fastq files</p>
+<hr>
+<p>In transferring the fastq files to raven, those from Pool 3 seemed fine. Those from other pools ended abruptly.</p>
+<blockquote class="blockquote">
+<p>Your FASTQ is truncated mid-record. We can tell because after the last complete read, it immediately starts a new <span class="citation" data-cites="m84082_250614_101514_s4/76093130/ccs">@m84082_250614_101514_s4/76093130/ccs</span> record but there’s no “+” line or quality block following it.</p>
+</blockquote>
+<p>For those in Pool three just ran</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">/opt/anaconda/anaconda3/envs/nanoplot_env/bin/NanoPlot</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-2">-t 40 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-3">--fastq ../data/pacbio-reads/fastq/m84082_251001_025627_s2.hifi_reads.bc2096.fastq <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-4">-o ../analyses/08-nanoplot/bc2096</span></code></pre></div>
+<p>For those in pools 1 and 2 needed to a little bit of clean up.</p>
+<p>eg</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">'BEGIN{RS="@"; ORS=""} NR&gt;1 { if (match($0, /\n\+/)) print "@" $0 }'</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-2">../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070.fastq <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-3"><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> ../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070--fixed.fast</span></code></pre></div>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>lake trout</category>
+  <category>methylation</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/54-lake-trout-QC/</guid>
+  <pubDate>Mon, 27 Oct 2025 07:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MOSAiC_orthologs__Tumbling_Oysters_2025-08-31_08-16-09.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Ortholog Selection for Physiological Processes</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/53-ortho-select/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -448,7 +521,6 @@ font-style: inherit;">"0"</span></span></code></pre></div>
 
 
 
-
 <section id="orthologous-protein-identification-across-three-coral-species" class="level1">
 <h1>Orthologous Protein Identification Across Three Coral Species</h1>
 <section id="introduction" class="level2">
@@ -590,7 +662,6 @@ font-style: inherit;">"0"</span></span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/51-nano-next/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -2348,7 +2419,6 @@ font-style: inherit;">"freq"</span>)</span></code></pre></div>
 
 
 
-
 <p>Went in a few directions but will try to layout properly here. Experiment - 3 populations, 4 pooled (n=5) libraires - thus 20 individuals represented per population.</p>
 <section id="data-as-provided" class="level1">
 <h1>Data as provided</h1>
@@ -2855,7 +2925,6 @@ font-style: inherit;">\</span></span>
 
 
 
-
 <section id="dock" class="level1">
 <h1>Dock</h1>
 <p>Inspected bags at dock. Retrieved one PolyIC and Control bag. This left two of each on dock. For all others replaced bags.</p>
@@ -2921,7 +2990,6 @@ font-style: inherit;">\</span></span>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/48-cod-bwa/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -3402,7 +3470,6 @@ font-style: inherit;">done</span></span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/47-ffs/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -6589,7 +6656,6 @@ Chromosome counts:
 
 
 
-
 <p>Day three. Looking for missing files.. working on slides</p>
 <p>Narrowed down issue with missing “WGBS” files from Peve and Ptua to a possible error in wget Azenta named files.</p>
 <p>Need to get full data sets for both species and run through Bismark.. and beyond..</p>
@@ -6610,7 +6676,6 @@ Chromosome counts:
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/45-ROLPI-d2/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -6921,7 +6986,6 @@ font-style: inherit;">nrow</span>(filtered_wgbs)</span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/44-ROLPI-d1/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -7931,7 +7995,6 @@ font-style: inherit;">"../output/05-Ptua-bismark-CG/filtered-WGBS-CpG-counts.csv
 
 
 
-
 <ul>
 <li>1 genome</li>
 <li>2 Full run</li>
@@ -8269,7 +8332,6 @@ ntLink_7    fuzznuc nucleotide_motif    303 304 2   +   .   ID=ntLink_7.12;note=
 
 
 
-
 <p>Taking Megan for a spin for Renee</p>
 <p>Read files</p>
 <pre class="{bash}"><code>ls /home/shared/16TB_HDD_01/fish546/renee/</code></pre>
@@ -8338,7 +8400,6 @@ Trimmomatic-0.39</code></pre>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/41-RI-coral/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -11567,7 +11628,6 @@ zr3644_9_pe.deduplication_report.txt</code></pre>
 
 
 
-
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <p>This lab notebook documents the process of identifying long non-coding RNAs (lncRNAs) from RNA-seq data. The pipeline includes data acquisition, genome alignment, transcript assembly, filtering, and classification.</p>
@@ -13437,7 +13497,6 @@ font-style: inherit;">"</span></span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/38-klone/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -16199,7 +16258,6 @@ font-style: inherit;">done</span></span></code></pre></div>
 
 
 
-
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/mm.gif" class="img-fluid figure-img"></p>
@@ -16888,405 +16946,6 @@ font-style: inherit;">"All intersections completed!"</span></span></code></pre><
   <guid>https://sr320.github.io/tumbling-oysters/posts/36-merry/</guid>
   <pubDate>Tue, 24 Dec 2024 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Userssr320Desktopigv_session.xml_2024-12-24_07-26-36.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Time-series coral lncRNA count matrix</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/34-Apul-lncRNA/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-<p>I started with a bed file from discovery (see below) and used it to count the number of lncRNAs in each sample from Time Series data (Apul)</p>
-<section id="converted-bed-to-gtf" class="level2">
-<h2 class="anchored" data-anchor-id="converted-bed-to-gtf">Converted Bed to GTF</h2>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'BEGIN{OFS="\t"; count=1} {printf "%s\t.\tlncRNA\t%d\t%d\t.\t+\t.\tgene_id \"lncRNA_%03d\";\n", $1, $2, $3, count++;}'</span> /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/10.1-Apul-lncRNA/Apul_lncRNA.bed <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-2"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/05-Apul-lncRNA/lncRNAs.gtf</span></code></pre></div>
-<pre><code>==&gt; /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/10.1-Apul-lncRNA/Apul_lncRNA.bed &lt;==
-ntLink_0    84514   93551
-ntLink_0    15627   19151
-ntLink_0    23443   23874
-ntLink_1    7484    9525
-ntLink_1    51265   51766
-ntLink_2    217051  217761
-ntLink_2    330551  331392
-ntLink_3    56721   62176
-ntLink_3    76352   81676
-ntLink_3    95705   100623</code></pre>
-<section id="gtf" class="level3">
-<h3 class="anchored" data-anchor-id="gtf">GTF</h3>
-<pre><code>ntLink_0    .   lncRNA  84514   93551   .   +   .   gene_id "lncRNA_001";
-ntLink_0    .   lncRNA  15627   19151   .   +   .   gene_id "lncRNA_002";
-ntLink_0    .   lncRNA  23443   23874   .   +   .   gene_id "lncRNA_003";
-ntLink_1    .   lncRNA  7484    9525    .   +   .   gene_id "lncRNA_004";
-ntLink_1    .   lncRNA  51265   51766   .   +   .   gene_id "lncRNA_005";
-ntLink_2    .   lncRNA  217051  217761  .   +   .   gene_id "lncRNA_006";</code></pre>
-</section>
-</section>
-<section id="feature-count" class="level2">
-<h2 class="anchored" data-anchor-id="feature-count">Feature Count</h2>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/subread-2.0.5-Linux-x86_64/bin/featureCounts</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-2">-T 42 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-3">-a ../output/05-Apul-lncRNA/lncRNAs.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-4">-o ../output/05-Apul-lncRNA/counts.txt <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-5">-t lncRNA <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-6">-g gene_id <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-7">-p <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-8">../data/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>sorted.bam</span></code></pre></div>
-</section>
-<section id="count-matrix" class="level2">
-<h2 class="anchored" data-anchor-id="count-matrix">Count Matrix</h2>
-<p><a href="https://github.com/urol-e5/timeseries_molecular/blob/main/D-Apul/output/05-Apul-lncRNA/counts.txt" class="uri">https://github.com/urol-e5/timeseries_molecular/blob/main/D-Apul/output/05-Apul-lncRNA/counts.txt</a></p>
-<hr>
-<p>Before I did that, first lncRNA were discovered. This was done with the deep-dive expression samples (n=5)</p>
-</section>
-<section id="discovery" class="level1">
-<h1>Discovery</h1>
-<section id="stringtie" class="level2">
-<h2 class="anchored" data-anchor-id="stringtie">StringTie</h2>
-<p>StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF (Gene Transfer Format) files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples–an important step in creating a canonical list of lncRNAs across all samples included in the pipeline.</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">find</span> ../output/07-Apul-Hisat/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>sorted.bam <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-2"><span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> basename <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-s</span> .sorted.bam <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-I{}</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-3">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-4">-p 42 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-5">-G ../data/Apulcra-genome.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-6">-o ../output/10.1-Apul-lncRNA/{}.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-7">../output/07-Apul-Hisat/{}.sorted.bam</span></code></pre></div>
-<p>Merges all individual GTF assemblies into a single merged GTF file.</p>
-<p>This is used to create a non-redundant set of transcripts after running StringTie separately on multiple RNA-Seq datasets.</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-2">--merge <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-3">-G ../data/Apulcra-genome.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-4">-o ../output/10.1-Apul-lncRNA/stringtie_merged.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-5">../output/10.1-Apul-lncRNA/RNA<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.gtf</span></code></pre></div>
-</section>
-<section id="gffcompare" class="level2">
-<h2 class="anchored" data-anchor-id="gffcompare">GFFcompare</h2>
-<p>https://ccb.jhu.edu/software/stringtie/gffcompare.shtml</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/gffcompare-0.12.6.Linux_x86_64/gffcompare</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-2">-r ../data/Apulcra-genome.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-3">-o ../output/10.1-Apul-lncRNA/gffcompare_merged <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-4">../output/10.1-Apul-lncRNA/stringtie_merged.gtf</span></code></pre></div>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_687474703a2f2f67616e6e65742e666973682e77617368696e67746f6e2e6564752f7365617368656c6c2f736e6170732f323032332d31312d30335f30392d3_2024-12-20_04-02-37.png" class="img-fluid"></p>
-</section>
-<section id="filter" class="level2">
-<h2 class="anchored" data-anchor-id="filter">Filter</h2>
-<p>Filters the combined GTF output from GFFcompare to select only the lines representing “transcripts” and excluding lines starting with “#” (these are lines in the output format from GFFcompare that don’t contain transcript information). This step further filters for a class code of “u”, and keep only those with lengths greater than 199 bases. The “u’ class code from the GFFcompare step is for”unknown” transcripts, that is those that are not previously annotated in our reference GFF as protein coding. The size filter of +200nt is a common filtering step for isolating lncRNAs.</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'$3 == "transcript" &amp;&amp; $1 !~ /^#/'</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb8-2">../output/10.1-Apul-lncRNA/gffcompare_merged.annotated.gtf <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">grep</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'class_code "u"\|class_code "x"|\class_code "i"\|class_code "y"'</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'($5 - $4 &gt; 199) || ($4 - $5 &gt; 199)'</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.gtf</span></code></pre></div>
-</section>
-<section id="bedtools" class="level2">
-<h2 class="anchored" data-anchor-id="bedtools">Bedtools</h2>
-<p>Extracts the sequence data from the <code>$FASTA</code> reference file based on the coordinates from the filtered GTF. The resulting sequences represent potential lncRNA candidates.</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/bedtools2/bin/fastaFromBed</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-2">-fi ../data/Apulcra-genome.fa <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-3">-bed ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-4">-fo ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb9-5">-name <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-split</span></span></code></pre></div>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">fgrep</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-c</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"&gt;"</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta </span>
-<span id="cb10-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta </span></code></pre></div>
-</section>
-<section id="cpc2" class="level2">
-<h2 class="anchored" data-anchor-id="cpc2">CPC2</h2>
-<p>Initializes a conda environment (Anaconda) and runs CPC2, a software to predict whether a transcript is coding or non-coding. The results are saved to the $OUTPUT_DIR. CPC2 uses ORF (Open Reading Frame) Analysis, Isometric Feature Mapping (Isomap), Sequence Homology, RNA Sequence Features, and Quality of Translation to assess coding potential and flag any transcripts we would want to exclude using the FASTA generated in the previous step.</p>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">eval</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/opt/anaconda/anaconda3/bin/conda</span> shell.bash hook<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb11-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">python</span> /home/shared/CPC2_standalone-1.0.1/bin/CPC2.py <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb11-3">-i ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb11-4">-o ../output/10.1-Apul-lncRNA/Apul_CPC2</span></code></pre></div>
-</section>
-<section id="filter-1" class="level2">
-<h2 class="anchored" data-anchor-id="filter-1">Filter</h2>
-<p>Filters the CPC2 results to get only noncoding transcripts (using the class “noncoding” from the CPC2 results) and extracts their IDs and matches these IDs with the sequences from the previous step to generate a GTF of long noncoding transcripts.</p>
-<p>Matches these IDs with the sequences from the previous step to generate a GTF of noncoding transcripts.</p>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'$8 == "noncoding" {print $1}'</span> ../output/10.1-Apul-lncRNA/Apul_CPC2.txt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt</span></code></pre></div>
-</section>
-</section>
-<section id="subsetting-fasta" class="level1">
-<h1>subsetting fasta</h1>
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb13-2">-r ../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA.fasta</span></code></pre></div>
-</section>
-<section id="getting-genome-feature-track" class="level1">
-<h1>Getting genome feature track</h1>
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"></span>
-<span id="cb14-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Open the input file and the output file</span></span>
-<span id="cb14-3"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">with</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'r'</span>) <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> infile, <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">open</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'../output/10.1-Apul-lncRNA/Apul_lncRNA.bed'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'w'</span>) <span class="im" style="color: #00769E;
-background-color: null;
-font-style: inherit;">as</span> outfile:</span>
-<span id="cb14-4">    <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Process each line in the input file</span></span>
-<span id="cb14-5">    <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> line <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> infile:</span>
-<span id="cb14-6">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Remove 'transcript::' and then split the line by ':' to extract the relevant parts</span></span>
-<span id="cb14-7">        parts <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> line.strip().replace(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'transcript::'</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">''</span>).split(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">':'</span>)</span>
-<span id="cb14-8">        chromosome <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> parts[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>]</span>
-<span id="cb14-9">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Split the position part by '-' to get start and end positions</span></span>
-<span id="cb14-10">        start, end <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> parts[<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>].split(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'-'</span>)</span>
-<span id="cb14-11">        </span>
-<span id="cb14-12">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># BED format requires the start position to be 0-based</span></span>
-<span id="cb14-13">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Convert the start position to 0-based by subtracting 1</span></span>
-<span id="cb14-14">        start <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">str</span>(<span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">int</span>(start) <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">-</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>)</span>
-<span id="cb14-15">        </span>
-<span id="cb14-16">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Write the chromosome, start, and end positions to the output file</span></span>
-<span id="cb14-17">        <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Separate each field with a tab character</span></span>
-<span id="cb14-18">        outfile.write(<span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">f'</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>chromosome<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\t</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>start<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\t</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">{</span>end<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">}</span><span class="ch" style="color: #20794D;
-background-color: null;
-font-style: inherit;">\n</span><span class="ss" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span>)</span>
-<span id="cb14-19"></span>
-<span id="cb14-20"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># After running this script, 'output.bed' will contain the converted data in BED format.</span></span></code></pre></div>
-<ul>
-<li>note that when you take this bed and make gtf you get -1 starts that make program fail - of course the 0-based / 1-based issue that will eventually need to be looked into.</li>
-</ul>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>e5</category>
-  <category>lncRNA</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/34-Apul-lncRNA/</guid>
-  <pubDate>Fri, 20 Dec 2024 08:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries_molecular__RStudio_Server_2024-12-20_03-51-09.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>

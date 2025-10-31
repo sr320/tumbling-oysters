@@ -1,0 +1,93 @@
+---
+title: "Lake Trout PacBio Data"
+description: "QC"
+categories: [lake trout, methylation]
+#citation: 
+date: 10-27-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MOSAiC_orthologs__Tumbling_Oysters_2025-08-31_08-16-09.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+PacBio data came from Wisconsin
+
+Raw data at 
+<https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/>
+
+have 4 lean and 4 siscowets
+
+they were run in three pools
+
+Pool 1.   
+
+Lean	FA047	bc2041	TATGATCACTGAGTAT.   
+Siscowet	FA097	bc2071	CGAGTCTAGCGAGTAT.   
+Siscowet	FA099	bc2072	TATCAGTAGTGAGTAT.   
+
+Pool 2.     
+
+Lean	FA094	bc2069	TCTATGACATGAGTAT.   
+Lean	FA095	bc2070	TACTGCTCACGAGTAT.  
+Siscowet	FA100	bc2073	ATCACTAGTCGAGTAT.  
+
+Pool 3.    
+
+Lean   FA092 - bc2068 ACTACGTGATGAGTAT.  
+Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.  
+
+---
+
+The first two pools arrived as Bams, and Sam demultiplexed.
+<https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/>
+
+
+
+The third pool arrived demultiplexed.
+
+
+Sam generated corresponding fastq files 
+
+
+---
+
+In transferring the fastq files to raven, those from Pool 3 seemed fine. Those from other pools ended abruptly. 
+
+> Your FASTQ is truncated mid-record.
+> We can tell because after the last complete read, it immediately starts a new @m84082_250614_101514_s4/76093130/ccs record but there’s no “+” line or quality block following it.
+
+
+For those in Pool three just ran 
+
+``` bash
+/opt/anaconda/anaconda3/envs/nanoplot_env/bin/NanoPlot \
+-t 40 \
+--fastq ../data/pacbio-reads/fastq/m84082_251001_025627_s2.hifi_reads.bc2096.fastq \
+-o ../analyses/08-nanoplot/bc2096
+```
+
+For those in pools 1 and 2 needed to a little bit of clean up.
+
+eg 
+
+``` bash
+awk 'BEGIN{RS="@"; ORS=""} NR>1 { if (match($0, /\n\+/)) print "@" $0 }' \
+../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070.fastq \
+> ../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070--fixed.fast
+```
+
+
