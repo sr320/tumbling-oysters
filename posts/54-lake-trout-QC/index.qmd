@@ -87,7 +87,7 @@ eg
 ``` bash
 awk 'BEGIN{RS="@"; ORS=""} NR>1 { if (match($0, /\n\+/)) print "@" $0 }' \
 ../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070.fastq \
-> ../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070--fixed.fast
+> ../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070--fixed.fastq
 ```
 
 
