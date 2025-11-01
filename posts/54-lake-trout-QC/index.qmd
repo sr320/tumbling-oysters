@@ -4,7 +4,7 @@ description: "QC"
 categories: [lake trout, methylation]
 #citation: 
 date: 10-27-2025
-image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_MOSAiC_orthologs__Tumbling_Oysters_2025-08-31_08-16-09.png # finding a good image
+image: http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_05-35-03.png # finding a good image
 
 author:
   - name: Steven Roberts
@@ -24,70 +24,78 @@ format:
 #runtime: shiny
 ---
 
+
+
 PacBio data came from Wisconsin
 
-Raw data at 
-<https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/>
+Raw data at <https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/>
 
 have 4 lean and 4 siscowets
 
 they were run in three pools
 
-Pool 1.   
+Pool 1.
 
-Lean	FA047	bc2041	TATGATCACTGAGTAT.   
-Siscowet	FA097	bc2071	CGAGTCTAGCGAGTAT.   
-Siscowet	FA099	bc2072	TATCAGTAGTGAGTAT.   
+Lean FA047 bc2041 TATGATCACTGAGTAT.\
+Siscowet FA097 bc2071 CGAGTCTAGCGAGTAT.\
+Siscowet FA099 bc2072 TATCAGTAGTGAGTAT.
 
-Pool 2.     
+Pool 2.
 
-Lean	FA094	bc2069	TCTATGACATGAGTAT.   
-Lean	FA095	bc2070	TACTGCTCACGAGTAT.  
-Siscowet	FA100	bc2073	ATCACTAGTCGAGTAT.  
+Lean FA094 bc2069 TCTATGACATGAGTAT.\
+Lean FA095 bc2070 TACTGCTCACGAGTAT.\
+Siscowet FA100 bc2073 ATCACTAGTCGAGTAT.
 
-Pool 3.    
+Pool 3.
 
-Lean   FA092 - bc2068 ACTACGTGATGAGTAT.  
-Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.  
+Lean FA092 - bc2068 ACTACGTGATGAGTAT.\
+Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.
 
----
+------------------------------------------------------------------------
 
-The first two pools arrived as Bams, and Sam demultiplexed.
-<https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/>
-
-
+The first two pools arrived as Bams, and Sam demultiplexed. <https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/>
 
 The third pool arrived demultiplexed.
 
+Sam generated corresponding fastq files
 
-Sam generated corresponding fastq files 
+------------------------------------------------------------------------
 
-
----
-
-In transferring the fastq files to raven, those from Pool 3 seemed fine. Those from other pools ended abruptly. 
-
-> Your FASTQ is truncated mid-record.
-> We can tell because after the last complete read, it immediately starts a new @m84082_250614_101514_s4/76093130/ccs record but there’s no “+” line or quality block following it.
-
-
-For those in Pool three just ran 
+For each of the 8 files ran
 
 ``` bash
 /opt/anaconda/anaconda3/envs/nanoplot_env/bin/NanoPlot \
 -t 40 \
---fastq ../data/pacbio-reads/fastq/m84082_251001_025627_s2.hifi_reads.bc2096.fastq \
--o ../analyses/08-nanoplot/bc2096
+--fastq ../data/pacbio-reads/fastq2/m84082_250614_101514_s4.hifi_reads.demux.bc2069--bc2069.fastq.gz \
+-o ../analyses/08-nanoplot/bc2069 \
+--prefix bc2069_
 ```
 
-For those in pools 1 and 2 needed to a little bit of clean up.
+which created 
 
-eg 
+![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_05-31-35.png)
 
-``` bash
-awk 'BEGIN{RS="@"; ORS=""} NR>1 { if (match($0, /\n\+/)) print "@" $0 }' \
-../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070.fastq \
-> ../data/pacbio-reads/fastq/m84082_250614_101514_s4.hifi_reads.demux.bc2070--bc2070--fixed.fastq
+after all were complete ran multiqc
+
+``` bash 
+multiqc ../analyses/08-nanoplot/ -o ../analyses/08-multiqc
 ```
+
+
+<https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/08-multiqc/multiqc_report.html>
+
+
+---
+
+
+<iframe src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/08-multiqc/multiqc_report.html" 
+        width="100%" 
+        height="800px" 
+        style="border:none;">
+</iframe>
+
+
+
+
 
 
