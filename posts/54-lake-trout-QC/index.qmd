@@ -51,6 +51,25 @@ Pool 3.
 Lean FA092 - bc2068 ACTACGTGATGAGTAT.\
 Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.
 
+
+
+## TLDR 
+
+| Type      | Sample ID |
+|------------|------------|
+| Lean       | bc2041     |
+| Lean       | bc2068     |
+| Lean       | bc2069     |
+| Lean       | bc2070     |
+| Siscowet   | bc2071     |
+| Siscowet   | bc2072     |
+| Siscowet   | bc2073     |
+| Siscowet   | bc2096     |
+
+
+Fastq files @
+https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/data/pacbio-reads/fastq2/
+
 ------------------------------------------------------------------------
 
 The first two pools arrived as Bams, and Sam demultiplexed. <https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/>
@@ -60,6 +79,9 @@ The third pool arrived demultiplexed.
 Sam generated corresponding fastq files
 
 ------------------------------------------------------------------------
+
+
+## NanoPlot
 
 For each of the 8 files ran
 
@@ -74,6 +96,9 @@ For each of the 8 files ran
 which created 
 
 ![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_05-31-35.png)
+
+## MultiQC
+
 
 after all were complete ran multiqc
 

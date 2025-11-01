@@ -1397,7 +1397,7 @@
     "href": "posts/54-lake-trout-QC/index.html",
     "title": "Lake Trout PacBio Data",
     "section": "",
-    "text": "PacBio data came from Wisconsin\nRaw data at https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/\nhave 4 lean and 4 siscowets\nthey were run in three pools\nPool 1.\nLean FA047 bc2041 TATGATCACTGAGTAT.\nSiscowet FA097 bc2071 CGAGTCTAGCGAGTAT.\nSiscowet FA099 bc2072 TATCAGTAGTGAGTAT.\nPool 2.\nLean FA094 bc2069 TCTATGACATGAGTAT.\nLean FA095 bc2070 TACTGCTCACGAGTAT.\nSiscowet FA100 bc2073 ATCACTAGTCGAGTAT.\nPool 3.\nLean FA092 - bc2068 ACTACGTGATGAGTAT.\nSiscowet FA253 - bc2096 ATGTACTAGTGAGTAT.\n\nThe first two pools arrived as Bams, and Sam demultiplexed. https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/\nThe third pool arrived demultiplexed.\nSam generated corresponding fastq files\n\nFor each of the 8 files ran\n/opt/anaconda/anaconda3/envs/nanoplot_env/bin/NanoPlot \\\n-t 40 \\\n--fastq ../data/pacbio-reads/fastq2/m84082_250614_101514_s4.hifi_reads.demux.bc2069--bc2069.fastq.gz \\\n-o ../analyses/08-nanoplot/bc2069 \\\n--prefix bc2069_\nwhich created\n\nafter all were complete ran multiqc\nmultiqc ../analyses/08-nanoplot/ -o ../analyses/08-multiqc\nhttps://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/08-multiqc/multiqc_report.html"
+    "text": "PacBio data came from Wisconsin\nRaw data at https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/\nhave 4 lean and 4 siscowets\nthey were run in three pools\nPool 1.\nLean FA047 bc2041 TATGATCACTGAGTAT.\nSiscowet FA097 bc2071 CGAGTCTAGCGAGTAT.\nSiscowet FA099 bc2072 TATCAGTAGTGAGTAT.\nPool 2.\nLean FA094 bc2069 TCTATGACATGAGTAT.\nLean FA095 bc2070 TACTGCTCACGAGTAT.\nSiscowet FA100 bc2073 ATCACTAGTCGAGTAT.\nPool 3.\nLean FA092 - bc2068 ACTACGTGATGAGTAT.\nSiscowet FA253 - bc2096 ATGTACTAGTGAGTAT."
   },
   {
     "objectID": "posts/55-cod-talk/index.html",
@@ -1419,5 +1419,26 @@
     "title": "Lets talk Cod",
     "section": "AN00025268",
     "text": "AN00025268\nLink to Report\nhttps://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025268/202508_AN00025268_Report/report.html\n\nLink to data\n\nhttps://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025268/"
+  },
+  {
+    "objectID": "posts/54-lake-trout-QC/index.html#tldr",
+    "href": "posts/54-lake-trout-QC/index.html#tldr",
+    "title": "Lake Trout PacBio Data",
+    "section": "TLDR",
+    "text": "TLDR\n\n\n\nType\nSample ID\n\n\n\n\nLean\nbc2041\n\n\nLean\nbc2068\n\n\nLean\nbc2069\n\n\nLean\nbc2070\n\n\nSiscowet\nbc2071\n\n\nSiscowet\nbc2072\n\n\nSiscowet\nbc2073\n\n\nSiscowet\nbc2096\n\n\n\nFastq files @ https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/data/pacbio-reads/fastq2/\n\nThe first two pools arrived as Bams, and Sam demultiplexed. https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/\nThe third pool arrived demultiplexed.\nSam generated corresponding fastq files"
+  },
+  {
+    "objectID": "posts/54-lake-trout-QC/index.html#nanoplot",
+    "href": "posts/54-lake-trout-QC/index.html#nanoplot",
+    "title": "Lake Trout PacBio Data",
+    "section": "NanoPlot",
+    "text": "NanoPlot\nFor each of the 8 files ran\n/opt/anaconda/anaconda3/envs/nanoplot_env/bin/NanoPlot \\\n-t 40 \\\n--fastq ../data/pacbio-reads/fastq2/m84082_250614_101514_s4.hifi_reads.demux.bc2069--bc2069.fastq.gz \\\n-o ../analyses/08-nanoplot/bc2069 \\\n--prefix bc2069_\nwhich created"
+  },
+  {
+    "objectID": "posts/54-lake-trout-QC/index.html#multiqc",
+    "href": "posts/54-lake-trout-QC/index.html#multiqc",
+    "title": "Lake Trout PacBio Data",
+    "section": "MultiQC",
+    "text": "MultiQC\nafter all were complete ran multiqc\nmultiqc ../analyses/08-nanoplot/ -o ../analyses/08-multiqc\nhttps://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/08-multiqc/multiqc_report.html"
   }
 ]
