@@ -1,0 +1,60 @@
+---
+title: "Deep Dive on Rank 35"
+description: "Going through barnacle rank gene factors"
+categories: [e5, barnacle, coral]
+#citation: 
+date: 11-02-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/2025-11-02_09-06-29.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+Sam had run a series of ranks to see which one was most appropriate. Specifically he ran from 5-75.
+
+It looks like 35 is where we go forward
+
+![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-02_09-13-35.png)
+
+-   • Gene sparsity increases sharply after rank 35.
+
+------------------------------------------------------------------------
+
+Heatmaps at 35
+
+![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-02_09-30-11.png)
+
+Figures for all ranks can be seen at <https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/timeseries_molecular/M-multi-species/scripts/22-Visualizing-Rank-outs.html>
+
+Comparison of GO terms
+
+![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-02_09-46-24.png) Full report:
+
+Key Findings The top 5 biological processes across all rank 35 components are:\
+- Innate immune response - 80 occurrences across 27 components.\
+- Proteolysis - 79 occurrences across 25 components.\
+- Positive regulation of gene expression - 78 occurrences across 27 components.\
+- Defense response to Gram-negative bacterium - 76 occurrences across 30 components.\
+- Positive regulation of transcription by RNA polymerase II - 76 occurrences across 21 components.
+
+Some of this is part is driven by Group IDs in multiple components
+
+
+![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-02_09-55-02.png)
+
+
+
