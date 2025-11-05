@@ -1,0 +1,107 @@
+---
+title: "More Sparsity?"
+description: "Optimizing Rank 35"
+categories: [e5, barnacle, coral]
+#citation: 
+date: 11-05-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/2025-11-05_13-57-12.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+Based on overlap of genes across components wanted to increase sparsity be increasing lambda-gene values..
+
+
+Ran with multiple values
+
+``` bash
+LAMBDAS_GENE="0.00 0.01 0.05 0.1 0.2 0.4 0.8"
+LAMBDA_SAMPLE=0.1
+LAMBDA_TIME=0.05
+RANK=35
+
+
+OUTDIR_BASE=../output/26-rank35-optimization
+
+for LG in $LAMBDAS_GENE; do
+  OUTDIR=${OUTDIR_BASE}/lambda_gene_${LG}
+  mkdir -p "$OUTDIR"
+
+  /Users/sr320/.local/bin/uv run python ../scripts/14.1-barnacle/build_tensor_and_run.py \
+    --input-file ../output/14-pca-orthologs/vst_counts_matrix.csv \
+    --output-dir "$OUTDIR" \
+    --rank $RANK \
+    --lambda-gene $LG \
+    --lambda-sample $LAMBDA_SAMPLE \
+    --lambda-time $LAMBDA_TIME \
+    --max-iter 2000 \
+    --tol 1e-5 \
+    --seed 81
+done
+```
+
+
+![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-05_14-01-07.png)
+
+
+Move forwaard with lamda_gene of 0.2...
+
+# Sample
+
+![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-05_14-08-38.png)
+
+# Time
+
+``` r
+library(tidyverse)
+
+# Read in data
+df <- read_csv("../output/26-rank35-optimization/lambda_gene_0.2/barnacle_factors/time_factors.csv") %>%
+  rename(TP = 1)   # rename the first column to TP
+
+# Reshape from wide to long
+df_long <- df %>%
+  pivot_longer(
+    cols = -TP,               # everything except TP
+    names_to = "Component",
+    values_to = "Loading"
+  )
+
+
+
+top_components <- df_long %>%
+  group_by(Component) %>%
+  summarize(var_loading = var(Loading)) %>%
+  slice_max(var_loading, n = 10) %>%
+  pull(Component)
+
+ggplot(df_long %>% filter(Component %in% top_components),
+       aes(x = TP, y = Loading, group = Component, color = Component)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 3) +
+  theme_classic(base_size = 14) +
+  labs(title = "Top 10 Most Variable Components Across Time Points",
+       x = "Time Point", y = "Loading Value")
+```
+
+
+![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-05_14-16-13.png)
+
+# Annotation
+
+
