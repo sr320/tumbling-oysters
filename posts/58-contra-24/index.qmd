@@ -1,0 +1,55 @@
+---
+title: "Contra on 24"
+description: "Epigenetic factors on barnacle"
+categories: [e5, barnacle, coral]
+#citation: 
+date: 11-13-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/2025-11-13_04-58-09.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+Took the top 100 genes in component 24 (of 35 rank) and did Context Dependent Regulation Ananysis
+
+Summary of output
+
+These CSV files contain the detailed results of context-dependent regulatory analysis, including interaction statistics, p-values, context strengths, and regulatory relationships for each analyzed gene-regulator pair.
+
+high_methylation_gene_lncrna_correlations.csv (29626.7 KB) high_methylation_gene_methylation_correlations.csv (339626.1 KB) high_methylation_gene_mirna_correlations.csv (40.0 KB) lncrna_mirna_context.csv (1544.7 KB) low_mirna_gene_lncrna_correlations.csv (36676.7 KB) low_mirna_gene_methylation_correlations.csv (341486.6 KB) low_mirna_gene_mirna_correlations.csv (81.5 KB) methylation_mirna_context.csv (1898.0 KB) multi_way_interactions.csv (248.9 KB)
+
+# Ptua
+
+Report: <https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/context_dependent_analysis_20251108_151255/reports/context_dependent_analysis_report.html>
+
+Multiway Regulation: `https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/context_dependent_analysis_20251108_151255/tables/multi_way_interactions.csv`
+
+# Peve
+
+Report: <https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/context_dependent_analysis_20251108_144034/reports/context_dependent_analysis_report.html>
+
+Multiway Regulation: `https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/context_dependent_analysis_20251108_144034/tables/multi_way_interactions.csv`
+
+
+# Apul
+
+Report: <https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/context_dependent_analysis_20251108_140602/reports/context_dependent_analysis_report.html>
+
+Multiway Regulation:
+`https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/context_dependent_analysis_20251108_140602/tables/multi_way_interactions.csv`
+
+
