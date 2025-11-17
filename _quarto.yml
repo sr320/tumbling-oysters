@@ -11,10 +11,7 @@ website:
     right:
       - icon: github
         href: https://github.com/sr320
-      - icon: newspaper
-        href: notes.qmd
-      - icon: "📝 Notes (TXT)"
-        href: notes.txt
+
 
 format:
   html:

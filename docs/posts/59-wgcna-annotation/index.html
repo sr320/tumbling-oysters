@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Steven Roberts">
-<meta name="dcterms.date" content="2025-10-27">
-<meta name="description" content="QC">
+<meta name="dcterms.date" content="2025-11-13">
+<meta name="description" content="GOing with more">
 
-<title>Lake Trout PacBio Data – Tumbling Oysters</title>
+<title>Functional annotation summary for WGCNA modules – Tumbling Oysters</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -106,6 +106,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="../../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+<script src="../../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="../../site_libs/datatables-binding-0.33/datatables.js"></script>
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="../../site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="../../site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="../../site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="../../site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="../../site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="../../site_libs/selectize-0.12.0/selectize.min.js"></script>
+<link href="../../site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 
 
 </head>
@@ -304,15 +318,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Lake Trout PacBio Data</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+      <div class="quarto-title-block"><div><h1 class="title">Functional annotation summary for WGCNA modules</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
                   <div>
         <div class="description">
-          QC
+          GOing with more
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">lake trout</div>
-                <div class="quarto-category">methylation</div>
+                <div class="quarto-category">e5</div>
+                <div class="quarto-category">barnacle</div>
+                <div class="quarto-category">coral</div>
               </div>
                   </div>
   </div>
@@ -339,7 +354,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 27, 2025</p>
+        <p class="date">November 13, 2025</p>
       </div>
     </div>
     
@@ -359,96 +374,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>PacBio data came from Wisconsin</p>
-<p>Raw data at <a href="https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/" class="uri">https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/</a></p>
-<p>have 4 lean and 4 siscowets</p>
-<p>they were run in three pools</p>
-<p>Pool 1.</p>
-<p>Lean FA047 bc2041 TATGATCACTGAGTAT.<br>
-Siscowet FA097 bc2071 CGAGTCTAGCGAGTAT.<br>
-Siscowet FA099 bc2072 TATCAGTAGTGAGTAT.</p>
-<p>Pool 2.</p>
-<p>Lean FA094 bc2069 TCTATGACATGAGTAT.<br>
-Lean FA095 bc2070 TACTGCTCACGAGTAT.<br>
-Siscowet FA100 bc2073 ATCACTAGTCGAGTAT.</p>
-<p>Pool 3.</p>
-<p>Lean FA092 - bc2068 ACTACGTGATGAGTAT.<br>
-Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.</p>
-<section id="tldr" class="level2">
-<h2 class="anchored" data-anchor-id="tldr">TLDR</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Type</th>
-<th>Sample ID</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Lean</td>
-<td>bc2041</td>
-</tr>
-<tr class="even">
-<td>Lean</td>
-<td>bc2068</td>
-</tr>
-<tr class="odd">
-<td>Lean</td>
-<td>bc2069</td>
-</tr>
-<tr class="even">
-<td>Lean</td>
-<td>bc2070</td>
-</tr>
-<tr class="odd">
-<td>Siscowet</td>
-<td>bc2071</td>
-</tr>
-<tr class="even">
-<td>Siscowet</td>
-<td>bc2072</td>
-</tr>
-<tr class="odd">
-<td>Siscowet</td>
-<td>bc2073</td>
-</tr>
-<tr class="even">
-<td>Siscowet</td>
-<td>bc2096</td>
-</tr>
-</tbody>
-</table>
-<p>Fastq files @ https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/data/pacbio-reads/fastq2/</p>
+<p>Implementation</p>
+<ul>
+<li><p><strong>Script</strong>:&nbsp;<code>19-annotate-wgcna-modules.py</code>&nbsp;joins&nbsp;<code>wgcna_ortholog_module_assignments.csv</code>&nbsp;with&nbsp;<code>ortholog_groups_annotated.csv</code>&nbsp;on&nbsp;<code>group_id</code>&nbsp;(OG_xxxxx)</p></li>
+<li><p><strong>Summarization</strong>: Counts and ranks GO terms (BP/CC/MF), GO Slim pathways, and protein functions per module</p></li>
+<li><p><strong>Output</strong>: 7 files in&nbsp;<code>M-multi-species/output/18-ortholog-wgcna/</code>:</p>
+<ul>
+<li><p><code>wgcna_module_annotation_summary.txt</code>&nbsp;- detailed report with top 10 terms per category for all 15 modules</p></li>
+<li><p><code>wgcna_module_overview.csv</code>&nbsp;- per-module statistics (size, coverage, dominant terms)</p></li>
+<li><p>5 CSV matrices showing term distributions across modules (GO BP/CC/MF, GO Slim, proteins)</p></li>
+</ul></li>
+</ul>
 <hr>
-<p>The first two pools arrived as Bams, and Sam demultiplexed. <a href="https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/" class="uri">https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/</a></p>
-<p>The third pool arrived demultiplexed.</p>
-<p>Sam generated corresponding fastq files</p>
-<hr>
-</section>
-<section id="nanoplot" class="level2">
-<h2 class="anchored" data-anchor-id="nanoplot">NanoPlot</h2>
-<p>For each of the 8 files ran</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/opt/anaconda/anaconda3/envs/nanoplot_env/bin/NanoPlot</span> <span class="dt">\</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>-t 40 <span class="dt">\</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>--fastq ../data/pacbio-reads/fastq2/m84082_250614_101514_s4.hifi_reads.demux.bc2069--bc2069.fastq.gz <span class="dt">\</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>-o ../analyses/08-nanoplot/bc2069 <span class="dt">\</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>--prefix bc2069_</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>which created</p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_05-31-35.png" class="img-fluid"></p>
-</section>
-<section id="multiqc" class="level2">
-<h2 class="anchored" data-anchor-id="multiqc">MultiQC</h2>
-<p>after all were complete ran multiqc</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span> ../analyses/08-nanoplot/ <span class="at">-o</span> ../analyses/08-multiqc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/08-multiqc/multiqc_report.html" class="uri">https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/08-multiqc/multiqc_report.html</a></p>
-<hr>
-<iframe src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/08-multiqc/multiqc_report.html" width="100%" height="800px" style="border:none;">
-</iframe>
+<p>All output:<a href="https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/output/18-ortholog-wgcna" class="uri">https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/output/18-ortholog-wgcna</a></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/urol-e5/timeseries_molecular/refs/heads/main/M-multi-species/output/18-ortholog-wgcna/wgcna_module_go_bp_summary.csv"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                                    term
+1 positive regulation of transcription by RNA polymerase II [GO:0045944]
+2 negative regulation of transcription by RNA polymerase II [GO:0000122]
+3          regulation of transcription by RNA polymerase II [GO:0006357]
+4        positive regulation of DNA-templated transcription [GO:0045893]
+5                                               proteolysis [GO:0006508]
+6                                         protein transport [GO:0015031]
+  module_0 module_1 module_2 module_3 module_4 module_5 module_6 module_7
+1       14       33       40       16       21       35        9       13
+2       16       36       25       16       17       23       15       13
+3       22       28       28       18       14       27        0        0
+4       14       26       29       14        0       22        0        0
+5        0       35       19       20       15        0        0       16
+6        9       33        0       21        0       17       12       12
+  module_8 module_9 module_10 module_11 module_12 module_13 module_14 total
+1        8        4         0         0         3         0         4   200
+2        7        0         0         0         3         0         2   173
+3        0        0         3         0         0         0         3   143
+4        5        0         0         0         3         0         0   113
+5        0        0         2         0         0         3         0   110
+6        0        0         0         0         0         0         0   104</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  df,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">pageLength =</span> <span class="dv">10</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">autoWidth =</span> <span class="cn">TRUE</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter =</span> <span class="st">'top'</span>,      <span class="co"># column filters at the top</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">rownames =</span> <span class="cn">FALSE</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="datatables html-widget html-fill-item" id="htmlwidget-0fb88eec8b62dde94752" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0fb88eec8b62dde94752">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"22\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"45\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"40\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"21\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"21\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"35\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"16\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"10\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"5\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"4\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"200\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["positive regulation of transcription by RNA polymerase II [GO:0045944]","negative regulation of transcription by RNA polymerase II [GO:0000122]","regulation of transcription by RNA polymerase II [GO:0006357]","positive regulation of DNA-templated transcription [GO:0045893]","proteolysis [GO:0006508]","protein transport [GO:0015031]","cell division [GO:0051301]","apoptotic process [GO:0006915]","protein ubiquitination [GO:0016567]","cilium assembly [GO:0060271]","signal transduction [GO:0007165]","intracellular signal transduction [GO:0035556]","DNA repair [GO:0006281]","negative regulation of DNA-templated transcription [GO:0045892]","DNA damage response [GO:0006974]","negative regulation of apoptotic process [GO:0043066]","cell differentiation [GO:0030154]","positive regulation of gene expression [GO:0010628]","protein stabilization [GO:0050821]","spermatogenesis [GO:0007283]","G protein-coupled receptor signaling pathway [GO:0007186]","neurogenesis [GO:0022008]","cell population proliferation [GO:0008283]","negative regulation of cell population proliferation [GO:0008285]","inflammatory response [GO:0006954]","mRNA splicing, via spliceosome [GO:0000398]","RNA splicing [GO:0008380]","mRNA processing [GO:0006397]","chromatin remodeling [GO:0006338]","protein folding [GO:0006457]","flagellated sperm motility [GO:0030317]","translation [GO:0006412]","positive regulation of cell population proliferation [GO:0008284]","sperm axoneme assembly [GO:0007288]","epithelial cilium movement involved in extracellular fluid movement [GO:0003351]","positive regulation of MAPK cascade [GO:0043410]","rhythmic process [GO:0048511]","positive regulation of proteasomal ubiquitin-dependent protein catabolic process [GO:0032436]","proteasome-mediated ubiquitin-dependent protein catabolic process [GO:0043161]","chordate embryonic development [GO:0043009]","endoplasmic reticulum to Golgi vesicle-mediated transport [GO:0006888]","intracellular protein transport [GO:0006886]","gluconeogenesis [GO:0006094]","malate metabolic process [GO:0006108]","malate-aspartate shuttle [GO:0043490]","tricarboxylic acid cycle [GO:0006099]","angiogenesis [GO:0001525]","negative regulation of cell differentiation [GO:0045596]","spermatid development [GO:0007286]","protein localization [GO:0008104]"],[14,16,22,14,0,9,0,11,9,11,12,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[33,36,28,26,35,33,45,0,0,34,0,0,33,0,30,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[40,25,28,29,19,0,0,15,28,0,0,18,0,0,0,19,24,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[16,16,18,14,20,21,0,12,0,18,14,0,0,0,0,0,0,0,0,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[21,17,14,0,15,0,0,16,15,0,14,0,0,14,0,0,0,0,0,0,14,13,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[35,23,27,22,0,17,17,17,0,0,16,16,0,0,0,0,0,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[9,15,0,0,0,12,14,9,10,0,0,0,11,8,0,8,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[13,13,0,0,16,12,10,0,9,0,0,11,0,0,0,0,0,0,0,0,0,0,9,11,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[8,7,0,5,0,0,0,0,0,6,0,0,0,5,0,0,0,0,6,0,0,0,0,0,0,10,8,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[4,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,2,0,3,0,0,0,0,0,2,2,2,2,2,0,0,0,0,0,0,0,0],[0,0,3,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,3,0,0,0,0,0,0,0,0,0,2,2,2,2,2,2,0,0],[0,0,0,0,0,0,0,0,0,0,2,0,0,0,2,0,2,0,0,2,0,0,0,0,0,0,0,0,0,2,4,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2],[3,3,0,3,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[4,2,3,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],[200,173,143,113,110,104,86,83,71,69,63,49,44,36,32,27,26,20,17,16,14,13,13,11,11,10,8,8,8,4,4,3,3,3,3,3,3,2,2,2,2,2,2,2,2,2,2,2,2,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>term<\/th>\n      <th>module_0<\/th>\n      <th>module_1<\/th>\n      <th>module_2<\/th>\n      <th>module_3<\/th>\n      <th>module_4<\/th>\n      <th>module_5<\/th>\n      <th>module_6<\/th>\n      <th>module_7<\/th>\n      <th>module_8<\/th>\n      <th>module_9<\/th>\n      <th>module_10<\/th>\n      <th>module_11<\/th>\n      <th>module_12<\/th>\n      <th>module_13<\/th>\n      <th>module_14<\/th>\n      <th>total<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]},{"name":"term","targets":0},{"name":"module_0","targets":1},{"name":"module_1","targets":2},{"name":"module_2","targets":3},{"name":"module_3","targets":4},{"name":"module_4","targets":5},{"name":"module_5","targets":6},{"name":"module_6","targets":7},{"name":"module_7","targets":8},{"name":"module_8","targets":9},{"name":"module_9","targets":10},{"name":"module_10","targets":11},{"name":"module_11","targets":12},{"name":"module_12","targets":13},{"name":"module_13","targets":14},{"name":"module_14","targets":15},{"name":"total","targets":16}],"order":[],"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 
 
 <!-- -->
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -914,131 +901,72 @@ Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.</p>
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Lake Trout PacBio Data"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "QC"</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [lake trout, methylation]</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation: </span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 10-27-2025</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_05-35-03.png # finding a good image</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">    url: </span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: FALSE</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#runtime: shiny</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>PacBio data came from Wisconsin</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>Raw data at <span class="ot">&lt;https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/&gt;</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>have 4 lean and 4 siscowets</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>they were run in three pools</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>Pool 1.</span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>Lean FA047 bc2041 TATGATCACTGAGTAT.\</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>Siscowet FA097 bc2071 CGAGTCTAGCGAGTAT.\</span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>Siscowet FA099 bc2072 TATCAGTAGTGAGTAT.</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>Pool 2.</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>Lean FA094 bc2069 TCTATGACATGAGTAT.\</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>Lean FA095 bc2070 TACTGCTCACGAGTAT.\</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>Siscowet FA100 bc2073 ATCACTAGTCGAGTAT.</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>Pool 3.</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>Lean FA092 - bc2068 ACTACGTGATGAGTAT.\</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>Siscowet FA253 - bc2096 ATGTACTAGTGAGTAT.</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="fu">## TLDR </span></span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Type      <span class="pp">|</span> Sample ID <span class="pp">|</span></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="pp">|------------|------------|</span></span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Lean       <span class="pp">|</span> bc2041     <span class="pp">|</span></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Lean       <span class="pp">|</span> bc2068     <span class="pp">|</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Lean       <span class="pp">|</span> bc2069     <span class="pp">|</span></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Lean       <span class="pp">|</span> bc2070     <span class="pp">|</span></span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Siscowet   <span class="pp">|</span> bc2071     <span class="pp">|</span></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Siscowet   <span class="pp">|</span> bc2072     <span class="pp">|</span></span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Siscowet   <span class="pp">|</span> bc2073     <span class="pp">|</span></span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Siscowet   <span class="pp">|</span> bc2096     <span class="pp">|</span></span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>Fastq files @</span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/data/pacbio-reads/fastq2/</span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>The first two pools arrived as Bams, and Sam demultiplexed. <span class="ot">&lt;https://robertslab.github.io/sams-notebook/posts/2025/2025-10-23-Demultiplexing---S.namaychush-PacBio-Sequencing-Using-Lima/&gt;</span></span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>The third pool arrived demultiplexed.</span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>Sam generated corresponding fastq files</span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>------------------------------------------------------------------------</span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="fu">## NanoPlot</span></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a>For each of the 8 files ran</span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="ex">/opt/anaconda/anaconda3/envs/nanoplot_env/bin/NanoPlot</span> <span class="dt">\</span></span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>-t 40 <span class="dt">\</span></span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>--fastq ../data/pacbio-reads/fastq2/m84082_250614_101514_s4.hifi_reads.demux.bc2069--bc2069.fastq.gz <span class="dt">\</span></span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a>-o ../analyses/08-nanoplot/bc2069 <span class="dt">\</span></span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a>--prefix bc2069_</span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a>which created </span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="al">![](http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_05-31-35.png)</span></span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="fu">## MultiQC</span></span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>after all were complete ran multiqc</span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash </span></span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span> ../analyses/08-nanoplot/ <span class="at">-o</span> ../analyses/08-multiqc</span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="ot">&lt;https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/08-multiqc/multiqc_report.html&gt;</span></span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">iframe</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/08-multiqc/multiqc_report.html"</span><span class="ot"> </span></span>
-<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="ot">        width</span><span class="op">=</span><span class="st">"100%"</span><span class="ot"> </span></span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="ot">        height</span><span class="op">=</span><span class="st">"800px"</span><span class="ot"> </span></span>
-<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="ot">        style</span><span class="op">=</span><span class="st">"border:none;"</span><span class="dt">&gt;</span></span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">iframe</span><span class="dt">&gt;</span></span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Functional annotation summary for WGCNA modules"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "GOing with more"</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [e5, barnacle, coral]</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation: </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 11-13-2025</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> http://gannet.fish.washington.edu/seashell/snaps/2025-11-13_05-28-34.png # finding a good image</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">    url: </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: FALSE</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#runtime: shiny</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>Implementation</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Script**:&nbsp;<span class="in">`19-annotate-wgcna-modules.py`</span>&nbsp;joins&nbsp;<span class="in">`wgcna_ortholog_module_assignments.csv`</span>&nbsp;with&nbsp;<span class="in">`ortholog_groups_annotated.csv`</span>&nbsp;on&nbsp;<span class="in">`group_id`</span>&nbsp;(OG_xxxxx)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Summarization**: Counts and ranks GO terms (BP/CC/MF), GO Slim pathways, and protein functions per module</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Output**: 7 files in&nbsp;<span class="in">`M-multi-species/output/18-ortholog-wgcna/`</span>:</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`wgcna_module_annotation_summary.txt`</span>&nbsp;- detailed report with top 10 terms per category for all 15 modules</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span><span class="in">`wgcna_module_overview.csv`</span>&nbsp;- per-module statistics (size, coverage, dominant terms)</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="ss">    -   </span>5 CSV matrices showing term distributions across modules (GO BP/CC/MF, GO Slim, proteins)</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>All output:<span class="ot">&lt;https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/output/18-ortholog-wgcna&gt;</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/urol-e5/timeseries_molecular/refs/heads/main/M-multi-species/output/18-ortholog-wgcna/wgcna_module_go_bp_summary.csv"</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>, <span class="at">check.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="fu">datatable</span>(</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>  df,</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">options =</span> <span class="fu">list</span>(</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">pageLength =</span> <span class="dv">51</span>,</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">autoWidth =</span> <span class="cn">TRUE</span></span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">filter =</span> <span class="st">'top'</span>,      <span class="co"># column filters at the top</span></span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">rownames =</span> <span class="cn">FALSE</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

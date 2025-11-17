@@ -1,0 +1,66 @@
+---
+title: "Functional annotation summary for WGCNA modules"
+description: "GOing with more"
+categories: [e5, barnacle, coral]
+#citation: 
+date: 11-13-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/2025-11-13_05-28-34.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+Implementation
+
+-   **Script**: `19-annotate-wgcna-modules.py` joins `wgcna_ortholog_module_assignments.csv` with `ortholog_groups_annotated.csv` on `group_id` (OG_xxxxx)
+
+-   **Summarization**: Counts and ranks GO terms (BP/CC/MF), GO Slim pathways, and protein functions per module
+
+-   **Output**: 7 files in `M-multi-species/output/18-ortholog-wgcna/`:
+
+    -   `wgcna_module_annotation_summary.txt` - detailed report with top 10 terms per category for all 15 modules
+
+    -   `wgcna_module_overview.csv` - per-module statistics (size, coverage, dominant terms)
+
+    -   5 CSV matrices showing term distributions across modules (GO BP/CC/MF, GO Slim, proteins)
+
+---
+
+All output:<https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/output/18-ortholog-wgcna>
+
+
+```{r}
+url <- "https://raw.githubusercontent.com/urol-e5/timeseries_molecular/refs/heads/main/M-multi-species/output/18-ortholog-wgcna/wgcna_module_go_bp_summary.csv"
+df <- read.csv(url, stringsAsFactors = FALSE, check.names = FALSE)
+head(df)
+```
+
+```{r}
+library(DT)
+
+datatable(
+  df,
+  options = list(
+    pageLength = 51,
+    autoWidth = TRUE
+  ),
+  filter = 'top',      # column filters at the top
+  rownames = FALSE
+)
+```
+
+
