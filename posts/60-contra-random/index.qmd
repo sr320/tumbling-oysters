@@ -1,0 +1,657 @@
+---
+title: "More Random Please"
+description: "GOing with more"
+categories: [e5, barnacle, coral]
+#citation: 
+date: 11-13-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/2025-11-13_05-28-34.png # finding a good image
+
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+### Status
+
+-   **Randomization done**: For each of cleaned_apul, cleaned_peve, and cleaned_ptua, the three requested files have been randomized:
+
+<!-- -->
+
+-   **Value ranges preserved**:
+
+For each file, I computed the global numeric **min/max** and re-generated every numeric entry uniformly within that range.
+
+Sparsity is roughly preserved by probabilistically setting some randomized values to zero using the original zero fraction.
+
+**Summaries updated**:
+
+Features and Samples remain the same; Sparsity has been recomputed from the new randomized data (e.g., in cleaned_apul, lncrna sparsity is now **3.76%**, mirrored in both lncrna_counts_summary.txt and combined_summary.txt).
+
+```         
+python code/context_dependent_analysis.py --data-dir data/full-species-24-random/cleaned_apul 
+```
+
+# Random v Real
+
+TLDR
+
+-   Real data has much stronger baseline signal (especially for lncRNA--gene relationships: high R² and high correlations).
+-   Interaction improvements and counts of "context-dependent" pairs are similar or stronger in random data, for both methylation--miRNA and lncRNA--miRNA, and especially for lncRNA--miRNA.
+-   Methylation--miRNA context_strength stands out as a metric where real \> random, while lncRNA--miRNA context_strength does not (and often random ≥ real).
+
+----
+
+### Where empirical FDR shows up
+
+When you run with --enable-empirical-fdr (and --null-replicates \> 0):
+
+-   **In the tables directory of that run** (e.g. output/context_dependent_analysis_YYYYMMDD_HHMMSS/tables/), the file:
+
+<!-- -->
+
+-   **methylation_mirna_context.csv** gets three extra columns:
+
+<!-- -->
+
+-   **empirical_fdr_threshold**: the scalar context_strength threshold chosen for the run (same value in every row).
+
+<!-- -->
+
+-   **empirical_fdr_estimated**: the estimated global FDR at that threshold (same in every row).
+
+<!-- -->
+
+-   **empirical_fdr_significant**: **True/False** per interaction, indicating whether context_strength \>= empirical_fdr_threshold.
+
+-----
+
+### Overview
+
+-   **Real-data run**: output/context_dependent_analysis_20251108_140602 using data/full-species-24/cleaned_apul.
+
+<!-- -->
+
+-   **Random-data run**: output/context_dependent_analysis_20251119_071813 using data/full-species-24-random/cleaned_apul.
+
+<!-- -->
+
+-   Both runs did the same core analyses (methylation–miRNA context, lncRNA–miRNA context, multi-way interactions) and produced the same types of context tables and plots.
+
+------------------------------------------------------------------------
+
+### Side‑by‑side numerical comparison
+
+#### 1. Methylation–miRNA context (methylation_mirna_context.csv)
+
+-   **Number of pairs**
+
+<!-- -->
+
+-   **Real**: 13,065 pairs
+
+<!-- -->
+
+-   **Random**: 7,125 pairs
+
+<!-- -->
+
+-   So the random run considered roughly half as many context pairs (this is likely due to code/parameter differences, not biology).
+
+<!-- -->
+
+-   **Context-dependent interaction counts (from reports)**
+
+<!-- -->
+
+-   **Real**: 1,464 context-dependent interactions (≈11% of all)
+
+<!-- -->
+
+-   **Random**: 1,152 context-dependent interactions (≈16% of all)
+
+<!-- -->
+
+-   **Random actually has a higher fraction** of pairs flagged as context-dependent.
+
+<!-- -->
+
+-   **Variance explained (R²)**
+
+<!-- -->
+
+-   **Real** (means):
+
+<!-- -->
+
+-   r2_regulator1_only: **0.392**
+
+<!-- -->
+
+-   r2_regulator1_regulator2: **0.481**
+
+<!-- -->
+
+-   r2_with_interaction: **0.502**
+
+<!-- -->
+
+-   **Random** (means):
+
+<!-- -->
+
+-   r2_regulator1_only: **0.345**
+
+<!-- -->
+
+-   r2_regulator1_regulator2: **0.406**
+
+<!-- -->
+
+-   r2_with_interaction: **0.437**
+
+<!-- -->
+
+-   **Interpretation**: Real data clearly has **stronger overall predictive signal** (higher R² at every stage).
+
+<!-- -->
+
+-   **Effect sizes / improvements**
+
+<!-- -->
+
+-   **Real** (means):
+
+<!-- -->
+
+-   improvement_from_regulator2: **0.089**
+
+<!-- -->
+
+-   improvement_from_interaction: **0.021**
+
+<!-- -->
+
+-   **Random** (means):
+
+<!-- -->
+
+-   improvement_from_regulator2: **0.061**
+
+<!-- -->
+
+-   improvement_from_interaction: **0.031**
+
+<!-- -->
+
+-   **Top interaction improvements** (from reports):
+
+<!-- -->
+
+-   **Real** top 10: up to **0.251**
+
+<!-- -->
+
+-   **Random** top 10: up to **0.261**
+
+<!-- -->
+
+-   **Interpretation**:
+
+<!-- -->
+
+-   Adding a second regulator boosts R² **more in real data** (+0.089 vs +0.061), consistent with real structure.
+
+<!-- -->
+
+-   The **interaction term itself** (improvement_from_interaction) is **not smaller in random**; in fact its mean is slightly **larger in random** (0.031 vs 0.021), with similar max values. So interaction “gains” alone do **not** cleanly separate real vs random.
+
+<!-- -->
+
+-   **Context strength**
+
+<!-- -->
+
+-   **Real**: mean context_strength **0.321** (p90 ≈ 0.674, max ≈ 1.843)
+
+<!-- -->
+
+-   **Random**: mean context_strength **0.255** (p90 ≈ 0.546, max ≈ 1.323)
+
+<!-- -->
+
+-   **Interpretation**: For methylation–miRNA, real data has **moderately stronger context signals on average**, but random still produces many pairs with non-trivial context_strength.
+
+------------------------------------------------------------------------
+
+#### 2. lncRNA–miRNA context (lncrna_mirna_context.csv)
+
+-   **Number of pairs**
+
+<!-- -->
+
+-   **Real**: 13,065
+
+<!-- -->
+
+-   **Random**: 7,125
+
+<!-- -->
+
+-   **Context-dependent interaction counts (from reports)**
+
+<!-- -->
+
+-   **Real**: 1,812 context-dependent interactions (≈14%)
+
+<!-- -->
+
+-   **Random**: 1,165 context-dependent interactions (≈16%)
+
+<!-- -->
+
+-   Again, **similar absolute scale**, with **random slightly higher in proportion**.
+
+<!-- -->
+
+-   **Variance explained (R²)**
+
+<!-- -->
+
+-   **Real** (means):
+
+<!-- -->
+
+-   r2_regulator1_only: **0.716**
+
+<!-- -->
+
+-   r2_regulator1_regulator2: **0.739**
+
+<!-- -->
+
+-   r2_with_interaction: **0.751**
+
+<!-- -->
+
+-   **Random** (means):
+
+<!-- -->
+
+-   r2_regulator1_only: **0.288**
+
+<!-- -->
+
+-   r2_regulator1_regulator2: **0.359**
+
+<!-- -->
+
+-   r2_with_interaction: **0.392**
+
+<!-- -->
+
+-   **Interpretation**: Huge separation here — real data shows **very strong baseline fits** (R² \~0.72–0.75), while random is much weaker (\~0.29–0.39). This is clear evidence that the overall lncRNA–gene relationships are real and not reproduced by randomization.
+
+<!-- -->
+
+-   **Effect sizes / improvements**
+
+<!-- -->
+
+-   **Real**:
+
+<!-- -->
+
+-   improvement_from_interaction: mean **0.012**, p90 ≈ 0.034, max ≈ 0.231
+
+<!-- -->
+
+-   **Random**:
+
+<!-- -->
+
+-   improvement_from_interaction: mean **0.033**, p90 ≈ 0.087, max ≈ 0.322
+
+<!-- -->
+
+-   **Interpretation**:
+
+<!-- -->
+
+-   On **random data**, the **interaction term looks stronger on average** (higher mean, higher upper tail) than on real data.
+
+<!-- -->
+
+-   This strongly suggests that **“interaction improvements” on their own are not a clean signal of biology**, and you can get quite substantial-looking interaction gains from noise.
+
+<!-- -->
+
+-   **Context strength**
+
+<!-- -->
+
+-   **Real**: mean context_strength **0.175**, p90 ≈ 0.381, max ≈ 1.737
+
+<!-- -->
+
+-   **Random**: mean context_strength **0.265**, p90 ≈ 0.549, max ≈ 1.306
+
+<!-- -->
+
+-   **Interpretation**: For lncRNA–miRNA, **random data actually has larger average context_strength** and more mass in the upper tail. So the context metric here is **not uniquely elevated in real data**.
+
+------------------------------------------------------------------------
+
+#### 3. Multi-way interactions (multi_way_interactions.csv)
+
+-   **Both runs**
+
+<!-- -->
+
+-   **Total genes analyzed**: 100
+
+<!-- -->
+
+-   **Genes with significant interactions**: **0** in both random and real runs.
+
+<!-- -->
+
+-   **Mean improvement from interactions**:
+
+<!-- -->
+
+-   **Real**: **0.671**
+
+<!-- -->
+
+-   **Random**: **0.811**
+
+<!-- -->
+
+-   **Interpretation**:
+
+<!-- -->
+
+-   The multi-way model produces **substantial mean improvements** in both datasets, even larger in the random run, yet **none are called significant** under your threshold.
+
+<!-- -->
+
+-   So the **raw improvement metric alone is not discriminative**, and the “significant interactions” filter is what’s preventing you from calling many clearly-noisy multi-way effects.
+
+------------------------------------------------------------------------
+
+### Overlap and qualitative patterns
+
+-   **Top hits differ**, but there is **some gene overlap** (e.g. FUN_028275, FUN_000398, FUN_040206 appear as top regulators in one or both runs), which suggests:
+
+<!-- -->
+
+-   Either those genes have generic properties (e.g. high variance, many regulators) that make them prone to being selected in many settings, or
+
+<!-- -->
+
+-   The pipeline’s ranking is influenced by structural aspects (feature counts, model behaviour) that can re-surface the same genes even on randomized expression.
+
+<!-- -->
+
+-   **File sizes and counts** (e.g. context tables, correlation tables) differ between runs, but that’s mostly reflecting different filtering / setup rather than a biologically interpretable signal.
+
+------------------------------------------------------------------------
+
+### Interpretation: do random and real give “similar” results?
+
+-   **Where they are clearly different**:
+
+<!-- -->
+
+-   **Real data shows much stronger base signal**:
+
+<!-- -->
+
+-   Higher R² for gene prediction from regulators (especially lncRNA–miRNA–gene, where real R² ≈ 0.75 vs random ≈ 0.39).
+
+<!-- -->
+
+-   Stronger, more consistent correlations (corr_high_regulator2, corr_low_regulator2 are \~0.6–0.8 in real vs near 0 on average in random).
+
+<!-- -->
+
+-   For methylation–miRNA, **context_strength is somewhat higher in real**.
+
+<!-- -->
+
+-   **Where they look surprisingly similar (or random looks “stronger”)**:
+
+<!-- -->
+
+-   The **number of context-dependent interactions** is large in both and not dramatically reduced in random; the **fraction of pairs flagged context-dependent is actually slightly higher in random** for both context analyses.
+
+<!-- -->
+
+-   **Mean interaction improvements** (improvement_from_interaction) and their upper tails are **of the same order in real and random**, and frequently **larger in the random run**, particularly for lncRNA–miRNA and multi-way models.
+
+<!-- -->
+
+-   Thus, **raw interaction “gain” and context_strength values alone can be generated by noise**, and do not serve as a strong discriminator between real and randomized data.
+
+------------------------------------------------------------------------
+
+### Bottom line
+
+-   **Yes, the pipeline produces superficially similar-looking context-dependent interaction metrics on random data and real data**: thousands of candidate interactions, similar or even larger mean interaction improvements and context_strengths, and comparable top effect sizes.
+
+<!-- -->
+
+-   **The main quantitative separation lives in the baseline fit quality (R² and correlations), not in the interaction metrics themselves.** Real data has much stronger overall gene–regulator relationships, but the extra improvement attributed to context/interaction is not dramatically suppressed in the random run.
+
+<!-- -->
+
+-   **Interpretation-wise**, this suggests that **context-dependent interaction scores require a proper null/thresholding strategy (e.g. empirical FDR vs randomizations)**; taken at face value, they are not by themselves strong evidence of biology because similar magnitudes arise from randomized data.
+
+# What is Contra Doing?
+
+### High‑level idea
+
+**context_dependent_analysis.py is a pipeline that asks:**
+
+“For each gene, do its regulators (miRNAs, lncRNAs, DNA methylation sites) affect it differently in different contexts (e.g., when a regulator is high vs low)?”
+
+It takes the four matched datasets (genes, lncRNAs, miRNAs, methylation), runs a lot of regression and correlation models in parallel, and then writes out tables and plots summarizing which interactions look context‑dependent.
+
+------------------------------------------------------------------------
+
+### Step 1 – Load and align the omics data
+
+-   **Loads four matrices** from gene_counts_cleaned.csv, lncrna_counts_cleaned.csv, mirna_counts_cleaned.csv, wgbs_counts_cleaned.csv.
+
+<!-- -->
+
+-   Rows = features (genes, lncRNAs, miRNAs, CpGs)
+
+<!-- -->
+
+-   Columns = the same 40 samples.
+
+<!-- -->
+
+-   **Checks that sample IDs match across all four**, so everything is aligned per sample.
+
+<!-- -->
+
+-   Stores convenient arrays so it can do fast, parallel calculations.
+
+------------------------------------------------------------------------
+
+### Step 2 – Methylation–miRNA–gene context analysis
+
+For **each gene**:
+
+-   **Finds top‑correlated miRNAs and CpG sites** with that gene (using Pearson correlation, keeping only those with somewhat small p‑values).
+
+<!-- -->
+
+-   For each **gene–miRNA–CpG trio**, it fits three regression models:
+
+1.  Gene \~ methylation
+
+<!-- -->
+
+1.  Gene \~ methylation + miRNA
+
+<!-- -->
+
+1.  Gene \~ methylation + miRNA + (methylation × miRNA interaction term)
+
+-   It then **asks whether including the interaction term significantly improves the model fit** (using an F‑test).
+
+<!-- -->
+
+-   If yes, it flags that **the effect of methylation on the gene depends on miRNA level** (context‑dependent regulation).
+
+<!-- -->
+
+-   It also **splits samples into “high miRNA” vs “low miRNA”** and compares the methylation–gene correlation in those two groups, to quantify how strong and in which direction the context effect is.
+
+All results are collected into a big table (one row per trio).
+
+------------------------------------------------------------------------
+
+### Step 3 – lncRNA–miRNA–gene context analysis
+
+This is analogous to Step 2, but now:
+
+-   **Regulator1 = lncRNA**, **Regulator2 = miRNA** for each gene.
+
+<!-- -->
+
+-   Same workflow: pick top regulators, fit 3 nested models, test whether **lncRNA’s effect on the gene depends on miRNA level**, and compare correlations in high vs low miRNA contexts.
+
+<!-- -->
+
+-   Produces another large table describing **lncRNA–miRNA–gene** context‑dependent interactions.
+
+------------------------------------------------------------------------
+
+### Step 4 – Multi‑way regulatory interactions
+
+For a subset or all genes (depending on script version):
+
+-   For each gene, **collects a set of top regulators** (a mix of miRNAs, lncRNAs, and methylation sites that correlate with the gene).
+
+<!-- -->
+
+-   Builds two models:
+
+<!-- -->
+
+-   **Base model**: gene \~ the strongest single regulator.
+
+<!-- -->
+
+-   **Full model**: gene \~ all selected regulators together.
+
+<!-- -->
+
+-   Tests whether **adding all these regulators significantly improves the explanation of gene expression**, again via a model comparison (F‑test).
+
+<!-- -->
+
+-   This highlights genes with **complex, multi‑regulator control** (many regulators acting together, not just one).
+
+------------------------------------------------------------------------
+
+### Step 5 – “Context‑specific networks” (high/low regulator states)
+
+The script defines simple contexts like:
+
+-   **High miRNA**, **low miRNA**, **high methylation**, based on z‑scored levels of a “sentinel” miRNA or CpG across samples.
+
+For each context:
+
+-   Subsets samples that fall into that context (e.g., high miRNA).
+
+<!-- -->
+
+-   Within that subset, **recalculates correlations**:
+
+<!-- -->
+
+-   gene–miRNA
+
+<!-- -->
+
+-   gene–lncRNA
+
+<!-- -->
+
+-   gene–methylation
+
+<!-- -->
+
+-   This gives **context‑specific correlation networks**, showing which regulatory edges are present when, say, a particular miRNA or CpG is high vs low.
+
+------------------------------------------------------------------------
+
+### Step 6 – Outputs, plots, and reports
+
+Finally, the script:
+
+-   **Saves all result tables** (interactions, p‑values, context strength, etc.) as CSVs in an output/.../tables folder.
+
+<!-- -->
+
+-   **Generates plots**:
+
+<!-- -->
+
+-   Distributions of “interaction improvement” (how much the interaction term helps).
+
+<!-- -->
+
+-   Distributions of context strength.
+
+<!-- -->
+
+-   Bar charts summarizing how many edges of each type exist in each context.
+
+<!-- -->
+
+-   **Produces Markdown and HTML reports** that summarize:
+
+<!-- -->
+
+-   How many interactions were tested.
+
+<!-- -->
+
+-   How many look context‑dependent.
+
+<!-- -->
+
+-   Top examples for each interaction type.
+
+<!-- -->
+
+-   Links to the generated CSV files.
+
+------------------------------------------------------------------------
+
+### In biologist terms
+
+-   Think of it as an **automatic screen for context‑dependent regulation** across all genes and all regulators you have.
+
+<!-- -->
+
+-   It’s looking for cases where **“regulator A only affects gene X when regulator B is high (or low)”**, and formalizes that with regression models, significance tests, and context‑specific networks.
