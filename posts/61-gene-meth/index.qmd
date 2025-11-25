@@ -1,0 +1,458 @@
+---
+title: "Timeseries Gene Level methylation"
+description: "finally"
+categories: [e5, coral]
+#citation: 
+date: 11-25-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_10-10-01.png # finding a good image
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+Getting gene-level methylation using 10xbedgraphs... 
+
+Here is a walk through of one species.. 
+
+
+## Gene Model Preparation
+
+``` bash
+head ../data/Pocillopora_meandrina_HIv1.genes-validated.gff3
+
+```
+
+```
+##gff-version 3
+##sequence-region   Pocillopora_meandrina_HIv1___xfSc0000716 887 39392
+Pocillopora_meandrina_HIv1___xfSc0000716	AUGUSTUS	gene	887	6811	.	-	.	ID=gene-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	AUGUSTUS	mRNA	887	6811	.	-	.	ID=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1;Parent=gene-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	AUGUSTUS	CDS	887	973	.	-	0	ID=cds-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1;Parent=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	AUGUSTUS	exon	887	973	.	-	0	ID=exon-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1-1;Parent=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	AUGUSTUS	CDS	1828	1882	.	-	1	ID=cds-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1;Parent=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	AUGUSTUS	exon	1828	1882	.	-	1	ID=exon-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1-2;Parent=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	AUGUSTUS	CDS	2308	2371	.	-	2	ID=cds-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1;Parent=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	AUGUSTUS	exon	2308	2371	.	-	2	ID=exon-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1-3;Parent=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
+```
+
+``` bash
+cut -f3 ../data/Pocillopora_meandrina_HIv1.genes-validated.gff3 | \
+grep -v "^#" | \
+sort | uniq -c | sort -nr
+```
+
+```
+ 208535 exon
+ 208535 CDS
+  31840 mRNA
+  31840 gene
+```
+
+
+``` bash
+gawk '$3=="gene" {
+    split($9, a, ";");
+    for(i in a){
+        if(a[i] ~ /^ID=/){
+            sub("ID=", "", a[i]);
+            gene_id = a[i];
+        }
+    }
+    print $1 "\t" $4-1 "\t" $5 "\t" gene_id;
+}' ../data/Pocillopora_meandrina_HIv1.genes-validated.gff3 > ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed
+```
+
+``` bash
+head ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed
+wc -l ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed
+```
+
+
+```
+Pocillopora_meandrina_HIv1___xfSc0000716	886	6811	gene-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	7304	12239	gene-Pocillopora_meandrina_HIv1___RNAseq.g29952.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	21621	23112	gene-Pocillopora_meandrina_HIv1___RNAseq.g29953.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	25312	26016	gene-Pocillopora_meandrina_HIv1___RNAseq.g29954.t1
+Pocillopora_meandrina_HIv1___xfSc0000716	34770	39392	gene-Pocillopora_meandrina_HIv1___RNAseq.g29955.t1
+Pocillopora_meandrina_HIv1___Sc0000029	18377	30613	gene-Pocillopora_meandrina_HIv1___RNAseq.g10233.t1
+Pocillopora_meandrina_HIv1___Sc0000029	35435	38326	gene-Pocillopora_meandrina_HIv1___RNAseq.g10234.t1
+Pocillopora_meandrina_HIv1___Sc0000029	39901	40640	gene-Pocillopora_meandrina_HIv1___RNAseq.g10235.t1
+Pocillopora_meandrina_HIv1___Sc0000029	56431	56839	gene-Pocillopora_meandrina_HIv1___RNAseq.g10236.t1
+Pocillopora_meandrina_HIv1___Sc0000029	96446	105523	gene-Pocillopora_meandrina_HIv1___RNAseq.g10237.t1
+31840 ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed
+```
+
+# Prepping bedgraphs
+
+```
+mkdir -p ../data/10xbedgraph
+cd ../data/10xbedgraph
+wget -r -l1 --no-parent -nd -A '*10x.bedgraph' \
+     'https://gannet.fish.washington.edu/metacarcinus/E5/Ptuahiniensis/20250821_meth_Ptua/'
+```
+
+``` bash
+head ../data/10xbedgraph/POC-40-TP1_10x.bedgraph
+```
+
+``` bash
+for f in ../data/10xbedgraph/*_10x.bedgraph; do
+    sort -k1,1 -k2,2n "$f" > ${f%.bedgraph}.sorted.bedgraph
+done
+```
+
+
+
+``` bash
+head ../data/10xbedgraph/POC-40-TP1_10x.sorted.bedgraph
+```
+
+```
+Pocillopora_meandrina_HIv1___Sc0000000	2852	2854	0.000000
+Pocillopora_meandrina_HIv1___Sc0000000	2908	2910	0.000000
+Pocillopora_meandrina_HIv1___Sc0000000	3375	3377	6.666667
+Pocillopora_meandrina_HIv1___Sc0000000	3384	3386	7.142857
+Pocillopora_meandrina_HIv1___Sc0000000	3429	3431	0.000000
+Pocillopora_meandrina_HIv1___Sc0000000	3570	3572	0.000000
+Pocillopora_meandrina_HIv1___Sc0000000	5128	5130	0.000000
+Pocillopora_meandrina_HIv1___Sc0000000	6101	6103	0.000000
+Pocillopora_meandrina_HIv1___Sc0000000	6110	6112	0.000000
+Pocillopora_meandrina_HIv1___Sc0000000	9318	9320	0.000000
+```
+
+
+``` bash
+mkdir -p ../output/09-Ptua-Gene-Methylation/
+
+sort -k1,1 -k2,2n ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed \
+  > ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.sorted.bed
+
+for f in ../data/10xbedgraph/*_10x.sorted.bedgraph; do
+    sample=$(basename "$f" _10x.sorted.bedgraph)
+
+    bedtools map \
+        -a ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.sorted.bed \
+        -b "$f" \
+        -c 4 \
+        -o mean,count \
+        > ../output/09-Ptua-Gene-Methylation/gene_methylation_${sample}.tsv
+done
+```
+
+
+```
+Pocillopora_meandrina_HIv1___Sc0000000	10770	23652	gene-Pocillopora_meandrina_HIv1___RNAseq.g20902.t1	77.1836165	18
+Pocillopora_meandrina_HIv1___Sc0000000	25128	33764	gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1	60.81863374	38
+Pocillopora_meandrina_HIv1___Sc0000000	33907	39296	gene-Pocillopora_meandrina_HIv1___TS.g25664.t1	20.83649989	45
+Pocillopora_meandrina_HIv1___Sc0000000	44371	50798	gene-Pocillopora_meandrina_HIv1___RNAseq.g20905.t1	0.2109149468	282
+Pocillopora_meandrina_HIv1___Sc0000000	52049	53624	gene-Pocillopora_meandrina_HIv1___RNAseq.g20906.t1	0.2717391282	39
+Pocillopora_meandrina_HIv1___Sc0000000	54620	71869	gene-Pocillopora_meandrina_HIv1___RNAseq.g20907.t1	9.341014667	255
+Pocillopora_meandrina_HIv1___Sc0000000	75141	87120	gene-Pocillopora_meandrina_HIv1___RNAseq.g20908.t1	35.22936122	74
+Pocillopora_meandrina_HIv1___Sc0000000	89333	101789	gene-Pocillopora_meandrina_HIv1___RNAseq.g20909.t1	32.38789587	97
+Pocillopora_meandrina_HIv1___Sc0000000	104428	116100	gene-Pocillopora_meandrina_HIv1___RNAseq.g20910.t1	54.14505446	61
+Pocillopora_meandrina_HIv1___Sc0000000	117505	121120	gene-Pocillopora_meandrina_HIv1___RNAseq.g20911.t1	27.60554107	54
+```
+
+
+``` bash
+for f in ../output/09-Ptua-Gene-Methylation/gene_methylation*.tsv; do
+    out="../output/09-Ptua-Gene-Methylation/$(basename "${f%.tsv}_gt10.tsv")"
+    awk '$6 > 10' "$f" > "$out"
+done
+```
+
+``` bash
+head ../output/09-Ptua-Gene-Methylation/gene_methylation_POC-40-TP*_gt10.tsv
+```
+
+
+```
+==> ../output/09-Ptua-Gene-Methylation/gene_methylation_POC-40-TP1_gt10.tsv <==
+Pocillopora_meandrina_HIv1___Sc0000000	10770	23652	gene-Pocillopora_meandrina_HIv1___RNAseq.g20902.t1	78.86871104	24
+Pocillopora_meandrina_HIv1___Sc0000000	25128	33764	gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1	66.12523937	38
+Pocillopora_meandrina_HIv1___Sc0000000	33907	39296	gene-Pocillopora_meandrina_HIv1___TS.g25664.t1	25.66347985	41
+Pocillopora_meandrina_HIv1___Sc0000000	44371	50798	gene-Pocillopora_meandrina_HIv1___RNAseq.g20905.t1	0.61153482	250
+Pocillopora_meandrina_HIv1___Sc0000000	52049	53624	gene-Pocillopora_meandrina_HIv1___RNAseq.g20906.t1	1.662464711	38
+Pocillopora_meandrina_HIv1___Sc0000000	54620	71869	gene-Pocillopora_meandrina_HIv1___RNAseq.g20907.t1	8.299407695	256
+Pocillopora_meandrina_HIv1___Sc0000000	75141	87120	gene-Pocillopora_meandrina_HIv1___RNAseq.g20908.t1	32.24347769	74
+Pocillopora_meandrina_HIv1___Sc0000000	89333	101789	gene-Pocillopora_meandrina_HIv1___RNAseq.g20909.t1	29.81549905	94
+Pocillopora_meandrina_HIv1___Sc0000000	104428	116100	gene-Pocillopora_meandrina_HIv1___RNAseq.g20910.t1	54.3217754	63
+Pocillopora_meandrina_HIv1___Sc0000000	117505	121120	gene-Pocillopora_meandrina_HIv1___RNAseq.g20911.t1	22.62597314	65
+```
+
+## Combined Matrix
+
+``` r
+library(tidyverse)
+
+# Directory containing all filtered tsv files
+indir <- "../output/09-Ptua-Gene-Methylation"
+
+# List all filtered files
+files <- list.files(indir, pattern = "gene_methylation.*_gt10.tsv", full.names = TRUE)
+
+# Read and combine
+df_list <- lapply(files, function(f) {
+  sample_name <- basename(f) |> 
+    sub("gene_methylation_", "", x = _) |> 
+    sub("_gt10.tsv", "", x = _)
+
+  read_tsv(f, col_names = FALSE) |>
+    select(X4, X5) |>
+    rename(gene_id = X4, !!sample_name := X5)
+})
+
+# Full join all files by gene_id
+merged <- reduce(df_list, full_join, by = "gene_id")
+
+# ---- NEW PART: keep genes present in >=75% of samples ----
+merged_75 <- merged %>% 
+  mutate(
+    # fraction of samples with non-NA values (ignores gene_id column)
+    frac_nonNA = rowMeans(!is.na(across(-gene_id)))
+  ) %>%
+  filter(frac_nonNA >= 0.75) %>% 
+  select(-frac_nonNA)
+
+# Save 75% filtered matrix
+write_tsv(merged_75, "../output/09-Ptua-Gene-Methylation/Ptua-gene-methylation_75pct.tsv")
+```
+
+
+```
+23370 ../output/09-Ptua-Gene-Methylation/Ptua-gene-methylation_75pct.tsv
+gene_id	POC-201-TP1	POC-201-TP2	POC-219-TP1	POC-219-TP2	POC-219-TP3	POC-219-TP4	POC-222-TP1	POC-222-TP3	POC-222-TP4	POC-255-TP1	POC-255-TP2	POC-255-TP3	POC-259-TP1	POC-259-TP2	POC-40-TP1	POC-40-TP2	POC-40-TP3	POC-40-TP4	POC-42-TP2	POC-42-TP4	POC-52-TP1	POC-52-TP2	POC-52-TP3	POC-52-TP4	POC-53-TP1	POC-53-TP2	POC-53-TP3	POC-53-TP4	POC-57-TP1	POC-57-TP2	POC-57-TP3	POC-57-TP4
+gene-Pocillopora_meandrina_HIv1___RNAseq.g20902.t1	55.94819507	65	NA	56.71798513	70.75064638	72.97016588	69.38569095	61.48214065	60.15602938	68.71286394	68.121314	NA	80.14404553	81.65033473	78.86871104	75.75863129	73.52938063	77.1836165	63.71908893	73.56089086	NA	63.53896107	61.79727092	NA	69.83198112	66.01362921	48.35913809	NA	71.90167729	75.73253744	74.34254614	65.64244627
+gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1	62.07071959	64.30941694	57.89994524	57.9764581	62.95167124	61.53853367	59.22841108	59.25982624	56.56210374	57.61653049	56.71230877	62.92154108	61.34633203	67.04912922	66.12523937	64.45467636	63.47604045	60.81863374	58.51124484	60.36185731	57.97446009	60.10673518	56.45465472	53.58677349	57.63890561	60.56861659	56.60354664	54.7309886	62.98476886	62.72254031	66.12983122	63.81437656
+```
+
+
+``` r
+library(tidyverse)
+library(pheatmap)
+
+# ------------------------------------------------------------
+# Load data
+# ------------------------------------------------------------
+df <- read_tsv("../output/09-Ptua-Gene-Methylation/Ptua-gene-methylation_75pct.tsv")
+
+mat <- df %>%
+  column_to_rownames("gene_id") %>%
+  as.matrix()
+
+# ------------------------------------------------------------
+# Step 1 — Impute NA with row means
+# ------------------------------------------------------------
+row_means <- rowMeans(mat, na.rm = TRUE)
+
+for (i in seq_len(nrow(mat))) {
+  if (is.na(row_means[i])) row_means[i] <- 0  # all-NA rows
+  mat[i, is.na(mat[i, ])] <- row_means[i]
+}
+
+# ------------------------------------------------------------
+# Step 2 — Remove zero-variance rows
+# ------------------------------------------------------------
+keep <- apply(mat, 1, function(x) sd(x) > 0)
+mat2 <- mat[keep, , drop = FALSE]
+
+# ------------------------------------------------------------
+# Step 3 — Remove rows still containing Inf/NaN
+# ------------------------------------------------------------
+mat2 <- mat2[apply(mat2, 1, function(x) all(is.finite(x))), , drop = FALSE]
+
+# ------------------------------------------------------------
+# Heatmap 1 — Scaled (same as before)
+# ------------------------------------------------------------
+pheatmap(
+  mat2,
+  scale = "row",
+  clustering_method = "ward.D2",
+  show_rownames = FALSE,
+  main = "Gene-level Methylation Patterns (Scaled)"
+)
+
+# ------------------------------------------------------------
+# Heatmap 2 — Actual methylation values (Unscaled)
+# ------------------------------------------------------------
+pheatmap(
+  mat2,
+  scale = "none",
+  clustering_method = "ward.D2",
+  show_rownames = FALSE,
+  main = "Gene-level Methylation Values (Raw)",
+  color = colorRampPalette(c("navy","green", "firebrick"))(100)  # optional nicer palette
+)
+```
+
+![heatmap_scaled](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-02-49.png) 
+
+
+
+``` r
+library(tidyverse)
+library(RColorBrewer)
+
+# -------------------------
+# Load data
+# -------------------------
+df <- read_tsv("../output/09-Ptua-Gene-Methylation/Ptua-gene-methylation_75pct.tsv")
+
+# -------------------------
+# Convert to matrix
+# -------------------------
+mat <- df %>%
+  column_to_rownames("gene_id") %>%
+  as.matrix()
+
+# -------------------------
+# Step 1: Impute NA with row means
+# -------------------------
+row_means <- rowMeans(mat, na.rm = TRUE)
+
+for (i in seq_len(nrow(mat))) {
+  if (is.na(row_means[i])) row_means[i] <- 0  # if entire row is NA
+  mat[i, is.na(mat[i, ])] <- row_means[i]
+}
+
+# -------------------------
+# Step 2: Remove zero-variance genes 
+# (these blow up PCA scaling)
+# -------------------------
+keep <- apply(mat, 1, function(x) sd(x) > 0)
+mat2 <- mat[keep, ]
+
+# -------------------------
+# Step 3: Remove genes containing any Inf/NaN
+# -------------------------
+mat2 <- mat2[apply(mat2, 1, function(x) all(is.finite(x))), ]
+
+# -------------------------
+# Step 4: Transpose (samples as rows)
+# -------------------------
+mat2_t <- t(mat2)
+
+# -------------------------
+# Extract sample group
+# -------------------------
+sample_groups <- str_extract(rownames(mat2_t), "POC-[0-9]+")
+
+ngroups <- length(unique(sample_groups))
+
+colors <- brewer.pal(max(3, ngroups), "Dark2")[1:ngroups]
+group_colors <- setNames(colors, unique(sample_groups))
+
+# -------------------------
+# Step 5: Run PCA safely
+# -------------------------
+pca <- prcomp(mat2_t, scale. = TRUE)
+
+# -------------------------
+# Step 6: Build plotting DF
+# -------------------------
+pca_df <- data.frame(
+  PC1 = pca$x[,1],
+  PC2 = pca$x[,2],
+  sample = rownames(pca$x),
+  group = sample_groups
+)
+
+# -------------------------
+# Step 7: Plot PCA
+# -------------------------
+ggplot(pca_df, aes(PC1, PC2, color = group, label = sample)) +
+  geom_point(size = 4) +
+  geom_text(vjust = -0.7, size = 3) +
+  scale_color_manual(values = group_colors) +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "PCA of Gene-Level Methylation",
+    color = "Sample Group"
+  )
+
+```
+
+
+
+
+
+![pca](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-02-17.png)
+
+
+``` r
+library(tidyverse)
+library(pheatmap)
+
+# ------------------------------------------------
+# Load and convert to matrix
+# ------------------------------------------------
+mat <- read_tsv("../output/09-Ptua-Gene-Methylation/Ptua-gene-methylation_75pct.tsv") %>%
+  column_to_rownames("gene_id") %>%
+  as.matrix()
+
+# ------------------------------------------------
+# Step 1 — Impute NA with row means
+# ------------------------------------------------
+row_means <- rowMeans(mat, na.rm = TRUE)
+
+for (i in seq_len(nrow(mat))) {
+  if (is.na(row_means[i])) row_means[i] <- 0  # handles all-NA rows
+  mat[i, is.na(mat[i, ])] <- row_means[i]
+}
+
+# ------------------------------------------------
+# Step 2 — Remove zero-variance genes
+# (these make correlation produce NA columns)
+# ------------------------------------------------
+keep <- apply(mat, 1, function(x) sd(x) > 0)
+mat2 <- mat[keep, , drop = FALSE]
+
+# ------------------------------------------------
+# Step 3 — Remove any rows still containing Inf/NaN
+# ------------------------------------------------
+mat2 <- mat2[apply(mat2, 1, function(x) all(is.finite(x))), , drop = FALSE]
+
+# ------------------------------------------------
+# Step 4 — Compute correlation matrix safely
+# ------------------------------------------------
+cor_mat <- cor(mat2, use = "pairwise.complete.obs")
+
+# ------------------------------------------------
+# Step 5 — Remove NA rows/columns in correlation matrix (if any remain)
+# ------------------------------------------------
+finite_cols <- apply(cor_mat, 2, function(x) all(is.finite(x)))
+cor_mat2 <- cor_mat[finite_cols, finite_cols]
+
+# ------------------------------------------------
+# Step 6 — Plot sample–sample correlation heatmap
+# ------------------------------------------------
+pheatmap(cor_mat2,
+         main = "Sample–Sample Correlation",
+         clustering_method = "average",
+         fontsize = 12)
+```
+
+![samplesample](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-05-08.png)
+
+
+
+## Quick Species Comparison
+
+
+| Apul | Peve | Ptua |
+|--------|---------|---------|
+| <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-14-56.png" width="250"> | <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-16-52.png" width="250"> | <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-02-49.png" width="250"> |
+
