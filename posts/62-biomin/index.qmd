@@ -1,0 +1,32 @@
+---
+title: "Calcification Count Matrices"
+description: "filtering timeseries"
+categories: [e5, coral]
+#citation: 
+date: 11-26-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/2025-11-26_10-46-20.png # finding a good image
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+Pulling out calcification / biomin gene counts.
+
+Have list of biomineralization genes from coral literature (e.g., Takeuchi et al. 2016, Ramos-Silva et al. 2013)
+
+
+
+
