@@ -9,14 +9,581 @@
 <link>https://sr320.github.io/tumbling-oysters/</link>
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.7.33</generator>
-<lastBuildDate>Tue, 25 Nov 2025 08:00:00 GMT</lastBuildDate>
+<generator>quarto-1.6.40</generator>
+<lastBuildDate>Wed, 26 Nov 2025 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Calcification Count Matrices</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/62-biomin/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Pulling out calcification / biomin gene counts.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+TLDR
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>https://raw.githubusercontent.com/urol-e5/timeseries-molecular-calcification/refs/heads/main/M-multi-species/output/33-biomin-pathway-counts/apul_biomin_counts.csv</li>
+<li>https://raw.githubusercontent.com/urol-e5/timeseries-molecular-calcification/refs/heads/main/M-multi-species/output/33-biomin-pathway-counts/peve_biomin_counts.csv</li>
+<li>https://raw.githubusercontent.com/urol-e5/timeseries-molecular-calcification/refs/heads/main/M-multi-species/output/33-biomin-pathway-counts/ptua_biomin_counts.csv</li>
+</ul>
+</div>
+</div>
+<p>Have list of biomineralization genes from coral literature (e.g., Takeuchi et al.&nbsp;2016, Ramos-Silva et al.&nbsp;2013)</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">makeblastdb</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-2">-in ../output/31-biomin-pathway/Stylo-biomin.fasta <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-3">-dbtype prot <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-4">-out ../output/31-biomin-pathway/Stylo-biomin-db</span></code></pre></div>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">blastp</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-2">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-query</span> ../output/11.3-ortholog-annotation/representative_sequences.faa <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-3">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-db</span> ../output/31-biomin-pathway/Stylo-biomin-db <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-out</span> ../output/31-biomin-pathway/OG-repseq_Stylo-biomin-results.tsv <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-outfmt</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"6 qseqid sseqid evalue bitscore"</span> <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-6">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-evalue</span> 1e-20 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-7">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-max_target_seqs</span> 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-8">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-max_hsps</span> 1 <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb2-9">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-num_threads</span> 10</span></code></pre></div>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(dplyr)</span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(readr)</span>
+<span id="cb3-3"></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Paths</span></span>
+<span id="cb3-5">blast_file <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/31-biomin-pathway/OG-repseq_Stylo-biomin-results.tsv"</span></span>
+<span id="cb3-6">mapping_file <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/11.3-ortholog-annotation/gene_to_ortholog_mapping.csv"</span></span>
+<span id="cb3-7"></span>
+<span id="cb3-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Read BLAST results</span></span>
+<span id="cb3-9">blast <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_tsv</span>(</span>
+<span id="cb3-10">  blast_file,</span>
+<span id="cb3-11">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col_names =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gene_id"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"hit"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"evalue"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"score"</span>)</span>
+<span id="cb3-12">)</span>
+<span id="cb3-13"></span>
+<span id="cb3-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Read ortholog mapping</span></span>
+<span id="cb3-15">mapping <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_csv</span>(mapping_file)</span>
+<span id="cb3-16"></span>
+<span id="cb3-17"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Join to add group_id to each gene in blast results</span></span>
+<span id="cb3-18">annotated <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> blast <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb3-19">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">left_join</span>(mapping <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(gene_id, group_id), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gene_id"</span>)</span>
+<span id="cb3-20"></span>
+<span id="cb3-21"></span>
+<span id="cb3-22"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Write out CSV</span></span>
+<span id="cb3-23"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">write_csv</span>(annotated, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/31-biomin-pathway/OG-repseq_Stylo-biomin.csv"</span>)</span>
+<span id="cb3-24"></span>
+<span id="cb3-25"></span>
+<span id="cb3-26"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># View result</span></span>
+<span id="cb3-27">annotated</span></code></pre></div>
+<pre><code>gene_id,hit,evalue,score,group_id
+FUN_000236-T1,XP_022780303.1,6.1399999999999995e-24,102,OG_00030
+FUN_000857-T1,XP_022795459.1,1.3899999999999998e-159,447,OG_00171
+FUN_000867-T1,XP_022780694.1,1.6e-34,125,OG_00176
+FUN_001009-T1,XP_022789591.1,7.039999999999999e-107,338,OG_00246
+FUN_001088-T1,XP_022783044.1,3.9e-35,130,OG_00297
+FUN_001089-T1,XP_022783044.1,2.1699999999999998e-23,93.2,OG_00298
+FUN_001101-T1,XP_022783044.1,1.22e-31,118,OG_00302
+FUN_001107-T1,XP_022795459.1,9.45e-59,190,OG_00305
+FUN_001118-T1,XP_022801359.1,1.33e-35,124,OG_00314</code></pre>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb5-2"></span>
+<span id="cb5-3">ogs <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_tsv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/33-biomin-pathway-counts/biomin-OG.txt"</span>,</span>
+<span id="cb5-4">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">col_names =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"group_id"</span>)</span>
+<span id="cb5-5"></span>
+<span id="cb5-6">map <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_csv</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/11.3-ortholog-annotation/gene_to_ortholog_mapping.csv"</span>)</span>
+<span id="cb5-7"></span>
+<span id="cb5-8">filtered <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> map <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb5-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">semi_join</span>(ogs, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"group_id"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb5-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-T</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d+$"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>))  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># &lt;&lt;&lt;&lt;&lt;&lt; KEY FIX</span></span></code></pre></div>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb6-2"></span>
+<span id="cb6-3">base_url <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://raw.githubusercontent.com/urol-e5/MOSAiC/refs/heads/main/data/orthologs"</span></span>
+<span id="cb6-4"></span>
+<span id="cb6-5">apul <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_csv</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">file.path</span>(base_url, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"apul-gene_count_matrix.csv"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">show_col_types =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb6-6">peve <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_csv</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">file.path</span>(base_url, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"peve-gene_count_matrix.csv"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">show_col_types =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb6-7">ptua <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">read_csv</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">file.path</span>(base_url, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"ptua-gene_count_matrix.csv"</span>), <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">show_col_types =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb7-2"></span>
+<span id="cb7-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ensure gene_id format matches count matrices</span></span>
+<span id="cb7-4">filtered <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> filtered <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb7-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-T</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d+$"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>))</span>
+<span id="cb7-6"></span>
+<span id="cb7-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># filter apul &amp; add group_id as first column</span></span>
+<span id="cb7-8">apul_filt <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> apul <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb7-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">inner_join</span>(</span>
+<span id="cb7-10">    filtered <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(species <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Apul"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(gene_id, group_id),</span>
+<span id="cb7-11">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gene_id"</span></span>
+<span id="cb7-12">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb7-13">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">relocate</span>(group_id, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">.before =</span> gene_id)   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># &lt;&lt;&lt;&lt;&lt;&lt; KEY LINEter(species == "Apul") </span></span>
+<span id="cb7-14"></span>
+<span id="cb7-15"></span>
+<span id="cb7-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># write to CSV</span></span>
+<span id="cb7-17"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">write_csv</span>(</span>
+<span id="cb7-18">  apul_filt,</span>
+<span id="cb7-19">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/33-biomin-pathway-counts/apul_biomin_counts.csv"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb8-2"></span>
+<span id="cb8-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ensure gene_id in mapping file matches (remove transcript suffix)</span></span>
+<span id="cb8-4">filtered <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> filtered <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb8-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-T</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d+$"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>))</span>
+<span id="cb8-6"></span>
+<span id="cb8-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># filter Peve matrix, normalize gene_id, join, move group_id to column 1</span></span>
+<span id="cb8-8">peve_filt <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> peve <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb8-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^gene-"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># &lt;&lt;&lt;&lt;&lt; FIX HERE</span></span>
+<span id="cb8-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">inner_join</span>(</span>
+<span id="cb8-11">    filtered <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(species <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Peve"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(gene_id, group_id),</span>
+<span id="cb8-12">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gene_id"</span></span>
+<span id="cb8-13">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb8-14">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">relocate</span>(group_id, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">.before =</span> gene_id)</span>
+<span id="cb8-15"></span>
+<span id="cb8-16"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># write to CSV</span></span>
+<span id="cb8-17"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">write_csv</span>(</span>
+<span id="cb8-18">  peve_filt,</span>
+<span id="cb8-19">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/33-biomin-pathway-counts/peve_biomin_counts.csv"</span></span>
+<span id="cb8-20">)</span></code></pre></div>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(tidyverse)</span>
+<span id="cb9-2"></span>
+<span id="cb9-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ensure gene_id in mapping file matches count matrix format</span></span>
+<span id="cb9-4">filtered <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> filtered <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb9-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"-T</span><span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">\\</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">d+$"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>))</span>
+<span id="cb9-6"></span>
+<span id="cb9-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># filter Ptua matrix, normalize gene_id, join, move group_id to column 1</span></span>
+<span id="cb9-8">ptua_filt <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> ptua <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb9-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"^gene-"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>)) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span>   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># &lt;&lt;&lt;&lt;&lt; KEY FIX</span></span>
+<span id="cb9-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">inner_join</span>(</span>
+<span id="cb9-11">    filtered <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb9-12">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filter</span>(species <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">==</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Ptua"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb9-13">      <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">select</span>(gene_id, group_id),</span>
+<span id="cb9-14">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gene_id"</span></span>
+<span id="cb9-15">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb9-16">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">relocate</span>(group_id, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">.before =</span> gene_id)</span>
+<span id="cb9-17"></span>
+<span id="cb9-18"></span>
+<span id="cb9-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># write to CSV</span></span>
+<span id="cb9-20"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">write_csv</span>(</span>
+<span id="cb9-21">  ptua_filt,</span>
+<span id="cb9-22">  <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"../output/33-biomin-pathway-counts/ptua_biomin_counts.csv"</span></span>
+<span id="cb9-23">)</span></code></pre></div>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>e5</category>
+  <category>coral</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/62-biomin/</guid>
+  <pubDate>Wed, 26 Nov 2025 08:00:00 GMT</pubDate>
+  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2025-11-26_10-46-20.png" medium="image" type="image/png"/>
+</item>
 <item>
   <title>Timeseries Gene Level methylation</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/61-gene-meth/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -1416,7 +1983,6 @@ font-style: inherit;">12</span>)</span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/58-biomin/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -2971,7 +3537,6 @@ font-style: inherit;">desc</span>(pct_of_all_biomin))</span>
 
 
 
-
 <p>Implementation</p>
 <ul>
 <li><p><strong>Script</strong>:&nbsp;<code>19-annotate-wgcna-modules.py</code>&nbsp;joins&nbsp;<code>wgcna_ortholog_module_assignments.csv</code>&nbsp;with&nbsp;<code>ortholog_groups_annotated.csv</code>&nbsp;on&nbsp;<code>group_id</code>&nbsp;(OG_xxxxx)</p></li>
@@ -3097,7 +3662,6 @@ font-style: inherit;">FALSE</span></span>
 
 
 
-
 <p>Took the top 100 genes in component 24 (of 35 rank) and did Context Dependent Regulation Ananysis</p>
 <p>Summary of output</p>
 <p>These CSV files contain the detailed results of context-dependent regulatory analysis, including interaction statistics, p-values, context strengths, and regulatory relationships for each analyzed gene-regulator pair.</p>
@@ -3135,7 +3699,6 @@ font-style: inherit;">FALSE</span></span>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/60-contra-random/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -3797,7 +4360,6 @@ font-style: inherit;">FALSE</span></span>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/57-barnacle-35opt/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -4654,7 +5216,6 @@ font-style: inherit;">""</span></span>
 
 
 
-
 <p>Sam had run a series of ranks to see which one was most appropriate. Specifically he ran from 5-75.</p>
 <p>It looks like 35 is where we go forward</p>
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/2025-11-02_09-13-35.png" class="img-fluid"></p>
@@ -4693,7 +5254,6 @@ font-style: inherit;">""</span></span>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/55-cod-talk/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -4907,7 +5467,6 @@ font-style: inherit;">""</span></span>
 
 
 
-
 <p>PacBio data came from Wisconsin</p>
 <p>Raw data at <a href="https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/" class="uri">https://owl.fish.washington.edu/nightingales/S_namaycush/LakeTrout/</a></p>
 <p>have 4 lean and 4 siscowets</p>
@@ -5025,7 +5584,6 @@ font-style: inherit;">-o</span> ../analyses/08-multiqc</span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/53-ortho-select/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -5457,7 +6015,6 @@ font-style: inherit;">"0"</span></span></code></pre></div>
 
 
 
-
 <section id="orthologous-protein-identification-across-three-coral-species" class="level1">
 <h1>Orthologous Protein Identification Across Three Coral Species</h1>
 <section id="introduction" class="level2">
@@ -5599,7 +6156,6 @@ font-style: inherit;">"0"</span></span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/51-nano-next/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -7357,7 +7913,6 @@ font-style: inherit;">"freq"</span>)</span></code></pre></div>
 
 
 
-
 <p>Went in a few directions but will try to layout properly here. Experiment - 3 populations, 4 pooled (n=5) libraires - thus 20 individuals represented per population.</p>
 <section id="data-as-provided" class="level1">
 <h1>Data as provided</h1>
@@ -7864,7 +8419,6 @@ font-style: inherit;">\</span></span>
 
 
 
-
 <section id="dock" class="level1">
 <h1>Dock</h1>
 <p>Inspected bags at dock. Retrieved one PolyIC and Control bag. This left two of each on dock. For all others replaced bags.</p>
@@ -7930,7 +8484,6 @@ font-style: inherit;">\</span></span>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/48-cod-bwa/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -8411,7 +8964,6 @@ font-style: inherit;">done</span></span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/47-ffs/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -11598,7 +12150,6 @@ Chromosome counts:
 
 
 
-
 <p>Day three. Looking for missing files.. working on slides</p>
 <p>Narrowed down issue with missing “WGBS” files from Peve and Ptua to a possible error in wget Azenta named files.</p>
 <p>Need to get full data sets for both species and run through Bismark.. and beyond..</p>
@@ -11619,7 +12170,6 @@ Chromosome counts:
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/45-ROLPI-d2/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -11930,7 +12480,6 @@ font-style: inherit;">nrow</span>(filtered_wgbs)</span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/44-ROLPI-d1/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -12929,344 +13478,6 @@ font-style: inherit;">"../output/05-Ptua-bismark-CG/filtered-WGBS-CpG-counts.csv
   <guid>https://sr320.github.io/tumbling-oysters/posts/44-ROLPI-d1/</guid>
   <pubDate>Sat, 24 May 2025 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_EpigeneticsSimulationMS_-_Online_LaTeX_Editor_Overleaf_2025-05-25_07-13-14.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>CpG Intersect</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/43-intersect/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-<ul>
-<li>1 genome</li>
-<li>2 Full run</li>
-<li>3 Intersectbed</li>
-</ul>
-<p>Annotating CpGs ….</p>
-<p>methylation calls derived at <a href="https://sr320.github.io/tumbling-oysters/posts/37-Apul-meth/" class="uri">https://sr320.github.io/tumbling-oysters/posts/37-Apul-meth/</a></p>
-<p>Now there are files for each of the Apul samples</p>
-<p>@ <a href="https://gannet.fish.washington.edu/seashell/bu-github/timeseries_molecular/D-Apul/output/15.5-Apul-bismark/" class="uri">https://gannet.fish.washington.edu/seashell/bu-github/timeseries_molecular/D-Apul/output/15.5-Apul-bismark/</a></p>
-<p>Maybe do all CpG in genome..</p>
-<section id="genome" class="level1">
-<h1>1 genome</h1>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../data/Apulcra-genome.fa</span></code></pre></div>
-<pre><code>&gt;ntLink_7
-TGTATTTCTAGAGATCTAAAGTACTCAGGATAGCTGAAAAAAAAACCGTC
-GTTCTTTCCCTCTGAATTTCTCACTTAGGTTTTCTGGGATATGTGACGCG
-CTGCAATCCTAAACAGCCACTAACGCCGGATGTCTTCAACCGAGCGCCTC
-TGCTCGAAAGCTATCTGGACCATTTGAAGGTATGGTTCAGCTTGATTTAC
-TGTTGCTTCGTAGTACTTTCATCCTGATGGTTCTAATGTGCTAAGTTTTC
-GCACATATTCTAGGTCATTAGGTTCTAATAGCAATGAGCTTTCAGTGATT
-CCCGAGAATACGCTTTCTGTAGCAGCAACTAAATTATGGAATGGTCTACC
-CTAAAATCTTAGAAAGTCTACCTCGTATATCAGCAGGCTAACTGCTACGT
-TCATTTTTCAAGCATTTGAAAGACGAAAGAAACAATAATAGTTAACCATA</code></pre>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(seqinr)</span>
-<span id="cb3-2"></span>
-<span id="cb3-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Replace 'input.fasta' with the name of your multi-sequence fasta file</span></span>
-<span id="cb3-4">input_file <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../data/Apulcra-genome.fa"</span></span>
-<span id="cb3-5">sequences <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read.fasta</span>(input_file)</span></code></pre></div>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Set the seed for reproducibility (optional)</span></span>
-<span id="cb4-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">42</span>)</span>
-<span id="cb4-3"></span>
-<span id="cb4-4">number_of_sequences_to_select <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">10</span></span>
-<span id="cb4-5"></span>
-<span id="cb4-6"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">if</span> (<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">length</span>(sequences) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&lt;</span> number_of_sequences_to_select) {</span>
-<span id="cb4-7">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">warning</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"There are fewer than 10 sequences in the fasta file. All sequences will be selected."</span>)</span>
-<span id="cb4-8">  number_of_sequences_to_select <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">length</span>(sequences)</span>
-<span id="cb4-9">}</span>
-<span id="cb4-10"></span>
-<span id="cb4-11">selected_indices <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">sample</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">length</span>(sequences), number_of_sequences_to_select)</span>
-<span id="cb4-12">selected_sequences <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> sequences[selected_indices]</span></code></pre></div>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Replace 'output.fasta' with your desired output file name</span></span>
-<span id="cb5-2">output_file <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/28-Apul-CpG-Annotation/output.fasta"</span></span>
-<span id="cb5-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">write.fasta</span>(selected_sequences, <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">names</span>(selected_sequences), output_file, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">open =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"w"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#likely will not need; fix issue where gff and fa name did not match</span></span>
-<span id="cb6-2"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># sed -i 's/&gt;lcl|/&gt;/g' ../output/10_seqs.fa</span></span></code></pre></div>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">#needed downstream for IGV</span></span>
-<span id="cb7-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/samtools-1.12/samtools</span> faidx <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb7-3">../output/28-Apul-CpG-Annotation/output.fasta</span></code></pre></div>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">fuzznuc</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-sequence</span> ../output/28-Apul-CpG-Annotation/output.fasta <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-pattern</span> CG <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-rformat</span> gff <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-outfile</span> ../output/28-Apul-CpG-Annotation/CGoutput-10seq.gff</span></code></pre></div>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tail</span> ../output/28-Apul-CpG-Annotation/CGoutput-10seq.gff</span></code></pre></div>
-</section>
-<section id="full-run" class="level1">
-<h1>2 Full run</h1>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">fuzznuc</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-sequence</span> ../data/Apulcra-genome.fa <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-pattern</span> CG <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-rformat</span> gff <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-outfile</span> ../output/28-Apul-CpG-Annotation/Apul-CG-motifs.gff</span></code></pre></div>
-</section>
-<section id="intersectbed" class="level1">
-<h1>3 Intersectbed</h1>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">bedtools</span> intersect <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb11-2">-a ../output/28-Apul-CpG-Annotation/Apul-CG-motifs.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb11-3">-b ../data/Apulchra-genome.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb11-4">-wb <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb11-5"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/28-Apul-CpG-Annotation/intersect_both.gff</span></code></pre></div>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/28-Apul-CpG-Annotation/intersect_both.gff</span></code></pre></div>
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">tail</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-50</span> ../data/Apulchra-genome.gff</span></code></pre></div>
-<pre><code>ptg000184l  funannotate exon    27291   27416   .   +   .   ID=FUN_044364-T1.exon2;Parent=FUN_044364-T1;
-ptg000184l  funannotate exon    27559   27784   .   +   .   ID=FUN_044364-T1.exon3;Parent=FUN_044364-T1;
-ptg000184l  funannotate exon    28179   28245   .   +   .   ID=FUN_044364-T1.exon4;Parent=FUN_044364-T1;
-ptg000184l  funannotate exon    33400   35016   .   +   .   ID=FUN_044364-T1.exon5;Parent=FUN_044364-T1;
-ptg000184l  funannotate CDS 26899   27163   .   +   0   ID=FUN_044364-T1.cds;Parent=FUN_044364-T1;
-ptg000184l  funannotate CDS 27291   27416   .   +   2   ID=FUN_044364-T1.cds;Parent=FUN_044364-T1;
-ptg000184l  funannotate CDS 27559   27784   .   +   2   ID=FUN_044364-T1.cds;Parent=FUN_044364-T1;
-ptg000184l  funannotate CDS 28179   28245   .   +   1   ID=FUN_044364-T1.cds;Parent=FUN_044364-T1;
-ptg000184l  funannotate CDS 33400   35016   .   +   0   ID=FUN_044364-T1.cds;Parent=FUN_044364-T1;
-ptg000185l  funannotate gene    8952    9296    .   -   .   ID=FUN_044365;
-ptg000185l  funannotate mRNA    8952    9296    .   -   .   ID=FUN_044365-T1;Parent=FUN_044365;product=hypothetical protein;
-ptg000185l  funannotate exon    8952    9296    .   -   .   ID=FUN_044365-T1.exon1;Parent=FUN_044365-T1;
-ptg000185l  funannotate CDS 8952    9296    .   -   0   ID=FUN_044365-T1.cds;Parent=FUN_044365-T1;
-ptg000185l  funannotate gene    30137   34494   .   +   .   ID=FUN_044366;
-ptg000185l  funannotate mRNA    30137   34494   .   +   .   ID=FUN_044366-T1;Parent=FUN_044366;product=hypothetical protein;
-ptg000185l  funannotate exon    30137   30432   .   +   .   ID=FUN_044366-T1.exon1;Parent=FUN_044366-T1;
-ptg000185l  funannotate exon    30536   30737   .   +   .   ID=FUN_044366-T1.exon2;Parent=FUN_044366-T1;
-ptg000185l  funannotate exon    30865   31414   .   +   .   ID=FUN_044366-T1.exon3;Parent=FUN_044366-T1;
-ptg000185l  funannotate exon    33568   34163   .   +   .   ID=FUN_044366-T1.exon4;Parent=FUN_044366-T1;
-ptg000185l  funannotate exon    34251   34494   .   +   .   ID=FUN_044366-T1.exon5;Parent=FUN_044366-T1;
-ptg000185l  funannotate CDS 30137   30432   .   +   0   ID=FUN_044366-T1.cds;Parent=FUN_044366-T1;
-ptg000185l  funannotate CDS 30536   30737   .   +   1   ID=FUN_044366-T1.cds;Parent=FUN_044366-T1;
-ptg000185l  funannotate CDS 30865   31414   .   +   0   ID=FUN_044366-T1.cds;Parent=FUN_044366-T1;
-ptg000185l  funannotate CDS 33568   34163   .   +   2   ID=FUN_044366-T1.cds;Parent=FUN_044366-T1;
-ptg000185l  funannotate CDS 34251   34494   .   +   0   ID=FUN_044366-T1.cds;Parent=FUN_044366-T1;
-ptg000186l  funannotate gene    587 1375    .   +   .   ID=FUN_044367;
-ptg000186l  funannotate mRNA    587 1375    .   +   .   ID=FUN_044367-T1;Parent=FUN_044367;product=hypothetical protein;
-ptg000186l  funannotate exon    587 835 .   +   .   ID=FUN_044367-T1.exon1;Parent=FUN_044367-T1;
-ptg000186l  funannotate exon    1070    1375    .   +   .   ID=FUN_044367-T1.exon2;Parent=FUN_044367-T1;
-ptg000186l  funannotate CDS 587 835 .   +   0   ID=FUN_044367-T1.cds;Parent=FUN_044367-T1;
-ptg000186l  funannotate CDS 1070    1375    .   +   0   ID=FUN_044367-T1.cds;Parent=FUN_044367-T1;
-ptg000186l  funannotate gene    2304    2977    .   +   .   ID=FUN_044368;
-ptg000186l  funannotate mRNA    2304    2977    .   +   .   ID=FUN_044368-T1;Parent=FUN_044368;product=hypothetical protein;
-ptg000186l  funannotate exon    2304    2504    .   +   .   ID=FUN_044368-T1.exon1;Parent=FUN_044368-T1;
-ptg000186l  funannotate exon    2576    2977    .   +   .   ID=FUN_044368-T1.exon2;Parent=FUN_044368-T1;
-ptg000186l  funannotate CDS 2304    2504    .   +   0   ID=FUN_044368-T1.cds;Parent=FUN_044368-T1;
-ptg000186l  funannotate CDS 2576    2977    .   +   0   ID=FUN_044368-T1.cds;Parent=FUN_044368-T1;
-ptg000186l  funannotate gene    8523    11277   .   +   .   ID=FUN_044369;
-ptg000186l  funannotate mRNA    8523    11277   .   +   .   ID=FUN_044369-T1;Parent=FUN_044369;product=hypothetical protein;
-ptg000186l  funannotate exon    8523    8549    .   +   .   ID=FUN_044369-T1.exon1;Parent=FUN_044369-T1;
-ptg000186l  funannotate exon    10894   11277   .   +   .   ID=FUN_044369-T1.exon2;Parent=FUN_044369-T1;
-ptg000186l  funannotate CDS 8523    8549    .   +   0   ID=FUN_044369-T1.cds;Parent=FUN_044369-T1;
-ptg000186l  funannotate CDS 10894   11277   .   +   0   ID=FUN_044369-T1.cds;Parent=FUN_044369-T1;
-ptg000186l  funannotate gene    18980   19053   .   -   .   ID=FUN_044370;
-ptg000186l  funannotate tRNA    18980   19053   .   -   .   ID=FUN_044370-T1;Parent=FUN_044370;product=tRNA-Thr;
-ptg000186l  funannotate exon    18980   19053   .   -   .   ID=FUN_044370-T1.exon1;Parent=FUN_044370-T1;
-ptg000187l  funannotate gene    16329   17045   .   -   .   ID=FUN_044371;
-ptg000187l  funannotate mRNA    16329   17045   .   -   .   ID=FUN_044371-T1;Parent=FUN_044371;product=hypothetical protein;
-ptg000187l  funannotate exon    16329   17045   .   -   .   ID=FUN_044371-T1.exon1;Parent=FUN_044371-T1;
-ptg000187l  funannotate CDS 16329   17045   .   -   0   ID=FUN_044371-T1.cds;Parent=FUN_044371-T1;</code></pre>
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-F</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'\t'</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'</span></span>
-<span id="cb15-2"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">BEGIN {</span></span>
-<span id="cb15-3"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  header = "##gff-version 3"</span></span>
-<span id="cb15-4"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">}</span></span>
-<span id="cb15-5"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">$0 ~ /^#/ { next }</span></span>
-<span id="cb15-6"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">{</span></span>
-<span id="cb15-7"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  outfile = "../output/28-Apul-CpG-Annotation/" $3 ".gff"</span></span>
-<span id="cb15-8"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  if (!(outfile in written)) {</span></span>
-<span id="cb15-9"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    print header &gt; outfile</span></span>
-<span id="cb15-10"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">    written[outfile] = 1</span></span>
-<span id="cb15-11"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  }</span></span>
-<span id="cb15-12"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  print &gt;&gt; outfile</span></span>
-<span id="cb15-13"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">}'</span> ../data/Apulchra-genome.gff</span></code></pre></div>
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ../output/28-Apul-CpG-Annotation/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>gff</span></code></pre></div>
-<pre><code>../output/28-Apul-CpG-Annotation/Apul-CG-motifs.gff
-../output/28-Apul-CpG-Annotation/CDS.gff
-../output/28-Apul-CpG-Annotation/CG_intersect_mRNA.gff
-../output/28-Apul-CpG-Annotation/CGoutput-10seq.gff
-../output/28-Apul-CpG-Annotation/exon.gff
-../output/28-Apul-CpG-Annotation/gene.gff
-../output/28-Apul-CpG-Annotation/intersect_both.gff
-../output/28-Apul-CpG-Annotation/mRNA.gff
-../output/28-Apul-CpG-Annotation/tRNA.gff</code></pre>
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">bedtools</span> intersect <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb18-2">-a ../output/28-Apul-CpG-Annotation/Apul-CG-motifs.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb18-3">-b ../output/28-Apul-CpG-Annotation/mRNA.gff <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb18-4">-wb <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb18-5"><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/28-Apul-CpG-Annotation/CG_intersect_mRNA.gff</span></code></pre></div>
-<div class="sourceCode" id="cb19" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">head</span> ../output/28-Apul-CpG-Annotation/CG_intersect_mRNA.gff</span></code></pre></div>
-<pre><code>ntLink_7    fuzznuc nucleotide_motif    97  98  2   +   .   ID=ntLink_7.3;note=*pat pattern:CG  ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;
-ntLink_7    fuzznuc nucleotide_motif    99  100 2   +   .   ID=ntLink_7.4;note=*pat pattern:CG  ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;
-ntLink_7    fuzznuc nucleotide_motif    124 125 2   +   .   ID=ntLink_7.5;note=*pat pattern:CG  ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;
-ntLink_7    fuzznuc nucleotide_motif    127 128 2   +   .   ID=ntLink_7.6;note=*pat pattern:CG  ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;
-ntLink_7    fuzznuc nucleotide_motif    141 142 2   +   .   ID=ntLink_7.7;note=*pat pattern:CG  ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;
-ntLink_7    fuzznuc nucleotide_motif    145 146 2   +   .   ID=ntLink_7.8;note=*pat pattern:CG  ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;
-ntLink_7    fuzznuc nucleotide_motif    155 156 2   +   .   ID=ntLink_7.9;note=*pat pattern:CG  ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;
-ntLink_7    fuzznuc nucleotide_motif    209 210 2   +   .   ID=ntLink_7.10;note=*pat pattern:CG ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;
-ntLink_7    fuzznuc nucleotide_motif    250 251 2   +   .   ID=ntLink_7.11;note=*pat pattern:CG ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;
-ntLink_7    fuzznuc nucleotide_motif    303 304 2   +   .   ID=ntLink_7.12;note=*pat pattern:CG ntLink_7    funannotate mRNA    79  4679    .   +   .   ID=FUN_002303-T1;Parent=FUN_002303;product=hypothetical protein;</code></pre>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>methylation</category>
-  <category>e5</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/43-intersect/</guid>
-  <pubDate>Thu, 15 May 2025 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_bestblogever_-_main_-_RStudio_2025-05-15_07-08-12.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
