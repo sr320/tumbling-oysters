@@ -4,7 +4,7 @@ description: "final push"
 categories: [e5, coral]
 #citation: 
 date: 11-29-2025
-image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-27-36.png # finding a good image
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_15-34-25.png # finding a good image
 author:
   - name: Steven Roberts
     url: 
@@ -595,6 +595,103 @@ done
 
 ```
 
+```{r, echo=TRUE, warning=FALSE, message=FALSE}
+library(tidyverse)
+
+# ---------------------------------------------------------
+# SETTINGS
+# ---------------------------------------------------------
+
+base_url <- "https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/timeseries_molecular/M-multi-species/output/40-rank35-optimization"
+
+lambda_vals <- c("0.00","0.1","0.2","0.4","0.8","1.0","10","40","100","1000")
+
+# ---------------------------------------------------------
+# FUNCTION: read gene_factors.csv AND FIX HEADER
+# ---------------------------------------------------------
+read_gene_factors <- function(lambda) {
+  url <- sprintf("%s/lambda_gene_%s/barnacle_factors/gene_factors.csv",
+                 base_url, lambda)
+
+  message("Reading: ", url)
+  df <- read_csv(url, show_col_types = FALSE)
+
+  # Fix the shifted header here
+  # First column should be "gene", others "comp1..compN"
+  colnames(df) <- c("gene", paste0("comp", 1:(ncol(df)-1)))
+
+  df$lambda_gene <- lambda
+  df
+}
+
+# ---------------------------------------------------------
+# READ ALL RUNS
+# ---------------------------------------------------------
+all_factors <- map_df(lambda_vals, read_gene_factors)
+
+# ---------------------------------------------------------
+# LONG FORMAT FOR ANALYSIS
+# ---------------------------------------------------------
+factor_long <- all_factors %>%
+  pivot_longer(
+    cols = starts_with("comp"),
+    names_to = "component",
+    values_to = "loading"
+  )
+```               
+
+
+
+```{r}
+sparsity_tbl <- factor_long %>%
+  group_by(lambda_gene) %>%
+  summarize(
+    n_values = n(),
+    n_zero = sum(loading == 0 | abs(loading) < 1e-12),
+    sparsity = n_zero / n_values
+  )
+
+sparsity_tbl 
+```
+
+
+
+
+```{r}
+gene_component_counts <- factor_long %>%
+  filter(loading > 0) %>%
+  group_by(lambda_gene, gene) %>%
+  summarize(
+    n_components = n_distinct(component),
+    .groups = "drop"
+  )
+
+```
+
+
+```{r}
+multi_component_summary <- gene_component_counts %>%
+  group_by(lambda_gene, n_components) %>%
+  summarize(n_genes = n(), .groups = "drop")
+
+multi_component_summary
+```
+
+```{r}
+summary_tbl <- sparsity_tbl %>%
+  left_join(
+    gene_component_counts %>%
+      group_by(lambda_gene) %>%
+      summarize(
+        mean_components = mean(n_components),
+        frac_multi = mean(n_components > 1),
+        .groups = "drop"
+      ),
+    by = "lambda_gene"
+  )
+
+summary_tbl
+```
 
 
 
