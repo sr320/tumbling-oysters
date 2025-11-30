@@ -1,0 +1,276 @@
+---
+title: "Calcifying Contra"
+description: "and beyond"
+categories: [e5, coral]
+#citation: 
+date: 11-29-2025
+image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-27-36.png # finding a good image
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+First off in time-series-calcification
+
+https://github.com/urol-e5/timeseries-molecular-calcification/blob/main/M-multi-species/scripts/34-biomin-pathway-compare.rmd
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-22-16.png) ![ortho-spread](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-23-06.png)
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-23-48.png)
+
+![genelevel](http://gannet.fish.washington.edu/seashell/snaps/000010.png) ![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-25-38.png)
+
+![](http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-26-36.png)
+
+# Contra
+
+Then took onto ConTra... with new script
+
+```         
+Duro:ConTra sr320$ python3 code/run_biomin_species_comparison.py                                         ======================================================================
+🧬 CROSS-SPECIES BIOMIN CONTEXT-DEPENDENT ANALYSIS
+======================================================================
+Workspace: /Users/sr320/GitHub/ConTra
+Comparison output: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251129_144655
+======================================================================
+```
+
+```         
+ Using context_dependent_analysis_20251129_192544 for apul
+  Using context_dependent_analysis_20251129_162258 for peve
+  Using context_dependent_analysis_20251129_144655 for ptua
+
+============================================================
+LOADING SPECIES RESULTS
+============================================================
+
+📂 Loading A. pulchra...
+  ✅ Loaded methylation_mirna_context.csv: 33270 rows
+
+📂 Loading P. evermanni...
+  ✅ Loaded methylation_mirna_context.csv: 27150 rows
+
+📂 Loading P. tuahiniensis...
+  ✅ Loaded methylation_mirna_context.csv: 51150 rows
+
+============================================================
+COMPARING METHYLATION-MIRNA CONTEXT ACROSS SPECIES
+============================================================
+
+📊 Summary:
+  Total unique OGs across all species: 611
+  OGs in 2+ species: 358
+  OGs in all 3 species: 100
+
+✅ Saved comparison table: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_052506/cross_species_methylation_mirna_comparison.csv
+
+🏆 Top 15 Conserved Context-Dependent OGs (in 2+ species):
+   og_id  n_species  mean_context_strength  apul_context_strength  peve_context_strength  ptua_context_strength
+OG_01155          3               1.310726               1.521005               0.996267               1.414906
+OG_02619          3               1.295301               1.468612               1.024492               1.392800
+OG_06119          3               1.236816               0.971755               1.252635               1.486059
+OG_08793          3               1.236346               0.808764               1.450764               1.449511
+OG_05366          3               1.199557               0.939276               1.174450               1.484946
+OG_03291          3               1.199266               1.186752               0.799569               1.611478
+OG_05637          3               1.192262               1.166134               1.165108               1.245543
+OG_01452          3               1.191146               1.526632               0.922735               1.124072
+OG_07153          3               1.174770               0.979025               1.358085               1.187201
+OG_01414          3               1.161650               1.680689               0.775683               1.028577
+OG_01753          3               1.160818               1.140792               1.097454               1.244207
+OG_08663          3               1.138407               0.935220               1.247335               1.232668
+OG_09796          3               1.133137               1.016265               1.074893               1.308253
+OG_04467          3               1.121429               1.075908               1.254588               1.033790
+OG_07892          3               1.113713               1.090661               0.877698               1.372780
+
+============================================================
+GENERATING VISUALIZATIONS
+============================================================
+/Users/sr320/GitHub/ConTra/code/run_biomin_species_comparison.py:397: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.violinplot(data=strength_df, x='species', y='context_strength',
+✅ Saved comparison plots: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_052506/plots/species_comparison_overview.png
+✅ Saved comparison report: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_052506/cross_species_comparison_report.md
+
+======================================================================
+🎉 CROSS-SPECIES COMPARISON COMPLETE!
+======================================================================
+Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_052506
+======================================================================
+```
+
+## **What the script does:**
+
+1.  **Runs analysis on all 3 species** in [full-species-biomin](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-browser/workbench/workbench.html):
+
+    -   A. pulchra (apul)
+
+    -   P. evermanni (peve)
+
+    -   P. tuahiniensis (ptua)
+
+2.  **Extracts OG IDs** from the results using regex to parse formats like:
+
+    -   `"('OG_13910', 'FUN_002435')"`
+
+    -   `OG_13910`
+
+3.  **Compares results across species**:
+
+    -   Finds OGs present in 2+ species
+
+    -   Ranks by conservation and context strength
+
+    -   Calculates correlations between species
+
+4.  **Generates outputs**:
+
+    -   `cross_species_methylation_mirna_comparison.csv` - Full comparison table
+
+    -   `plots/species_comparison_overview.png` - 4-panel visualization
+
+    -   `cross_species_comparison_report.md` - Summary report
+
+------------------------------------------------------------------------
+
+# Cross-Species Biomin Context-Dependent Analysis Comparison
+
+**Generated:** 2025-11-30 05:25:07
+
+## Overview
+
+This report compares context-dependent regulatory interactions across three coral species:
+
+-   **A. pulchra** (`apul`)
+-   **P. evermanni** (`peve`)
+-   **P. tuahiniensis** (`ptua`)
+
+## Per-Species Summary
+
+### A. pulchra (apul)
+
+-   Total methylation-miRNA interactions: 33270
+-   Context-dependent interactions: 3039
+-   Mean context strength: 0.311
+-   Unique OGs: 334
+
+### P. evermanni (peve)
+
+-   Total methylation-miRNA interactions: 27150
+-   Context-dependent interactions: 3935
+-   Mean context strength: 0.371
+-   Unique OGs: 309
+
+### P. tuahiniensis (ptua)
+
+-   Total methylation-miRNA interactions: 51150
+-   Context-dependent interactions: 8765
+-   Mean context strength: 0.346
+-   Unique OGs: 474
+
+## Cross-Species Conservation
+
+-   **Total unique OGs:** 611
+-   **OGs in 2+ species:** 358 (58.6%)
+-   **OGs in all 3 species:** 100 (16.4%)
+
+### Top Conserved OGs (Context-Dependent in Multiple Species)
+
+| OG ID    | \# Species | Mean Strength | A. pulchra | P. evermanni | P. tuahiniensis |
+|------------|------------|------------|------------|------------|------------|
+| OG_01155 | 3          | 1.311         | 1.521      | 0.996        | 1.415           |
+| OG_02619 | 3          | 1.295         | 1.469      | 1.024        | 1.393           |
+| OG_06119 | 3          | 1.237         | 0.972      | 1.253        | 1.486           |
+| OG_08793 | 3          | 1.236         | 0.809      | 1.451        | 1.450           |
+| OG_05366 | 3          | 1.200         | 0.939      | 1.174        | 1.485           |
+| OG_03291 | 3          | 1.199         | 1.187      | 0.800        | 1.611           |
+| OG_05637 | 3          | 1.192         | 1.166      | 1.165        | 1.246           |
+| OG_01452 | 3          | 1.191         | 1.527      | 0.923        | 1.124           |
+| OG_07153 | 3          | 1.175         | 0.979      | 1.358        | 1.187           |
+| OG_01414 | 3          | 1.162         | 1.681      | 0.776        | 1.029           |
+| OG_01753 | 3          | 1.161         | 1.141      | 1.097        | 1.244           |
+| OG_08663 | 3          | 1.138         | 0.935      | 1.247        | 1.233           |
+| OG_09796 | 3          | 1.133         | 1.016      | 1.075        | 1.308           |
+| OG_04467 | 3          | 1.121         | 1.076      | 1.255        | 1.034           |
+| OG_07892 | 3          | 1.114         | 1.091      | 0.878        | 1.373           |
+| OG_07150 | 3          | 1.111         | 0.796      | 1.339        | 1.197           |
+| OG_02190 | 3          | 1.110         | 1.233      | 1.204        | 0.894           |
+| OG_00355 | 3          | 1.100         | 1.065      | 1.244        | 0.992           |
+| OG_06712 | 3          | 1.076         | 1.348      | 0.619        | 1.262           |
+| OG_08849 | 3          | 1.073         | 1.007      | 1.049        | 1.163           |
+
+## Interpretation
+
+OGs (orthologous groups) that show context-dependent regulation in multiple species suggest:
+
+1.  **Conserved regulatory mechanisms** - These genes may have fundamental roles where regulation is evolutionarily maintained
+2.  **Robust biological signals** - Conservation across species reduces the likelihood of false positives
+3.  **Candidates for functional validation** - These genes are high-priority targets for experimental follow-up
+
+## Files Generated
+
+-   `cross_species_methylation_mirna_comparison.csv` - Full comparison table
+-   `plots/species_comparison_overview.png` - Visualization of cross-species patterns
+-   `cross_species_comparison_report.md` - This report
+
+------------------------------------------------------------------------
+
+```{r}
+library(tidyverse)
+library(reactable)
+library(htmltools)
+
+url <- "https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/biomin_comparison_20251130_052506/cross_species_methylation_mirna_comparison.csv"
+df <- read_csv(url, show_col_types = FALSE)
+
+# Format all numeric columns to 2 digits after decimal
+df_fmt <- df %>%
+  mutate(across(where(is.numeric), ~ sprintf("%.2f", .x)))
+
+reactable(
+  df_fmt,
+  searchable = TRUE,
+  filterable = TRUE,
+  pagination = TRUE,
+  highlight = TRUE,
+  striped = TRUE,
+  defaultPageSize = 20,
+  sortable = TRUE,
+  theme = reactable::reactableTheme(
+    highlightColor = "#EAF2F8"
+  )
+)
+```
+
+# Full on, Statiscal Robust ConTra
+
+```
+sr320@n3439:/mmfs1/gscratch/scrubbed/sr320/github/ConTra$ python code/context_dependent_analysis.py   --data-dir data/full-species-biomin/cleaned_peve   --enable-empirical-fdr   --null-replicates 1   --fdr-alpha 0.3   --enable-lncrna-context   --enable-multi-way
+🚀 Initializing optimized context-dependent analysis with 192 parallel workers
+💾 Available RAM: 2963.0 GB
+📁 Output directory: /mmfs1/gscratch/scrubbed/sr320/github/ConTra/output/context_dependent_analysis_20251130_091333
+📂 Loading cleaned datasets with parallel processing...
+✅ Loaded gene expression: (553, 36)
+✅ Loaded lncRNA expression: (8319, 36)
+✅ Loaded miRNA expression: (48, 36)
+✅ Loaded DNA methylation: (104459, 36)
+✓ All datasets aligned with 36 samples
+Time points: ['TP1', 'TP2', 'TP3', 'TP4']
+Conditions: ['216', '236', '245', '260', '262', '69', '72', '73', '74', '83']
+```
+
+
