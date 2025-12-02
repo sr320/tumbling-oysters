@@ -15,6 +15,9 @@ author:
 draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 format:
   html:
+    toc: true            # ← enable TOC
+    toc-location: left   # or: right, body
+    toc-depth: 3         # how many heading levels to show
     code-fold: FALSE
     code-tools: true
     code-copy: true
