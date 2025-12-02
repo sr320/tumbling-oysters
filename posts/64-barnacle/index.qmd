@@ -25,8 +25,6 @@ format:
 
 ## Trying to build alternative tensor
 
-
-
 ``` python
 #!/usr/bin/env python3
 """
@@ -347,8 +345,7 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-```    
-
+```
 
 ### Output
 
@@ -357,7 +354,6 @@ library(readr)
 library(pheatmap)
 library(tidyverse)
 ```
-
 
 ```{r}
 gene_csv <-read.csv("https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/timeseries_molecular/M-multi-species/output/50-tensor-alternative/barnacle_factors/gene_factors.csv",
@@ -384,7 +380,6 @@ sample_csv <- read.csv("https://gannet.fish.washington.edu/v1_web/owlshell/bu-gi
 colnames(sample_csv) <- c("Sample", paste0("Component_", 1:(ncol(sample_csv)-1)))
 ```
 
-
 ```{r}
 # Load required libraries
 library(readr)
@@ -408,6 +403,7 @@ pheatmap(df_scaled,
          show_colnames = TRUE,
          main = "Heatmap of Samples vs Features")
 ```
+
 ```{r}
 library(tidyverse)
 
@@ -434,9 +430,6 @@ ggplot(df_long, aes(x = Time_ID, y = Value, group = Component, color = Component
     y = "Loading Value"
   )
 ```
-
-
-
 
 ```{r}
 library(tidyverse)
@@ -474,8 +467,6 @@ ggplot(time_csv_long, aes(x = Time_ID, y = Value, group = Component, color = Com
     y = "Component Value"
   )
 ```
-
-
 
 ```{r}
 library(tidyverse)
@@ -517,7 +508,6 @@ ggplot(df_sel, aes(x = Time_ID, y = Value, group = 1)) +
   )
 ```
 
-
 ```{r}
 library(tidyverse)
 library(pheatmap)
@@ -540,6 +530,7 @@ pheatmap(
   main = "Gene Factor Loadings (All Components)"
 )
 ```
+
 ```{r}
 library(tidyverse)
 library(pheatmap)
@@ -561,10 +552,7 @@ pheatmap(
 )
 ```
 
-
-
-# More lamda testing
-
+## More lamda testing
 
 ``` bash
 LAMBDAS_GENE="0.00 0.1 0.2 0.4 0.8 1.0 10 40 100 1000"
@@ -591,7 +579,6 @@ for LG in $LAMBDAS_GENE; do
     --tol 1e-5 \
     --seed 92
 done
-
 
 ```
 
@@ -638,9 +625,7 @@ factor_long <- all_factors %>%
     names_to = "component",
     values_to = "loading"
   )
-```               
-
-
+```
 
 ```{r}
 sparsity_tbl <- factor_long %>%
@@ -654,9 +639,6 @@ sparsity_tbl <- factor_long %>%
 sparsity_tbl 
 ```
 
-
-
-
 ```{r}
 gene_component_counts <- factor_long %>%
   filter(loading > 0) %>%
@@ -667,7 +649,6 @@ gene_component_counts <- factor_long %>%
   )
 
 ```
-
 
 ```{r}
 multi_component_summary <- gene_component_counts %>%
@@ -692,8 +673,6 @@ summary_tbl <- sparsity_tbl %>%
 
 summary_tbl
 ```
-
-
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE, fig.width=10, fig.height=18}
 
@@ -758,7 +737,6 @@ summary_tbl
   
 
 ```
-
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE, fig.width=10, fig.height=18}
 
@@ -919,7 +897,6 @@ summary_tbl
   
 
 ```
-
 
 ```{r, echo=TRUE, warning=FALSE, message=FALSE, fig.width=10, fig.height=18}
 
