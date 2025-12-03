@@ -334,6 +334,8 @@ This report presents the results of context-dependent regulatory interaction ana
 
 ## Data Files
 
+<https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/context_dependent_analysis_20251201_160901/tables/>
+
 The following data files were generated:
 
 These CSV files contain the detailed results of context-dependent regulatory analysis, including interaction statistics, p-values, context strengths, and regulatory relationships for each analyzed gene-regulator pair.
@@ -493,6 +495,8 @@ This report presents the results of context-dependent regulatory interaction ana
 | 10 | ('OG_12805', 'Peve_00005899') | 0.919 | False |
 
 ## Data Files
+
+<https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/context_dependent_analysis_20251130_091333/tables/>
 
 The following data files were generated:
 
@@ -654,6 +658,8 @@ This report presents the results of context-dependent regulatory interaction ana
 | 10 | ('OG_02176', 'FUN_008525') | 0.920 | False |
 
 ## Data Files
+
+<https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/context_dependent_analysis_20251201_061836/tables/>
 
 The following data files were generated:
 
