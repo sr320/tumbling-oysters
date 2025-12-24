@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,9 +24,8 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -37,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -68,18 +67,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0348920b7671f696dc9078d39bff215e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-0b0971fe3c507452e01567f62a81532a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e76cdc2a28bf56c993f4e6ffb14f81c0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -110,167 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="nav-fixed fullcontent quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
-    const toggleBodyColorMode = (bsSheetEl) => {
-      const mode = bsSheetEl.getAttribute("data-mode");
-      const bodyEl = window.document.querySelector("body");
-      if (mode === "dark") {
-        bodyEl.classList.add("quarto-dark");
-        bodyEl.classList.remove("quarto-light");
-      } else {
-        bodyEl.classList.add("quarto-light");
-        bodyEl.classList.remove("quarto-dark");
-      }
-    }
-    const toggleBodyColorPrimary = () => {
-      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
-      if (bsSheetEl) {
-        toggleBodyColorMode(bsSheetEl);
-      }
-    }
-    const setColorSchemeToggle = (alternate) => {
-      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-      for (let i=0; i < toggles.length; i++) {
-        const toggle = toggles[i];
-        if (toggle) {
-          if (alternate) {
-            toggle.classList.add("alternate");
-          } else {
-            toggle.classList.remove("alternate");
-          }
-        }
-      }
-    };
-    const toggleColorMode = (alternate) => {
-      // Switch the stylesheets
-      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
-      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-      manageTransitions('#quarto-margin-sidebar .nav-link', false);
-      if (alternate) {
-        // note: dark is layered on light, we don't disable primary!
-        enableStylesheet(alternateStylesheets);
-        for (const sheetNode of alternateStylesheets) {
-          if (sheetNode.id === "quarto-bootstrap") {
-            toggleBodyColorMode(sheetNode);
-          }
-        }
-      } else {
-        disableStylesheet(alternateStylesheets);
-        enableStylesheet(primaryStylesheets)
-        toggleBodyColorPrimary();
-      }
-      manageTransitions('#quarto-margin-sidebar .nav-link', true);
-      // Switch the toggles
-      setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
-      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-        manageTransitions("body", false);
-        window.scrollTo(0, 1);
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          manageTransitions("body", true);
-        }, 40);
-      }
-    }
-    const disableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        stylesheet.rel = 'disabled-stylesheet';
-      }
-    }
-    const enableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
-          stylesheet.rel = 'stylesheet';
-        }
-      }
-    }
-    const manageTransitions = (selector, allowTransitions) => {
-      const els = window.document.querySelectorAll(selector);
-      for (let i=0; i < els.length; i++) {
-        const el = els[i];
-        if (allowTransitions) {
-          el.classList.remove('notransition');
-        } else {
-          el.classList.add('notransition');
-        }
-      }
-    }
-    const isFileUrl = () => {
-      return window.location.protocol === 'file:';
-    }
-    const hasAlternateSentinel = () => {
-      let styleSentinel = getColorSchemeSentinel();
-      if (styleSentinel !== null) {
-        return styleSentinel === "alternate";
-      } else {
-        return false;
-      }
-    }
-    const setStyleSentinel = (alternate) => {
-      const value = alternate ? "alternate" : "default";
-      if (!isFileUrl()) {
-        window.localStorage.setItem("quarto-color-scheme", value);
-      } else {
-        localAlternateSentinel = value;
-      }
-    }
-    const getColorSchemeSentinel = () => {
-      if (!isFileUrl()) {
-        const storageValue = window.localStorage.getItem("quarto-color-scheme");
-        return storageValue != null ? storageValue : localAlternateSentinel;
-      } else {
-        return localAlternateSentinel;
-      }
-    }
-    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-      let newTheme = '';
-      if(authorPrefersDark) {
-        newTheme = isAlternate ? baseTheme : alternateTheme;
-      } else {
-        newTheme = isAlternate ? alternateTheme : baseTheme;
-      }
-      const changeGiscusTheme = () => {
-        // From: https://github.com/giscus/giscus/issues/336
-        const sendMessage = (message) => {
-          const iframe = document.querySelector('iframe.giscus-frame');
-          if (!iframe) return;
-          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-        sendMessage({
-          setConfig: {
-            theme: newTheme
-          }
-        });
-      }
-      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-      if (isGiscussLoaded) {
-        changeGiscusTheme();
-      }
-    };
-    const authorPrefersDark = true;
-    const darkModeDefault = authorPrefersDark;
-    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-    // Dark / light mode switch
-    window.quartoToggleColorScheme = () => {
-      // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
-      toggleColorMode(toAlternate);
-      setStyleSentinel(toAlternate);
-      toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
-    };
-    // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
-      toggleColorMode(true);
-    } else {
-      toggleColorMode(false);
-    }
-  </script>
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -353,7 +191,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
-
 
 
 
@@ -1079,306 +916,431 @@ OGs with context-dependent = TRUE in all 3 species: 2 </code></pre>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    // Ensure there is a toggle, if there isn't float one in the top right
-    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-      const i = window.document.createElement("i");
-      i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
     }
-    setColorSchemeToggle(hasAlternateSentinel())
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
         }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = true;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
       }
       return false;
     }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/sr320\.github\.io\/tumbling-oysters");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
-    const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
-        }
-        return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/sr320\.github\.io\/tumbling-oysters");
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
         }
       }
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
     }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
     }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
       } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
         }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
       }
     }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
           }
         } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
+          // See if we can fetch this
+          fetch(url.split('#')[0])
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
+            const note = htmlDoc.getElementById(id);
             if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
+              const html = processXRef(id, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1386,161 +1348,185 @@ OGs with context-dependent = TRUE in all 3 species: 2 </code></pre>
             instance.show();
           });
         }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          let top = null;
-          let height = null;
-          let parent = null;
-          if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
-            }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
-            }
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
       } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
             }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
         });
       }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
     }
-  });
-  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb28" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Context dependent DNA methylation :: miRNA regulation of gene expression"</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Contra"</span></span>
@@ -1568,244 +1554,244 @@ OGs with context-dependent = TRUE in all 3 species: 2 </code></pre>
 <span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="in">```{r setup, include=FALSE}</span></span>
-<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">echo =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::opts_chunk$set(echo = TRUE)</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
 <span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="fu"># Read in Cross-Species Methylation miRNA Comparison Data</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r read-data}</span></span>
-<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Read CSV from remote URL</span></span>
-<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>biomin_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/biomin_comparison_20251130_052506/cross_species_methylation_mirna_comparison.csv"</span>)</span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a><span class="in"># Read CSV from remote URL</span></span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a><span class="in">biomin_data &lt;- read_csv("https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/ConTra/output/biomin_comparison_20251130_052506/cross_species_methylation_mirna_comparison.csv")</span></span>
 <span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Display structure of the data</span></span>
-<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(biomin_data)</span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a><span class="in"># Display structure of the data</span></span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a><span class="in">glimpse(biomin_data)</span></span>
 <span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{r view-columns}</span></span>
-<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a><span class="co"># View column names to identify context dependent columns</span></span>
-<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(biomin_data)</span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a><span class="in"># View column names to identify context dependent columns</span></span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a><span class="in">colnames(biomin_data)</span></span>
 <span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary of Context Dependent Groups</span></span>
 <span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a><span class="in">```{r context-dependent-summary}</span></span>
-<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify columns that contain "context" in their name (case insensitive)</span></span>
-<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>context_cols <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"context"</span>, <span class="fu">names</span>(biomin_data), <span class="at">ignore.case =</span> <span class="cn">TRUE</span>, <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Context-related columns found:</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(context_cols)</span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a><span class="in"># Identify columns that contain "context" in their name (case insensitive)</span></span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a><span class="in">context_cols &lt;- grep("context", names(biomin_data), ignore.case = TRUE, value = TRUE)</span></span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a><span class="in">cat("Context-related columns found:\n")</span></span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a><span class="in">print(context_cols)</span></span>
 <span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a><span class="in">```{r filter-context-true}</span></span>
-<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for rows where any context dependent column is TRUE</span></span>
-<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a><span class="co"># First, let's see unique values in context columns</span></span>
-<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(context_cols) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (col <span class="cf">in</span> context_cols) {</span>
-<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Unique values in"</span>, col, <span class="st">":</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">unique</span>(biomin_data[[col]]))</span>
-<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="in"># Filter for rows where any context dependent column is TRUE</span></span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a><span class="in"># First, let's see unique values in context columns</span></span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a><span class="in">if (length(context_cols) &gt; 0) {</span></span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a><span class="in">  for (col in context_cols) {</span></span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a><span class="in">    cat("\nUnique values in", col, ":\n")</span></span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a><span class="in">    print(unique(biomin_data[[col]]))</span></span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a><span class="in">```{r summarize-context-dependent}</span></span>
-<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter and summarize data where context dependent columns have TRUE values</span></span>
-<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(context_cols) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create filter for rows where any context dependent column is TRUE</span></span>
-<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a>  context_true_data <span class="ot">&lt;-</span> biomin_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">if_any</span>(<span class="fu">all_of</span>(context_cols), <span class="sc">~</span> . <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">|</span> . <span class="sc">==</span> <span class="st">"TRUE"</span> <span class="sc">|</span> . <span class="sc">==</span> <span class="st">"true"</span>))</span>
-<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Number of rows with context dependent = TRUE:"</span>, <span class="fu">nrow</span>(context_true_data), <span class="st">"</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Summarize by og_id</span></span>
-<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="st">"og_id"</span> <span class="sc">%in%</span> <span class="fu">names</span>(context_true_data)) {</span>
-<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a>    context_summary <span class="ot">&lt;-</span> context_true_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a>      <span class="fu">group_by</span>(og_id) <span class="sc">%&gt;%</span></span>
-<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(</span>
-<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a>        <span class="at">n_records =</span> <span class="fu">n</span>(),</span>
-<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a>        <span class="fu">across</span>(<span class="fu">where</span>(is.numeric), <span class="sc">~</span> <span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.names =</span> <span class="st">"mean_{.col}"</span>),</span>
-<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a>        <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(context_summary)</span>
-<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Column 'og_id' not found in data</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">head</span>(context_true_data))</span>
-<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a><span class="in"># Filter and summarize data where context dependent columns have TRUE values</span></span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a><span class="in">if (length(context_cols) &gt; 0) {</span></span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a><span class="in">  # Create filter for rows where any context dependent column is TRUE</span></span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a><span class="in">  context_true_data &lt;- biomin_data %&gt;%</span></span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(if_any(all_of(context_cols), ~ . == TRUE | . == "TRUE" | . == "true"))</span></span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("Number of rows with context dependent = TRUE:", nrow(context_true_data), "\n\n")</span></span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a><span class="in">  # Summarize by og_id</span></span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a><span class="in">  if ("og_id" %in% names(context_true_data)) {</span></span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a><span class="in">    context_summary &lt;- context_true_data %&gt;%</span></span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a><span class="in">      group_by(og_id) %&gt;%</span></span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a><span class="in">      summarise(</span></span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a><span class="in">        n_records = n(),</span></span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a><span class="in">        across(where(is.numeric), ~ mean(.x, na.rm = TRUE), .names = "mean_{.col}"),</span></span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a><span class="in">        .groups = "drop"</span></span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a><span class="in">      )</span></span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a><span class="in">    print(context_summary)</span></span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a><span class="in">  } else {</span></span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a><span class="in">    cat("Column 'og_id' not found in data\n")</span></span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a><span class="in">    print(head(context_true_data))</span></span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a><span class="in">```{r detailed-view}</span></span>
-<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a><span class="co"># Display detailed view of context-dependent records</span></span>
-<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"context_true_data"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(context_true_data) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a><span class="in"># Display detailed view of context-dependent records</span></span>
+<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a><span class="in">if (exists("context_true_data") &amp;&amp; nrow(context_true_data) &gt; 0) {</span></span>
 <span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Detailed view of context-dependent records:</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(context_true_data)</span>
-<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("\nDetailed view of context-dependent records:\n")</span></span>
+<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a><span class="in">  print(context_true_data)</span></span>
+<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a><span class="fu"># Species-Specific and Shared Context-Dependent OGs</span></span>
 <span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a><span class="in">```{r species-analysis}</span></span>
-<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Identify species-specific context dependent columns</span></span>
-<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a>species_context_cols <span class="ot">&lt;-</span> context_cols[<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">"shared|common"</span>, context_cols, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)]</span>
+<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a><span class="in"># Identify species-specific context dependent columns</span></span>
+<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a><span class="in">species_context_cols &lt;- context_cols[!grepl("shared|common", context_cols, ignore.case = TRUE)]</span></span>
 <span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a><span class="co"># Create summary of which OGs are TRUE for each species</span></span>
-<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a>species_summary <span class="ot">&lt;-</span> biomin_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(og_id, <span class="fu">all_of</span>(context_cols), <span class="fu">everything</span>())</span>
+<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a><span class="in"># Create summary of which OGs are TRUE for each species</span></span>
+<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a><span class="in">species_summary &lt;- biomin_data %&gt;%</span></span>
+<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a><span class="in">  select(og_id, all_of(context_cols), everything())</span></span>
 <span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Count how many species have TRUE for each OG</span></span>
-<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">length</span>(context_cols) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a>  og_species_count <span class="ot">&lt;-</span> biomin_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a>      <span class="at">species_true_count =</span> <span class="fu">sum</span>(<span class="fu">c_across</span>(<span class="fu">all_of</span>(context_cols)) <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">|</span> </span>
-<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">c_across</span>(<span class="fu">all_of</span>(context_cols)) <span class="sc">==</span> <span class="st">"TRUE"</span> <span class="sc">|</span> </span>
-<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">c_across</span>(<span class="fu">all_of</span>(context_cols)) <span class="sc">==</span> <span class="st">"true"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
-<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a>  <span class="co"># OGs with TRUE in exactly one species (species-specific)</span></span>
-<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a>  single_species_ogs <span class="ot">&lt;-</span> og_species_count <span class="sc">%&gt;%</span></span>
-<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(species_true_count <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-128"><a href="#cb28-128" aria-hidden="true" tabindex="-1"></a>  <span class="co"># OGs shared across two species</span></span>
-<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a>  two_species_ogs <span class="ot">&lt;-</span> og_species_count <span class="sc">%&gt;%</span></span>
-<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(species_true_count <span class="sc">==</span> <span class="dv">2</span>)</span>
-<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a>  <span class="co"># OGs shared across three species</span></span>
-<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a>  three_species_ogs <span class="ot">&lt;-</span> og_species_count <span class="sc">%&gt;%</span></span>
-<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(species_true_count <span class="sc">==</span> <span class="dv">3</span>)</span>
-<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"OGs with context-dependent = TRUE in exactly 1 species:"</span>, <span class="fu">nrow</span>(single_species_ogs), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"OGs with context-dependent = TRUE in exactly 2 species:"</span>, <span class="fu">nrow</span>(two_species_ogs), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-138"><a href="#cb28-138" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"OGs with context-dependent = TRUE in all 3 species:"</span>, <span class="fu">nrow</span>(three_species_ogs), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-139"><a href="#cb28-139" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a><span class="in"># Count how many species have TRUE for each OG</span></span>
+<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a><span class="in">if (length(context_cols) &gt; 0) {</span></span>
+<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a><span class="in">  og_species_count &lt;- biomin_data %&gt;%</span></span>
+<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a><span class="in">    rowwise() %&gt;%</span></span>
+<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a><span class="in">    mutate(</span></span>
+<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a><span class="in">      species_true_count = sum(c_across(all_of(context_cols)) == TRUE | </span></span>
+<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a><span class="in">                               c_across(all_of(context_cols)) == "TRUE" | </span></span>
+<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a><span class="in">                               c_across(all_of(context_cols)) == "true", na.rm = TRUE)</span></span>
+<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a><span class="in">    ) %&gt;%</span></span>
+<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a><span class="in">    ungroup()</span></span>
+<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a><span class="in">  # OGs with TRUE in exactly one species (species-specific)</span></span>
+<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a><span class="in">  single_species_ogs &lt;- og_species_count %&gt;%</span></span>
+<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(species_true_count == 1)</span></span>
+<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-128"><a href="#cb28-128" aria-hidden="true" tabindex="-1"></a><span class="in">  # OGs shared across two species</span></span>
+<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a><span class="in">  two_species_ogs &lt;- og_species_count %&gt;%</span></span>
+<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(species_true_count == 2)</span></span>
+<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a><span class="in">  # OGs shared across three species</span></span>
+<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a><span class="in">  three_species_ogs &lt;- og_species_count %&gt;%</span></span>
+<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(species_true_count == 3)</span></span>
+<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("OGs with context-dependent = TRUE in exactly 1 species:", nrow(single_species_ogs), "\n")</span></span>
+<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("OGs with context-dependent = TRUE in exactly 2 species:", nrow(two_species_ogs), "\n")</span></span>
+<span id="cb28-138"><a href="#cb28-138" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("OGs with context-dependent = TRUE in all 3 species:", nrow(three_species_ogs), "\n")</span></span>
+<span id="cb28-139"><a href="#cb28-139" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb28-140"><a href="#cb28-140" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-141"><a href="#cb28-141" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-142"><a href="#cb28-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r species-specific-details}</span></span>
-<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a><span class="co"># Detailed breakdown by species</span></span>
-<span id="cb28-144"><a href="#cb28-144" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (col <span class="cf">in</span> context_cols) {</span>
-<span id="cb28-145"><a href="#cb28-145" aria-hidden="true" tabindex="-1"></a>  species_name <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"_context.*|context_dependent_|_methylation.*"</span>, <span class="st">""</span>, col, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a>  true_count <span class="ot">&lt;-</span> <span class="fu">sum</span>(biomin_data[[col]] <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">|</span> biomin_data[[col]] <span class="sc">==</span> <span class="st">"TRUE"</span> <span class="sc">|</span> biomin_data[[col]] <span class="sc">==</span> <span class="st">"true"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-147"><a href="#cb28-147" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, species_name, <span class="st">"- OGs with context-dependent = TRUE:"</span>, true_count, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-148"><a href="#cb28-148" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a>  species_ogs <span class="ot">&lt;-</span> biomin_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-150"><a href="#cb28-150" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(.data[[col]] <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">|</span> .data[[col]] <span class="sc">==</span> <span class="st">"TRUE"</span> <span class="sc">|</span> .data[[col]] <span class="sc">==</span> <span class="st">"true"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-151"><a href="#cb28-151" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(og_id, <span class="fu">all_of</span>(col), <span class="fu">where</span>(is.numeric))</span>
-<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">nrow</span>(species_ogs) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-154"><a href="#cb28-154" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(species_ogs)</span>
-<span id="cb28-155"><a href="#cb28-155" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb28-156"><a href="#cb28-156" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a><span class="in"># Detailed breakdown by species</span></span>
+<span id="cb28-144"><a href="#cb28-144" aria-hidden="true" tabindex="-1"></a><span class="in">for (col in context_cols) {</span></span>
+<span id="cb28-145"><a href="#cb28-145" aria-hidden="true" tabindex="-1"></a><span class="in">  species_name &lt;- gsub("_context.*|context_dependent_|_methylation.*", "", col, ignore.case = TRUE)</span></span>
+<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a><span class="in">  true_count &lt;- sum(biomin_data[[col]] == TRUE | biomin_data[[col]] == "TRUE" | biomin_data[[col]] == "true", na.rm = TRUE)</span></span>
+<span id="cb28-147"><a href="#cb28-147" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("\n", species_name, "- OGs with context-dependent = TRUE:", true_count, "\n")</span></span>
+<span id="cb28-148"><a href="#cb28-148" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a><span class="in">  species_ogs &lt;- biomin_data %&gt;%</span></span>
+<span id="cb28-150"><a href="#cb28-150" aria-hidden="true" tabindex="-1"></a><span class="in">    filter(.data[[col]] == TRUE | .data[[col]] == "TRUE" | .data[[col]] == "true") %&gt;%</span></span>
+<span id="cb28-151"><a href="#cb28-151" aria-hidden="true" tabindex="-1"></a><span class="in">    select(og_id, all_of(col), where(is.numeric))</span></span>
+<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a><span class="in">  if (nrow(species_ogs) &gt; 0) {</span></span>
+<span id="cb28-154"><a href="#cb28-154" aria-hidden="true" tabindex="-1"></a><span class="in">    print(species_ogs)</span></span>
+<span id="cb28-155"><a href="#cb28-155" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb28-156"><a href="#cb28-156" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb28-157"><a href="#cb28-157" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-158"><a href="#cb28-158" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-159"><a href="#cb28-159" aria-hidden="true" tabindex="-1"></a><span class="in">```{r shared-ogs-summary}</span></span>
-<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary of shared OGs with quantitative metrics</span></span>
-<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"two_species_ogs"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(two_species_ogs) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-162"><a href="#cb28-162" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== OGs Shared Across Two Species ===</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-163"><a href="#cb28-163" aria-hidden="true" tabindex="-1"></a>  two_species_summary <span class="ot">&lt;-</span> two_species_ogs <span class="sc">%&gt;%</span></span>
-<span id="cb28-164"><a href="#cb28-164" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(og_id, <span class="fu">all_of</span>(context_cols), <span class="fu">where</span>(is.numeric))</span>
-<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(two_species_summary)</span>
-<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a><span class="in"># Summary of shared OGs with quantitative metrics</span></span>
+<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a><span class="in">if (exists("two_species_ogs") &amp;&amp; nrow(two_species_ogs) &gt; 0) {</span></span>
+<span id="cb28-162"><a href="#cb28-162" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("\n=== OGs Shared Across Two Species ===\n")</span></span>
+<span id="cb28-163"><a href="#cb28-163" aria-hidden="true" tabindex="-1"></a><span class="in">  two_species_summary &lt;- two_species_ogs %&gt;%</span></span>
+<span id="cb28-164"><a href="#cb28-164" aria-hidden="true" tabindex="-1"></a><span class="in">    select(og_id, all_of(context_cols), where(is.numeric))</span></span>
+<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a><span class="in">  print(two_species_summary)</span></span>
+<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb28-167"><a href="#cb28-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"three_species_ogs"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(three_species_ogs) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== OGs Shared Across All Three Species ===</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a>  three_species_summary <span class="ot">&lt;-</span> three_species_ogs <span class="sc">%&gt;%</span></span>
-<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(og_id, <span class="fu">all_of</span>(context_cols), <span class="fu">where</span>(is.numeric))</span>
-<span id="cb28-172"><a href="#cb28-172" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(three_species_summary)</span>
-<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a><span class="in">if (exists("three_species_ogs") &amp;&amp; nrow(three_species_ogs) &gt; 0) {</span></span>
+<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("\n=== OGs Shared Across All Three Species ===\n")</span></span>
+<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a><span class="in">  three_species_summary &lt;- three_species_ogs %&gt;%</span></span>
+<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a><span class="in">    select(og_id, all_of(context_cols), where(is.numeric))</span></span>
+<span id="cb28-172"><a href="#cb28-172" aria-hidden="true" tabindex="-1"></a><span class="in">  print(three_species_summary)</span></span>
+<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb28-174"><a href="#cb28-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-175"><a href="#cb28-175" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-176"><a href="#cb28-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r quantitative-summary}</span></span>
-<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate quantitative summary statistics for context-dependent OGs</span></span>
-<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"context_true_data"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(context_true_data) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a>  numeric_cols <span class="ot">&lt;-</span> <span class="fu">names</span>(context_true_data)[<span class="fu">sapply</span>(context_true_data, is.numeric)]</span>
-<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(numeric_cols) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">=== Quantitative Summary of Context-Dependent OGs ===</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a>    quant_summary <span class="ot">&lt;-</span> context_true_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-184"><a href="#cb28-184" aria-hidden="true" tabindex="-1"></a>      <span class="fu">summarise</span>(<span class="fu">across</span>(<span class="fu">all_of</span>(numeric_cols), </span>
-<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">list</span>(<span class="at">mean =</span> <span class="sc">~</span><span class="fu">mean</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb28-186"><a href="#cb28-186" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sd =</span> <span class="sc">~</span><span class="fu">sd</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb28-187"><a href="#cb28-187" aria-hidden="true" tabindex="-1"></a>                            <span class="at">min =</span> <span class="sc">~</span><span class="fu">min</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb28-188"><a href="#cb28-188" aria-hidden="true" tabindex="-1"></a>                            <span class="at">max =</span> <span class="sc">~</span><span class="fu">max</span>(.x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a>                       <span class="at">.names =</span> <span class="st">"{.col}_{.fn}"</span>))</span>
-<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb28-191"><a href="#cb28-191" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Transpose for better readability</span></span>
-<span id="cb28-192"><a href="#cb28-192" aria-hidden="true" tabindex="-1"></a>    quant_summary_long <span class="ot">&lt;-</span> quant_summary <span class="sc">%&gt;%</span></span>
-<span id="cb28-193"><a href="#cb28-193" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), <span class="at">names_to =</span> <span class="st">"metric"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
-<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(quant_summary_long)</span>
-<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb28-196"><a href="#cb28-196" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a><span class="in"># Generate quantitative summary statistics for context-dependent OGs</span></span>
+<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a><span class="in">if (exists("context_true_data") &amp;&amp; nrow(context_true_data) &gt; 0) {</span></span>
+<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a><span class="in">  numeric_cols &lt;- names(context_true_data)[sapply(context_true_data, is.numeric)]</span></span>
+<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a><span class="in">  if (length(numeric_cols) &gt; 0) {</span></span>
+<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a><span class="in">    cat("\n=== Quantitative Summary of Context-Dependent OGs ===\n")</span></span>
+<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a><span class="in">    quant_summary &lt;- context_true_data %&gt;%</span></span>
+<span id="cb28-184"><a href="#cb28-184" aria-hidden="true" tabindex="-1"></a><span class="in">      summarise(across(all_of(numeric_cols), </span></span>
+<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a><span class="in">                       list(mean = ~mean(.x, na.rm = TRUE),</span></span>
+<span id="cb28-186"><a href="#cb28-186" aria-hidden="true" tabindex="-1"></a><span class="in">                            sd = ~sd(.x, na.rm = TRUE),</span></span>
+<span id="cb28-187"><a href="#cb28-187" aria-hidden="true" tabindex="-1"></a><span class="in">                            min = ~min(.x, na.rm = TRUE),</span></span>
+<span id="cb28-188"><a href="#cb28-188" aria-hidden="true" tabindex="-1"></a><span class="in">                            max = ~max(.x, na.rm = TRUE)),</span></span>
+<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a><span class="in">                       .names = "{.col}_{.fn}"))</span></span>
+<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a><span class="in">    </span></span>
+<span id="cb28-191"><a href="#cb28-191" aria-hidden="true" tabindex="-1"></a><span class="in">    # Transpose for better readability</span></span>
+<span id="cb28-192"><a href="#cb28-192" aria-hidden="true" tabindex="-1"></a><span class="in">    quant_summary_long &lt;- quant_summary %&gt;%</span></span>
+<span id="cb28-193"><a href="#cb28-193" aria-hidden="true" tabindex="-1"></a><span class="in">      pivot_longer(everything(), names_to = "metric", values_to = "value")</span></span>
+<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a><span class="in">    print(quant_summary_long)</span></span>
+<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb28-196"><a href="#cb28-196" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb28-197"><a href="#cb28-197" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-198"><a href="#cb28-198" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-199"><a href="#cb28-199" aria-hidden="true" tabindex="-1"></a><span class="fu"># Summary Paragraph</span></span>
 <span id="cb28-200"><a href="#cb28-200" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-201"><a href="#cb28-201" aria-hidden="true" tabindex="-1"></a><span class="in">```{r generate-paragraph, results='asis'}</span></span>
-<span id="cb28-202"><a href="#cb28-202" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate dynamic summary paragraph</span></span>
-<span id="cb28-203"><a href="#cb28-203" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"context_cols"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">length</span>(context_cols) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-204"><a href="#cb28-204" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-205"><a href="#cb28-205" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get counts per species</span></span>
-<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a>  species_counts <span class="ot">&lt;-</span> <span class="fu">sapply</span>(context_cols, <span class="cf">function</span>(col) {</span>
-<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(biomin_data[[col]] <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">|</span> biomin_data[[col]] <span class="sc">==</span> <span class="st">"TRUE"</span> <span class="sc">|</span> biomin_data[[col]] <span class="sc">==</span> <span class="st">"true"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-208"><a href="#cb28-208" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb28-209"><a href="#cb28-209" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Get OG lists per species</span></span>
-<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a>  species_ogs_list <span class="ot">&lt;-</span> <span class="fu">lapply</span>(context_cols, <span class="cf">function</span>(col) {</span>
-<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a>    biomin_data <span class="sc">%&gt;%</span></span>
-<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a>      <span class="fu">filter</span>(.data[[col]] <span class="sc">==</span> <span class="cn">TRUE</span> <span class="sc">|</span> .data[[col]] <span class="sc">==</span> <span class="st">"TRUE"</span> <span class="sc">|</span> .data[[col]] <span class="sc">==</span> <span class="st">"true"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-214"><a href="#cb28-214" aria-hidden="true" tabindex="-1"></a>      <span class="fu">pull</span>(og_id)</span>
-<span id="cb28-215"><a href="#cb28-215" aria-hidden="true" tabindex="-1"></a>  })</span>
-<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(species_ogs_list) <span class="ot">&lt;-</span> context_cols</span>
-<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Build paragraph</span></span>
-<span id="cb28-219"><a href="#cb28-219" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">## Cross-Species Context-Dependent Methylation and miRNA Analysis</span><span class="sc">\n\n</span><span class="st">"</span>)</span>
-<span id="cb28-220"><a href="#cb28-220" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"This analysis examined orthogroup (OG) patterns across species for context-dependent methylation and miRNA associations. "</span>)</span>
-<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Species-specific findings</span></span>
-<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(context_cols)) {</span>
-<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a>    col <span class="ot">&lt;-</span> context_cols[i]</span>
-<span id="cb28-226"><a href="#cb28-226" aria-hidden="true" tabindex="-1"></a>    species_name <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"_context.*|context_dependent_|_methylation.*"</span>, <span class="st">""</span>, col, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-227"><a href="#cb28-227" aria-hidden="true" tabindex="-1"></a>    ogs <span class="ot">&lt;-</span> species_ogs_list[[col]]</span>
-<span id="cb28-228"><a href="#cb28-228" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(ogs) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-229"><a href="#cb28-229" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">"**"</span>, species_name, <span class="st">"** showed context-dependent patterns in "</span>, <span class="fu">length</span>(ogs), <span class="st">" OGs ("</span>, </span>
-<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a>          <span class="fu">paste</span>(<span class="fu">head</span>(ogs, <span class="dv">5</span>), <span class="at">collapse =</span> <span class="st">", "</span>), <span class="cf">if</span>(<span class="fu">length</span>(ogs) <span class="sc">&gt;</span> <span class="dv">5</span>) <span class="st">", ..."</span> <span class="cf">else</span> <span class="st">""</span>, <span class="st">"). "</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb28-231"><a href="#cb28-231" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb28-232"><a href="#cb28-232" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb28-233"><a href="#cb28-233" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Shared patterns</span></span>
-<span id="cb28-235"><a href="#cb28-235" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"two_species_ogs"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(two_species_ogs) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-236"><a href="#cb28-236" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">A total of **"</span>, <span class="fu">nrow</span>(two_species_ogs), <span class="st">" OGs** exhibited context-dependent patterns shared across exactly two species"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">nrow</span>(two_species_ogs) <span class="sc">&lt;=</span> <span class="dv">10</span>) {</span>
-<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">" ("</span>, <span class="fu">paste</span>(two_species_ogs<span class="sc">$</span>og_id, <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">")"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">". "</span>)</span>
-<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"three_species_ogs"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(three_species_ogs) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-244"><a href="#cb28-244" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">"Notably, **"</span>, <span class="fu">nrow</span>(three_species_ogs), <span class="st">" OGs** showed conserved context-dependent patterns across all three species"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb28-245"><a href="#cb28-245" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">nrow</span>(three_species_ogs) <span class="sc">&lt;=</span> <span class="dv">10</span>) {</span>
-<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">" ("</span>, <span class="fu">paste</span>(three_species_ogs<span class="sc">$</span>og_id, <span class="at">collapse =</span> <span class="st">", "</span>), <span class="st">")"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb28-248"><a href="#cb28-248" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cat</span>(<span class="st">", suggesting evolutionary conservation of these regulatory mechanisms. "</span>)</span>
-<span id="cb28-249"><a href="#cb28-249" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Quantitative highlights</span></span>
-<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">exists</span>(<span class="st">"context_true_data"</span>) <span class="sc">&amp;&amp;</span> <span class="fu">nrow</span>(context_true_data) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-253"><a href="#cb28-253" aria-hidden="true" tabindex="-1"></a>    numeric_cols <span class="ot">&lt;-</span> <span class="fu">names</span>(context_true_data)[<span class="fu">sapply</span>(context_true_data, is.numeric)]</span>
-<span id="cb28-254"><a href="#cb28-254" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(numeric_cols) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb28-255"><a href="#cb28-255" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Quantitatively, context-dependent OGs showed the following characteristics: "</span>)</span>
-<span id="cb28-256"><a href="#cb28-256" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> (nc <span class="cf">in</span> <span class="fu">head</span>(numeric_cols, <span class="dv">3</span>)) {</span>
-<span id="cb28-257"><a href="#cb28-257" aria-hidden="true" tabindex="-1"></a>        mean_val <span class="ot">&lt;-</span> <span class="fu">mean</span>(context_true_data[[nc]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a>        sd_val <span class="ot">&lt;-</span> <span class="fu">sd</span>(context_true_data[[nc]], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="st">"**"</span>, nc, <span class="st">"** (mean ± SD: "</span>, <span class="fu">round</span>(mean_val, <span class="dv">3</span>), <span class="st">" ± "</span>, <span class="fu">round</span>(sd_val, <span class="dv">3</span>), <span class="st">"); "</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb28-260"><a href="#cb28-260" aria-hidden="true" tabindex="-1"></a>      }</span>
-<span id="cb28-261"><a href="#cb28-261" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb28-262"><a href="#cb28-262" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb28-263"><a href="#cb28-263" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb28-264"><a href="#cb28-264" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb28-265"><a href="#cb28-265" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-202"><a href="#cb28-202" aria-hidden="true" tabindex="-1"></a><span class="in"># Generate dynamic summary paragraph</span></span>
+<span id="cb28-203"><a href="#cb28-203" aria-hidden="true" tabindex="-1"></a><span class="in">if (exists("context_cols") &amp;&amp; length(context_cols) &gt; 0) {</span></span>
+<span id="cb28-204"><a href="#cb28-204" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-205"><a href="#cb28-205" aria-hidden="true" tabindex="-1"></a><span class="in">  # Get counts per species</span></span>
+<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a><span class="in">  species_counts &lt;- sapply(context_cols, function(col) {</span></span>
+<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a><span class="in">    sum(biomin_data[[col]] == TRUE | biomin_data[[col]] == "TRUE" | biomin_data[[col]] == "true", na.rm = TRUE)</span></span>
+<span id="cb28-208"><a href="#cb28-208" aria-hidden="true" tabindex="-1"></a><span class="in">  })</span></span>
+<span id="cb28-209"><a href="#cb28-209" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a><span class="in">  # Get OG lists per species</span></span>
+<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a><span class="in">  species_ogs_list &lt;- lapply(context_cols, function(col) {</span></span>
+<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a><span class="in">    biomin_data %&gt;%</span></span>
+<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a><span class="in">      filter(.data[[col]] == TRUE | .data[[col]] == "TRUE" | .data[[col]] == "true") %&gt;%</span></span>
+<span id="cb28-214"><a href="#cb28-214" aria-hidden="true" tabindex="-1"></a><span class="in">      pull(og_id)</span></span>
+<span id="cb28-215"><a href="#cb28-215" aria-hidden="true" tabindex="-1"></a><span class="in">  })</span></span>
+<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a><span class="in">  names(species_ogs_list) &lt;- context_cols</span></span>
+<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a><span class="in">  # Build paragraph</span></span>
+<span id="cb28-219"><a href="#cb28-219" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("\n## Cross-Species Context-Dependent Methylation and miRNA Analysis\n\n")</span></span>
+<span id="cb28-220"><a href="#cb28-220" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("This analysis examined orthogroup (OG) patterns across species for context-dependent methylation and miRNA associations. ")</span></span>
+<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a><span class="in">  # Species-specific findings</span></span>
+<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a><span class="in">  for (i in seq_along(context_cols)) {</span></span>
+<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a><span class="in">    col &lt;- context_cols[i]</span></span>
+<span id="cb28-226"><a href="#cb28-226" aria-hidden="true" tabindex="-1"></a><span class="in">    species_name &lt;- gsub("_context.*|context_dependent_|_methylation.*", "", col, ignore.case = TRUE)</span></span>
+<span id="cb28-227"><a href="#cb28-227" aria-hidden="true" tabindex="-1"></a><span class="in">    ogs &lt;- species_ogs_list[[col]]</span></span>
+<span id="cb28-228"><a href="#cb28-228" aria-hidden="true" tabindex="-1"></a><span class="in">    if (length(ogs) &gt; 0) {</span></span>
+<span id="cb28-229"><a href="#cb28-229" aria-hidden="true" tabindex="-1"></a><span class="in">      cat("**", species_name, "** showed context-dependent patterns in ", length(ogs), " OGs (", </span></span>
+<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a><span class="in">          paste(head(ogs, 5), collapse = ", "), if(length(ogs) &gt; 5) ", ..." else "", "). ", sep = "")</span></span>
+<span id="cb28-231"><a href="#cb28-231" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb28-232"><a href="#cb28-232" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb28-233"><a href="#cb28-233" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a><span class="in">  # Shared patterns</span></span>
+<span id="cb28-235"><a href="#cb28-235" aria-hidden="true" tabindex="-1"></a><span class="in">  if (exists("two_species_ogs") &amp;&amp; nrow(two_species_ogs) &gt; 0) {</span></span>
+<span id="cb28-236"><a href="#cb28-236" aria-hidden="true" tabindex="-1"></a><span class="in">    cat("\n\nA total of **", nrow(two_species_ogs), " OGs** exhibited context-dependent patterns shared across exactly two species", sep = "")</span></span>
+<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a><span class="in">    if (nrow(two_species_ogs) &lt;= 10) {</span></span>
+<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a><span class="in">      cat(" (", paste(two_species_ogs$og_id, collapse = ", "), ")", sep = "")</span></span>
+<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a><span class="in">    cat(". ")</span></span>
+<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a><span class="in">  if (exists("three_species_ogs") &amp;&amp; nrow(three_species_ogs) &gt; 0) {</span></span>
+<span id="cb28-244"><a href="#cb28-244" aria-hidden="true" tabindex="-1"></a><span class="in">    cat("Notably, **", nrow(three_species_ogs), " OGs** showed conserved context-dependent patterns across all three species", sep = "")</span></span>
+<span id="cb28-245"><a href="#cb28-245" aria-hidden="true" tabindex="-1"></a><span class="in">    if (nrow(three_species_ogs) &lt;= 10) {</span></span>
+<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a><span class="in">      cat(" (", paste(three_species_ogs$og_id, collapse = ", "), ")", sep = "")</span></span>
+<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb28-248"><a href="#cb28-248" aria-hidden="true" tabindex="-1"></a><span class="in">    cat(", suggesting evolutionary conservation of these regulatory mechanisms. ")</span></span>
+<span id="cb28-249"><a href="#cb28-249" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a><span class="in">  # Quantitative highlights</span></span>
+<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a><span class="in">  if (exists("context_true_data") &amp;&amp; nrow(context_true_data) &gt; 0) {</span></span>
+<span id="cb28-253"><a href="#cb28-253" aria-hidden="true" tabindex="-1"></a><span class="in">    numeric_cols &lt;- names(context_true_data)[sapply(context_true_data, is.numeric)]</span></span>
+<span id="cb28-254"><a href="#cb28-254" aria-hidden="true" tabindex="-1"></a><span class="in">    if (length(numeric_cols) &gt; 0) {</span></span>
+<span id="cb28-255"><a href="#cb28-255" aria-hidden="true" tabindex="-1"></a><span class="in">      cat("\n\nQuantitatively, context-dependent OGs showed the following characteristics: ")</span></span>
+<span id="cb28-256"><a href="#cb28-256" aria-hidden="true" tabindex="-1"></a><span class="in">      for (nc in head(numeric_cols, 3)) {</span></span>
+<span id="cb28-257"><a href="#cb28-257" aria-hidden="true" tabindex="-1"></a><span class="in">        mean_val &lt;- mean(context_true_data[[nc]], na.rm = TRUE)</span></span>
+<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a><span class="in">        sd_val &lt;- sd(context_true_data[[nc]], na.rm = TRUE)</span></span>
+<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a><span class="in">        cat("**", nc, "** (mean ± SD: ", round(mean_val, 3), " ± ", round(sd_val, 3), "); ", sep = "")</span></span>
+<span id="cb28-260"><a href="#cb28-260" aria-hidden="true" tabindex="-1"></a><span class="in">      }</span></span>
+<span id="cb28-261"><a href="#cb28-261" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb28-262"><a href="#cb28-262" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb28-263"><a href="#cb28-263" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb28-264"><a href="#cb28-264" aria-hidden="true" tabindex="-1"></a><span class="in">  cat("\n")</span></span>
+<span id="cb28-265"><a href="#cb28-265" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb28-266"><a href="#cb28-266" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb28-267"><a href="#cb28-267" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>

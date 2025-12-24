@@ -9,14 +9,172 @@
 <link>https://sr320.github.io/tumbling-oysters/</link>
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.7.32</generator>
-<lastBuildDate>Thu, 04 Dec 2025 08:00:00 GMT</lastBuildDate>
+<generator>quarto-1.6.40</generator>
+<lastBuildDate>Wed, 24 Dec 2025 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Merry Linkmas</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/69-linksmas/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Here are few tidbits to bring you cheer this Christmas Season!</p>
+<p>In no particular order:</p>
+<section id="paper-genomic-insights-into-the-origin-of-ecotypes" class="level1">
+<h1>1) [Paper] Genomic insights into the origin of ecotypes</h1>
+<section id="highlights" class="level2">
+<h2 class="anchored" data-anchor-id="highlights">Highlights</h2>
+<p>The ecotype concept describes populations of species that are phenotypically and genetically differentiated by adaptation to contrasting habitats.</p>
+<p>Ecotypes offer a powerful framework for understanding how, and why, biodiversity arises within species and why similar environments repeatedly generate similar forms.</p>
+<p>A century after its introduction, the ecotype concept continues to shape thinking about adaptation, ecological diversification, and the early stages of speciation.</p>
+<p>The concept has expanded far beyond its botanical origins, influencing research across the tree of life.</p>
+<p>Genomic tools have provided new insight into the forces and factors that drive the formation of ecotypes.</p>
+<p>Integrating genomic, ecological, and experimental approaches will be essential for tackling emerging challenges in the decade ahead.</p>
+<p><a href="https://www.cell.com/action/showPdf?pii=S0169-5347%2825%2900345-3">Link</a></p>
+</section>
+</section>
+<section id="paper-defining-the-epigenetic-toolkit-as-an-evolvable-trait" class="level1">
+<h1>2) [Paper] Defining the epigenetic toolkit as an evolvable trait</h1>
+<section id="highlights-1" class="level2">
+<h2 class="anchored" data-anchor-id="highlights-1">Highlights</h2>
+<p>Previous studies have revealed the genetic basis of many complex epigenetic and phenotypic traits through classic screening or genome-wide association studies (GWAS). We explore the question of how the homeostatic state of a plant is balanced under varied levels of nutrient supply when environmental or internal (epi)genetic factors significantly perturb this balance.</p>
+<p>We explore how epigenetic regulation of the genome of a plant interacts with physiological processes (such as homeostasis) at the biological pathway level when exposed to different nutrient availability scenarios and under changing environmental conditions.</p>
+<p>We propose a conceptual model involving an ‘epigenetic toolkit’ where plants sense environmental pressures to develop a complex crosstalk between physiology, epigenetic/epigenomic state, and their genetic code, and ultimately fine-tune adaptation at the organismal level.</p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Defining_the_epigenetic_toolkit_as_an_evolvable_trait_Trends_in_Plant_Science_2025-12-22_11-24-19.png" class="img-fluid"></p>
+<p><a href="https://www.cell.com/action/showPdf?pii=S1360-1385%2825%2900348-6">Link</a></p>
+</section>
+</section>
+<section id="software-isoformswitchanalyzer-v2-analysis-of-functional-isoform-changes-in-long-read-and-single-cell-sequencing-data" class="level1">
+<h1>3) [Software] IsoformSwitchAnalyzeR v2: Analysis of Functional Isoform Changes in Long-read and Single-cell Sequencing Data</h1>
+<p><a href="https://www.biorxiv.org/content/10.64898/2025.12.08.693027v1.full.pdf">Link</a></p>
+</section>
+<section id="book-modern-statistics-for-modern-biology" class="level1">
+<h1>4) [Book] Modern Statistics for Modern Biology</h1>
+<p><a href="https://web.stanford.edu/class/bios221/book/">Link</a></p>
+</section>
+<section id="paper-the-plant-mind-unraveling-abiotic-stress-priming-memory-and-adaptation" class="level1">
+<h1>5) [Paper] The Plant Mind: Unraveling Abiotic Stress Priming, Memory, and Adaptation</h1>
+<section id="abstract" class="level2">
+<h2 class="anchored" data-anchor-id="abstract">ABSTRACT</h2>
+<p>Plants exhibit a remarkable capacity to adapt to recurrent abiotic stresses, prompting a re-evaluation of traditional views on plant responses to environmental challenges. This review explores the intricate mechanisms of stress priming, memory, and adaptation in plants. Specifically, it details the molecular and physiological processes underlying abiotic stress priming, which serve as a gateway to understanding plant memory. Stress priming fosters resilience against diverse stressors through interconnected pathways involving hormone signaling, transcriptional regulation, DNA methylation, histone modifications, and small RNAs. These epigenetic changes orchestrate stress-responsive gene expression and can, in some cases, be passed on to future generations. This review distinguishes between somatic memory, intergenerational effects, and transgenerational inheritance to avoid conceptual overlap. By connecting short-term priming to long-term adaptation and potential heritability, this article proposes a paradigm shift in how plant resilience is understood, with significant implications for crop improvement under climate stress.</p>
+<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_The_Plant_Mind_Unraveling_Abiotic_Stress_Priming_Memory_and_Adaptation_-_Aswathi_-_2025_-_Physiologia_Plantarum_-_Wiley_Onli_2025-12-22_11-34-49.png" class="img-fluid"></p>
+<p><a href="https://onlinelibrary.wiley.com/doi/epdf/10.1111/ppl.70372">Link</a></p>
+</section>
+</section>
+<section id="software-gff-analysis-tools---ai-agent" class="level1">
+<h1>6) [Software] <a href="https://github.com/ToyokoLabs/gffutilsAI#gff-analysis-tools---ai-agent">GFF Analysis Tools - AI Agent</a></h1>
+<p>This AI agent provides an intuitive interface for bioinformatics researchers to analyze GFF files without writing complex code. Users can ask questions in natural language, and the agent will select and execute the appropriate analysis tools to provide comprehensive answers.</p>
+<section id="features" class="level2">
+<h2 class="anchored" data-anchor-id="features">Features</h2>
+<section id="coordinate-based-queries" class="level3">
+<h3 class="anchored" data-anchor-id="coordinate-based-queries">🧬 Coordinate-based Queries</h3>
+<ul>
+<li>Find features by genomic coordinates (regions and specific positions)</li>
+<li>Query features overlapping genomic regions with filtering by type and strand</li>
+<li>Identify features containing specific genomic positions</li>
+</ul>
+</section>
+<section id="relationship-and-hierarchy-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="relationship-and-hierarchy-analysis">🔗 Relationship and Hierarchy Analysis</h3>
+<ul>
+<li>Explore gene structure and organization (get all child features like exons, CDS, UTRs)</li>
+<li>Find parent features of any given feature using upward traversal</li>
+<li>Get all features of specific types with efficient iteration</li>
+</ul>
+</section>
+<section id="statistical-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="statistical-analysis">📊 Statistical Analysis</h3>
+<ul>
+<li>Calculate comprehensive feature statistics (counts, length distributions per feature type)</li>
+<li>Generate per-chromosome feature summaries and analysis</li>
+<li>Analyze length distributions with detailed statistics (min, max, mean, median, std dev, percentiles)</li>
+<li>Create histogram data for feature length distributions</li>
+</ul>
+</section>
+<section id="attribute-based-searches" class="level3">
+<h3 class="anchored" data-anchor-id="attribute-based-searches">🔍 Attribute-based Searches</h3>
+<ul>
+<li>Search features by attribute key-value pairs (exact and partial matching)</li>
+<li>Find features containing specific attribute keys</li>
+<li>Support pattern matching and logical operations for attribute queries</li>
+</ul>
+</section>
+<section id="positional-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="positional-analysis">📍 Positional Analysis</h3>
+<ul>
+<li>Identify intergenic regions (gaps between genes) with filtering options</li>
+<li>Calculate feature density in genomic windows across chromosomes</li>
+<li>Analyze strand distribution of features with counts and percentages</li>
+<li>Support clustering analysis and positional insights</li>
+</ul>
+</section>
+<section id="export-and-reporting" class="level3">
+<h3 class="anchored" data-anchor-id="export-and-reporting">📤 Export and Reporting</h3>
+<ul>
+<li>Export feature data to CSV format with comprehensive filtering</li>
+<li>Generate human-readable summary reports of GFF file contents</li>
+<li>Provide formatted output for downstream analysis</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="paper-comprehensive-whole-transcriptome-analysis-reveals-specific-lncrna-circrna-and-mirna-mrna-networks-of-pearl-oyster-pinctada-fucata-martensii-in-response-to-hypoxia-stress" class="level1">
+<h1>7) [Paper] Comprehensive whole transcriptome analysis reveals specific lncRNA, circRNA and miRNA-mRNA networks of pearl oyster (<em>Pinctada fucata martensii</em>) in response to hypoxia stress</h1>
+<section id="highlights-2" class="level2">
+<h2 class="anchored" data-anchor-id="highlights-2">Highlights</h2>
+<p>Construct a ceRNA network with 9 DElncRNAs, 10 DEcircRNAs, 3 DEmiRNAs, and 6 DEmRNAs.</p>
+<p>CeRNA networks are critically involved in the molecular response to hypoxia.</p>
+<p>Hypoxia drives ceRNA-based regulation of metabolism, antioxidation, and RNA splicing.</p>
+</section>
+<section id="abstract-1" class="level2">
+<h2 class="anchored" data-anchor-id="abstract-1">Abstract</h2>
+<p>Hypoxia is a prevalent environmental stressor in both natural and aquaculture environments. <em>Pinctada fucata martensii</em>, a commercially valuable pearl oyster species, is particularly susceptible to hypoxic stress in aquaculture. To explore its molecular response to short-term hypoxia, whole-transcriptome sequencing was performed on gill tissues under normoxic and hypoxic conditions. A total of 721 differentially expressed mRNAs (DEmRNAs), 259 long non-coding RNAs (DElncRNAs), 55 circular RNAs (DEcircRNAs), and 17 microRNAs (DEmiRNAs) were identified. Based on predicted interactions among these differentially expressed RNAs, a competing endogenous RNA (ceRNA) network was constructed, consisting of 9 DElncRNAs, 10 DEcircRNAs, 3 DEmiRNAs, and 6 DEmRNAs. Six DElncRNAs and three DEcircRNAs were predicted to interact with miR-152, and the axis-mediated activation of target genes–ALDH5A1 and SLC23A2, FAT4 and CCDC97, and LAC–was implicated in the modulation of metabolic pathways, enzyme activity, antioxidant defenses, thereby promoting antioxidant capacity and suppressing cell growth as part of an adaptive survival strategy. This ceRNA network reveals a key molecular hub that links hypoxia sensing to immunomodulatory mechanisms. Moreover, the co-repression of stress-response genes HSP20 and HSP70 in this network enhances hypoxic tolerance increased energy utilization efficiency and regulation of RNA. Functional analysis of the network revealed enrichment in pathways related to energy metabolism, antioxidant defense, and RNA splicing regulation. These findings provide novel insights into transcriptomic regulation and adaptive mechanisms in bivalves under hypoxic stress.</p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S2352513425006921">Link</a></p>
+</section>
+</section>
+<section id="paper-multi-omics-reprogramming-drives-a-counterintuitive-reversal-of-disease-susceptibility-during-ageing" class="level1">
+<h1>8 [Paper] Multi-Omics Reprogramming Drives a Counterintuitive Reversal of Disease Susceptibility During Ageing</h1>
+<section id="abstract-2" class="level2">
+<h2 class="anchored" data-anchor-id="abstract-2">Abstract</h2>
+<p>Ageing is a progressive and irreversible biological process characterized by the deterioration of physiological functions and increased vulnerability to mortality. Although extensively studied in vertebrates, ageing in long-lived invertebrates remains comparatively unexplored. While ageing typically leads to greater susceptibility to infectious diseases, a striking and unexpected reversal was identified in oysters: older oysters exhibit markedly increased tolerance to the Pacific Oyster Mortality Syndrome (POMS), a panzootic disease primarily driven by the OsHV-1 herpesvirus and responsible for severe losses in global aquaculture. To investigate this counterintuitive pattern, we challenged oysters aged 4, 16, and 28 months from four biparental families and conducted an integrative multi-omics analysis, including epigenomics, transcriptomics, and metabolomics on the two families showing the strongest age-related increase in survival. Our results reveal that ageing in <em>Magallana gigas</em> is characterized by coordinated epigenetic, transcriptional, and metabolic reprogramming that reduces host permissiveness to POMS. We show that the epigenetic remodeling of key immune regulators (e.g., Toll-like receptors, MyD88) aligns with transcriptional rewiring of NF-κB and ubiquitin pathways, producing a finely tuned innate immune state marked by enhanced antiviral activity but reduced antibacterial responsiveness. We also identify age-related repression of mTOR signaling, likely promoting autophagy and improving viral control. These regulatory changes are tightly linked to metabolic adjustments, including reduced TCA cycle flux, remodeled nitrogen metabolism, and altered glutathione dynamics, which collectively support a stress-tolerant, energy-conserving phenotype. Together, our findings reveal a fundamental evolutionary trade-off: juveniles prioritize growth at the cost of viral susceptibility, whereas adults invest in cellular maintenance and antiviral preparedness.</p>
+<p><a href="https://www.biorxiv.org/content/10.64898/2025.12.12.693928v2">Link</a></p>
+</section>
+</section>
+<section id="paper-unraveling-the-microrna-regulatory-network-underlying-the-planktonic-to-benthic-transition-in-the-pacific-oyster" class="level1">
+<h1>9 [Paper] Unraveling the microRNA regulatory network underlying the planktonic-to-benthic transition in the Pacific oyster</h1>
+<section id="abstract-3" class="level2">
+<h2 class="anchored" data-anchor-id="abstract-3">Abstract</h2>
+<p>The Pacific oyster, <em>Crassostrea gigas</em>, undergoes a critical developmental transition from planktonic larvae to sessile benthic juveniles, a process essential for both aquaculture productivity and the stability of marine ecosystems. While environmental and neuroendocrine cues regulating this transition have been extensively studied, the contribution of microRNAs (miRNAs) remains largely unexplored. In this study, we employed a high-resolution temporal sampling strategy to investigate oyster metamorphosis, identified 33 miRNAs associated with larval settlement and metamorphosis. Additionally, we uncovered 35 highly correlated miRNA-target gene pairs, revealing a complex post-transcriptional regulatory network. We further validated the expression pattern of the potential regulatory hub miRNA novel_mir_80 and confirmed its presence through whole-mount in situ hybridization using LNA-modified probes. Functional annotation of target genes highlighted key roles in adhesion, signal transduction, protein homeostasis, cytoskeleton remodeling, genome stability, and transcriptional and epigenetic regulation. These results underscore the pivotal role of miRNAs in orchestrating developmental reprogramming during the planktonic-benthic transition. Our findings not only expand current understanding of miRNA-mediated gene regulation in <em>C. gigas</em>, but also provide novel molecular targets with potential applications in oyster breeding and aquaculture management.</p>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S2352513425006908">Link</a></p>
+</section>
+</section>
+<section id="paper-fasting-reduces-viral-susceptibility-in-oysters-until-energy-depletion-becomes-detrimental" class="level1">
+<h1>10 [Paper] Fasting reduces viral susceptibility in oysters until energy depletion becomes detrimental</h1>
+<section id="abstract-4" class="level2">
+<h2 class="anchored" data-anchor-id="abstract-4">Abstract</h2>
+<p>Nutritional status is a key determinant of disease outcomes in animals, yet its effects are complex. While abundant food supplies support host immunity, they may also fuel pathogen proliferation, whereas food limitation can restrict resources for both host and parasite. The balance between these opposing processes and the physiological limits to fasting as a protective strategy remain poorly understood. Here we tested how the duration of food deprivation affects infection outcome, using the Pacific oyster (<em>Magallana gigas</em>) and its lethal pathogen Ostreid herpesvirus 1 as a model system. We found that moderate fasting markedly improved survival, with the lowest mortality observed after 14–28 days without food. However, beyond this range, survival declined sharply, revealing a tipping point where prolonged starvation reversed its protective effect. Biochemical analyses of oysters from Sequence 1 at the onset of infection provided mechanistic insight: carbohydrate reserves were depleted rapidly, lipid reserves fell by approximately 90% after 28 days of starvation and protein catabolism occurred only after extended fasting, coinciding with the decline in survival. Our results demonstrate that fasting can transiently enhance resistance to viral infection but is constrained by finite energy reserves. By identifying a physiological threshold beyond which starvation compromises survival, we uncover a novel mechanism linking host energetics to disease outcomes.</p>
+<p><a href="https://royalsocietypublishing.org/rsbl/article/21/12/20250606/364694">Link</a></p>
+
+
+<!-- -->
+
+</section>
+</section>
+
+ ]]></description>
+  <category>links</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/69-linksmas/</guid>
+  <pubDate>Wed, 24 Dec 2025 08:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/69-linksmas/link.jpeg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Barnacle</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/68-barnacle/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -1420,7 +1578,6 @@ font-style: inherit;">"Count"</span>)</span></code></pre></div>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/67-coeff-var/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -5858,7 +6015,6 @@ loaded via a namespace (and not attached):
 
 
 
-
 <section id="read-in-cross-species-methylation-mirna-comparison-data" class="level1">
 <h1>Read in Cross-Species Methylation miRNA Comparison Data</h1>
 <div class="cell">
@@ -7674,7 +7830,6 @@ font-style: inherit;">"</span>)</span>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/65-gbm-plots/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -15916,7 +16071,6 @@ loaded via a namespace (and not attached):
 
 
 
-
 <section id="trying-to-build-alternative-tensor" class="level2">
 <h2 class="anchored" data-anchor-id="trying-to-build-alternative-tensor">Trying to build alternative tensor</h2>
 <div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
@@ -20462,7 +20616,6 @@ font-style: inherit;">"Count"</span>)</span></code></pre></div>
 
 
 
-
 <p>First off in time-series-calcification</p>
 <p>https://github.com/urol-e5/timeseries-molecular-calcification/blob/main/M-multi-species/scripts/34-biomin-pathway-compare.rmd</p>
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-22-16.png" class="img-fluid"> <img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-23-06.png" class="img-fluid" alt="ortho-spread"></p>
@@ -22048,7 +22201,6 @@ font-style: inherit;">"#EAF2F8"</span></span>
 
 
 
-
 <p>Pulling out calcification / biomin gene counts.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -22612,7 +22764,6 @@ font-style: inherit;">"../output/33-biomin-pathway-counts/ptua_biomin_counts.csv
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/61-gene-meth/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -25728,7 +25879,6 @@ font-style: inherit;">FALSE</span></span>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/60-contra-random/</link>
   <description><![CDATA[ 
-
 
 
 
@@ -29932,512 +30082,6 @@ font-style: inherit;">"freq"</span>)</span></code></pre></div>
   <guid>https://sr320.github.io/tumbling-oysters/posts/51-nano-next/</guid>
   <pubDate>Mon, 04 Aug 2025 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-04_20-31-31.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Getting on with Nanopore cDNA data</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/50-nano-cDNA/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Went in a few directions but will try to layout properly here. Experiment - 3 populations, 4 pooled (n=5) libraires - thus 20 individuals represented per population.</p>
-<section id="data-as-provided" class="level1">
-<h1>Data as provided</h1>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Screen_Capture_on_2025-08-01_at_17-36-23.gif" class="img-fluid"></p>
-</section>
-<section id="combining" class="level1">
-<h1>Combining</h1>
-<p>Here is an example from one species</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">find</span> /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode01 <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-name</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"*.fastq.gz"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-print0</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-0</span> zcat <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">gzip</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/02-RNAseq/Qui_barcode01_combined.fastq.gz</span>
-<span id="cb1-2"></span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">find</span> /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode01_1 <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-name</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"*.fastq.gz"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-print0</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-0</span> zcat <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">gzip</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/02-RNAseq/Qui_barcode01_1_combined.fastq.gz</span>
-<span id="cb1-4"></span>
-<span id="cb1-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">find</span> /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode02_1 <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-name</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"*.fastq.gz"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-print0</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-0</span> zcat <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">gzip</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/02-RNAseq/Qui_barcode02_1_combined.fastq.gz</span>
-<span id="cb1-6"></span>
-<span id="cb1-7"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">find</span> /home/shared/16TB_HDD_01/valentina/data/Quilhua/barcode12 <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-name</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"*.fastq.gz"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-print0</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xargs</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-0</span> zcat <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">gzip</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/02-RNAseq/Qui_barcode12_combined.fastq.gz</span></code></pre></div>
-</section>
-<section id="align" class="level1">
-<h1>Align</h1>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">eval</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/opt/anaconda/anaconda3/bin/conda</span> shell.bash hook<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb2-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">conda</span> activate</span>
-<span id="cb2-3"></span>
-<span id="cb2-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Set number of threads</span></span>
-<span id="cb2-5"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">threads</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>42</span>
-<span id="cb2-6"></span>
-<span id="cb2-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Set paths</span></span>
-<span id="cb2-8"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">ref_genome</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../data/Och_HapA_assembly.fa"</span></span>
-<span id="cb2-9"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">input_dir</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/02-RNAseq"</span></span>
-<span id="cb2-10"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">output_dir</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/02-RNAseq"</span></span>
-<span id="cb2-11"></span>
-<span id="cb2-12"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Loop over each FASTQ file</span></span>
-<span id="cb2-13"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> fq <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${input_dir}</span>/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.fastq.gz<span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">do</span></span>
-<span id="cb2-14">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Extract sample name (e.g., Pum_barcode02 from Pum_barcode02_combined.fastq.gz)</span></span>
-<span id="cb2-15">  <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$fq</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> .fastq.gz<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb2-16"></span>
-<span id="cb2-17">  <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">echo</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Processing </span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$sample</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">..."</span></span>
-<span id="cb2-18"></span>
-<span id="cb2-19">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Run minimap2 and samtools sort</span></span>
-<span id="cb2-20">  <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">minimap2</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-ax</span> splice <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-k14</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--MD</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-t</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$threads</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$ref_genome</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$fq</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">|</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-21">    <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">samtools</span> sort <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-@</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$threads</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${sample}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">.sorted.bam"</span></span>
-<span id="cb2-22"></span>
-<span id="cb2-23">  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Index the sorted BAM</span></span>
-<span id="cb2-24">  <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">samtools</span> index <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">/</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${sample}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">.sorted.bam"</span></span>
-<span id="cb2-25"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">done</span></span></code></pre></div>
-</section>
-<section id="stringtie" class="level1">
-<h1>Stringtie</h1>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-p</span> ../output/02-RNAseq/stringtie_out</span>
-<span id="cb3-2"></span>
-<span id="cb3-3"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> bam <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> ../output/02-RNAseq/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>combined.sorted.bam<span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">do</span></span>
-<span id="cb3-4">    <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> _combined.sorted.bam<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb3-5">    <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-6">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-L</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-7">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> ../output/02-RNAseq/stringtie_out/<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${sample}</span>.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-8">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-p</span> 32 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb3-9">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-v</span></span>
-<span id="cb3-10"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">done</span></span></code></pre></div>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ls</span> ../output/02-RNAseq/stringtie_out/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>.gtf <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> ../output/02-RNAseq/stringtie_out/mergelist.txt</span>
-<span id="cb4-2"></span>
-<span id="cb4-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--merge</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-4">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-L</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-5">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-G</span> ../data/GN.gene.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-6">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> ../output/02-RNAseq/stringtie_out/merged.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb4-7">    ../output/02-RNAseq/stringtie_out/mergelist.txt</span></code></pre></div>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mkdir</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-p</span> ../output/02-RNAseq/stringtie_quant</span>
-<span id="cb5-2"></span>
-<span id="cb5-3"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">for</span> bam <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">in</span> ../output/02-RNAseq/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>combined.sorted.bam<span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">;</span> <span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">do</span></span>
-<span id="cb5-4">    <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">sample</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$(</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">basename</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> _combined.sorted.bam<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">)</span></span>
-<span id="cb5-5">    <span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$bam</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-6">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-L</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-7">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-e</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-8">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-B</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-9">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-G</span> ../output/02-RNAseq/stringtie_out/merged.gtf <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb5-10">        <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> ../output/02-RNAseq/stringtie_quant/<span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${sample}</span>.gtf</span>
-<span id="cb5-11"><span class="cf" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">done</span></span></code></pre></div>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">python</span> /home/shared/stringtie-2.2.1.Linux_x86_64/prepDE.py <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-2">-i ../output/02-RNAseq/stringtie_quant/samplelist.txt <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-3">-g ../output/02-RNAseq/stringtie_quant/gene_count_matrix.csv <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb6-4">-t ../output/02-RNAseq/stringtie_quant/transcript_count_matrix.csv</span></code></pre></div>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-01_17-48-48.png" class="img-fluid"></p>
-</section>
-<section id="next" class="level1">
-<h1>Next?</h1>
-<p>Normalize, QC?, Annotate (many are novel genes)</p>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>oyster</category>
-  <category>chile</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/50-nano-cDNA/</guid>
-  <pubDate>Fri, 01 Aug 2025 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-ostrea-chil__RStudio_Server_2025-08-01_17-33-00.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>

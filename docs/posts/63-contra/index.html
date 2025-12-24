@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,9 +24,8 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -37,7 +36,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -68,18 +67,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-0348920b7671f696dc9078d39bff215e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-0b0971fe3c507452e01567f62a81532a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e76cdc2a28bf56c993f4e6ffb14f81c0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -118,167 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="floating nav-fixed quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
-    const toggleBodyColorMode = (bsSheetEl) => {
-      const mode = bsSheetEl.getAttribute("data-mode");
-      const bodyEl = window.document.querySelector("body");
-      if (mode === "dark") {
-        bodyEl.classList.add("quarto-dark");
-        bodyEl.classList.remove("quarto-light");
-      } else {
-        bodyEl.classList.add("quarto-light");
-        bodyEl.classList.remove("quarto-dark");
-      }
-    }
-    const toggleBodyColorPrimary = () => {
-      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
-      if (bsSheetEl) {
-        toggleBodyColorMode(bsSheetEl);
-      }
-    }
-    const setColorSchemeToggle = (alternate) => {
-      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-      for (let i=0; i < toggles.length; i++) {
-        const toggle = toggles[i];
-        if (toggle) {
-          if (alternate) {
-            toggle.classList.add("alternate");
-          } else {
-            toggle.classList.remove("alternate");
-          }
-        }
-      }
-    };
-    const toggleColorMode = (alternate) => {
-      // Switch the stylesheets
-      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
-      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-      manageTransitions('#quarto-margin-sidebar .nav-link', false);
-      if (alternate) {
-        // note: dark is layered on light, we don't disable primary!
-        enableStylesheet(alternateStylesheets);
-        for (const sheetNode of alternateStylesheets) {
-          if (sheetNode.id === "quarto-bootstrap") {
-            toggleBodyColorMode(sheetNode);
-          }
-        }
-      } else {
-        disableStylesheet(alternateStylesheets);
-        enableStylesheet(primaryStylesheets)
-        toggleBodyColorPrimary();
-      }
-      manageTransitions('#quarto-margin-sidebar .nav-link', true);
-      // Switch the toggles
-      setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
-      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-        manageTransitions("body", false);
-        window.scrollTo(0, 1);
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          manageTransitions("body", true);
-        }, 40);
-      }
-    }
-    const disableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        stylesheet.rel = 'disabled-stylesheet';
-      }
-    }
-    const enableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
-          stylesheet.rel = 'stylesheet';
-        }
-      }
-    }
-    const manageTransitions = (selector, allowTransitions) => {
-      const els = window.document.querySelectorAll(selector);
-      for (let i=0; i < els.length; i++) {
-        const el = els[i];
-        if (allowTransitions) {
-          el.classList.remove('notransition');
-        } else {
-          el.classList.add('notransition');
-        }
-      }
-    }
-    const isFileUrl = () => {
-      return window.location.protocol === 'file:';
-    }
-    const hasAlternateSentinel = () => {
-      let styleSentinel = getColorSchemeSentinel();
-      if (styleSentinel !== null) {
-        return styleSentinel === "alternate";
-      } else {
-        return false;
-      }
-    }
-    const setStyleSentinel = (alternate) => {
-      const value = alternate ? "alternate" : "default";
-      if (!isFileUrl()) {
-        window.localStorage.setItem("quarto-color-scheme", value);
-      } else {
-        localAlternateSentinel = value;
-      }
-    }
-    const getColorSchemeSentinel = () => {
-      if (!isFileUrl()) {
-        const storageValue = window.localStorage.getItem("quarto-color-scheme");
-        return storageValue != null ? storageValue : localAlternateSentinel;
-      } else {
-        return localAlternateSentinel;
-      }
-    }
-    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-      let newTheme = '';
-      if(authorPrefersDark) {
-        newTheme = isAlternate ? baseTheme : alternateTheme;
-      } else {
-        newTheme = isAlternate ? alternateTheme : baseTheme;
-      }
-      const changeGiscusTheme = () => {
-        // From: https://github.com/giscus/giscus/issues/336
-        const sendMessage = (message) => {
-          const iframe = document.querySelector('iframe.giscus-frame');
-          if (!iframe) return;
-          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-        sendMessage({
-          setConfig: {
-            theme: newTheme
-          }
-        });
-      }
-      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-      if (isGiscussLoaded) {
-        changeGiscusTheme();
-      }
-    };
-    const authorPrefersDark = true;
-    const darkModeDefault = authorPrefersDark;
-    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-    // Dark / light mode switch
-    window.quartoToggleColorScheme = () => {
-      // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
-      toggleColorMode(toAlternate);
-      setStyleSentinel(toAlternate);
-      toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
-    };
-    // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
-      toggleColorMode(true);
-    } else {
-      toggleColorMode(false);
-    }
-  </script>
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -439,7 +277,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
-
 
 
 
@@ -1939,306 +1776,431 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    // Ensure there is a toggle, if there isn't float one in the top right
-    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-      const i = window.document.createElement("i");
-      i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
     }
-    setColorSchemeToggle(hasAlternateSentinel())
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
         }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = true;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
       }
       return false;
     }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/sr320\.github\.io\/tumbling-oysters");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
-    const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
-        }
-        return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/sr320\.github\.io\/tumbling-oysters");
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
         }
       }
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
     }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
     }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
       } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
         }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
       }
     }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
           }
         } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
+          // See if we can fetch this
+          fetch(url.split('#')[0])
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
+            const note = htmlDoc.getElementById(id);
             if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
+              const html = processXRef(id, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -2246,161 +2208,185 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
             instance.show();
           });
         }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          let top = null;
-          let height = null;
-          let parent = null;
-          if (lineIds.length > 0) {
-              //compute the position of the single el (top and bottom and make a div)
-              const el = window.document.getElementById(lineIds[0]);
-              top = el.offsetTop;
-              height = el.offsetHeight;
-              parent = el.parentElement.parentElement;
-            if (lineIds.length > 1) {
-              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-              height = bottom - top;
-            }
-            if (top !== null && height !== null && parent !== null) {
-              // cook up a div (if necessary) and position it 
-              let div = window.document.getElementById("code-annotation-line-highlight");
-              if (div === null) {
-                div = window.document.createElement("div");
-                div.setAttribute("id", "code-annotation-line-highlight");
-                div.style.position = 'absolute';
-                parent.appendChild(div);
-              }
-              div.style.top = top - 2 + "px";
-              div.style.height = height + 4 + "px";
-              div.style.left = 0;
-              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-              if (gutterDiv === null) {
-                gutterDiv = window.document.createElement("div");
-                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-                gutterDiv.style.position = 'absolute';
-                const codeCell = window.document.getElementById(targetCell);
-                const gutter = codeCell.querySelector('.code-annotation-gutter');
-                gutter.appendChild(gutterDiv);
-              }
-              gutterDiv.style.top = top - 2 + "px";
-              gutterDiv.style.height = height + 4 + "px";
-            }
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
       } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
             }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
         });
       }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
     }
-  });
-  </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
 <div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Calcifying Contra"</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "and beyond"</span></span>
@@ -2555,7 +2541,7 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a><span class="fu"># Cross-Species Biomin Context-Dependent Analysis Comparison</span></span>
 <span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>**Generated:** 2025-11-30 05<span class="sc">:25:</span>07</span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a>**Generated:** 2025-11-30 05:25:07</span>
 <span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a><span class="fu">## Overview</span></span>
 <span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a></span>
@@ -2641,7 +2627,7 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-240"><a href="#cb6-240" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-241"><a href="#cb6-241" aria-hidden="true" tabindex="-1"></a><span class="fu"># Ptua Context-Dependent Regulation Analysis Report</span></span>
 <span id="cb6-242"><a href="#cb6-242" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>**Generated:** 2025-12-02 12<span class="sc">:52:</span>16</span>
+<span id="cb6-243"><a href="#cb6-243" aria-hidden="true" tabindex="-1"></a>**Generated:** 2025-12-02 12:52:16</span>
 <span id="cb6-244"><a href="#cb6-244" aria-hidden="true" tabindex="-1"></a>**Analysis ID:** 20251201_160901</span>
 <span id="cb6-245"><a href="#cb6-245" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-246"><a href="#cb6-246" aria-hidden="true" tabindex="-1"></a><span class="fu">## Executive Summary</span></span>
@@ -2675,18 +2661,18 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-274"><a href="#cb6-274" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-275"><a href="#cb6-275" aria-hidden="true" tabindex="-1"></a>*This table shows genes whose regulation by DNA methylation is context-dependent on miRNA expression levels, ranked by context strength.*</span>
 <span id="cb6-276"><a href="#cb6-276" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rank <span class="pp">|</span> Gene <span class="pp">|</span> Methylation <span class="pp">|</span> miRNA <span class="pp">|</span> Improvement <span class="pp">|</span> Context Strength <span class="pp">|</span> Empirical FDR Sig. <span class="pp">|</span></span>
-<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|-------------|-------|-------------|------------------|--------------------|</span></span>
-<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> ('OG_02537', 'Pocillopora_meandrina_HIv1___TS.g26115.t1') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000010_2525456 <span class="pp">|</span> mirna_Cluster_4609 <span class="pp">|</span> 0.043 <span class="pp">|</span> 1.805 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> ('OG_08920', 'Pocillopora_meandrina_HIv1___RNAseq.g1090.t1') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000017_5066475 <span class="pp">|</span> mirna_Cluster_4094 <span class="pp">|</span> 0.016 <span class="pp">|</span> 1.770 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> ('OG_01414', 'Pocillopora_meandrina_HIv1___TS.g28923.t1a') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000003_1369854 <span class="pp">|</span> mirna_Cluster_4826 <span class="pp">|</span> 0.015 <span class="pp">|</span> 1.681 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> ('OG_04723', 'Pocillopora_meandrina_HIv1___RNAseq.g4434.t2') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000000_18894187 <span class="pp">|</span> mirna_Cluster_4826 <span class="pp">|</span> 0.131 <span class="pp">|</span> 1.600 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ('OG_15303', 'Pocillopora_meandrina_HIv1___TS.g5438.t1') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000018_8279715 <span class="pp">|</span> mirna_Cluster_6807 <span class="pp">|</span> 0.004 <span class="pp">|</span> 1.583 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ('OG_14804', 'Pocillopora_meandrina_HIv1___RNAseq.g24442.t1') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000006_12397256 <span class="pp">|</span> mirna_Cluster_4485 <span class="pp">|</span> 0.005 <span class="pp">|</span> 1.562 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> ('OG_13910', 'Pocillopora_meandrina_HIv1___RNAseq.g778.t1') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000010_5065428 <span class="pp">|</span> mirna_Cluster_3415 <span class="pp">|</span> 0.002 <span class="pp">|</span> 1.561 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> ('OG_08920', 'Pocillopora_meandrina_HIv1___RNAseq.g1090.t1') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000017_5066475 <span class="pp">|</span> mirna_Cluster_5123 <span class="pp">|</span> 0.040 <span class="pp">|</span> 1.545 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ('OG_01452', 'Pocillopora_meandrina_HIv1___RNAseq.g19573.t1') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000000_10732016 <span class="pp">|</span> mirna_Cluster_4826 <span class="pp">|</span> 0.265 <span class="pp">|</span> 1.527 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> ('OG_01155', 'Pocillopora_meandrina_HIv1___RNAseq.g6698.t2') <span class="pp">|</span> methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000011_3176997 <span class="pp">|</span> mirna_Cluster_4485 <span class="pp">|</span> 0.045 <span class="pp">|</span> 1.521 <span class="pp">|</span> False <span class="pp">|</span></span>
+<span id="cb6-277"><a href="#cb6-277" aria-hidden="true" tabindex="-1"></a>| Rank | Gene | Methylation | miRNA | Improvement | Context Strength | Empirical FDR Sig. |</span>
+<span id="cb6-278"><a href="#cb6-278" aria-hidden="true" tabindex="-1"></a>|------|------|-------------|-------|-------------|------------------|--------------------|</span>
+<span id="cb6-279"><a href="#cb6-279" aria-hidden="true" tabindex="-1"></a>| 1 | ('OG_02537', 'Pocillopora_meandrina_HIv1___TS.g26115.t1') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000010_2525456 | mirna_Cluster_4609 | 0.043 | 1.805 | False |</span>
+<span id="cb6-280"><a href="#cb6-280" aria-hidden="true" tabindex="-1"></a>| 2 | ('OG_08920', 'Pocillopora_meandrina_HIv1___RNAseq.g1090.t1') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000017_5066475 | mirna_Cluster_4094 | 0.016 | 1.770 | False |</span>
+<span id="cb6-281"><a href="#cb6-281" aria-hidden="true" tabindex="-1"></a>| 3 | ('OG_01414', 'Pocillopora_meandrina_HIv1___TS.g28923.t1a') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000003_1369854 | mirna_Cluster_4826 | 0.015 | 1.681 | False |</span>
+<span id="cb6-282"><a href="#cb6-282" aria-hidden="true" tabindex="-1"></a>| 4 | ('OG_04723', 'Pocillopora_meandrina_HIv1___RNAseq.g4434.t2') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000000_18894187 | mirna_Cluster_4826 | 0.131 | 1.600 | False |</span>
+<span id="cb6-283"><a href="#cb6-283" aria-hidden="true" tabindex="-1"></a>| 5 | ('OG_15303', 'Pocillopora_meandrina_HIv1___TS.g5438.t1') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000018_8279715 | mirna_Cluster_6807 | 0.004 | 1.583 | False |</span>
+<span id="cb6-284"><a href="#cb6-284" aria-hidden="true" tabindex="-1"></a>| 6 | ('OG_14804', 'Pocillopora_meandrina_HIv1___RNAseq.g24442.t1') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000006_12397256 | mirna_Cluster_4485 | 0.005 | 1.562 | False |</span>
+<span id="cb6-285"><a href="#cb6-285" aria-hidden="true" tabindex="-1"></a>| 7 | ('OG_13910', 'Pocillopora_meandrina_HIv1___RNAseq.g778.t1') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000010_5065428 | mirna_Cluster_3415 | 0.002 | 1.561 | False |</span>
+<span id="cb6-286"><a href="#cb6-286" aria-hidden="true" tabindex="-1"></a>| 8 | ('OG_08920', 'Pocillopora_meandrina_HIv1___RNAseq.g1090.t1') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000017_5066475 | mirna_Cluster_5123 | 0.040 | 1.545 | False |</span>
+<span id="cb6-287"><a href="#cb6-287" aria-hidden="true" tabindex="-1"></a>| 9 | ('OG_01452', 'Pocillopora_meandrina_HIv1___RNAseq.g19573.t1') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000000_10732016 | mirna_Cluster_4826 | 0.265 | 1.527 | False |</span>
+<span id="cb6-288"><a href="#cb6-288" aria-hidden="true" tabindex="-1"></a>| 10 | ('OG_01155', 'Pocillopora_meandrina_HIv1___RNAseq.g6698.t2') | methylation_CpG_Pocillopora_meandrina_HIv1___Sc0000011_3176997 | mirna_Cluster_4485 | 0.045 | 1.521 | False |</span>
 <span id="cb6-289"><a href="#cb6-289" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-290"><a href="#cb6-290" aria-hidden="true" tabindex="-1"></a><span class="fu">### lncRNA-miRNA Context Analysis (Exploratory)</span></span>
 <span id="cb6-291"><a href="#cb6-291" aria-hidden="true" tabindex="-1"></a></span>
@@ -2699,18 +2685,18 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-298"><a href="#cb6-298" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-299"><a href="#cb6-299" aria-hidden="true" tabindex="-1"></a>*This table identifies genes whose lncRNA-mediated regulation varies depending on miRNA expression. Note that current interaction metrics behave similarly or more strongly under randomized data and should be interpreted cautiously.*</span>
 <span id="cb6-300"><a href="#cb6-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rank <span class="pp">|</span> Gene <span class="pp">|</span> lncRNA <span class="pp">|</span> miRNA <span class="pp">|</span> Improvement <span class="pp">|</span> Context Strength <span class="pp">|</span></span>
-<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|--------|-------|-------------|------------------|</span></span>
-<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') <span class="pp">|</span> lncrna_lncRNA_12271 <span class="pp">|</span> mirna_Cluster_6456 <span class="pp">|</span> 0.376 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') <span class="pp">|</span> lncrna_lncRNA_30484 <span class="pp">|</span> mirna_Cluster_1159 <span class="pp">|</span> 0.360 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') <span class="pp">|</span> lncrna_lncRNA_12271 <span class="pp">|</span> mirna_Cluster_4 <span class="pp">|</span> 0.356 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') <span class="pp">|</span> lncrna_lncRNA_5394 <span class="pp">|</span> mirna_Cluster_1159 <span class="pp">|</span> 0.354 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') <span class="pp">|</span> lncrna_lncRNA_5394 <span class="pp">|</span> mirna_Cluster_3713 <span class="pp">|</span> 0.340 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') <span class="pp">|</span> lncrna_lncRNA_29138 <span class="pp">|</span> mirna_Cluster_6456 <span class="pp">|</span> 0.334 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') <span class="pp">|</span> lncrna_lncRNA_30480 <span class="pp">|</span> mirna_Cluster_3713 <span class="pp">|</span> 0.333 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') <span class="pp">|</span> lncrna_lncRNA_29138 <span class="pp">|</span> mirna_Cluster_4 <span class="pp">|</span> 0.332 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') <span class="pp">|</span> lncrna_lncRNA_30481 <span class="pp">|</span> mirna_Cluster_3713 <span class="pp">|</span> 0.329 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') <span class="pp">|</span> lncrna_lncRNA_29132 <span class="pp">|</span> mirna_Cluster_6456 <span class="pp">|</span> 0.326 <span class="pp">|</span> nan <span class="pp">|</span></span>
+<span id="cb6-301"><a href="#cb6-301" aria-hidden="true" tabindex="-1"></a>| Rank | Gene | lncRNA | miRNA | Improvement | Context Strength |</span>
+<span id="cb6-302"><a href="#cb6-302" aria-hidden="true" tabindex="-1"></a>|------|------|--------|-------|-------------|------------------|</span>
+<span id="cb6-303"><a href="#cb6-303" aria-hidden="true" tabindex="-1"></a>| 1 | ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') | lncrna_lncRNA_12271 | mirna_Cluster_6456 | 0.376 | nan |</span>
+<span id="cb6-304"><a href="#cb6-304" aria-hidden="true" tabindex="-1"></a>| 2 | ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') | lncrna_lncRNA_30484 | mirna_Cluster_1159 | 0.360 | nan |</span>
+<span id="cb6-305"><a href="#cb6-305" aria-hidden="true" tabindex="-1"></a>| 3 | ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') | lncrna_lncRNA_12271 | mirna_Cluster_4 | 0.356 | nan |</span>
+<span id="cb6-306"><a href="#cb6-306" aria-hidden="true" tabindex="-1"></a>| 4 | ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') | lncrna_lncRNA_5394 | mirna_Cluster_1159 | 0.354 | nan |</span>
+<span id="cb6-307"><a href="#cb6-307" aria-hidden="true" tabindex="-1"></a>| 5 | ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') | lncrna_lncRNA_5394 | mirna_Cluster_3713 | 0.340 | nan |</span>
+<span id="cb6-308"><a href="#cb6-308" aria-hidden="true" tabindex="-1"></a>| 6 | ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') | lncrna_lncRNA_29138 | mirna_Cluster_6456 | 0.334 | nan |</span>
+<span id="cb6-309"><a href="#cb6-309" aria-hidden="true" tabindex="-1"></a>| 7 | ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') | lncrna_lncRNA_30480 | mirna_Cluster_3713 | 0.333 | nan |</span>
+<span id="cb6-310"><a href="#cb6-310" aria-hidden="true" tabindex="-1"></a>| 8 | ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') | lncrna_lncRNA_29138 | mirna_Cluster_4 | 0.332 | nan |</span>
+<span id="cb6-311"><a href="#cb6-311" aria-hidden="true" tabindex="-1"></a>| 9 | ('OG_14681', 'Pocillopora_meandrina_HIv1___TS.g17155.t1') | lncrna_lncRNA_30481 | mirna_Cluster_3713 | 0.329 | nan |</span>
+<span id="cb6-312"><a href="#cb6-312" aria-hidden="true" tabindex="-1"></a>| 10 | ('OG_14763', 'Pocillopora_meandrina_HIv1___RNAseq.g13186.t1') | lncrna_lncRNA_29132 | mirna_Cluster_6456 | 0.326 | nan |</span>
 <span id="cb6-313"><a href="#cb6-313" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-314"><a href="#cb6-314" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multi-Way Interaction Analysis (Exploratory)</span></span>
 <span id="cb6-315"><a href="#cb6-315" aria-hidden="true" tabindex="-1"></a></span>
@@ -2722,18 +2708,18 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-321"><a href="#cb6-321" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-322"><a href="#cb6-322" aria-hidden="true" tabindex="-1"></a>*This table shows genes with the largest multi-regulator improvements. Current evidence suggests similar improvements can arise under randomized data; treat these results as hypothesis-generating rather than definitive.*</span>
 <span id="cb6-323"><a href="#cb6-323" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rank <span class="pp">|</span> Gene <span class="pp">|</span> Improvement <span class="pp">|</span> Significant Interactions <span class="pp">|</span></span>
-<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|-------------|------------------------|</span></span>
-<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> ('OG_07000', 'Pocillopora_meandrina_HIv1___RNAseq.g5328.t1') <span class="pp">|</span> 0.912 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> ('OG_02317', 'Pocillopora_meandrina_HIv1___TS.g30016.t1') <span class="pp">|</span> 0.912 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> ('OG_08545', 'Pocillopora_meandrina_HIv1___RNAseq.g1314.t1') <span class="pp">|</span> 0.912 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> ('OG_00466', 'Pocillopora_meandrina_HIv1___TS.g4618.t1') <span class="pp">|</span> 0.911 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-330"><a href="#cb6-330" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ('OG_07822', 'Pocillopora_meandrina_HIv1___RNAseq.g27709.t1') <span class="pp">|</span> 0.910 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-331"><a href="#cb6-331" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ('OG_04209', 'Pocillopora_meandrina_HIv1___RNAseq.g10045.t1') <span class="pp">|</span> 0.908 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-332"><a href="#cb6-332" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> ('OG_01117', 'Pocillopora_meandrina_HIv1___TS.g20470.t1') <span class="pp">|</span> 0.907 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> ('OG_17014', 'Pocillopora_meandrina_HIv1___RNAseq.g15484.t1') <span class="pp">|</span> 0.907 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-334"><a href="#cb6-334" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ('OG_02666', 'Pocillopora_meandrina_HIv1___RNAseq.g21004.t1') <span class="pp">|</span> 0.906 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-335"><a href="#cb6-335" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> ('OG_07042', 'Pocillopora_meandrina_HIv1___TS.g12785.t1') <span class="pp">|</span> 0.906 <span class="pp">|</span> False <span class="pp">|</span></span>
+<span id="cb6-324"><a href="#cb6-324" aria-hidden="true" tabindex="-1"></a>| Rank | Gene | Improvement | Significant Interactions |</span>
+<span id="cb6-325"><a href="#cb6-325" aria-hidden="true" tabindex="-1"></a>|------|------|-------------|------------------------|</span>
+<span id="cb6-326"><a href="#cb6-326" aria-hidden="true" tabindex="-1"></a>| 1 | ('OG_07000', 'Pocillopora_meandrina_HIv1___RNAseq.g5328.t1') | 0.912 | False |</span>
+<span id="cb6-327"><a href="#cb6-327" aria-hidden="true" tabindex="-1"></a>| 2 | ('OG_02317', 'Pocillopora_meandrina_HIv1___TS.g30016.t1') | 0.912 | False |</span>
+<span id="cb6-328"><a href="#cb6-328" aria-hidden="true" tabindex="-1"></a>| 3 | ('OG_08545', 'Pocillopora_meandrina_HIv1___RNAseq.g1314.t1') | 0.912 | False |</span>
+<span id="cb6-329"><a href="#cb6-329" aria-hidden="true" tabindex="-1"></a>| 4 | ('OG_00466', 'Pocillopora_meandrina_HIv1___TS.g4618.t1') | 0.911 | False |</span>
+<span id="cb6-330"><a href="#cb6-330" aria-hidden="true" tabindex="-1"></a>| 5 | ('OG_07822', 'Pocillopora_meandrina_HIv1___RNAseq.g27709.t1') | 0.910 | False |</span>
+<span id="cb6-331"><a href="#cb6-331" aria-hidden="true" tabindex="-1"></a>| 6 | ('OG_04209', 'Pocillopora_meandrina_HIv1___RNAseq.g10045.t1') | 0.908 | False |</span>
+<span id="cb6-332"><a href="#cb6-332" aria-hidden="true" tabindex="-1"></a>| 7 | ('OG_01117', 'Pocillopora_meandrina_HIv1___TS.g20470.t1') | 0.907 | False |</span>
+<span id="cb6-333"><a href="#cb6-333" aria-hidden="true" tabindex="-1"></a>| 8 | ('OG_17014', 'Pocillopora_meandrina_HIv1___RNAseq.g15484.t1') | 0.907 | False |</span>
+<span id="cb6-334"><a href="#cb6-334" aria-hidden="true" tabindex="-1"></a>| 9 | ('OG_02666', 'Pocillopora_meandrina_HIv1___RNAseq.g21004.t1') | 0.906 | False |</span>
+<span id="cb6-335"><a href="#cb6-335" aria-hidden="true" tabindex="-1"></a>| 10 | ('OG_07042', 'Pocillopora_meandrina_HIv1___TS.g12785.t1') | 0.906 | False |</span>
 <span id="cb6-336"><a href="#cb6-336" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-337"><a href="#cb6-337" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Files</span></span>
 <span id="cb6-338"><a href="#cb6-338" aria-hidden="true" tabindex="-1"></a></span>
@@ -2803,7 +2789,7 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-402"><a href="#cb6-402" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-403"><a href="#cb6-403" aria-hidden="true" tabindex="-1"></a><span class="fu"># Peve Context-Dependent Regulation Analysis Report</span></span>
 <span id="cb6-404"><a href="#cb6-404" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-405"><a href="#cb6-405" aria-hidden="true" tabindex="-1"></a>**Generated:** 2025-11-30 19<span class="sc">:41:</span>04</span>
+<span id="cb6-405"><a href="#cb6-405" aria-hidden="true" tabindex="-1"></a>**Generated:** 2025-11-30 19:41:04</span>
 <span id="cb6-406"><a href="#cb6-406" aria-hidden="true" tabindex="-1"></a>**Analysis ID:** 20251130_091333</span>
 <span id="cb6-407"><a href="#cb6-407" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-408"><a href="#cb6-408" aria-hidden="true" tabindex="-1"></a><span class="fu">## Executive Summary</span></span>
@@ -2837,18 +2823,18 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-436"><a href="#cb6-436" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-437"><a href="#cb6-437" aria-hidden="true" tabindex="-1"></a>*This table shows genes whose regulation by DNA methylation is context-dependent on miRNA expression levels, ranked by context strength.*</span>
 <span id="cb6-438"><a href="#cb6-438" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-439"><a href="#cb6-439" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rank <span class="pp">|</span> Gene <span class="pp">|</span> Methylation <span class="pp">|</span> miRNA <span class="pp">|</span> Improvement <span class="pp">|</span> Context Strength <span class="pp">|</span> Empirical FDR Sig. <span class="pp">|</span></span>
-<span id="cb6-440"><a href="#cb6-440" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|-------------|-------|-------------|------------------|--------------------|</span></span>
-<span id="cb6-441"><a href="#cb6-441" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> ('OG_11813', 'Peve_00021937') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_3933_26651 <span class="pp">|</span> mirna_Cluster_1004 <span class="pp">|</span> 0.028 <span class="pp">|</span> 1.523 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-442"><a href="#cb6-442" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> ('OG_11813', 'Peve_00021937') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_2342_55729 <span class="pp">|</span> mirna_Cluster_1004 <span class="pp">|</span> 0.043 <span class="pp">|</span> 1.513 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-443"><a href="#cb6-443" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> ('OG_11813', 'Peve_00021937') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_3933_26651 <span class="pp">|</span> mirna_Cluster_6236 <span class="pp">|</span> 0.052 <span class="pp">|</span> 1.455 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-444"><a href="#cb6-444" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> ('OG_08793', 'Peve_00007107') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_865_27253 <span class="pp">|</span> mirna_Cluster_3165 <span class="pp">|</span> 0.032 <span class="pp">|</span> 1.451 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-445"><a href="#cb6-445" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ('OG_11813', 'Peve_00021937') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_3933_26651 <span class="pp">|</span> mirna_Cluster_4247 <span class="pp">|</span> 0.038 <span class="pp">|</span> 1.437 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-446"><a href="#cb6-446" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ('OG_11360', 'Peve_00001484') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_325_68647 <span class="pp">|</span> mirna_Cluster_6234 <span class="pp">|</span> 0.130 <span class="pp">|</span> 1.388 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-447"><a href="#cb6-447" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> ('OG_06599', 'Peve_00038759') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_259_87918 <span class="pp">|</span> mirna_Cluster_9197 <span class="pp">|</span> 0.000 <span class="pp">|</span> 1.369 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-448"><a href="#cb6-448" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> ('OG_11360', 'Peve_00001484') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_325_68647 <span class="pp">|</span> mirna_Cluster_3165 <span class="pp">|</span> 0.164 <span class="pp">|</span> 1.362 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-449"><a href="#cb6-449" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ('OG_11813', 'Peve_00021937') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_1152_147508 <span class="pp">|</span> mirna_Cluster_1004 <span class="pp">|</span> 0.054 <span class="pp">|</span> 1.360 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-450"><a href="#cb6-450" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> ('OG_07153', 'Peve_00000682') <span class="pp">|</span> methylation_CpG_Porites_evermani_scaffold_910_155276 <span class="pp">|</span> mirna_Cluster_5058 <span class="pp">|</span> 0.078 <span class="pp">|</span> 1.358 <span class="pp">|</span> False <span class="pp">|</span></span>
+<span id="cb6-439"><a href="#cb6-439" aria-hidden="true" tabindex="-1"></a>| Rank | Gene | Methylation | miRNA | Improvement | Context Strength | Empirical FDR Sig. |</span>
+<span id="cb6-440"><a href="#cb6-440" aria-hidden="true" tabindex="-1"></a>|------|------|-------------|-------|-------------|------------------|--------------------|</span>
+<span id="cb6-441"><a href="#cb6-441" aria-hidden="true" tabindex="-1"></a>| 1 | ('OG_11813', 'Peve_00021937') | methylation_CpG_Porites_evermani_scaffold_3933_26651 | mirna_Cluster_1004 | 0.028 | 1.523 | False |</span>
+<span id="cb6-442"><a href="#cb6-442" aria-hidden="true" tabindex="-1"></a>| 2 | ('OG_11813', 'Peve_00021937') | methylation_CpG_Porites_evermani_scaffold_2342_55729 | mirna_Cluster_1004 | 0.043 | 1.513 | False |</span>
+<span id="cb6-443"><a href="#cb6-443" aria-hidden="true" tabindex="-1"></a>| 3 | ('OG_11813', 'Peve_00021937') | methylation_CpG_Porites_evermani_scaffold_3933_26651 | mirna_Cluster_6236 | 0.052 | 1.455 | False |</span>
+<span id="cb6-444"><a href="#cb6-444" aria-hidden="true" tabindex="-1"></a>| 4 | ('OG_08793', 'Peve_00007107') | methylation_CpG_Porites_evermani_scaffold_865_27253 | mirna_Cluster_3165 | 0.032 | 1.451 | False |</span>
+<span id="cb6-445"><a href="#cb6-445" aria-hidden="true" tabindex="-1"></a>| 5 | ('OG_11813', 'Peve_00021937') | methylation_CpG_Porites_evermani_scaffold_3933_26651 | mirna_Cluster_4247 | 0.038 | 1.437 | False |</span>
+<span id="cb6-446"><a href="#cb6-446" aria-hidden="true" tabindex="-1"></a>| 6 | ('OG_11360', 'Peve_00001484') | methylation_CpG_Porites_evermani_scaffold_325_68647 | mirna_Cluster_6234 | 0.130 | 1.388 | False |</span>
+<span id="cb6-447"><a href="#cb6-447" aria-hidden="true" tabindex="-1"></a>| 7 | ('OG_06599', 'Peve_00038759') | methylation_CpG_Porites_evermani_scaffold_259_87918 | mirna_Cluster_9197 | 0.000 | 1.369 | False |</span>
+<span id="cb6-448"><a href="#cb6-448" aria-hidden="true" tabindex="-1"></a>| 8 | ('OG_11360', 'Peve_00001484') | methylation_CpG_Porites_evermani_scaffold_325_68647 | mirna_Cluster_3165 | 0.164 | 1.362 | False |</span>
+<span id="cb6-449"><a href="#cb6-449" aria-hidden="true" tabindex="-1"></a>| 9 | ('OG_11813', 'Peve_00021937') | methylation_CpG_Porites_evermani_scaffold_1152_147508 | mirna_Cluster_1004 | 0.054 | 1.360 | False |</span>
+<span id="cb6-450"><a href="#cb6-450" aria-hidden="true" tabindex="-1"></a>| 10 | ('OG_07153', 'Peve_00000682') | methylation_CpG_Porites_evermani_scaffold_910_155276 | mirna_Cluster_5058 | 0.078 | 1.358 | False |</span>
 <span id="cb6-451"><a href="#cb6-451" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-452"><a href="#cb6-452" aria-hidden="true" tabindex="-1"></a><span class="fu">### lncRNA-miRNA Context Analysis (Exploratory)</span></span>
 <span id="cb6-453"><a href="#cb6-453" aria-hidden="true" tabindex="-1"></a></span>
@@ -2861,18 +2847,18 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-460"><a href="#cb6-460" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-461"><a href="#cb6-461" aria-hidden="true" tabindex="-1"></a>*This table identifies genes whose lncRNA-mediated regulation varies depending on miRNA expression. Note that current interaction metrics behave similarly or more strongly under randomized data and should be interpreted cautiously.*</span>
 <span id="cb6-462"><a href="#cb6-462" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-463"><a href="#cb6-463" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rank <span class="pp">|</span> Gene <span class="pp">|</span> lncRNA <span class="pp">|</span> miRNA <span class="pp">|</span> Improvement <span class="pp">|</span> Context Strength <span class="pp">|</span></span>
-<span id="cb6-464"><a href="#cb6-464" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|--------|-------|-------------|------------------|</span></span>
-<span id="cb6-465"><a href="#cb6-465" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> ('OG_18262', 'Peve_00044240') <span class="pp">|</span> lncrna_lncRNA_10659 <span class="pp">|</span> mirna_Cluster_6099 <span class="pp">|</span> 0.469 <span class="pp">|</span> 1.007 <span class="pp">|</span></span>
-<span id="cb6-466"><a href="#cb6-466" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> ('OG_18262', 'Peve_00044240') <span class="pp">|</span> lncrna_lncRNA_10659 <span class="pp">|</span> mirna_Cluster_6918 <span class="pp">|</span> 0.458 <span class="pp">|</span> 0.989 <span class="pp">|</span></span>
-<span id="cb6-467"><a href="#cb6-467" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> ('OG_13684', 'Peve_00018981') <span class="pp">|</span> lncrna_lncRNA_12581 <span class="pp">|</span> mirna_Cluster_6234 <span class="pp">|</span> 0.444 <span class="pp">|</span> 0.898 <span class="pp">|</span></span>
-<span id="cb6-468"><a href="#cb6-468" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> ('OG_12320', 'Peve_00024570') <span class="pp">|</span> lncrna_lncRNA_19767 <span class="pp">|</span> mirna_Cluster_670 <span class="pp">|</span> 0.440 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-469"><a href="#cb6-469" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ('OG_12320', 'Peve_00024570') <span class="pp">|</span> lncrna_lncRNA_19765 <span class="pp">|</span> mirna_Cluster_670 <span class="pp">|</span> 0.439 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-470"><a href="#cb6-470" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ('OG_13526', 'Peve_00019641') <span class="pp">|</span> lncrna_lncRNA_20807 <span class="pp">|</span> mirna_Cluster_670 <span class="pp">|</span> 0.437 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-471"><a href="#cb6-471" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> ('OG_13526', 'Peve_00019641') <span class="pp">|</span> lncrna_lncRNA_23227 <span class="pp">|</span> mirna_Cluster_670 <span class="pp">|</span> 0.437 <span class="pp">|</span> nan <span class="pp">|</span></span>
-<span id="cb6-472"><a href="#cb6-472" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> ('OG_13684', 'Peve_00018981') <span class="pp">|</span> lncrna_lncRNA_23131 <span class="pp">|</span> mirna_Cluster_981 <span class="pp">|</span> 0.433 <span class="pp">|</span> 0.861 <span class="pp">|</span></span>
-<span id="cb6-473"><a href="#cb6-473" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ('OG_13684', 'Peve_00018981') <span class="pp">|</span> lncrna_lncRNA_12581 <span class="pp">|</span> mirna_Cluster_5257 <span class="pp">|</span> 0.433 <span class="pp">|</span> 0.975 <span class="pp">|</span></span>
-<span id="cb6-474"><a href="#cb6-474" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> ('OG_13684', 'Peve_00018981') <span class="pp">|</span> lncrna_lncRNA_12581 <span class="pp">|</span> mirna_Cluster_6235 <span class="pp">|</span> 0.432 <span class="pp">|</span> 0.987 <span class="pp">|</span></span>
+<span id="cb6-463"><a href="#cb6-463" aria-hidden="true" tabindex="-1"></a>| Rank | Gene | lncRNA | miRNA | Improvement | Context Strength |</span>
+<span id="cb6-464"><a href="#cb6-464" aria-hidden="true" tabindex="-1"></a>|------|------|--------|-------|-------------|------------------|</span>
+<span id="cb6-465"><a href="#cb6-465" aria-hidden="true" tabindex="-1"></a>| 1 | ('OG_18262', 'Peve_00044240') | lncrna_lncRNA_10659 | mirna_Cluster_6099 | 0.469 | 1.007 |</span>
+<span id="cb6-466"><a href="#cb6-466" aria-hidden="true" tabindex="-1"></a>| 2 | ('OG_18262', 'Peve_00044240') | lncrna_lncRNA_10659 | mirna_Cluster_6918 | 0.458 | 0.989 |</span>
+<span id="cb6-467"><a href="#cb6-467" aria-hidden="true" tabindex="-1"></a>| 3 | ('OG_13684', 'Peve_00018981') | lncrna_lncRNA_12581 | mirna_Cluster_6234 | 0.444 | 0.898 |</span>
+<span id="cb6-468"><a href="#cb6-468" aria-hidden="true" tabindex="-1"></a>| 4 | ('OG_12320', 'Peve_00024570') | lncrna_lncRNA_19767 | mirna_Cluster_670 | 0.440 | nan |</span>
+<span id="cb6-469"><a href="#cb6-469" aria-hidden="true" tabindex="-1"></a>| 5 | ('OG_12320', 'Peve_00024570') | lncrna_lncRNA_19765 | mirna_Cluster_670 | 0.439 | nan |</span>
+<span id="cb6-470"><a href="#cb6-470" aria-hidden="true" tabindex="-1"></a>| 6 | ('OG_13526', 'Peve_00019641') | lncrna_lncRNA_20807 | mirna_Cluster_670 | 0.437 | nan |</span>
+<span id="cb6-471"><a href="#cb6-471" aria-hidden="true" tabindex="-1"></a>| 7 | ('OG_13526', 'Peve_00019641') | lncrna_lncRNA_23227 | mirna_Cluster_670 | 0.437 | nan |</span>
+<span id="cb6-472"><a href="#cb6-472" aria-hidden="true" tabindex="-1"></a>| 8 | ('OG_13684', 'Peve_00018981') | lncrna_lncRNA_23131 | mirna_Cluster_981 | 0.433 | 0.861 |</span>
+<span id="cb6-473"><a href="#cb6-473" aria-hidden="true" tabindex="-1"></a>| 9 | ('OG_13684', 'Peve_00018981') | lncrna_lncRNA_12581 | mirna_Cluster_5257 | 0.433 | 0.975 |</span>
+<span id="cb6-474"><a href="#cb6-474" aria-hidden="true" tabindex="-1"></a>| 10 | ('OG_13684', 'Peve_00018981') | lncrna_lncRNA_12581 | mirna_Cluster_6235 | 0.432 | 0.987 |</span>
 <span id="cb6-475"><a href="#cb6-475" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-476"><a href="#cb6-476" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multi-Way Interaction Analysis (Exploratory)</span></span>
 <span id="cb6-477"><a href="#cb6-477" aria-hidden="true" tabindex="-1"></a></span>
@@ -2884,18 +2870,18 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-483"><a href="#cb6-483" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-484"><a href="#cb6-484" aria-hidden="true" tabindex="-1"></a>*This table shows genes with the largest multi-regulator improvements. Current evidence suggests similar improvements can arise under randomized data; treat these results as hypothesis-generating rather than definitive.*</span>
 <span id="cb6-485"><a href="#cb6-485" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-486"><a href="#cb6-486" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rank <span class="pp">|</span> Gene <span class="pp">|</span> Improvement <span class="pp">|</span> Significant Interactions <span class="pp">|</span></span>
-<span id="cb6-487"><a href="#cb6-487" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|-------------|------------------------|</span></span>
-<span id="cb6-488"><a href="#cb6-488" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> ('OG_13066', 'Peve_00003034') <span class="pp">|</span> 0.921 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-489"><a href="#cb6-489" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> ('OG_13685', 'Peve_00034973') <span class="pp">|</span> 0.921 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-490"><a href="#cb6-490" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> ('OG_10907', 'Peve_00033654') <span class="pp">|</span> 0.921 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-491"><a href="#cb6-491" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> ('OG_05950', 'Peve_00044664') <span class="pp">|</span> 0.921 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-492"><a href="#cb6-492" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ('OG_01981', 'Peve_00033650') <span class="pp">|</span> 0.921 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-493"><a href="#cb6-493" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ('OG_03267', 'Peve_00013805') <span class="pp">|</span> 0.920 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-494"><a href="#cb6-494" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> ('OG_17015', 'Peve_00023327') <span class="pp">|</span> 0.919 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-495"><a href="#cb6-495" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> ('OG_02088', 'Peve_00026747') <span class="pp">|</span> 0.919 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-496"><a href="#cb6-496" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ('OG_05713', 'Peve_00041095') <span class="pp">|</span> 0.919 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-497"><a href="#cb6-497" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> ('OG_12805', 'Peve_00005899') <span class="pp">|</span> 0.919 <span class="pp">|</span> False <span class="pp">|</span></span>
+<span id="cb6-486"><a href="#cb6-486" aria-hidden="true" tabindex="-1"></a>| Rank | Gene | Improvement | Significant Interactions |</span>
+<span id="cb6-487"><a href="#cb6-487" aria-hidden="true" tabindex="-1"></a>|------|------|-------------|------------------------|</span>
+<span id="cb6-488"><a href="#cb6-488" aria-hidden="true" tabindex="-1"></a>| 1 | ('OG_13066', 'Peve_00003034') | 0.921 | False |</span>
+<span id="cb6-489"><a href="#cb6-489" aria-hidden="true" tabindex="-1"></a>| 2 | ('OG_13685', 'Peve_00034973') | 0.921 | False |</span>
+<span id="cb6-490"><a href="#cb6-490" aria-hidden="true" tabindex="-1"></a>| 3 | ('OG_10907', 'Peve_00033654') | 0.921 | False |</span>
+<span id="cb6-491"><a href="#cb6-491" aria-hidden="true" tabindex="-1"></a>| 4 | ('OG_05950', 'Peve_00044664') | 0.921 | False |</span>
+<span id="cb6-492"><a href="#cb6-492" aria-hidden="true" tabindex="-1"></a>| 5 | ('OG_01981', 'Peve_00033650') | 0.921 | False |</span>
+<span id="cb6-493"><a href="#cb6-493" aria-hidden="true" tabindex="-1"></a>| 6 | ('OG_03267', 'Peve_00013805') | 0.920 | False |</span>
+<span id="cb6-494"><a href="#cb6-494" aria-hidden="true" tabindex="-1"></a>| 7 | ('OG_17015', 'Peve_00023327') | 0.919 | False |</span>
+<span id="cb6-495"><a href="#cb6-495" aria-hidden="true" tabindex="-1"></a>| 8 | ('OG_02088', 'Peve_00026747') | 0.919 | False |</span>
+<span id="cb6-496"><a href="#cb6-496" aria-hidden="true" tabindex="-1"></a>| 9 | ('OG_05713', 'Peve_00041095') | 0.919 | False |</span>
+<span id="cb6-497"><a href="#cb6-497" aria-hidden="true" tabindex="-1"></a>| 10 | ('OG_12805', 'Peve_00005899') | 0.919 | False |</span>
 <span id="cb6-498"><a href="#cb6-498" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-499"><a href="#cb6-499" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Files</span></span>
 <span id="cb6-500"><a href="#cb6-500" aria-hidden="true" tabindex="-1"></a></span>
@@ -2966,7 +2952,7 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-565"><a href="#cb6-565" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-566"><a href="#cb6-566" aria-hidden="true" tabindex="-1"></a><span class="fu"># Apul Context-Dependent Regulation Analysis Report</span></span>
 <span id="cb6-567"><a href="#cb6-567" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-568"><a href="#cb6-568" aria-hidden="true" tabindex="-1"></a>**Generated:** 2025-12-01 11<span class="sc">:13:</span>07</span>
+<span id="cb6-568"><a href="#cb6-568" aria-hidden="true" tabindex="-1"></a>**Generated:** 2025-12-01 11:13:07</span>
 <span id="cb6-569"><a href="#cb6-569" aria-hidden="true" tabindex="-1"></a>**Analysis ID:** 20251201_061836</span>
 <span id="cb6-570"><a href="#cb6-570" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-571"><a href="#cb6-571" aria-hidden="true" tabindex="-1"></a><span class="fu">## Executive Summary</span></span>
@@ -3000,18 +2986,18 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-599"><a href="#cb6-599" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-600"><a href="#cb6-600" aria-hidden="true" tabindex="-1"></a>*This table shows genes whose regulation by DNA methylation is context-dependent on miRNA expression levels, ranked by context strength.*</span>
 <span id="cb6-601"><a href="#cb6-601" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-602"><a href="#cb6-602" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rank <span class="pp">|</span> Gene <span class="pp">|</span> Methylation <span class="pp">|</span> miRNA <span class="pp">|</span> Improvement <span class="pp">|</span> Context Strength <span class="pp">|</span> Empirical FDR Sig. <span class="pp">|</span></span>
-<span id="cb6-603"><a href="#cb6-603" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|-------------|-------|-------------|------------------|--------------------|</span></span>
-<span id="cb6-604"><a href="#cb6-604" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> ('OG_05303', 'FUN_023974') <span class="pp">|</span> methylation_CpG_ptg000001l_9710125 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.060 <span class="pp">|</span> 1.881 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-605"><a href="#cb6-605" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> ('OG_07265', 'FUN_033056') <span class="pp">|</span> methylation_CpG_ptg000021l_10139814 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.018 <span class="pp">|</span> 1.875 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-606"><a href="#cb6-606" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> ('OG_14547', 'FUN_019026') <span class="pp">|</span> methylation_CpG_ptg000023l_11736283 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.023 <span class="pp">|</span> 1.875 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-607"><a href="#cb6-607" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> ('OG_07265', 'FUN_033056') <span class="pp">|</span> methylation_CpG_ptg000018l_7377398 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.067 <span class="pp">|</span> 1.854 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-608"><a href="#cb6-608" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ('OG_10509', 'FUN_002531') <span class="pp">|</span> methylation_CpG_ptg000031l_5310815 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.004 <span class="pp">|</span> 1.837 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-609"><a href="#cb6-609" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ('OG_06610', 'FUN_029760') <span class="pp">|</span> methylation_CpG_ptg000031l_5310762 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.004 <span class="pp">|</span> 1.833 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-610"><a href="#cb6-610" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> ('OG_10811', 'FUN_006888') <span class="pp">|</span> methylation_CpG_ptg000023l_8252944 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.006 <span class="pp">|</span> 1.756 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-611"><a href="#cb6-611" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> ('OG_14711', 'FUN_024326') <span class="pp">|</span> methylation_CpG_ptg000012l_17885415 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.045 <span class="pp">|</span> 1.672 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-612"><a href="#cb6-612" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ('OG_10811', 'FUN_006888') <span class="pp">|</span> methylation_CpG_ptg000027l_7575122 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.015 <span class="pp">|</span> 1.660 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-613"><a href="#cb6-613" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> ('OG_06610', 'FUN_029760') <span class="pp">|</span> methylation_CpG_ptg000021l_6263529 <span class="pp">|</span> mirna_Cluster_3109 <span class="pp">|</span> 0.012 <span class="pp">|</span> 1.657 <span class="pp">|</span> False <span class="pp">|</span></span>
+<span id="cb6-602"><a href="#cb6-602" aria-hidden="true" tabindex="-1"></a>| Rank | Gene | Methylation | miRNA | Improvement | Context Strength | Empirical FDR Sig. |</span>
+<span id="cb6-603"><a href="#cb6-603" aria-hidden="true" tabindex="-1"></a>|------|------|-------------|-------|-------------|------------------|--------------------|</span>
+<span id="cb6-604"><a href="#cb6-604" aria-hidden="true" tabindex="-1"></a>| 1 | ('OG_05303', 'FUN_023974') | methylation_CpG_ptg000001l_9710125 | mirna_Cluster_3109 | 0.060 | 1.881 | False |</span>
+<span id="cb6-605"><a href="#cb6-605" aria-hidden="true" tabindex="-1"></a>| 2 | ('OG_07265', 'FUN_033056') | methylation_CpG_ptg000021l_10139814 | mirna_Cluster_3109 | 0.018 | 1.875 | False |</span>
+<span id="cb6-606"><a href="#cb6-606" aria-hidden="true" tabindex="-1"></a>| 3 | ('OG_14547', 'FUN_019026') | methylation_CpG_ptg000023l_11736283 | mirna_Cluster_3109 | 0.023 | 1.875 | False |</span>
+<span id="cb6-607"><a href="#cb6-607" aria-hidden="true" tabindex="-1"></a>| 4 | ('OG_07265', 'FUN_033056') | methylation_CpG_ptg000018l_7377398 | mirna_Cluster_3109 | 0.067 | 1.854 | False |</span>
+<span id="cb6-608"><a href="#cb6-608" aria-hidden="true" tabindex="-1"></a>| 5 | ('OG_10509', 'FUN_002531') | methylation_CpG_ptg000031l_5310815 | mirna_Cluster_3109 | 0.004 | 1.837 | False |</span>
+<span id="cb6-609"><a href="#cb6-609" aria-hidden="true" tabindex="-1"></a>| 6 | ('OG_06610', 'FUN_029760') | methylation_CpG_ptg000031l_5310762 | mirna_Cluster_3109 | 0.004 | 1.833 | False |</span>
+<span id="cb6-610"><a href="#cb6-610" aria-hidden="true" tabindex="-1"></a>| 7 | ('OG_10811', 'FUN_006888') | methylation_CpG_ptg000023l_8252944 | mirna_Cluster_3109 | 0.006 | 1.756 | False |</span>
+<span id="cb6-611"><a href="#cb6-611" aria-hidden="true" tabindex="-1"></a>| 8 | ('OG_14711', 'FUN_024326') | methylation_CpG_ptg000012l_17885415 | mirna_Cluster_3109 | 0.045 | 1.672 | False |</span>
+<span id="cb6-612"><a href="#cb6-612" aria-hidden="true" tabindex="-1"></a>| 9 | ('OG_10811', 'FUN_006888') | methylation_CpG_ptg000027l_7575122 | mirna_Cluster_3109 | 0.015 | 1.660 | False |</span>
+<span id="cb6-613"><a href="#cb6-613" aria-hidden="true" tabindex="-1"></a>| 10 | ('OG_06610', 'FUN_029760') | methylation_CpG_ptg000021l_6263529 | mirna_Cluster_3109 | 0.012 | 1.657 | False |</span>
 <span id="cb6-614"><a href="#cb6-614" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-615"><a href="#cb6-615" aria-hidden="true" tabindex="-1"></a><span class="fu">### lncRNA-miRNA Context Analysis (Exploratory)</span></span>
 <span id="cb6-616"><a href="#cb6-616" aria-hidden="true" tabindex="-1"></a></span>
@@ -3024,18 +3010,18 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-623"><a href="#cb6-623" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-624"><a href="#cb6-624" aria-hidden="true" tabindex="-1"></a>*This table identifies genes whose lncRNA-mediated regulation varies depending on miRNA expression. Note that current interaction metrics behave similarly or more strongly under randomized data and should be interpreted cautiously.*</span>
 <span id="cb6-625"><a href="#cb6-625" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-626"><a href="#cb6-626" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rank <span class="pp">|</span> Gene <span class="pp">|</span> lncRNA <span class="pp">|</span> miRNA <span class="pp">|</span> Improvement <span class="pp">|</span> Context Strength <span class="pp">|</span></span>
-<span id="cb6-627"><a href="#cb6-627" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|--------|-------|-------------|------------------|</span></span>
-<span id="cb6-628"><a href="#cb6-628" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_48837 <span class="pp">|</span> mirna_Cluster_14165 <span class="pp">|</span> 0.420 <span class="pp">|</span> 1.162 <span class="pp">|</span></span>
-<span id="cb6-629"><a href="#cb6-629" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_48837 <span class="pp">|</span> mirna_Cluster_14146 <span class="pp">|</span> 0.407 <span class="pp">|</span> 1.082 <span class="pp">|</span></span>
-<span id="cb6-630"><a href="#cb6-630" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_48837 <span class="pp">|</span> mirna_Cluster_3226 <span class="pp">|</span> 0.406 <span class="pp">|</span> 0.969 <span class="pp">|</span></span>
-<span id="cb6-631"><a href="#cb6-631" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_48837 <span class="pp">|</span> mirna_Cluster_10452 <span class="pp">|</span> 0.400 <span class="pp">|</span> 0.910 <span class="pp">|</span></span>
-<span id="cb6-632"><a href="#cb6-632" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_23415 <span class="pp">|</span> mirna_Cluster_9512 <span class="pp">|</span> 0.394 <span class="pp">|</span> 1.033 <span class="pp">|</span></span>
-<span id="cb6-633"><a href="#cb6-633" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_23414 <span class="pp">|</span> mirna_Cluster_9512 <span class="pp">|</span> 0.392 <span class="pp">|</span> 1.021 <span class="pp">|</span></span>
-<span id="cb6-634"><a href="#cb6-634" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_23416 <span class="pp">|</span> mirna_Cluster_9512 <span class="pp">|</span> 0.391 <span class="pp">|</span> 1.028 <span class="pp">|</span></span>
-<span id="cb6-635"><a href="#cb6-635" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_54028 <span class="pp">|</span> mirna_Cluster_4752 <span class="pp">|</span> 0.387 <span class="pp">|</span> 0.966 <span class="pp">|</span></span>
-<span id="cb6-636"><a href="#cb6-636" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_48837 <span class="pp">|</span> mirna_Cluster_4752 <span class="pp">|</span> 0.379 <span class="pp">|</span> 1.288 <span class="pp">|</span></span>
-<span id="cb6-637"><a href="#cb6-637" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> ('OG_10579', 'FUN_003891') <span class="pp">|</span> lncrna_lncRNA_44695 <span class="pp">|</span> mirna_Cluster_4752 <span class="pp">|</span> 0.377 <span class="pp">|</span> 0.834 <span class="pp">|</span></span>
+<span id="cb6-626"><a href="#cb6-626" aria-hidden="true" tabindex="-1"></a>| Rank | Gene | lncRNA | miRNA | Improvement | Context Strength |</span>
+<span id="cb6-627"><a href="#cb6-627" aria-hidden="true" tabindex="-1"></a>|------|------|--------|-------|-------------|------------------|</span>
+<span id="cb6-628"><a href="#cb6-628" aria-hidden="true" tabindex="-1"></a>| 1 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_48837 | mirna_Cluster_14165 | 0.420 | 1.162 |</span>
+<span id="cb6-629"><a href="#cb6-629" aria-hidden="true" tabindex="-1"></a>| 2 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_48837 | mirna_Cluster_14146 | 0.407 | 1.082 |</span>
+<span id="cb6-630"><a href="#cb6-630" aria-hidden="true" tabindex="-1"></a>| 3 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_48837 | mirna_Cluster_3226 | 0.406 | 0.969 |</span>
+<span id="cb6-631"><a href="#cb6-631" aria-hidden="true" tabindex="-1"></a>| 4 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_48837 | mirna_Cluster_10452 | 0.400 | 0.910 |</span>
+<span id="cb6-632"><a href="#cb6-632" aria-hidden="true" tabindex="-1"></a>| 5 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_23415 | mirna_Cluster_9512 | 0.394 | 1.033 |</span>
+<span id="cb6-633"><a href="#cb6-633" aria-hidden="true" tabindex="-1"></a>| 6 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_23414 | mirna_Cluster_9512 | 0.392 | 1.021 |</span>
+<span id="cb6-634"><a href="#cb6-634" aria-hidden="true" tabindex="-1"></a>| 7 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_23416 | mirna_Cluster_9512 | 0.391 | 1.028 |</span>
+<span id="cb6-635"><a href="#cb6-635" aria-hidden="true" tabindex="-1"></a>| 8 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_54028 | mirna_Cluster_4752 | 0.387 | 0.966 |</span>
+<span id="cb6-636"><a href="#cb6-636" aria-hidden="true" tabindex="-1"></a>| 9 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_48837 | mirna_Cluster_4752 | 0.379 | 1.288 |</span>
+<span id="cb6-637"><a href="#cb6-637" aria-hidden="true" tabindex="-1"></a>| 10 | ('OG_10579', 'FUN_003891') | lncrna_lncRNA_44695 | mirna_Cluster_4752 | 0.377 | 0.834 |</span>
 <span id="cb6-638"><a href="#cb6-638" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-639"><a href="#cb6-639" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multi-Way Interaction Analysis (Exploratory)</span></span>
 <span id="cb6-640"><a href="#cb6-640" aria-hidden="true" tabindex="-1"></a></span>
@@ -3047,18 +3033,18 @@ Results saved to: /Users/sr320/GitHub/ConTra/output/biomin_comparison_20251130_0
 <span id="cb6-646"><a href="#cb6-646" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-647"><a href="#cb6-647" aria-hidden="true" tabindex="-1"></a>*This table shows genes with the largest multi-regulator improvements. Current evidence suggests similar improvements can arise under randomized data; treat these results as hypothesis-generating rather than definitive.*</span>
 <span id="cb6-648"><a href="#cb6-648" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-649"><a href="#cb6-649" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Rank <span class="pp">|</span> Gene <span class="pp">|</span> Improvement <span class="pp">|</span> Significant Interactions <span class="pp">|</span></span>
-<span id="cb6-650"><a href="#cb6-650" aria-hidden="true" tabindex="-1"></a><span class="pp">|------|------|-------------|------------------------|</span></span>
-<span id="cb6-651"><a href="#cb6-651" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 1 <span class="pp">|</span> ('OG_10450', 'FUN_001498') <span class="pp">|</span> 0.928 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-652"><a href="#cb6-652" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 2 <span class="pp">|</span> ('OG_12424', 'FUN_030063') <span class="pp">|</span> 0.928 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-653"><a href="#cb6-653" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 3 <span class="pp">|</span> ('OG_10523', 'FUN_002672') <span class="pp">|</span> 0.928 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-654"><a href="#cb6-654" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 4 <span class="pp">|</span> ('OG_12286', 'FUN_028190') <span class="pp">|</span> 0.926 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-655"><a href="#cb6-655" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 5 <span class="pp">|</span> ('OG_09897', 'FUN_042992') <span class="pp">|</span> 0.925 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-656"><a href="#cb6-656" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 6 <span class="pp">|</span> ('OG_14500', 'FUN_017790') <span class="pp">|</span> 0.925 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-657"><a href="#cb6-657" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 7 <span class="pp">|</span> ('OG_04209', 'FUN_016791') <span class="pp">|</span> 0.923 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-658"><a href="#cb6-658" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 8 <span class="pp">|</span> ('OG_10759', 'FUN_006140') <span class="pp">|</span> 0.922 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-659"><a href="#cb6-659" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 9 <span class="pp">|</span> ('OG_08920', 'FUN_038376') <span class="pp">|</span> 0.921 <span class="pp">|</span> False <span class="pp">|</span></span>
-<span id="cb6-660"><a href="#cb6-660" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 10 <span class="pp">|</span> ('OG_02176', 'FUN_008525') <span class="pp">|</span> 0.920 <span class="pp">|</span> False <span class="pp">|</span></span>
+<span id="cb6-649"><a href="#cb6-649" aria-hidden="true" tabindex="-1"></a>| Rank | Gene | Improvement | Significant Interactions |</span>
+<span id="cb6-650"><a href="#cb6-650" aria-hidden="true" tabindex="-1"></a>|------|------|-------------|------------------------|</span>
+<span id="cb6-651"><a href="#cb6-651" aria-hidden="true" tabindex="-1"></a>| 1 | ('OG_10450', 'FUN_001498') | 0.928 | False |</span>
+<span id="cb6-652"><a href="#cb6-652" aria-hidden="true" tabindex="-1"></a>| 2 | ('OG_12424', 'FUN_030063') | 0.928 | False |</span>
+<span id="cb6-653"><a href="#cb6-653" aria-hidden="true" tabindex="-1"></a>| 3 | ('OG_10523', 'FUN_002672') | 0.928 | False |</span>
+<span id="cb6-654"><a href="#cb6-654" aria-hidden="true" tabindex="-1"></a>| 4 | ('OG_12286', 'FUN_028190') | 0.926 | False |</span>
+<span id="cb6-655"><a href="#cb6-655" aria-hidden="true" tabindex="-1"></a>| 5 | ('OG_09897', 'FUN_042992') | 0.925 | False |</span>
+<span id="cb6-656"><a href="#cb6-656" aria-hidden="true" tabindex="-1"></a>| 6 | ('OG_14500', 'FUN_017790') | 0.925 | False |</span>
+<span id="cb6-657"><a href="#cb6-657" aria-hidden="true" tabindex="-1"></a>| 7 | ('OG_04209', 'FUN_016791') | 0.923 | False |</span>
+<span id="cb6-658"><a href="#cb6-658" aria-hidden="true" tabindex="-1"></a>| 8 | ('OG_10759', 'FUN_006140') | 0.922 | False |</span>
+<span id="cb6-659"><a href="#cb6-659" aria-hidden="true" tabindex="-1"></a>| 9 | ('OG_08920', 'FUN_038376') | 0.921 | False |</span>
+<span id="cb6-660"><a href="#cb6-660" aria-hidden="true" tabindex="-1"></a>| 10 | ('OG_02176', 'FUN_008525') | 0.920 | False |</span>
 <span id="cb6-661"><a href="#cb6-661" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-662"><a href="#cb6-662" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data Files</span></span>
 <span id="cb6-663"><a href="#cb6-663" aria-hidden="true" tabindex="-1"></a></span>
