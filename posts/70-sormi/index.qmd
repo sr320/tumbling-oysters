@@ -1,0 +1,53 @@
+---
+title: "Initial YC25 Oyster assay runs"
+description: ""
+categories: [sormi]
+#citation: 
+date: 05-08-2026
+image: "http://gannet.fish.washington.edu/seashell/snaps/2026-05-08_06-19-16.png" # finding a good image
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    toc: true            # ← enable TOC
+    toc-location: left   # or: right, body
+    toc-depth: 3         # how many heading levels to show
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+Over the past month we have ran some initial SORMI assays on the USDA YC25 families.
+
+In short there was one adult-cup resazurin, a follow up [heat-mortality test (33C)](https://github.com/RobertsLab/sormi-assay-development/tree/main/heat-survivorship/20260427-33C-USDA-families), two FW RT resazurin plate-runs, and one FW 36C resazurin plate. I would not trust the stats.
+
+# Resazurin
+
+Run in solo cups in incubator.
+
+![](images/clipboard-4101762963.png)
+
+# Mortality
+
+![](images/clipboard-1931826657.png)
+
+# Resaszurin
+
+Smaller oysters run in 12-well plates. Used FW for making up resazurin. Room temperature.
+
+![](images/clipboard-751489528.png)
+
+![](images/clipboard-2305900461.png)
+
+Then the did a run with 36
+
+![](images/clipboard-949066699.png)
