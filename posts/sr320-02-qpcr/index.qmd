@@ -8,7 +8,7 @@ author:
     affiliation: Professor, UW - School of Aquatic and Fishery Sciences
     affiliation-url: https://robertslab.info
 date: 07-21-2023
-categories: [Quarto, R, tidyverse, ggplot, qPCR] # self-defined categories
+categories: ["Transcriptomics", "Computing"]
 citation: 
   url: https://sr320.github.io/tumbling-oysters/posts/sr320-02-qpcr/ # self-defined
 image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_lsamp-2023_-_main_-_RStudio_2023-07-21_13-31-47.png # finding a good image
