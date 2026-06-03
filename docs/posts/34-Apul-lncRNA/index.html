@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,9 +12,6 @@
 
 <title>Time-series coral lncRNA count matrix – Tumbling Oysters</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -77,12 +74,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-dbc92dda8186f57fa2e333fbb71d6a9d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-59898bd1c6b9d2bb783127feaa000c76.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d329e753491efaeac79c98c4b193a686.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-b1812915518d0f2e9664867131b8a81f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-d05667a7cf763527d0ffc0f60659af7b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -314,8 +311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">e5</div>
-                <div class="quarto-category">lncRNA</div>
+                <div class="quarto-category">Transcriptomics</div>
               </div>
                   </div>
   </div>
@@ -365,8 +361,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>I started with a bed file from discovery (see below) and used it to count the number of lncRNAs in each sample from Time Series data (Apul)</p>
 <section id="converted-bed-to-gtf" class="level2">
 <h2 class="anchored" data-anchor-id="converted-bed-to-gtf">Converted Bed to GTF</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'BEGIN{OFS="\t"; count=1} {printf "%s\t.\tlncRNA\t%d\t%d\t.\t+\t.\tgene_id \"lncRNA_%03d\";\n", $1, $2, $3, count++;}'</span> /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/10.1-Apul-lncRNA/Apul_lncRNA.bed <span class="dt">\</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../output/05-Apul-lncRNA/lncRNAs.gtf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'BEGIN{OFS="\t"; count=1} {printf "%s\t.\tlncRNA\t%d\t%d\t.\t+\t.\tgene_id \"lncRNA_%03d\";\n", $1, $2, $3, count++;}'</span> /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/10.1-Apul-lncRNA/Apul_lncRNA.bed <span class="dt">\</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../output/05-Apul-lncRNA/lncRNAs.gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>==&gt; /home/shared/8TB_HDD_03/sr320/github/deep-dive-expression/D-Apul/output/10.1-Apul-lncRNA/Apul_lncRNA.bed &lt;==
 ntLink_0    84514   93551
 ntLink_0    15627   19151
@@ -390,14 +386,14 @@ ntLink_2    .   lncRNA  217051  217761  .   +   .   gene_id "lncRNA_006";</code>
 </section>
 <section id="feature-count" class="level2">
 <h2 class="anchored" data-anchor-id="feature-count">Feature Count</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/subread-2.0.5-Linux-x86_64/bin/featureCounts</span> <span class="dt">\</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/subread-2.0.5-Linux-x86_64/bin/featureCounts</span> <span class="dt">\</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>-T 42 <span class="dt">\</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>-a ../output/05-Apul-lncRNA/lncRNAs.gtf <span class="dt">\</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>-o ../output/05-Apul-lncRNA/counts.txt <span class="dt">\</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>-t lncRNA <span class="dt">\</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>-g gene_id <span class="dt">\</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>-p <span class="dt">\</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>../data/<span class="pp">*</span>sorted.bam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>../data/<span class="pp">*</span>sorted.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="count-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="count-matrix">Count Matrix</h2>
@@ -410,70 +406,70 @@ ntLink_2    .   lncRNA  217051  217761  .   +   .   gene_id "lncRNA_006";</code>
 <section id="stringtie" class="level2">
 <h2 class="anchored" data-anchor-id="stringtie">StringTie</h2>
 <p>StringTie uses the sorted BAM files to assemble transcripts for each sample, outputting them as GTF (Gene Transfer Format) files. And then merges all individual GTF assemblies into a single merged GTF file. This step extracts transcript information and merges GTFs from all samples–an important step in creating a canonical list of lncRNAs across all samples included in the pipeline.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> ../output/07-Apul-Hisat/<span class="pp">*</span>sorted.bam <span class="dt">\</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> ../output/07-Apul-Hisat/<span class="pp">*</span>sorted.bam <span class="dt">\</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">|</span> <span class="fu">xargs</span> basename <span class="at">-s</span> .sorted.bam <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-I{}</span> <span class="dt">\</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie <span class="dt">\</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>-p 42 <span class="dt">\</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>-G ../data/Apulcra-genome.gff <span class="dt">\</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>-o ../output/10.1-Apul-lncRNA/{}.gtf <span class="dt">\</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>../output/07-Apul-Hisat/{}.sorted.bam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>../output/07-Apul-Hisat/{}.sorted.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Merges all individual GTF assemblies into a single merged GTF file.</p>
 <p>This is used to create a non-redundant set of transcripts after running StringTie separately on multiple RNA-Seq datasets.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="dt">\</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/stringtie-2.2.1.Linux_x86_64/stringtie</span> <span class="dt">\</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>--merge <span class="dt">\</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>-G ../data/Apulcra-genome.gff <span class="dt">\</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>-o ../output/10.1-Apul-lncRNA/stringtie_merged.gtf <span class="dt">\</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>../output/10.1-Apul-lncRNA/RNA<span class="pp">*</span>.gtf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>../output/10.1-Apul-lncRNA/RNA<span class="pp">*</span>.gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="gffcompare" class="level2">
 <h2 class="anchored" data-anchor-id="gffcompare">GFFcompare</h2>
 <p>https://ccb.jhu.edu/software/stringtie/gffcompare.shtml</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/gffcompare-0.12.6.Linux_x86_64/gffcompare</span> <span class="dt">\</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/gffcompare-0.12.6.Linux_x86_64/gffcompare</span> <span class="dt">\</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>-r ../data/Apulcra-genome.gff <span class="dt">\</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>-o ../output/10.1-Apul-lncRNA/gffcompare_merged <span class="dt">\</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>../output/10.1-Apul-lncRNA/stringtie_merged.gtf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>../output/10.1-Apul-lncRNA/stringtie_merged.gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_687474703a2f2f67616e6e65742e666973682e77617368696e67746f6e2e6564752f7365617368656c6c2f736e6170732f323032332d31312d30335f30392d3_2024-12-20_04-02-37.png" class="img-fluid"></p>
 </section>
 <section id="filter" class="level2">
 <h2 class="anchored" data-anchor-id="filter">Filter</h2>
 <p>Filters the combined GTF output from GFFcompare to select only the lines representing “transcripts” and excluding lines starting with “#” (these are lines in the output format from GFFcompare that don’t contain transcript information). This step further filters for a class code of “u”, and keep only those with lengths greater than 199 bases. The “u’ class code from the GFFcompare step is for”unknown” transcripts, that is those that are not previously annotated in our reference GFF as protein coding. The size filter of +200nt is a common filtering step for isolating lncRNAs.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'$3 == "transcript" &amp;&amp; $1 !~ /^#/'</span> <span class="dt">\</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>../output/10.1-Apul-lncRNA/gffcompare_merged.annotated.gtf <span class="kw">|</span> <span class="fu">grep</span> <span class="st">'class_code "u"\|class_code "x"|\class_code "i"\|class_code "y"'</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'($5 - $4 &gt; 199) || ($4 - $5 &gt; 199)'</span> <span class="op">&gt;</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.gtf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'$3 == "transcript" &amp;&amp; $1 !~ /^#/'</span> <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>../output/10.1-Apul-lncRNA/gffcompare_merged.annotated.gtf <span class="kw">|</span> <span class="fu">grep</span> <span class="st">'class_code "u"\|class_code "x"|\class_code "i"\|class_code "y"'</span> <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'($5 - $4 &gt; 199) || ($4 - $5 &gt; 199)'</span> <span class="op">&gt;</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.gtf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="bedtools" class="level2">
 <h2 class="anchored" data-anchor-id="bedtools">Bedtools</h2>
 <p>Extracts the sequence data from the <code>$FASTA</code> reference file based on the coordinates from the filtered GTF. The resulting sequences represent potential lncRNA candidates.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/bedtools2/bin/fastaFromBed</span> <span class="dt">\</span></span>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/bedtools2/bin/fastaFromBed</span> <span class="dt">\</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>-fi ../data/Apulcra-genome.fa <span class="dt">\</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>-bed ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.gtf <span class="dt">\</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>-fo ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta <span class="dt">\</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>-name <span class="at">-split</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fgrep</span> <span class="at">-c</span> <span class="st">"&gt;"</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>-name <span class="at">-split</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fgrep</span> <span class="at">-c</span> <span class="st">"&gt;"</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="cpc2" class="level2">
 <h2 class="anchored" data-anchor-id="cpc2">CPC2</h2>
 <p>Initializes a conda environment (Anaconda) and runs CPC2, a software to predict whether a transcript is coding or non-coding. The results are saved to the $OUTPUT_DIR. CPC2 uses ORF (Open Reading Frame) Analysis, Isometric Feature Mapping (Isomap), Sequence Homology, RNA Sequence Features, and Quality of Translation to assess coding potential and flag any transcripts we would want to exclude using the FASTA generated in the previous step.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">"</span><span class="va">$(</span><span class="ex">/opt/anaconda/anaconda3/bin/conda</span> shell.bash hook<span class="va">)</span><span class="st">"</span></span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">eval</span> <span class="st">"</span><span class="va">$(</span><span class="ex">/opt/anaconda/anaconda3/bin/conda</span> shell.bash hook<span class="va">)</span><span class="st">"</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> /home/shared/CPC2_standalone-1.0.1/bin/CPC2.py <span class="dt">\</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>-i ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta <span class="dt">\</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>-o ../output/10.1-Apul-lncRNA/Apul_CPC2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>-o ../output/10.1-Apul-lncRNA/Apul_CPC2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="filter-1" class="level2">
 <h2 class="anchored" data-anchor-id="filter-1">Filter</h2>
 <p>Filters the CPC2 results to get only noncoding transcripts (using the class “noncoding” from the CPC2 results) and extracts their IDs and matches these IDs with the sequences from the previous step to generate a GTF of long noncoding transcripts.</p>
 <p>Matches these IDs with the sequences from the previous step to generate a GTF of noncoding transcripts.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'$8 == "noncoding" {print $1}'</span> ../output/10.1-Apul-lncRNA/Apul_CPC2.txt <span class="op">&gt;</span> ../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'$8 == "noncoding" {print $1}'</span> ../output/10.1-Apul-lncRNA/Apul_CPC2.txt <span class="op">&gt;</span> ../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="subsetting-fasta" class="level1">
 <h1>subsetting fasta</h1>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/samtools-1.12/samtools</span> faidx ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta <span class="dt">\</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>-r ../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt <span class="op">&gt;</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA.fasta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/samtools-1.12/samtools</span> faidx ../output/10.1-Apul-lncRNA/Apul_lncRNA_candidates.fasta <span class="dt">\</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>-r ../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt <span class="op">&gt;</span> ../output/10.1-Apul-lncRNA/Apul_lncRNA.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="getting-genome-feature-track" class="level1">
 <h1>Getting genome feature track</h1>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the input file and the output file</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'../output/10.1-Apul-lncRNA/Apul_noncoding_transcripts_ids.txt'</span>, <span class="st">'r'</span>) <span class="im">as</span> infile, <span class="bu">open</span>(<span class="st">'../output/10.1-Apul-lncRNA/Apul_lncRNA.bed'</span>, <span class="st">'w'</span>) <span class="im">as</span> outfile:</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Process each line in the input file</span></span>
@@ -492,7 +488,7 @@ ntLink_2    .   lncRNA  217051  217761  .   +   .   gene_id "lncRNA_006";</code>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Separate each field with a tab character</span></span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>        outfile.write(<span class="ss">f'</span><span class="sc">{</span>chromosome<span class="sc">}</span><span class="ch">\t</span><span class="sc">{</span>start<span class="sc">}</span><span class="ch">\t</span><span class="sc">{</span>end<span class="sc">}</span><span class="ch">\n</span><span class="ss">'</span>)</span>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co"># After running this script, 'output.bed' will contain the converted data in BED format.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co"># After running this script, 'output.bed' will contain the converted data in BED format.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>note that when you take this bed and make gtf you get -1 starts that make program fail - of course the 0-based / 1-based issue that will eventually need to be looked into.</li>
 </ul>
@@ -567,14 +563,13 @@ ntLink_2    .   lncRNA  217051  217761  .   +   .   gene_id "lncRNA_006";</code>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -967,10 +962,10 @@ ntLink_2    .   lncRNA  217051  217761  .   +   .   gene_id "lncRNA_006";</code>
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Time-series coral lncRNA count matrix"</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Coral lncRNA count matrix generation and analysis pathway"</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [e5, lncRNA]</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["Transcriptomics"]</span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation: </span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 12-20-2024</span></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries_molecular__RStudio_Server_2024-12-20_03-51-09.png # finding a good image</span></span>
@@ -1174,7 +1169,7 @@ ntLink_2    .   lncRNA  217051  217761  .   +   .   gene_id "lncRNA_006";</code>
 <span id="cb15-205"><a href="#cb15-205" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb15-206"><a href="#cb15-206" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-207"><a href="#cb15-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>note that when you take this bed and make gtf you get -1 starts that make program fail - of course the 0-based / 1-based issue that will eventually need to be looked into.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb15-208"><a href="#cb15-208" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>note that when you take this bed and make gtf you get -1 starts that make program fail - of course the 0-based / 1-based issue that will eventually need to be looked into.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
