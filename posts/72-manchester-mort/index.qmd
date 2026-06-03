@@ -1,0 +1,41 @@
+---
+title: "Mortality Trial on Manchester Oysters"
+description: "Heating up in the incubator"
+categories: [priming]
+#citation: 
+date: 06-03-2026
+image: "images/clipboard-1475596766.png" # finding a good image
+author:
+  - name: Steven Roberts
+    url: 
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    toc: true            # ← enable TOC
+    toc-location: left   # or: right, body
+    toc-depth: 3         # how many heading levels to show
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+Last week we pulled some oysters from Manchester that had different priming experiences.
+
+![](images/clipboard-4074959556.png)
+
+There were 8 cohorts and 8 oysters were brought back to UW. \
+\
+:[Spreadsheet](https://docs.google.com/spreadsheets/d/1suyutJjz5jdJ-H3tTnz6piezhtyCK2XbPEnfmU2bEMo/edit?usp=sharing): with cup IDs and Tag \#
+
+![](images/clipboard-3812268574.png)
+
+Placed in incubator in 16 oz cups with instant ocean at 10am on Monday (Day 01). At 4pm Monday there was 1 mortality.
+
+![](images/clipboard-1475596766.png).
