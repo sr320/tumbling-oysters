@@ -6,8 +6,11 @@ listing:
   type: default
   categories: true
   sort-ui: false
-  filter-ui: false
+  filter-ui: true
   feed: true
 page-layout: full
 title-block-banner: true
 ---
+
+Posts now use a shared category system to make browsing easier:
+Lab Updates, Aquaculture, Epigenetics, Genomics, Transcriptomics, Computing, and Reading Notes.
