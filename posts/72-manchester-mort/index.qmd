@@ -1,7 +1,7 @@
 ---
 title: "Mortality Trial on Manchester Oysters"
 description: "Heating up in the incubator"
-categories: [priming]
+categories: ["Aquaculture"]
 #citation: 
 date: 06-03-2026
 image: "images/clipboard-1475596766.png" # finding a good image
@@ -26,11 +26,13 @@ format:
 #runtime: shiny
 ---
 
+<img src="https://img.shields.io/badge/AI%20Use-L0%20None-lightgrey" alt="AI Use Level 0"/>
+
 Last week we pulled some oysters from Manchester that had different priming experiences.
 
 ![](images/clipboard-4074959556.png)
 
-There were 8 cohorts and 8 oysters were brought back to UW. \
+There were 8 cohorts and 8 oysters were brought back to UW.\
 \
 :[Spreadsheet](https://docs.google.com/spreadsheets/d/1suyutJjz5jdJ-H3tTnz6piezhtyCK2XbPEnfmU2bEMo/edit?usp=sharing): with cup IDs and Tag \#
 
@@ -40,8 +42,13 @@ Placed in incubator in 16 oz cups with instant ocean at 10am on Monday (Day 01).
 
 ![](images/clipboard-1475596766.png).
 
+<<<<<<< HEAD
 # RESULTS
 
 see <https://ahuffmyer.github.io/posts/2026-06-03-analyzing-manchester-stress-survival.html>
 
 
+=======
+UPDATE: Mort counts\
+![](images/clipboard-849330797.png)
+>>>>>>> cc965140e670764e4b74953862c85ca663ce62b9

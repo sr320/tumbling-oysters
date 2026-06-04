@@ -1,7 +1,7 @@
 ---
 title: "Running Bismark in SLURM Array for Methylation Analysis"
 description: "Bismark array processing workflow"
-categories: [methylation, klone]
+categories: ["Epigenetics", "Computing"]
 #citation: 
 date: 11-10-2024
 image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_project-mytilus-methylation__RStudio_Server_2024-11-10_11-32-22.png # finding a good image

@@ -1,7 +1,7 @@
 ---
 title: "Time-series coral lncRNA count matrix"
 description: "Coral lncRNA count matrix generation and analysis pathway"
-categories: [e5, lncRNA]
+categories: ["Transcriptomics"]
 #citation: 
 date: 12-20-2024
 image: http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries_molecular__RStudio_Server_2024-12-20_03-51-09.png # finding a good image
