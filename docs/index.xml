@@ -12,6 +12,37 @@
 <generator>quarto-1.9.36</generator>
 <lastBuildDate>Thu, 04 Jun 2026 07:00:00 GMT</lastBuildDate>
 <item>
+  <title>Mortality Trial on Wescott Oysters</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+
+<p><img src="https://img.shields.io/badge/AI%20Use-L0%20None-lightgrey" alt="AI Use Level 0"></p>
+<p>We had some leftover oyster from Wescott Bay Weekly and Daily primed.</p>
+<p>Started Mortality Trial at Noon on June 8. 35C</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/images/clipboard-3935626096.png" class="img-fluid"></p>
+<p>Mort Reading June 8 at 4pm 3 dead.</p>
+<p>June 9 9am - several dead.</p>
+<p>June 9 at 9:30 am seemed to blow fuse.</p>
+<p>At 3pm temperature down to 30C with only 1 dead at that time</p>
+<p>Leaving overnight.</p>
+
+
+<!-- -->
+
+
+ ]]></description>
+  <category>Aquaculture</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/</guid>
+  <pubDate>Thu, 04 Jun 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/images/clipboard-3935626096.png" medium="image" type="image/png" height="42" width="144"/>
+</item>
+<item>
   <title>Mortality Trial on SORMI Oysters</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/</link>
@@ -27561,214 +27592,6 @@ font-style: inherit;">""</span></span>
   <guid>https://sr320.github.io/tumbling-oysters/posts/56-barnacle/</guid>
   <pubDate>Sun, 02 Nov 2025 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2025-11-02_09-06-29.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Lets talk Cod</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/55-cod-talk/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-
-<p>The directory <code>/volume1/web/nightingales/G_macrocephalus</code> contains seven sequencing projects, each representing a distinct Azenta sequencing batch or data delivery. The projects vary in size and file-naming conventions but consistently use paired-end FASTQ/FQ files with clear sample identifiers. Two projects (30-1067895835, 30-1149633765) are earlier batches, while others correspond to newer Azenta runs (<code>AN00025267</code>, <code>AN00025268</code>, <code>H202SC23041287</code>).</p>
-<ul>
-<li><strong>30-1067895835</strong> — Single-sample pilot sequencing set (<code>1D11</code>), paired-end reads, includes Azenta report.<br>
-</li>
-<li><strong>30-1149633765</strong> — Large-scale sequencing project (<code>EXP###</code>, <code>MHW###</code> prefixes), paired-end reads with checksums and HTML report.<br>
-</li>
-<li><strong>30-1149634506</strong> — Moderate batch (<code>ET##</code> prefix), paired-end reads with standard naming and report.<br>
-</li>
-<li><strong>30-943133806</strong> — Mixed sample identifiers (e.g., <code>19-G</code>, <code>RESUB-###</code>), includes supplemental folder and Azenta report.<br>
-</li>
-<li><strong>AN00025267 / AN00025268</strong> — Consistent naming (<code>##B_1.fastq.gz</code> / <code>_2.fastq.gz</code>), likely replicate or continuation projects.<br>
-</li>
-<li><strong>H202SC23041287</strong> — Deeply nested structure (<code>GM##</code> samples, multiple lanes per run), each sample has multiple files and MD5 checksums.</li>
-</ul>
-<hr>
-<section id="section" class="level1">
-<h1>30-1067895835</h1>
-<p><strong>30-1067895835</strong> is test aging sample, noting there are also some comparable shark sample(s). refers to WGBS from a single cod fin clip (experimental cod with “genetic sampling count” = 84 from <a href="https://github.com/RobertsLab/project-cod-temperature/blob/main/data/temp-experiment.csv">this table</a> - that cod was held at 9C).</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 14%">
-<col style="width: 10%">
-<col style="width: 16%">
-<col style="width: 10%">
-<col style="width: 14%">
-<col style="width: 18%">
-<col style="width: 14%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Project</th>
-<th>Sample ID</th>
-<th>Barcode Sequence</th>
-<th># Reads</th>
-<th>Yield (Mbases)</th>
-<th>Mean Quality Score</th>
-<th>% Bases &gt;= 30</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>30-1067895835</td>
-<td>1D11</td>
-<td>CAACACAG+TGGCTATC</td>
-<td>47,537,334</td>
-<td>14,261</td>
-<td>37.27</td>
-<td>87.02</td>
-</tr>
-</tbody>
-</table>
-<p>Direct links - <code>https://owl.fish.washington.edu/nightingales/G_macrocephalus/30-1067895835/1D11_R1_001.fastq.gz</code> - <code>https://owl.fish.washington.edu/nightingales/G_macrocephalus/30-1067895835/1D11_R2_001.fastq.gz</code></p>
-<hr>
-</section>
-<section id="an00025267-an00025268" class="level1">
-<h1>AN00025267 / AN00025268</h1>
-<p><strong>AN00025267 / AN00025268</strong> are paired RNA-seq / WGBS samples. Samples 1-36 are blood from cod held at 16C and samples 44-74 are blood from cod held at 0C. Note we also have lcWGS (~3x depth, a few samples higher) for the same cod individuals, should we want to, say, compare SNPs pulled from WGBS and lcWGS, or do a similar genetic + epigenetic variation paper (like the Silliman &amp; Spencer Oly paper).</p>
-<section id="an00025267" class="level2">
-<h2 class="anchored" data-anchor-id="an00025267">AN00025267</h2>
-<p>Link to <strong>AN00025267</strong> report:</p>
-<p><a href="https://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025267/202508_AN00025267_Report/report.html" class="uri">https://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025267/202508_AN00025267_Report/report.html</a></p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_06-07-03.png" class="img-fluid"></p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_06-08-09.png" width="50%"></p>
-<p>Link to data - <a href="https://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025267/" class="uri">https://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025267/</a></p>
-<hr>
-</section>
-<section id="an00025268" class="level2">
-<h2 class="anchored" data-anchor-id="an00025268">AN00025268</h2>
-<p>Link to Report</p>
-<p><a href="https://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025268/202508_AN00025268_Report/report.html" class="uri">https://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025268/202508_AN00025268_Report/report.html</a></p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_06-16-46.png" width="75%"></p>
-<p>Link to data</p>
-<ul>
-<li><a href="https://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025268/" class="uri">https://owl.fish.washington.edu/nightingales/G_macrocephalus/AN00025268/</a></li>
-</ul>
-<hr>
-</section>
-</section>
-<section id="genome" class="level1">
-<h1>Genome</h1>
-<p><a href="https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/" class="uri">https://www.ncbi.nlm.nih.gov/datasets/genome/GCF_031168955.1/</a></p>
-<hr>
-</section>
-<section id="larger-effort" class="level1">
-<h1>Larger Effort</h1>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 12%">
-<col style="width: 4%">
-<col style="width: 12%">
-<col style="width: 12%">
-<col style="width: 45%">
-<col style="width: 7%">
-<col style="width: 6%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Project</th>
-<th>Type</th>
-<th style="text-align: right;">Unique samples</th>
-<th style="text-align: right;">FASTQ/FQ files</th>
-<th>Naming schema</th>
-<th>Examples</th>
-<th>Status</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>30-943133806</td>
-<td>RNA-seq</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">160</td>
-<td><code>NN[_SUFFIX]_R{1,2}_001.fastq.gz</code>, <code>RESUB-###_R{1,2}_001.fastq.gz</code></td>
-<td><code>100_R1_001.fastq.gz</code>, <code>19-G_R1_001.fastq.gz</code>, <code>RESUB-76_R1_001.fastq.gz</code></td>
-<td>Complete - WGCNA analysis identified temperature-responsive genes (0, 5, 9, 16C)</td>
-</tr>
-<tr class="even">
-<td>H202SC23041287</td>
-<td>lcWGS</td>
-<td style="text-align: right;">157</td>
-<td style="text-align: right;">314*</td>
-<td><code>GM##_*_{1,2}.fq.gz</code> (sample <code>GM##</code>, multiple lanes/runs)</td>
-<td><code>GM1_CKDN230011839-1A_H5NNGDSX7_L1_1.fq.gz</code></td>
-<td>Complete - Population assignment, RDA, GWAS, eQTL analyses</td>
-</tr>
-<tr class="odd">
-<td>30-1149633765</td>
-<td>WGS</td>
-<td style="text-align: right;">350</td>
-<td style="text-align: right;">700</td>
-<td><code>EXP###_R{1,2}_001.fastq.gz</code>, <code>MHW###_R{1,2}_001.fastq.gz</code></td>
-<td><code>EXP001_R1_001.fastq.gz</code>, <code>MHW001_R1_001.fastq.gz</code></td>
-<td>In progress - heatwave genetics study (2008-2023) + experimental resequencing</td>
-</tr>
-<tr class="even">
-<td>30-1149634506</td>
-<td>WGS</td>
-<td style="text-align: right;">16</td>
-<td style="text-align: right;">32</td>
-<td><code>ET##_R{1,2}_001.fastq.gz</code></td>
-<td><code>ET22_R1_001.fastq.gz</code></td>
-<td>In progress - pilot ecotype sequencing (shallow/deep)</td>
-</tr>
-<tr class="odd">
-<td>AN00025267**</td>
-<td>BS-seq</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">64</td>
-<td><code>##B_{1,2}.fastq.gz</code> (paired reads as <code>_1</code>/<code>_2</code>)</td>
-<td><code>01B_1.fastq.gz</code>, <code>01B_2.fastq.gz</code></td>
-<td>In progress - nf-core/methylseq pipeline (17.nextflow)</td>
-</tr>
-<tr class="even">
-<td>AN00025268**</td>
-<td>BS-seq</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">64</td>
-<td><code>##B_{1,2}.fastq.gz</code> (paired reads as <code>_1</code>/<code>_2</code>)</td>
-<td><code>01B_1.fastq.gz</code>, <code>01B_2.fastq.gz</code></td>
-<td>Planned</td>
-</tr>
-<tr class="odd">
-<td>30-1067895835**</td>
-<td>WGBS</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td><code>SAMPLE_R{1,2}_001.fastq.gz</code></td>
-<td><code>1D11_R1_001.fastq.gz</code></td>
-<td>trial WGBS for Pacific cod methylation and depth, in progress</td>
-</tr>
-</tbody>
-</table>
-<section id="key-results-to-date" class="level3">
-<h3 class="anchored" data-anchor-id="key-results-to-date">Key Results to Date</h3>
-<ul>
-<li><strong>RNA-seq differential expression</strong>: Weighted gene correlation network analysis (WGCNA) identified genes expressed in the liver that are temperature-responsive, and those that correlate with juvenile cod performance (e.g.&nbsp;liver lipid content) within temperatures, particularly warming.<br>
-</li>
-<li><strong>Gene ontology enrichment</strong>: GO term enrichment analysis performed using DAVID on DEGs.</li>
-<li><strong>Population genetics</strong>: lcWGS data analyzed to assign experimental fish to known Pacific cod spawning populations using WGSassign, PCA, which indicated that all were from the GOA spawning aggregation. Redundancy analysis (RDA) indicated that genetic variation associated with GOA populations (eGOA, wGOA) was not strongly linked to phenotypic responses in warming (16C), while there was some evidence for population-associated variation in cold acclimation (e.g.&nbsp;polar lipid concentrations). Additional genetic structure (within the wGOA population) existed that was not associated with the wGOA and eGOA populations that correlated with trait variation.</li>
-<li><strong>Genome-Wide Association Study (GWAS)</strong>: lcWGS data paired with per-individual traits (growth, condition, liver lipid content) measured across four temperatures (0-16C) identified genetic variants associated with trait variation.<br>
-</li>
-<li><strong>Growth and physiology</strong>: Significant treatment effects observed on growth rates (SGRww, SGRsl), condition indices (Kwet, HSI), and liver lipid composition. Temperature-dependent models were constructed.</li>
-</ul>
-
-
-<!-- -->
-
-</section>
-</section>
-
- ]]></description>
-  <category>Epigenetics</category>
-  <category>Transcriptomics</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/55-cod-talk/</guid>
-  <pubDate>Sat, 01 Nov 2025 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2025-11-01_06-14-45.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
