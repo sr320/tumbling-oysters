@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,6 +12,9 @@
 
 <title>Myt Iso-seq Annotation – Tumbling Oysters</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -74,12 +77,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-59898bd1c6b9d2bb783127feaa000c76.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d329e753491efaeac79c98c4b193a686.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-dbc92dda8186f57fa2e333fbb71d6a9d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-b1812915518d0f2e9664867131b8a81f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d05667a7cf763527d0ffc0f60659af7b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -360,21 +363,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p><strong>code</strong>: https://github.com/mattgeorgephd/PSMFC-mytilus-byssus-pilot/blob/main/code/06-annotation.Rmd</p>
 <p>In this following chunk where the fasta file is downloaded the <a href="https://www.uniprot.org/help/release-statistics">release</a> is noted and the file name is modified accordingly.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../data</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../data</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> uniprot_sprot.fasta.gz uniprot_sprot_r2023_02.fasta.gz</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> <span class="at">-k</span> uniprot_sprot_r2023_02.fasta.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> <span class="at">-k</span> uniprot_sprot_r2023_02.fasta.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A protein blast database is then made.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/ncbi-blast-2.11.0+/bin/makeblastdb</span> <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/ncbi-blast-2.11.0+/bin/makeblastdb</span> <span class="dt">\</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>-in ../data/uniprot_sprot_r2023_02.fasta <span class="dt">\</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>-dbtype prot <span class="dt">\</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>-out ../analyses/blast/uniprot_sprot_r2023_02</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-4</span> ../data/Mtros-hq_transcripts.fasta</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>-out ../analyses/blast/uniprot_sprot_r2023_02</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-4</span> ../data/Mtros-hq_transcripts.fasta</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"&gt;"</span> ../data/Mtros-hq_transcripts.fasta <span class="kw">|</span> <span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"&gt;"</span> ../data/Mtros-hq_transcripts.fasta <span class="kw">|</span> <span class="fu">head</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>## &gt;MT_Pool_HQ_transcript/0
 ## AGTGAGAGACAAGCCGGCTTGTTACAAAACATCTCCCTTTTCCTTGTCAACTCTTGGAGT
 ## ACGGACGGGACCTGACTTTTGACCACCGGAACTGACTTTCGGATTGATTATTATAATAAT
@@ -389,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ## &gt;MT_Pool_HQ_transcript/7
 ## &gt;MT_Pool_HQ_transcript/8
 ## &gt;MT_Pool_HQ_transcript/10</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/ncbi-blast-2.11.0+/bin/blastx</span> <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/ncbi-blast-2.11.0+/bin/blastx</span> <span class="dt">\</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>-query ../data/Mtros-hq_transcripts.fasta <span class="dt">\</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>-db ../analyses/blast/uniprot_sprot_r2023_02 <span class="dt">\</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>-out ../analyses/blast/Mtros-hq-uniprot_blastx.tab <span class="dt">\</span></span>
@@ -397,34 +400,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>-num_threads 40 <span class="dt">\</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>-max_target_seqs 1 <span class="dt">\</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>-max_hsps 1 <span class="dt">\</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>-outfmt 6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>-outfmt 6</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Here is what the output file looks like, and at this point we want to get the UniProt Accession number for each gene</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-2</span> ../analyses/blast/Mtros-hq-uniprot_blastx.tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-2</span> ../analyses/blast/Mtros-hq-uniprot_blastx.tab</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>## MT_Pool_HQ_transcript/0  sp|D3ZHA0|FLNC_RAT  42.357  2486    1247    48  1977    8993    278 2724    0.0 1647
 ## MT_Pool_HQ_transcript/1  sp|P16157|ANK1_HUMAN    31.783  774 524 1   6347    8668    17  786 5.29e-119   425</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../analyses/blast/Mtros-hq-uniprot_blastx.tab"</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">header =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>blastsp <span class="ot">&lt;-</span> blast <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SPID =</span> <span class="fu">str_extract</span>(V2, <span class="st">"(?&lt;=</span><span class="sc">\\</span><span class="st">|)[^</span><span class="sc">\\</span><span class="st">|]*(?=</span><span class="sc">\\</span><span class="st">|)"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../analyses/blast/Mtros-hq-uniprot_blastx.tab"</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">header =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>blastsp <span class="ot">&lt;-</span> blast <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SPID =</span> <span class="fu">str_extract</span>(V2, <span class="st">"(?&lt;=</span><span class="sc">\\</span><span class="st">|)[^</span><span class="sc">\\</span><span class="st">|]*(?=</span><span class="sc">\\</span><span class="st">|)"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now lets just write out SPIDs.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SPID =</span> <span class="fu">str_extract</span>(V2, <span class="st">"(?&lt;=</span><span class="sc">\\</span><span class="st">|)[^</span><span class="sc">\\</span><span class="st">|]*(?=</span><span class="sc">\\</span><span class="st">|)"</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(V1, SPID, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SPID) <span class="sc">%&gt;%</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write.table</span>(<span class="at">file =</span> <span class="st">"../analyses/blast/SPID.txt"</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">quote =</span> <span class="cn">FALSE</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>With a list of matching Swiss-Prot IDs, (technically UniProt Accession number) we can go back to <a href="https://www.uniprot.org" class="uri">https://www.uniprot.org</a> and grab corresponding GO terms. This can be done via a web or using Python API.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> uniprot-retrieval.py ../analyses/blast/SPID.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> uniprot-retrieval.tsv.gz ../analyses/blast/uniprot-retrieval.tsv.gz</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> uniprot-retrieval.py ../analyses/blast/SPID.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> uniprot-retrieval.tsv.gz ../analyses/blast/uniprot-retrieval.tsv.gz</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> ../analyses/blast/uniprot-retrieval.tsv.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> ../analyses/blast/uniprot-retrieval.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Web</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>idmap <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../analyses/blast/idmapping_2023_08_07.tsv"</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">row.names=</span><span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>idmap <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../analyses/blast/idmapping_2023_08_07.tsv"</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">row.names=</span><span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Joining</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(blastsp, idmap, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"SPID"</span> <span class="ot">=</span> <span class="st">"Entry"</span>)) <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(blastsp, idmap, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"SPID"</span> <span class="ot">=</span> <span class="st">"Entry"</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(V1, V2, V11, Protein.names, Gene.Ontology..biological.process., Gene.Ontology.IDs) <span class="sc">%&gt;%</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(<span class="at">file =</span> <span class="st">"../analyses/blast/Mtros_GO.txt"</span>, <span class="at">sep =</span> <span class="co">#"\t", row.names = FALSE, quote = FALSE</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../analyses/blast/Mtros_GO.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../analyses/blast/Mtros_GO.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>## "V1" "V2" "V11" "Protein.names" "Gene.Ontology..biological.process." "Gene.Ontology.IDs"
 ## "1" "MT_Pool_HQ_transcript/0" "sp|D3ZHA0|FLNC_RAT" 0 "Filamin-C (FLN-C) (ABP-280-like protein) (ABP-L) (Actin-binding-like protein) (Filamin-2) (Gamma-filamin)" "muscle cell development [GO:0055001]; sarcomere organization [GO:0045214]" "GO:0005737; GO:0005856; GO:0008092; GO:0016528; GO:0030018; GO:0030506; GO:0042383; GO:0043034; GO:0045214; GO:0051015; GO:0055001"
 ## "2" "MT_Pool_HQ_transcript/1" "sp|P16157|ANK1_HUMAN" 5.29e-119 "Ankyrin-1 (ANK-1) (Ankyrin-R) (Erythrocyte ankyrin)" "cytoskeleton organization [GO:0007010]; endoplasmic reticulum to Golgi vesicle-mediated transport [GO:0006888]; exocytosis [GO:0006887]; maintenance of epithelial cell apical/basal polarity [GO:0045199]; protein localization to plasma membrane [GO:0072659]; signal transduction [GO:0007165]" "GO:0005198; GO:0005200; GO:0005829; GO:0005856; GO:0005886; GO:0006887; GO:0006888; GO:0007010; GO:0007165; GO:0008093; GO:0009898; GO:0014731; GO:0016323; GO:0016529; GO:0019899; GO:0019903; GO:0030507; GO:0031430; GO:0043005; GO:0044325; GO:0045199; GO:0051117; GO:0072659"
@@ -448,8 +451,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-roberts2023" class="csl-entry quarto-appendix-citeas" role="listitem">
-Roberts, Steven. 2023. <span>“Myt Iso-Seq Annotation.”</span> July 24,
-2023. <a href="https://sr320.github.io/tumbling-oysters/posts/sr320-04-mytgo/">https://sr320.github.io/tumbling-oysters/posts/sr320-04-mytgo/</a>.
+Roberts, Steven. 2023. <span>“Myt Iso-Seq Annotation.”</span> July 24.
+<a href="https://sr320.github.io/tumbling-oysters/posts/sr320-04-mytgo/">https://sr320.github.io/tumbling-oysters/posts/sr320-04-mytgo/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -515,13 +518,14 @@ Roberts, Steven. 2023. <span>“Myt Iso-Seq Annotation.”</span> July 24,
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -914,7 +918,7 @@ Roberts, Steven. 2023. <span>“Myt Iso-Seq Annotation.”</span> July 24,
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Myt Iso-seq Annotation"</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Mytilus isothermal sequencing annotation workflow"</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
@@ -1070,7 +1074,7 @@ Roberts, Steven. 2023. <span>“Myt Iso-Seq Annotation.”</span> July 24,
 <span id="cb17-154"><a href="#cb17-154" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "6" "MT_Pool_HQ_transcript/5" "sp|Q6V0I7|FAT4_HUMAN" 4.12e-81 "Protocadherin Fat 4 (hFat4) (Cadherin family member 14) (FAT tumor suppressor homolog 4) (Fat-like cadherin protein FAT-J)" "cerebral cortex development [GO:0021987]; heterophilic cell-cell adhesion via plasma membrane cell adhesion molecules [GO:0007157]; hippo signaling [GO:0035329]; homophilic cell adhesion via plasma membrane adhesion molecules [GO:0007156]; neurogenesis [GO:0022008]" "GO:0005509; GO:0005886; GO:0007156; GO:0007157; GO:0021987; GO:0022008; GO:0035329; GO:0070062"</span></span>
 <span id="cb17-155"><a href="#cb17-155" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "7" "MT_Pool_HQ_transcript/6" "sp|Q24292|DS_DROME" 6.93e-80 "Protein dachsous (Adherin)" "establishment of ommatidial planar polarity [GO:0042067]; establishment of planar polarity [GO:0001736]; homophilic cell adhesion via plasma membrane adhesion molecules [GO:0007156]; imaginal disc morphogenesis [GO:0007560]; negative regulation of hippo signaling [GO:0035331]; positive regulation of hippo signaling [GO:0035332]; protein localization involved in establishment of planar polarity [GO:0090251]" "GO:0001736; GO:0005509; GO:0005886; GO:0007156; GO:0007560; GO:0016327; GO:0035331; GO:0035332; GO:0042067; GO:0070161; GO:0090251"</span></span>
 <span id="cb17-156"><a href="#cb17-156" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "8" "MT_Pool_HQ_transcript/7" "sp|E9Q555|RN213_MOUSE" 0 "E3 ubiquitin-protein ligase RNF213 (EC 2.3.2.27) (EC 3.6.4.-) (E3 ubiquitin-lipopolysaccharide ligase RNF213) (EC 2.3.2.-) (Mysterin) (RING finger protein 213)" "angiogenesis [GO:0001525]; defense response to bacterium [GO:0042742]; immune system process [GO:0002376]; lipid droplet formation [GO:0140042]; lipid ubiquitination [GO:0120323]; negative regulation of non-canonical Wnt signaling pathway [GO:2000051]; protein autoubiquitination [GO:0051865]; protein K63-linked ubiquitination [GO:0070534]; protein ubiquitination [GO:0016567]; regulation of lipid metabolic process [GO:0019216]; sprouting angiogenesis [GO:0002040]; ubiquitin-dependent protein catabolic process [GO:0006511]; xenophagy [GO:0098792]" "GO:0001525; GO:0002040; GO:0002376; GO:0004842; GO:0005524; GO:0005730; GO:0005737; GO:0005811; GO:0005829; GO:0006511; GO:0016567; GO:0016887; GO:0019216; GO:0042742; GO:0046872; GO:0051865; GO:0061630; GO:0070534; GO:0098792; GO:0120323; GO:0140042; GO:2000051"</span></span>
-<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "9" "MT_Pool_HQ_transcript/8" "sp|Q8TD57|DYH3_HUMAN" 0 "Dynein axonemal heavy chain 3 (Axonemal beta dynein heavy chain 3) (HsADHC3) (Ciliary dynein heavy chain 3) (Dnahc3-b)" "cilium-dependent cell motility [GO:0060285]; microtubule-based movement [GO:0007018]" "GO:0003777; GO:0005524; GO:0005858; GO:0005874; GO:0007018; GO:0008569; GO:0030286; GO:0045505; GO:0051959; GO:0060285"</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb17-157"><a href="#cb17-157" aria-hidden="true" tabindex="-1"></a><span class="in">    ## "9" "MT_Pool_HQ_transcript/8" "sp|Q8TD57|DYH3_HUMAN" 0 "Dynein axonemal heavy chain 3 (Axonemal beta dynein heavy chain 3) (HsADHC3) (Ciliary dynein heavy chain 3) (Dnahc3-b)" "cilium-dependent cell motility [GO:0060285]; microtubule-based movement [GO:0007018]" "GO:0003777; GO:0005524; GO:0005858; GO:0005874; GO:0007018; GO:0008569; GO:0030286; GO:0045505; GO:0051959; GO:0060285"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

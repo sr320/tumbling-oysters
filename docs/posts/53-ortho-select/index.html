@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,6 +12,9 @@
 
 <title>Ortholog Selection for Physiological Processes – Tumbling Oysters</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -74,12 +77,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-59898bd1c6b9d2bb783127feaa000c76.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d329e753491efaeac79c98c4b193a686.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-dbc92dda8186f57fa2e333fbb71d6a9d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-b1812915518d0f2e9664867131b8a81f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d05667a7cf763527d0ffc0f60659af7b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -364,7 +367,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="overview-of-annotated-orthologs" class="level2">
 <h2 class="anchored" data-anchor-id="overview-of-annotated-orthologs">Overview of Annotated Orthologs</h2>
 <p>First, let’s examine the annotated ortholog data from the previous analysis:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/11-orthology-analysis/ortholog_groups.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/11-orthology-analysis/ortholog_groups.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>group_id,apul,peve,ptua,type,avg_identity
 OG_00001,FUN_000185-T1,Peve_00037402,Pocillopora_meandrina_HIv1___RNAseq.g28886.t1,three_way,71.059
 OG_00002,FUN_000189-T1,Peve_00038462,Pocillopora_meandrina_HIv1___RNAseq.g28888.t3,three_way,68.72583333333334
@@ -375,12 +378,12 @@ OG_00006,FUN_000193-T1,Peve_00038467,Pocillopora_meandrina_HIv1___RNAseq.g28894.
 OG_00007,FUN_000194-T1,Peve_00038470,Pocillopora_meandrina_HIv1___RNAseq.g28898.t1,three_way,77.11833333333334
 OG_00008,FUN_000195-T1,Peve_00038471,Pocillopora_meandrina_HIv1___RNAseq.g28899.t1,three_way,68.38
 OG_00009,FUN_000197-T1,Peve_00027182,Pocillopora_meandrina_HIv1___RNAseq.g28901.t1,three_way,56.498333333333335</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/11-orthology-analysis/ortholog_groups.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/11-orthology-analysis/ortholog_groups.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>18327 ../output/11-orthology-analysis/ortholog_groups.csv</code></pre>
 </section>
 <section id="annotated-orthologs" class="level2">
 <h2 class="anchored" data-anchor-id="annotated-orthologs">Annotated Orthologs</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>group_id,apul,peve,ptua,type,avg_identity,query,accession,id,reviewed,protein_name,organism,pident,length,evalue,bitscore,title,go_ids,go_bp,go_cc,go_mf,goslim_ids,goslim_names
 OG_00001,FUN_000185-T1,Peve_00037402,Pocillopora_meandrina_HIv1___RNAseq.g28886.t1,three_way,71.059,FUN_000185-T1,Q32LQ0,AMPE_BOVIN,,Glutamyl aminopeptidase (EAP) (EC 3.4.11.7) (Aminopeptidase A) (AP-A) (CD antigen CD249),Bos taurus (Bovine),41.5,881.0,1.4e-197,691.4,sp|Q32LQ0|AMPE_BOVIN Glutamyl aminopeptidase OS=Bos taurus OX=9913 GN=ENPEP PE=2 SV=1,GO:0003081; GO:0004177; GO:0004230; GO:0005615; GO:0005737; GO:0005886; GO:0006508; GO:0008217; GO:0008270; GO:0008283; GO:0016477; GO:0042277; GO:0043171; GO:0070006,cell migration [GO:0016477]; cell population proliferation [GO:0008283]; peptide catabolic process [GO:0043171]; proteolysis [GO:0006508]; regulation of blood pressure [GO:0008217]; regulation of systemic arterial blood pressure by renin-angiotensin [GO:0003081],cytoplasm [GO:0005737]; extracellular space [GO:0005615]; plasma membrane [GO:0005886],aminopeptidase activity [GO:0004177]; glutamyl aminopeptidase activity [GO:0004230]; metalloaminopeptidase activity [GO:0070006]; peptide binding [GO:0042277]; zinc ion binding [GO:0008270],GO:0003824; GO:0005615; GO:0005886; GO:0016787; GO:0048870; GO:0050886; GO:0140096,"catalytic activity; extracellular space; plasma membrane; hydrolase activity; cell motility; endocrine process; catalytic activity, acting on a protein"
 OG_00002,FUN_000189-T1,Peve_00038462,Pocillopora_meandrina_HIv1___RNAseq.g28888.t3,three_way,68.72583333333334,FUN_000189-T1,Q9DCT6,,,,,38.0,171.0,4.6e-18,92.8,sp|Q9DCT6|BAP18_MOUSE BPTF-associated chromatin complex component 1 OS=Mus musculus OX=10090 GN=Bacc1 PE=1 SV=1,,,,,,
@@ -391,7 +394,7 @@ OG_00006,FUN_000193-T1,Peve_00038467,Pocillopora_meandrina_HIv1___RNAseq.g28894.
 OG_00007,FUN_000194-T1,Peve_00038470,Pocillopora_meandrina_HIv1___RNAseq.g28898.t1,three_way,77.11833333333334,FUN_000194-T1,P70182,,,,,60.2,447.0,3.4e-147,523.5,sp|P70182|PI51A_MOUSE Phosphatidylinositol 4-phosphate 5-kinase type-1 alpha OS=Mus musculus OX=10090 GN=Pip5k1a PE=1 SV=2,,,,,,
 OG_00008,FUN_000195-T1,Peve_00038471,Pocillopora_meandrina_HIv1___RNAseq.g28899.t1,three_way,68.38,FUN_000195-T1,B8D9S0,,,,,38.5,148.0,9e-19,95.1,sp|B8D9S0|FMT_BUCA5 Methionyl-tRNA formyltransferase OS=Buchnera aphidicola subsp. Acyrthosiphon pisum (strain 5A) OX=563178 GN=fmt PE=3 SV=1,,,,,,
 OG_00009,FUN_000197-T1,Peve_00027182,Pocillopora_meandrina_HIv1___RNAseq.g28901.t1,three_way,56.498333333333335,FUN_000197-T1,Q8TCT7,,,,,44.7,488.0,1.6e-89,331.6,sp|Q8TCT7|SPP2B_HUMAN Signal peptide peptidase-like 2B OS=Homo sapiens OX=9606 GN=SPPL2B PE=1 SV=2,,,,,,</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/12-ortho-annot/ortholog_groups_annotated.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>18373 ../output/12-ortho-annot/ortholog_groups_annotated.csv</code></pre>
 </section>
 </section>
@@ -400,7 +403,7 @@ OG_00009,FUN_000197-T1,Peve_00027182,Pocillopora_meandrina_HIv1___RNAseq.g28901.
 <section id="filter-for-specific-go-terms" class="level2">
 <h2 class="anchored" data-anchor-id="filter-for-specific-go-terms">Filter for Specific GO Terms</h2>
 <p>We’ll filter the annotated orthologs for genes involved in metabolic and stress-related processes that are relevant to coral physiology:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter orthologs for metabolic and stress-related processes</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter orthologs for metabolic and stress-related processes</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Filtering for:"</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Glycolysis (GO:0006096)"</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"- Gluconeogenesis (GO:0006094)"</span></span>
@@ -424,7 +427,7 @@ OG_00009,FUN_000197-T1,Peve_00027182,Pocillopora_meandrina_HIv1___RNAseq.g28901.
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;&gt;</span> ../output/13-ortho-select/selected_orthologs.csv</span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Total orthologs selected:"</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/13-ortho-select/selected_orthologs.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/13-ortho-select/selected_orthologs.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Filtering for:
 - Glycolysis (GO:0006096)
 - Gluconeogenesis (GO:0006094)
@@ -437,8 +440,8 @@ OG_00009,FUN_000197-T1,Peve_00027182,Pocillopora_meandrina_HIv1___RNAseq.g28901.
 
 Total orthologs selected:
 787 ../output/13-ortho-select/selected_orthologs.csv</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first few selected orthologs</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/13-ortho-select/selected_orthologs.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Show first few selected orthologs</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/13-ortho-select/selected_orthologs.csv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>group_id,apul,peve,ptua,type,avg_identity,query,accession,id,reviewed,protein_name,organism,pident,length,evalue,bitscore,title,go_ids,go_bp,go_cc,go_mf,goslim_ids,goslim_names
 OG_00044,FUN_000272-T1,Peve_00027798,Pocillopora_meandrina_HIv1___RNAseq.g28985.t1,three_way,70.59733333333334,FUN_000272-T1,O75031,HSF2B_HUMAN,,Heat shock factor 2-binding protein,Homo sapiens (Human),43.2,190.0,5.9e-32,139.0,sp|O75031|HSF2B_HUMAN Heat shock factor 2-binding protein OS=Homo sapiens OX=9606 GN=HSF2BP PE=1 SV=1,GO:0005654; GO:0005694; GO:0005829; GO:0006366; GO:0007141; GO:0007144; GO:0007283; GO:1990918,double-strand break repair involved in meiotic recombination [GO:1990918]; female meiosis I [GO:0007144]; male meiosis I [GO:0007141]; spermatogenesis [GO:0007283]; transcription by RNA polymerase II [GO:0006366],chromosome [GO:0005694]; cytosol [GO:0005829]; nucleoplasm [GO:0005654],,GO:0005654; GO:0005694; GO:0005829; GO:0006281; GO:0006351; GO:0022414; GO:0043226; GO:0140013,nucleoplasm; chromosome; cytosol; DNA repair; DNA-templated transcription; reproductive process; organelle; meiotic nuclear division
 OG_00086,FUN_000437-T1,Peve_00011193,Pocillopora_meandrina_HIv1___RNAseq.g2323.t1,three_way,77.881,FUN_000437-T1,F1MNN4,FBXW7_BOVIN,,F-box/WD repeat-containing protein 7 (F-box and WD-40 domain-containing protein 7),Bos taurus (Bovine),36.4,195.0,1.9999999999999998e-26,122.5,sp|F1MNN4|FBXW7_BOVIN F-box/WD repeat-containing protein 7 OS=Bos taurus OX=9913 GN=FBXW7 PE=1 SV=3,GO:0005634; GO:0005654; GO:0005694; GO:0005737; GO:0006281; GO:0006974; GO:0007062; GO:0010629; GO:0010992; GO:0019005; GO:0030332; GO:0031146; GO:0031398; GO:0031625; GO:0042752; GO:0042802; GO:0043130; GO:0043161; GO:0050816; GO:0050821; GO:0070374; GO:0070534; GO:0097027; GO:1901524; GO:1901800; GO:1903378; GO:1903955; GO:1990452; GO:1990756; GO:2000060; GO:2001205,DNA damage response [GO:0006974]; DNA repair [GO:0006281]; negative regulation of gene expression [GO:0010629]; negative regulation of osteoclast development [GO:2001205]; positive regulation of ERK1 and ERK2 cascade [GO:0070374]; positive regulation of oxidative stress-induced neuron intrinsic apoptotic signaling pathway [GO:1903378]; positive regulation of proteasomal protein catabolic process [GO:1901800]; positive regulation of protein targeting to mitochondrion [GO:1903955]; positive regulation of protein ubiquitination [GO:0031398]; positive regulation of ubiquitin-dependent protein catabolic process [GO:2000060]; proteasome-mediated ubiquitin-dependent protein catabolic process [GO:0043161]; protein K63-linked ubiquitination [GO:0070534]; protein stabilization [GO:0050821]; regulation of circadian rhythm [GO:0042752]; regulation of mitophagy [GO:1901524]; SCF-dependent proteasomal ubiquitin-dependent protein catabolic process [GO:0031146]; sister chromatid cohesion [GO:0007062]; ubiquitin recycling [GO:0010992],chromosome [GO:0005694]; cytoplasm [GO:0005737]; nucleoplasm [GO:0005654]; nucleus [GO:0005634]; Parkin-FBXW7-Cul1 ubiquitin ligase complex [GO:1990452]; SCF ubiquitin ligase complex [GO:0019005],cyclin binding [GO:0030332]; identical protein binding [GO:0042802]; phosphothreonine residue binding [GO:0050816]; ubiquitin binding [GO:0043130]; ubiquitin protein ligase binding [GO:0031625]; ubiquitin-like ligase-substrate adaptor activity [GO:1990756]; ubiquitin-protein transferase activator activity [GO:0097027],GO:0005634; GO:0005654; GO:0005694; GO:0006281; GO:0030163; GO:0043226; GO:0060090; GO:0098772,nucleus; nucleoplasm; chromosome; DNA repair; protein catabolic process; organelle; molecular adaptor activity; molecular function regulator activity
@@ -453,7 +456,7 @@ OG_00248,FUN_001011-T1,Peve_00041060,Pocillopora_meandrina_HIv1___RNAseq.g29164.
 <section id="summary-by-go-category" class="level2">
 <h2 class="anchored" data-anchor-id="summary-by-go-category">Summary by GO Category</h2>
 <p>Let’s examine how many orthologs were identified for each physiological process:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count orthologs by each GO category</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count orthologs by each GO category</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Glycolysis (GO:0006096) ==="</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0006096'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -476,7 +479,7 @@ OG_00248,FUN_001011-T1,Peve_00041060,Pocillopora_meandrina_HIv1___RNAseq.g29164.
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0030163'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Reproductive Process (GO:0022414) ==="</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0022414'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">'GO:0022414'</span> ../output/13-ortho-select/selected_orthologs.csv <span class="kw">||</span> <span class="bu">echo</span> <span class="st">"0"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>=== Glycolysis (GO:0006096) ===
 10
 === Gluconeogenesis (GO:0006094) ===
@@ -600,13 +603,14 @@ OG_00248,FUN_001011-T1,Peve_00041060,Pocillopora_meandrina_HIv1___RNAseq.g29164.
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -999,7 +1003,7 @@ OG_00248,FUN_001011-T1,Peve_00041060,Pocillopora_meandrina_HIv1___RNAseq.g29164.
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Ortholog Selection for Physiological Processes"</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Selecting orthologs based on metabolic and reproductive GO terms"</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["Genomics"]</span></span>
@@ -1233,7 +1237,7 @@ OG_00248,FUN_001011-T1,Peve_00041060,Pocillopora_meandrina_HIv1___RNAseq.g29164.
 <span id="cb15-232"><a href="#cb15-232" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-233"><a href="#cb15-233" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>**Protein homeostasis** - essential for cellular function and stress responses</span>
 <span id="cb15-234"><a href="#cb15-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a>This filtered set of orthologs provides a focused gene list for downstream expression analysis, particularly for studies examining coral physiological responses to environmental stressors.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb15-235"><a href="#cb15-235" aria-hidden="true" tabindex="-1"></a>This filtered set of orthologs provides a focused gene list for downstream expression analysis, particularly for studies examining coral physiological responses to environmental stressors.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
