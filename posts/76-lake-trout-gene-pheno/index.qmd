@@ -1,0 +1,99 @@
+---
+title: "From DMRs and Deletions to Candidate Genes in Lake Trout"
+description: "Annotating differential methylation and PAVs, then reasoning about lean vs siscowet phenotype"
+categories: ["Computing", "Genomics", "Epigenetics"] #choose "Aquaculture", "Computing", "Epigenetics", "Genomics", "Lab Updates", "Reading Notes", "Transcriptomics"
+#citation:
+date: 06-15-2026
+image: "images/clipboard-1759510015.png" # finding a good image
+author:
+  - name: Steven Roberts
+    url:
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    toc: true            # ← enable TOC
+    toc-location: left   # or: right, body
+    toc-depth: 3         # how many heading levels to show
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+<a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-L4%20Substantial-red" alt="AI Use L4: Substantial"/></a>
+
+This is the write-up of the `code/18` series in [project-lake-trout](https://github.com/RobertsLab/project-lake-trout). We already had differential methylation (DMRs/DMCs) and differential presence/absence variants (PAVs) for the lean vs siscowet lake trout comparison on the **GCF_016432855.1 (SaNama_1.0)** reference. What we did *not* have was any sense of *which genes* those signals fall in, *what those genes do*, and *which ecotype phenotypes* they could plausibly touch. Step 18 closes that gap — it does no new variant calling, it just asks where the existing signals land and reasons about consequences.
+
+The whole plan, with the per-step status notes, lives in [`code/18-diff-annotation-phenotype-plan.md`](https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-diff-annotation-phenotype-plan.md).
+
+## The caveat that shapes everything
+
+The reference genome is a problem we have to lead with, not bury. GCF_016432855.1 was assembled from a female gynogenetic **doubled haploid** of the **Seneca Lake (NY) brood stock** — a **lean** morphotype. So every ecotype-asymmetric result is **lean-reference biased**: siscowet diverges more from the reference, which inflates apparent siscowet-specific PAVs and *reduces* siscowet CpG coverage exactly in the regions where the ecotypes differ most. Two consequences I kept in front of me the whole way:
+
+-   A "siscowet-specific deletion" is enriched for lean-present / siscowet-absent sequence — it is a candidate, not a confirmed loss in siscowet.
+-   Siscowet-specific vs lean-specific counts are **not** magnitude-comparable. The least-biased classes are siscowet-specific deletions and lean-specific *insertions*.
+
+Everything below is framed as prioritized hypotheses, not findings.
+
+
+## Step 0 — Build a gene function table
+
+The repo had gene coordinates and symbols but **no functional annotation**, so that was the one new data dependency. Rather than reach for an ortholog-mapping tool first, I pulled the NCBI RefSeq annotation for the assembly directly:
+
+-   `*_genomic.gff.gz` — gene models and transcript `product=` names (the join backbone)
+-   `*_gene_ontology.gaf.gz` — GO annotations keyed on NCBI GeneID
+
+[`code/18-build-gene-function-table.py`](https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-build-gene-function-table.py) parses both and writes `analyses/18-annotation/gene_function_table.tsv`, keyed on the same `gene-XXX` IDs used in the gene BED so every downstream join is trivial. It covers all 46,359 genes — 9,738 with a real symbol, 46,231 with a product name, and **34,367 with at least one GO term**. Because GO came straight from the GAF, the planned eggNOG/DIAMOND ortholog pass turned out to be unnecessary for first-pass coverage. The script QCs itself against the gene BED to confirm the join key matches.
+
+## Steps 1–2 — Assign DMRs, DMCs, and PAVs to genes
+
+[`code/18.1-assign-features-to-genes.py`](https://github.com/RobertsLab/project-lake-trout/blob/main/code/18.1-assign-features-to-genes.py) does the positional assignment, pure stdlib (no bedtools), joining onto the Step 0 table. Two design decisions matter:
+
+-   **Proximity classes, not just overlap.** Regulatory methylation often sits in promoters, so each feature–gene pair is classified `promoter` (TSS ± 2 kb, strand-aware) \> `exon` \> `intron` \> `upstream ≤5 kb` \> `downstream ≤5 kb`, with the gene body ± 5 kb as the outer window.
+-   **Lead with the stringent PAV set.** The `stringent.siscowet_specific.deletions.bed` set (3,465 deletions \>100 bp, all-4-vs-none) is the high-confidence signal; the lenient lean/siscowet sets are carried only as a lower-confidence per-gene *burden* table, with the reference-bias caveat written into the file.
+
+Outputs: `dmr_gene_assignments.tsv`, `dmc_gene_assignments.tsv`, `pav_gene_assignments.tsv`, and `pav_gene_burden.tsv`. Headline numbers — 149/302 DMRs within 5 kb of a gene (88 landing in promoters), and 1,543/3,465 stringent deletions near a gene, **54 of them overlapping an exon**.
+
+## Step 3 — Integrate the layers + expression
+
+[`code/18.2-integrate-candidates.py`](https://github.com/RobertsLab/project-lake-trout/blob/main/code/18.2-integrate-candidates.py) merges the methylation and PAV assignments into one ranked candidate table (`integrated_candidate_genes.tsv`, 2,036 genes) and flags **convergent** genes hit by *both* a DMR and a stringent siscowet-specific deletion — the strongest candidates (there are **4**). A few judgment calls baked in:
+
+-   Liver RNAseq (`whole_tx_table.csv`) is joined on `gene_id` for expression context, but it is from a *separate parasite study with different individuals and one tissue*, so it is carried as orthogonal support, never confirmation.
+-   Repetitive ncRNA biotypes (rRNA/snRNA/snoRNA/tRNA) get a `caution` flag and are deprioritized in the ranked view, because promoter "DMRs" there are usually rDNA-array methylation artifacts rather than gene regulation.
+-   A simple additive `rank_score` rewards convergence, promoter DMRs, exonic deletions, expression, and methylation→expression concordance.
+
+## Step 4 — GO enrichment
+
+[`code/18.3-go-enrichment.py`](https://github.com/RobertsLab/project-lake-trout/blob/main/code/18.3-go-enrichment.py) runs a **self-contained** hypergeometric over-representation analysis on the DMR set, the stringent PAV set, and their union. I deliberately used the *local* GO annotations (from Step 0) with full DAG propagation (`go-basic.obo`, is_a + part_of, true-path rule) and BH-FDR within each set — an ortholog-based tool like g:Profiler would have dropped most of the symbol-less `LOC` genes.
+
+The one robust result is **calcium ion transport / channel** enrichment in the PAV set (FDR ≈ 3e-3). The DMR enrichment is a histone + `znf883` tandem-cluster artifact, and lipid/growth terms are only suggestive (FDR \> 0.1). The README and the script both flag the confounders explicitly: gene-length bias (long channel genes accumulate deletions by chance), reference bias, IEA-only annotations, and gene clustering. KEGG was deferred — GO is the substantive result and KEGG needs KO mapping we don't have yet.
+
+## Step 5 — Phenotype synthesis
+
+The narrative report is [`code/18-diff-annotation-phenotype.Rmd`](https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-diff-annotation-phenotype.Rmd) (rendered: [`18-diff-annotation-phenotype.html`](https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-diff-annotation-phenotype.html)). It walks per-axis evidence blocks — lipid/energy, body-shape/growth/muscle, calcium/sensory-neural, immune, and a chromatin block flagged as artifact — each anchored to the morphometric phenotype data in `data/measurements.xlsx`, with the full causality and reference-bias caveats. The cleanest takeaways:
+
+-   A small **convergent** set (led by a `znf883` paralog), partly reflecting repetitive mapping, so flagged rather than asserted.
+-   The **calcium-transport/channel** GO signal in the PAV set (with the gene-length caveat).
+-   Individual lipid genes (`angptl5`, `mogat2`) and a high-effect muscle-development promoter DMR (`rbm24b`, hyper-methylated in siscowet, Δ33%) that line up with the known lipid- and body-shape differences between the ecotypes.
+
+None of these are confirmed. They are prioritized hypotheses for follow-up on ecotype-specific (hifiasm) assemblies and in matched tissue — the per-ecotype track is the needed complement to a lean-reference-only analysis.
+
+## Reproducing
+
+Everything is plain Python 3 (stdlib only) plus a base-R Rmd; no external bioinformatics dependencies. From the repo root, after dropping the three NCBI RefSeq files into `analyses/18-annotation/raw/` (the GFF, the GAF, and `go-basic.obo`):
+
+``` bash
+python3 code/18-build-gene-function-table.py   # Step 0 -> gene_function_table.tsv
+python3 code/18.1-assign-features-to-genes.py  # Steps 1-2 -> *_gene_assignments.tsv
+python3 code/18.2-integrate-candidates.py      # Step 3 -> integrated_candidate_genes.tsv
+python3 code/18.3-go-enrichment.py             # Step 4 -> go_enrichment_{dmr,pav,union}.tsv
+# then knit code/18-diff-annotation-phenotype.Rmd for the Step 5 report + figure
+```
+
+Each script prints its own QC to stderr (gene counts, join-key checks, hit counts, FDR tallies), so a successful run is self-verifying.
