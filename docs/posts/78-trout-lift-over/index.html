@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,9 +12,6 @@
 
 <title>Liftoff Annotation of Lean &amp; Siscowet Lake Trout Ecotype Assemblies – Tumbling Oysters</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -77,12 +74,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-dbc92dda8186f57fa2e333fbb71d6a9d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-59898bd1c6b9d2bb783127feaa000c76.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d329e753491efaeac79c98c4b193a686.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-b1812915518d0f2e9664867131b8a81f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-d05667a7cf763527d0ffc0f60659af7b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -436,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="download-the-reference-annotation" class="level3">
 <h3 class="anchored" data-anchor-id="download-the-reference-annotation">1. Download the reference annotation</h3>
 <p>The reference FASTA and GFF3 for <code>GCF_016432855.1</code> (SaNama_1.0) are the source annotation Liftoff transfers from. Run once; skipped if already present.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">${ref_dir}</span><span class="st">"</span></span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">${ref_dir}</span><span class="st">"</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="va">${datasets}</span><span class="st">"</span> download genome accession <span class="st">"</span><span class="va">${ref_accession}</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude-rna</span> <span class="dt">\</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--exclude-protein</span> <span class="dt">\</span></span>
@@ -444,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">--filename</span> <span class="st">"</span><span class="va">${ref_accession}</span><span class="st">.zip"</span></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> <span class="at">-o</span> <span class="st">"</span><span class="va">${ref_accession}</span><span class="st">.zip"</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> ncbi_dataset/data/<span class="st">"</span><span class="va">${ref_accession}</span><span class="st">"</span>/<span class="pp">*</span>_genomic.fna <span class="st">"</span><span class="va">${ref_fasta}</span><span class="st">"</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> ncbi_dataset/data/<span class="st">"</span><span class="va">${ref_accession}</span><span class="st">"</span>/genomic.gff   <span class="st">"</span><span class="va">${ref_gff}</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> ncbi_dataset/data/<span class="st">"</span><span class="va">${ref_accession}</span><span class="st">"</span>/genomic.gff   <span class="st">"</span><span class="va">${ref_gff}</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="run-liftoff-per-ecotype" class="level3">
 <h3 class="anchored" data-anchor-id="run-liftoff-per-ecotype">2. Run Liftoff per ecotype</h3>
@@ -455,7 +452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>-copies -sc 0.95</code> reports additional gene copies (expansions) at ≥95% identity</li>
 <li><code>-u</code> records reference genes that could <strong>not</strong> be lifted (ecotype-specific loss / PAV candidates)</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">${output_dir}</span><span class="st">"</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">${output_dir}</span><span class="st">"</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> faidx <span class="st">"</span><span class="va">${lean_fasta}</span><span class="st">"</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="va">${liftoff}</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class="va">${lean_fasta}</span><span class="st">"</span> <span class="dt">\</span></span>
@@ -468,13 +465,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">-p</span> <span class="st">"</span><span class="va">${threads}</span><span class="st">"</span> <span class="dt">\</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">-polish</span> <span class="dt">\</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">-copies</span> <span class="at">-sc</span> 0.95 <span class="dt">\</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;</span> lean.liftoff.log <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;</span> lean.liftoff.log <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The siscowet run is identical with <code>siscowet.*</code> substituted in.</p>
 </section>
 <section id="derive-genes-only-bed-protein-fasta" class="level3">
 <h3 class="anchored" data-anchor-id="derive-genes-only-bed-protein-fasta">3. Derive genes-only BED + protein FASTA</h3>
 <p><code>-polish</code> writes <code>*.gff3_polished</code>; prefer that when present. A genes-only BED is built to match the repo’s <code>data/...genes.bed</code> convention (<code>chrom start end gene-ID 0 strand</code>), and proteins are extracted with <code>gffread</code>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">${output_dir}</span><span class="st">"</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> <span class="st">"</span><span class="va">${output_dir}</span><span class="st">"</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">LEAN_GFF</span><span class="op">=</span>lean.liftoff.gff3_polished</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">[</span> <span class="ot">-s</span> <span class="st">"</span><span class="va">$LEAN_GFF</span><span class="st">"</span> <span class="bu">]</span> <span class="kw">||</span> <span class="va">LEAN_GFF</span><span class="op">=</span>lean.liftoff.gff3</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'BEGIN{OFS="\t"} $3=="gene"{</span></span>
@@ -482,20 +479,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="st">  for(i=1;i&lt;=n;i++){ if(a[i]~/^ID=/){ sub(/^ID=/,"",a[i]); id=a[i] } }</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="st">  print $1, $4-1, $5, id, 0, $7</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span> <span class="st">"</span><span class="va">$LEAN_GFF</span><span class="st">"</span> <span class="op">&gt;</span> lean.liftoff.genes.bed</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="va">${gffread}</span><span class="st">"</span> <span class="at">-y</span> lean.liftoff.proteins.faa <span class="at">-g</span> <span class="st">"</span><span class="va">${lean_fasta}</span><span class="st">"</span> <span class="st">"</span><span class="va">$LEAN_GFF</span><span class="st">"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="st">"</span><span class="va">${gffread}</span><span class="st">"</span> <span class="at">-y</span> lean.liftoff.proteins.faa <span class="at">-g</span> <span class="st">"</span><span class="va">${lean_fasta}</span><span class="st">"</span> <span class="st">"</span><span class="va">$LEAN_GFF</span><span class="st">"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="inherit-functional-annotation" class="level3">
 <h3 class="anchored" data-anchor-id="inherit-functional-annotation">4. Inherit functional annotation</h3>
 <p>Lifted gene IDs are the reference <code>gene-XXX</code> IDs, which are the join key in the existing <code>gene_function_table.tsv</code>. A left join carries symbol / product / GO onto each ecotype’s lifted genes with no new computation.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>func <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(func_table, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>func <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(func_table, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>bed_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"chrom"</span>, <span class="st">"start"</span>, <span class="st">"end"</span>, <span class="st">"gene_id"</span>, <span class="st">"score"</span>, <span class="st">"strand"</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(bed_path, <span class="at">col_names =</span> bed_cols, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>out <span class="ot">&lt;-</span> genes <span class="sc">%&gt;%</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(gene_id, <span class="at">eco_chrom =</span> chrom, <span class="at">eco_start =</span> start,</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">eco_end =</span> end, <span class="at">eco_strand =</span> strand) <span class="sc">%&gt;%</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(func, <span class="at">by =</span> <span class="st">"gene_id"</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(out, out_path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(out, out_path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -661,14 +658,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1061,7 +1057,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="sourceCode" id="cb5" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Liftoff Annotation of Lean &amp; Siscowet Lake Trout Ecotype Assemblies"</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Transferring the SaNama_1.0 annotation onto two PacBio HiFi ecotype assemblies with Liftoff"</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [Genomics, Computing]</span></span>
@@ -1224,7 +1220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a><span class="st">## References</span></span>
 <span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="st">- Shumate, A. &amp; Salzberg, S.L. (2021). Liftoff: accurate mapping of gene annotations. *Bioinformatics* 37(12):1639–1643.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a><span class="st">- Shumate, A. &amp; Salzberg, S.L. (2021). Liftoff: accurate mapping of gene annotations. *Bioinformatics* 37(12):1639–1643.</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
