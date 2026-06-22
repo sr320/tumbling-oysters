@@ -1,0 +1,43 @@
+---
+title: "Oyster Priming Week 3"
+description: "Two Locations"
+categories: [Aquaculture] #choose "Aquaculture", "Computing", "Epigenetics", "Genomics", "Lab Updates", "Reading Notes", "Transcriptomics"
+#citation:
+date: 06-17-2026
+image: "images/clipboard-3886987232.png" # finding a good image
+author:
+  - name: Steven Roberts
+    url:
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    toc: true            # ← enable TOC
+    toc-location: left   # or: right, body
+    toc-depth: 3         # how many heading levels to show
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+<!-- <a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%204%20Substantial%20AI%20Contribution-red" alt="AI Use Level 4: Substantial AI contribution"/></a> -->
+
+<a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%200%20No%20AI%20use-lightgrey" alt="AI Use Level 0: No AI use"/></a>
+
+Did a 30 minute bath for small oysters in FTR.
+
+1pm
+
+Started Warm = 24.5 C Control = 12.5 C
+
+End Warm = 24.8 Control = 13.0 C
+
+![![](images/clipboard-2198262507.png)](images/clipboard-3886987232.png)
+
+Updated <https://github.com/RobertsLab/project-gigas-conditioning/blob/main/data/westcott-repeat-priming/treatment_tracking.csv>
