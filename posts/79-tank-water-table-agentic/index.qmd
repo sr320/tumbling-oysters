@@ -1,0 +1,37 @@
+---
+title: "Tank Prep, Water Table Build, and Agentic AI Tutorial"
+description: "Adding water to right tank for Wednesday assay, new water table with Sam, Agentic AI work, and SORMI seed mortality trial setup"
+categories: ["Aquaculture", "Computing"] #choose "Aquaculture", "Computing", "Epigenetics", "Genomics", "Lab Updates", "Reading Notes", "Transcriptomics"
+#citation:
+date: 06-23-2026
+image: "" # finding a good image
+author:
+  - name: Steven Roberts
+    url:
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: true # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    toc: true            # ← enable TOC
+    toc-location: left   # or: right, body
+    toc-depth: 3         # how many heading levels to show
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+<a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"/></a>
+
+Added water to the tank on the right to get it ready for oysters coming in to be assayed on Wednesday.
+
+Sam and I worked on building the new water table.
+
+Worked with Cristina and Cas on the Agentic AI Tutorial.
+
+Helped Jeffrey set up the SORMI seed mortality trial.
