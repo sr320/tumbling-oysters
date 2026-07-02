@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,6 +12,9 @@
 
 <title>Timeseries Gene Level methylation – Tumbling Oysters</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -74,12 +77,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-59898bd1c6b9d2bb783127feaa000c76.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d329e753491efaeac79c98c4b193a686.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-dbc92dda8186f57fa2e333fbb71d6a9d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-b1812915518d0f2e9664867131b8a81f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-d05667a7cf763527d0ffc0f60659af7b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -363,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Here is a walk through of one species..</p>
 <section id="gene-model-preparation" class="level2">
 <h2 class="anchored" data-anchor-id="gene-model-preparation">Gene Model Preparation</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/Pocillopora_meandrina_HIv1.genes-validated.gff3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/Pocillopora_meandrina_HIv1.genes-validated.gff3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>##gff-version 3
 ##sequence-region   Pocillopora_meandrina_HIv1___xfSc0000716 887 39392
 Pocillopora_meandrina_HIv1___xfSc0000716    AUGUSTUS    gene    887 6811    .   -   .   ID=gene-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
@@ -374,14 +377,14 @@ Pocillopora_meandrina_HIv1___xfSc0000716    AUGUSTUS    CDS 1828    1882    .   
 Pocillopora_meandrina_HIv1___xfSc0000716    AUGUSTUS    exon    1828    1882    .   -   1   ID=exon-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1-2;Parent=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
 Pocillopora_meandrina_HIv1___xfSc0000716    AUGUSTUS    CDS 2308    2371    .   -   2   ID=cds-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1;Parent=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
 Pocillopora_meandrina_HIv1___xfSc0000716    AUGUSTUS    exon    2308    2371    .   -   2   ID=exon-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1-3;Parent=mrna-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-f3</span> ../data/Pocillopora_meandrina_HIv1.genes-validated.gff3 <span class="kw">|</span> <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-f3</span> ../data/Pocillopora_meandrina_HIv1.genes-validated.gff3 <span class="kw">|</span> <span class="dt">\</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code> 208535 exon
  208535 CDS
   31840 mRNA
   31840 gene</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gawk</span> <span class="st">'$3=="gene" {</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gawk</span> <span class="st">'$3=="gene" {</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="st">    split($9, a, ";");</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="st">    for(i in a){</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="st">        if(a[i] ~ /^ID=/){</span></span>
@@ -390,9 +393,9 @@ Pocillopora_meandrina_HIv1___xfSc0000716    AUGUSTUS    exon    2308    2371    
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">        }</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="st">    }</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="st">    print $1 "\t" $4-1 "\t" $5 "\t" gene_id;</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span> ../data/Pocillopora_meandrina_HIv1.genes-validated.gff3 <span class="op">&gt;</span> ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span> ../data/Pocillopora_meandrina_HIv1.genes-validated.gff3 <span class="op">&gt;</span> ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Pocillopora_meandrina_HIv1___xfSc0000716    886 6811    gene-Pocillopora_meandrina_HIv1___RNAseq.g29951.t1
 Pocillopora_meandrina_HIv1___xfSc0000716    7304    12239   gene-Pocillopora_meandrina_HIv1___RNAseq.g29952.t1
 Pocillopora_meandrina_HIv1___xfSc0000716    21621   23112   gene-Pocillopora_meandrina_HIv1___RNAseq.g29953.t1
@@ -411,11 +414,11 @@ Pocillopora_meandrina_HIv1___Sc0000029  96446   105523  gene-Pocillopora_meandri
 cd ../data/10xbedgraph
 wget -r -l1 --no-parent -nd -A '*10x.bedgraph' \
      'https://gannet.fish.washington.edu/metacarcinus/E5/Ptuahiniensis/20250821_meth_Ptua/'</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/10xbedgraph/POC-40-TP1_10x.bedgraph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> ../data/10xbedgraph/<span class="pp">*</span>_10x.bedgraph<span class="kw">;</span> <span class="cf">do</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/10xbedgraph/POC-40-TP1_10x.bedgraph</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> ../data/10xbedgraph/<span class="pp">*</span>_10x.bedgraph<span class="kw">;</span> <span class="cf">do</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2n</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="op">&gt;</span> <span class="va">${f</span><span class="op">%</span>.bedgraph<span class="va">}</span>.sorted.bedgraph</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/10xbedgraph/POC-40-TP1_10x.sorted.bedgraph</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/10xbedgraph/POC-40-TP1_10x.sorted.bedgraph</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Pocillopora_meandrina_HIv1___Sc0000000  2852    2854    0.000000
 Pocillopora_meandrina_HIv1___Sc0000000  2908    2910    0.000000
 Pocillopora_meandrina_HIv1___Sc0000000  3375    3377    6.666667
@@ -426,7 +429,7 @@ Pocillopora_meandrina_HIv1___Sc0000000  5128    5130    0.000000
 Pocillopora_meandrina_HIv1___Sc0000000  6101    6103    0.000000
 Pocillopora_meandrina_HIv1___Sc0000000  6110    6112    0.000000
 Pocillopora_meandrina_HIv1___Sc0000000  9318    9320    0.000000</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../output/09-Ptua-Gene-Methylation/</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ../output/09-Ptua-Gene-Methylation/</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2n</span> ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.bed <span class="dt">\</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">&gt;</span> ../data/Pocillopora_meandrina_HIv1.GENESonly-validated.sorted.bed</span>
@@ -440,7 +443,7 @@ Pocillopora_meandrina_HIv1___Sc0000000  9318    9320    0.000000</code></pre>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">-c</span> 4 <span class="dt">\</span></span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">-o</span> mean,count <span class="dt">\</span></span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="op">&gt;</span> ../output/09-Ptua-Gene-Methylation/gene_methylation_<span class="va">${sample}</span>.tsv</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>Pocillopora_meandrina_HIv1___Sc0000000  10770   23652   gene-Pocillopora_meandrina_HIv1___RNAseq.g20902.t1  77.1836165  18
 Pocillopora_meandrina_HIv1___Sc0000000  25128   33764   gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1  60.81863374 38
 Pocillopora_meandrina_HIv1___Sc0000000  33907   39296   gene-Pocillopora_meandrina_HIv1___TS.g25664.t1  20.83649989 45
@@ -451,11 +454,11 @@ Pocillopora_meandrina_HIv1___Sc0000000  75141   87120   gene-Pocillopora_meandri
 Pocillopora_meandrina_HIv1___Sc0000000  89333   101789  gene-Pocillopora_meandrina_HIv1___RNAseq.g20909.t1  32.38789587 97
 Pocillopora_meandrina_HIv1___Sc0000000  104428  116100  gene-Pocillopora_meandrina_HIv1___RNAseq.g20910.t1  54.14505446 61
 Pocillopora_meandrina_HIv1___Sc0000000  117505  121120  gene-Pocillopora_meandrina_HIv1___RNAseq.g20911.t1  27.60554107 54</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> ../output/09-Ptua-Gene-Methylation/gene_methylation<span class="pp">*</span>.tsv<span class="kw">;</span> <span class="cf">do</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> ../output/09-Ptua-Gene-Methylation/gene_methylation<span class="pp">*</span>.tsv<span class="kw">;</span> <span class="cf">do</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="va">out</span><span class="op">=</span><span class="st">"../output/09-Ptua-Gene-Methylation/</span><span class="va">$(</span><span class="fu">basename</span> <span class="st">"</span><span class="va">${f</span><span class="op">%</span>.tsv<span class="va">}</span><span class="st">_gt10.tsv"</span><span class="va">)</span><span class="st">"</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">awk</span> <span class="st">'$6 &gt; 10'</span> <span class="st">"</span><span class="va">$f</span><span class="st">"</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$out</span><span class="st">"</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/09-Ptua-Gene-Methylation/gene_methylation_POC-40-TP<span class="pp">*</span>_gt10.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../output/09-Ptua-Gene-Methylation/gene_methylation_POC-40-TP<span class="pp">*</span>_gt10.tsv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>==&gt; ../output/09-Ptua-Gene-Methylation/gene_methylation_POC-40-TP1_gt10.tsv &lt;==
 Pocillopora_meandrina_HIv1___Sc0000000  10770   23652   gene-Pocillopora_meandrina_HIv1___RNAseq.g20902.t1  78.86871104 24
 Pocillopora_meandrina_HIv1___Sc0000000  25128   33764   gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1  66.12523937 38
@@ -469,7 +472,7 @@ Pocillopora_meandrina_HIv1___Sc0000000  104428  116100  gene-Pocillopora_meandri
 Pocillopora_meandrina_HIv1___Sc0000000  117505  121120  gene-Pocillopora_meandrina_HIv1___RNAseq.g20911.t1  22.62597314 65</code></pre>
 <section id="combined-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="combined-matrix">Combined Matrix</h2>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Directory containing all filtered tsv files</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>indir <span class="ot">&lt;-</span> <span class="st">"../output/09-Ptua-Gene-Methylation"</span></span>
@@ -501,12 +504,12 @@ Pocillopora_meandrina_HIv1___Sc0000000  117505  121120  gene-Pocillopora_meandri
 <span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>frac_nonNA)</span>
 <span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Save 75% filtered matrix</span></span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="fu">write_tsv</span>(merged_75, <span class="st">"../output/09-Ptua-Gene-Methylation/Ptua-gene-methylation_75pct.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="fu">write_tsv</span>(merged_75, <span class="st">"../output/09-Ptua-Gene-Methylation/Ptua-gene-methylation_75pct.tsv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>23370 ../output/09-Ptua-Gene-Methylation/Ptua-gene-methylation_75pct.tsv
 gene_id POC-201-TP1 POC-201-TP2 POC-219-TP1 POC-219-TP2 POC-219-TP3 POC-219-TP4 POC-222-TP1 POC-222-TP3 POC-222-TP4 POC-255-TP1 POC-255-TP2 POC-255-TP3 POC-259-TP1 POC-259-TP2 POC-40-TP1  POC-40-TP2  POC-40-TP3  POC-40-TP4  POC-42-TP2  POC-42-TP4  POC-52-TP1  POC-52-TP2  POC-52-TP3  POC-52-TP4  POC-53-TP1  POC-53-TP2  POC-53-TP3  POC-53-TP4  POC-57-TP1  POC-57-TP2  POC-57-TP3  POC-57-TP4
 gene-Pocillopora_meandrina_HIv1___RNAseq.g20902.t1  55.94819507 65  NA  56.71798513 70.75064638 72.97016588 69.38569095 61.48214065 60.15602938 68.71286394 68.121314   NA  80.14404553 81.65033473 78.86871104 75.75863129 73.52938063 77.1836165  63.71908893 73.56089086 NA  63.53896107 61.79727092 NA  69.83198112 66.01362921 48.35913809 NA  71.90167729 75.73253744 74.34254614 65.64244627
 gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1  62.07071959 64.30941694 57.89994524 57.9764581  62.95167124 61.53853367 59.22841108 59.25982624 56.56210374 57.61653049 56.71230877 62.92154108 61.34633203 67.04912922 66.12523937 64.45467636 63.47604045 60.81863374 58.51124484 60.36185731 57.97446009 60.10673518 56.45465472 53.58677349 57.63890561 60.56861659 56.60354664 54.7309886  62.98476886 62.72254031 66.12983122 63.81437656</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------------------</span></span>
@@ -560,14 +563,14 @@ gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1  62.07071959 64.30941694 57.8
 <span id="cb20-52"><a href="#cb20-52" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_rownames =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb20-53"><a href="#cb20-53" aria-hidden="true" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">"Gene-level Methylation Values (Raw)"</span>,</span>
 <span id="cb20-54"><a href="#cb20-54" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"navy"</span>,<span class="st">"green"</span>, <span class="st">"firebrick"</span>))(<span class="dv">100</span>)  <span class="co"># optional nicer palette</span></span>
-<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-55"><a href="#cb20-55" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-02-49.png" class="img-fluid figure-img"></p>
 <figcaption>heatmap_scaled</figcaption>
 </figure>
 </div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># -------------------------</span></span>
@@ -645,14 +648,14 @@ gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1  62.07071959 64.30941694 57.8
 <span id="cb21-76"><a href="#cb21-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
 <span id="cb21-77"><a href="#cb21-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"PCA of Gene-Level Methylation"</span>,</span>
 <span id="cb21-78"><a href="#cb21-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Sample Group"</span></span>
-<span id="cb21-79"><a href="#cb21-79" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-79"><a href="#cb21-79" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-02-17.png" class="img-fluid figure-img"></p>
 <figcaption>pca</figcaption>
 </figure>
 </div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pheatmap)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ------------------------------------------------</span></span>
@@ -701,7 +704,7 @@ gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1  62.07071959 64.30941694 57.8
 <span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a><span class="fu">pheatmap</span>(cor_mat2,</span>
 <span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">"Sample–Sample Correlation"</span>,</span>
 <span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>         <span class="at">clustering_method =</span> <span class="st">"average"</span>,</span>
-<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>         <span class="at">fontsize =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>         <span class="at">fontsize =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-05-08.png" class="img-fluid figure-img"></p>
@@ -804,13 +807,14 @@ gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1  62.07071959 64.30941694 57.8
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1203,7 +1207,7 @@ gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1  62.07071959 64.30941694 57.8
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Timeseries Gene Level methylation"</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "finally"</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["Epigenetics", "Transcriptomics"]</span></span>
@@ -1659,7 +1663,7 @@ gene-Pocillopora_meandrina_HIv1___RNAseq.g20903.t1  62.07071959 64.30941694 57.8
 <span id="cb23-454"><a href="#cb23-454" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb23-455"><a href="#cb23-455" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Apul <span class="pp">|</span> Peve <span class="pp">|</span> Ptua <span class="pp">|</span></span>
 <span id="cb23-456"><a href="#cb23-456" aria-hidden="true" tabindex="-1"></a><span class="pp">|--------|---------|---------|</span></span>
-<span id="cb23-457"><a href="#cb23-457" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-14-56.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"250"</span><span class="dt">&gt;</span> <span class="pp">|</span> <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-16-52.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"250"</span><span class="dt">&gt;</span> <span class="pp">|</span> <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-02-49.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"250"</span><span class="dt">&gt;</span> <span class="pp">|</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb23-457"><a href="#cb23-457" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-14-56.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"250"</span><span class="dt">&gt;</span> <span class="pp">|</span> <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-16-52.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"250"</span><span class="dt">&gt;</span> <span class="pp">|</span> <span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"http://gannet.fish.washington.edu/seashell/snaps/Monosnap_timeseries-molecular-calcification__RStudio_Server_2025-11-25_11-02-49.png"</span><span class="ot"> width</span><span class="op">=</span><span class="st">"250"</span><span class="dt">&gt;</span> <span class="pp">|</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
