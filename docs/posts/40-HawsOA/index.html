@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,9 +12,6 @@
 
 <title>OA OA OA – Tumbling Oysters</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -77,12 +74,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-dbc92dda8186f57fa2e333fbb71d6a9d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-59898bd1c6b9d2bb783127feaa000c76.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d329e753491efaeac79c98c4b193a686.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-b1812915518d0f2e9664867131b8a81f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-d05667a7cf763527d0ffc0f60659af7b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -363,7 +360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">echo =</span> <span class="cn">TRUE</span>,         <span class="co"># Display code chunks</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">eval =</span> <span class="cn">FALSE</span>,        <span class="co"># Avoid automatic execution</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">warning =</span> <span class="cn">FALSE</span>,     <span class="co"># Hide warnings</span></span>
@@ -372,33 +369,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.height =</span> <span class="dv">4</span>,      <span class="co"># Set default plot height</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.align =</span> <span class="st">"center"</span>, <span class="co"># Center align plots</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">""</span>         <span class="co"># Prevents '##' in output</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Lets redo the bismark with new genome.</p>
 <section id="download-reads" class="level1">
 <h1>Download Reads</h1>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-r</span> <span class="dt">\</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-r</span> <span class="dt">\</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>--no-directories <span class="at">--no-parent</span> <span class="dt">\</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>-P ../../data/Haws-10 <span class="dt">\</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>-A <span class="st">"*fq.gz"</span> <span class="dt">\</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>https://gannet.fish.washington.edu/spartina/project-oyster-oa/Haws/trimmed-data-2/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>https://gannet.fish.washington.edu/spartina/project-oyster-oa/Haws/trimmed-data-2/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="download-new-genome" class="level1">
 <h1>Download new genome</h1>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../../data/Haws-10</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/datasets</span> download genome accession GCF_963853765.1 <span class="at">--include</span> gff3,rna,cds,protein,genome,seq-report</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../../data/Haws-10</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/datasets</span> download genome accession GCF_963853765.1 <span class="at">--include</span> gff3,rna,cds,protein,genome,seq-report</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> ../../data/Haws-10/ncbi_dataset.zip</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> ../../data/Haws-10/ncbi_dataset.zip</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="genome-prep" class="level1">
 <h1>Genome Prep</h1>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Directories and programs</span></span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Directories and programs</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="va">bismark_dir</span><span class="op">=</span><span class="st">"/home/shared/Bismark-0.24.0/"</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="va">bowtie2_dir</span><span class="op">=</span><span class="st">"/home/shared/bowtie2-2.4.4-linux-x86_64/"</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="va">genome_folder</span><span class="op">=</span><span class="st">"../../data/Haws-10/"</span></span>
@@ -407,17 +404,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>--verbose <span class="dt">\</span></span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>--parallel 12 <span class="dt">\</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>--path_to_aligner <span class="va">${bowtie2_dir}</span> <span class="dt">\</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="va">${genome_folder}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="va">${genome_folder}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="checking-alignment-min-scores" class="level1">
 <h1>Checking alignment min scores</h1>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../../data/Haws-10/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../../data/Haws-10/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set directories and files</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set directories and files</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="va">reads_dir</span><span class="op">=</span><span class="st">"../../data/Haws-10/"</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="va">genome_folder</span><span class="op">=</span><span class="st">"../../data/Haws-10/"</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="va">output_dir</span><span class="op">=</span><span class="st">"../../analyses/Haws-10/"</span></span>
@@ -512,14 +509,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>            <span class="bu">echo</span> <span class="st">"</span><span class="va">${sample_name}</span><span class="st">,</span><span class="va">${score_min}</span><span class="st">,</span><span class="va">${mapping}</span><span class="st">"</span> <span class="op">&gt;&gt;</span> <span class="va">${summary_file}</span></span>
 <span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>        <span class="cf">fi</span></span>
 <span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>    <span class="cf">fi</span></span>
-<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Summary file does not, did manual inspection</p>
 </section>
 <section id="full-run" class="level1">
 <h1>Full Run</h1>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set variables</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set variables</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">reads_dir</span><span class="op">=</span><span class="st">"../../data/Haws-10/"</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">genome_folder</span><span class="op">=</span><span class="st">"../../data/Haws-10/"</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="va">output_dir</span><span class="op">=</span><span class="st">"../../analyses/Haws-10/"</span></span>
@@ -544,14 +541,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">-o</span> <span class="va">${output_dir}</span> <span class="dt">\</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">--basename</span> <span class="va">${sample_name}</span> <span class="dt">\</span></span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        <span class="dv">2</span><span class="op">&gt;</span> <span class="st">"</span><span class="va">${output_dir}</span><span class="st">/</span><span class="va">${sample_name}</span><span class="st">-bismark_summary.txt"</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">View MultiQC Report</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">View MultiQC Report</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(<span class="at">src=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html"</span>, <span class="at">width=</span><span class="st">"100%"</span>, <span class="at">height=</span><span class="st">"600px"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(<span class="at">src=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html"</span>, <span class="at">width=</span><span class="st">"100%"</span>, <span class="at">height=</span><span class="st">"600px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <iframe src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-10/multiqc_report.html" width="100%" height="600px"></iframe>
 </div>
@@ -564,41 +561,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Notebook 14</p>
 <p>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/<span class="pp">*</span>.bam <span class="kw">|</span> <span class="dt">\</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/<span class="pp">*</span>.bam <span class="kw">|</span> <span class="dt">\</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> .bam <span class="kw">|</span> <span class="dt">\</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 8 /home/shared/Bismark-0.24.0/deduplicate_bismark <span class="dt">\</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>--bam <span class="dt">\</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>--paired <span class="dt">\</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>--output_dir /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/{}.bam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-10/{}.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="methylation-extraction" class="level2">
 <h2 class="anchored" data-anchor-id="methylation-extraction">Methylation Extraction</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bam <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-n</span> 1 <span class="at">-I{}</span> /home/shared/Bismark-0.24.0/bismark_methylation_extractor <span class="at">--bedGraph</span> <span class="at">--counts</span> <span class="at">--comprehensive</span> <span class="at">--merge_non_CpG</span> <span class="at">--multicore</span> 48 <span class="at">--buffer_size</span> 75% <span class="dt">\</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bam <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-n</span> 1 <span class="at">-I{}</span> /home/shared/Bismark-0.24.0/bismark_methylation_extractor <span class="at">--bedGraph</span> <span class="at">--counts</span> <span class="at">--comprehensive</span> <span class="at">--merge_non_CpG</span> <span class="at">--multicore</span> 48 <span class="at">--buffer_size</span> 75% <span class="dt">\</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>--output /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14 <span class="dt">\</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>{} </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>{} </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="methylation-calls" class="level2">
 <h2 class="anchored" data-anchor-id="methylation-calls">Methylation Calls</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/<span class="pp">*</span>deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xargs</span> <span class="at">-n</span> 1 basename <span class="at">-s</span> _pe.deduplicated.bismark.cov.gz <span class="kw">|</span> <span class="dt">\</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">parallel</span> <span class="at">-j</span> 48 /home/shared/Bismark-0.24.0/coverage2cytosine <span class="dt">\</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>--genome_folder /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/data/Haws-10 <span class="dt">\</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>-o /home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{} <span class="dt">\</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>--merge_CpG <span class="dt">\</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>--zero_based <span class="dt">\</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{}_pe.deduplicated.bismark.cov.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>/home/shared/16TB_HDD_01/sr320/github/project-oyster-oa/analyses/Haws-14/{}_pe.deduplicated.bismark.cov.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">View MultiQC Report</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">View MultiQC Report</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(<span class="at">src=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/multiqc_report.html"</span>, <span class="at">width=</span><span class="st">"100%"</span>, <span class="at">height=</span><span class="st">"600px"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>htmltools<span class="sc">::</span>tags<span class="sc">$</span><span class="fu">iframe</span>(<span class="at">src=</span><span class="st">"https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/multiqc_report.html"</span>, <span class="at">width=</span><span class="st">"100%"</span>, <span class="at">height=</span><span class="st">"600px"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <iframe src="https://gannet.fish.washington.edu/seashell/bu-github/project-oyster-oa/analyses/Haws-14/multiqc_report.html" width="100%" height="600px"></iframe>
 </div>
@@ -946,14 +943,13 @@ zr3644_9_pe.deduplication_report.txt</code></pre>
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1346,7 +1342,7 @@ zr3644_9_pe.deduplication_report.txt</code></pre>
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "OA OA OA"</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Bringing diploid - triploid to an end?"</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["Epigenetics", "Aquaculture"]</span></span>
@@ -1888,7 +1884,7 @@ zr3644_9_pe.deduplication_report.txt</code></pre>
 <span id="cb15-556"><a href="#cb15-556" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplicated_splitting_report.txt</span></span>
 <span id="cb15-557"><a href="#cb15-557" aria-hidden="true" tabindex="-1"></a><span class="ex">zr3644_9_pe.deduplication_report.txt</span></span>
 <span id="cb15-558"><a href="#cb15-558" aria-hidden="true" tabindex="-1"></a><span class="kw">```</span></span>
-</code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

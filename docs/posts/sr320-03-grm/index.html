@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.7.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,9 +12,6 @@
 
 <title>Epidiverse GRM – Tumbling Oysters</title>
 <style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -77,12 +74,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-a06763021a52c43c40a351ac8b799b8f.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-dbc92dda8186f57fa2e333fbb71d6a9d.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-59898bd1c6b9d2bb783127feaa000c76.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-d329e753491efaeac79c98c4b193a686.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-b1812915518d0f2e9664867131b8a81f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-d05667a7cf763527d0ffc0f60659af7b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-882fbd249e241fe6be97c3532ffeacbe.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e6cd4c6da1e7827ff9efde909fba17e7.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -383,12 +380,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="merging-epidiverse-vcfs" class="level2">
 <h2 class="anchored" data-anchor-id="merging-epidiverse-vcfs">0.1 Merging Epidiverse VCFs</h2>
 <p>Next step for capturing SNP info in Epidiverse Workflow is merging.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../data/big</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../data/big</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> <span class="at">-r</span> <span class="dt">\</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>--no-directories <span class="at">--no-parent</span> <span class="dt">\</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>-P . <span class="dt">\</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>-A <span class="st">"*vcf.g*"</span> https://gannet.fish.washington.edu/Atumefaciens/20220921-cvir-ceabigr-nextflow-epidiverse-snp/snps/vcf/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>-A <span class="st">"*vcf.g*"</span> https://gannet.fish.washington.edu/Atumefaciens/20220921-cvir-ceabigr-nextflow-epidiverse-snp/snps/vcf/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/bcftools-1.14/bcftools</span>  merge <span class="dt">\</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>--force-samples <span class="dt">\</span></span>
@@ -396,8 +393,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>--merge all <span class="dt">\</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>--threads 40 <span class="dt">\</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>-O v <span class="dt">\</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>-o ../output/51-SNPs/EpiDiv_merged.vcf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-20</span> ../output/51-SNPs/EpiDiv_merged.vcf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>-o ../output/51-SNPs/EpiDiv_merged.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-20</span> ../output/51-SNPs/EpiDiv_merged.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>## ##fileformat=VCFv4.2
 ## ##FILTER=&lt;ID=PASS,Description="All filters passed"&gt;
 ## ##fileDate=20220924
@@ -419,7 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ## ##INFO=&lt;ID=NS,Number=1,Type=Integer,Description="Number of samples with data"&gt;
 ## ##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total read depth at the locus"&gt;</code></pre>
 <p>The eventual GRM does not have sample names so wanted to check order of merged files (assuming this is related to how GRM file is created)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fgrep</span> <span class="st">"R1_val_1"</span> ../output/51-SNPs/EpiDiv_merged.vcf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fgrep</span> <span class="st">"R1_val_1"</span> ../output/51-SNPs/EpiDiv_merged.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>##commandline="freebayes -f GCF_002022765.2_C_virginica-3.0_genomic.fa 12M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam --strict-vcf --no-partial-observations --report-genotype-likelihood-max --genotype-qualities --min-repeat-entropy 1 --min-coverage 0 --min-base-quality 1 --region NC_035780.1:0-100000"
 ##bcftools_viewCommand=view -Oz 12M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf; Date=Sat Sep 24 13:39:51 2022
 ##bcftools_mergeCommand=merge --force-samples --merge all --threads 40 -O v -o ../output/51-SNPs/EpiDiv_merged.vcf ../data/big/12M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/13M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/16F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/19F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/22F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/23M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/29F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/31M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/35F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/36F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/39F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/3F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/41F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/44F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/48M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/50F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/52F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/53F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/54F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/59M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/64M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/6M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/76F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/77F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/7M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz ../data/big/9M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.vcf.gz; Date=Sun May  7 10:33:42 2023</code></pre>
@@ -435,15 +432,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong><code>--out ../output/51-SNPs/EpiDiv_merged.f</code></strong>: This is the location and prefix of the output files. Several files might be generated depending on the options you used, and they’ll all start with this prefix.</p></li>
 </ul>
 <p>So, in summary, this command is running a filtering process on a VCF file, and then saving a new VCF file that only includes bi-allelic sites (those with exactly 2 alleles) where less than 50% of the data is missing and the less common variant appears at least twice. The new file will keep all the INFO fields from the original VCF.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/vcftools-0.1.16/bin/vcftools</span> <span class="dt">\</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/vcftools-0.1.16/bin/vcftools</span> <span class="dt">\</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>--vcf ../output/51-SNPs/EpiDiv_merged.vcf <span class="dt">\</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>--recode <span class="at">--recode-INFO-all</span> <span class="dt">\</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>--min-alleles 2 <span class="at">--max-alleles</span> 2 <span class="dt">\</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>--max-missing 0.5 <span class="dt">\</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>--mac 2 <span class="dt">\</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>--out ../output/51-SNPs/EpiDiv_merged.f.recode.vcf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>--out ../output/51-SNPs/EpiDiv_merged.f.recode.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>After filtering, kept 26 out of 26 Individuals Outputting VCF file… After filtering, kept 2343637 out of a possible 144873997 Sites Run Time = 897.00 seconds</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-20</span> ../output/51-SNPs/EpiDiv_merged.f.recode.vcf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-20</span> ../output/51-SNPs/EpiDiv_merged.f.recode.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>## ##fileformat=VCFv4.2
 ## ##FILTER=&lt;ID=PASS,Description="All filters passed"&gt;
 ## ##fileDate=20220924
@@ -464,7 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ## ##commandline="freebayes -f GCF_002022765.2_C_virginica-3.0_genomic.fa 12M_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam --strict-vcf --no-partial-observations --report-genotype-likelihood-max --genotype-qualities --min-repeat-entropy 1 --min-coverage 0 --min-base-quality 1 --region NC_035780.1:0-100000"
 ## ##INFO=&lt;ID=NS,Number=1,Type=Integer,Description="Number of samples with data"&gt;
 ## ##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total read depth at the locus"&gt;</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fgrep</span> <span class="st">"R1_val_1"</span> ../output/51-SNPs/EpiDiv_merged.f.recode.vcf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fgrep</span> <span class="st">"R1_val_1"</span> ../output/51-SNPs/EpiDiv_merged.f.recode.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
 <section id="ngsrelate" class="level1">
@@ -480,7 +477,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>As of version 2, NgsRelate can parse BCF/VCF files using htslib with the following command:</p>
 <pre><code>./ngsrelate  -h my.VCF.gz -O vcf.res
 By default, NgsRelate will estimate the allele frequencies using the individuals provided in the VCF files. Allele frequencies from the INFO field can used be used instead using -A TAG. The TAG usually take the form of AF or AF1 but can be set to anything. By default the PL data (Phred-scaled likelihoods for genotypes) is parsed, however, the called genotypes can also be used instead with the -T GT option. If called genotypes are being used, the software requires an additional argument (-c 1). If using -c 2, ngsRelate calls genotypes assuming hardy-weinberg.</code></pre>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-d</span> <span class="st">','</span> <span class="at">-f</span> 1 <span class="op">&lt;&lt;EOF</span></span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cut</span> <span class="at">-d</span> <span class="st">','</span> <span class="at">-f</span> 1 <span class="op">&lt;&lt;EOF</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="st">12M,S12M,Exposed,M,3,EM05</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="st">13M,S13M,Control,M,1,CM04</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="st">16F,S16F,Control,F,2,CF05</span></span>
@@ -507,14 +504,14 @@ By default, NgsRelate will estimate the allele frequencies using the individuals
 <span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="st">77F,S77F,Exposed,F,4,EF04</span></span>
 <span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="st">7M,S7M,Control,M,1,CM01</span></span>
 <span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="st">9M,S9M,Exposed,M,3,EM02</span></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/ngsRelate/ngsRelate/ngsRelate</span> <span class="dt">\</span></span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a><span class="op">EOF</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/ngsRelate/ngsRelate/ngsRelate</span> <span class="dt">\</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>-h ../output/51-SNPs/EpiDiv_merged.f.recode.vcf <span class="dt">\</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>-T GT <span class="dt">\</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>-c 1 <span class="dt">\</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>-z ../output/53-revisit-epi-SNPs/sample.txt <span class="dt">\</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>-O ../output/53-revisit-epi-SNPs/vcf.relatedness</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-2</span> ../output/53-revisit-epi-SNPs/vcf.relatedness</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>-O ../output/53-revisit-epi-SNPs/vcf.relatedness</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-2</span> ../output/53-revisit-epi-SNPs/vcf.relatedness</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>## a    b   ida idb nSites  J9  J8  J7  J6  J5  J4  J3  J2  J1  rab Fa  Fb  theta   inbred_relatedness_1_2  inbred_relatedness_2_1  fraternity  identity    zygosity    2of3_IDB    F_diff_a_b  loglh   nIter   bestoptimll coverage    2dsfs   R0  R1  KING    2dsfs_loglike   2dsfsf_niter
 ## 0    1   12M 13M 1038400 0.799793    0.000003    0.051831    0.000002    0.000000    0.000000    0.000000    0.148370    0.000000    0.051833    0.148370    0.148372    0.025916    0.000000    0.000000    0.200201    0.000000    0.200201    0.200204    -0.000001   -1663336.404155 134 -1  0.493654    6.306127e-02,2.031383e-02,6.122145e-02,2.076443e-02,1.558777e-01,1.402793e-01,5.729257e-02,1.300012e-01,3.511883e-01    0.760301    0.362614    -0.130234   -1948248.937260 10</code></pre>
 <section id="output-format" class="level2">
@@ -550,15 +547,15 @@ By default, NgsRelate will estimate the allele frequencies using the individuals
 </ol>
 <p>You can also input a file with the IDs of the individuals (on ID per line), using the <code>-z</code> option, in the same order as in the file <code>filelist</code> used to make the genotype likelihoods or the VCF file. If you do the output will also contain these IDs as column 3 and 4.</p>
 <p>Note that in some cases nIter is -1. This indicates that values on the boundary of the parameter space had a higher likelihood than the values achieved using the EM-algorithm (ML methods sometimes have trouble finding the ML estimate when it is on the boundary of the parameter space, and we therefore test the boundary values explicitly and output these if these have the highest likelihood)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"../output/53-revisit-epi-SNPs/vcf.relatedness"</span>,<span class="at">header =</span> T)</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">read.table</span>(<span class="st">"../output/53-revisit-epi-SNPs/vcf.relatedness"</span>,<span class="at">header =</span> T)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dfrab <span class="ot">&lt;-</span> df[,<span class="fu">c</span>(<span class="st">"ida"</span>,<span class="st">"idb"</span>,<span class="st">"rab"</span>)]</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>distrab <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">list2dist</span>(dfrab))</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(distrab,<span class="at">file=</span><span class="st">"../output/53-revisit-epi-SNPs/epiMATRIX_mbd_rab.txt"</span>, <span class="at">col.names =</span> T, <span class="at">row.names =</span> T, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the heatmap</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(distrab, <span class="at">Rowv =</span> <span class="cn">NA</span>, <span class="at">Colv =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="fu">cm.colors</span>(<span class="dv">256</span>), <span class="at">scale =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(distrab,<span class="at">file=</span><span class="st">"../output/53-revisit-epi-SNPs/epiMATRIX_mbd_rab.txt"</span>, <span class="at">col.names =</span> T, <span class="at">row.names =</span> T, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the heatmap</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap</span>(distrab, <span class="at">Rowv =</span> <span class="cn">NA</span>, <span class="at">Colv =</span> <span class="cn">NA</span>, <span class="at">col =</span> <span class="fu">cm.colors</span>(<span class="dv">256</span>), <span class="at">scale =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-12-1.png?raw=true" style="display: block; margin: auto;"></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform hierarchical clustering</span></span>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform hierarchical clustering</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(distrab))</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the dendrogram (cladogram)</span></span>
@@ -566,7 +563,7 @@ By default, NgsRelate will estimate the allele frequencies using the individuals
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># If you want to add labels to the leaves of the tree (optional):</span></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>labels <span class="ot">&lt;-</span> <span class="fu">rownames</span>(distrab)</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc, <span class="at">k =</span> <span class="dv">6</span>, <span class="at">border =</span> <span class="st">"gray"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc, <span class="at">k =</span> <span class="dv">6</span>, <span class="at">border =</span> <span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-13-1.png?raw=true" style="display: block; margin: auto;"></p>
 
 
@@ -583,7 +580,7 @@ By default, NgsRelate will estimate the allele frequencies using the individuals
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-roberts2023" class="csl-entry quarto-appendix-citeas" role="listitem">
-Roberts, Steven. 2023. <span>“Epidiverse GRM.”</span> July 24. <a href="https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/">https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/</a>.
+Roberts, Steven. 2023. <span>“Epidiverse GRM.”</span> July 24, 2023. <a href="https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/">https://sr320.github.io/tumbling-oysters/posts/sr320-03-grm/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -649,14 +646,13 @@ Roberts, Steven. 2023. <span>“Epidiverse GRM.”</span> July 24. <a href="http
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -1049,7 +1045,7 @@ Roberts, Steven. 2023. <span>“Epidiverse GRM.”</span> July 24. <a href="http
     }
   });
   </script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<div class="sourceCode" id="cb20" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Epidiverse GRM"</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Re-evaluating the GRM"</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
@@ -1427,7 +1423,7 @@ Roberts, Steven. 2023. <span>“Epidiverse GRM.”</span> July 24. <a href="http
 <span id="cb20-376"><a href="#cb20-376" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc, <span class="at">k =</span> <span class="dv">6</span>, <span class="at">border =</span> <span class="st">"gray"</span>)</span>
 <span id="cb20-377"><a href="#cb20-377" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb20-378"><a href="#cb20-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-379"><a href="#cb20-379" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-13-1.png?raw=true"</span><span class="ot"> style</span><span class="op">=</span><span class="st">"display: block; margin: auto;"</span><span class="ot"> </span><span class="dt">/&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb20-379"><a href="#cb20-379" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">img</span><span class="ot"> src</span><span class="op">=</span><span class="st">"https://github.com/sr320/ceabigr/blob/main/code/53-revisit-epi-SNPs_files/figure-gfm/unnamed-chunk-13-1.png?raw=true"</span><span class="ot"> style</span><span class="op">=</span><span class="st">"display: block; margin: auto;"</span><span class="ot"> </span><span class="dt">/&gt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
