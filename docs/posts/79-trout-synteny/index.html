@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Steven Roberts">
-<meta name="dcterms.date" content="2026-06-17">
-<meta name="description" content="Two Locations">
+<meta name="dcterms.date" content="2026-07-02">
+<meta name="description" content="Purging haplotigs, re-lifting genes, and building MCScanX synteny maps from shared gene IDs">
 
-<title>Oyster Priming Week 3 – Tumbling Oysters</title>
+<title>Gene-Anchored Synteny Between Lean and Siscowet Lake Trout – Tumbling Oysters</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,40 +22,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -72,12 +38,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-8ea72dc5fed832574809a9c94082fbbb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-0b0971fe3c507452e01567f62a81532a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../../site_libs/bootstrap/bootstrap-dark-e76cdc2a28bf56c993f4e6ffb14f81c0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-69d87467896a330188e7f833fde9423c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-3b85e4d4982b0db94155cfe949b08200.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -108,7 +74,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="floating nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -139,44 +105,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <div class="quarto-title-block"><div><h1 class="title">Oyster Priming Week 3</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+      <h1 class="title">Gene-Anchored Synteny Between Lean and Siscowet Lake Trout</h1>
                   <div>
         <div class="description">
-          Two Locations
+          Purging haplotigs, re-lifting genes, and building MCScanX synteny maps from shared gene IDs
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Aquaculture</div>
+                <div class="quarto-category">Computing</div>
+                <div class="quarto-category">Genomics</div>
               </div>
                   </div>
   </div>
     
-  <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
-    
-      <div class="quarto-title-meta-contents">
-      <p class="author">Steven Roberts <a href="https://orcid.org/0000-0001-8302-1138" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-    </div>
-    <div class="quarto-title-meta-contents">
-          <p class="affiliation">
-              <a href="https://robertslab.info">
-              Professor, UW - School of Aquatic and Fishery Sciences
-              </a>
-            </p>
-        </div>
-    </div>
-
+  
   <div class="quarto-title-meta">
 
-        
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Steven Roberts </p>
+            </div>
+    </div>
+      
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 17, 2026</p>
+        <p class="date">July 2, 2026</p>
       </div>
     </div>
     
@@ -186,13 +144,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-    </div>
+    
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -200,28 +153,115 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<!-- <a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%204%20Substantial%20AI%20Contribution-red" alt="AI Use Level 4: Substantial AI contribution"/></a> -->
-<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%200%20No%20AI%20use-lightgrey" alt="AI Use Level 0: No AI use"></a></p>
-<p>Did a 30 minute bath for small oysters in FTR.</p>
-<p>1pm</p>
-<p>Started Warm = 24.5 C Control = 12.5 C</p>
-<p>End Warm = 24.8 Control = 13.0 C</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/clipboard-3886987232.png" class="img-fluid figure-img"></p>
-<figcaption><img src="images/clipboard-2198262507.png" class="img-fluid figure-img"></figcaption>
-</figure>
-</div>
-<p>Updated <a href="https://github.com/RobertsLab/project-gigas-conditioning/blob/main/data/westcott-repeat-priming/treatment_tracking.csv" class="uri">https://github.com/RobertsLab/project-gigas-conditioning/blob/main/data/westcott-repeat-priming/treatment_tracking.csv</a><br>
-<br>
-<br>
-<br>
-# Point Whitney</p>
-<p>Went on June 19 - went up to 36 for heated. Controls just at room temperature inside hatchery space. Going forward I suggest we go 36C about every ~4-5 days on heated and leave controls in silo.</p>
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<p>Two lake trout ecotypes, two hifiasm assemblies, and one question: do the <strong>lean</strong> and <strong>siscowet</strong> genomes agree on gene order, and how does each line up against the reference? This is the gene-anchored synteny pass (Track B of the ecotype genome-comparison plan). The trick that makes it cheap is that orthology is already solved — Liftoff gave every lifted gene the reference <code>gene-XXX</code> ID, so a gene shared between two genomes carries the <strong>same base ID</strong>. That means MCScanX anchor pairs can be synthesized straight from ID identity, with no OrthoFinder / DIAMOND step.</p>
+<p>Full outputs (too large for GitHub) live on <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/">gannet</a>.</p>
+<section id="step-1-purge-haplotigs" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-purge-haplotigs">Step 1 — Purge haplotigs</h2>
+<p>The raw hifiasm assemblies were size-inflated relative to the ~2.5 Gb expected genome, a classic sign of retained haplotigs that would show up as spurious duplications in any synteny map. So each assembly went through the standard <code>purge_dups</code> HiFi pipeline (map reads back for depth → cutoffs → self-align → purge → extract primary set) before anything else.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Ecotype</th>
+<th>Raw</th>
+<th>Purged</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>lean</td>
+<td>3.73 Gb / 33,035 contigs</td>
+<td><strong>2.58 Gb / 12,700 contigs</strong></td>
+</tr>
+<tr class="even">
+<td>siscowet</td>
+<td>4.0 Gb / 24,184 contigs</td>
+<td><strong>2.84 Gb / 8,159 contigs</strong></td>
+</tr>
+</tbody>
+</table>
+<p>That knocked lean down to essentially the expected genome size and roughly halved the contig count for both.</p>
+</section>
+<section id="step-2-re-lift-the-annotation" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-re-lift-the-annotation">Step 2 — Re-lift the annotation</h2>
+<p>Gene coordinates have to match the sequences being compared, so I re-ran Liftoff (same flags: <code>-polish -copies -sc 0.95 -u</code>) against the purged FASTAs and pulled a genes-only BED per ecotype.</p>
+<ul>
+<li><strong>lean</strong>: 55,437 lifted genes (4,636 unmapped)</li>
+<li><strong>siscowet</strong>: 59,968 lifted genes (3,069 unmapped)</li>
+</ul>
+</section>
+<section id="step-34-synthetic-anchors-mcscanx" class="level2">
+<h2 class="anchored" data-anchor-id="step-34-synthetic-anchors-mcscanx">Step 3–4 — Synthetic anchors + MCScanX</h2>
+<p>Instead of running an aligner to find homologs, I built the MCScanX <code>.blast</code> files by joining the per-genome gene maps on their <strong>base ID</strong> (stripping the <code>_N</code> copy suffix Liftoff adds, so gene-family expansions still form multiple pairs). Genome codes (<code>rf</code>, <code>ln</code>, <code>si</code>) prefix every chromosome tag and gene UID so MCScanX can tell intra- from inter-genome blocks, and the <code>.</code> in accessions like <code>NC_052307.1</code> gets stripped since MCScanX chokes on it.</p>
+<p>Three comparisons, all anchored to the same 42-chromosome reference:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Comparison</th>
+<th>Collinear blocks</th>
+<th>Anchor genes</th>
+<th>Inverted blocks</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>reference vs lean</td>
+<td>1,897</td>
+<td>29,695</td>
+<td>889</td>
+</tr>
+<tr class="even">
+<td>reference vs siscowet</td>
+<td>1,966</td>
+<td>34,231</td>
+<td>973</td>
+</tr>
+<tr class="odd">
+<td>lean vs siscowet</td>
+<td>4,113</td>
+<td>77,628</td>
+<td>1,130</td>
+</tr>
+</tbody>
+</table>
+<p>The cross-ecotype comparison (lean vs siscowet) is the richest — nearly 78k anchor genes across 4,113 blocks — which is what you’d hope for between two assemblies of the same species. The reference comparisons are more fragmented, as expected given the reference is chromosome-scale while the ecotype assemblies are still contigs.</p>
+</section>
+<section id="step-56-summarize-and-plot" class="level2">
+<h2 class="anchored" data-anchor-id="step-56-summarize-and-plot">Step 5–6 — Summarize and plot</h2>
+<p>Each <code>.collinearity</code> was parsed into a tidy block table (<code>synteny_blocks.tsv</code>) and a contig-to-reference-chromosome assignment (<code>contig_to_chromosome.tsv</code>), then three figure types were rendered to <code>plots/</code>:</p>
+<ol type="1">
+<li><strong>Comparison summary bars</strong> — blocks, anchor genes, % inverted per comparison.</li>
+<li><strong>Contig-to-chromosome heatmaps</strong> — which ecotype contig maps to which reference chromosome.</li>
+<li><strong>Gene-level dotplots</strong> — anchor positions per chromosome pair, colored by orientation.</li>
+</ol>
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/plots/01_synteny_summary.png" class="img-fluid"></p>
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/plots/02_contig_to_chrom_heatmap.png" class="img-fluid"></p>
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/plots/03_dotplot_lean_vs_siscowet.png" class="img-fluid"></p>
+</section>
+<section id="deliverables" class="level2">
+<h2 class="anchored" data-anchor-id="deliverables">Deliverables</h2>
+<p>Written to <code>output/21.1-gene-anchored-synteny/</code>:</p>
+<ul>
+<li><code>{eco}.purged.fa</code> — haplotig-purged primary assemblies</li>
+<li><code>{eco}.purged.liftoff.genes.bed</code> — re-lifted genes on the purged assemblies</li>
+<li><code>{ref_lean,ref_sisco,lean_sisco}.collinearity</code> — MCScanX collinear blocks</li>
+<li><code>synteny_blocks.tsv</code> — tidy block table (chromosomes, anchor counts, orientation)</li>
+<li><code>contig_to_chromosome.tsv</code> — ecotype contig → reference chromosome assignment</li>
+</ul>
+<p>These feed the structural-variant and overlay steps next — whole-genome alignment (Track A), plus PAV and DMR overlay.</p>
+</section>
+<section id="in-plain-english" class="level2">
+<h2 class="anchored" data-anchor-id="in-plain-english">In plain English</h2>
+<p>A few terms from the table above:</p>
+<ul>
+<li><p><strong>Anchor genes</strong> — genes we could confidently match up as “the same gene” in both genomes being compared. These are the shared landmarks. The more anchors, the more the two genomes have in common. Between the two ecotypes we found ~78,000 of them.</p></li>
+<li><p><strong>Collinear blocks</strong> — runs of anchor genes that appear in the <em>same order</em> in both genomes. A block is a stretch where the layout is conserved, like a passage of text that reads identically in both books. Thousands of blocks means large parts of the genome are laid out the same way in both fish.</p></li>
+<li><p><strong>Inverted blocks</strong> — blocks where the genes are the same and still in order, but the whole segment is <em>flipped</em> end-for-end (like a paragraph printed backwards). This happens when a chunk of DNA gets reversed during evolution. Tracking these tells us where the two genomes have been rearranged rather than simply copied.</p></li>
+</ul>
+<p>One housekeeping step worth explaining: the raw genome drafts were nearly <em>twice</em> as big as they should be. That’s because the sequencing captured both copies of each chromosome (one from each parent) and sometimes listed them as if they were separate pieces — inflating the total. <strong>Purging</strong> removes those redundant copies so we’re comparing one clean version of each genome, not a genome accidentally doubled up.</p>
 
 
-<!-- -->
-
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -455,57 +495,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       container: window.document.getElementById('quarto-embedded-source-code-modal')
     });
     clipboardModal.on('success', onCopySuccess);
-  }
-  const viewSource = window.document.getElementById('quarto-view-source') ||
-                     window.document.getElementById('quarto-code-tools-source');
-  if (viewSource) {
-    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-    viewSource.addEventListener("click", function(e) {
-      if (sourceUrl) {
-        // rstudio viewer pane
-        if (/\bcapabilities=\b/.test(window.location)) {
-          window.open(sourceUrl);
-        } else {
-          window.location.href = sourceUrl;
-        }
-      } else {
-        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-        modal.show();
-      }
-      return false;
-    });
-  }
-  function toggleCodeHandler(show) {
-    return function(e) {
-      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-      for (let i=0; i<detailsSrc.length; i++) {
-        const details = detailsSrc[i].parentElement;
-        if (show) {
-          details.open = true;
-        } else {
-          details.removeAttribute("open");
-        }
-      }
-      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-      const fromCls = show ? "hidden" : "unhidden";
-      const toCls = show ? "unhidden" : "hidden";
-      for (let i=0; i<cellCodeDivs.length; i++) {
-        const codeDiv = cellCodeDivs[i];
-        if (codeDiv.classList.contains(fromCls)) {
-          codeDiv.classList.remove(fromCls);
-          codeDiv.classList.add(toCls);
-        } 
-      }
-      return false;
-    }
-  }
-  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-  if (hideAllCode) {
-    hideAllCode.addEventListener("click", toggleCodeHandler(false));
-  }
-  const showAllCode = window.document.getElementById("quarto-show-all-code");
-  if (showAllCode) {
-    showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
@@ -835,57 +824,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Oyster Priming Week 3"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "Two Locations"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> [Aquaculture] #choose "Aquaculture", "Computing", "Epigenetics", "Genomics", "Lab Updates", "Reading Notes", "Transcriptomics"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation:</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 06-17-2026</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "images/clipboard-3886987232.png" # finding a good image</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    url:</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true            # ← enable TOC</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left   # or: right, body</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3         # how many heading levels to show</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: FALSE</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#runtime: shiny</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- &lt;a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"&gt;&lt;img src="https://img.shields.io/badge/AI%20Use-Level%204%20Substantial%20AI%20Contribution-red" alt="AI Use Level 4: Substantial AI contribution"/&gt;&lt;/a&gt; --&gt;</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>&lt;a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"&gt;&lt;img src="https://img.shields.io/badge/AI%20Use-Level%200%20No%20AI%20use-lightgrey" alt="AI Use Level 0: No AI use"/&gt;&lt;/a&gt;</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>Did a 30 minute bath for small oysters in FTR.</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>1pm</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>Started Warm = 24.5 C Control = 12.5 C</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>End Warm = 24.8 Control = 13.0 C</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>!<span class="co">[</span><span class="al">![](images/clipboard-2198262507.png)</span><span class="co">](images/clipboard-3886987232.png)</span></span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>Updated <span class="ot">&lt;https://github.com/RobertsLab/project-gigas-conditioning/blob/main/data/westcott-repeat-priming/treatment_tracking.csv&gt;</span>\</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>\</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>\</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>\</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="sc">\#</span> Point Whitney</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>Went on June 19 - went up to 36 for heated. Controls just at room temperature inside hatchery space. Going forward I suggest we go 36C about every \~4-5 days on heated and leave controls in silo.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
-</div></div></div></div></div>
+</script>
 </div> <!-- /content -->
 
 
