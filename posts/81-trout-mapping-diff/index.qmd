@@ -5,14 +5,14 @@ author: "Steven Roberts"
 date: "07-04-2026"
 categories: [Genomics, Computing]
 draft: false
-image: "https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-genome-sv/plots/01_sv_counts.png"
+image: "https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-genome-sv/plots/03_plotsr_lean_vs_sisco.png"
 ---
 
 <a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"/></a>
 
 ## The question
 
-Lean and siscowet lake trout are two ecotypes of the same species that look and behave differently --- siscowet are deep-water, fat-rich fish; lean are shallower-water and leaner. Earlier work in this project ([21.1](21.1-gene-anchored-synteny.Rmd)) matched up genes between the two ecotypes and the reference genome, one gene at a time. That tells us *which* genes correspond to each other, but not *how the genome itself has been rearranged* --- whether whole chunks of DNA have flipped around, moved to a different chromosome, or been duplicated. That's what this step, described in full in [23.1-genome-sv-map.Rmd](23.1-genome-sv-map.Rmd), is for.
+Lean and siscowet lake trout are two ecotypes of the same species that look and behave differently --- siscowet are deep-water, fat-rich fish; lean are shallower-water and leaner. Earlier work in this project ([21.1](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/code/21.1-gene-anchored-synteny.Rmd)) matched up genes between the two ecotypes and the reference genome, one gene at a time. That tells us *which* genes correspond to each other, but not *how the genome itself has been rearranged* --- whether whole chunks of DNA have flipped around, moved to a different chromosome, or been duplicated. That's what this step, described in full in [23.1-genome-sv-map.Rmd](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/code/23.1-genome-sv-map.Rmd), is for.
 
 ## What's a "structural variant"?
 
@@ -97,7 +97,7 @@ This is the first sequence-level, whole-genome map of how the lean and siscowet 
 ## What's next
 
 -   Finish the siscowet-vs-reference comparison and fold it into the summary and plots above.
--   Feed the confirmed SVs into the genome browsers alongside the gene-anchored synteny tracks ([22-synteny-browser-integration](22-synteny-browser-integration.qmd)), so a rearrangement and the genes inside it can be viewed together.
+-   Feed the confirmed SVs into the genome browsers alongside the gene-anchored synteny tracks ([22-synteny-browser-integration](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/code/22-synteny-browser-integration.qmd)), so a rearrangement and the genes inside it can be viewed together.
 -   Look for genes that fall inside the largest, high-confidence inversions/translocations as candidates worth a closer look.
 
 All large intermediate files (alignments, full SyRI output, etc.) are too big for GitHub and are hosted instead at [gannet.fish.washington.edu/gitrepos/project-lake-trout/analyses/23-genome-sv/](https://gannet.fish.washington.edu/gitrepos/project-lake-trout/analyses/23-genome-sv/).
