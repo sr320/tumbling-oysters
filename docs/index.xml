@@ -12,6 +12,155 @@
 <generator>quarto-1.6.40</generator>
 <lastBuildDate>Sat, 04 Jul 2026 07:00:00 GMT</lastBuildDate>
 <item>
+  <title>Mapping Structural Differences Between Lean and Siscowet Genomes</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/81-trout-mapping-diff/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="the-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-question">The question</h2>
+<p>Lean and siscowet lake trout are two ecotypes of the same species that look and behave differently — siscowet are deep-water, fat-rich fish; lean are shallower-water and leaner. Earlier work in this project (<a href="21.1-gene-anchored-synteny.Rmd">21.1</a>) matched up genes between the two ecotypes and the reference genome, one gene at a time. That tells us <em>which</em> genes correspond to each other, but not <em>how the genome itself has been rearranged</em> — whether whole chunks of DNA have flipped around, moved to a different chromosome, or been duplicated. That’s what this step, described in full in <a href="23.1-genome-sv-map.Rmd">23.1-genome-sv-map.Rmd</a>, is for.</p>
+</section>
+<section id="whats-a-structural-variant" class="level2">
+<h2 class="anchored" data-anchor-id="whats-a-structural-variant">What’s a “structural variant”?</h2>
+<p>Most genetic differences people think of are tiny — a single letter (base) swapped for another (a SNP). <strong>Structural variants (SVs)</strong> are the bigger, chunkier kind of difference:</p>
+<ul>
+<li><strong>Inversion</strong> — a segment of DNA is flipped end-to-end.</li>
+<li><strong>Translocation</strong> — a segment moved to a different location or chromosome.</li>
+<li><strong>Duplication</strong> — a segment copied, so it appears more than once.</li>
+<li><strong>Indel</strong> — a stretch of DNA inserted or deleted.</li>
+<li><strong>Diverged / highly-diverged regions</strong> — stretches that aligned but accumulated a lot of small differences.</li>
+</ul>
+<p>Any of these can disrupt, duplicate, or relocate genes — which makes them good candidates for explaining trait differences between ecotypes that a single-gene comparison would miss.</p>
+</section>
+<section id="how-we-found-them" class="level2">
+<h2 class="anchored" data-anchor-id="how-we-found-them">How we found them</h2>
+<ol type="1">
+<li><strong>Anchor</strong> each ecotype’s genome onto the 42 reference chromosomes using <strong>RagTag</strong>, so lean, siscowet, and the reference all share the same chromosome-numbering scheme.</li>
+<li><strong>Align</strong> each pair of genomes whole-genome, base-by-base, with <strong>minimap2</strong>.</li>
+<li><strong>Call variants</strong> on those alignments with <strong>SyRI</strong>, a tool built specifically to sort genome differences into syntenic (matching) blocks versus the SV categories above.</li>
+<li><strong>Summarize and plot</strong> the results.</li>
+</ol>
+<p>Three comparisons were run: lean-vs-reference, siscowet-vs-reference, and lean-vs-siscowet directly. (At the time of this writing, siscowet-vs-reference is still processing — the numbers and plots below cover lean-vs-reference and the direct lean-vs-siscowet comparison.)</p>
+</section>
+<section id="what-we-found" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-found">What we found</h2>
+<section id="how-much-of-the-genome-is-rearranged" class="level3">
+<h3 class="anchored" data-anchor-id="how-much-of-the-genome-is-rearranged">How much of the genome is rearranged?</h3>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-genome-sv/plots/01_sv_counts.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Both comparisons turn up thousands of inversions, duplications, and translocations, plus hundreds of thousands of small indels — but lean-vs-siscowet (comparing the two ecotypes directly) consistently shows <em>more</em> rearrangements than either ecotype does against the reference. That’s expected: the reference is more closely related to one lineage, so ecotype-vs-ecotype differences stack the changes from both branches together.</p>
+</section>
+<section id="how-much-dna-is-actually-involved" class="level3">
+<h3 class="anchored" data-anchor-id="how-much-dna-is-actually-involved">How much DNA is actually involved?</h3>
+<p>Counting events is one thing; some SVs are a few bases, others span megabases. This plot shows the total amount of reference genome sequence (in Mb) covered by each SV class:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-genome-sv/plots/02_sv_span_mb.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Translocations and highly-diverged regions dominate by footprint — in the lean-vs-siscowet comparison, translocated segments alone total roughly <strong>230 Mb</strong>, and diverged regions another <strong>~197 Mb</strong>, out of a ~2.5–2.8 Gb genome. Inversions cover tens of megabases in both comparisons. So while indels are the most <em>numerous</em> SV type, translocations and inversions are the ones that move around the most sequence.</p>
+</section>
+<section id="what-it-looks-like-across-the-genome" class="level3">
+<h3 class="anchored" data-anchor-id="what-it-looks-like-across-the-genome">What it looks like across the genome</h3>
+<p>The plots below (from <code>plotsr</code>) lay both genomes side by side, chromosome by chromosome, and draw a ribbon between every matching segment — colored by whether it’s syntenic (gray), inverted, translocated, or duplicated. This is the most intuitive view: you can see directly which chromosomes have large flipped or relocated blocks.</p>
+<p><strong>Lean vs.&nbsp;reference:</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-genome-sv/plots/03_plotsr_lean_vs_ref.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Lean vs.&nbsp;siscowet:</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-genome-sv/plots/03_plotsr_lean_vs_sisco.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="checking-our-work-against-an-independent-method" class="level2">
+<h2 class="anchored" data-anchor-id="checking-our-work-against-an-independent-method">Checking our work against an independent method</h2>
+<p>A separate, earlier analysis (<a href="15-diff-pav.py">15-diff-pav.py</a>) had already flagged regions present in one ecotype but absent in another (presence/absence variation, or PAV) just by comparing coverage against the reference — a much simpler method than SyRI’s full alignment. Cross-validating the two (<a href="23.2-sv-pav-crossvalidate.py">23.2-sv-pav-crossvalidate.py</a>) asks: of the regions PAV flagged, how many does SyRI <em>independently</em> confirm as a real structural event?</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Ecotype</th>
+<th>PAV-flagged regions</th>
+<th>Confirmed by SyRI</th>
+<th>Fraction confirmed</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>lean insertions</td>
+<td>770,891</td>
+<td>141,159</td>
+<td>18.3%</td>
+</tr>
+<tr class="even">
+<td>lean deletions</td>
+<td>225,337</td>
+<td>45,948</td>
+<td>20.4%</td>
+</tr>
+</tbody>
+</table>
+<p>Roughly a fifth of the PAV calls line up with a SyRI-confirmed structural variant — mostly highly-diverged regions, duplications, and translocations. That’s a meaningful overlap given the two methods work completely differently (read-depth/coverage vs.&nbsp;full alignment), and it gives us a <strong>high-confidence subset</strong> of SVs that two independent approaches agree on.</p>
+</section>
+<section id="why-this-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters">Why this matters</h2>
+<p>This is the first sequence-level, whole-genome map of how the lean and siscowet genomes differ structurally — not just gene-by-gene, but at the level of entire rearranged segments. It completes the piece of the ecotype comparison that gene-anchored synteny alone couldn’t answer, and gives us a shortlist of large, high-confidence structural differences to check against the gene annotations for candidates that might relate to the depth and body-fat differences between the two ecotypes.</p>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s next</h2>
+<ul>
+<li>Finish the siscowet-vs-reference comparison and fold it into the summary and plots above.</li>
+<li>Feed the confirmed SVs into the genome browsers alongside the gene-anchored synteny tracks (<a href="22-synteny-browser-integration.qmd">22-synteny-browser-integration</a>), so a rearrangement and the genes inside it can be viewed together.</li>
+<li>Look for genes that fall inside the largest, high-confidence inversions/translocations as candidates worth a closer look.</li>
+</ul>
+<p>All large intermediate files (alignments, full SyRI output, etc.) are too big for GitHub and are hosted instead at <a href="https://gannet.fish.washington.edu/gitrepos/project-lake-trout/analyses/23-genome-sv/">gannet.fish.washington.edu/gitrepos/project-lake-trout/analyses/23-genome-sv/</a>.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Genomics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/81-trout-mapping-diff/</guid>
+  <pubDate>Sat, 04 Jul 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-genome-sv/plots/01_sv_counts.png" medium="image" type="image/png"/>
+</item>
+<item>
   <title>Beyond AUC</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/80-sormi-post-mort/</link>
@@ -23477,573 +23626,6 @@ font-style: inherit;">"#EAF2F8"</span></span>
   <guid>https://sr320.github.io/tumbling-oysters/posts/63-contra/</guid>
   <pubDate>Sat, 29 Nov 2025 08:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Image_2025-11-30_08-27-36.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Calcification Count Matrices</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/62-biomin/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Pulling out calcification / biomin gene counts.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-TLDR
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>https://raw.githubusercontent.com/urol-e5/timeseries-molecular-calcification/refs/heads/main/M-multi-species/output/33-biomin-pathway-counts/apul_biomin_counts.csv</li>
-<li>https://raw.githubusercontent.com/urol-e5/timeseries-molecular-calcification/refs/heads/main/M-multi-species/output/33-biomin-pathway-counts/peve_biomin_counts.csv</li>
-<li>https://raw.githubusercontent.com/urol-e5/timeseries-molecular-calcification/refs/heads/main/M-multi-species/output/33-biomin-pathway-counts/ptua_biomin_counts.csv</li>
-</ul>
-</div>
-</div>
-<p>Have list of biomineralization genes from coral literature (e.g., Takeuchi et al.&nbsp;2016, Ramos-Silva et al.&nbsp;2013)</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">makeblastdb</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-2">-in ../output/31-biomin-pathway/Stylo-biomin.fasta <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-3">-dbtype prot <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-4">-out ../output/31-biomin-pathway/Stylo-biomin-db</span></code></pre></div>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">blastp</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-2">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-query</span> ../output/11.3-ortholog-annotation/representative_sequences.faa <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-3">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-db</span> ../output/31-biomin-pathway/Stylo-biomin-db <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-4">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-out</span> ../output/31-biomin-pathway/OG-repseq_Stylo-biomin-results.tsv <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-5">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-outfmt</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"6 qseqid sseqid evalue bitscore"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-6">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-evalue</span> 1e-20 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-7">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-max_target_seqs</span> 1 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-8">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-max_hsps</span> 1 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-9">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-num_threads</span> 10</span></code></pre></div>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(dplyr)</span>
-<span id="cb3-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(readr)</span>
-<span id="cb3-3"></span>
-<span id="cb3-4"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Paths</span></span>
-<span id="cb3-5">blast_file <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/31-biomin-pathway/OG-repseq_Stylo-biomin-results.tsv"</span></span>
-<span id="cb3-6">mapping_file <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/11.3-ortholog-annotation/gene_to_ortholog_mapping.csv"</span></span>
-<span id="cb3-7"></span>
-<span id="cb3-8"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Read BLAST results</span></span>
-<span id="cb3-9">blast <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read_tsv</span>(</span>
-<span id="cb3-10">  blast_file,</span>
-<span id="cb3-11">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col_names =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gene_id"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"hit"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"evalue"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"score"</span>)</span>
-<span id="cb3-12">)</span>
-<span id="cb3-13"></span>
-<span id="cb3-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Read ortholog mapping</span></span>
-<span id="cb3-15">mapping <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read_csv</span>(mapping_file)</span>
-<span id="cb3-16"></span>
-<span id="cb3-17"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Join to add group_id to each gene in blast results</span></span>
-<span id="cb3-18">annotated <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> blast <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb3-19">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">left_join</span>(mapping <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">select</span>(gene_id, group_id), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gene_id"</span>)</span>
-<span id="cb3-20"></span>
-<span id="cb3-21"></span>
-<span id="cb3-22"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Write out CSV</span></span>
-<span id="cb3-23"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">write_csv</span>(annotated, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/31-biomin-pathway/OG-repseq_Stylo-biomin.csv"</span>)</span>
-<span id="cb3-24"></span>
-<span id="cb3-25"></span>
-<span id="cb3-26"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># View result</span></span>
-<span id="cb3-27">annotated</span></code></pre></div>
-<pre><code>gene_id,hit,evalue,score,group_id
-FUN_000236-T1,XP_022780303.1,6.1399999999999995e-24,102,OG_00030
-FUN_000857-T1,XP_022795459.1,1.3899999999999998e-159,447,OG_00171
-FUN_000867-T1,XP_022780694.1,1.6e-34,125,OG_00176
-FUN_001009-T1,XP_022789591.1,7.039999999999999e-107,338,OG_00246
-FUN_001088-T1,XP_022783044.1,3.9e-35,130,OG_00297
-FUN_001089-T1,XP_022783044.1,2.1699999999999998e-23,93.2,OG_00298
-FUN_001101-T1,XP_022783044.1,1.22e-31,118,OG_00302
-FUN_001107-T1,XP_022795459.1,9.45e-59,190,OG_00305
-FUN_001118-T1,XP_022801359.1,1.33e-35,124,OG_00314</code></pre>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(tidyverse)</span>
-<span id="cb5-2"></span>
-<span id="cb5-3">ogs <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read_tsv</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/33-biomin-pathway-counts/biomin-OG.txt"</span>,</span>
-<span id="cb5-4">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col_names =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"group_id"</span>)</span>
-<span id="cb5-5"></span>
-<span id="cb5-6">map <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read_csv</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/11.3-ortholog-annotation/gene_to_ortholog_mapping.csv"</span>)</span>
-<span id="cb5-7"></span>
-<span id="cb5-8">filtered <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> map <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb5-9">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">semi_join</span>(ogs, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"group_id"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb5-10">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"-T</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">d+$"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>))  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># &lt;&lt;&lt;&lt;&lt;&lt; KEY FIX</span></span></code></pre></div>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(tidyverse)</span>
-<span id="cb6-2"></span>
-<span id="cb6-3">base_url <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"https://raw.githubusercontent.com/urol-e5/MOSAiC/refs/heads/main/data/orthologs"</span></span>
-<span id="cb6-4"></span>
-<span id="cb6-5">apul <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read_csv</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">file.path</span>(base_url, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"apul-gene_count_matrix.csv"</span>), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">show_col_types =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
-<span id="cb6-6">peve <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read_csv</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">file.path</span>(base_url, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"peve-gene_count_matrix.csv"</span>), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">show_col_types =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
-<span id="cb6-7">ptua <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read_csv</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">file.path</span>(base_url, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"ptua-gene_count_matrix.csv"</span>), <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">show_col_types =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(tidyverse)</span>
-<span id="cb7-2"></span>
-<span id="cb7-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># ensure gene_id format matches count matrices</span></span>
-<span id="cb7-4">filtered <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> filtered <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb7-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"-T</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">d+$"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>))</span>
-<span id="cb7-6"></span>
-<span id="cb7-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># filter apul &amp; add group_id as first column</span></span>
-<span id="cb7-8">apul_filt <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> apul <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb7-9">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">inner_join</span>(</span>
-<span id="cb7-10">    filtered <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(species <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Apul"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">select</span>(gene_id, group_id),</span>
-<span id="cb7-11">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gene_id"</span></span>
-<span id="cb7-12">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb7-13">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">relocate</span>(group_id, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">.before =</span> gene_id)   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># &lt;&lt;&lt;&lt;&lt;&lt; KEY LINEter(species == "Apul") </span></span>
-<span id="cb7-14"></span>
-<span id="cb7-15"></span>
-<span id="cb7-16"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># write to CSV</span></span>
-<span id="cb7-17"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">write_csv</span>(</span>
-<span id="cb7-18">  apul_filt,</span>
-<span id="cb7-19">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/33-biomin-pathway-counts/apul_biomin_counts.csv"</span>)</span></code></pre></div>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(tidyverse)</span>
-<span id="cb8-2"></span>
-<span id="cb8-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># ensure gene_id in mapping file matches (remove transcript suffix)</span></span>
-<span id="cb8-4">filtered <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> filtered <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb8-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"-T</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">d+$"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>))</span>
-<span id="cb8-6"></span>
-<span id="cb8-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># filter Peve matrix, normalize gene_id, join, move group_id to column 1</span></span>
-<span id="cb8-8">peve_filt <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> peve <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb8-9">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"^gene-"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span>   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># &lt;&lt;&lt;&lt;&lt; FIX HERE</span></span>
-<span id="cb8-10">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">inner_join</span>(</span>
-<span id="cb8-11">    filtered <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(species <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Peve"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">select</span>(gene_id, group_id),</span>
-<span id="cb8-12">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gene_id"</span></span>
-<span id="cb8-13">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb8-14">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">relocate</span>(group_id, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">.before =</span> gene_id)</span>
-<span id="cb8-15"></span>
-<span id="cb8-16"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># write to CSV</span></span>
-<span id="cb8-17"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">write_csv</span>(</span>
-<span id="cb8-18">  peve_filt,</span>
-<span id="cb8-19">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/33-biomin-pathway-counts/peve_biomin_counts.csv"</span></span>
-<span id="cb8-20">)</span></code></pre></div>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(tidyverse)</span>
-<span id="cb9-2"></span>
-<span id="cb9-3"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># ensure gene_id in mapping file matches count matrix format</span></span>
-<span id="cb9-4">filtered <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> filtered <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb9-5">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"-T</span><span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">\\</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">d+$"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>))</span>
-<span id="cb9-6"></span>
-<span id="cb9-7"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># filter Ptua matrix, normalize gene_id, join, move group_id to column 1</span></span>
-<span id="cb9-8">ptua_filt <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> ptua <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb9-9">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">mutate</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">gene_id =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">str_replace</span>(gene_id, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"^gene-"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">""</span>)) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span>   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># &lt;&lt;&lt;&lt;&lt; KEY FIX</span></span>
-<span id="cb9-10">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">inner_join</span>(</span>
-<span id="cb9-11">    filtered <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb9-12">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">filter</span>(species <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">==</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Ptua"</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb9-13">      <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">select</span>(gene_id, group_id),</span>
-<span id="cb9-14">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gene_id"</span></span>
-<span id="cb9-15">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb9-16">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">relocate</span>(group_id, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">.before =</span> gene_id)</span>
-<span id="cb9-17"></span>
-<span id="cb9-18"></span>
-<span id="cb9-19"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># write to CSV</span></span>
-<span id="cb9-20"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">write_csv</span>(</span>
-<span id="cb9-21">  ptua_filt,</span>
-<span id="cb9-22">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"../output/33-biomin-pathway-counts/ptua_biomin_counts.csv"</span></span>
-<span id="cb9-23">)</span></code></pre></div>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>Transcriptomics</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/62-biomin/</guid>
-  <pubDate>Wed, 26 Nov 2025 08:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2025-11-26_10-46-20.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
