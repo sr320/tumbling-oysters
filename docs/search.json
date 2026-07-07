@@ -2413,5 +2413,12 @@
     "title": "Two-Genome Evidence",
     "section": "What’s next",
     "text": "What’s next\n\nPhase 3 — ecotype-native methylation. Re-call DNA methylation with each ecotype’s reads mapped to its own genome, then compare on shared coordinates, to see which of the original 302 differentially methylated regions are real versus reference artifacts. The calcium-vs-lipid result above is exactly the kind of thing native methylation can corroborate or overturn.\nFold the reciprocal-PAV and two-genome candidate tracks into the genome browsers alongside the synteny and SV views.\n\nThe large intermediate files (the 8 read-to-genome alignments, full coverage tables, etc.) are too big for GitHub; the committed outputs are the analysis tables in analyses/23-reciprocal-pav/, analyses/23-gene-sets/, and analyses/23-integration/."
+  },
+  {
+    "objectID": "posts/82-trout-recip-pav/index.html#where-to-explore",
+    "href": "posts/82-trout-recip-pav/index.html#where-to-explore",
+    "title": "Two-Genome Evidence",
+    "section": "Where to explore",
+    "text": "Where to explore\nThe ecotype-specific gene lists are the natural starting point (each row has the gene ID, symbol, product name, copy number, and a GO-term count):\n\nGenes present in lean but not siscowet — lean_only.tsv (5,058 genes)\nGenes present in siscowet but not lean — siscowet_only.tsv (9,589 genes)\nCopy-number differences between the ecotypes — cnv.tsv (2,359 genes) — and shared.tsv for contrast\n\nIn the “-only” tables an in_{other}_unmapped = Y flag means the other assembly independently confirms the gene failed to transfer, so those rows are the most confident calls — a good filter to start from.\nTwo complementary views for going deeper:\n\nRead-based ecotype-specific genes (genes inside regions genuinely uncovered by the other ecotype’s sequencing reads, a different signal than annotation) — lean_specific.genes.tsv and siscowet_specific.genes.tsv. A gene appearing here and in the gene-set list above is the strongest case.\nEverything joined — one row per gene with all six evidence flags and an n_lines count: two_genome_candidates.tsv (≥2 lines incl. a native line) and the full gene_evidence_matrix.tsv. The re-run enrichment results, including the calcium-vs-lipid test, are in analyses/23-integration/."
   }
 ]

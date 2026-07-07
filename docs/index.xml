@@ -157,6 +157,21 @@
 </ul>
 <p>That is an honest and important result: the depth-adaptation (calcium) story is robust to removing the reference bias, while the lipid story appears to have been at least partly an artifact of measuring everything against a lean-background reference. It should be treated cautiously until the next phases weigh in.</p>
 </section>
+<section id="where-to-explore" class="level2">
+<h2 class="anchored" data-anchor-id="where-to-explore">Where to explore</h2>
+<p>The ecotype-specific gene lists are the natural starting point (each row has the gene ID, symbol, product name, copy number, and a GO-term count):</p>
+<ul>
+<li>Genes present in <strong>lean but not siscowet</strong> — <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-gene-sets/lean_only.tsv">lean_only.tsv</a> (5,058 genes)</li>
+<li>Genes present in <strong>siscowet but not lean</strong> — <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-gene-sets/siscowet_only.tsv">siscowet_only.tsv</a> (9,589 genes)</li>
+<li><strong>Copy-number differences</strong> between the ecotypes — <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-gene-sets/cnv.tsv">cnv.tsv</a> (2,359 genes) — and <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-gene-sets/shared.tsv">shared.tsv</a> for contrast</li>
+</ul>
+<p>In the “-only” tables an <code>in_{other}_unmapped = Y</code> flag means the other assembly independently confirms the gene failed to transfer, so those rows are the most confident calls — a good filter to start from.</p>
+<p>Two complementary views for going deeper:</p>
+<ul>
+<li><strong>Read-based ecotype-specific genes</strong> (genes inside regions genuinely uncovered by the <em>other</em> ecotype’s sequencing reads, a different signal than annotation) — <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-reciprocal-pav/lean_specific.genes.tsv">lean_specific.genes.tsv</a> and <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-reciprocal-pav/siscowet_specific.genes.tsv">siscowet_specific.genes.tsv</a>. A gene appearing here <strong>and</strong> in the gene-set list above is the strongest case.</li>
+<li><strong>Everything joined</strong> — one row per gene with all six evidence flags and an <code>n_lines</code> count: <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-integration/two_genome_candidates.tsv">two_genome_candidates.tsv</a> (≥2 lines incl.&nbsp;a native line) and the full <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-integration/gene_evidence_matrix.tsv">gene_evidence_matrix.tsv</a>. The re-run enrichment results, including the calcium-vs-lipid test, are in <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-integration/">analyses/23-integration/</a>.</li>
+</ul>
+</section>
 <section id="why-this-matters" class="level2">
 <h2 class="anchored" data-anchor-id="why-this-matters">Why this matters</h2>
 <p>This round converts “single-reference associations” into <strong>two-genome evidence</strong>. For the first time we can say which ecotype differences are visible from <em>both</em> genomes’ points of view, rank candidate genes by how many independent methods flag them, and — crucially — see which of our prior headline findings survive once the built-in reference bias is stripped out.</p>
