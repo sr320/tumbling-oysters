@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Steven Roberts">
-<meta name="dcterms.date" content="2026-07-07">
-<meta name="description" content="Reciprocal PAV, Ecotype-Specific Genes, and What Survives">
+<meta name="dcterms.date" content="2026-07-08">
+<meta name="description" content="recovering a lost sample and mapping the mussel methylome">
 
-<title>Two-Genome Evidence – Tumbling Oysters</title>
+<title>The case of the missing mussel – Tumbling Oysters</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -269,10 +269,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Two-Genome Evidence</h1>
+      <h1 class="title">The case of the missing mussel</h1>
                   <div>
         <div class="description">
-          Reciprocal PAV, Ecotype-Specific Genes, and What Survives
+          recovering a lost sample and mapping the mussel methylome
         </div>
       </div>
                           <div class="quarto-categories">
@@ -295,7 +295,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">July 7, 2026</p>
+        <p class="date">July 8, 2026</p>
       </div>
     </div>
     
@@ -316,167 +316,131 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
-<section id="where-we-left-off" class="level2">
-<h2 class="anchored" data-anchor-id="where-we-left-off">Where we left off</h2>
-<p>In <a href="23.1-genome-sv-map.qmd">23.1</a> we built the first whole-genome map of how the <strong>lean</strong> and <strong>siscowet</strong> lake trout genomes are structurally rearranged. But almost every biological result in this project so far — differentially methylated regions, presence/absence variation (PAV), candidate genes — was measured against a single <strong>lean-background reference genome</strong>. That builds in a bias: because the reference is more closely related to lean, anything “siscowet-specific” looks inflated simply because siscowet is further from the reference, not necessarily because the biology is stronger.</p>
-<p>Now that we have each ecotype’s <em>own</em> assembled genome, this round of work (scripts <a href="23.3-sisco-sv-repair.py">23.3</a> → <a href="23.6-integrate-phase2.py">23.6</a>) re-does the key comparisons <strong>on native coordinates</strong> and <strong>in both directions</strong>, then asks a sharper question: <em>which findings still hold up when the reference bias is removed?</em></p>
+<section id="why-were-looking-at-mussels" class="level2">
+<h2 class="anchored" data-anchor-id="why-were-looking-at-mussels">Why we’re looking at mussels</h2>
+<p>Bay mussels (<em>Mytilus trossulus</em>) spend their whole lives filtering seawater in one spot, so they end up as living records of whatever is in the water around them. That makes them excellent <strong>sentinels</strong> for coastal pollution. In this project we’re studying mussels from Puget Sound that grew at six different locations — three relatively clean sites and three with high levels of <strong>PAHs</strong> (polycyclic aromatic hydrocarbons, a family of pollutants that come from oil, soot, and combustion). Twenty-four mussels in all, four from each site.</p>
+<p>The question behind the whole project is: <strong>does pollution leave a readable mark on a mussel’s DNA?</strong> Not by changing the DNA letters themselves, but through <em>DNA methylation</em> — small chemical tags that sit on top of the DNA and can turn the volume of genes up or down. If polluted-site mussels carry a consistent, distinctive methylation pattern, that pattern could become a <strong>biomarker</strong>: a cheap, fast test for exposure that doesn’t require expensive chemistry on the water itself.</p>
+<p>This post is about a piece of housekeeping that turned into a small detective story, plus the first big-picture look at what mussel DNA methylation actually looks like.</p>
 </section>
-<section id="first-a-snag-we-had-to-fix" class="level2">
-<h2 class="anchored" data-anchor-id="first-a-snag-we-had-to-fix">First, a snag we had to fix</h2>
-<p>Before building anything new, we discovered that one Phase-1 comparison — siscowet-vs-reference — had silently failed. The variant caller (SyRI) had quit with “unequal number of chromosomes.” The cause turned out to be small and specific: the scaffolding step had accidentally glued a 15 kb siscowet fragment onto the reference <strong>mitochondrion</strong> (a tiny 16 kb “extra chromosome”), leaving siscowet with 43 chromosomes to the reference’s 42. Lean happened to dodge this, which is why only siscowet broke.</p>
-<p>The fix (<a href="23.3-sisco-sv-repair.py">23.3</a>) was to drop that stray mitochondrial piece and re-run the comparison. With siscowet’s structural variants finally in hand, we re-ran the cross-check from <a href="23.2-sv-pav-crossvalidate.py">23.2</a> — and it now covers <strong>both</strong> ecotypes symmetrically:</p>
+<section id="a-quick-word-on-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="a-quick-word-on-the-data">A quick word on the data</h2>
+<p>To read methylation across the whole genome we use <strong>whole-genome bisulfite sequencing (WGBS)</strong>. The practical upshot: for each mussel we get a giant table listing millions of individual <strong>CpG sites</strong> (specific spots in the DNA where methylation happens) and, for each one, what fraction of DNA copies carried the methyl tag. One mussel’s table is about <strong>750 megabytes</strong>. There are 24 of them.</p>
+</section>
+<section id="the-mystery-one-mussel-had-no-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-mystery-one-mussel-had-no-data">The mystery: one mussel had no data</h2>
+<p>While setting up the analysis, one sample — mussel <strong>93M</strong>, from the Smith Cove industrial site — was missing its data file. At first glance the project notes suggested 93M had been dropped earlier as a “low-quality outlier,” so a missing file seemed plausible.</p>
+<p>But something didn’t add up. The <strong>raw sequencing reads</strong> for 93M were sitting on our server, and they were a completely normal size — just as big as every other mussel’s. A genuinely low-quality sample would have <em>fewer</em> reads, not a full set. So why was there no finished data?</p>
+<p>Digging into the records revealed the answer: 93M had <strong>never actually been processed</strong>. What existed was a tiny <strong>10,000-read test run</strong> — the kind of quick check you do to make sure a pipeline works before turning it loose on the real thing. That test had quietly been mistaken for the finished product. The “outlier” was never an outlier; it was simply <strong>unfinished</strong>.</p>
+</section>
+<section id="the-recovery" class="level2">
+<h2 class="anchored" data-anchor-id="the-recovery">The recovery</h2>
+<p>Fixing it meant running 93M through the exact same assembly line as the other 23 mussels, from raw reads to finished methylation table:</p>
+<ol type="1">
+<li><strong>Line up ~41 million pairs of DNA reads</strong> against the mussel reference genome (the slow step — about a day of computing).</li>
+<li><strong>Remove duplicate reads</strong> left over from sample prep.</li>
+<li><strong>Read off the methylation</strong> at every covered CpG site.</li>
+<li><strong>Merge the two DNA strands</strong> into one tidy per-site table.</li>
+</ol>
+<p>The result: a complete, standard-sized file for 93M with <strong>17.2 million CpG sites</strong> and an overall methylation level of <strong>11.65%</strong> — right in line with the other mussels. A sample that had been written off was now a full, usable member of the group. (There were a few potholes along the way — a blocked download here, an incompatible software setting there — but nothing that a second pass couldn’t fix.)</p>
+</section>
+<section id="what-does-a-mussel-methylome-look-like" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-a-mussel-methylome-look-like">What does a mussel methylome look like?</h2>
+<p>With all 24 mussels finally in hand, we could draw the first complete picture of the <em>M. trossulus</em> methylation “landscape.” Four features stand out, and reassuringly, they all match what’s known from other shellfish.</p>
+<section id="most-of-the-genome-is-un-methylated" class="level3">
+<h3 class="anchored" data-anchor-id="most-of-the-genome-is-un-methylated">1. Most of the genome is <em>un</em>-methylated</h3>
+<p>Averaged across the mussels, only about <strong>11–12%</strong> of CpG sites carry a methyl tag. Human DNA, by comparison, is methylated at most of its CpG sites. Low, sparse methylation is the normal state for invertebrates like mussels and oysters.</p>
+</section>
+<section id="its-an-on-or-off-mosaic-pattern" class="level3">
+<h3 class="anchored" data-anchor-id="its-an-on-or-off-mosaic-pattern">2. It’s an on-or-off, “mosaic” pattern</h3>
+<p>Methylation in mussels isn’t a smooth dial — it’s more like a light switch. Sites tend to be either almost fully off or almost fully on, with relatively few in between:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Ecotype</th>
-<th>PAV-flagged regions</th>
-<th>Confirmed by SyRI</th>
-<th>Fraction confirmed</th>
+<th>Methylation state</th>
+<th style="text-align: right;">Share of sites</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>lean insertions</td>
-<td>770,891</td>
-<td>141,159</td>
-<td>18.3%</td>
+<td>Off (unmethylated)</td>
+<td style="text-align: right;"><strong>80%</strong></td>
 </tr>
 <tr class="even">
-<td>lean deletions</td>
-<td>225,337</td>
-<td>45,948</td>
-<td>20.4%</td>
+<td>In-between</td>
+<td style="text-align: right;">10%</td>
 </tr>
 <tr class="odd">
-<td><strong>siscowet insertions</strong></td>
-<td>1,086,799</td>
-<td>191,266</td>
-<td><strong>17.6%</strong></td>
-</tr>
-<tr class="even">
-<td><strong>siscowet deletions</strong></td>
-<td>245,906</td>
-<td>46,136</td>
-<td><strong>18.8%</strong></td>
+<td>On (methylated)</td>
+<td style="text-align: right;">10%</td>
 </tr>
 </tbody>
 </table>
-<p>The siscowet numbers land right next to lean’s — reassuring, because a lopsided result would have hinted the fix left something crooked. We also patched the original scaffolding step so the mitochondrion can never sneak back in.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-mytilus-methylation/output/27-methylation-landscape/bimodality_pooled.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Genome-wide methylation is bimodal: most sites cluster near “off,” with a smaller peak near “on.”</figcaption>
+</figure>
+</div>
 </section>
-<section id="reciprocal-pav-reading-each-genome-in-the-others-mirror" class="level2">
-<h2 class="anchored" data-anchor-id="reciprocal-pav-reading-each-genome-in-the-others-mirror">Reciprocal PAV: reading each genome in the other’s mirror</h2>
-<p>“Presence/absence variation” asks a simple question: <em>is this chunk of DNA present in one fish but missing in the other?</em> The old approach mapped everyone’s reads onto the lean reference, so it always saw the world through a lean lens. The new approach (<a href="23.4-reciprocal-pav.py">23.4</a>) is <strong>reciprocal</strong>:</p>
-<ul>
-<li>We take <strong>lean’s</strong> sequencing reads and map them onto <strong>siscowet’s</strong> genome. Any stretch of the siscowet genome that lean’s reads <em>can’t</em> cover is sequence that siscowet has and lean lacks — measured against siscowet’s real genome, not a stand-in.</li>
-<li>Then we do the mirror image: <strong>siscowet’s</strong> reads onto <strong>lean’s</strong> genome.</li>
-</ul>
-<p>To be conservative, we only keep a region if <strong>all four fish</strong> of the querying ecotype agree it’s missing, <em>and</em> the DNA on either side is well-covered (so we know reads really do map there and it isn’t just an unmappable edge). That gives a clean, native-coordinate call for each ecotype:</p>
+<section id="methylation-lives-inside-genes-not-around-them" class="level3">
+<h3 class="anchored" data-anchor-id="methylation-lives-inside-genes-not-around-them">3. Methylation lives inside genes, not around them</h3>
+<p>Where the methyl tags <em>do</em> land is highly non-random. They’re concentrated in the <strong>bodies of genes</strong> and largely absent from the switch-like regions (promoters) and the empty stretches between genes:</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Direction</th>
-<th>Sequence present in one ecotype, absent in the other</th>
-<th>Genes affected</th>
-<th>Novel sequence in the reads</th>
+<th>Part of the genome</th>
+<th style="text-align: right;">Average methylation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>lean reads → siscowet genome</td>
-<td>340 siscowet regions (0.70 Mb)</td>
-<td>71</td>
-<td>115,171 lean-specific clusters (10.3 Mb)</td>
+<td>Gene bodies (genes, exons, introns)</td>
+<td style="text-align: right;"><strong>~20%</strong></td>
 </tr>
 <tr class="even">
-<td>siscowet reads → lean genome</td>
-<td>343 lean regions (0.87 Mb)</td>
-<td>44</td>
-<td>175,748 siscowet-specific clusters (17.2 Mb)</td>
+<td>Promoters (gene “on-switches”)</td>
+<td style="text-align: right;">7%</td>
+</tr>
+<tr class="odd">
+<td>Between genes (intergenic)</td>
+<td style="text-align: right;">5%</td>
 </tr>
 </tbody>
 </table>
-<p>Two things stand out. The strict “present in one, absent in the other” regions are relatively few (~340 each way) — as expected once you demand agreement across all four fish and covered flanks. But the <strong>novel sequence</strong> each ecotype carries relative to the other is large: <strong>10–17 Mb</strong>, with siscowet carrying more, consistent with siscowet having the bigger genome overall.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-mytilus-methylation/output/28-genomic-feature-distribution/feature_methylation_barplot.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Methylation is enriched in gene bodies and depleted in promoters and intergenic space — the classic molluscan “gene-body methylation” pattern.</figcaption>
+</figure>
+</div>
+<p>This “gene-body methylation” is the signature pattern of invertebrates, and it’s thought to mark the steady, housekeeping genes a cell relies on all the time.</p>
 </section>
-<section id="which-genes-are-ecotype-specific" class="level2">
-<h2 class="anchored" data-anchor-id="which-genes-are-ecotype-specific">Which genes are ecotype-specific?</h2>
-<p>Because both genomes were annotated from the same reference gene list, we can line up their gene catalogs directly (<a href="23.5-gene-set-ops.py">23.5</a>):</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Category</th>
-<th>Genes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Shared (found in both ecotypes)</td>
-<td>50,379</td>
-</tr>
-<tr class="even">
-<td>Lean-only</td>
-<td>5,058</td>
-</tr>
-<tr class="odd">
-<td>Siscowet-only</td>
-<td>9,589</td>
-</tr>
-<tr class="even">
-<td>Copy-number different between ecotypes</td>
-<td>2,359</td>
-</tr>
-</tbody>
-</table>
-<p>The arithmetic closes exactly (shared + lean-only = lean’s total; shared + siscowet-only = siscowet’s total), a good internal consistency check. Most copy-number differences are in repetitive families (tRNA genes and the like), which is expected and easy to set aside when looking for trait-relevant signals.</p>
+<section id="the-genome-itself-remembers-where-methylation-has-been" class="level3">
+<h3 class="anchored" data-anchor-id="the-genome-itself-remembers-where-methylation-has-been">4. The genome itself remembers where methylation has been</h3>
+<p>There’s an elegant twist here. Methylation is chemically corrosive to DNA over evolutionary time — spots that have been methylated for millions of years slowly <em>lose</em> their CpG sites. So we can measure how “CpG-depleted” each gene is and use that as a fossil record of its long-term methylation history.</p>
+<p>Sure enough, mussel genes fall into <strong>two camps</strong> — one CpG-rich, one CpG-depleted — and the CpG-depleted genes are exactly the ones we observe to be <strong>heavily methylated today</strong> (a strong negative relationship, correlation ≈ −0.68). The genome’s ancient history and its present-day chemistry tell the same story.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-mytilus-methylation/output/29-cpg-oe-mosaic/oe_vs_methylation.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption>Genes that are CpG-depleted (left) are the ones most heavily methylated today — linking long-term evolutionary history to the current methylome.</figcaption>
+</figure>
+</div>
 </section>
-<section id="putting-it-all-together-and-what-survives" class="level2">
-<h2 class="anchored" data-anchor-id="putting-it-all-together-and-what-survives">Putting it all together — and what survives</h2>
-<p>Finally (<a href="23.6-integrate-phase2.py">23.6</a>) we asked, for every gene: <em>how many independent lines of evidence say it differs between the ecotypes?</em> We tallied six — the two new native ones (reciprocal PAV, ecotype-only presence), copy-number change, structural variants, differential methylation, and the old reference-based PAV.</p>
-<p><strong>2,895 genes are now supported by at least two independent lines, including at least one of the new native lines</strong> — meaning they are no longer single-reference associations. 109 genes carry three or more lines (histone clusters, ADAMTS proteases, ABC transporters, a corticotropin-releasing-factor receptor, and others).</p>
-<p>Then the sharpest test. This project has two long-standing candidate stories: a <strong>lipid/buoyancy</strong> signal (siscowet are the fat, deep-water fish) and a <strong>calcium-transport/depth-adaptation</strong> signal. We re-ran the gene-set enrichment on the native, two-genome gene sets to see which survives:</p>
+</section>
+<section id="and-about-that-outlier" class="level2">
+<h2 class="anchored" data-anchor-id="and-about-that-outlier">And about that “outlier”…</h2>
+<p>Now that 93M was fully processed, we could finally check whether it deserved its bad reputation. It didn’t. Ranked against all 24 mussels by overall methylation, 93M came in <strong>14th — dead center of the pack</strong>. Its recovered data is normal in every way that matters. Its earlier exclusion was a processing gap, not a quality problem.</p>
+</section>
+<section id="the-bottom-line" class="level2">
+<h2 class="anchored" data-anchor-id="the-bottom-line">The bottom line</h2>
 <ul>
-<li><strong>The calcium signal holds up strongly.</strong> Genes present in lean but not siscowet are significantly enriched for <strong>voltage-gated calcium channel activity</strong> (FDR 9 × 10⁻⁴) and <strong>calcium ion transport</strong> (FDR 9 × 10⁻³); reciprocal-PAV genes are enriched for calcium ion binding.</li>
-<li><strong>The lipid/buoyancy signal does not.</strong> No lipid- or buoyancy-related category reached significance in any of the native two-genome sets.</li>
+<li>A mussel thought to be a low-quality dropout was actually just <strong>never finished processing</strong>; it has now been fully recovered and looks completely normal.</li>
+<li>Across all 24 Puget Sound mussels, DNA methylation is <strong>low and sparse (~12%)</strong>, organized as an <strong>on/off mosaic</strong>, and <strong>concentrated inside genes</strong> — the textbook pattern for shellfish.</li>
+<li>The genome’s own CpG-depletion “fossil record” lines up with the methylation we measure today.</li>
 </ul>
-<p>That is an honest and important result: the depth-adaptation (calcium) story is robust to removing the reference bias, while the lipid story appears to have been at least partly an artifact of measuring everything against a lean-background reference. It should be treated cautiously until the next phases weigh in.</p>
-</section>
-<section id="where-to-explore" class="level2">
-<h2 class="anchored" data-anchor-id="where-to-explore">Where to explore</h2>
-<p>The ecotype-specific gene lists are the natural starting point (each row has the gene ID, symbol, product name, copy number, and a GO-term count):</p>
-<ul>
-<li>Genes present in <strong>lean but not siscowet</strong> — <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-gene-sets/lean_only.tsv">lean_only.tsv</a> (5,058 genes)</li>
-<li>Genes present in <strong>siscowet but not lean</strong> — <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-gene-sets/siscowet_only.tsv">siscowet_only.tsv</a> (9,589 genes)</li>
-<li><strong>Copy-number differences</strong> between the ecotypes — <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-gene-sets/cnv.tsv">cnv.tsv</a> (2,359 genes) — and <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-gene-sets/shared.tsv">shared.tsv</a> for contrast</li>
-</ul>
-<p>In the “-only” tables an <code>in_{other}_unmapped = Y</code> flag means the other assembly independently confirms the gene failed to transfer, so those rows are the most confident calls — a good filter to start from.</p>
-<p>Two complementary views for going deeper:</p>
-<ul>
-<li><strong>Read-based ecotype-specific genes</strong> (genes inside regions genuinely uncovered by the <em>other</em> ecotype’s sequencing reads, a different signal than annotation) — <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-reciprocal-pav/lean_specific.genes.tsv">lean_specific.genes.tsv</a> and <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-reciprocal-pav/siscowet_specific.genes.tsv">siscowet_specific.genes.tsv</a>. A gene appearing here <strong>and</strong> in the gene-set list above is the strongest case.</li>
-<li><strong>Everything joined</strong> — one row per gene with all six evidence flags and an <code>n_lines</code> count: <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-integration/two_genome_candidates.tsv">two_genome_candidates.tsv</a> (≥2 lines incl.&nbsp;a native line) and the full <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-integration/gene_evidence_matrix.tsv">gene_evidence_matrix.tsv</a>. The re-run enrichment results, including the calcium-vs-lipid test, are in <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-integration/">analyses/23-integration/</a>.</li>
-</ul>
-</section>
-<section id="why-this-matters" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-matters">Why this matters</h2>
-<p>This round converts “single-reference associations” into <strong>two-genome evidence</strong>. For the first time we can say which ecotype differences are visible from <em>both</em> genomes’ points of view, rank candidate genes by how many independent methods flag them, and — crucially — see which of our prior headline findings survive once the built-in reference bias is stripped out.</p>
-</section>
-<section id="whats-next" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next">What’s next</h2>
-<ul>
-<li><strong>Phase 3 — ecotype-native methylation.</strong> Re-call DNA methylation with each ecotype’s reads mapped to its <em>own</em> genome, then compare on shared coordinates, to see which of the original 302 differentially methylated regions are real versus reference artifacts. The calcium-vs-lipid result above is exactly the kind of thing native methylation can corroborate or overturn.</li>
-<li>Fold the reciprocal-PAV and two-genome candidate tracks into the genome browsers alongside the synteny and SV views.</li>
-</ul>
-<p>The large intermediate files (the 8 read-to-genome alignments, full coverage tables, etc.) are too big for GitHub; the committed outputs are the analysis tables in <code>analyses/23-reciprocal-pav/</code>, <code>analyses/23-gene-sets/</code>, and <code>analyses/23-integration/</code>.</p>
+<p>This is the descriptive baseline. The next chapter asks the question that started it all: <strong>do the mussels from polluted sites carry methylation differences from the clean-site mussels</strong> — and could any of those differences serve as a practical pollution biomarker? That comparison is where we head next.</p>
+<hr>
+<p><em>Technical note: this landscape was produced with methylKit and BEDTools from merged-CpG coverage files; scripts and full results are in <code>code/26</code>–<code>code/29</code> and <code>output/26</code>–<code>output/29</code> of the project repository. The 93M recovery pipeline is <code>code/25.1-93M-cov-recovery.sh</code>.</em></p>
 
 
 </section>
