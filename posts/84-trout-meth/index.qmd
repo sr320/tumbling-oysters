@@ -1,101 +1,66 @@
 ---
-title: "The case of the missing mussel"
-description: "recovering a lost sample and mapping the mussel methylome"
+title: "Reading Methylation on Each Fish's Own Genome"
+description: ""
 author: "Steven Roberts"
-date: "07-08-2026"
+date: "07-09-2026"
 categories: [Genomics, Computing]
 draft: false
-image: "images/clipboard-625479505.png"
+image: "images/clipboard-1659226758.png"
 ---
 
 <a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"/></a>
 
+## The question
 
-## Why we're looking at mussels
+DNA methylation is a chemical "annotation" layered on top of the DNA sequence — small tags (methyl groups) attached to certain letters that can turn genes up or down without changing the letters themselves. It's one of the ways the same genome can behave differently in different animals, so it's a natural place to look for what distinguishes **lean** and **siscowet** lake trout.
 
-Bay mussels (*Mytilus trossulus*) spend their whole lives filtering seawater in one spot, so they end up as living records of whatever is in the water around them. That makes them excellent **sentinels** for coastal pollution. In this project we're studying mussels from Puget Sound that grew at six different locations — three relatively clean sites and three with high levels of **PAHs** (polycyclic aromatic hydrocarbons, a family of pollutants that come from oil, soot, and combustion). Twenty-four mussels in all, four from each site.
+An earlier step in this project ([14-diff-meth](14-diff-meth.py)) found \~300 stretches of the genome that looked differently methylated between the two ecotypes. But there was a catch, the same one that has shadowed this whole project: those differences were all measured against a **single reference genome** built mostly from lean-type fish. When you measure a siscowet fish against a lean-based yardstick, some of what looks like a "difference" can be an artifact of the yardstick, not real biology. Now that we have each ecotype's *own* assembled genome, we can finally check.
 
-The question behind the whole project is: **does pollution leave a readable mark on a mussel's DNA?** Not by changing the DNA letters themselves, but through *DNA methylation* — small chemical tags that sit on top of the DNA and can turn the volume of genes up or down. If polluted-site mussels carry a consistent, distinctive methylation pattern, that pattern could become a **biomarker**: a cheap, fast test for exposure that doesn't require expensive chemistry on the water itself.
+## What we did
 
-This post is about a piece of housekeeping that turned into a small detective story, plus the first big-picture look at what mussel DNA methylation actually looks like.
+The idea is simple to state: **read each fish's methylation on its own genome, not on a borrowed one.**
 
-## A quick word on the data
+1.  **Align to self.** Each fish's PacBio reads (which carry the methylation tags directly) were aligned to its *own* ecotype's genome — lean fish to the lean genome, siscowet to the siscowet genome ([23.8](23.8-native-meth-pipeline.py)).
+2.  **Call methylation.** We measured, at every CpG site, what fraction of reads were methylated, using the same `modkit` tool the project used before.
+3.  **Compare fairly.** Here's the hard part: the two genomes have different coordinate systems, so you can't just line them up position-by-position. Instead we used **genes as the common language** — every gene has the same ID in both genomes — and asked, for each gene, "how methylated is it in lean fish versus siscowet fish?" ([23.9](23.9-native-meth-dmg.py)). That sidesteps the coordinate problem entirely.
+4.  **Re-test the old findings.** Finally, we checked the \~300 reference-based differences against this fresh, native measurement: do they hold up?
 
-To read methylation across the whole genome we use **whole-genome bisulfite sequencing (WGBS)**. The practical upshot: for each mussel we get a giant table listing millions of individual **CpG sites** (specific spots in the DNA where methylation happens) and, for each one, what fraction of DNA copies carried the methyl tag. One mussel's table is about **750 megabytes**. There are 24 of them.
+## What we found
 
-## The mystery: one mussel had no data
+Two honest headline numbers:
 
-While setting up the analysis, one sample — mussel **93M**, from the Smith Cove industrial site — was missing its data file. At first glance the project notes suggested 93M had been dropped earlier as a "low-quality outlier," so a missing file seemed plausible.
+-   Of the **10,838 genes** we could test, **63** showed a nominal methylation difference between the ecotypes (about 37 more-methylated in siscowet, 26 less). Interesting candidates, but…
+-   **None of them survived a strict statistical correction**, and **none of the \~180 genes tied to the earlier reference-based differences were confirmed** on the native genomes.
 
-But something didn't add up. The **raw sequencing reads** for 93M were sitting on our server, and they were a completely normal size — just as big as every other mussel's. A genuinely low-quality sample would have *fewer* reads, not a full set. So why was there no finished data?
+In plain terms: **the earlier methylation differences did not reproduce when we measured each fish on its own genome.** That fits the pattern from the previous step ([23.7](23.7-two-genome-evidence.qmd)) — signals that lean heavily on a single reference genome tend to weaken once that crutch is removed.
 
-Digging into the records revealed the answer: 93M had **never actually been processed**. What existed was a tiny **10,000-read test run** — the kind of quick check you do to make sure a pipeline works before turning it loose on the real thing. That test had quietly been mistaken for the finished product. The "outlier" was never an outlier; it was simply **unfinished**.
+## The important caveat
 
-## The recovery
+This is a place to be careful rather than dramatic. The native test was **underpowered**, for reasons that have nothing to do with the biology:
 
-Fixing it meant running 93M through the exact same assembly line as the other 23 mussels, from raw reads to finished methylation table:
+-   **Only four fish per group.** With samples that small, even a real difference struggles to clear the statistical bar once you correct for testing thousands of genes at once — the math simply can't reach significance.
+-   **Uneven coverage.** Reading methylation reliably needs deep coverage at each site. Some fish had plenty; others had relatively little. Only about a fifth of genes — and only 45 of the \~180 previously flagged genes — had enough coverage in enough fish to test at all.
+-   **A coarser lens.** Aggregating to whole genes is more robust across two different genomes, but it can blur a sharp, localized methylation difference that a position-by-position test would catch.
 
-1.  **Line up \~41 million pairs of DNA reads** against the mussel reference genome (the slow step — about a day of computing).
-2.  **Remove duplicate reads** left over from sample prep.
-3.  **Read off the methylation** at every covered CpG site.
-4.  **Merge the two DNA strands** into one tidy per-site table.
+So the fair conclusion is **"the reference-based methylation differences are not corroborated on native genomes at the current sequencing depth,"** not "they are definitely artifacts." Settling it properly would take deeper sequencing, more individuals, or a position-level comparison.
 
-The result: a complete, standard-sized file for 93M with **17.2 million CpG sites** and an overall methylation level of **11.65%** — right in line with the other mussels. A sample that had been written off was now a full, usable member of the group. (There were a few potholes along the way — a blocked download here, an incompatible software setting there — but nothing that a second pass couldn't fix.)
+## Why this matters
 
-## What does a mussel methylome look like?
+This closes the loop on the project's central caveat for the three cheapest, highest-value lines of evidence. Across structural variants, presence/absence, and now methylation, the story is consistent: some ecotype differences are robust to removing the single-reference bias (notably the calcium/depth-adaptation signal in [23.7](23.7-two-genome-evidence.qmd)), while others — including much of the methylation signal — are not, or can't yet be confirmed. Knowing *which* is which is exactly what a two-genome design was built to tell us, and it keeps the project's conclusions honest.
 
-With all 24 mussels finally in hand, we could draw the first complete picture of the *M. trossulus* methylation "landscape." Four features stand out, and reassuringly, they all match what's known from other shellfish.
+## Where to explore
 
-### 1. Most of the genome is *un*-methylated
+All tables are hosted on gannet:
 
-Averaged across the mussels, only about **11–12%** of CpG sites carry a methyl tag. Human DNA, by comparison, is methylated at most of its CpG sites. Low, sparse methylation is the normal state for invertebrates like mussels and oysters.
+-   Per-gene methylation, every gene × every fish — [native_methylation_by_gene.tsv](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-native-methylation/native_methylation_by_gene.tsv)
+-   All genes tested, with statistics — [dmg_results.tsv](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-native-methylation/dmg_results.tsv)
+-   The 63 nominal candidates — [dmg_significant.tsv](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-native-methylation/dmg_significant.tsv)
+-   Did the earlier reference-based differences hold up? — [reference_dmr_confirmation.tsv](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-native-methylation/reference_dmr_confirmation.tsv)
+-   Plain-text summary — [native_dmg_report.txt](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/analyses/23-native-methylation/native_dmg_report.txt)
 
-### 2. It's an on-or-off, "mosaic" pattern
+## What's next
 
-Methylation in mussels isn't a smooth dial — it's more like a light switch. Sites tend to be either almost fully off or almost fully on, with relatively few in between:
+-   **More power.** The clearest next move for methylation is depth and sample size — the biology here may be real but currently invisible to a four-versus-four test.
+-   **Phase 4 — new genes.** So far every analysis only sees genes that already exist in the reference. A from-scratch gene annotation (BRAKER3) of each ecotype's genome would reveal genuinely ecotype-specific genes that the reference can't show — the last major piece of the two-genome comparison.
 
-| Methylation state  | Share of sites |
-|--------------------|---------------:|
-| Off (unmethylated) |        **80%** |
-| In-between         |            10% |
-| On (methylated)    |            10% |
-
-![Genome-wide methylation is bimodal: most sites cluster near "off," with a smaller peak near "on."](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-mytilus-methylation/output/27-methylation-landscape/bimodality_pooled.png){width="70%"}
-
-### 3. Methylation lives inside genes, not around them
-
-Where the methyl tags *do* land is highly non-random. They're concentrated in the **bodies of genes** and largely absent from the switch-like regions (promoters) and the empty stretches between genes:
-
-| Part of the genome                  | Average methylation |
-|-------------------------------------|--------------------:|
-| Gene bodies (genes, exons, introns) |           **\~20%** |
-| Promoters (gene "on-switches")      |                  7% |
-| Between genes (intergenic)          |                  5% |
-
-![Methylation is enriched in gene bodies and depleted in promoters and intergenic space — the classic molluscan "gene-body methylation" pattern.](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-mytilus-methylation/output/28-genomic-feature-distribution/feature_methylation_barplot.png){width="75%"}
-
-This "gene-body methylation" is the signature pattern of invertebrates, and it's thought to mark the steady, housekeeping genes a cell relies on all the time.
-
-### 4. The genome itself remembers where methylation has been
-
-There's an elegant twist here. Methylation is chemically corrosive to DNA over evolutionary time — spots that have been methylated for millions of years slowly *lose* their CpG sites. So we can measure how "CpG-depleted" each gene is and use that as a fossil record of its long-term methylation history.
-
-Sure enough, mussel genes fall into **two camps** — one CpG-rich, one CpG-depleted — and the CpG-depleted genes are exactly the ones we observe to be **heavily methylated today** (a strong negative relationship, correlation ≈ −0.68). The genome's ancient history and its present-day chemistry tell the same story.
-
-![Genes that are CpG-depleted (left) are the ones most heavily methylated today — linking long-term evolutionary history to the current methylome.](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-mytilus-methylation/output/29-cpg-oe-mosaic/oe_vs_methylation.png){width="70%"}
-
-## And about that "outlier"…
-
-Now that 93M was fully processed, we could finally check whether it deserved its bad reputation. It didn't. Ranked against all 24 mussels by overall methylation, 93M came in **14th — dead center of the pack**. Its recovered data is normal in every way that matters. Its earlier exclusion was a processing gap, not a quality problem.
-
-## The bottom line
-
--   A mussel thought to be a low-quality dropout was actually just **never finished processing**; it has now been fully recovered and looks completely normal.
--   Across all 24 Puget Sound mussels, DNA methylation is **low and sparse (\~12%)**, organized as an **on/off mosaic**, and **concentrated inside genes** — the textbook pattern for shellfish.
--   The genome's own CpG-depletion "fossil record" lines up with the methylation we measure today.
-
-This is the descriptive baseline. The next chapter asks the question that started it all: **do the mussels from polluted sites carry methylation differences from the clean-site mussels** — and could any of those differences serve as a practical pollution biomarker? That comparison is where we head next.
-
-------------------------------------------------------------------------
-
-*Technical note: this landscape was produced with methylKit and BEDTools from merged-CpG coverage files; scripts and full results are in `code/26`–`code/29` and `output/26`–`output/29` of the project repository. The 93M recovery pipeline is `code/25.1-93M-cov-recovery.sh`.*
+The large intermediate files (the eight read-to-genome alignments and full per-site methylation calls) are too big for GitHub; the committed outputs are the gene-level tables above.
