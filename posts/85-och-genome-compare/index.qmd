@@ -1,0 +1,276 @@
+---
+title: "Three Ostrea chilensis Assemblies Walk Into a Dot Plot"
+description: "minimap2 whole-genome comparison of Assembly 1.0, HapA, and HapB"
+categories: ["Genomics", "Computing"] #choose "Aquaculture", "Computing", "Epigenetics", "Genomics", "Lab Updates", "Reading Notes", "Transcriptomics"
+#citation:
+date: 08-20-2026
+image: "https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/12-compare-genomes/plots/assembly1_vs_hapb.svg"
+author:
+  - name: Steven Roberts
+    url:
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: true # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    toc: true            # ← enable TOC
+    toc-location: left   # or: right, body
+    toc-depth: 3         # how many heading levels to show
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+<a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"/></a>
+
+## Why
+
+There are three *Ostrea chilensis* genome files floating around this project: the
+two haplotype assemblies from the annotation contract (`Och_HapA`, `Och_HapB`) and
+a merged "Assembly 1.0" (`merged_out.fasta.TBtools.fa`) that has been the de facto
+alignment target for the ONT RNA-seq work. Nobody had written down how they
+actually relate to each other, and I need to pick a reference and defend the
+choice. So: align all three against each other and look.
+
+Code is [`code/12-compare-genomes.py`](https://github.com/RobertsLab/project-ostrea-chil/blob/main/code/12-compare-genomes.py),
+outputs in [`output/12-compare-genomes/`](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/12-compare-genomes/).
+
+## The script
+
+One standard-library Python file — no pandas, no matplotlib. It downloads the
+FASTAs, summarizes them, runs three minimap2 comparisons, parses the PAFs, and
+hand-writes SVG dot plots.
+
+```bash
+python code/12-compare-genomes.py --threads 16
+```
+
+A few choices worth flagging:
+
+**Download the `.fai` first.** Each assembly's index is a few hundred bytes and
+carries every sequence name and length, which is all the stats table needs. That
+makes `--stats-only` a free, network-cheap mode:
+
+```bash
+python code/12-compare-genomes.py --stats-only
+```
+
+**Use the `.fai` to detect a truncated download.** These are 0.8–1.2 GB files over
+HTTP, and a half-finished FASTA is the kind of thing that quietly poisons an
+alignment. The last FAI record says where the last sequence starts and how it's
+wrapped, so you can compute the minimum legal file size and refuse to proceed:
+
+```python
+minimum_bytes = (
+    offset
+    + ((length - 1) // line_bases) * line_width
+    + ((length - 1) % line_bases)
+    + 1
+)
+```
+
+Downloads go to a `.part` file, resume with `curl --continue-at -`, and only get
+renamed into place on success. Same pattern for the PAFs.
+
+**Stream minimap2 straight into gzip.** No intermediate plain-text PAF on disk:
+
+```python
+process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=log_handle)
+with gzip.open(temporary, "wb", compresslevel=6) as paf_handle:
+    shutil.copyfileobj(process.stdout, paf_handle, length=1024 * 1024)
+```
+
+**Coverage is computed on merged intervals.** Summing PAF block lengths
+double-counts anywhere two alignments overlap the same locus, which in a
+haplotype-vs-haplotype comparison is everywhere. `merge_interval_length()` collapses
+overlapping intervals per sequence first, so "aligned bp" means bases covered at
+least once.
+
+Alignments are `minimap2 -x asm5 --secondary=no`, three of them:
+
+| Target | Query |
+|---|---|
+| Assembly 1.0 | Och_HapA |
+| Assembly 1.0 | Och_HapB |
+| Och_HapA | Och_HapB |
+
+That took ~72 min wall on 16 threads (926 / 1,900 / 1,456 s) and peaked at
+68–97 GB RSS, so this is a Hyak job, not a laptop job.
+
+## Assembly stats
+
+```bash
+column -t -s$'\t' output/12-compare-genomes/assembly_stats.tsv
+```
+
+| Assembly | Seqs | Total bp | N50 | L50 |
+|---|---|---|---|---|
+| Assembly 1.0 | 10 | 1,180,920,922 | 125,625,032 | 4 |
+| Och_HapA | 10 | 789,630,056 | 90,413,844 | 5 |
+| Och_HapB | 10 | 1,131,963,527 | 113,891,610 | 5 |
+
+First surprise. The annotation report (and our README, which I need to fix) says
+~790 Mb per haplotype. That's true for HapA. **HapB is 1.13 Gb — 43% larger than
+HapA.** Two haplotypes of the same animal should not differ by 342 Mb. Given the
+69.4% repeat content in this genome, my guess is HapB is carrying a lot of
+uncollapsed repeat.
+
+## Reading the identity numbers
+
+Before the pairwise table, one calibration point that makes everything else
+interpretable.
+
+The script reports identity as `matching_bp / alignment_block_bp` — BLAST-style,
+so ambiguous bases and gaps inside a block count against you. Assembly 1.0's
+`Chromosome_2A` and HapA's `Chromosome_2A` are the *same 98,156,180 bp of
+sequence*, and they align as a single block at **92.35%**.
+
+So ~90–92% is the ceiling of this metric here, not a measure of divergence. Read
+it as:
+
+- **89–92%** → literally the same sequence
+- **70–84%** → homologous chromosomes, alternate haplotypes
+- **below 60%** → repeat noise
+
+## Pairwise comparisons
+
+| Comparison | Alignments | Identity | Target cov | Query cov |
+|---|---|---|---|---|
+| Assembly 1.0 ← HapA | 2,613 | 85.5% | 68.4% | **99.93%** |
+| Assembly 1.0 ← HapB | 18,016 | 76.6% | 84.0% | **99.56%** |
+| HapA ← HapB | 50,635 | 60.1% | 98.5% | 98.5% |
+
+Both haplotypes are essentially *entirely* inside Assembly 1.0 — 99.9% and 99.6%
+of their bases align somewhere in it — but neither alone covers it (68% and 84%).
+That is the signature of a mosaic with redundancy, which is exactly what it turned
+out to be.
+
+Note also how the alignment count explodes as you move down the table: 2,613 →
+18,016 → 50,635. Same three genomes, same settings. The fragmentation is the
+result, not an artifact to explain away.
+
+## Assembly 1.0 is a mosaic
+
+Line up the sequence lengths and the answer falls out. Four of Assembly 1.0's ten
+sequences are **byte-identical in length to a HapA chromosome**, two are identical
+to a HapB chromosome, and four are HapB chromosomes plus extra:
+
+| Assembly 1.0 | Length | Source | Source length |
+|---|---|---|---|
+| Chromosome_2A | 98,156,180 | HapA 2A | 98,156,180 ✓ |
+| Chromosome_4A | 93,973,257 | HapA 4A | 93,973,257 ✓ |
+| Chromosome_6A | 76,092,957 | HapA 6A | 76,092,957 ✓ |
+| Chromosome_10A | 41,401,248 | HapA 10A | 41,401,248 ✓ |
+| Chromosome_8B | 108,828,118 | HapB 8B | 108,828,118 ✓ |
+| Chromosome_9B | 91,966,420 | HapB 9B | 91,966,420 ✓ |
+| Chromosome_1B | 231,619,483 | HapB 1B | 139,369,942 **+92 Mb** |
+| Chromosome_7B | 183,991,082 | HapB 7B | 112,150,790 **+72 Mb** |
+| Chromosome_5B | 125,625,032 | HapB 5B | 113,891,610 +12 Mb |
+| Chromosome_6B | 129,267,145 | HapB 6B | 112,639,144 +17 Mb |
+
+The two big inflations are the interesting ones. `sequence_correspondence.tsv` says
+Assembly 1.0's `Chromosome_1B` receives 138.9 Mb of blocks from HapB `1B` at 90.3%
+*and* 101.3 Mb from HapA `1A` at 91.9%. Both at the identity ceiling. Sum: ~240 Mb,
+against a sequence that is 231.6 Mb long.
+
+**Chromosome 1 has both haplotypes concatenated into a single sequence.** Chromosome
+7 is the same story (112.0 Mb from HapB 7B at 90.7% + 74.7 Mb from HapA 7A at
+90.9% = 186.7 Mb, sequence is 184.0 Mb).
+
+Chromosomes 5 and 6B are *not* that. Their HapA homologs align at 80–84% — real
+homology, not a second copy — so the +12 and +17 Mb is something else, probably
+scaffolded-in unplaced sequence.
+
+If you're aligning RNA-seq to Assembly 1.0, chromosomes 1 and 7 are duplicated
+reference. Multi-mapping reads over ~175 Mb of the genome are going to be split
+between two copies of the same locus, which is not a thing you want in a count
+matrix.
+
+## The chromosome 3/6 name collision
+
+Assembly 1.0 has a `Chromosome_6A` **and** a `Chromosome_6B`, and no chromosome 3
+at all. That looked like a bug until I checked what actually aligns to what.
+
+From `hapa_vs_hapb`:
+
+| HapA | HapB | Identity |
+|---|---|---|
+| Chromosome_3A | Chromosome_6B | 81.4% / 75.8% |
+| Chromosome_6A | Chromosome_3B | 68.2% / 61.1% |
+
+**The two haplotype assemblies disagree about which chromosome is 3 and which is
+6.** They're each internally consistent; the labels just got swapped between them.
+Every other chromosome pairs by number exactly as you'd expect (1A↔1B, 2A↔2B, …).
+
+So Assembly 1.0 is fine biologically — all ten linkage groups are present, one
+sequence each. It picked HapA's chr6 and HapB's chr6, which are different
+chromosomes, and ended up with two sequences named 6 and none named 3. Anything
+that keys on chromosome name across these three files is going to be wrong for two
+chromosomes.
+
+## Dot plots
+
+Hand-rolled SVG — cumulative offsets per sequence for both axes, one `<line>` per
+alignment, blue forward and red reverse, filtered to blocks ≥100 kb. No plotting
+library, which means no dependency and the output is a text file you can diff.
+
+**Assembly 1.0 vs HapA** — clean. 667 blocks drawn. The near-diagonal segments are
+the four verbatim HapA chromosomes.
+
+![](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/12-compare-genomes/plots/assembly1_vs_hapa.svg)
+
+**Assembly 1.0 vs HapB** — 1,103 blocks. The stacked segments on `Chromosome_1B`
+and `Chromosome_7B` are the concatenated haplotypes.
+
+![](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/12-compare-genomes/plots/assembly1_vs_hapb.svg)
+
+**HapA vs HapB** — 2,483 blocks and a mess of red. The 3/6 swap is visible as the
+two off-diagonal blocks.
+
+![](https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-ostrea-chil/output/12-compare-genomes/plots/hapa_vs_hapb.svg)
+
+## Caveats
+
+`-x asm5` is tuned for ~5% divergence. That's the right preset for the
+near-identical comparisons, and too tight for HapA vs HapB — some of that
+50,635-alignment fragmentation is the preset, not the biology. Worth a rerun at
+`asm10`/`asm20` to see how much of it collapses.
+
+The whole-comparison identity numbers (85.5 / 76.6 / 60.1%) are block-length
+weighted over everything, including short repeat hits, so they're much less
+informative than the per-chromosome-pair rows in `sequence_correspondence.tsv`.
+Don't quote the summary number.
+
+And `--secondary=no` means each query region contributes one alignment, so the
+repeat-driven pileups (HapB `2B` puts 116 Mb of blocks onto a 98 Mb sequence in
+both orientations) are coming from genuinely distinct query regions landing on the
+same target, not from reported secondaries.
+
+## Where this leaves the reference choice
+
+Assembly 1.0 has the most complete sequence content but ~175 Mb of duplicated
+haplotype on chromosomes 1 and 7 and a broken chromosome naming scheme. HapA is
+the clean haploid representation at 790 Mb. HapB is 1.13 Gb and needs explaining
+before I'd trust it.
+
+Next: quantify how much of the RNA-seq multi-mapping in the existing alignments
+falls on Assembly 1.0 chr1 and chr7, and rerun the cross-haplotype comparison at a
+looser preset.
+
+## Outputs
+
+| File | What |
+|---|---|
+| `assembly_stats.tsv` | seq count, total bp, N50/L50, N90/L90 per assembly |
+| `sequence_lengths.tsv` | every sequence and its length |
+| `pairwise_summary.tsv` | one row per comparison — identity, coverage both directions |
+| `sequence_correspondence.tsv` | query × target × strand, with matching and block bp |
+| `input_manifest.tsv` | local paths, file sizes, source URLs |
+| `alignments/*.paf.gz` | the PAFs |
+| `logs/*.minimap2.log` | minimap2 stderr, including version and full command |
+| `plots/*.svg` | the three dot plots |
