@@ -1,0 +1,188 @@
+---
+title: "62 CpGs Separate Quihua From Rio Pudeto"
+description: "Site-level differential methylation in Ostrea chilensis at 4x coverage"
+categories: ["Epigenetics", "Genomics"] #choose "Aquaculture", "Computing", "Epigenetics", "Genomics", "Lab Updates", "Reading Notes", "Transcriptomics"
+#citation:
+date: 08-21-2026
+image: "images/heat.png" # finding a good image
+author:
+  - name: Steven Roberts
+    url:
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    toc: true            # ← enable TOC
+    toc-location: left   # or: right, body
+    toc-depth: 3         # how many heading levels to show
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+<a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"/></a>
+
+## Why
+
+Having [settled which *Ostrea chilensis* assembly to point at](../85-och-genome-compare/), the next question is whether the whole-genome bisulfite data actually says anything about site. Two Chilean sites with four replicates each — Quihua and Rio Pudeto — aligned to `Och_HapB`. A third site (PUMALIN) has a single replicate and is out; you cannot run a group test on n = 1.
+
+Sign convention throughout is **Rio Pudeto minus Quihua**. Positive means more methylated at Rio Pudeto.
+
+## The answer
+
+**62 CpGs are differentially methylated** at q \< 0.01 and \|Δ\| ≥ 25 points, out of 492,229 tested. Split exactly 31 up in Rio Pudeto, 31 up in Quihua.
+
+The effects are not marginal. Median \|Δ\| is 62 percentage points, max 98, and 61 of the 62 show *complete* non-overlap between the two groups' per-sample values — near 0% in one site and near 100% in the other. That near-binary shape is the thing that makes me believe them. Low-depth sampling noise gives you ragged intermediate values, not clean separation.
+
+Global methylation is indistinguishable between sites (Welch p = 0.76). So this is locus-specific, not a genome-wide shift. PCA on the 20,000 most variable CpGs puts only 17% of variance on PC1, but PC1 separates the sites completely (Mann–Whitney p = 0.029 — the floor at 4 vs 4).
+
+## Destranding buys 26% more testable CpGs
+
+Depth is the binding constraint here, and there is a free win in how you count it.
+
+Bismark's coverage files report each strand of a CpG separately, so nominal per-strand depth understates what's actually usable. Merging each CpG dyad from the genome-wide cytosine reports — all 25,151,341 dyads in the assembly — lifts mean depth to 3.5–4.4×. That is what makes a 5×-in-all-eight-samples filter return 492,229 testable CpGs, **26% more than the same filter applied per strand**.
+
+| sample       | site       | dyads ≥1×  | dyads ≥5× | mean cov | global meth (%) |
+|--------------|------------|------------|-----------|----------|-----------------|
+| Quihua_1     | Quihua     | 18,255,918 | 6,382,560 | 3.96     | 22.42           |
+| Quihua_2     | Quihua     | 17,223,535 | 5,281,737 | 3.75     | 27.67           |
+| Quihua_3     | Quihua     | 17,952,062 | 6,584,680 | 4.12     | 24.88           |
+| Quihua_4     | Quihua     | 17,713,312 | 5,554,945 | 3.75     | 23.40           |
+| Rio_Pudeto_1 | Rio Pudeto | 17,773,202 | 5,789,224 | 3.84     | 24.46           |
+| Rio_Pudeto_4 | Rio Pudeto | 17,098,812 | 4,684,283 | 3.51     | 26.73           |
+| Rio_Pudeto_6 | Rio Pudeto | 18,233,200 | 7,111,307 | 4.28     | 24.61           |
+| Rio_Pudeto_7 | Rio Pudeto | 18,337,559 | 7,520,899 | 4.45     | 24.26           |
+
+Still only \~2% of the genome's dyads make it into the tested set. Worth remembering when reading anything downstream.
+
+## The count is set by q, not by effect size
+
+| q    | min \|Δ\| | n DML | up in Pudeto | up in Quihua |
+|------|-----------|-------|--------------|--------------|
+| 0.01 | 25        | 62    | 31           | 31           |
+| 0.01 | 15        | 62    | 31           | 31           |
+| 0.01 | 10        | 62    | 31           | 31           |
+| 0.05 | 15        | 103   | 51           | 52           |
+| 0.05 | 10        | 103   | 51           | 52           |
+
+Every CpG that reaches q \< 0.01 already clears 25 points, so the effect-size cut is doing no work at all. Nice property — it means the primary set isn't an artifact of where I drew the \|Δ\| line. Relaxing to q \< 0.05 gives 103.
+
+## The DMR check is the important part
+
+A single CpG at \~4× can look differential by chance, so this needed an independent check. Tile the genome into 1 kb non-overlapping windows, require ≥5 covered bases per tile, rerun the same test at window level: **138 DMRs** at q \< 0.05, \|Δ\| ≥ 15.
+
+Then ask how many of the 62 single-CpG calls fall inside one.
+
+**20 of 62 (32%), against 0.068% of tested background CpGs.** Odds ratio 697, p = 8e-48. All 20 agree in direction with their enclosing window (Spearman ρ = 0.90).
+
+This is the strongest evidence in the whole analysis that the single-CpG calls are not depth artifacts. Window effects come out slightly attenuated, which is what you'd expect — a 1 kb tile averages the DML with its less-differential neighbours.
+
+## Getting gene annotation onto the alignment reference
+
+Here is where the [mosaic assembly problem from last time](../85-och-genome-compare/) comes back to bite.
+
+The only gene annotation for this species (`GN.gene.gff3`, 21,444 genes) is built on the mosaic assembly whose chromosomes mix both haplotypes. Its coordinates match `Och_HapB` — the alignment reference — on **two chromosomes**. Not ten.
+
+So the loci had to be transferred: extract transcripts, megablast them against `Och_HapB`, chain colinear HSPs per subject and strand, require ≥80% of transcript length aligned at ≥90% identity. **21,060 of 21,444 transcripts transferred (98.2%)** — 232 failed thresholds, 152 had no hit.
+
+I validated that rather than assuming it. Chromosomes 8B and 9B have GFF coordinates genuinely native to `Och_HapB` (assembly lengths match exactly), so they're a ground truth: 74–75% of transferred loci reproduce the original annotation *to the base pair*, 95.7% overlap it, median reciprocal overlap 1.000. On chromosomes drawn from the other haplotype the exact-match rate is 0% — which confirms those coordinate systems really do differ and could not have been used as-is.
+
+## No feature is enriched
+
+Every DML and every tested CpG got assigned hierarchically (exon \> intron \> promoter \> intergenic) plus CpG-island context. Enrichment tested against the **tested-CpG background**, not the whole genome, so mappability and coverage bias cancel.
+
+| track   | category   | n DML | \% DML | \% background | OR   | q    |
+|---------|------------|-------|--------|---------------|------|------|
+| feature | exon       | 0     | 0.00   | 0.87          | 0.00 | 1.00 |
+| feature | intron     | 15    | 24.19  | 17.63         | 1.49 | 0.72 |
+| feature | promoter   | 2     | 3.23   | 1.92          | 1.71 | 0.78 |
+| feature | intergenic | 45    | 72.58  | 79.58         | 0.68 | 0.72 |
+| cgi     | island     | 0     | 0.00   | 0.18          | 0.00 | 1.00 |
+| cgi     | shore      | 1     | 1.61   | 3.43          | 0.46 | 1.00 |
+| cgi     | open_sea   | 61    | 98.39  | 96.39         | 2.28 | 1.00 |
+
+Nothing survives FDR. DMLs distribute essentially like the CpGs that were testable — mostly intergenic, some intronic, two promoters, no exons, no islands. The intron and promoter excesses look suggestive in a bar chart and are well inside sampling noise. All q \> 0.7.
+
+With 62 DMLs there's power to detect only large compositional shifts, so read this as "no strong feature preference," not proof of none. Also worth noting: only 0.18% of tested CpGs sit in a called CpG island, so island-context tests here are nearly uninformative by construction.
+
+## Chromosome 1B is a hotspot
+
+| chromosome     | n DML | tested CpGs | DML per 100k | Poisson q  |
+|----------------|-------|-------------|--------------|------------|
+| Chromosome_1B  | 19    | 65,670      | 28.93        | **0.0095** |
+| Chromosome_9B  | 12    | 47,990      | 25.01        | 0.07       |
+| Chromosome_6B  | 10    | 62,048      | 16.12        | 0.35       |
+| Chromosome_10B | 3     | 29,187      | 10.28        | 0.50       |
+| Chromosome_3B  | 4     | 45,998      | 8.70         | 0.35       |
+| Chromosome_5B  | 4     | 54,810      | 7.30         | 0.30       |
+| Chromosome_4B  | 4     | 55,532      | 7.20         | 0.30       |
+| Chromosome_8B  | 2     | 28,527      | 7.01         | 0.35       |
+| Chromosome_7B  | 2     | 43,032      | 4.65         | 0.23       |
+| Chromosome_2B  | 2     | 59,435      | 3.37         | 0.07       |
+
+Rates are normalized to tested-CpG density, so this isn't just coverage. 1B carries 28.9 DML per 100k against a genome-wide 12.6 (q = 0.0095). 9B is next but doesn't clear correction. Four 1 Mb bins carry a significant local excess, and several DMLs sit as adjacent pairs or short runs within tens of base pairs — the same clustering the DMR analysis picks up.
+
+## Genes
+
+15 transferred gene loci carry a DML in the body or 1 kb promoter, 12 with a SwissProt hit, against a background of 9,870 transferred genes containing at least one tested CpG. 21 of 23 DML–gene associations are gene-body; only two are promoter.
+
+| gene     | n   | context        | mean Δ | min q   | SwissProt                         |
+|------------|------------|------------|------------|------------|------------|
+| GN003785 | 2   | body, promoter | 96.27  | 1.4e-15 | 60S ribosomal protein L14         |
+| GN003779 | 1   | body           | 93.94  | 6.1e-12 | Uncharacterized C20orf96          |
+| GN002392 | 1   | body           | -73.33 | 1.2e-08 | Clathrin heavy chain 1            |
+| GN015922 | 2   | body           | -58.98 | 1.0e-05 | Cytochrome P450 4F6               |
+| GN016518 | 2   | body           | -58.98 | 1.0e-05 | Cytochrome P450 4F12              |
+| GN020540 | 3   | body           | -63.87 | 2.9e-05 | Nucleoporin Nup107                |
+| GN020548 | 3   | body           | -63.87 | 2.9e-05 | LRR-containing protein 63         |
+| GN012249 | 1   | body           | -71.11 | 1.4e-04 | —                                 |
+| GN012257 | 1   | body           | -71.11 | 1.4e-04 | Chloride channel CLIC-like 1      |
+| GN003178 | 1   | body           | 66.67  | 2.0e-04 | Casein kinase II subunit alpha    |
+| GN017845 | 1   | body           | 65.85  | 5.8e-04 | Farnesyltransferase subunit beta  |
+| GN007213 | 1   | body           | -47.06 | 1.3e-03 | Ubiquitin C-term hydrolase 25     |
+| GN000740 | 2   | body           | -51.28 | 5.0e-03 | —                                 |
+| GN002474 | 1   | promoter       | -84.74 | 5.3e-03 | —                                 |
+| GN003840 | 1   | body           | 72.87  | 7.0e-03 | Protein-tyrosine sulfotransferase |
+
+Read that table carefully, because two pairs (GN015922/GN016518 and GN020540/GN020548) are *overlapping transferred loci sharing the same DMLs*. They are not independent observations. Same for GN012249/GN012257. Collapse those and you have **12 non-redundant loci**, not 15. Three loci also span \>200 kb after transfer against a 1.9 kb median, which is almost certainly over-chained alignment.
+
+**GO enrichment is not robust and I'm not going to pretend otherwise.** One term reaches q \< 0.05 — aromatase activity (GO:0070330, q = 0.035) — and it rests entirely on the two cytochrome P450 4F paralogs that occupy overlapping transferred loci and share the same two DMLs. Count that locus once and the term drops to p = 0.027 uncorrected, which does not survive multiple testing. With 11 GO-annotated genes in the study set this is underpowered. Reporting it for completeness, not as a finding.
+
+## What this doesn't show
+
+**Depth.** 3.5–4.4× per dyad after destranding is low for single-CpG inference. The 5×-in-all-8 filter and the DMR concordance are the safeguards, and both hold. Deeper sequencing would mainly expand the tested set (492,229 of 25.1M dyads) rather than overturn what's here.
+
+**One haplotype as reference.** The tested \~2% of dyads is a mappability-biased sample of the genome. That's exactly why enrichment was tested against that background rather than against the genome.
+
+**Transferred annotation.** 98.2% transfer and 95.7% overlap validation is good, but a quarter of validated loci shift by more than a base pair and a few over-chain into implausible spans. Feature calls near locus boundaries — the 1 kb promoter class especially — carry more uncertainty than gene-body calls.
+
+**n = 4 per site, and site is confounded with everything.** Temperature, salinity, food, tidal exposure, population genetic background. Nothing here separates an environmental response from a heritable difference. That is the real limitation, and no amount of sequencing depth fixes it.
+
+**Functional analysis is underpowered.** 62 DMLs in 12 non-redundant loci cannot support pathway-level conclusions.
+
+## Methods, briefly
+
+Bismark genome-wide cytosine reports destranded by merging CpG dyads (all 25,151,341), read into methylKit under R 4.2.3, filtered at 5× with the top 0.1% of coverage removed, median-normalized, united across all eight samples. Differential methylation via `calculateDiffMeth` with Chi-square testing and MN overdispersion correction, BH-adjusted. Tiling 1 kb non-overlapping, ≥5 covered bases. CpG islands called from the reference by Gardiner-Garden/Frommer (≥200 bp, GC \> 0.5, obs/exp \> 0.6). Enrichment by two-sided Fisher exact with BH; per-chromosome and per-bin excess by Poisson against tested-CpG-normalized expectation; GO by hypergeometric with background = transferred genes containing at least one tested CpG.
+
+## Outputs
+
+| File | What |
+|------------------------------------|------------------------------------|
+| `dml_significant.csv` | the 62 DMLs — position, effect, q, direction, DMR membership, feature, island class, nearest gene, per-sample methylation |
+| `dml_genes_annotated.csv` | DML-carrying genes with SwissProt hit, GO IDs, redundancy and transfer-span flags |
+| `feature_enrichment.tsv` | feature and island enrichment against tested background |
+| `go_enrichment.tsv` | GO hypergeometric with robustness annotation |
+| `dmr_1kb.csv` | the 138 tiled DMRs |
+| `dmr_dml_concordance.csv` | the 20 DML/DMR pairs |
+| `dml_per_chromosome.tsv`, `dml_hotspot_bins.tsv` | chromosome and 1 Mb bin statistics |
+| `qc_samples.csv`, `gene_transfer_qc.tsv` | per-sample coverage, per-chromosome transfer rates |
+
+## Next
+
+The DMR set is 138 windows and I've only used it as a validation check so far — it deserves its own look, since region-level calls are the ones that survive low depth. Also want to know what's going on with chromosome 1B, and whether PUMALIN can be brought in with more replicates.
