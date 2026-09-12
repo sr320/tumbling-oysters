@@ -10,7 +10,135 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Fri, 21 Aug 2026 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 11 Sep 2026 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>The Pathogen Has a Plan, the Hosts Do Not</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/87-seastar-susceptibility-genomics/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="the-short-version" class="level2">
+<h2 class="anchored" data-anchor-id="the-short-version">The short version</h2>
+<p>Now that <em>Vibrio pectenicida</em> FHCF-3 is the confirmed agent of sea star wasting disease, an obvious question follows: why do some sea stars die and others shrug it off? The three species we keep coming back to line up as a clean gradient — sunflower star (<em>Pycnopodia helianthoides</em>, most susceptible) &gt; ochre star (<em>Pisaster ochraceus</em>, intermediate) &gt; leather star (<em>Dermasterias imbricata</em>, resistant).</p>
+<p>So I put the pathogen’s gene catalog next to all three host proteomes and asked whether the gradient is written in gene content.</p>
+<p>Two answers, pointing in opposite directions:</p>
+<ul>
+<li><strong>The pathogen side is rich and unambiguous.</strong> FHCF-3 carries a complete secreted-toxin delivery system loaded with 16 pore-forming toxin and hemolysin loci, including two intact aerolysin-family toxins.</li>
+<li><strong>The host side does not explain the gradient.</strong> Of 50 gene families tested, <em>none</em> survives multiple-testing correction. What we get is a ranked list of candidates, not an answer.</li>
+</ul>
+</section>
+<section id="what-the-pathogen-brings" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-pathogen-brings">What the pathogen brings</h2>
+<p>960 of 3,905 FHCF-3 coding loci sorted into ten virulence categories. Delivery is clearly not the limiting step: the T2SS export operon is complete with nothing missing, one T3SS cluster is complete with no pseudogenes, and two separate T6SS clusters carry all 13 core components intact. Sec and Tat backbones are fine.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Loci</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mobile element</td>
+<td>186</td>
+</tr>
+<tr class="even">
+<td>Secretion system</td>
+<td>185</td>
+</tr>
+<tr class="odd">
+<td>Motility / chemotaxis</td>
+<td>175</td>
+</tr>
+<tr class="even">
+<td>Surface / immune evasion</td>
+<td>139</td>
+</tr>
+<tr class="odd">
+<td>Degradative enzyme</td>
+<td>75</td>
+</tr>
+<tr class="even">
+<td>Adhesion / biofilm</td>
+<td>71</td>
+</tr>
+<tr class="odd">
+<td>Quorum sensing / regulation</td>
+<td>48</td>
+</tr>
+<tr class="even">
+<td>Metal acquisition</td>
+<td>43</td>
+</tr>
+<tr class="odd">
+<td>Toxin-antitoxin module</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<td><strong>Pore-forming toxin / hemolysin</strong></td>
+<td><strong>16</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The aerolysins are the weapon to watch. Two are intact — one at 52% identity to <em>Aeromonas hydrophila</em> Aerolysin-4 with the full canonical proaerolysin architecture (pro-domain, β-PFT domain, Sec signal feeding the T2SS), one at 33% identity to the <em>A. salmonicida</em> enzyme. A third paralogue is a pseudogene, which is a nice detail: recent decay of a toxin gene in a genome that still holds two working copies.</p>
+<p>Around them sit an M6 immune-inhibitor-A metalloprotease at 68% identity to <em>V. cholerae</em> PrtV, two thermolabile hemolysins, a 1,180-aa ShlA/HpmA cytolysin with its cognate transporter, a 3,899-aa RTX T1SS substrate, an AexT-like ADP-ribosyltransferase, and a GbpA-type GlcNAc adhesin with GH18 chitinases.</p>
+<p>One more thing worth noting: 65 methyl-accepting chemoreceptor loci in a 4.37-Mb genome. That is a lot of sensing hardware for a small genome, and it fits a bacterium that actively goes looking for a host.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/87-seastar-susceptibility-genomics/images/clipboard-1963825332.png" class="img-fluid"></p>
+</section>
+<section id="what-the-hosts-do-not-show" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-hosts-do-not-show">What the hosts do not show</h2>
+<p>51 host families were scored — the immune repertoire plus every family the pathogen’s toxins are known to engage — against a genome-wide permutation background built from orthogroup resampling.</p>
+<p>The smallest permutation p-value across 50 testable families is 0.0085 (C-type lectins). After Benjamini-Hochberg, the minimum q is 0.271. Nothing is significant. A naive chi-square test flags six families, but it treats genes as independent draws and is badly anticonservative here; the permutation is the number to trust.</p>
+<p>Two mechanistic hypotheses did get positively <strong>excluded</strong> at the gene-content level, which is a real result:</p>
+<ul>
+<li><strong>GPI-anchor biosynthesis is complete in all three species.</strong> GPI-anchored surface proteins are the receptor class for aerolysin-family toxins, so the simplest resistance model — the resistant species lost the receptor pathway — is off the table.</li>
+<li><strong>Glycosphingolipid and sphingomyelin synthesis is complete in all three.</strong> The raft-lipid route for the ETX/MTX2 arm is not differentiated either.</li>
+</ul>
+<p>This also corrected a provisional earlier result of ours: apparent absences of UGCG, SGMS1/2, ST3GAL5 and CERS2-5 turned out to be Swiss-Prot naming artefacts, not gene losses. Worth remembering the next time an absence looks exciting.</p>
+<p>Shared effector and ECM machinery — caspases, NF-κB/Rel, IRF, TIR, CARD, MMPs, TIMPs, transglutaminase, fibronectin, laminin, collagen — all vary by less than 1.5-fold. The pathogen’s collagen-chewing targets are just as available in the resistant animal.</p>
+</section>
+<section id="the-candidates-that-survive" class="level2">
+<h2 class="anchored" data-anchor-id="the-candidates-that-survive">The candidates that survive</h2>
+<p>Effect sizes rank candidates. They do not establish significance. With that said:</p>
+<p><strong>1. Host aerolysin-like β-PFT superfamily — 2 / 5 / 9 copies (4.9-fold, monotonic, p = 0.025).</strong> The only candidate that both follows the gradient and is welded to the pathogen’s principal weapon. The resistant leather star has the most; the sunflower star has a single intact gene where the other two carry tandem arrays (a four-gene array within 45 kb in <em>Pisaster</em>, a pair plus a triplet in <em>Dermasterias</em>). These host proteins are distant clan relatives of the pathogen’s toxins (11-20% identity), which makes them interesting three ways: decoy receptors, host effectors in their own right (this is the natterin/EDSP lineage of animal defensive pore-formers), or simply proteins sharing the toxin’s glycan-binding surface.</p>
+<p><strong>2. C-type lectins — 82 / 129 / 134 per 10k genes (1.63-fold, monotonic, p = 0.0085).</strong> Lowest p-value in the study, unaffected by duplicate collapse, spread over 21-22 scaffolds per species rather than one expanded gene. Repertoire breadth, not a single amplification.</p>
+<p><strong>3. Fibrinogen-related proteins — 114 / 350 / 45.</strong> Biggest raw difference in the dataset and demonstrably not an artefact, but it is a <em>Pisaster</em>-specific expansion (a 54-gene tandem cluster on Scaffold_9), not a gradient. Read it as a lineage trait.</p>
+<p><strong>4. Phospholipid scramblases — 5 / 5 / 13 (resistant-high, p = 0.031).</strong> The ShlA/HpmA cytolysin needs no protein receptor: phosphatidylethanolamine activates it and the bilayer is the substrate. Resistance to that class has to come from lipid asymmetry and membrane repair, and the resistant species carries 2.6-fold more scramblases.</p>
+<p><strong>5. Chitin-binding CBM_14 / peritrophins — 13 / 18 / 2 (resistant-depleted, p = 0.033).</strong> Consistent with a different epidermal glycan surface and fewer adhesion footholds for the GbpA adhesin, but the direction needs independent confirmation.</p>
+<p><strong>6. SRCR receptors and ADAM proteases</strong>, both higher in the resistant species. SRCR is deliberately ambiguous — those proteins are pattern-recognition receptors <em>and</em> a documented GPI-anchored surface class, so a higher count could mean more immune sensing or more aerolysin receptors.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/87-seastar-susceptibility-genomics/images/clipboard-3220079040.png" class="img-fluid"></p>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next?</h2>
+<ol type="1">
+<li><strong>Quantify the candidate transcripts in the exposure RNA-seq we already have.</strong> The orthogroup table was built as the cross-species join key for exactly this. Specific question: are the host aerolysin-like genes induced on exposure in the two species that have arrays?</li>
+<li><strong>Toxin-sensitivity assay on coelomocytes</strong> from all three species against recombinant RS18300 proaerolysin and against culture supernatant ± protease inhibition. This tests whether differential susceptibility shows up at single-cell lysis at all — the pivot the entire genomic interpretation rests on.</li>
+<li><strong>Competition test of the decoy hypothesis</strong> — recombinant <em>Dermasterias</em> aerolysin-like proteins pre-incubated with proaerolysin, assayed for protection of <em>Pycnopodia</em> coelomocytes.</li>
+<li><strong>Resolve GPI-anchoring in the SRCR set</strong> computationally before treating SRCR counts as immune capacity.</li>
+<li><strong>Surface-glycan characterization</strong> of body wall and epidermal mucus by lectin histochemistry or a GbpA binding assay.</li>
+<li><strong>Improve the <em>Pycnopodia</em> annotation</strong> before making any further copy-number claim about it. A transcriptome-guided re-annotation would firm up or dissolve candidate 1’s most striking feature.</li>
+</ol>
+</section>
+<section id="notes-on-how-this-was-done" class="level2">
+<h2 class="anchored" data-anchor-id="notes-on-how-this-was-done">Notes on how this was done</h2>
+<p>DIAMOND blastp against UniProtKB/Swiss-Prot 2026_03 for functional annotation; OrthoFinder 3.1.5 for orthogroups (28,963 clusters, 10,071 strict 1:1:1 single-copy); HMMER3 hmmsearch at trusted cutoffs against 77 InterPro-verified Pfam models plus 16 supplementary ones; the full NCBIFAM/TIGRFAM library at trusted cutoffs over the FHCF-3 proteome; Phobius for signal peptides on a 30-protein priority set; MAFFT for the aerolysin alignment. Statistics are a Cochran-Armitage trend test against an empirical null from 4,000 orthogroup resamples per family size, Benjamini-Hochberg across families.</p>
+<p>Known limits: BUSCO was not run, so completeness rests on orthogroup recovery metrics; the Pfam scan is targeted, so an empty family row means no hit to those specific models rather than genome-wide absence; signal-peptide prediction covered 30 of 3,582 FHCF-3 proteins; and the <em>V. splendidus</em> comparator is not a confirmed non-pathogen, so it is indicative only.</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Genomics</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/87-seastar-susceptibility-genomics/</guid>
+  <pubDate>Fri, 11 Sep 2026 07:00:00 GMT</pubDate>
+</item>
 <item>
   <title>62 CpGs Separate Quihua From Rio Pudeto</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -2916,166 +3044,6 @@ Took 5 oyster from each family, added to cup and and filled to first ridge (abou
   <guid>https://sr320.github.io/tumbling-oysters/posts/70-sormi/</guid>
   <pubDate>Fri, 08 May 2026 07:00:00 GMT</pubDate>
   <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2026-05-08_06-19-16.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Merry Linkmas</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/69-linksmas/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Here are few tidbits to bring you cheer this Christmas Season!</p>
-<p>In no particular order:</p>
-<section id="paper-genomic-insights-into-the-origin-of-ecotypes" class="level1">
-<h1>1) [Paper] Genomic insights into the origin of ecotypes</h1>
-<section id="highlights" class="level2">
-<h2 class="anchored" data-anchor-id="highlights">Highlights</h2>
-<p>The ecotype concept describes populations of species that are phenotypically and genetically differentiated by adaptation to contrasting habitats.</p>
-<p>Ecotypes offer a powerful framework for understanding how, and why, biodiversity arises within species and why similar environments repeatedly generate similar forms.</p>
-<p>A century after its introduction, the ecotype concept continues to shape thinking about adaptation, ecological diversification, and the early stages of speciation.</p>
-<p>The concept has expanded far beyond its botanical origins, influencing research across the tree of life.</p>
-<p>Genomic tools have provided new insight into the forces and factors that drive the formation of ecotypes.</p>
-<p>Integrating genomic, ecological, and experimental approaches will be essential for tackling emerging challenges in the decade ahead.</p>
-<p><a href="https://www.cell.com/action/showPdf?pii=S0169-5347%2825%2900345-3">Link</a></p>
-</section>
-</section>
-<section id="paper-defining-the-epigenetic-toolkit-as-an-evolvable-trait" class="level1">
-<h1>2) [Paper] Defining the epigenetic toolkit as an evolvable trait</h1>
-<section id="highlights-1" class="level2">
-<h2 class="anchored" data-anchor-id="highlights-1">Highlights</h2>
-<p>Previous studies have revealed the genetic basis of many complex epigenetic and phenotypic traits through classic screening or genome-wide association studies (GWAS). We explore the question of how the homeostatic state of a plant is balanced under varied levels of nutrient supply when environmental or internal (epi)genetic factors significantly perturb this balance.</p>
-<p>We explore how epigenetic regulation of the genome of a plant interacts with physiological processes (such as homeostasis) at the biological pathway level when exposed to different nutrient availability scenarios and under changing environmental conditions.</p>
-<p>We propose a conceptual model involving an ‘epigenetic toolkit’ where plants sense environmental pressures to develop a complex crosstalk between physiology, epigenetic/epigenomic state, and their genetic code, and ultimately fine-tune adaptation at the organismal level.</p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_Defining_the_epigenetic_toolkit_as_an_evolvable_trait_Trends_in_Plant_Science_2025-12-22_11-24-19.png" class="img-fluid"></p>
-<p><a href="https://www.cell.com/action/showPdf?pii=S1360-1385%2825%2900348-6">Link</a></p>
-</section>
-</section>
-<section id="software-isoformswitchanalyzer-v2-analysis-of-functional-isoform-changes-in-long-read-and-single-cell-sequencing-data" class="level1">
-<h1>3) [Software] IsoformSwitchAnalyzeR v2: Analysis of Functional Isoform Changes in Long-read and Single-cell Sequencing Data</h1>
-<p><a href="https://www.biorxiv.org/content/10.64898/2025.12.08.693027v1.full.pdf">Link</a></p>
-</section>
-<section id="book-modern-statistics-for-modern-biology" class="level1">
-<h1>4) [Book] Modern Statistics for Modern Biology</h1>
-<p><a href="https://web.stanford.edu/class/bios221/book/">Link</a></p>
-</section>
-<section id="paper-the-plant-mind-unraveling-abiotic-stress-priming-memory-and-adaptation" class="level1">
-<h1>5) [Paper] The Plant Mind: Unraveling Abiotic Stress Priming, Memory, and Adaptation</h1>
-<section id="abstract" class="level2">
-<h2 class="anchored" data-anchor-id="abstract">ABSTRACT</h2>
-<p>Plants exhibit a remarkable capacity to adapt to recurrent abiotic stresses, prompting a re-evaluation of traditional views on plant responses to environmental challenges. This review explores the intricate mechanisms of stress priming, memory, and adaptation in plants. Specifically, it details the molecular and physiological processes underlying abiotic stress priming, which serve as a gateway to understanding plant memory. Stress priming fosters resilience against diverse stressors through interconnected pathways involving hormone signaling, transcriptional regulation, DNA methylation, histone modifications, and small RNAs. These epigenetic changes orchestrate stress-responsive gene expression and can, in some cases, be passed on to future generations. This review distinguishes between somatic memory, intergenerational effects, and transgenerational inheritance to avoid conceptual overlap. By connecting short-term priming to long-term adaptation and potential heritability, this article proposes a paradigm shift in how plant resilience is understood, with significant implications for crop improvement under climate stress.</p>
-<p><img src="http://gannet.fish.washington.edu/seashell/snaps/Monosnap_The_Plant_Mind_Unraveling_Abiotic_Stress_Priming_Memory_and_Adaptation_-_Aswathi_-_2025_-_Physiologia_Plantarum_-_Wiley_Onli_2025-12-22_11-34-49.png" class="img-fluid"></p>
-<p><a href="https://onlinelibrary.wiley.com/doi/epdf/10.1111/ppl.70372">Link</a></p>
-</section>
-</section>
-<section id="software-gff-analysis-tools---ai-agent" class="level1">
-<h1>6) [Software] <a href="https://github.com/ToyokoLabs/gffutilsAI#gff-analysis-tools---ai-agent">GFF Analysis Tools - AI Agent</a></h1>
-<p>This AI agent provides an intuitive interface for bioinformatics researchers to analyze GFF files without writing complex code. Users can ask questions in natural language, and the agent will select and execute the appropriate analysis tools to provide comprehensive answers.</p>
-<section id="features" class="level2">
-<h2 class="anchored" data-anchor-id="features">Features</h2>
-<section id="coordinate-based-queries" class="level3">
-<h3 class="anchored" data-anchor-id="coordinate-based-queries">🧬 Coordinate-based Queries</h3>
-<ul>
-<li>Find features by genomic coordinates (regions and specific positions)</li>
-<li>Query features overlapping genomic regions with filtering by type and strand</li>
-<li>Identify features containing specific genomic positions</li>
-</ul>
-</section>
-<section id="relationship-and-hierarchy-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="relationship-and-hierarchy-analysis">🔗 Relationship and Hierarchy Analysis</h3>
-<ul>
-<li>Explore gene structure and organization (get all child features like exons, CDS, UTRs)</li>
-<li>Find parent features of any given feature using upward traversal</li>
-<li>Get all features of specific types with efficient iteration</li>
-</ul>
-</section>
-<section id="statistical-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="statistical-analysis">📊 Statistical Analysis</h3>
-<ul>
-<li>Calculate comprehensive feature statistics (counts, length distributions per feature type)</li>
-<li>Generate per-chromosome feature summaries and analysis</li>
-<li>Analyze length distributions with detailed statistics (min, max, mean, median, std dev, percentiles)</li>
-<li>Create histogram data for feature length distributions</li>
-</ul>
-</section>
-<section id="attribute-based-searches" class="level3">
-<h3 class="anchored" data-anchor-id="attribute-based-searches">🔍 Attribute-based Searches</h3>
-<ul>
-<li>Search features by attribute key-value pairs (exact and partial matching)</li>
-<li>Find features containing specific attribute keys</li>
-<li>Support pattern matching and logical operations for attribute queries</li>
-</ul>
-</section>
-<section id="positional-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="positional-analysis">📍 Positional Analysis</h3>
-<ul>
-<li>Identify intergenic regions (gaps between genes) with filtering options</li>
-<li>Calculate feature density in genomic windows across chromosomes</li>
-<li>Analyze strand distribution of features with counts and percentages</li>
-<li>Support clustering analysis and positional insights</li>
-</ul>
-</section>
-<section id="export-and-reporting" class="level3">
-<h3 class="anchored" data-anchor-id="export-and-reporting">📤 Export and Reporting</h3>
-<ul>
-<li>Export feature data to CSV format with comprehensive filtering</li>
-<li>Generate human-readable summary reports of GFF file contents</li>
-<li>Provide formatted output for downstream analysis</li>
-</ul>
-</section>
-</section>
-</section>
-<section id="paper-comprehensive-whole-transcriptome-analysis-reveals-specific-lncrna-circrna-and-mirna-mrna-networks-of-pearl-oyster-pinctada-fucata-martensii-in-response-to-hypoxia-stress" class="level1">
-<h1>7) [Paper] Comprehensive whole transcriptome analysis reveals specific lncRNA, circRNA and miRNA-mRNA networks of pearl oyster (<em>Pinctada fucata martensii</em>) in response to hypoxia stress</h1>
-<section id="highlights-2" class="level2">
-<h2 class="anchored" data-anchor-id="highlights-2">Highlights</h2>
-<p>Construct a ceRNA network with 9 DElncRNAs, 10 DEcircRNAs, 3 DEmiRNAs, and 6 DEmRNAs.</p>
-<p>CeRNA networks are critically involved in the molecular response to hypoxia.</p>
-<p>Hypoxia drives ceRNA-based regulation of metabolism, antioxidation, and RNA splicing.</p>
-</section>
-<section id="abstract-1" class="level2">
-<h2 class="anchored" data-anchor-id="abstract-1">Abstract</h2>
-<p>Hypoxia is a prevalent environmental stressor in both natural and aquaculture environments. <em>Pinctada fucata martensii</em>, a commercially valuable pearl oyster species, is particularly susceptible to hypoxic stress in aquaculture. To explore its molecular response to short-term hypoxia, whole-transcriptome sequencing was performed on gill tissues under normoxic and hypoxic conditions. A total of 721 differentially expressed mRNAs (DEmRNAs), 259 long non-coding RNAs (DElncRNAs), 55 circular RNAs (DEcircRNAs), and 17 microRNAs (DEmiRNAs) were identified. Based on predicted interactions among these differentially expressed RNAs, a competing endogenous RNA (ceRNA) network was constructed, consisting of 9 DElncRNAs, 10 DEcircRNAs, 3 DEmiRNAs, and 6 DEmRNAs. Six DElncRNAs and three DEcircRNAs were predicted to interact with miR-152, and the axis-mediated activation of target genes–ALDH5A1 and SLC23A2, FAT4 and CCDC97, and LAC–was implicated in the modulation of metabolic pathways, enzyme activity, antioxidant defenses, thereby promoting antioxidant capacity and suppressing cell growth as part of an adaptive survival strategy. This ceRNA network reveals a key molecular hub that links hypoxia sensing to immunomodulatory mechanisms. Moreover, the co-repression of stress-response genes HSP20 and HSP70 in this network enhances hypoxic tolerance increased energy utilization efficiency and regulation of RNA. Functional analysis of the network revealed enrichment in pathways related to energy metabolism, antioxidant defense, and RNA splicing regulation. These findings provide novel insights into transcriptomic regulation and adaptive mechanisms in bivalves under hypoxic stress.</p>
-<p><a href="https://www.sciencedirect.com/science/article/pii/S2352513425006921">Link</a></p>
-</section>
-</section>
-<section id="paper-multi-omics-reprogramming-drives-a-counterintuitive-reversal-of-disease-susceptibility-during-ageing" class="level1">
-<h1>8 [Paper] Multi-Omics Reprogramming Drives a Counterintuitive Reversal of Disease Susceptibility During Ageing</h1>
-<section id="abstract-2" class="level2">
-<h2 class="anchored" data-anchor-id="abstract-2">Abstract</h2>
-<p>Ageing is a progressive and irreversible biological process characterized by the deterioration of physiological functions and increased vulnerability to mortality. Although extensively studied in vertebrates, ageing in long-lived invertebrates remains comparatively unexplored. While ageing typically leads to greater susceptibility to infectious diseases, a striking and unexpected reversal was identified in oysters: older oysters exhibit markedly increased tolerance to the Pacific Oyster Mortality Syndrome (POMS), a panzootic disease primarily driven by the OsHV-1 herpesvirus and responsible for severe losses in global aquaculture. To investigate this counterintuitive pattern, we challenged oysters aged 4, 16, and 28 months from four biparental families and conducted an integrative multi-omics analysis, including epigenomics, transcriptomics, and metabolomics on the two families showing the strongest age-related increase in survival. Our results reveal that ageing in <em>Magallana gigas</em> is characterized by coordinated epigenetic, transcriptional, and metabolic reprogramming that reduces host permissiveness to POMS. We show that the epigenetic remodeling of key immune regulators (e.g., Toll-like receptors, MyD88) aligns with transcriptional rewiring of NF-κB and ubiquitin pathways, producing a finely tuned innate immune state marked by enhanced antiviral activity but reduced antibacterial responsiveness. We also identify age-related repression of mTOR signaling, likely promoting autophagy and improving viral control. These regulatory changes are tightly linked to metabolic adjustments, including reduced TCA cycle flux, remodeled nitrogen metabolism, and altered glutathione dynamics, which collectively support a stress-tolerant, energy-conserving phenotype. Together, our findings reveal a fundamental evolutionary trade-off: juveniles prioritize growth at the cost of viral susceptibility, whereas adults invest in cellular maintenance and antiviral preparedness.</p>
-<p><a href="https://www.biorxiv.org/content/10.64898/2025.12.12.693928v2">Link</a></p>
-</section>
-</section>
-<section id="paper-unraveling-the-microrna-regulatory-network-underlying-the-planktonic-to-benthic-transition-in-the-pacific-oyster" class="level1">
-<h1>9 [Paper] Unraveling the microRNA regulatory network underlying the planktonic-to-benthic transition in the Pacific oyster</h1>
-<section id="abstract-3" class="level2">
-<h2 class="anchored" data-anchor-id="abstract-3">Abstract</h2>
-<p>The Pacific oyster, <em>Crassostrea gigas</em>, undergoes a critical developmental transition from planktonic larvae to sessile benthic juveniles, a process essential for both aquaculture productivity and the stability of marine ecosystems. While environmental and neuroendocrine cues regulating this transition have been extensively studied, the contribution of microRNAs (miRNAs) remains largely unexplored. In this study, we employed a high-resolution temporal sampling strategy to investigate oyster metamorphosis, identified 33 miRNAs associated with larval settlement and metamorphosis. Additionally, we uncovered 35 highly correlated miRNA-target gene pairs, revealing a complex post-transcriptional regulatory network. We further validated the expression pattern of the potential regulatory hub miRNA novel_mir_80 and confirmed its presence through whole-mount in situ hybridization using LNA-modified probes. Functional annotation of target genes highlighted key roles in adhesion, signal transduction, protein homeostasis, cytoskeleton remodeling, genome stability, and transcriptional and epigenetic regulation. These results underscore the pivotal role of miRNAs in orchestrating developmental reprogramming during the planktonic-benthic transition. Our findings not only expand current understanding of miRNA-mediated gene regulation in <em>C. gigas</em>, but also provide novel molecular targets with potential applications in oyster breeding and aquaculture management.</p>
-<p><a href="https://www.sciencedirect.com/science/article/pii/S2352513425006908">Link</a></p>
-</section>
-</section>
-<section id="paper-fasting-reduces-viral-susceptibility-in-oysters-until-energy-depletion-becomes-detrimental" class="level1">
-<h1>10 [Paper] Fasting reduces viral susceptibility in oysters until energy depletion becomes detrimental</h1>
-<section id="abstract-4" class="level2">
-<h2 class="anchored" data-anchor-id="abstract-4">Abstract</h2>
-<p>Nutritional status is a key determinant of disease outcomes in animals, yet its effects are complex. While abundant food supplies support host immunity, they may also fuel pathogen proliferation, whereas food limitation can restrict resources for both host and parasite. The balance between these opposing processes and the physiological limits to fasting as a protective strategy remain poorly understood. Here we tested how the duration of food deprivation affects infection outcome, using the Pacific oyster (<em>Magallana gigas</em>) and its lethal pathogen Ostreid herpesvirus 1 as a model system. We found that moderate fasting markedly improved survival, with the lowest mortality observed after 14–28 days without food. However, beyond this range, survival declined sharply, revealing a tipping point where prolonged starvation reversed its protective effect. Biochemical analyses of oysters from Sequence 1 at the onset of infection provided mechanistic insight: carbohydrate reserves were depleted rapidly, lipid reserves fell by approximately 90% after 28 days of starvation and protein catabolism occurred only after extended fasting, coinciding with the decline in survival. Our results demonstrate that fasting can transiently enhance resistance to viral infection but is constrained by finite energy reserves. By identifying a physiological threshold beyond which starvation compromises survival, we uncover a novel mechanism linking host energetics to disease outcomes.</p>
-<p><a href="https://royalsocietypublishing.org/rsbl/article/21/12/20250606/364694">Link</a></p>
-
-
-<!-- -->
-
-</section>
-</section>
-
- ]]></description>
-  <category>Lab Updates</category>
-  <category>Computing</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/69-linksmas/</guid>
-  <pubDate>Wed, 24 Dec 2025 08:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/69-linksmas/link.jpeg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
