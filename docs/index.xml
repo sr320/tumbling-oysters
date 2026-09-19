@@ -32,6 +32,11 @@
 <li><strong>Diploid condition index.</strong> The late-minus-early AUC difference correlates at rho -0.35, family-wise <em>p</em> 0.09. Weak and single-feature.</li>
 </ol>
 <p>Everything else, including triploid survival, is indistinguishable from noise.</p>
+<p>Two design differences are the most likely explanations for why this looks so much weaker than the USDA family work, and both are about information content rather than about the assay failing:</p>
+<ul>
+<li><strong>One family.</strong> Every animal here is HNRY. The USDA result was built on variation <em>among</em> families, which is where most of the heritable signal in this kind of trait sits. Within a single family we are asking the assay to resolve individual variation against a background of shared genetics, and there is simply much less to find.</li>
+<li><strong>Endpoint survival instead of duration of survival.</strong> The field phenotype here is binary: alive or dead at one sampling. The USDA families were scored on how long each animal survived in the lab challenge, a graded response that uses every animal rather than only the ones that crossed the line. Collapsing that to a single endpoint throws away most of the resolution, and it is a large part of why 33 deaths buy so little here.</li>
+</ul>
 <p>So the honest summary: in this cohort, a pre-deployment 40 °C resazurin trace carries a small amount of information about how much a triploid will grow, possibly about whether a diploid will survive, and essentially none about triploid mortality. None of it is strong enough to use as a screen today. The next deployment, ideally with more deaths and a recorded field duration, is what would confirm or kill the triploid growth lead.</p>
 </section>
 <section id="what-this-was" class="level2">

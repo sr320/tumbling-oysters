@@ -223,6 +223,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Diploid condition index.</strong> The late-minus-early AUC difference correlates at rho -0.35, family-wise <em>p</em> 0.09. Weak and single-feature.</li>
 </ol>
 <p>Everything else, including triploid survival, is indistinguishable from noise.</p>
+<p>Two design differences are the most likely explanations for why this looks so much weaker than the USDA family work, and both are about information content rather than about the assay failing:</p>
+<ul>
+<li><strong>One family.</strong> Every animal here is HNRY. The USDA result was built on variation <em>among</em> families, which is where most of the heritable signal in this kind of trait sits. Within a single family we are asking the assay to resolve individual variation against a background of shared genetics, and there is simply much less to find.</li>
+<li><strong>Endpoint survival instead of duration of survival.</strong> The field phenotype here is binary: alive or dead at one sampling. The USDA families were scored on how long each animal survived in the lab challenge, a graded response that uses every animal rather than only the ones that crossed the line. Collapsing that to a single endpoint throws away most of the resolution, and it is a large part of why 33 deaths buy so little here.</li>
+</ul>
 <p>So the honest summary: in this cohort, a pre-deployment 40 °C resazurin trace carries a small amount of information about how much a triploid will grow, possibly about whether a diploid will survive, and essentially none about triploid mortality. None of it is strong enough to use as a screen today. The next deployment, ideally with more deaths and a recorded field duration, is what would confirm or kill the triploid growth lead.</p>
 </section>
 <section id="what-this-was" class="level2">
@@ -943,76 +948,81 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Everything else, including triploid survival, is indistinguishable from noise.</span>
 <span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>So the honest summary: in this cohort, a pre-deployment 40 °C resazurin trace carries a small amount of information about how much a triploid will grow, possibly about whether a diploid will survive, and essentially none about triploid mortality. None of it is strong enough to use as a screen today. The next deployment, ideally with more deaths and a recorded field duration, is what would confirm or kill the triploid growth lead.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>Two design differences are the most likely explanations for why this looks so much weaker than the USDA family work, and both are about information content rather than about the assay failing:</span>
 <span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this was</span></span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>The question: of every index that can be gleaned from a 4-hour resazurin run on an individual oyster, which ones forecast that same animal's field performance, and how should the assay be normalized, truncated, and combined to do so?</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>The analysis is a fresh, self-contained pass at the 2025-08-26 ploidy trial (HNRY family, one day, 40 °C), starting from the **raw plate-reader files** rather than the processed <span class="in">`ploidy_metabolism.csv`</span>. That matters because absolute fluorescence, blank-subtracted resorufin production, un-normalized fold change, actual elapsed read times, and baseline autofluorescence are all lost by the time the data reach the processed CSV.</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>It differs from the family-level prediction notebook in <span class="in">`sormi-assay-development`</span> in three ways:</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Individual-level linkage.** The same animal was assayed, tagged, deployed, and sampled, so n is \~160 individuals rather than \~9 family means.</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Every scale and every feature.** Five value scales × \~45 curve features × two size/plate adjustments, catalogued and then de-duplicated to \~280 distinct indices.</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Honest multiplicity control.** With several hundred candidates, nominal *p*-values are meaningless. Every screen is calibrated against a permutation null for the *best* index in the family, every composite is built with nested feature selection inside the cross-validation loop, and every out-of-sample score is compared against a ploidy + size + plate benchmark fitted the same way.</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>That last point is the reason for the flat TL;DR. On the survival screen the best index reaches AUC \~0.68 pooled and \~0.81 in diploids **by chance alone** at these death counts. The observed maxima, 0.63 and 0.74, sit below their own null ceilings.</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/survival_permutation_ceiling.png)</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>The heatmap below is the whole catalogue in one view: the 30 indices with the strongest pooled association, against every field phenotype, by stratum. Warm and cool blocks swap sides between diploid and triploid panels more often than they agree.</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/association_heatmap_top_indices.png)</span></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">## The numbers</span></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>Best single index per stratum for survival (AUC, family-wise permutation *p*):</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>diploid: <span class="in">`final_value`</span> on <span class="in">`fc_corr_mm`</span>, size/plate-adjusted, AUC = 0.74 (n = 80, 9 dead), family-wise *p* = 0.32</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>pooled: <span class="in">`n_negative_intervals`</span> on <span class="in">`raw_rfu`</span>, AUC = 0.63 (n = 156, 33 dead), family-wise *p* = 0.41</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>triploid: <span class="in">`time_to_vmax`</span> on <span class="in">`raw_rfu`</span>, adjusted, AUC = 0.63 (n = 76, 24 dead), family-wise *p* = 0.77</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>0 of 852 index × stratum tests cleared the 0.05 family-wise threshold.</span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>Best single index per continuous phenotype:</span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>dry tissue weight: <span class="in">`rate_h2`</span> on <span class="in">`fc_corr_mm`</span> (adj), triploid, rho = 0.42 (n = 52), *p* = 0.08</span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>growth: <span class="in">`sat_asymptote`</span> on <span class="in">`fc_corr`</span>, triploid, rho = 0.40 (n = 49), *p* = 0.11</span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>performance composite: same index, rho = 0.40, *p* = 0.11</span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>condition index: <span class="in">`delta_auc_late_minus_early`</span> on <span class="in">`raw_rfu`</span>, diploid, rho = -0.35 (n = 71), *p* = 0.09</span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>cup: <span class="in">`baseline_value`</span> on <span class="in">`raw_rfu`</span> (adj), triploid, rho = -0.33, *p* = 0.36</span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>yield (DTW): <span class="in">`time_to_vmax`</span> on <span class="in">`raw_rfu`</span> (adj), triploid, rho = 0.23, *p* = 0.63</span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/best_index_scatter.png)</span></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="fu">## Three things that came out sideways</span></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>**Capacity means different things in the two ploidies.** Diploids that produced *more* resorufin per mm at 40 °C were more likely to be alive at sampling; in triploids the same capacity-type indices track growth, not survival; and for condition index in diploids they go the other way entirely. That argues for scoring ploidies separately rather than pooling.</span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>**Triploid survival is simply not in the trace.** Despite three times as many deaths as in diploids, no index exceeds AUC 0.63 in either direction, and the nested composites fall *below* 0.5, which is the signature of selecting on noise. Whatever killed the triploids in the field is not visible in their 4-hour 40 °C trajectory at deployment.</span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/nested_composite_cv.png)</span></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>**Normalization matters less than expected; adjustment matters more.** Dividing by shell length (<span class="in">`fc_corr_mm`</span>) versus not (<span class="in">`fc_corr`</span>) changes little once plate and size are regressed out. Keep the existing pipeline, but always test features after adjusting for assay size and plate.</span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a>And one practical note: **a 2-hour read is not clearly worse than 4 hours.** The <span class="in">`short_assay_2h`</span> composite is within one SD of the best full-assay composite for pooled survival and matches or exceeds it for growth and condition. The assay-duration curves are flat after 2 h in the pooled stratum. If this is ever run at scale, that is the thread to pull.</span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/assay_duration.png)</span></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a><span class="fu">## Screening value today</span></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>Culling the predicted-worst quintile on the best out-of-sample composite would raise realized survival by three to four percentage points in diploids and the pooled set, and would *lower* it in triploids. Not a usable screen.</span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/screening_utility.png)</span></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next</span></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Record the field sampling date and days at sea so growth can be expressed per day.</span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Add a non-stressed ambient-temperature control run on the same animals, so stress *response* (40 °C minus ambient) can join the catalogue.</span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Re-run with the 2025-08-13 cohort once its field outcomes exist. The catalogue gains power fastest from more deaths, not more indices.</span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>Full notebook and rendered report: <span class="co">[</span><span class="ot">resazurin-ploidy-index-catalogue-field-prediction</span><span class="co">](https://github.com/RobertsLab/vims-resazurin/blob/main/code/ploidy/resazurin-ploidy-index-catalogue-field-prediction.md)</span> in <span class="in">`vims-resazurin`</span>, with all CSV outputs and figures under <span class="in">`output/ploidy/resazurin-index-catalogue/`</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**One family.** Every animal here is HNRY. The USDA result was built on variation *among* families, which is where most of the heritable signal in this kind of trait sits. Within a single family we are asking the assay to resolve individual variation against a background of shared genetics, and there is simply much less to find.</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Endpoint survival instead of duration of survival.** The field phenotype here is binary: alive or dead at one sampling. The USDA families were scored on how long each animal survived in the lab challenge, a graded response that uses every animal rather than only the ones that crossed the line. Collapsing that to a single endpoint throws away most of the resolution, and it is a large part of why 33 deaths buy so little here.</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>So the honest summary: in this cohort, a pre-deployment 40 °C resazurin trace carries a small amount of information about how much a triploid will grow, possibly about whether a diploid will survive, and essentially none about triploid mortality. None of it is strong enough to use as a screen today. The next deployment, ideally with more deaths and a recorded field duration, is what would confirm or kill the triploid growth lead.</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this was</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>The question: of every index that can be gleaned from a 4-hour resazurin run on an individual oyster, which ones forecast that same animal's field performance, and how should the assay be normalized, truncated, and combined to do so?</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>The analysis is a fresh, self-contained pass at the 2025-08-26 ploidy trial (HNRY family, one day, 40 °C), starting from the **raw plate-reader files** rather than the processed <span class="in">`ploidy_metabolism.csv`</span>. That matters because absolute fluorescence, blank-subtracted resorufin production, un-normalized fold change, actual elapsed read times, and baseline autofluorescence are all lost by the time the data reach the processed CSV.</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>It differs from the family-level prediction notebook in <span class="in">`sormi-assay-development`</span> in three ways:</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Individual-level linkage.** The same animal was assayed, tagged, deployed, and sampled, so n is \~160 individuals rather than \~9 family means.</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Every scale and every feature.** Five value scales × \~45 curve features × two size/plate adjustments, catalogued and then de-duplicated to \~280 distinct indices.</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Honest multiplicity control.** With several hundred candidates, nominal *p*-values are meaningless. Every screen is calibrated against a permutation null for the *best* index in the family, every composite is built with nested feature selection inside the cross-validation loop, and every out-of-sample score is compared against a ploidy + size + plate benchmark fitted the same way.</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>That last point is the reason for the flat TL;DR. On the survival screen the best index reaches AUC \~0.68 pooled and \~0.81 in diploids **by chance alone** at these death counts. The observed maxima, 0.63 and 0.74, sit below their own null ceilings.</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/survival_permutation_ceiling.png)</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>The heatmap below is the whole catalogue in one view: the 30 indices with the strongest pooled association, against every field phenotype, by stratum. Warm and cool blocks swap sides between diploid and triploid panels more often than they agree.</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/association_heatmap_top_indices.png)</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a><span class="fu">## The numbers</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>Best single index per stratum for survival (AUC, family-wise permutation *p*):</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>diploid: <span class="in">`final_value`</span> on <span class="in">`fc_corr_mm`</span>, size/plate-adjusted, AUC = 0.74 (n = 80, 9 dead), family-wise *p* = 0.32</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>pooled: <span class="in">`n_negative_intervals`</span> on <span class="in">`raw_rfu`</span>, AUC = 0.63 (n = 156, 33 dead), family-wise *p* = 0.41</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>triploid: <span class="in">`time_to_vmax`</span> on <span class="in">`raw_rfu`</span>, adjusted, AUC = 0.63 (n = 76, 24 dead), family-wise *p* = 0.77</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>0 of 852 index × stratum tests cleared the 0.05 family-wise threshold.</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>Best single index per continuous phenotype:</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>dry tissue weight: <span class="in">`rate_h2`</span> on <span class="in">`fc_corr_mm`</span> (adj), triploid, rho = 0.42 (n = 52), *p* = 0.08</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>growth: <span class="in">`sat_asymptote`</span> on <span class="in">`fc_corr`</span>, triploid, rho = 0.40 (n = 49), *p* = 0.11</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>performance composite: same index, rho = 0.40, *p* = 0.11</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>condition index: <span class="in">`delta_auc_late_minus_early`</span> on <span class="in">`raw_rfu`</span>, diploid, rho = -0.35 (n = 71), *p* = 0.09</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>cup: <span class="in">`baseline_value`</span> on <span class="in">`raw_rfu`</span> (adj), triploid, rho = -0.33, *p* = 0.36</span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>yield (DTW): <span class="in">`time_to_vmax`</span> on <span class="in">`raw_rfu`</span> (adj), triploid, rho = 0.23, *p* = 0.63</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/best_index_scatter.png)</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="fu">## Three things that came out sideways</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>**Capacity means different things in the two ploidies.** Diploids that produced *more* resorufin per mm at 40 °C were more likely to be alive at sampling; in triploids the same capacity-type indices track growth, not survival; and for condition index in diploids they go the other way entirely. That argues for scoring ploidies separately rather than pooling.</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>**Triploid survival is simply not in the trace.** Despite three times as many deaths as in diploids, no index exceeds AUC 0.63 in either direction, and the nested composites fall *below* 0.5, which is the signature of selecting on noise. Whatever killed the triploids in the field is not visible in their 4-hour 40 °C trajectory at deployment.</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/nested_composite_cv.png)</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>**Normalization matters less than expected; adjustment matters more.** Dividing by shell length (<span class="in">`fc_corr_mm`</span>) versus not (<span class="in">`fc_corr`</span>) changes little once plate and size are regressed out. Keep the existing pipeline, but always test features after adjusting for assay size and plate.</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>And one practical note: **a 2-hour read is not clearly worse than 4 hours.** The <span class="in">`short_assay_2h`</span> composite is within one SD of the best full-assay composite for pooled survival and matches or exceeds it for growth and condition. The assay-duration curves are flat after 2 h in the pooled stratum. If this is ever run at scale, that is the thread to pull.</span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/assay_duration.png)</span></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a><span class="fu">## Screening value today</span></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>Culling the predicted-worst quintile on the best out-of-sample composite would raise realized survival by three to four percentage points in diploids and the pooled set, and would *lower* it in triploids. Not a usable screen.</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="al">![](images/screening_utility.png)</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Next</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>Record the field sampling date and days at sea so growth can be expressed per day.</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>Add a non-stressed ambient-temperature control run on the same animals, so stress *response* (40 °C minus ambient) can join the catalogue.</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="ss">3.  </span>Re-run with the 2025-08-13 cohort once its field outcomes exist. The catalogue gains power fastest from more deaths, not more indices.</span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>Full notebook and rendered report: <span class="co">[</span><span class="ot">resazurin-ploidy-index-catalogue-field-prediction</span><span class="co">](https://github.com/RobertsLab/vims-resazurin/blob/main/code/ploidy/resazurin-ploidy-index-catalogue-field-prediction.md)</span> in <span class="in">`vims-resazurin`</span>, with all CSV outputs and figures under <span class="in">`output/ploidy/resazurin-index-catalogue/`</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
