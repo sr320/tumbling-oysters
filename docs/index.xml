@@ -10,7 +10,622 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Fri, 11 Sep 2026 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 19 Sep 2026 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>No Genotype-Environment Association in Olympia Oyster lcWGS</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/88-oly-lcwgs-rda/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>We tested whether allele frequencies across 15 Olympia oyster (<em>Ostrea lurida</em>) collections track local environmental conditions, using redundancy analysis on low-coverage whole-genome data. <strong>They do not.</strong> Across 12,858,328 SNPs and 13 populations with complete environmental data, the environmental term explains no more variance than chance (adjusted <em>R</em>² = −0.004, <em>p</em> = 0.55); conditioning on geography makes it worse; forward selection admits no predictors; no constrained axis is significant; and no locus passes FDR (lowest <em>q</em> = 0.96). An annotation-guided follow-up on a new chromosome-scale assembly, testing <em>a priori</em> gene sets instead of every marker, is also negative (lowest BH <em>q</em> = 0.46).</p>
+<p>Neutral population structure, by contrast, is real and substantial (adjusted <em>R</em>² = 0.111). The data are informative; the environmental hypothesis is the thing that fails.</p>
+<p>Two results we were not looking for turned out to matter more than the primary one: a mislabelled site, and a clear demonstration that the binding constraint on this design is the number of sampled sites rather than anything about sequencing.</p>
+</section>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Restoration programs move Olympia oysters between beds. If populations are locally adapted, source choice has consequences for performance; if they are not, sourcing can be decided on logistics, disease history and genetic diversity. Genotype-environment association (GEA) asks the genetic version of this question directly: do allele frequencies covary with site conditions, over and above ancestry and geographic proximity?</p>
+<p>The distinction that matters, and that Fst alone cannot address: <em>populations differ</em> is nearly always true and is mostly drift; <em>populations differ because of their environment</em> is a much stronger claim and is the one relevant to sourcing.</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>Low-coverage whole-genome sequencing of 112 libraries from 15 putative collection sites (13 in Puget Sound and the Strait of Juan de Fuca, one on the outer Washington coast, one in Coos Bay, Oregon). Repository: <code>github.com/zbengt/oly-lc-WGS</code>; alignments and variants served over HTTP from a lab web host.</p>
+<p>After QC, <strong>109 libraries</strong> were retained. Two blanks and one library far below the depth threshold were dropped. Mean depth of retained samples was 5.48× (range 3.46–6.73), 5–8 individuals per site.</p>
+<section id="environmental-layer-rebuilt" class="level3">
+<h3 class="anchored" data-anchor-id="environmental-layer-rebuilt">Environmental layer (rebuilt)</h3>
+<p>The environmental data committed with the repository were not usable as predictors: a 30-day window in which all 15 sites collapsed onto 5 water-temperature stations 12–69 km away. Most of what that layer called “environment” was really basin identity.</p>
+<p>We rebuilt it from <strong>Washington Department of Ecology monthly CTD casts, 2013–2018</strong>, restricted to the 0–5 m band, giving <strong>13 unique stations at 0.4–23.3 km</strong>. Predictors, chosen to keep collinearity manageable against a small number of sites:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>predictor</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>temp_summer_mean</code></td>
+<td>mean June–August water temperature</td>
+</tr>
+<tr class="even">
+<td><code>sal_amplitude</code></td>
+<td>seasonal salinity range</td>
+</tr>
+<tr class="odd">
+<td><code>chl_summer_mean</code></td>
+<td>summer chlorophyll-<em>a</em>, as a food-supply proxy</td>
+</tr>
+</tbody>
+</table>
+<p>Two sites carry temperature only and are excluded from the multivariate model: Coos Bay (no accessible Oregon source supplied salinity, oxygen or chlorophyll) and Willapa Bay (outside the Ecology Salish Sea program; the only long marine record in the bay is a NOAA CO-OPS temperature gauge 23 km from the beds). That leaves <strong>13 populations, 94 individuals</strong> in the constrained models.</p>
+<p>Spatial structure was captured by distance-based Moran eigenvector maps (<code>MEM1</code>, <code>MEM2</code>); neutral ancestry by the first two structure PCs.</p>
+</section>
+<section id="genotypes" class="level3">
+<h3 class="anchored" data-anchor-id="genotypes">Genotypes</h3>
+<p>Genotypes came from the joint VCF’s likelihoods rather than from BAM-level re-estimation. Filtering with <code>bcftools</code>: biallelic SNPs, QUAL ≥ 30, MQ ≥ 30, <code>F_MISSING</code> &lt; 0.2, MAF 0.05–0.95, plus an excess-heterozygosity screen (<code>ExcHet</code> &gt; 1e-6) as a paralog guard.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>stage</th>
+<th>SNPs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>after bcftools filters</td>
+<td>14,250,907</td>
+</tr>
+<tr class="even">
+<td>dropped — excess depth</td>
+<td>14,250</td>
+</tr>
+<tr class="odd">
+<td>dropped — missing in a population</td>
+<td>1,903</td>
+</tr>
+<tr class="even">
+<td>dropped — MAF &lt; 0.05</td>
+<td>1,376,098</td>
+</tr>
+<tr class="odd">
+<td><strong>retained</strong></td>
+<td><strong>12,858,656</strong></td>
+</tr>
+<tr class="even">
+<td>thinned subset for structure</td>
+<td>174,534</td>
+</tr>
+</tbody>
+</table>
+<p>Population allele frequencies <strong>pool sequencing reads within a site</strong> (summed ALT depth over summed total depth) rather than averaging per-individual calls, which at ~5× would be biased toward homozygotes. Individual dosages are read-based, carrying depth uncertainty forward.</p>
+</section>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<section id="redundancy-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="redundancy-analysis">Redundancy analysis</h3>
+<p>Population allele frequencies (SNPs standardised across populations) were regressed on the three predictors, with partial RDA conditioning separately and jointly on geography (MEM) and ancestry (structure PCs). An individual-level model was fitted in parallel.</p>
+<p><strong>Fitting in principal coordinates.</strong> With 13 populations and ~1.3 × 10⁷ SNPs, the response matrix cannot be held in memory. A direct fit exhausted R’s 16 GB vector limit at 918k columns. But an RDA depends on the response only through its <em>row space</em>, so we compute the Gram matrix of the column-standardised frequency matrix, take <code>Ypc = U·diag(s)</code>, and fit that instead. This is exact, not an approximation: eigenvalues, <em>R</em>², <em>F</em> and permutation <em>p</em>-values are identical. Total inertia must equal the SNP count, and that identity is asserted in every script as a correctness check. SNP loadings are recovered afterwards by back-projection.</p>
+</section>
+<section id="permutation-design-the-part-that-changes-the-answer" class="level3">
+<h3 class="anchored" data-anchor-id="permutation-design-the-part-that-changes-the-answer">Permutation design (the part that changes the answer)</h3>
+<p>Environmental predictors are <strong>constant within a site</strong>. Permuting individuals freely would treat 94 oysters as 94 independent tests of temperature when they are really 13. We therefore permute <strong>site condition vectors among sites</strong>, keeping each individual attached to its own site.</p>
+<p><code>vegan</code>’s <code>Plots(strata=)</code> scheme cannot be used here because it requires balanced plots and our sites hold 5–8 individuals, so the restricted permutation is implemented directly, with the <em>F</em> statistic computed from the constrained and residual components.</p>
+<p>The difference is not cosmetic:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>null</th>
+<th><em>F</em></th>
+<th><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>permute site conditions among sites (correct)</td>
+<td>1.250</td>
+<td><strong>0.495</strong></td>
+</tr>
+<tr class="even">
+<td>permute individuals freely (pseudoreplicated)</td>
+<td>1.250</td>
+<td><strong>0.001</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Same data, same model, same <em>F</em>. Any GEA result on a design like this that permutes individuals freely is measuring pseudoreplication.</p>
+</section>
+<section id="scaling-to-the-whole-genome" class="level3">
+<h3 class="anchored" data-anchor-id="scaling-to-the-whole-genome">Scaling to the whole genome</h3>
+<p>The first pass used the 1,200 highest-variant-density contigs, 7.4% of the VCF’s records, not by choice but because the 24.5 GB joint VCF transfers to the analysis sandbox at ~1.5 MB/s. The lab compute host pulls the same file at ~94 MB/s, so the full file was filtered there: all 158,839 contigs across 24 parallel workers, 25 minutes wall.</p>
+</section>
+<section id="annotation-guided-follow-up" class="level3">
+<h3 class="anchored" data-anchor-id="annotation-guided-follow-up">Annotation-guided follow-up</h3>
+<p>A chromosome-scale Dovetail Hi-C assembly (PO2457: 1.023 Gb, 145 scaffolds, N50 103 Mb, 10 scaffolds ≥ 10 Mb holding 98.7%) became available with MAKER annotation, 34,178 gene models and a RepeatMasker track covering 61.2% of the assembly. The original reference (<code>Olurida_v081</code>, 158,839 contigs, N50 13 kb) had no usable annotation.</p>
+<p>This enables a better-powered question. A scan of 12.7 M markers against 9 residual degrees of freedom is a multiplicity problem more than a test; 12 targeted tests informed by prior biology is not. We lifted the SNP set onto the new scaffolds with <code>minimap2 -cx asm20</code> (the <code>asm20</code> preset because this is a different individual and <em>Ostrea</em> is highly polymorphic), dropped repeat-masked positions, assigned SNPs to gene bodies ± 2 kb, and tested four gene sets built from the annotation’s UniProt-style <code>Note</code> fields.</p>
+<p>The null is again restricted permutation of the predictor across the 13 populations, 999 times. This matters because a per-gene maximum statistic is strongly biased by SNP count. Genes here hold a median of 61 SNPs and a maximum of 2,487, and permuting the predictor holds every gene’s SNP count, internal LD and the genome-wide correlation structure exactly fixed.</p>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<section id="variance-partitioning" class="level3">
+<h3 class="anchored" data-anchor-id="variance-partitioning">Variance partitioning</h3>
+<p>Genome-wide, 13 populations, 12,858,328 SNPs:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>component</th>
+<th><em>R</em>²</th>
+<th>adjusted <em>R</em>²</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>environment (marginal)</td>
+<td>0.247</td>
+<td><strong>−0.004</strong></td>
+</tr>
+<tr class="even">
+<td>geography MEM (marginal)</td>
+<td>0.190</td>
+<td>0.028</td>
+</tr>
+<tr class="odd">
+<td><strong>ancestry PC (marginal)</strong></td>
+<td>0.259</td>
+<td><strong>0.111</strong></td>
+</tr>
+<tr class="even">
+<td>environment | geography</td>
+<td>0.225</td>
+<td>−0.031</td>
+</tr>
+<tr class="odd">
+<td>environment | ancestry</td>
+<td>0.219</td>
+<td>−0.006</td>
+</tr>
+<tr class="even">
+<td>environment | geography + ancestry</td>
+<td>0.218</td>
+<td>−0.015</td>
+</tr>
+<tr class="odd">
+<td>full model</td>
+<td>0.620</td>
+<td>0.088</td>
+</tr>
+</tbody>
+</table>
+<p>Negative adjusted <em>R</em>² is what a predictor that does not earn its keep looks like after the penalty for model complexity. Ancestry is the only component carrying real signal.</p>
+</section>
+<section id="significance" class="level3">
+<h3 class="anchored" data-anchor-id="significance">Significance</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>test</th>
+<th>statistic</th>
+<th><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>environment, global</td>
+<td><em>F</em> = 0.984</td>
+<td>0.545</td>
+</tr>
+<tr class="even">
+<td>environment | geography, global</td>
+<td><em>F</em> = 0.896</td>
+<td>0.910</td>
+</tr>
+<tr class="odd">
+<td>temperature term</td>
+<td><em>F</em> = 1.111</td>
+<td>0.164</td>
+</tr>
+<tr class="even">
+<td>salinity range term</td>
+<td><em>F</em> = 0.945</td>
+<td>0.513</td>
+</tr>
+<tr class="odd">
+<td>chlorophyll term</td>
+<td><em>F</em> = 0.896</td>
+<td>0.697</td>
+</tr>
+<tr class="even">
+<td>first constrained axis (RDA1)</td>
+<td><em>F</em> = 1.115</td>
+<td>0.637</td>
+</tr>
+</tbody>
+</table>
+<p>Forward selection (<code>ordiR2step</code>, 999 permutations) admitted <strong>zero</strong> predictors. The marginal temperature hint present in the 7.4% subset (term <em>p</em> = 0.068) <strong>disappears at genome scale</strong> (<em>p</em> = 0.164). The subset was enriched for variable regions, not a random genomic sample.</p>
+</section>
+<section id="no-candidate-loci" class="level3">
+<h3 class="anchored" data-anchor-id="no-candidate-loci">No candidate loci</h3>
+<p>A Mahalanobis scan on constrained-axis loadings under a robust (MCD) covariance returned <strong>zero loci</strong> at <em>q</em> &lt; 0.05, <em>q</em> &lt; 0.10 and <em>q</em> &lt; 0.20, on both the subset (lowest <em>q</em> = 0.75) and genome-wide (lowest <em>q</em> = 0.96).</p>
+<p>A permissive 3-SD cut-off returns 1,342 loci on the subset and 10,615 genome-wide. Those are the tail of a null distribution from a model that is not globally significant, and we are deliberately not reporting them as candidates. If a GEA paper shows a gene list without FDR correction, this is the number that was skipped.</p>
+</section>
+<section id="robustness" class="level3">
+<h3 class="anchored" data-anchor-id="robustness">Robustness</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>variation</th>
+<th>sites</th>
+<th><em>p</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>main model, 3 predictors</td>
+<td>13</td>
+<td>0.545</td>
+</tr>
+<tr class="even">
+<td>drop the sites with uncertain labels</td>
+<td>10</td>
+<td>0.919</td>
+</tr>
+<tr class="odd">
+<td>merge the two Fidalgo Bay collections</td>
+<td>12</td>
+<td>0.562</td>
+</tr>
+<tr class="even">
+<td>temperature alone</td>
+<td>15</td>
+<td>0.338</td>
+</tr>
+<tr class="odd">
+<td>temperature alone, conditioned on geography</td>
+<td>15</td>
+<td>0.173</td>
+</tr>
+<tr class="even">
+<td><strong>temperature alone, conditioned on ancestry</strong></td>
+<td>15</td>
+<td><strong>0.025</strong></td>
+</tr>
+<tr class="odd">
+<td>temperature alone, Ecology-measured sites only</td>
+<td>13</td>
+<td>0.128</td>
+</tr>
+</tbody>
+</table>
+<p>One test is nominally significant, and we are not claiming it. It is one of four temperature models (correcting for that alone gives <em>p</em> ≈ 0.10), it explains ~1% of variance (adjusted <em>R</em>² = 0.0098), and the same predictor fails both without the ancestry correction and on the Ecology-measured sites alone. Temperature remains the most plausible candidate and it remains unsupported.</p>
+</section>
+<section id="gene-set-tests" class="level3">
+<h3 class="anchored" data-anchor-id="gene-set-tests">Gene-set tests</h3>
+<p>Lift-over of 12,710,660 SNPs: 7,650,471 (60.2%) placed on the new assembly from 127,066 of 158,839 old contigs (80.0%); 2,957,241 dropped as repeat-masked; <strong>1,988,871 (15.6% of input)</strong> assigned to a gene body ± 2 kb. 20,846 of 34,178 genes carried ≥ 5 SNPs.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>gene set</th>
+<th>genes</th>
+<th>SNPs</th>
+<th>predictor</th>
+<th>observed</th>
+<th>null</th>
+<th><em>p</em></th>
+<th>BH <em>q</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>immune recognition</td>
+<td>248</td>
+<td>24,058</td>
+<td>temperature</td>
+<td>0.642</td>
+<td>0.609 ± 0.018</td>
+<td>0.050</td>
+<td>0.46</td>
+</tr>
+<tr class="even">
+<td>heat shock / chaperone</td>
+<td>92</td>
+<td>11,142</td>
+<td>temperature</td>
+<td>0.655</td>
+<td>0.620 ± 0.023</td>
+<td>0.084</td>
+<td>0.46</td>
+</tr>
+<tr class="odd">
+<td>ion &amp; solute transport</td>
+<td>400</td>
+<td>55,375</td>
+<td>temperature</td>
+<td>0.638</td>
+<td>0.625 ± 0.020</td>
+<td>0.220</td>
+<td>0.46</td>
+</tr>
+<tr class="even">
+<td>oxidative stress</td>
+<td>36</td>
+<td>3,235</td>
+<td>temperature</td>
+<td>0.615</td>
+<td>0.596 ± 0.027</td>
+<td>0.225</td>
+<td>0.46</td>
+</tr>
+</tbody>
+</table>
+<p>No gene passes FDR for any predictor (lowest <em>q</em> = 0.54 temperature, 0.81 salinity, 1.00 chlorophyll across 20,846 genes). The two smallest set-level <em>p</em>-values are both against temperature, the predictor with the strongest prior, but neither survives correction and both sit under 2 SD from their nulls.</p>
+</section>
+<section id="figures" class="level3">
+<h3 class="anchored" data-anchor-id="figures">Figures</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/88-oly-lcwgs-rda/images/rda-summary.png" class="img-fluid figure-img"></p>
+<figcaption>Subset analysis (918,481 SNPs, 14 populations). (a) Site scores with environmental biplot arrows; (b) adjusted <em>R</em>² by variance component; (c) RDA1 loadings along the assembly; (d) permutation null <em>F</em> under site-restricted versus free permutation.</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/88-oly-lcwgs-rda/images/rda-genomewide.png" class="img-fluid figure-img"></p>
+<figcaption>Genome-wide analysis (12,858,328 SNPs, 13 populations), with the outer-coast site relabelled. Same panels; the conclusions are unchanged and the loading scan is now exhaustive.</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="the-two-unplanned-findings" class="level2">
+<h2 class="anchored" data-anchor-id="the-two-unplanned-findings">The two unplanned findings</h2>
+<section id="a-site-is-mislabelled" class="level3">
+<h3 class="anchored" data-anchor-id="a-site-is-mislabelled">A site is mislabelled</h3>
+<p>A collection recorded as “WB” and inferred in the repository to be Westcott Bay, San Juan Island, is genetically not a Puget Sound population. Genome-wide Hudson’s Fst:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>comparison</th>
+<th>Fst</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Coos Bay ↔︎ WB</td>
+<td><strong>0.097</strong></td>
+</tr>
+<tr class="even">
+<td>among the 13 Salish Sea sites</td>
+<td>0.115</td>
+</tr>
+<tr class="odd">
+<td>Coos Bay ↔︎ Salish Sea (mean)</td>
+<td>0.174</td>
+</tr>
+<tr class="even">
+<td>WB ↔︎ Salish Sea (mean)</td>
+<td>0.174</td>
+</tr>
+</tbody>
+</table>
+<p>WB is <em>closer to Oregon</em> than Salish Sea sites are to each other. Reinterpreting it as <strong>Willapa Bay</strong>, an outer-coast estuary, makes this ordinary: two outer-coast populations resembling one another. Three site labels in this dataset remain inferred rather than read from collection records.</p>
+<p>This is not a bookkeeping detail. The label determines which environmental values a site receives. As “Westcott Bay” the site was assigned the coldest summer temperature in the dataset (10.8 °C) while carrying the most distinctive genetics; as Willapa Bay it is 16.3 °C, near the warm end. Part of the earlier apparent temperature signal was that mislabelling.</p>
+</section>
+<section id="sequencing-was-never-the-limitation" class="level3">
+<h3 class="anchored" data-anchor-id="sequencing-was-never-the-limitation">Sequencing was never the limitation</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>7.4% subset</th>
+<th>full VCF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SNPs</td>
+<td>918,481</td>
+<td>12,858,328</td>
+</tr>
+<tr class="even">
+<td>environment adjusted <em>R</em>²</td>
+<td>−0.0043</td>
+<td>−0.0040</td>
+</tr>
+<tr class="odd">
+<td>environment <em>p</em></td>
+<td>0.499</td>
+<td>0.545</td>
+</tr>
+<tr class="even">
+<td>lowest <em>q</em> across loci</td>
+<td>0.75</td>
+<td>0.96</td>
+</tr>
+</tbody>
+</table>
+<p>A 14× increase in markers moved nothing, and this is expected rather than surprising: the response’s rank is bounded by the number of <em>populations</em> (≤ 12), leaving 9 residual degrees of freedom in the environmental model. More markers cannot buy degrees of freedom the sampling design does not have.</p>
+</section>
+</section>
+<section id="what-this-does-and-does-not-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-does-and-does-not-mean">What this does and does not mean</h2>
+<p><strong>Supported:</strong> these three basin-scale predictors, across the complete genome and 13 populations, explain no allele-frequency variance beyond ancestry and geography.</p>
+<p><strong>Not supported:</strong> that Olympia oysters are not locally adapted. Three design features could hide a real signal:</p>
+<ol type="1">
+<li>Conditions were measured mid-channel, kilometres away, as monthly means, erasing exactly the intertidal extremes most plausible as selective agents.</li>
+<li>13 sites is very little environmental replication, whatever the marker count.</li>
+<li>Polygenic adaptation on many loci of small effect is poorly served by this method.</li>
+</ol>
+<p>What has now been <em>excluded</em> as explanations: marker count, reference contiguity, repeat contamination, and lack of functional annotation. Each was tested; none changed the answer.</p>
+</section>
+<section id="what-would-change-the-answer" class="level2">
+<h2 class="anchored" data-anchor-id="what-would-change-the-answer">What would change the answer</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>buys</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Temperature/salinity loggers on the beds</td>
+<td>what the animals actually experience, instead of basin averages</td>
+<td>low</td>
+</tr>
+<tr class="even">
+<td>Resolve the three uncertain site labels</td>
+<td>removes the failure mode demonstrated above</td>
+<td>archival</td>
+</tr>
+<tr class="odd">
+<td>Add sites along a real environmental gradient</td>
+<td>environmental replication, the binding constraint</td>
+<td>moderate</td>
+</tr>
+<tr class="even">
+<td>Common-garden or reciprocal transplant</td>
+<td>measures performance directly rather than inferring it</td>
+<td>high</td>
+</tr>
+<tr class="odd">
+<td>More sequencing</td>
+<td>nothing, we now have direct evidence</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notes-to-self" class="level2">
+<h2 class="anchored" data-anchor-id="notes-to-self">Notes to self</h2>
+<ul>
+<li><strong>Fit in principal coordinates from the Gram matrix.</strong> The exactness argument (RDA sees the response only through its row space) is what makes a 12.9-million-column response tractable at all. Assert <code>total inertia == n_snp</code> every time; it caught two transposition errors.</li>
+<li><strong>Standardise the right axis.</strong> Twice, draft code standardised across SNPs instead of across populations. The inertia assertion caught both before they reached a result.</li>
+<li><strong>Unit-test the lift-over.</strong> The CIGAR walk was checked against synthetic forward, reverse, deletion and insertion alignments before submission. The insertion case matters most: query bases inside an insertion must be <em>dropped</em>, not approximated, or SNPs land silently in the wrong gene.</li>
+<li><strong>34% of SNPs failed to lift</strong> for falling outside an alignment block. Dropping them is correct but it is the largest single loss in that step, and it means the gene-set test sees 15.6% of the original markers.</li>
+<li><strong>Annotation is the ceiling on the gene-set approach.</strong> 16,548 of 34,178 genes are “Protein of unknown function”, and BUSCO completeness is moderate (mollusca <code>C:80.1%</code>, <code>M:17.4%</code>). A gene set can only be tested to the extent the annotation names its members.</li>
+<li><strong>The lift-over inherits the old alignment.</strong> It moves coordinates; it does not re-derive genotypes, so paralog artefacts from a 158,839-contig reference persist. A positive result would have needed confirmation on a fresh alignment.</li>
+<li>Infrastructure: SSH connection multiplexing failed after the socket directory under <code>/tmp</code> was swept, producing <code>unix_listener: cannot bind to path</code>. Every remote call failed with exit 255 while interactive <code>ssh</code> worked fine, which made it look like a stalled approval. Recreating the directory fixes it.</li>
+</ul>
+</section>
+<section id="reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
+<p>Seeds fixed at 42 throughout; 999 permutations everywhere.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># environmental layer and genotype matrices</span></span>
+<span id="cb1-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> code/05_environmental_predictors.py</span>
+<span id="cb1-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> code/06_genotype_matrix.py</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># subset RDA</span></span>
+<span id="cb1-6"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> code/07_prepare_rda_inputs.py</span>
+<span id="cb1-7"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Rscript</span> code/07_rda.R</span>
+<span id="cb1-8"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Rscript</span> code/07b_candidates.R</span>
+<span id="cb1-9"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Rscript</span> code/07c_figure_inputs.R</span>
+<span id="cb1-10"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> code/07d_figure.py</span>
+<span id="cb1-11"></span>
+<span id="cb1-12"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># genome-wide (lab compute host)</span></span>
+<span id="cb1-13"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">bash</span> work/gw/run_gw.sh                  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># calls work/gw/oly_gw.py worker|merge</span></span>
+<span id="cb1-14"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Rscript</span> code/10_rda_genomewide.R</span>
+<span id="cb1-15"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> work/gw/scan.py <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>workdir<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> axis-site-scores.tsv sample_pop.tsv out</span>
+<span id="cb1-16"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">Rscript</span> code/10b_temp_only.R</span>
+<span id="cb1-17"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> code/10c_figure.py</span>
+<span id="cb1-18"></span>
+<span id="cb1-19"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># lift-over to the chromosome-scale assembly and gene-set tests</span></span>
+<span id="cb1-20"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">minimap2</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-cx</span> asm20 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-t</span> 46 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--secondary</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>no Ol_PO2457.fasta Olurida_v081.fa <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> old2new.paf</span>
+<span id="cb1-21"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> work/newasm/liftgene.py <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>workdir<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> old2new.paf annotation.gff.gz <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-22">                               repeats.gff.gz pop_env13.tsv out</span></code></pre></div>
+<p>Full methods and limitations: <code>output/07_rda/README.md</code>, <code>output/10_rda_genomewide/README.md</code>, <code>output/13_liftover_geneset/README.md</code>.</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Genomics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/88-oly-lcwgs-rda/</guid>
+  <pubDate>Sat, 19 Sep 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/88-oly-lcwgs-rda/images/rda-genomewide.png" medium="image" type="image/png" height="128" width="144"/>
+</item>
 <item>
   <title>The Pathogen Has a Plan, the Hosts Do Not</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -3004,46 +3619,6 @@ Took 5 oyster from each family, added to cup and and filled to first ridge (abou
   <guid>https://sr320.github.io/tumbling-oysters/posts/71-10k/</guid>
   <pubDate>Fri, 29 May 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/71-10k/images/clipboard-642075153.png" medium="image" type="image/png" height="162" width="144"/>
-</item>
-<item>
-  <title>Initial YC25 Oyster assay runs</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/70-sormi/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Over the past month we have ran some initial SORMI assays on the USDA YC25 families.</p>
-<p>In short there was one adult-cup resazurin, a follow up <a href="https://github.com/RobertsLab/sormi-assay-development/tree/main/heat-survivorship/20260427-33C-USDA-families">heat-mortality test (33C)</a>, two FW RT resazurin plate-runs, and one FW 36C resazurin plate. I would not trust the stats.</p>
-<section id="resazurin" class="level1">
-<h1>Resazurin</h1>
-<p>Run in solo cups in incubator.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/70-sormi/images/clipboard-4101762963.png" class="img-fluid"></p>
-</section>
-<section id="mortality" class="level1">
-<h1>Mortality</h1>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/70-sormi/images/clipboard-1931826657.png" class="img-fluid"></p>
-</section>
-<section id="resazurin-12-well" class="level1">
-<h1>Resazurin (12-well)</h1>
-<p>Smaller oysters run in 12-well plates. Used FW for making up resazurin. Room temperature.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/70-sormi/images/clipboard-751489528.png" class="img-fluid"></p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/70-sormi/images/clipboard-2305900461.png" class="img-fluid"></p>
-<p>Then the did a run with 36</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/70-sormi/images/clipboard-949066699.png" class="img-fluid"></p>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>Aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/70-sormi/</guid>
-  <pubDate>Fri, 08 May 2026 07:00:00 GMT</pubDate>
-  <media:content url="http://gannet.fish.washington.edu/seashell/snaps/2026-05-08_06-19-16.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>
