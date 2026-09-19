@@ -627,6 +627,438 @@ font-style: inherit;">\</span></span>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/88-oly-lcwgs-rda/images/rda-genomewide.png" medium="image" type="image/png" height="128" width="144"/>
 </item>
 <item>
+  <title>Population structure in Olympia oyster low-coverage WGS, and what a chromosome-scale assembly changes about it</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/89-oly-lcwgs-population-structure/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Neutral population structure in this dataset is real, strong and easy to describe: two outer-coast collections (Coos Bay, Oregon and the site recorded as “WB”) form one cluster that sits far from everything in the Salish Sea, and within the Salish Sea the basins — Hood Canal, South Sound, North Sound, the Strait — separate on later axes while individual sites inside a basin overlap. Genome-wide Hudson <em>F</em><sub>ST</sub> averages 0.115 among the 13 Salish Sea collections and 0.174 between either outer-coast collection and the Salish Sea.</p>
+<p>The one site that forced a change of interpretation is “WB”. It was carried in the repository as Westcott Bay, San Juan Island. Genetically it is not a Puget Sound population: its closest relative in the dataset is Coos Bay (<em>F</em><sub>ST</sub> = 0.097), closer than the average pair of Salish Sea sites (0.115). Read as <strong>Willapa Bay</strong> — an outer-coast estuary — the pattern is ordinary.</p>
+<p>A chromosome-scale assembly (PO2457) is now available, and this post also asks what it does and does not change for these results. Short version: it does not change the structure, because structure is a property of the samples rather than the coordinate system. What it changes is what we know about the markers. Of the 7.65 M SNPs that could be placed on the new assembly, <strong>38.7 % fall inside repeat-masked intervals</strong> that the old fragmented reference gave us no way to identify — and every <em>F</em><sub>ST</sub> and PC below was computed with those markers included.</p>
+<p>The genotype–environment work on this dataset is written up separately (see <a href="../88-oly-lcwgs-rda/">the GEA analysis</a>); nothing here depends on it.</p>
+</section>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Two practical questions sit underneath any restoration sourcing decision, and they are different questions:</p>
+<ol type="1">
+<li><strong>Are these collections genetically distinguishable, and how are they arranged?</strong> That is this post.</li>
+<li><strong>Do those differences track local conditions?</strong> That is the genotype–environment analysis, and it is negative.</li>
+</ol>
+<p>Question 1 is also the quality-control pass for everything else. If the samples do not resolve into the groups the metadata claims, the metadata is the thing to fix first — which is exactly what happened.</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>Low-coverage whole-genome sequencing of 112 libraries from 15 putative collection sites, 13 of them in Puget Sound and the Strait of Juan de Fuca, one on the outer Washington coast, one in Coos Bay, Oregon. Repository: <code>github.com/zbengt/oly-lc-WGS</code>; alignments and variants served over HTTP from a lab web host.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>libraries sequenced</td>
+<td>112</td>
+</tr>
+<tr class="even">
+<td>retained after QC</td>
+<td><strong>109</strong> (2 blank controls, 1 below the depth threshold)</td>
+</tr>
+<tr class="odd">
+<td>mean depth, retained</td>
+<td>5.48× (range 3.46–6.73)</td>
+</tr>
+<tr class="even">
+<td>individuals per site</td>
+<td>5–8</td>
+</tr>
+<tr class="odd">
+<td>genotype missingness</td>
+<td>mean 3.1 %, max 13.6 % (<code>HC18_Triton_Wild_16</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Two collections — <code>Fidalgo_Bay</code> and <code>FB18_Wild</code> — carry identical coordinates (48.488, −122.576) and are treated as separate populations throughout, because the records do not establish that they are the same collection event. Three site labels besides WB (<code>CS18_22_Wild_plate1</code>, <code>LS</code>, <code>MB</code>) are inferred from sample naming rather than read from collection records.</p>
+<section id="variants" class="level3">
+<h3 class="anchored" data-anchor-id="variants">Variants</h3>
+<p>Genotypes come from the joint VCF’s likelihoods. Filtering with <code>bcftools</code>: biallelic SNPs, QUAL ≥ 30, MQ ≥ 30, <code>F_MISSING</code> &lt; 0.2, MAF 0.05–0.95, plus an excess-heterozygosity screen (<code>ExcHet</code> &gt; 1e−6) as a paralog guard.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>stage</th>
+<th>SNPs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>after <code>bcftools</code> filters</td>
+<td>14,250,907</td>
+</tr>
+<tr class="even">
+<td>dropped — excess depth</td>
+<td>14,250</td>
+</tr>
+<tr class="odd">
+<td>dropped — missing in a population</td>
+<td>1,903</td>
+</tr>
+<tr class="even">
+<td>dropped — MAF &lt; 0.05</td>
+<td>1,376,098</td>
+</tr>
+<tr class="odd">
+<td><strong>retained</strong></td>
+<td><strong>12,858,656</strong></td>
+</tr>
+<tr class="even">
+<td>thinned subset used for PCA</td>
+<td>174,534</td>
+</tr>
+</tbody>
+</table>
+<p>Population allele frequencies <strong>pool sequencing reads within a site</strong> (summed ALT depth over summed total depth) rather than averaging per-individual hard calls, which at ~5× would be biased toward homozygotes. Individual dosages are flat-prior posteriors from the PL fields, so depth uncertainty is carried forward into the PCA rather than hidden by a call.</p>
+</section>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<p><strong>Ordination.</strong> PCA on individual dosages, LD-thinned to 174,534 SNPs, all 109 individuals, no outlier removal. The scores shown are from the genome-wide run.</p>
+<p><strong>Differentiation.</strong> Hudson’s <em>F</em><sub>ST</sub> per population pair, computed from the pooled read counts described above and averaged over all 12,858,656 SNPs using the ratio-of-averages estimator (sum of numerators over sum of denominators, not the mean of per-SNP ratios).</p>
+<p><strong>Relatedness.</strong> A genetic relationship matrix and IBS from 39,066 thinned SNPs (the earlier subset-era run; not repeated genome-wide), with kinship evaluated <em>within</em> sites (349 within-site pairs) against a within-site null, since across-site kinship is confounded with the structure we are trying to describe.</p>
+<p>Seeds fixed at 42; the pipeline is scripted end to end (see Reproducibility).</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<section id="the-ordination-has-one-dominant-split-and-a-basin-level-second-tier" class="level3">
+<h3 class="anchored" data-anchor-id="the-ordination-has-one-dominant-split-and-a-basin-level-second-tier">The ordination has one dominant split and a basin-level second tier</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/89-oly-lcwgs-population-structure/images/structure-fst-panel.png" class="img-fluid figure-img"></p>
+<figcaption>Genome-wide population structure across 15 Olympia oyster collections. (a) PCA of 109 individuals on 174,534 LD-thinned SNPs; the two outer-coast collections separate from every Salish Sea site along PC1, with a standardised gap of 13.0 pooled SD between the two groups. (b) The same ordination, PC2 against PC3, Salish Sea individuals only: Hood Canal, South Puget Sound and the Fidalgo Bay collections occupy distinct regions while sites inside a basin overlap. (c) Genome-wide Hudson <em>F</em><sub>ST</sub> (× 100) for all 105 population pairs, computed over 12,858,656 SNPs. Absolute values are provisional (see caveats); the ordering is the interpretable part.</figcaption>
+</figure>
+</div>
+<p>PC1 separates Coos Bay + Willapa Bay (15 individuals) from the 94 Salish Sea individuals; the gap between the two groups is 13.0 pooled standard deviations, and the two outer-coast collections are not resolved from each other on it (site means 190.1 and 202.8, against a within-group SD of 7.2).</p>
+<p>The later axes are basin-level, not site-level:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>axis</th>
+<th>what it separates</th>
+<th>site means at the extremes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PC2</td>
+<td>Hood Canal from South Puget Sound</td>
+<td>Triton Cove −124.3, Port Gamble −118.9 · Little Skookum +64.5, Squaxin +63.4</td>
+</tr>
+<tr class="even">
+<td>PC3</td>
+<td>the Fidalgo Bay collections from everything else</td>
+<td>FB18 Wild +180.3, Fidalgo Bay +101.9 · Mud Bay −31.4</td>
+</tr>
+</tbody>
+</table>
+<p>Per-axis variance fractions were not carried back from the genome-wide run; on the earlier 918,481-SNP subset PC1 and PC2 took 2.9 % and 2.1 %, with the remaining axes at or below a 1/109 noise floor. Low fractions are normal for this kind of data and do not argue against the split — the <em>separation</em> of the outer-coast cluster is what carries the signal, not the share of total variance on the axis.</p>
+</section>
+<section id="differentiation" class="level3">
+<h3 class="anchored" data-anchor-id="differentiation">Differentiation</h3>
+<p>Genome-wide Hudson <em>F</em><sub>ST</sub>, 105 pairs:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>comparison</th>
+<th><em>F</em><sub>ST</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Coos Bay ↔︎ Willapa Bay</td>
+<td><strong>0.097</strong></td>
+</tr>
+<tr class="even">
+<td>among the 13 Salish Sea sites (mean)</td>
+<td>0.115 (range 0.086–0.150)</td>
+</tr>
+<tr class="odd">
+<td>Coos Bay ↔︎ Salish Sea (mean)</td>
+<td>0.174 (range 0.157–0.184)</td>
+</tr>
+<tr class="even">
+<td>Willapa Bay ↔︎ Salish Sea (mean)</td>
+<td>0.174 (range 0.157–0.185)</td>
+</tr>
+<tr class="odd">
+<td>all pairs (mean)</td>
+<td>0.129; max 0.185 (FB18 Wild ↔︎ Willapa Bay)</td>
+</tr>
+</tbody>
+</table>
+<p>The closest pair in the dataset is Dogfish Bay ↔︎ Ostrich Bay (0.086), two Central Puget Sound sites 13 km apart. The most differentiated Salish Sea pair is FB18 Wild (Fidalgo Bay, north) ↔︎ Triton Cove (Hood Canal) at 0.150.</p>
+<p><strong>The two Fidalgo Bay collections differ at <em>F</em><sub>ST</sub> = 0.143</strong> — above the Salish Sea average, from collections recorded at the same coordinates. Either they are separate collection events from genuinely different beds, or one label is wrong, or a batch effect is being read as differentiation. This is unresolved and it is the second metadata problem the genetics surfaced.</p>
+</section>
+<section id="relatedness-does-not-drive-any-of-this" class="level3">
+<h3 class="anchored" data-anchor-id="relatedness-does-not-drive-any-of-this">Relatedness does not drive any of this</h3>
+<p>Within-site kinship across 349 pairs: median 0.041, maximum 0.093 (<code>FB18_Wild_12</code> / <code>FB18_Wild_9</code>, <em>z</em> = 3.8 against the within-site distribution). No pair reaches the first-degree range; six pairs sit just at the second-degree boundary (0.089–0.093) and all six are in the FB18 Wild collection — six of the ten pairs among its five individuals. Cousin-level pairs in one small collection will nudge that site’s allele frequencies, and FB18 Wild is one of the two collections behind the Fidalgo Bay anomaly above, but they cannot produce the basin-scale structure.</p>
+</section>
+<section id="absolute-fst-values-are-provisional-the-earlier-subset-understated-them-by-half" class="level3">
+<h3 class="anchored" data-anchor-id="absolute-fst-values-are-provisional-the-earlier-subset-understated-them-by-half">Absolute <em>F</em><sub>ST</sub> values are provisional; the earlier subset understated them by half</h3>
+<p>The first pass used the 1,200 highest-variant-density contigs (7.4 % of the VCF’s records). That subset gives systematically <em>lower</em> differentiation than the genome:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>7.4 % subset</th>
+<th>genome-wide</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Coos Bay ↔︎ Willapa Bay</td>
+<td>0.038</td>
+<td>0.097</td>
+</tr>
+<tr class="even">
+<td>among the 13 Salish Sea sites (mean)</td>
+<td>0.052</td>
+<td>0.115</td>
+</tr>
+<tr class="odd">
+<td>Fidalgo Bay ↔︎ FB18 Wild</td>
+<td>0.051</td>
+<td>0.143</td>
+</tr>
+</tbody>
+</table>
+<p>Selecting contigs for variant density selects regions where variation is high and shared — including, most likely, collapsed paralogs, where reads from two loci pile onto one and every population looks heterozygous and therefore similar. Any <em>F</em><sub>ST</sub> quoted from that subset is a floor, not an estimate.</p>
+<p>That is a warning about the genome-wide numbers too. They are computed from pooled read counts at 5.5× on a 158,839-contig reference with no repeat mask, using a ratio-of-averages estimator that is unbiased under its assumptions but not immune to reference collapse. Treat the ordering of the pairs as solid and the absolute magnitudes as an upper-bounded guess.</p>
+</section>
+</section>
+<section id="the-relabelled-site" class="level2">
+<h2 class="anchored" data-anchor-id="the-relabelled-site">The relabelled site</h2>
+<p>The site recorded as “WB” was inferred in the repository to be Westcott Bay, San Juan Island. Three independent readings of the data say otherwise: it clusters with Coos Bay on PC1 with no separation between them, its <em>F</em><sub>ST</sub> to Coos Bay (0.097) is lower than the average Salish Sea pair (0.115), and its mean <em>F</em><sub>ST</sub> to the Salish Sea (0.174) is the same as Coos Bay’s (0.174) — that is, it is as foreign to Puget Sound as an Oregon population is.</p>
+<p>Reinterpreting it as <strong>Willapa Bay</strong>, an outer-coast Washington estuary between Coos Bay and the Strait, makes all three ordinary: two outer-coast populations resembling each other more than either resembles the inland sea.</p>
+<p>This is not only bookkeeping. The label determines which environmental record a site inherits, and it also determines whether the dataset contains one outer-coast lineage or two. For a restoration audience the practical reading is that the Willapa/Coos group is a separate genetic unit from Puget Sound stock at a magnitude (<em>F</em><sub>ST</sub> ≈ 0.17) that dwarfs any within-Sound contrast — which is a sourcing-relevant fact regardless of whether local adaptation can be demonstrated.</p>
+</section>
+<section id="where-the-chromosome-scale-assembly-enters" class="level2">
+<h2 class="anchored" data-anchor-id="where-the-chromosome-scale-assembly-enters">Where the chromosome-scale assembly enters</h2>
+<p>A Dovetail HiRise Hi-C assembly of <em>O. lurida</em> (PO2457) with MAKER annotation is now in hand:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>property</th>
+<th><code>Olurida_v081</code> (used for everything above)</th>
+<th>PO2457</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>total length</td>
+<td>1.140 Gb</td>
+<td>1.023 Gb</td>
+</tr>
+<tr class="even">
+<td>sequences</td>
+<td>158,839 contigs</td>
+<td>145 scaffolds</td>
+</tr>
+<tr class="odd">
+<td>N50</td>
+<td>13.0 kb</td>
+<td>103.0 Mb</td>
+</tr>
+<tr class="even">
+<td>sequences ≥ 10 Mb</td>
+<td>0</td>
+<td>10, holding 98.7 %</td>
+</tr>
+<tr class="odd">
+<td>gene annotation</td>
+<td>none usable</td>
+<td>34,178 genes</td>
+</tr>
+<tr class="even">
+<td>repeat annotation</td>
+<td>none</td>
+<td>61.2 % masked</td>
+</tr>
+<tr class="odd">
+<td>BUSCO (mollusca)</td>
+<td>not assessed</td>
+<td>C 80.1 %, M 17.4 %</td>
+</tr>
+</tbody>
+</table>
+<p><em>O. lurida</em> has n = 10, so those ten large scaffolds are chromosomes.</p>
+<p><strong>What it does not change.</strong> None of the results above. PCA and <em>F</em><sub>ST</sub> are functions of the genotype matrix; renaming and reordering the coordinates of the markers leaves both invariant. A new assembly could only change these results by changing which reads map where — i.e.&nbsp;by realignment, not lift-over.</p>
+<p><strong>What it tells us about the markers we used.</strong> Lifting the SNP set onto the new scaffolds with <code>minimap2 -cx asm20</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 67%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>stage</th>
+<th>SNPs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>entering lift-over</td>
+<td>12,710,660</td>
+</tr>
+<tr class="even">
+<td>placed on the new assembly</td>
+<td>7,650,471 (60.2 %)</td>
+</tr>
+<tr class="odd">
+<td>dropped — old contig had no alignment</td>
+<td>742,509</td>
+</tr>
+<tr class="even">
+<td>dropped — position outside an alignment block</td>
+<td>4,317,680</td>
+</tr>
+<tr class="odd">
+<td>of those placed, inside a RepeatMasker interval</td>
+<td><strong>2,957,241 (38.7 %)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Nearly two in five placeable markers sit in repeat. Those markers were in every <em>F</em><sub>ST</sub> and PC above, because the old reference offered no way to exclude them. That is the most likely single explanation for differentiation values that look high for a broadcast-spawning marine invertebrate at this spatial scale.</p>
+<p>The assembly-size difference points the same way: the old reference is <strong>117 Mb larger</strong> than the new one despite being the same genome, the signature of unresolved haplotig redundancy, and only 48.4 % of it is covered at ≥ 1× despite 5.48× mean depth — coverage is piling into a fraction of the reference.</p>
+</section>
+<section id="what-this-does-and-does-not-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-does-and-does-not-mean">What this does and does not mean</h2>
+<p><strong>Supported.</strong> Two genetic groups are unambiguous: outer coast (Coos Bay, Willapa Bay) and Salish Sea. Within the Salish Sea, basin-level differentiation is detectable and consistent across PCA and <em>F</em><sub>ST</sub>, and site-level differences inside a basin are small. Relatedness and sample QC do not account for any of it.</p>
+<p><strong>Not supported.</strong> Any absolute statement about the magnitude of differentiation, any site-level (as opposed to basin-level) ranking of distinctiveness, and any claim that structure reflects adaptation rather than drift and limited dispersal. The last of those was tested directly and failed.</p>
+<p><strong>Not assessed here.</strong> Isolation by distance (no Mantel or MRM test was run), admixture proportions, effective population size, and any within-chromosome pattern — the last of which the old reference made impossible and the new one makes routine.</p>
+</section>
+<section id="what-would-sharpen-this" class="level2">
+<h2 class="anchored" data-anchor-id="what-would-sharpen-this">What would sharpen this</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>buys</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Recompute <em>F</em><sub>ST</sub> and PCA with repeat-masked positions dropped, using the existing lift-over</td>
+<td>a direct measure of how much of the apparent differentiation is repeat-driven; no realignment needed</td>
+<td>low — one pass over existing files</td>
+</tr>
+<tr class="even">
+<td>Resolve the two Fidalgo Bay collections in the collection records</td>
+<td>removes a 0.143 <em>F</em><sub>ST</sub> anomaly that is currently unexplained</td>
+<td>archival</td>
+</tr>
+<tr class="odd">
+<td>Confirm the WB collection’s provenance from records</td>
+<td>settles the relabelling with evidence rather than inference</td>
+<td>archival</td>
+</tr>
+<tr class="even">
+<td>Realign all 224 fastq files to PO2457</td>
+<td>genotypes free of the collapsed-contig problem, plus chromosome-anchored windowed <em>F</em><sub>ST</sub>, LD decay and inversion scans</td>
+<td>~1–2 days wall, ~1.5 TB scratch</td>
+</tr>
+</tbody>
+</table>
+<p>The first row is the highest ratio of information to effort in this table and should come next.</p>
+</section>
+<section id="notes-to-self" class="level2">
+<h2 class="anchored" data-anchor-id="notes-to-self">Notes to self</h2>
+<ul>
+<li><strong>Population structure is coordinate-free; marker quality is not.</strong> The instinct to re-run structure “on the new genome” is wrong unless the reads are re-mapped. What the new genome actually bought here was a repeat mask and a way to count how much of the marker set is suspect.</li>
+<li><strong>Check subset-versus-genome differentiation before quoting any <em>F</em><sub>ST</sub>.</strong> The variant-density subset halved every value. It was chosen for transfer speed, and it turned out to be non-neutral with respect to the statistic.</li>
+<li><strong>Pool reads for population frequencies; never average hard calls.</strong> At 5.5× the calls are homozygote-biased and the bias is depth-dependent, so it varies across sites.</li>
+<li><strong>Evaluate kinship within sites, against a within-site null.</strong> Across-site kinship is the structure being measured; using it as a relatedness screen would flag whole basins.</li>
+<li><strong>Two collections sharing coordinates are not evidence that they are one collection.</strong> Keeping <code>Fidalgo_Bay</code> and <code>FB18_Wild</code> separate is what surfaced the 0.143 anomaly; merging them would have averaged it away silently.</li>
+</ul>
+</section>
+<section id="reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
+<p>Seeds fixed at 42 throughout.</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># QC, site curation, genotype matrices, structure and relatedness</span></span>
+<span id="cb1-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> code/06_genotype_matrix.py</span>
+<span id="cb1-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> code/06b_structure_checks.py</span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># genome-wide filtering and statistics (lab compute host, 24 workers)</span></span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">bash</span> work/gw/run_gw.sh                  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># calls work/gw/oly_gw.py worker|merge</span></span>
+<span id="cb1-7"></span>
+<span id="cb1-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># lift-over of the SNP set onto the chromosome-scale assembly</span></span>
+<span id="cb1-9"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">minimap2</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-cx</span> asm20 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-t</span> 46 <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">--secondary</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span>no Ol_PO2457.fasta Olurida_v081.fa <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> old2new.paf</span>
+<span id="cb1-10"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python</span> work/newasm/liftgene.py <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;</span>workdir<span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&gt;</span> old2new.paf annotation.gff.gz <span class="dt" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">\</span></span>
+<span id="cb1-11">                               repeats.gff.gz pop_env13.tsv out</span></code></pre></div>
+<p>Tables behind every number above: <code>output/06_structure/</code> (<code>pairwise-fst.tsv</code>, <code>structure-pcs.tsv</code>, <code>eigenvalues.tsv</code>, <code>within-site-kinship.tsv</code>, <code>individual-missingness.tsv</code>, <code>structure-checks.json</code>), <code>output/10_rda_genomewide/tables/</code> (<code>pairwise-fst-genomewide.tsv</code>, <code>structure-pcs.tsv</code>, <code>filter-summary.tsv</code>), and <code>output/13_liftover_geneset/tables/</code> (<code>liftover-summary.tsv</code>).</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Genomics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/89-oly-lcwgs-population-structure/</guid>
+  <pubDate>Thu, 17 Sep 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/89-oly-lcwgs-population-structure/images/structure-fst-panel.png" medium="image" type="image/png" height="61" width="144"/>
+</item>
+<item>
   <title>The Pathogen Has a Plan, the Hosts Do Not</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/87-seastar-susceptibility-genomics/</link>
@@ -3592,33 +4024,6 @@ Took 5 oyster from each family, added to cup and and filled to first ridge (abou
   <guid>https://sr320.github.io/tumbling-oysters/posts/72-manchester-mort/</guid>
   <pubDate>Wed, 03 Jun 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/72-manchester-mort/images/clipboard-1475596766.png" medium="image" type="image/png" height="130" width="144"/>
-</item>
-<item>
-  <title>Setting up 2026 prime</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/71-10k/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>On February 26 received 10k 4mm seed from Jamestown.</p>
-<p>Took 150 ml and bagged with heat label - and 150 ml bagged and labelled with control. Both went into outside drum silos.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/71-10k/images/clipboard-642075153.png" class="img-fluid"></p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/71-10k/images/clipboard-614444957.png" class="img-fluid"></p>
-<p>The remaining oyster brought back to UW.</p>
-<p>Heat priming will start next week- with plan on weekly at 12C for 30 minutes.</p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>Aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/71-10k/</guid>
-  <pubDate>Fri, 29 May 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/71-10k/images/clipboard-642075153.png" medium="image" type="image/png" height="162" width="144"/>
 </item>
 </channel>
 </rss>

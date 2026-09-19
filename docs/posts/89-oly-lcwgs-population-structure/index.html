@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Steven Roberts">
+<meta name="dcterms.date" content="2026-09-17">
+<meta name="description" content="109 libraries, 15 collections, 12.9 M SNPs — structure, differentiation, relatedness, and one relabelled site">
+
+<title>Population structure in Olympia oyster low-coverage WGS, and what a chromosome-scale assembly changes about it – Tumbling Oysters</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-86daaaaad7353f9cc0c554efc1dd6d94.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-f8dc6eab18fde03278982b0b35885446.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-0b0971fe3c507452e01567f62a81532a.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-e76cdc2a28bf56c993f4e6ffb14f81c0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Tumbling Oysters</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/sr320"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <div class="quarto-title-block"><div><h1 class="title">Population structure in Olympia oyster low-coverage WGS, and what a chromosome-scale assembly changes about it</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+                  <div>
+        <div class="description">
+          109 libraries, 15 collections, 12.9 M SNPs — structure, differentiation, relatedness, and one relabelled site
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Genomics</div>
+                <div class="quarto-category">Computing</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <p class="author">Steven Roberts <a href="https://orcid.org/0000-0001-8302-1138" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+    </div>
+    <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://robertslab.info">
+              Professor, UW - School of Aquatic and Fishery Sciences
+              </a>
+            </p>
+        </div>
+    </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 17, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#summary" id="toc-summary" class="nav-link active" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#question" id="toc-question" class="nav-link" data-scroll-target="#question">Question</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a>
+  <ul class="collapse">
+  <li><a href="#variants" id="toc-variants" class="nav-link" data-scroll-target="#variants">Variants</a></li>
+  </ul></li>
+  <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  <ul class="collapse">
+  <li><a href="#the-ordination-has-one-dominant-split-and-a-basin-level-second-tier" id="toc-the-ordination-has-one-dominant-split-and-a-basin-level-second-tier" class="nav-link" data-scroll-target="#the-ordination-has-one-dominant-split-and-a-basin-level-second-tier">The ordination has one dominant split and a basin-level second tier</a></li>
+  <li><a href="#differentiation" id="toc-differentiation" class="nav-link" data-scroll-target="#differentiation">Differentiation</a></li>
+  <li><a href="#relatedness-does-not-drive-any-of-this" id="toc-relatedness-does-not-drive-any-of-this" class="nav-link" data-scroll-target="#relatedness-does-not-drive-any-of-this">Relatedness does not drive any of this</a></li>
+  <li><a href="#absolute-fst-values-are-provisional-the-earlier-subset-understated-them-by-half" id="toc-absolute-fst-values-are-provisional-the-earlier-subset-understated-them-by-half" class="nav-link" data-scroll-target="#absolute-fst-values-are-provisional-the-earlier-subset-understated-them-by-half">Absolute <em>F</em><sub>ST</sub> values are provisional; the earlier subset understated them by half</a></li>
+  </ul></li>
+  <li><a href="#the-relabelled-site" id="toc-the-relabelled-site" class="nav-link" data-scroll-target="#the-relabelled-site">The relabelled site</a></li>
+  <li><a href="#where-the-chromosome-scale-assembly-enters" id="toc-where-the-chromosome-scale-assembly-enters" class="nav-link" data-scroll-target="#where-the-chromosome-scale-assembly-enters">Where the chromosome-scale assembly enters</a></li>
+  <li><a href="#what-this-does-and-does-not-mean" id="toc-what-this-does-and-does-not-mean" class="nav-link" data-scroll-target="#what-this-does-and-does-not-mean">What this does and does not mean</a></li>
+  <li><a href="#what-would-sharpen-this" id="toc-what-would-sharpen-this" class="nav-link" data-scroll-target="#what-would-sharpen-this">What would sharpen this</a></li>
+  <li><a href="#notes-to-self" id="toc-notes-to-self" class="nav-link" data-scroll-target="#notes-to-self">Notes to self</a></li>
+  <li><a href="#reproducibility" id="toc-reproducibility" class="nav-link" data-scroll-target="#reproducibility">Reproducibility</a></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>Neutral population structure in this dataset is real, strong and easy to describe: two outer-coast collections (Coos Bay, Oregon and the site recorded as “WB”) form one cluster that sits far from everything in the Salish Sea, and within the Salish Sea the basins — Hood Canal, South Sound, North Sound, the Strait — separate on later axes while individual sites inside a basin overlap. Genome-wide Hudson <em>F</em><sub>ST</sub> averages 0.115 among the 13 Salish Sea collections and 0.174 between either outer-coast collection and the Salish Sea.</p>
+<p>The one site that forced a change of interpretation is “WB”. It was carried in the repository as Westcott Bay, San Juan Island. Genetically it is not a Puget Sound population: its closest relative in the dataset is Coos Bay (<em>F</em><sub>ST</sub> = 0.097), closer than the average pair of Salish Sea sites (0.115). Read as <strong>Willapa Bay</strong> — an outer-coast estuary — the pattern is ordinary.</p>
+<p>A chromosome-scale assembly (PO2457) is now available, and this post also asks what it does and does not change for these results. Short version: it does not change the structure, because structure is a property of the samples rather than the coordinate system. What it changes is what we know about the markers. Of the 7.65 M SNPs that could be placed on the new assembly, <strong>38.7 % fall inside repeat-masked intervals</strong> that the old fragmented reference gave us no way to identify — and every <em>F</em><sub>ST</sub> and PC below was computed with those markers included.</p>
+<p>The genotype–environment work on this dataset is written up separately (see <a href="../88-oly-lcwgs-rda/">the GEA analysis</a>); nothing here depends on it.</p>
+</section>
+<section id="question" class="level2">
+<h2 class="anchored" data-anchor-id="question">Question</h2>
+<p>Two practical questions sit underneath any restoration sourcing decision, and they are different questions:</p>
+<ol type="1">
+<li><strong>Are these collections genetically distinguishable, and how are they arranged?</strong> That is this post.</li>
+<li><strong>Do those differences track local conditions?</strong> That is the genotype–environment analysis, and it is negative.</li>
+</ol>
+<p>Question 1 is also the quality-control pass for everything else. If the samples do not resolve into the groups the metadata claims, the metadata is the thing to fix first — which is exactly what happened.</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>Low-coverage whole-genome sequencing of 112 libraries from 15 putative collection sites, 13 of them in Puget Sound and the Strait of Juan de Fuca, one on the outer Washington coast, one in Coos Bay, Oregon. Repository: <code>github.com/zbengt/oly-lc-WGS</code>; alignments and variants served over HTTP from a lab web host.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>libraries sequenced</td>
+<td>112</td>
+</tr>
+<tr class="even">
+<td>retained after QC</td>
+<td><strong>109</strong> (2 blank controls, 1 below the depth threshold)</td>
+</tr>
+<tr class="odd">
+<td>mean depth, retained</td>
+<td>5.48× (range 3.46–6.73)</td>
+</tr>
+<tr class="even">
+<td>individuals per site</td>
+<td>5–8</td>
+</tr>
+<tr class="odd">
+<td>genotype missingness</td>
+<td>mean 3.1 %, max 13.6 % (<code>HC18_Triton_Wild_16</code>)</td>
+</tr>
+</tbody>
+</table>
+<p>Two collections — <code>Fidalgo_Bay</code> and <code>FB18_Wild</code> — carry identical coordinates (48.488, −122.576) and are treated as separate populations throughout, because the records do not establish that they are the same collection event. Three site labels besides WB (<code>CS18_22_Wild_plate1</code>, <code>LS</code>, <code>MB</code>) are inferred from sample naming rather than read from collection records.</p>
+<section id="variants" class="level3">
+<h3 class="anchored" data-anchor-id="variants">Variants</h3>
+<p>Genotypes come from the joint VCF’s likelihoods. Filtering with <code>bcftools</code>: biallelic SNPs, QUAL ≥ 30, MQ ≥ 30, <code>F_MISSING</code> &lt; 0.2, MAF 0.05–0.95, plus an excess-heterozygosity screen (<code>ExcHet</code> &gt; 1e−6) as a paralog guard.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>stage</th>
+<th>SNPs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>after <code>bcftools</code> filters</td>
+<td>14,250,907</td>
+</tr>
+<tr class="even">
+<td>dropped — excess depth</td>
+<td>14,250</td>
+</tr>
+<tr class="odd">
+<td>dropped — missing in a population</td>
+<td>1,903</td>
+</tr>
+<tr class="even">
+<td>dropped — MAF &lt; 0.05</td>
+<td>1,376,098</td>
+</tr>
+<tr class="odd">
+<td><strong>retained</strong></td>
+<td><strong>12,858,656</strong></td>
+</tr>
+<tr class="even">
+<td>thinned subset used for PCA</td>
+<td>174,534</td>
+</tr>
+</tbody>
+</table>
+<p>Population allele frequencies <strong>pool sequencing reads within a site</strong> (summed ALT depth over summed total depth) rather than averaging per-individual hard calls, which at ~5× would be biased toward homozygotes. Individual dosages are flat-prior posteriors from the PL fields, so depth uncertainty is carried forward into the PCA rather than hidden by a call.</p>
+</section>
+</section>
+<section id="methods" class="level2">
+<h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<p><strong>Ordination.</strong> PCA on individual dosages, LD-thinned to 174,534 SNPs, all 109 individuals, no outlier removal. The scores shown are from the genome-wide run.</p>
+<p><strong>Differentiation.</strong> Hudson’s <em>F</em><sub>ST</sub> per population pair, computed from the pooled read counts described above and averaged over all 12,858,656 SNPs using the ratio-of-averages estimator (sum of numerators over sum of denominators, not the mean of per-SNP ratios).</p>
+<p><strong>Relatedness.</strong> A genetic relationship matrix and IBS from 39,066 thinned SNPs (the earlier subset-era run; not repeated genome-wide), with kinship evaluated <em>within</em> sites (349 within-site pairs) against a within-site null, since across-site kinship is confounded with the structure we are trying to describe.</p>
+<p>Seeds fixed at 42; the pipeline is scripted end to end (see Reproducibility).</p>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<section id="the-ordination-has-one-dominant-split-and-a-basin-level-second-tier" class="level3">
+<h3 class="anchored" data-anchor-id="the-ordination-has-one-dominant-split-and-a-basin-level-second-tier">The ordination has one dominant split and a basin-level second tier</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/structure-fst-panel.png" class="img-fluid figure-img"></p>
+<figcaption>Genome-wide population structure across 15 Olympia oyster collections. (a) PCA of 109 individuals on 174,534 LD-thinned SNPs; the two outer-coast collections separate from every Salish Sea site along PC1, with a standardised gap of 13.0 pooled SD between the two groups. (b) The same ordination, PC2 against PC3, Salish Sea individuals only: Hood Canal, South Puget Sound and the Fidalgo Bay collections occupy distinct regions while sites inside a basin overlap. (c) Genome-wide Hudson <em>F</em><sub>ST</sub> (× 100) for all 105 population pairs, computed over 12,858,656 SNPs. Absolute values are provisional (see caveats); the ordering is the interpretable part.</figcaption>
+</figure>
+</div>
+<p>PC1 separates Coos Bay + Willapa Bay (15 individuals) from the 94 Salish Sea individuals; the gap between the two groups is 13.0 pooled standard deviations, and the two outer-coast collections are not resolved from each other on it (site means 190.1 and 202.8, against a within-group SD of 7.2).</p>
+<p>The later axes are basin-level, not site-level:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>axis</th>
+<th>what it separates</th>
+<th>site means at the extremes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PC2</td>
+<td>Hood Canal from South Puget Sound</td>
+<td>Triton Cove −124.3, Port Gamble −118.9 · Little Skookum +64.5, Squaxin +63.4</td>
+</tr>
+<tr class="even">
+<td>PC3</td>
+<td>the Fidalgo Bay collections from everything else</td>
+<td>FB18 Wild +180.3, Fidalgo Bay +101.9 · Mud Bay −31.4</td>
+</tr>
+</tbody>
+</table>
+<p>Per-axis variance fractions were not carried back from the genome-wide run; on the earlier 918,481-SNP subset PC1 and PC2 took 2.9 % and 2.1 %, with the remaining axes at or below a 1/109 noise floor. Low fractions are normal for this kind of data and do not argue against the split — the <em>separation</em> of the outer-coast cluster is what carries the signal, not the share of total variance on the axis.</p>
+</section>
+<section id="differentiation" class="level3">
+<h3 class="anchored" data-anchor-id="differentiation">Differentiation</h3>
+<p>Genome-wide Hudson <em>F</em><sub>ST</sub>, 105 pairs:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>comparison</th>
+<th><em>F</em><sub>ST</sub></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Coos Bay ↔︎ Willapa Bay</td>
+<td><strong>0.097</strong></td>
+</tr>
+<tr class="even">
+<td>among the 13 Salish Sea sites (mean)</td>
+<td>0.115 (range 0.086–0.150)</td>
+</tr>
+<tr class="odd">
+<td>Coos Bay ↔︎ Salish Sea (mean)</td>
+<td>0.174 (range 0.157–0.184)</td>
+</tr>
+<tr class="even">
+<td>Willapa Bay ↔︎ Salish Sea (mean)</td>
+<td>0.174 (range 0.157–0.185)</td>
+</tr>
+<tr class="odd">
+<td>all pairs (mean)</td>
+<td>0.129; max 0.185 (FB18 Wild ↔︎ Willapa Bay)</td>
+</tr>
+</tbody>
+</table>
+<p>The closest pair in the dataset is Dogfish Bay ↔︎ Ostrich Bay (0.086), two Central Puget Sound sites 13 km apart. The most differentiated Salish Sea pair is FB18 Wild (Fidalgo Bay, north) ↔︎ Triton Cove (Hood Canal) at 0.150.</p>
+<p><strong>The two Fidalgo Bay collections differ at <em>F</em><sub>ST</sub> = 0.143</strong> — above the Salish Sea average, from collections recorded at the same coordinates. Either they are separate collection events from genuinely different beds, or one label is wrong, or a batch effect is being read as differentiation. This is unresolved and it is the second metadata problem the genetics surfaced.</p>
+</section>
+<section id="relatedness-does-not-drive-any-of-this" class="level3">
+<h3 class="anchored" data-anchor-id="relatedness-does-not-drive-any-of-this">Relatedness does not drive any of this</h3>
+<p>Within-site kinship across 349 pairs: median 0.041, maximum 0.093 (<code>FB18_Wild_12</code> / <code>FB18_Wild_9</code>, <em>z</em> = 3.8 against the within-site distribution). No pair reaches the first-degree range; six pairs sit just at the second-degree boundary (0.089–0.093) and all six are in the FB18 Wild collection — six of the ten pairs among its five individuals. Cousin-level pairs in one small collection will nudge that site’s allele frequencies, and FB18 Wild is one of the two collections behind the Fidalgo Bay anomaly above, but they cannot produce the basin-scale structure.</p>
+</section>
+<section id="absolute-fst-values-are-provisional-the-earlier-subset-understated-them-by-half" class="level3">
+<h3 class="anchored" data-anchor-id="absolute-fst-values-are-provisional-the-earlier-subset-understated-them-by-half">Absolute <em>F</em><sub>ST</sub> values are provisional; the earlier subset understated them by half</h3>
+<p>The first pass used the 1,200 highest-variant-density contigs (7.4 % of the VCF’s records). That subset gives systematically <em>lower</em> differentiation than the genome:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>7.4 % subset</th>
+<th>genome-wide</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Coos Bay ↔︎ Willapa Bay</td>
+<td>0.038</td>
+<td>0.097</td>
+</tr>
+<tr class="even">
+<td>among the 13 Salish Sea sites (mean)</td>
+<td>0.052</td>
+<td>0.115</td>
+</tr>
+<tr class="odd">
+<td>Fidalgo Bay ↔︎ FB18 Wild</td>
+<td>0.051</td>
+<td>0.143</td>
+</tr>
+</tbody>
+</table>
+<p>Selecting contigs for variant density selects regions where variation is high and shared — including, most likely, collapsed paralogs, where reads from two loci pile onto one and every population looks heterozygous and therefore similar. Any <em>F</em><sub>ST</sub> quoted from that subset is a floor, not an estimate.</p>
+<p>That is a warning about the genome-wide numbers too. They are computed from pooled read counts at 5.5× on a 158,839-contig reference with no repeat mask, using a ratio-of-averages estimator that is unbiased under its assumptions but not immune to reference collapse. Treat the ordering of the pairs as solid and the absolute magnitudes as an upper-bounded guess.</p>
+</section>
+</section>
+<section id="the-relabelled-site" class="level2">
+<h2 class="anchored" data-anchor-id="the-relabelled-site">The relabelled site</h2>
+<p>The site recorded as “WB” was inferred in the repository to be Westcott Bay, San Juan Island. Three independent readings of the data say otherwise: it clusters with Coos Bay on PC1 with no separation between them, its <em>F</em><sub>ST</sub> to Coos Bay (0.097) is lower than the average Salish Sea pair (0.115), and its mean <em>F</em><sub>ST</sub> to the Salish Sea (0.174) is the same as Coos Bay’s (0.174) — that is, it is as foreign to Puget Sound as an Oregon population is.</p>
+<p>Reinterpreting it as <strong>Willapa Bay</strong>, an outer-coast Washington estuary between Coos Bay and the Strait, makes all three ordinary: two outer-coast populations resembling each other more than either resembles the inland sea.</p>
+<p>This is not only bookkeeping. The label determines which environmental record a site inherits, and it also determines whether the dataset contains one outer-coast lineage or two. For a restoration audience the practical reading is that the Willapa/Coos group is a separate genetic unit from Puget Sound stock at a magnitude (<em>F</em><sub>ST</sub> ≈ 0.17) that dwarfs any within-Sound contrast — which is a sourcing-relevant fact regardless of whether local adaptation can be demonstrated.</p>
+</section>
+<section id="where-the-chromosome-scale-assembly-enters" class="level2">
+<h2 class="anchored" data-anchor-id="where-the-chromosome-scale-assembly-enters">Where the chromosome-scale assembly enters</h2>
+<p>A Dovetail HiRise Hi-C assembly of <em>O. lurida</em> (PO2457) with MAKER annotation is now in hand:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>property</th>
+<th><code>Olurida_v081</code> (used for everything above)</th>
+<th>PO2457</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>total length</td>
+<td>1.140 Gb</td>
+<td>1.023 Gb</td>
+</tr>
+<tr class="even">
+<td>sequences</td>
+<td>158,839 contigs</td>
+<td>145 scaffolds</td>
+</tr>
+<tr class="odd">
+<td>N50</td>
+<td>13.0 kb</td>
+<td>103.0 Mb</td>
+</tr>
+<tr class="even">
+<td>sequences ≥ 10 Mb</td>
+<td>0</td>
+<td>10, holding 98.7 %</td>
+</tr>
+<tr class="odd">
+<td>gene annotation</td>
+<td>none usable</td>
+<td>34,178 genes</td>
+</tr>
+<tr class="even">
+<td>repeat annotation</td>
+<td>none</td>
+<td>61.2 % masked</td>
+</tr>
+<tr class="odd">
+<td>BUSCO (mollusca)</td>
+<td>not assessed</td>
+<td>C 80.1 %, M 17.4 %</td>
+</tr>
+</tbody>
+</table>
+<p><em>O. lurida</em> has n = 10, so those ten large scaffolds are chromosomes.</p>
+<p><strong>What it does not change.</strong> None of the results above. PCA and <em>F</em><sub>ST</sub> are functions of the genotype matrix; renaming and reordering the coordinates of the markers leaves both invariant. A new assembly could only change these results by changing which reads map where — i.e.&nbsp;by realignment, not lift-over.</p>
+<p><strong>What it tells us about the markers we used.</strong> Lifting the SNP set onto the new scaffolds with <code>minimap2 -cx asm20</code>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 67%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>stage</th>
+<th>SNPs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>entering lift-over</td>
+<td>12,710,660</td>
+</tr>
+<tr class="even">
+<td>placed on the new assembly</td>
+<td>7,650,471 (60.2 %)</td>
+</tr>
+<tr class="odd">
+<td>dropped — old contig had no alignment</td>
+<td>742,509</td>
+</tr>
+<tr class="even">
+<td>dropped — position outside an alignment block</td>
+<td>4,317,680</td>
+</tr>
+<tr class="odd">
+<td>of those placed, inside a RepeatMasker interval</td>
+<td><strong>2,957,241 (38.7 %)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Nearly two in five placeable markers sit in repeat. Those markers were in every <em>F</em><sub>ST</sub> and PC above, because the old reference offered no way to exclude them. That is the most likely single explanation for differentiation values that look high for a broadcast-spawning marine invertebrate at this spatial scale.</p>
+<p>The assembly-size difference points the same way: the old reference is <strong>117 Mb larger</strong> than the new one despite being the same genome, the signature of unresolved haplotig redundancy, and only 48.4 % of it is covered at ≥ 1× despite 5.48× mean depth — coverage is piling into a fraction of the reference.</p>
+</section>
+<section id="what-this-does-and-does-not-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-does-and-does-not-mean">What this does and does not mean</h2>
+<p><strong>Supported.</strong> Two genetic groups are unambiguous: outer coast (Coos Bay, Willapa Bay) and Salish Sea. Within the Salish Sea, basin-level differentiation is detectable and consistent across PCA and <em>F</em><sub>ST</sub>, and site-level differences inside a basin are small. Relatedness and sample QC do not account for any of it.</p>
+<p><strong>Not supported.</strong> Any absolute statement about the magnitude of differentiation, any site-level (as opposed to basin-level) ranking of distinctiveness, and any claim that structure reflects adaptation rather than drift and limited dispersal. The last of those was tested directly and failed.</p>
+<p><strong>Not assessed here.</strong> Isolation by distance (no Mantel or MRM test was run), admixture proportions, effective population size, and any within-chromosome pattern — the last of which the old reference made impossible and the new one makes routine.</p>
+</section>
+<section id="what-would-sharpen-this" class="level2">
+<h2 class="anchored" data-anchor-id="what-would-sharpen-this">What would sharpen this</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>buys</th>
+<th>cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Recompute <em>F</em><sub>ST</sub> and PCA with repeat-masked positions dropped, using the existing lift-over</td>
+<td>a direct measure of how much of the apparent differentiation is repeat-driven; no realignment needed</td>
+<td>low — one pass over existing files</td>
+</tr>
+<tr class="even">
+<td>Resolve the two Fidalgo Bay collections in the collection records</td>
+<td>removes a 0.143 <em>F</em><sub>ST</sub> anomaly that is currently unexplained</td>
+<td>archival</td>
+</tr>
+<tr class="odd">
+<td>Confirm the WB collection’s provenance from records</td>
+<td>settles the relabelling with evidence rather than inference</td>
+<td>archival</td>
+</tr>
+<tr class="even">
+<td>Realign all 224 fastq files to PO2457</td>
+<td>genotypes free of the collapsed-contig problem, plus chromosome-anchored windowed <em>F</em><sub>ST</sub>, LD decay and inversion scans</td>
+<td>~1–2 days wall, ~1.5 TB scratch</td>
+</tr>
+</tbody>
+</table>
+<p>The first row is the highest ratio of information to effort in this table and should come next.</p>
+</section>
+<section id="notes-to-self" class="level2">
+<h2 class="anchored" data-anchor-id="notes-to-self">Notes to self</h2>
+<ul>
+<li><strong>Population structure is coordinate-free; marker quality is not.</strong> The instinct to re-run structure “on the new genome” is wrong unless the reads are re-mapped. What the new genome actually bought here was a repeat mask and a way to count how much of the marker set is suspect.</li>
+<li><strong>Check subset-versus-genome differentiation before quoting any <em>F</em><sub>ST</sub>.</strong> The variant-density subset halved every value. It was chosen for transfer speed, and it turned out to be non-neutral with respect to the statistic.</li>
+<li><strong>Pool reads for population frequencies; never average hard calls.</strong> At 5.5× the calls are homozygote-biased and the bias is depth-dependent, so it varies across sites.</li>
+<li><strong>Evaluate kinship within sites, against a within-site null.</strong> Across-site kinship is the structure being measured; using it as a relatedness screen would flag whole basins.</li>
+<li><strong>Two collections sharing coordinates are not evidence that they are one collection.</strong> Keeping <code>Fidalgo_Bay</code> and <code>FB18_Wild</code> separate is what surfaced the 0.143 anomaly; merging them would have averaged it away silently.</li>
+</ul>
+</section>
+<section id="reproducibility" class="level2">
+<h2 class="anchored" data-anchor-id="reproducibility">Reproducibility</h2>
+<p>Seeds fixed at 42 throughout.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># QC, site curation, genotype matrices, structure and relatedness</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> code/06_genotype_matrix.py</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> code/06b_structure_checks.py</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># genome-wide filtering and statistics (lab compute host, 24 workers)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> work/gw/run_gw.sh                  <span class="co"># calls work/gw/oly_gw.py worker|merge</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># lift-over of the SNP set onto the chromosome-scale assembly</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="ex">minimap2</span> <span class="at">-cx</span> asm20 <span class="at">-t</span> 46 <span class="at">--secondary</span><span class="op">=</span>no Ol_PO2457.fasta Olurida_v081.fa <span class="op">&gt;</span> old2new.paf</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> work/newasm/liftgene.py <span class="op">&lt;</span>workdir<span class="op">&gt;</span> old2new.paf annotation.gff.gz <span class="dt">\</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                               repeats.gff.gz pop_env13.tsv out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Tables behind every number above: <code>output/06_structure/</code> (<code>pairwise-fst.tsv</code>, <code>structure-pcs.tsv</code>, <code>eigenvalues.tsv</code>, <code>within-site-kinship.tsv</code>, <code>individual-missingness.tsv</code>, <code>structure-checks.json</code>), <code>output/10_rda_genomewide/tables/</code> (<code>pairwise-fst-genomewide.tsv</code>, <code>structure-pcs.tsv</code>, <code>filter-summary.tsv</code>), and <code>output/13_liftover_geneset/tables/</code> (<code>liftover-summary.tsv</code>).</p>
+
+
+<!-- -->
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = true;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/sr320\.github\.io\/tumbling-oysters");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb2" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Population structure in Olympia oyster low-coverage WGS, and what a chromosome-scale assembly changes about it"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="an">description:</span><span class="co"> "109 libraries, 15 collections, 12.9 M SNPs — structure, differentiation, relatedness, and one relabelled site"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="an">categories:</span><span class="co"> ["Genomics", "Computing"] #choose "Aquaculture", "Computing", "Epigenetics", "Genomics", "Lab Updates", "Reading Notes", "Transcriptomics"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#citation:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="an">date:</span><span class="co"> 09-17-2026</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="an">image:</span><span class="co"> "images/structure-fst-panel.png"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="an">author:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">  - name: Steven Roberts</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">    url:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">    orcid: 0000-0001-8302-1138</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation: Professor, UW - School of Aquatic and Fishery Sciences</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">    affiliation-url: https://robertslab.info</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">  #url:  # self-defined</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="an">draft:</span><span class="co"> false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">  html:</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">    toc: true            # ← enable TOC</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-location: left   # or: right, body</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">    toc-depth: 3         # how many heading levels to show</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">    code-fold: FALSE</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">    code-tools: true</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">    code-copy: true</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">    highlight-style: github</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">    code-overflow: wrap</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#runtime: shiny</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>&lt;a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"&gt;&lt;img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"/&gt;&lt;/a&gt;</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>Neutral population structure in this dataset is real, strong and easy to describe: two outer-coast collections (Coos Bay, Oregon and the site recorded as "WB") form one cluster that sits far from everything in the Salish Sea, and within the Salish Sea the basins — Hood Canal, South Sound, North Sound, the Strait — separate on later axes while individual sites inside a basin overlap. Genome-wide Hudson *F*~ST~ averages 0.115 among the 13 Salish Sea collections and 0.174 between either outer-coast collection and the Salish Sea.</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>The one site that forced a change of interpretation is "WB". It was carried in the repository as Westcott Bay, San Juan Island. Genetically it is not a Puget Sound population: its closest relative in the dataset is Coos Bay (*F*~ST~ = 0.097), closer than the average pair of Salish Sea sites (0.115). Read as **Willapa Bay** — an outer-coast estuary — the pattern is ordinary.</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>A chromosome-scale assembly (PO2457) is now available, and this post also asks what it does and does not change for these results. Short version: it does not change the structure, because structure is a property of the samples rather than the coordinate system. What it changes is what we know about the markers. Of the 7.65 M SNPs that could be placed on the new assembly, **38.7 % fall inside repeat-masked intervals** that the old fragmented reference gave us no way to identify — and every *F*~ST~ and PC below was computed with those markers included.</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>The genotype–environment work on this dataset is written up separately (see <span class="co">[</span><span class="ot">the GEA analysis</span><span class="co">](../88-oly-lcwgs-rda/)</span>); nothing here depends on it.</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="fu">## Question</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>Two practical questions sit underneath any restoration sourcing decision, and they are different questions:</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a><span class="ss">1.  </span>**Are these collections genetically distinguishable, and how are they arranged?** That is this post.</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a><span class="ss">2.  </span>**Do those differences track local conditions?** That is the genotype–environment analysis, and it is negative.</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>Question 1 is also the quality-control pass for everything else. If the samples do not resolve into the groups the metadata claims, the metadata is the thing to fix first — which is exactly what happened.</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>Low-coverage whole-genome sequencing of 112 libraries from 15 putative collection sites, 13 of them in Puget Sound and the Strait of Juan de Fuca, one on the outer Washington coast, one in Coos Bay, Oregon. Repository: <span class="in">`github.com/zbengt/oly-lc-WGS`</span>; alignments and variants served over HTTP from a lab web host.</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>|  |  |</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>|------------------------------------|------------------------------------|</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>| libraries sequenced | 112 |</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>| retained after QC | **109** (2 blank controls, 1 below the depth threshold) |</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>| mean depth, retained | 5.48× (range 3.46–6.73) |</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>| individuals per site | 5–8 |</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>| genotype missingness | mean 3.1 %, max 13.6 % (<span class="in">`HC18_Triton_Wild_16`</span>) |</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>Two collections — <span class="in">`Fidalgo_Bay`</span> and <span class="in">`FB18_Wild`</span> — carry identical coordinates (48.488, −122.576) and are treated as separate populations throughout, because the records do not establish that they are the same collection event. Three site labels besides WB (<span class="in">`CS18_22_Wild_plate1`</span>, <span class="in">`LS`</span>, <span class="in">`MB`</span>) are inferred from sample naming rather than read from collection records.</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a><span class="fu">### Variants</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>Genotypes come from the joint VCF's likelihoods. Filtering with <span class="in">`bcftools`</span>: biallelic SNPs, QUAL ≥ 30, MQ ≥ 30, <span class="in">`F_MISSING`</span> <span class="sc">\&lt;</span> 0.2, MAF 0.05–0.95, plus an excess-heterozygosity screen (<span class="in">`ExcHet`</span> <span class="sc">\&gt;</span> 1e−6) as a paralog guard.</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>| stage                             | SNPs           |</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>|-----------------------------------|----------------|</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>| after <span class="in">`bcftools`</span> filters          | 14,250,907     |</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>| dropped — excess depth            | 14,250         |</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>| dropped — missing in a population | 1,903          |</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>| dropped — MAF <span class="sc">\&lt;</span> 0.05             | 1,376,098      |</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>| **retained**                      | **12,858,656** |</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>| thinned subset used for PCA       | 174,534        |</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>Population allele frequencies **pool sequencing reads within a site** (summed ALT depth over summed total depth) rather than averaging per-individual hard calls, which at \~5× would be biased toward homozygotes. Individual dosages are flat-prior posteriors from the PL fields, so depth uncertainty is carried forward into the PCA rather than hidden by a call.</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a><span class="fu">## Methods</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>**Ordination.** PCA on individual dosages, LD-thinned to 174,534 SNPs, all 109 individuals, no outlier removal. The scores shown are from the genome-wide run.</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>**Differentiation.** Hudson's *F*~ST~ per population pair, computed from the pooled read counts described above and averaged over all 12,858,656 SNPs using the ratio-of-averages estimator (sum of numerators over sum of denominators, not the mean of per-SNP ratios).</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>**Relatedness.** A genetic relationship matrix and IBS from 39,066 thinned SNPs (the earlier subset-era run; not repeated genome-wide), with kinship evaluated *within* sites (349 within-site pairs) against a within-site null, since across-site kinship is confounded with the structure we are trying to describe.</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>Seeds fixed at 42; the pipeline is scripted end to end (see Reproducibility).</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a><span class="fu">## Results</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a><span class="fu">### The ordination has one dominant split and a basin-level second tier</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a><span class="al">![Genome-wide population structure across 15 Olympia oyster collections. (a) PCA of 109 individuals on 174,534 LD-thinned SNPs; the two outer-coast collections separate from every Salish Sea site along PC1, with a standardised gap of 13.0 pooled SD between the two groups. (b) The same ordination, PC2 against PC3, Salish Sea individuals only: Hood Canal, South Puget Sound and the Fidalgo Bay collections occupy distinct regions while sites inside a basin overlap. (c) Genome-wide Hudson *F*~ST~ (× 100) for all 105 population pairs, computed over 12,858,656 SNPs. Absolute values are provisional (see caveats); the ordering is the interpretable part.](images/structure-fst-panel.png)</span></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>PC1 separates Coos Bay + Willapa Bay (15 individuals) from the 94 Salish Sea individuals; the gap between the two groups is 13.0 pooled standard deviations, and the two outer-coast collections are not resolved from each other on it (site means 190.1 and 202.8, against a within-group SD of 7.2).</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>The later axes are basin-level, not site-level:</span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>| axis | what it separates | site means at the extremes |</span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>|------------------------|------------------------|------------------------|</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>| PC2 | Hood Canal from South Puget Sound | Triton Cove −124.3, Port Gamble −118.9 · Little Skookum +64.5, Squaxin +63.4 |</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>| PC3 | the Fidalgo Bay collections from everything else | FB18 Wild +180.3, Fidalgo Bay +101.9 · Mud Bay −31.4 |</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>Per-axis variance fractions were not carried back from the genome-wide run; on the earlier 918,481-SNP subset PC1 and PC2 took 2.9 % and 2.1 %, with the remaining axes at or below a 1/109 noise floor. Low fractions are normal for this kind of data and do not argue against the split — the *separation* of the outer-coast cluster is what carries the signal, not the share of total variance on the axis.</span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a><span class="fu">### Differentiation</span></span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>Genome-wide Hudson *F*~ST~, 105 pairs:</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>| comparison | *F*~ST~ |</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>|----|----|</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>| Coos Bay ↔ Willapa Bay | **0.097** |</span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>| among the 13 Salish Sea sites (mean) | 0.115 (range 0.086–0.150) |</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a>| Coos Bay ↔ Salish Sea (mean) | 0.174 (range 0.157–0.184) |</span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>| Willapa Bay ↔ Salish Sea (mean) | 0.174 (range 0.157–0.185) |</span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>| all pairs (mean) | 0.129; max 0.185 (FB18 Wild ↔ Willapa Bay) |</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>The closest pair in the dataset is Dogfish Bay ↔ Ostrich Bay (0.086), two Central Puget Sound sites 13 km apart. The most differentiated Salish Sea pair is FB18 Wild (Fidalgo Bay, north) ↔ Triton Cove (Hood Canal) at 0.150.</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>**The two Fidalgo Bay collections differ at *F*~ST~ = 0.143** — above the Salish Sea average, from collections recorded at the same coordinates. Either they are separate collection events from genuinely different beds, or one label is wrong, or a batch effect is being read as differentiation. This is unresolved and it is the second metadata problem the genetics surfaced.</span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a><span class="fu">### Relatedness does not drive any of this</span></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>Within-site kinship across 349 pairs: median 0.041, maximum 0.093 (<span class="in">`FB18_Wild_12`</span> / <span class="in">`FB18_Wild_9`</span>, *z* = 3.8 against the within-site distribution). No pair reaches the first-degree range; six pairs sit just at the second-degree boundary (0.089–0.093) and all six are in the FB18 Wild collection — six of the ten pairs among its five individuals. Cousin-level pairs in one small collection will nudge that site's allele frequencies, and FB18 Wild is one of the two collections behind the Fidalgo Bay anomaly above, but they cannot produce the basin-scale structure.</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a><span class="fu">### Absolute *F*~ST~ values are provisional; the earlier subset understated them by half</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a>The first pass used the 1,200 highest-variant-density contigs (7.4 % of the VCF's records). That subset gives systematically *lower* differentiation than the genome:</span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>|                                      | 7.4 % subset | genome-wide |</span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>|--------------------------------------|--------------|-------------|</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>| Coos Bay ↔ Willapa Bay               | 0.038        | 0.097       |</span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>| among the 13 Salish Sea sites (mean) | 0.052        | 0.115       |</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>| Fidalgo Bay ↔ FB18 Wild              | 0.051        | 0.143       |</span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>Selecting contigs for variant density selects regions where variation is high and shared — including, most likely, collapsed paralogs, where reads from two loci pile onto one and every population looks heterozygous and therefore similar. Any *F*~ST~ quoted from that subset is a floor, not an estimate.</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>That is a warning about the genome-wide numbers too. They are computed from pooled read counts at 5.5× on a 158,839-contig reference with no repeat mask, using a ratio-of-averages estimator that is unbiased under its assumptions but not immune to reference collapse. Treat the ordering of the pairs as solid and the absolute magnitudes as an upper-bounded guess.</span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a><span class="fu">## The relabelled site</span></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>The site recorded as "WB" was inferred in the repository to be Westcott Bay, San Juan Island. Three independent readings of the data say otherwise: it clusters with Coos Bay on PC1 with no separation between them, its *F*~ST~ to Coos Bay (0.097) is lower than the average Salish Sea pair (0.115), and its mean *F*~ST~ to the Salish Sea (0.174) is the same as Coos Bay's (0.174) — that is, it is as foreign to Puget Sound as an Oregon population is.</span>
+<span id="cb2-143"><a href="#cb2-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-144"><a href="#cb2-144" aria-hidden="true" tabindex="-1"></a>Reinterpreting it as **Willapa Bay**, an outer-coast Washington estuary between Coos Bay and the Strait, makes all three ordinary: two outer-coast populations resembling each other more than either resembles the inland sea.</span>
+<span id="cb2-145"><a href="#cb2-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-146"><a href="#cb2-146" aria-hidden="true" tabindex="-1"></a>This is not only bookkeeping. The label determines which environmental record a site inherits, and it also determines whether the dataset contains one outer-coast lineage or two. For a restoration audience the practical reading is that the Willapa/Coos group is a separate genetic unit from Puget Sound stock at a magnitude (*F*~ST~ ≈ 0.17) that dwarfs any within-Sound contrast — which is a sourcing-relevant fact regardless of whether local adaptation can be demonstrated.</span>
+<span id="cb2-147"><a href="#cb2-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-148"><a href="#cb2-148" aria-hidden="true" tabindex="-1"></a><span class="fu">## Where the chromosome-scale assembly enters</span></span>
+<span id="cb2-149"><a href="#cb2-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-150"><a href="#cb2-150" aria-hidden="true" tabindex="-1"></a>A Dovetail HiRise Hi-C assembly of *O. lurida* (PO2457) with MAKER annotation is now in hand:</span>
+<span id="cb2-151"><a href="#cb2-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-152"><a href="#cb2-152" aria-hidden="true" tabindex="-1"></a>| property | <span class="in">`Olurida_v081`</span> (used for everything above) | PO2457 |</span>
+<span id="cb2-153"><a href="#cb2-153" aria-hidden="true" tabindex="-1"></a>|----|----|----|</span>
+<span id="cb2-154"><a href="#cb2-154" aria-hidden="true" tabindex="-1"></a>| total length | 1.140 Gb | 1.023 Gb |</span>
+<span id="cb2-155"><a href="#cb2-155" aria-hidden="true" tabindex="-1"></a>| sequences | 158,839 contigs | 145 scaffolds |</span>
+<span id="cb2-156"><a href="#cb2-156" aria-hidden="true" tabindex="-1"></a>| N50 | 13.0 kb | 103.0 Mb |</span>
+<span id="cb2-157"><a href="#cb2-157" aria-hidden="true" tabindex="-1"></a>| sequences ≥ 10 Mb | 0 | 10, holding 98.7 % |</span>
+<span id="cb2-158"><a href="#cb2-158" aria-hidden="true" tabindex="-1"></a>| gene annotation | none usable | 34,178 genes |</span>
+<span id="cb2-159"><a href="#cb2-159" aria-hidden="true" tabindex="-1"></a>| repeat annotation | none | 61.2 % masked |</span>
+<span id="cb2-160"><a href="#cb2-160" aria-hidden="true" tabindex="-1"></a>| BUSCO (mollusca) | not assessed | C 80.1 %, M 17.4 % |</span>
+<span id="cb2-161"><a href="#cb2-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-162"><a href="#cb2-162" aria-hidden="true" tabindex="-1"></a>*O. lurida* has n = 10, so those ten large scaffolds are chromosomes.</span>
+<span id="cb2-163"><a href="#cb2-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-164"><a href="#cb2-164" aria-hidden="true" tabindex="-1"></a>**What it does not change.** None of the results above. PCA and *F*~ST~ are functions of the genotype matrix; renaming and reordering the coordinates of the markers leaves both invariant. A new assembly could only change these results by changing which reads map where — i.e. by realignment, not lift-over.</span>
+<span id="cb2-165"><a href="#cb2-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-166"><a href="#cb2-166" aria-hidden="true" tabindex="-1"></a>**What it tells us about the markers we used.** Lifting the SNP set onto the new scaffolds with <span class="in">`minimap2 -cx asm20`</span>:</span>
+<span id="cb2-167"><a href="#cb2-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-168"><a href="#cb2-168" aria-hidden="true" tabindex="-1"></a>| stage                                           | SNPs                   |</span>
+<span id="cb2-169"><a href="#cb2-169" aria-hidden="true" tabindex="-1"></a>|-------------------------------------------------|------------------------|</span>
+<span id="cb2-170"><a href="#cb2-170" aria-hidden="true" tabindex="-1"></a>| entering lift-over                              | 12,710,660             |</span>
+<span id="cb2-171"><a href="#cb2-171" aria-hidden="true" tabindex="-1"></a>| placed on the new assembly                      | 7,650,471 (60.2 %)     |</span>
+<span id="cb2-172"><a href="#cb2-172" aria-hidden="true" tabindex="-1"></a>| dropped — old contig had no alignment           | 742,509                |</span>
+<span id="cb2-173"><a href="#cb2-173" aria-hidden="true" tabindex="-1"></a>| dropped — position outside an alignment block   | 4,317,680              |</span>
+<span id="cb2-174"><a href="#cb2-174" aria-hidden="true" tabindex="-1"></a>| of those placed, inside a RepeatMasker interval | **2,957,241 (38.7 %)** |</span>
+<span id="cb2-175"><a href="#cb2-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-176"><a href="#cb2-176" aria-hidden="true" tabindex="-1"></a>Nearly two in five placeable markers sit in repeat. Those markers were in every *F*~ST~ and PC above, because the old reference offered no way to exclude them. That is the most likely single explanation for differentiation values that look high for a broadcast-spawning marine invertebrate at this spatial scale.</span>
+<span id="cb2-177"><a href="#cb2-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-178"><a href="#cb2-178" aria-hidden="true" tabindex="-1"></a>The assembly-size difference points the same way: the old reference is **117 Mb larger** than the new one despite being the same genome, the signature of unresolved haplotig redundancy, and only 48.4 % of it is covered at ≥ 1× despite 5.48× mean depth — coverage is piling into a fraction of the reference.</span>
+<span id="cb2-179"><a href="#cb2-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-180"><a href="#cb2-180" aria-hidden="true" tabindex="-1"></a><span class="fu">## What this does and does not mean</span></span>
+<span id="cb2-181"><a href="#cb2-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-182"><a href="#cb2-182" aria-hidden="true" tabindex="-1"></a>**Supported.** Two genetic groups are unambiguous: outer coast (Coos Bay, Willapa Bay) and Salish Sea. Within the Salish Sea, basin-level differentiation is detectable and consistent across PCA and *F*~ST~, and site-level differences inside a basin are small. Relatedness and sample QC do not account for any of it.</span>
+<span id="cb2-183"><a href="#cb2-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-184"><a href="#cb2-184" aria-hidden="true" tabindex="-1"></a>**Not supported.** Any absolute statement about the magnitude of differentiation, any site-level (as opposed to basin-level) ranking of distinctiveness, and any claim that structure reflects adaptation rather than drift and limited dispersal. The last of those was tested directly and failed.</span>
+<span id="cb2-185"><a href="#cb2-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-186"><a href="#cb2-186" aria-hidden="true" tabindex="-1"></a>**Not assessed here.** Isolation by distance (no Mantel or MRM test was run), admixture proportions, effective population size, and any within-chromosome pattern — the last of which the old reference made impossible and the new one makes routine.</span>
+<span id="cb2-187"><a href="#cb2-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-188"><a href="#cb2-188" aria-hidden="true" tabindex="-1"></a><span class="fu">## What would sharpen this</span></span>
+<span id="cb2-189"><a href="#cb2-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-190"><a href="#cb2-190" aria-hidden="true" tabindex="-1"></a>|   | buys | cost |</span>
+<span id="cb2-191"><a href="#cb2-191" aria-hidden="true" tabindex="-1"></a>|------------------------|------------------------|------------------------|</span>
+<span id="cb2-192"><a href="#cb2-192" aria-hidden="true" tabindex="-1"></a>| Recompute *F*~ST~ and PCA with repeat-masked positions dropped, using the existing lift-over | a direct measure of how much of the apparent differentiation is repeat-driven; no realignment needed | low — one pass over existing files |</span>
+<span id="cb2-193"><a href="#cb2-193" aria-hidden="true" tabindex="-1"></a>| Resolve the two Fidalgo Bay collections in the collection records | removes a 0.143 *F*~ST~ anomaly that is currently unexplained | archival |</span>
+<span id="cb2-194"><a href="#cb2-194" aria-hidden="true" tabindex="-1"></a>| Confirm the WB collection's provenance from records | settles the relabelling with evidence rather than inference | archival |</span>
+<span id="cb2-195"><a href="#cb2-195" aria-hidden="true" tabindex="-1"></a>| Realign all 224 fastq files to PO2457 | genotypes free of the collapsed-contig problem, plus chromosome-anchored windowed *F*~ST~, LD decay and inversion scans | \~1–2 days wall, \~1.5 TB scratch |</span>
+<span id="cb2-196"><a href="#cb2-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-197"><a href="#cb2-197" aria-hidden="true" tabindex="-1"></a>The first row is the highest ratio of information to effort in this table and should come next.</span>
+<span id="cb2-198"><a href="#cb2-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-199"><a href="#cb2-199" aria-hidden="true" tabindex="-1"></a><span class="fu">## Notes to self</span></span>
+<span id="cb2-200"><a href="#cb2-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-201"><a href="#cb2-201" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Population structure is coordinate-free; marker quality is not.** The instinct to re-run structure "on the new genome" is wrong unless the reads are re-mapped. What the new genome actually bought here was a repeat mask and a way to count how much of the marker set is suspect.</span>
+<span id="cb2-202"><a href="#cb2-202" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Check subset-versus-genome differentiation before quoting any *F*~ST~.** The variant-density subset halved every value. It was chosen for transfer speed, and it turned out to be non-neutral with respect to the statistic.</span>
+<span id="cb2-203"><a href="#cb2-203" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Pool reads for population frequencies; never average hard calls.** At 5.5× the calls are homozygote-biased and the bias is depth-dependent, so it varies across sites.</span>
+<span id="cb2-204"><a href="#cb2-204" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Evaluate kinship within sites, against a within-site null.** Across-site kinship is the structure being measured; using it as a relatedness screen would flag whole basins.</span>
+<span id="cb2-205"><a href="#cb2-205" aria-hidden="true" tabindex="-1"></a><span class="ss">-   </span>**Two collections sharing coordinates are not evidence that they are one collection.** Keeping <span class="in">`Fidalgo_Bay`</span> and <span class="in">`FB18_Wild`</span> separate is what surfaced the 0.143 anomaly; merging them would have averaged it away silently.</span>
+<span id="cb2-206"><a href="#cb2-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-207"><a href="#cb2-207" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducibility</span></span>
+<span id="cb2-208"><a href="#cb2-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-209"><a href="#cb2-209" aria-hidden="true" tabindex="-1"></a>Seeds fixed at 42 throughout.</span>
+<span id="cb2-210"><a href="#cb2-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a><span class="in">``` bash</span></span>
+<span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a><span class="co"># QC, site curation, genotype matrices, structure and relatedness</span></span>
+<span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> code/06_genotype_matrix.py</span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> code/06b_structure_checks.py</span>
+<span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a><span class="co"># genome-wide filtering and statistics (lab compute host, 24 workers)</span></span>
+<span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> work/gw/run_gw.sh                  <span class="co"># calls work/gw/oly_gw.py worker|merge</span></span>
+<span id="cb2-218"><a href="#cb2-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-219"><a href="#cb2-219" aria-hidden="true" tabindex="-1"></a><span class="co"># lift-over of the SNP set onto the chromosome-scale assembly</span></span>
+<span id="cb2-220"><a href="#cb2-220" aria-hidden="true" tabindex="-1"></a><span class="ex">minimap2</span> <span class="at">-cx</span> asm20 <span class="at">-t</span> 46 <span class="at">--secondary</span><span class="op">=</span>no Ol_PO2457.fasta Olurida_v081.fa <span class="op">&gt;</span> old2new.paf</span>
+<span id="cb2-221"><a href="#cb2-221" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> work/newasm/liftgene.py <span class="op">&lt;</span>workdir<span class="op">&gt;</span> old2new.paf annotation.gff.gz <span class="dt">\</span></span>
+<span id="cb2-222"><a href="#cb2-222" aria-hidden="true" tabindex="-1"></a>                               repeats.gff.gz pop_env13.tsv out</span>
+<span id="cb2-223"><a href="#cb2-223" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-224"><a href="#cb2-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-225"><a href="#cb2-225" aria-hidden="true" tabindex="-1"></a>Tables behind every number above: <span class="in">`output/06_structure/`</span> (<span class="in">`pairwise-fst.tsv`</span>, <span class="in">`structure-pcs.tsv`</span>, <span class="in">`eigenvalues.tsv`</span>, <span class="in">`within-site-kinship.tsv`</span>, <span class="in">`individual-missingness.tsv`</span>, <span class="in">`structure-checks.json`</span>), <span class="in">`output/10_rda_genomewide/tables/`</span> (<span class="in">`pairwise-fst-genomewide.tsv`</span>, <span class="in">`structure-pcs.tsv`</span>, <span class="in">`filter-summary.tsv`</span>), and <span class="in">`output/13_liftover_geneset/tables/`</span> (<span class="in">`liftover-summary.tsv`</span>).</span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
