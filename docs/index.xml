@@ -12,6 +12,99 @@
 <generator>quarto-1.6.40</generator>
 <lastBuildDate>Sat, 19 Sep 2026 07:00:00 GMT</lastBuildDate>
 <item>
+  <title>Does a 4-hour resazurin trace forecast field performance? Mostly no</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/90-resazurin-index-catalogue/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="tldr" class="level2">
+<h2 class="anchored" data-anchor-id="tldr">TL;DR</h2>
+<p>Zero of the 284 distinct indices cleared family-wise <em>p</em> &lt; 0.05 for survival, growth, condition index, tissue weight, cup, yield, or the performance composite. Not one.</p>
+<p>The closest calls, in order of how much I believe them:</p>
+<ol type="1">
+<li><strong>Triploid growth and tissue weight.</strong> The fitted metabolic plateau (<code>sat_asymptote</code>) and the second-hour rate (<code>rate_h2</code>) correlate at rho 0.40 to 0.42 with growth in shell height and dry tissue weight. Family-wise <em>p</em> is 0.08 to 0.11, so it is just short of the ceiling. Cross-validated single-index prediction keeps rho around 0.28, and the composites beat the size-plus-plate benchmark by a similar margin. This is the one signal that shows up across several related features, several scales, and two related phenotypes. Caveat: a few high-plateau animals do some of the work.</li>
+<li><strong>Diploid survival.</strong> Size-and-plate-adjusted capacity features (<code>final_value</code>, <code>mean_rate</code>, <code>auc_total</code>) give AUC around 0.74, and a nested composite holds AUC 0.67 out of sample against a 0.43 benchmark. But this rests on nine deaths, and the direction (higher output, better survival) is opposite to the family-level USDA result, so I would call it a hypothesis, not a finding.</li>
+<li><strong>Diploid condition index.</strong> The late-minus-early AUC difference correlates at rho -0.35, family-wise <em>p</em> 0.09. Weak and single-feature.</li>
+</ol>
+<p>Everything else, including triploid survival, is indistinguishable from noise.</p>
+<p>So the honest summary: in this cohort, a pre-deployment 40 °C resazurin trace carries a small amount of information about how much a triploid will grow, possibly about whether a diploid will survive, and essentially none about triploid mortality. None of it is strong enough to use as a screen today. The next deployment, ideally with more deaths and a recorded field duration, is what would confirm or kill the triploid growth lead.</p>
+</section>
+<section id="what-this-was" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-was">What this was</h2>
+<p>The question: of every index that can be gleaned from a 4-hour resazurin run on an individual oyster, which ones forecast that same animal’s field performance, and how should the assay be normalized, truncated, and combined to do so?</p>
+<p>The analysis is a fresh, self-contained pass at the 2025-08-26 ploidy trial (HNRY family, one day, 40 °C), starting from the <strong>raw plate-reader files</strong> rather than the processed <code>ploidy_metabolism.csv</code>. That matters because absolute fluorescence, blank-subtracted resorufin production, un-normalized fold change, actual elapsed read times, and baseline autofluorescence are all lost by the time the data reach the processed CSV.</p>
+<p>It differs from the family-level prediction notebook in <code>sormi-assay-development</code> in three ways:</p>
+<ul>
+<li><strong>Individual-level linkage.</strong> The same animal was assayed, tagged, deployed, and sampled, so n is ~160 individuals rather than ~9 family means.</li>
+<li><strong>Every scale and every feature.</strong> Five value scales × ~45 curve features × two size/plate adjustments, catalogued and then de-duplicated to ~280 distinct indices.</li>
+<li><strong>Honest multiplicity control.</strong> With several hundred candidates, nominal <em>p</em>-values are meaningless. Every screen is calibrated against a permutation null for the <em>best</em> index in the family, every composite is built with nested feature selection inside the cross-validation loop, and every out-of-sample score is compared against a ploidy + size + plate benchmark fitted the same way.</li>
+</ul>
+<p>That last point is the reason for the flat TL;DR. On the survival screen the best index reaches AUC ~0.68 pooled and ~0.81 in diploids <strong>by chance alone</strong> at these death counts. The observed maxima, 0.63 and 0.74, sit below their own null ceilings.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/90-resazurin-index-catalogue/images/survival_permutation_ceiling.png" class="img-fluid"></p>
+<p>The heatmap below is the whole catalogue in one view: the 30 indices with the strongest pooled association, against every field phenotype, by stratum. Warm and cool blocks swap sides between diploid and triploid panels more often than they agree.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/90-resazurin-index-catalogue/images/association_heatmap_top_indices.png" class="img-fluid"></p>
+</section>
+<section id="the-numbers" class="level2">
+<h2 class="anchored" data-anchor-id="the-numbers">The numbers</h2>
+<p>Best single index per stratum for survival (AUC, family-wise permutation <em>p</em>):</p>
+<ul>
+<li>diploid: <code>final_value</code> on <code>fc_corr_mm</code>, size/plate-adjusted, AUC = 0.74 (n = 80, 9 dead), family-wise <em>p</em> = 0.32</li>
+<li>pooled: <code>n_negative_intervals</code> on <code>raw_rfu</code>, AUC = 0.63 (n = 156, 33 dead), family-wise <em>p</em> = 0.41</li>
+<li>triploid: <code>time_to_vmax</code> on <code>raw_rfu</code>, adjusted, AUC = 0.63 (n = 76, 24 dead), family-wise <em>p</em> = 0.77</li>
+</ul>
+<p>0 of 852 index × stratum tests cleared the 0.05 family-wise threshold.</p>
+<p>Best single index per continuous phenotype:</p>
+<ul>
+<li>dry tissue weight: <code>rate_h2</code> on <code>fc_corr_mm</code> (adj), triploid, rho = 0.42 (n = 52), <em>p</em> = 0.08</li>
+<li>growth: <code>sat_asymptote</code> on <code>fc_corr</code>, triploid, rho = 0.40 (n = 49), <em>p</em> = 0.11</li>
+<li>performance composite: same index, rho = 0.40, <em>p</em> = 0.11</li>
+<li>condition index: <code>delta_auc_late_minus_early</code> on <code>raw_rfu</code>, diploid, rho = -0.35 (n = 71), <em>p</em> = 0.09</li>
+<li>cup: <code>baseline_value</code> on <code>raw_rfu</code> (adj), triploid, rho = -0.33, <em>p</em> = 0.36</li>
+<li>yield (DTW): <code>time_to_vmax</code> on <code>raw_rfu</code> (adj), triploid, rho = 0.23, <em>p</em> = 0.63</li>
+</ul>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/90-resazurin-index-catalogue/images/best_index_scatter.png" class="img-fluid"></p>
+</section>
+<section id="three-things-that-came-out-sideways" class="level2">
+<h2 class="anchored" data-anchor-id="three-things-that-came-out-sideways">Three things that came out sideways</h2>
+<p><strong>Capacity means different things in the two ploidies.</strong> Diploids that produced <em>more</em> resorufin per mm at 40 °C were more likely to be alive at sampling; in triploids the same capacity-type indices track growth, not survival; and for condition index in diploids they go the other way entirely. That argues for scoring ploidies separately rather than pooling.</p>
+<p><strong>Triploid survival is simply not in the trace.</strong> Despite three times as many deaths as in diploids, no index exceeds AUC 0.63 in either direction, and the nested composites fall <em>below</em> 0.5, which is the signature of selecting on noise. Whatever killed the triploids in the field is not visible in their 4-hour 40 °C trajectory at deployment.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/90-resazurin-index-catalogue/images/nested_composite_cv.png" class="img-fluid"></p>
+<p><strong>Normalization matters less than expected; adjustment matters more.</strong> Dividing by shell length (<code>fc_corr_mm</code>) versus not (<code>fc_corr</code>) changes little once plate and size are regressed out. Keep the existing pipeline, but always test features after adjusting for assay size and plate.</p>
+<p>And one practical note: <strong>a 2-hour read is not clearly worse than 4 hours.</strong> The <code>short_assay_2h</code> composite is within one SD of the best full-assay composite for pooled survival and matches or exceeds it for growth and condition. The assay-duration curves are flat after 2 h in the pooled stratum. If this is ever run at scale, that is the thread to pull.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/90-resazurin-index-catalogue/images/assay_duration.png" class="img-fluid"></p>
+</section>
+<section id="screening-value-today" class="level2">
+<h2 class="anchored" data-anchor-id="screening-value-today">Screening value today</h2>
+<p>Culling the predicted-worst quintile on the best out-of-sample composite would raise realized survival by three to four percentage points in diploids and the pooled set, and would <em>lower</em> it in triploids. Not a usable screen.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/90-resazurin-index-catalogue/images/screening_utility.png" class="img-fluid"></p>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next</h2>
+<ol type="1">
+<li>Record the field sampling date and days at sea so growth can be expressed per day.</li>
+<li>Add a non-stressed ambient-temperature control run on the same animals, so stress <em>response</em> (40 °C minus ambient) can join the catalogue.</li>
+<li>Re-run with the 2025-08-13 cohort once its field outcomes exist. The catalogue gains power fastest from more deaths, not more indices.</li>
+</ol>
+<p>Full notebook and rendered report: <a href="https://github.com/RobertsLab/vims-resazurin/blob/main/code/ploidy/resazurin-ploidy-index-catalogue-field-prediction.md">resazurin-ploidy-index-catalogue-field-prediction</a> in <code>vims-resazurin</code>, with all CSV outputs and figures under <code>output/ploidy/resazurin-index-catalogue/</code>.</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Aquaculture</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/90-resazurin-index-catalogue/</guid>
+  <pubDate>Sat, 19 Sep 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/90-resazurin-index-catalogue/images/association_heatmap_top_indices.png" medium="image" type="image/png" height="100" width="144"/>
+</item>
+<item>
   <title>No Genotype-Environment Association in Olympia Oyster lcWGS</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/88-oly-lcwgs-rda/</link>
@@ -3990,40 +4083,6 @@ Took 5 oyster from each family, added to cup and and filled to first ridge (abou
   <guid>https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/</guid>
   <pubDate>Thu, 04 Jun 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/images/clipboard-600172185.png" medium="image" type="image/png" height="135" width="144"/>
-</item>
-<item>
-  <title>Mortality Trial on Manchester Oysters</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/72-manchester-mort/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><img src="https://img.shields.io/badge/AI%20Use-L0%20None-lightgrey" alt="AI Use Level 0"></p>
-<p>Last week we pulled some oysters from Manchester that had different priming experiences.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/72-manchester-mort/images/clipboard-4074959556.png" class="img-fluid"></p>
-<p>There were 8 cohorts and 8 oysters were brought back to UW.<br>
-<br>
-:<a href="https://docs.google.com/spreadsheets/d/1suyutJjz5jdJ-H3tTnz6piezhtyCK2XbPEnfmU2bEMo/edit?usp=sharing">Spreadsheet</a>: with cup IDs and Tag #</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/72-manchester-mort/images/clipboard-3812268574.png" class="img-fluid"></p>
-<p>Placed in incubator in 16 oz cups with instant ocean at 10am on Monday (Day 01). At 4pm Monday there was 1 mortality.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/72-manchester-mort/images/clipboard-1475596766.png" class="img-fluid">.</p>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD # RESULTS</p>
-<p>see <a href="https://ahuffmyer.github.io/posts/2026-06-03-analyzing-manchester-stress-survival.html" class="uri">https://ahuffmyer.github.io/posts/2026-06-03-analyzing-manchester-stress-survival.html</a></p>
-<p>======= UPDATE: Mort counts<br>
-<img src="https://sr320.github.io/tumbling-oysters/posts/72-manchester-mort/images/clipboard-849330797.png" class="img-fluid"> &gt;&gt;&gt;&gt;&gt;&gt;&gt; cc965140e670764e4b74953862c85ca663ce62b9</p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>Aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/72-manchester-mort/</guid>
-  <pubDate>Wed, 03 Jun 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/72-manchester-mort/images/clipboard-1475596766.png" medium="image" type="image/png" height="130" width="144"/>
 </item>
 </channel>
 </rss>
