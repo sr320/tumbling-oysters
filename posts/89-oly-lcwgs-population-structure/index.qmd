@@ -52,7 +52,7 @@ Question 1 is also the quality-control pass for everything else. If the samples 
 Low-coverage whole-genome sequencing of 112 libraries from 15 putative collection sites, 13 of them in Puget Sound and the Strait of Juan de Fuca, one on the outer Washington coast, one in Coos Bay, Oregon. Repository: `github.com/zbengt/oly-lc-WGS`; alignments and variants served over HTTP from a lab web host.
 
 |  |  |
-|------------------------------------|------------------------------------|
+|----|----|
 | libraries sequenced | 112 |
 | retained after QC | **109** (2 blank controls, 1 below the depth threshold) |
 | mean depth, retained | 5.48× (range 3.46–6.73) |
@@ -97,7 +97,7 @@ PC1 separates Coos Bay + Willapa Bay (15 individuals) from the 94 Salish Sea ind
 The later axes are basin-level, not site-level:
 
 | axis | what it separates | site means at the extremes |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | PC2 | Hood Canal from South Puget Sound | Triton Cove −124.3, Port Gamble −118.9 · Little Skookum +64.5, Squaxin +63.4 |
 | PC3 | the Fidalgo Bay collections from everything else | FB18 Wild +180.3, Fidalgo Bay +101.9 · Mud Bay −31.4 |
 
@@ -188,7 +188,7 @@ The assembly-size difference points the same way: the old reference is **117 Mb 
 ## What would sharpen this
 
 |   | buys | cost |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Recompute *F*~ST~ and PCA with repeat-masked positions dropped, using the existing lift-over | a direct measure of how much of the apparent differentiation is repeat-driven; no realignment needed | low — one pass over existing files |
 | Resolve the two Fidalgo Bay collections in the collection records | removes a 0.143 *F*~ST~ anomaly that is currently unexplained | archival |
 | Confirm the WB collection's provenance from records | settles the relabelling with evidence rather than inference | archival |

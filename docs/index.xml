@@ -10,7 +10,230 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Sat, 19 Sep 2026 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 26 Sep 2026 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Oil vs. Control Ranks 9 of 10 Label Splits</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/91-gulf-oil-methylation/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="why" class="level2">
+<h2 class="anchored" data-anchor-id="why">Why</h2>
+<p>SRP139854 (BioProject PRJNA449904) is six eastern oyster gill libraries from 2015: three unexposed (NB3, NB6, NB11) and three exposed to 25,000 ppm oil (HB2, HB16, HB30). Single-end 101 bp, HiSeq 2500. SRA lists the selection as “5-methylcytidine antibody” with a bisulfite-seq strategy, so these are methyl-enriched libraries that were then bisulfite converted. The question is simple: does oil exposure change gill DNA methylation?</p>
+<p>Everything is in <a href="https://github.com/sr320/project-gulf">project-gulf</a> as seven numbered notebooks (<code>code/01</code> to <code>code/07</code>), with every decision and number logged in <code>plan.md</code>.</p>
+</section>
+<section id="the-answer" class="level2">
+<h2 class="anchored" data-anchor-id="the-answer">The answer</h2>
+<p><strong>No oil effect I can detect.</strong> methylKit finds 1,111 differentially methylated CpGs at ≥5× (q &lt; 0.01, |Δ| ≥ 25) and 158 DMRs in 1 kb tiles. But with 3 controls vs.&nbsp;2 oil there are only 10 ways to pick which two samples are “oil”. I ran every one. The real split ranks <strong>9 of 10</strong> for both CpGs and regions.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/91-gulf-oil-methylation/images/permutation.png" class="img-fluid"></p>
+<p>The random splits give more hits than the real one, and their direction follows single samples. Every split containing NB6 (the least methylated sample) comes out mostly hypomethylated in “oil”: 696 of 742 DMRs for NB6 + HB2. Every split with NB3 (the most methylated) comes out mostly hypermethylated: 501 of 529 for NB11 + NB3. The test is picking up per-sample global methylation, and the real split sits among the noise.</p>
+<p>PCA says the same thing. PC1 (33%) runs from NB6 to NB3, both controls. HB2 and HB16 sit in the middle next to control NB11, and HB16 correlates best with NB11 (r = 0.82).</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/91-gulf-oil-methylation/images/pca-5x.png" class="img-fluid"></p>
+<p>This is not evidence that oil does nothing. At 3 v 2, the smallest achievable permutation p is 0.1, and the technical noise below is bigger than any plausible treatment effect.</p>
+</section>
+<section id="getting-clean-calls-took-most-of-the-work" class="level2">
+<h2 class="anchored" data-anchor-id="getting-clean-calls-took-most-of-the-work">Getting clean calls took most of the work</h2>
+<section id="adapter-dimers-got-past-default-trimming" class="level3">
+<h3 class="anchored" data-anchor-id="adapter-dimers-got-past-default-trimming">Adapter dimers got past default trimming</h3>
+<p>Trim Galore (2.3.0) auto-detects and searches only the first 13 bp of the Illumina adapter. Dimers with sequencing errors in the first bases (<code>GACCGGAAGAGC…</code>) or missing the first four bases (<code>CGGAAGAGC…</code>) slipped through: 1.6–6.5% of trimmed reads, and 22% in HB30. Passing both the full 33 bp TruSeq adapter and a 4 bp-truncated copy dropped this to ≤0.03%. Also turned off poly-G trimming, which 2.3.0 switches on automatically. This is 4-colour HiSeq data, so G runs are real.</p>
+</section>
+<section id="a-lot-of-the-reads-were-never-bisulfite-converted" class="level3">
+<h3 class="anchored" data-anchor-id="a-lot-of-the-reads-were-never-bisulfite-converted">A lot of the reads were never bisulfite converted</h3>
+<p>First Bismark pass reported CHH methylation of 22–73%. It should be under 1% in oyster. C and G content per read showed a second population with both bases at normal levels, i.e.&nbsp;unconverted. <code>filter_non_conversion</code> (≥3 methylated non-CpG calls) removed them before deduplication.</p>
+</section>
+<section id="pbat-style-strands-and-a-strong-5-bias" class="level3">
+<h3 class="anchored" data-anchor-id="pbat-style-strands-and-a-strong-5-bias">PBAT-style strands and a strong 5′ bias</h3>
+<p>After filtering, 77–97% of alignments land on the complementary strands (CTOT/CTOB). That looks like a post-bisulfite adapter tagging kit, not a fully non-directional one. I aligned <code>--non_directional</code> anyway to keep the 3–23% on OT/OB. <code>--score_min L,0,-0.6</code> beat the default by 7–15 points of converted mapping in every sample, with no rise in the unconverted share.</p>
+<p>M-bias shows non-CpG methylation of 10–31% over the first 6 bases, plus junk at the last 1–2. The spike at position 20 is the last base of reads trimmed to the 20 bp minimum. Extraction uses <code>--ignore 10 --ignore_3prime 2</code>.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/91-gulf-oil-methylation/images/m-bias.png" class="img-fluid"></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>sample</th>
+<th>group</th>
+<th>mapping</th>
+<th>unconverted removed</th>
+<th>duplicates</th>
+<th>conversion</th>
+<th>final reads</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>NB3</td>
+<td>control</td>
+<td>48.5%</td>
+<td>33.1%</td>
+<td>72.7%</td>
+<td>98.1%</td>
+<td>1.09 M</td>
+</tr>
+<tr class="even">
+<td>NB6</td>
+<td>control</td>
+<td>38.8%</td>
+<td>19.1%</td>
+<td>38.9%</td>
+<td>99.0%</td>
+<td>4.02 M</td>
+</tr>
+<tr class="odd">
+<td>NB11</td>
+<td>control</td>
+<td>51.9%</td>
+<td>27.7%</td>
+<td>62.4%</td>
+<td>98.7%</td>
+<td>4.44 M</td>
+</tr>
+<tr class="even">
+<td>HB2</td>
+<td>oil</td>
+<td>48.0%</td>
+<td>32.9%</td>
+<td>48.4%</td>
+<td>98.8%</td>
+<td>4.74 M</td>
+</tr>
+<tr class="odd">
+<td>HB16</td>
+<td>oil</td>
+<td>51.4%</td>
+<td>20.0%</td>
+<td>58.1%</td>
+<td>98.7%</td>
+<td>3.72 M</td>
+</tr>
+<tr class="even">
+<td>HB30</td>
+<td>oil</td>
+<td>42.0%</td>
+<td>53.2%</td>
+<td>65.4%</td>
+<td>97.8%</td>
+<td>0.19 M</td>
+</tr>
+</tbody>
+</table>
+<p>Conversion is 100 − non-CpG methylation after filtering. Only NB6 reaches 99%, and the ones with more residual non-CpG methylation (NB3, HB30) are also the most CpG-methylated. I read that as partial conversion still inflating calls.</p>
+</section>
+<section id="two-decisions" class="level3">
+<h3 class="anchored" data-anchor-id="two-decisions">Two decisions</h3>
+<ul>
+<li><strong>Dropped HB30.</strong> 14,350 CpGs at ≥10× (deduplicated) vs.&nbsp;144,000–436,000 for the others. Keeping it cuts CpGs shared by all samples from 80,785 to 9,995 at ≥10×.</li>
+<li><strong>Used deduplicated calls.</strong> Per-CpG methylation agrees with the non-deduplicated calls at r = 0.986–0.992, so duplicates add coverage but not information. They would just inflate confidence in the tests.</li>
+</ul>
+<p>That leaves 3 v 2, and global methylation among the three controls alone spans 36% (NB6) to 72.5% (NB3).</p>
+</section>
+</section>
+<section id="the-methylation-landscape-is-the-part-worth-keeping" class="level2">
+<h2 class="anchored" data-anchor-id="the-methylation-landscape-is-the-part-worth-keeping">The methylation landscape is the part worth keeping</h2>
+<p>This doesn’t depend on treatment. 14.46 M CpGs in the genome against the 167,693 covered at ≥5× in all five samples:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>feature</th>
+<th>genome CpGs</th>
+<th>tested CpGs</th>
+<th>relative coverage</th>
+<th>mean meth</th>
+<th>&gt;50% meth</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>exon</td>
+<td>16.1%</td>
+<td>72.9%</td>
+<td>4.53×</td>
+<td>72.6%</td>
+<td>79.8%</td>
+</tr>
+<tr class="even">
+<td>intron</td>
+<td>38.7%</td>
+<td>17.1%</td>
+<td>0.44×</td>
+<td>68.8%</td>
+<td>79.4%</td>
+</tr>
+<tr class="odd">
+<td>promoter</td>
+<td>4.9%</td>
+<td>0.8%</td>
+<td>0.16×</td>
+<td>43.5%</td>
+<td>48.0%</td>
+</tr>
+<tr class="even">
+<td>intergenic</td>
+<td>40.4%</td>
+<td>9.2%</td>
+<td>0.23×</td>
+<td>47.2%</td>
+<td>53.8%</td>
+</tr>
+</tbody>
+</table>
+<p>Methylation sits in gene bodies, especially exons, which is what you’d expect for an invertebrate and for MBD enrichment. Promoter and intergenic CpGs split into unmethylated and methylated groups.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/91-gulf-oil-methylation/images/landscape-methylation.png" class="img-fluid"></p>
+<p>Gene-body methylation is cleanly bimodal. Of 6,984 protein-coding genes with ≥5 tested CpGs, 74% are ≥60% methylated, 15% are under 10%, and 11% are in between. About 27,600 protein-coding genes don’t have the coverage to score, so the unmethylated mode is probably under-represented.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/91-gulf-oil-methylation/images/gene-body-methylation.png" class="img-fluid"></p>
+<p>TEs are thin here. NCBI’s RepeatMasker output labels almost every non-simple repeat <code>DNA?</code>. They hold 3.0% of genome CpGs, 1.7% of tested, and are slightly more methylated (77.5% vs.&nbsp;69.2%).</p>
+</section>
+<section id="annotation-of-the-hits-didnt-rescue-anything" class="level2">
+<h2 class="anchored" data-anchor-id="annotation-of-the-hits-didnt-rescue-anything">Annotation of the hits didn’t rescue anything</h2>
+<p>I ran the same annotation on all ten splits so the real one could be compared against noise, not just background.</p>
+<ul>
+<li>The real split’s DMLs are more exonic (80.6%) than any random split’s (69.4–78.8%; background 73.0%). With nine comparisons that is p ≈ 0.1 at best, and it could just reflect well-covered methylated exons.</li>
+<li>DMR feature distribution is inside the random range for every feature.</li>
+<li>883 genes overlap a real-split DML or DMR. Random splits give lists the same size.</li>
+<li>GO over-representation gives 3 terms at FDR &lt; 0.05 for the real split, all dynein (GO:0051959, GO:0008569, GO:0030286). That ranks 9 of 10; the random splits give 0–7. Dynein genes are long and CpG-rich, and the test doesn’t correct for that.</li>
+</ul>
+</section>
+<section id="what-would-change-the-answer" class="level2">
+<h2 class="anchored" data-anchor-id="what-would-change-the-answer">What would change the answer</h2>
+<ul>
+<li>More oil animals. At 3 v 2 nothing can get below p = 0.1 by permutation. Re-sequencing HB30 would help.</li>
+<li>Knowing the library kit. The strand pattern says PBAT-style.</li>
+<li>Figuring out why so many reads went unconverted: incomplete conversion, or unconverted DNA carried through the MBD pulldown.</li>
+<li>A stricter conversion filter (threshold 2, or percentage-based) might shrink the between-sample differences that dominate PC1.</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Epigenetics</category>
+  <category>Genomics</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/91-gulf-oil-methylation/</guid>
+  <pubDate>Sat, 26 Sep 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/91-gulf-oil-methylation/images/permutation.png" medium="image" type="image/png" height="76" width="144"/>
+</item>
 <item>
   <title>Does a 4-hour resazurin trace forecast field performance? Mostly no</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -4058,36 +4281,6 @@ font-style: inherit;"># then knit code/18-diff-annotation-phenotype.Rmd for the 
   <guid>https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/</guid>
   <pubDate>Thu, 04 Jun 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/images/clipboard-3935626096.png" medium="image" type="image/png" height="42" width="144"/>
-</item>
-<item>
-  <title>Mortality Trial on SORMI Oysters</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><img src="https://img.shields.io/badge/AI%20Use-L0%20None-lightgrey" alt="AI Use Level 0"></p>
-<p>From one of the first transport of SORMI oysters from Manchester, there were leftover adults that have been hanging out in tanks.. For context these are leftovers of when we did the BIG resazurin trial where solution was made in 5 gallon bucket!</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/images/clipboard-600172185.png" class="img-fluid"><br>
-<br>
-Took 5 oyster from each family, added to cup and and filled to first ridge (about 2cm) with instant ocean. Incubator set at 35C (NOTE 36 on whiteboard was revised after photo). Went in at 4pm June 3.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/images/clipboard-1502474124.png" class="img-fluid"></p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/images/clipboard-2038262444.png" class="img-fluid"></p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/images/clipboard-2079913513.png" class="img-fluid"></p>
-<p>see - <a href="https://github.com/RobertsLab/sormi-assay-development/blob/main/heat-survivorship/code/01-mgig-heat-survivorship-20260604.qmd" class="uri">https://github.com/RobertsLab/sormi-assay-development/blob/main/heat-survivorship/code/01-mgig-heat-survivorship-20260604.qmd</a></p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>Aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/</guid>
-  <pubDate>Thu, 04 Jun 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/73-sormi-mort/images/clipboard-600172185.png" medium="image" type="image/png" height="135" width="144"/>
 </item>
 </channel>
 </rss>
