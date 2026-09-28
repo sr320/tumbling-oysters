@@ -10,7 +10,163 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Sat, 26 Sep 2026 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 28 Sep 2026 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Olympia Oyster lcWGS on the New Chromosome Assembly</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/92-oly-lcwgs-structure/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="where-this-started" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-started">Where this started</h2>
+<p>The <a href="https://github.com/zbengt/oly-lc-WGS">oly-lc-WGS</a> repo holds low-coverage whole genome sequencing for 112 Olympia oysters (<em>Ostrea lurida</em>) from 15 sites: 13 around Puget Sound plus Coos Bay, Oregon, and a set labelled WB. Two blanks. Reads had been aligned to Olurida_v081 last November and there was a PCA in the README, but it rested on 7,865 SNPs from a single contig, so nothing about structure had really been asked yet.</p>
+<p>Two other things had happened since. Scrubbed storage on klone had purged everything large: raw reads, BAMs, VCFs, the genome. And on September 21 NCBI released a chromosome-level <em>O. lurida</em> assembly from USDA-ARS and PSRF, GCA_061535525.1 (xbOstLuri2): 10 chromosomes, 1.03 Gb, scaffold N50 of 100 Mb, against 466,560 scaffolds and a 12.9 kb N50 for v081.</p>
+<p>So the order of work over two days was: restore, re-align, then do the population genetics properly.</p>
+</section>
+<section id="restore" class="level2">
+<h2 class="anchored" data-anchor-id="restore">Restore</h2>
+<p>Everything was on gannet under <code>bu-github/oly-lc-WGS/</code>, readable over https. SLURM jobs on <code>coenv/cpu-g2</code> pulled it back with six parallel <code>wget -c</code> streams, verified by size against the server:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>set</th>
+<th>files</th>
+<th>size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>step 01 BAMs and indices (v081)</td>
+<td>224</td>
+<td>554 GB</td>
+</tr>
+<tr class="even">
+<td>joint VCFs, PLINK, PCA, IBS</td>
+<td>23</td>
+<td>52 GB</td>
+</tr>
+<tr class="odd">
+<td>raw FASTQs</td>
+<td>224</td>
+<td>490 GB</td>
+</tr>
+<tr class="even">
+<td>v081 reference and BWA index</td>
+<td>8</td>
+<td>3.2 GB</td>
+</tr>
+</tbody>
+</table>
+<p>Zero mismatches, all 112 BAMs pass <code>samtools quickcheck</code>. About three hours. The new genome came from NCBI Datasets with its md5 checked.</p>
+</section>
+<section id="step-05-re-alignment-to-xbostluri2" class="level2">
+<h2 class="anchored" data-anchor-id="step-05-re-alignment-to-xbostluri2">Step 05: re-alignment to xbOstLuri2</h2>
+<p><code>code/05_realign_xbOstLuri2.Rmd</code> runs a 112-task SLURM array, 24 at a time, 16 cores each: <code>bwa mem</code> with a proper <code>@RG</code>, then <code>samtools fixmate | sort | markdup</code>, then <code>flagstat</code> and <code>coverage</code> per sample. Tools from the lab R4.4 container. Duplicates are marked, not removed; the v081 run never marked them. About 41 to 78 minutes per sample, five hours end to end, no failures.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>110 non-blank samples</th>
+<th style="text-align: right;">Olurida_v081</th>
+<th style="text-align: right;">xbOstLuri2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>median depth</td>
+<td style="text-align: right;">5.55x</td>
+<td style="text-align: right;">7.15x</td>
+</tr>
+<tr class="even">
+<td>primary reads mapped</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">96.5 to 99.0%</td>
+</tr>
+<tr class="odd">
+<td>properly paired (Coos_Bay_7)</td>
+<td style="text-align: right;">66%</td>
+<td style="text-align: right;">86%</td>
+</tr>
+<tr class="even">
+<td>duplicates</td>
+<td style="text-align: right;">not marked</td>
+<td style="text-align: right;">12.5 to 21.6%</td>
+</tr>
+<tr class="odd">
+<td>mean MAPQ</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">37</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/92-oly-lcwgs-structure/images/depth-v081-vs-xbostluri2.png" class="img-fluid"></p>
+<p>Every sample gained depth, median ratio 1.28. The MAPQ drop looked alarming until I split it out: the fraction of reads at MAPQ ≥ 30 is identical on both genomes (67% in Coos_Bay_7). What changed is that reads v081 placed with low but nonzero confidence among its fragments are now MAPQ 0 on repeat copies that are actually assembled. Any downstream filter at MAPQ 20 keeps the same reads and gains 39% more covered genome.</p>
+<p><code>HC18_Triton_Wild_10</code> is the one bad library: 0.78x, 79% mapped. It’s out of everything below.</p>
+<p>The BAMs went back to gannet with <code>bu.sh</code>, 552 GB in 80 minutes.</p>
+</section>
+<section id="step-06-structure-from-genotype-likelihoods" class="level2">
+<h2 class="anchored" data-anchor-id="step-06-structure-from-genotype-likelihoods">Step 06: structure from genotype likelihoods</h2>
+<p>At 7x, called genotypes are biased toward homozygotes, so <code>code/06_angsd_structure.Rmd</code> stays in likelihood space. 109 samples, 10 chromosomes (995 of 1,029 Mb), MAPQ and base quality ≥ 20, unique proper pairs, duplicates dropped, site covered in ≥ 80% of samples, total depth between a third and twice the expected 769x.</p>
+<ul>
+<li>ANGSD <code>-GL 1 -doGlf 2</code>, SNP p &lt; 1e-6, MAF ≥ 0.05, in 44 windows of 25 Mb: <strong>7,418,858 SNPs</strong>.</li>
+<li>PCAngsd for the covariance matrix and admixture at K = 2 to 6.</li>
+<li>ANGSD <code>-doSaf</code> per site per population, folded SFS with <code>realSFS</code>, Watterson’s theta, pi and Tajima’s D with <code>thetaStat</code>.</li>
+<li><code>realSFS fst</code> for all 105 pairs, weighted Fst.</li>
+</ul>
+<section id="pca" class="level3">
+<h3 class="anchored" data-anchor-id="pca">PCA</h3>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/92-oly-lcwgs-structure/images/pca.png" class="img-fluid"></p>
+<p>PC1 (5.4%) is Coos Bay and WB, together, against everything in Puget Sound. PC2 (3.4%) pulls Hood Canal (Triton Cove, Port Gamble) and most of MB away from the South and Central Sound. PC3 is the two Fidalgo Bay sets. PC4 splits the Kitsap sites (Dogfish, Ostrich, CS18) from the South Sound proper (LS, Squaxin, North Bay).</p>
+</section>
+<section id="admixture" class="level3">
+<h3 class="anchored" data-anchor-id="admixture">Admixture</h3>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/92-oly-lcwgs-structure/images/admixture.png" class="img-fluid"></p>
+<p>K = 2 is Coos Bay + WB versus Puget Sound. K = 3 separates Hood Canal from the South/Central Sound. K = 4 adds a component shared by Hood Canal and the north Olympic Peninsula sites, so Sequim and Discovery Bay come out as mixtures. The Fidalgo sets carry a visible slice of the Coos Bay component, which fits the outplanting history there.</p>
+</section>
+<section id="fst" class="level3">
+<h3 class="anchored" data-anchor-id="fst">Fst</h3>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/92-oly-lcwgs-structure/images/fst-heatmap.png" class="img-fluid"></p>
+<p>Weighted Fst, all 105 pairs, range 0.034 to 0.143:</p>
+<ul>
+<li><strong>WB to Coos Bay: 0.037.</strong> That is the same as between neighbouring sites within Puget Sound (0.034 to 0.038). WB to every Puget Sound site: 0.11 to 0.14. WB is Coos Bay stock. Whatever the prefix denotes, these are not a San Juan Island wild population.</li>
+<li><strong>Three Puget Sound groups</strong>: South/Central Sound, Hood Canal, north Olympic Peninsula. Within-group 0.034 to 0.038, between groups 0.04 to 0.09. Fidalgo Bay intermediate.</li>
+<li><strong>MB belongs with Hood Canal</strong>: 0.035 to Sequim, 0.036 to Port Gamble, 0.06 to 0.07 to the South Sound sites. The “Mud Bay, Eld Inlet” reading of that prefix, and the NOAA station it was matched to in step 04, need revisiting against the collection sheet.</li>
+</ul>
+</section>
+<section id="diversity-with-a-caveat" class="level3">
+<h3 class="anchored" data-anchor-id="diversity-with-a-caveat">Diversity, with a caveat</h3>
+<p>Pi is 0.0034 to 0.0040 per site everywhere, over roughly 620 million filtered sites per population. Tajima’s D is the odd one: the “2018 Wild” sets come out near zero or negative (Triton Cove −0.37) and every other set comes out at +0.35 to +0.49. That split follows the sample-naming convention exactly, and the same two groups differed in duplicate rate in step 05 (12 to 16% versus 20 to 22%), so I read it as two library batches with different error profiles in the rare-variant tail, not biology. The PCA has no batch axis: CS18, a 2018 set, clusters with the non-2018 Kitsap sites.</p>
+</section>
+</section>
+<section id="compute-notes" class="level2">
+<h2 class="anchored" data-anchor-id="compute-notes">Compute notes</h2>
+<p>Things that cost time and are now written into the Rmd prose:</p>
+<ul>
+<li><code>realSFS</code> holds every site’s likelihood vectors for both populations in memory for a 2D SFS, about 140 bytes per site, so 90 GB per pair genome-wide. It was OOM-killed at 16 GB. Estimating it in 100 M-site blocks fit in memory but ran at one EM iteration per minute per block, about 12 hours per pair. The version that shipped estimates the 2D prior from chromosome 1 with a 60-iteration cap, about 50 minutes per pair, and still uses every site for the per-site Fst.</li>
+<li>PCAngsd admixture on 7.4 M sites takes 20 minutes at K = 3 and nearly 3 hours per K from K = 4 up. K = 5 and 6 ran as separate jobs.</li>
+<li>The whole of step 06 was 245 hours of summed task wall time, about 14 hours on the clock.</li>
+</ul>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next</h2>
+<p>Confirm what WB and MB actually are from the collection records. Add a batch covariate before trusting Tajima’s D. LD-prune before the PCA and run NGSadmix with cross-validation to settle K. And the environmental layer in step 04 needs redoing for MB once its site is fixed.</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Genomics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/92-oly-lcwgs-structure/</guid>
+  <pubDate>Mon, 28 Sep 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/92-oly-lcwgs-structure/images/pca.png" medium="image" type="image/png" height="72" width="144"/>
+</item>
 <item>
   <title>Oil vs. Control Ranks 9 of 10 Label Splits</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -4250,37 +4406,6 @@ font-style: inherit;"># then knit code/18-diff-annotation-phenotype.Rmd for the 
   <guid>https://sr320.github.io/tumbling-oysters/posts/76-detection/</guid>
   <pubDate>Wed, 10 Jun 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/76-detection/images/clipboard-1329639524.png" medium="image" type="image/png" height="104" width="144"/>
-</item>
-<item>
-  <title>Mortality Trial on Wescott Oysters</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><img src="https://img.shields.io/badge/AI%20Use-L0%20None-lightgrey" alt="AI Use Level 0"></p>
-<p>We had some leftover oyster from Wescott Bay Weekly and Daily primed.</p>
-<p>Started Mortality Trial at Noon on June 8. 35C</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/images/clipboard-3935626096.png" class="img-fluid"></p>
-<p>Mort Reading June 8 at 4pm 3 dead.</p>
-<p>June 9 9am - several dead.</p>
-<p>June 9 at 9:30 am seemed to blow fuse.</p>
-<p>At 3pm temperature down to 30C with only 1 dead at that time</p>
-<p>Leaving overnight.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/images/clipboard-211702451.png" class="img-fluid"></p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>Aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/</guid>
-  <pubDate>Thu, 04 Jun 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/74-wescott-mort/images/clipboard-3935626096.png" medium="image" type="image/png" height="42" width="144"/>
 </item>
 </channel>
 </rss>
