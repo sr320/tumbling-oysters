@@ -10,7 +10,117 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Mon, 28 Sep 2026 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 02 Oct 2026 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Ploidy and pH Don’t Move Methylation, Genotype Does</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/93-haws-methylation-null/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="why" class="level2">
+<h2 class="anchored" data-anchor-id="why">Why</h2>
+<p>Haws diploid and triploid <em>C. gigas</em>, high vs.&nbsp;low pH, 6 oysters per ploidy × pH cell (24 total, WGBS). Earlier passes (04-methylKit, 04-DSS) reported 178 ploidy / 154 pH DML. Today was about finding out whether any of that holds up. Everything is in <a href="https://github.com/RobertsLab/project-oyster-oa">project-oyster-oa</a> under <code>code/Haws/04.*</code>, with a running summary in <code>04-methylation-summary.md</code>.</p>
+</section>
+<section id="the-answer" class="level2">
+<h2 class="anchored" data-anchor-id="the-answer">The answer</h2>
+<p><strong>No ploidy or pH effect I can detect</strong>, at any scale: single CpGs, 250 bp or 1 kb windows, gene bodies, or GO gene sets. What does stand out is that <strong>methylation tracks each oyster’s genetic background</strong>.</p>
+</section>
+<section id="what-was-run" class="level2">
+<h2 class="anchored" data-anchor-id="what-was-run">What was run</h2>
+<ul>
+<li><strong>04.2 / 04.3 methylKit per-CpG.</strong> Fixed <code>filterByCoverage</code> argument names and the outlier handling; Slurm version comparing overdispersion settings.</li>
+<li><strong>04.4 DSS per-CpG.</strong> New pipeline with the ploidy × pH model, sample QC, 100 label permutations, a BS-SNPer SNP check, a genotype PC covariate, and runs with outlier oysters dropped.</li>
+<li><strong>04.6 methylKit regions.</strong> 250 bp and 1 kb windows, gene bodies, GSEA on NCBI GO terms (2,196 sets), all against label permutations.</li>
+<li><strong>Power simulations</strong> (04.4 and 04.6). Known differences spiked into the real counts.</li>
+<li><strong>04.7 variance partitioning.</strong> Genotype vs.&nbsp;ploidy and pH.</li>
+</ul>
+</section>
+<section id="overdispersion-decides-everything" class="level2">
+<h2 class="anchored" data-anchor-id="overdispersion-decides-everything">Overdispersion decides everything</h2>
+<p>Without overdispersion (methylKit <code>none</code>) there are thousands of hits: 730–6,896 per-CpG DML and 4,500–9,000 DMRs. With <code>MN</code> there are about 0. The <code>none</code> hits are differences between individual oysters, not treatment.</p>
+</section>
+<section id="shuffled-labels-give-as-many-hits-as-the-real-ones" class="level2">
+<h2 class="anchored" data-anchor-id="shuffled-labels-give-as-many-hits-as-the-real-ones">Shuffled labels give as many hits as the real ones</h2>
+<ul>
+<li>DSS: 187 ploidy DML from the real labels vs.&nbsp;a mean of 223 from 100 shuffles. pH: 185 vs.&nbsp;166.</li>
+<li>methylKit regions: in all 72 comparisons (region set × test × threshold) the real count is inside the permutation distribution, usually near the median.</li>
+<li>Even with <code>MN</code>, methylKit BH q &lt; 0.05 flags 27–185 windows in <em>every</em> shuffle. Nominal FDR from both tools is too optimistic for this data. Only the permutations give a fair null.</li>
+</ul>
+<p>The one GO lead (<em>mitotic spindle assembly checkpoint signaling</em>, pH, FDR 0.078) is something about half of the shuffled labelings also produce.</p>
+<p>So the earlier 178 / 154 DML, and the annotation and enrichment built on them (07–09), are most likely false positives.</p>
+</section>
+<section id="genotype-is-the-one-clear-result" class="level2">
+<h2 class="anchored" data-anchor-id="genotype-is-the-one-clear-result">Genotype is the one clear result</h2>
+<p>All 24 samples pass technical QC (conversion 99.5%, mapping 60–62%). But genetic similarity between pairs of oysters predicts their methylation similarity (rho = 0.86), using only SNPs bisulfite conversion can’t fake.</p>
+<p>Four oysters are genetically distinct (2H-1, 2H-2, 3H-5, 3H-2), and <strong>all four are high pH</strong>. That happens by chance about 5% of the time, so pH is partly confounded with genotype.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/93-haws-methylation-null/images/genotype-PCA.png" class="img-fluid"></p>
+<p>Accounting for it doesn’t uncover a hidden effect. Dropping the outliers three different ways, and a permutation that keeps the four in high pH (<code>fixGeno4</code>), all give counts within the null. A 9-gene pH lead in one drop set disappeared when all four were removed.</p>
+</section>
+<section id="how-big-an-effect-could-we-have-seen" class="level2">
+<h2 class="anchored" data-anchor-id="how-big-an-effect-could-we-have-seen">How big an effect could we have seen?</h2>
+<p>Spiked known Δ into the real data (binomial thinning, real labels, 10 replicates per Δ) and asked when the result would beat the permutation null.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Test</th>
+<th>Experiment-level detection limit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Single CpGs (DSS, 1,000 spiked)</td>
+<td>~20 points</td>
+</tr>
+<tr class="even">
+<td>1 kb windows (methylKit <code>MN</code>, 1,000 spiked)</td>
+<td>~10 points</td>
+</tr>
+<tr class="odd">
+<td>Gene bodies (methylKit <code>MN</code>, 300 spiked)</td>
+<td>~5 points</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/93-haws-methylation-null/images/power-genes.png" class="img-fluid"></p>
+<p>Gene bodies are the most sensitive test. The real null rules out gene-body shifts of about 5 points or more across ~1% of genes. Shifts of ~2 points can’t be seen. These are best cases, since effects are uniform within a group.</p>
+</section>
+<section id="variance-partitioning" class="level2">
+<h2 class="anchored" data-anchor-id="variance-partitioning">Variance partitioning</h2>
+<p>Distance-based variance partitioning and PERMANOVA on methylation distance, with 3 genotype PCs, ploidy and pH as terms (<code>vegan</code>).</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/93-haws-methylation-null/images/varpart.png" class="img-fluid"></p>
+<ul>
+<li><strong>Genotype</strong> explains 8–12% of methylation distance between oysters (Mantel r = 0.73–0.77). Without the four outliers it’s still 5–9% (r = 0.28–0.41, p &lt; 0.001).</li>
+<li><strong>Ploidy and pH</strong> explain −0.5% to 0.4%. pH is never significant in PERMANOVA. Ploidy is borderline with all 24 (p = 0.02–0.05) and gone without the outliers.</li>
+<li>Per feature, 4–5× more CpGs and genes are genotype-associated than chance (2× without the outliers). Treatment sits at its shuffle null.</li>
+<li>85–95% is unexplained by either.</li>
+</ul>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next</h2>
+<ul>
+<li>Pull the hatchery records for the four genetic outliers. If they share a source or family, the pH arm has a design confound to report.</li>
+<li>Flag or retract the older DML and the 07–09 annotation built on them. The 07 TE overlaps also used the wrong file.</li>
+<li>Write it up as a solid null with a positive genetics result. Run the exon, intron, upstream and TE region sets once against permutations to close out the region analysis.</li>
+<li>The genotype–methylation link (cis-mQTL-like? family?) could seed a follow-up. <code>per-gene-partition-*.csv</code> is the starting point.</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Epigenetics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/93-haws-methylation-null/</guid>
+  <pubDate>Fri, 02 Oct 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/93-haws-methylation-null/images/varpart.png" medium="image" type="image/png" height="113" width="144"/>
+</item>
 <item>
   <title>Olympia Oyster lcWGS on the New Chromosome Assembly</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -4233,179 +4343,6 @@ font-style: inherit;"># then knit code/18-diff-annotation-phenotype.Rmd for the 
   <guid>https://sr320.github.io/tumbling-oysters/posts/77-priming-w2/</guid>
   <pubDate>Wed, 10 Jun 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/77-priming-w2/images/clipboard-3886987232.png" medium="image" type="image/png" height="135" width="144"/>
-</item>
-<item>
-  <title>Guidelines for Pathogen Detection Using qPCR in Aquatic Systems</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/76-detection/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%204%20Substantial%20AI%20Contribution-red" alt="AI Use Level 4: Substantial AI contribution"></a></p>
-<p>Pulling together a general framework for designing, validating, and applying real-time quantitative PCR to detect and quantify parasites and pathogens in aquatic hosts and environmental samples. It generalizes the assay-development workflow we used for two marine bivalve pathogens — <em>Perkinsus marinus</em> (Dermo) in the eastern oyster (De Faveri et al.&nbsp;2009) and Quahog Parasite Unknown (QPX) in the hard clam (Lyons et al.&nbsp;2006) — and lines it up with the MIQE reporting standards (Bustin et al.&nbsp;2009). Meant as a checklist and reference, not a fixed protocol; specific reagents, cyclers, and thresholds get tuned per system.</p>
-<section id="decide-whether-qpcr-is-the-right-tool" class="level2">
-<h2 class="anchored" data-anchor-id="decide-whether-qpcr-is-the-right-tool">1. Decide whether qPCR is the right tool</h2>
-<p>qPCR is worth developing when you need one or more of: higher sensitivity than the standard reference method, species-level specificity (especially where congeners co-occur), quantitative output (cells or genome copies per unit tissue/volume), or higher throughput. For aquatic pathogens this often matters because traditional culture-based diagnostics (e.g., Ray’s fluid thioglycollate medium for <em>Perkinsus</em>) cannot discriminate between morphologically similar species and miss low-intensity infections. qPCR is not a free replacement: it requires up-front design, validation, and ongoing controls, and it detects DNA, not viability. Plan to run it alongside, not instead of, the reference method during development.</p>
-</section>
-<section id="target-selection" class="level2">
-<h2 class="anchored" data-anchor-id="target-selection">2. Target selection</h2>
-<p>Choose a genomic region that is conserved enough to be reliably present across all life stages and strains of the target, but variable enough to separate it from close relatives.</p>
-<ul>
-<li><strong>Ribosomal DNA / ITS regions</strong> are the common default for protistan and fungal-like aquatic pathogens. Both reference assays targeted rDNA — the ITS region between the 5.8S and 28S genes for <em>P. marinus</em>, and rDNA-associated sequence for QPX. Multicopy rDNA boosts sensitivity, but copy number can vary, so calibrate quantification to cells rather than assuming a fixed copies-per-organism.</li>
-<li><strong>Confirm presence across life stages.</strong> A frequent pitfall is assuming the target sequence is equally abundant in all stages (trophont, meront, hypnospore, resting/cyst forms). Verify detection in the stages relevant to your sampling.</li>
-<li><strong>Check against public databases and, critically, against the genomes of co-occurring and sister taxa</strong> before committing. Design with maximum dissimilarity to the nearest relatives (the <em>P. marinus</em> assay was explicitly constrained against <em>P. olseni</em>).</li>
-</ul>
-</section>
-<section id="primer-and-probe-design" class="level2">
-<h2 class="anchored" data-anchor-id="primer-and-probe-design">3. Primer and probe design</h2>
-<ul>
-<li>Use a <strong>hydrolysis (dual-labeled) probe</strong> rather than intercalating dye when specificity is paramount; the probe adds a third sequence-specific check beyond the two primers. A 5′ reporter / 3′ quencher (e.g., FAM/BHQ) configuration is standard.</li>
-<li>Design with software that enforces amplicon length, Tm matching, and minimal secondary structure (e.g., Primer Express or equivalent), then add an explicit specificity constraint against the closest relative’s sequence.</li>
-<li>Keep amplicons short (typically ~70–150 bp) for efficient amplification from degraded or environmental DNA.</li>
-<li>Order primers/probe from a single reputable synthesis source and record lot numbers.</li>
-</ul>
-</section>
-<section id="sample-collection-preservation-and-tissue-selection" class="level2">
-<h2 class="anchored" data-anchor-id="sample-collection-preservation-and-tissue-selection">4. Sample collection, preservation, and tissue selection</h2>
-<ul>
-<li><strong>Sample the tissue or matrix where the pathogen concentrates.</strong> For <em>Perkinsus</em> and QPX this meant mantle/rectum and inflammatory nodules; for environmental work it meant water-column aggregates (marine snow), pseudofeces, and sediment.</li>
-<li>Use <strong>sterile dissection</strong> and process paired tissue sets when validating against a reference method — one set per method, from the same individual — so the comparison is genuinely matched.</li>
-<li>Standardize tissue mass (e.g., 30 mg wet weight) so results normalize cleanly to cells or copies per gram.</li>
-<li>Preserve to protect DNA: freeze (−20 °C or colder) or use an appropriate fixative/preservative; avoid iodine staining on material destined for PCR, as iodine can bind DNA and suppress amplification.</li>
-</ul>
-</section>
-<section id="dna-extraction-balance-throughput-against-purity" class="level2">
-<h2 class="anchored" data-anchor-id="dna-extraction-balance-throughput-against-purity">5. DNA extraction: balance throughput against purity</h2>
-<ul>
-<li><strong>Column/kit extractions</strong> (e.g., silica-membrane kits) yield clean, stable DNA but are slow, multi-step, and raise cross-contamination risk through repeated transfers — limiting batch size for surveillance-scale work.</li>
-<li><strong>Chelex resin extraction</strong> is a fast, single-tube alternative that the reference studies showed gives amplification comparable to kits for these targets. It trades long-term DNA stability for speed; Chelex extracts should be stored at 4 °C and used relatively promptly, whereas kit DNA stores frozen.</li>
-<li><strong>Validate any chosen method against a reference extraction</strong> using both neat dilution series and host tissue, confirming no significant difference in Cq before adopting it for routine use.</li>
-<li>Include a <strong>reagent-only extraction blank for every extraction batch</strong>, carried through the entire protocol, to catch reagent or workflow contamination.</li>
-</ul>
-</section>
-<section id="standard-curves-and-quantification" class="level2">
-<h2 class="anchored" data-anchor-id="standard-curves-and-quantification">6. Standard curves and quantification</h2>
-<ul>
-<li><strong>Calibrate to counted cells, not just DNA mass.</strong> Quantify cultured organisms (replicate hemocytometer counts) <em>before</em> extraction, then build the standard curve from serial dilutions of those counted cells. This lets Cq values be translated directly into organism abundance — the step that makes the assay quantitative and comparable across studies.</li>
-<li>Span at least <strong>five orders of magnitude</strong> in the dilution series (the reference assays ran ~600 to 6,000,000 cells per gram / per reaction equivalent).</li>
-<li>Require a strong linear fit (R² ≥ 0.98–0.99) and report slope and amplification efficiency.</li>
-<li>Run <strong>all standards, samples, and controls in duplicate</strong> (technical replicates), at minimum.</li>
-<li>Re-run or verify the standard curve periodically rather than relying indefinitely on one historical curve; report consistency across runs.</li>
-</ul>
-</section>
-<section id="controls-run-every-plate" class="level2">
-<h2 class="anchored" data-anchor-id="controls-run-every-plate">7. Controls (run every plate)</h2>
-<ul>
-<li><strong>No-template control (NTC):</strong> reagents, no DNA — detects reagent/primer contamination.</li>
-<li><strong>Extraction blanks:</strong> as above, one per extraction batch.</li>
-<li><strong>Positive control / standard dilutions:</strong> confirm the assay is performing and anchor quantification.</li>
-<li><strong>Negative biological controls:</strong> tissue from a site or stock with a long verified history of being pathogen-free, to establish the host-matrix baseline.</li>
-</ul>
-</section>
-<section id="sensitivity-and-limit-of-detection" class="level2">
-<h2 class="anchored" data-anchor-id="sensitivity-and-limit-of-detection">8. Sensitivity and limit of detection</h2>
-<ul>
-<li>Determine the lowest reliably detectable quantity using the serial dilution series, both <strong>with and without host/environmental matrix</strong>. The <em>P. marinus</em> assay detected as few as ~3 cells; QPX resolved down to ~1 organism per reaction.</li>
-<li>Report the limit of detection explicitly and note how it compares to the reference method — qPCR commonly detects an order of magnitude or more below culture-based assays, which materially reduces false negatives at low infection intensity.</li>
-</ul>
-</section>
-<section id="specificity-validation" class="level2">
-<h2 class="anchored" data-anchor-id="specificity-validation">9. Specificity validation</h2>
-<ul>
-<li>Test the assay against <strong>the most closely related species</strong> (phylogenetic neighbors) and <strong>the species most likely to co-occur</strong> in the same host or water body. The <em>P. marinus</em> assay was screened against <em>P. olseni</em> (nearest relative) and <em>P. chesapeaki</em> (geographic co-occurrence); the QPX assay was screened against ~29 thraustochytrid-like isolates from multiple regions.</li>
-<li>Require <strong>no amplification</strong> of non-target DNA across a relevant concentration range, not just at a single dilution.</li>
-</ul>
-</section>
-<section id="inhibition-and-matrix-effects" class="level2">
-<h2 class="anchored" data-anchor-id="inhibition-and-matrix-effects">10. Inhibition and matrix effects</h2>
-<ul>
-<li>PCR inhibitors (humic acids, polysaccharides, host compounds) are a recognized cause of false negatives in environmental and tissue samples.</li>
-<li>Test for inhibition by comparing standard curves built from <strong>neat cells</strong> versus <strong>cells spiked into host tissue or environmental matrix</strong>. If the curves do not differ significantly, the matrix is not inhibiting and the laborious “spiking” step can be dropped from routine runs — a genuine time savings demonstrated in both reference studies.</li>
-<li>Where matrix effects do appear, consider dilution of template, an internal amplification control, or additional cleanup.</li>
-</ul>
-</section>
-<section id="life-stage-and-target-presence-considerations" class="level2">
-<h2 class="anchored" data-anchor-id="life-stage-and-target-presence-considerations">11. Life-stage and target-presence considerations</h2>
-<ul>
-<li>Confirm the assay detects DNA from <strong>all relevant life stages</strong> present in your samples. For <em>Perkinsus</em>, paired incubated (hypnospore) versus non-incubated (trophont) tissues showed only marginal differences, with iodine binding and uneven within-host parasite distribution as plausible sources of the small discrepancy.</li>
-<li>Remember qPCR quantifies DNA, which <strong>does not distinguish viable from non-viable organisms</strong>. Interpret abundance accordingly, and pair with viability-sensitive methods if live-organism counts are the question.</li>
-</ul>
-</section>
-<section id="validation-against-the-reference-method" class="level2">
-<h2 class="anchored" data-anchor-id="validation-against-the-reference-method">12. Validation against the reference method</h2>
-<ul>
-<li>Process <strong>matched tissue from the same individuals</strong> with both qPCR and the established reference assay across a full range of infection intensities.</li>
-<li>Use regression to relate qPCR output to the reference scale. The <em>P. marinus</em> work plotted Cq and cell density against the Mackin index (R² ~0.94–0.98), allowing molecular results to be expressed on the familiar diagnostic scale — a model worth replicating, because it lets a new assay integrate with historical datasets rather than orphaning them.</li>
-<li>Quantitative output also enables <strong>refinement of legacy ordinal scales</strong> into finer, cell-count-anchored categories.</li>
-</ul>
-</section>
-<section id="environmental-and-surveillance-application" class="level2">
-<h2 class="anchored" data-anchor-id="environmental-and-surveillance-application">13. Environmental and surveillance application</h2>
-<ul>
-<li>Demonstrate the assay on <strong>naturally contaminated field samples</strong>, not just spiked controls — water aggregates, feces/pseudofeces, sediment, and lesion tissue as appropriate.</li>
-<li>For surveillance, throughput and contamination control dominate: favor single-tube extraction, strict plate controls, and batch blanks.</li>
-<li>A quantitative, sequence-specific assay supports <strong>a universal, lab-transferable intensity scale</strong>, addressing the cross-laboratory inconsistency that plagues subjective, scale-dependent visual diagnostics.</li>
-</ul>
-</section>
-<section id="data-analysis-and-reporting-miqe-aligned" class="level2">
-<h2 class="anchored" data-anchor-id="data-analysis-and-reporting-miqe-aligned">14. Data analysis and reporting (MIQE-aligned)</h2>
-<p>Report enough that another lab can reproduce and benchmark the assay:</p>
-<ul>
-<li>Target gene/region, accession(s), amplicon length, and primer/probe sequences with modifications.</li>
-<li>Extraction method, input mass/volume, and elution details.</li>
-<li>Reaction chemistry, volumes, primer/probe concentrations, and cycling conditions.</li>
-<li>Standard curve: dilution range, slope, R², amplification efficiency, and how it maps to cells or copies.</li>
-<li>Limit of detection, specificity panel and results, replicate structure, and all control results.</li>
-<li>Cq values (and the threshold/baseline method used), with any reference-method correlation statistics.</li>
-</ul>
-</section>
-<section id="quality-assurance-and-interlaboratory-standardization" class="level2">
-<h2 class="anchored" data-anchor-id="quality-assurance-and-interlaboratory-standardization">15. Quality assurance and interlaboratory standardization</h2>
-<ul>
-<li>Calibrate against <strong>accepted standards</strong> and, where feasible, validate across <strong>more than one laboratory</strong> to remove individual-interpretation bias — a step long recommended (e.g., OIE proficiency standards) but rarely practiced for these pathogens.</li>
-<li>Maintain reagent lot records, periodic positive-control checks, and a documented threshold-setting convention so results remain comparable over time.</li>
-</ul>
-</section>
-<section id="quick-reference-checklist" class="level2">
-<h2 class="anchored" data-anchor-id="quick-reference-checklist">Quick-reference checklist</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">qPCR justified over (or alongside) the reference method</label></li>
-<li><label><input type="checkbox">Target region present in all life stages; dissimilar to relatives</label></li>
-<li><label><input type="checkbox">Dual-labeled probe designed with explicit specificity constraint</label></li>
-<li><label><input type="checkbox">Pathogen-concentrating tissue/matrix sampled; mass standardized</label></li>
-<li><label><input type="checkbox">Extraction method validated against a reference; batch blanks included</label></li>
-<li><label><input type="checkbox">Standard curve calibrated to counted cells, ≥5 orders of magnitude, R² ≥ 0.98</label></li>
-<li><label><input type="checkbox">NTC, extraction blanks, positive and negative biological controls on every plate</label></li>
-<li><label><input type="checkbox">Limit of detection determined with and without matrix</label></li>
-<li><label><input type="checkbox">Specificity confirmed against nearest relatives and co-occurring species</label></li>
-<li><label><input type="checkbox">Inhibition tested (neat vs.&nbsp;spiked); spiking dropped only if no difference</label></li>
-<li><label><input type="checkbox">Validated against reference method on matched tissue across intensity range</label></li>
-<li><label><input type="checkbox">Demonstrated on natural field samples</label></li>
-<li><label><input type="checkbox">MIQE-aligned reporting; interlaboratory calibration where possible</label></li>
-</ul>
-</section>
-<section id="key-references" class="level2">
-<h2 class="anchored" data-anchor-id="key-references">Key references</h2>
-<ul>
-<li>De Faveri, J., Smolowitz, R. M., &amp; Roberts, S. B. (2009). Development and validation of a real-time quantitative PCR assay for the detection and quantification of <em>Perkinsus marinus</em> in the eastern oyster, <em>Crassostrea virginica</em>. <em>Journal of Shellfish Research</em>, 28(3), 459–464.</li>
-<li>Lyons, M. M., Smolowitz, R., Dungan, C. F., &amp; Roberts, S. B. (2006). Development of a real-time quantitative PCR assay for the hard clam pathogen Quahog Parasite Unknown (QPX). <em>Diseases of Aquatic Organisms</em>, 72(1), 45–52.</li>
-<li>Bustin, S. A., et al.&nbsp;(2009). The MIQE guidelines: minimum information for publication of quantitative real-time PCR experiments. <em>Clinical Chemistry</em>, 55(4), 611–622.</li>
-</ul>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>Aquaculture</category>
-  <category>Reading Notes</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/76-detection/</guid>
-  <pubDate>Wed, 10 Jun 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/76-detection/images/clipboard-1329639524.png" medium="image" type="image/png" height="104" width="144"/>
 </item>
 </channel>
 </rss>
