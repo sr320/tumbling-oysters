@@ -64,12 +64,14 @@ The QC table was too tidy. Pum1, Pum2, Pum3 and Pum5 all mapped at 56.0% with 19
 
 The index barcodes in the read headers explain it. The 15 files contain 9 barcodes. Checking read names (the first 200,000 of each file, searched across the other file; controls between different barcodes share 0%):
 
-| file             | reads found in | what it is                        |
-|------------------|----------------|-----------------------------------|
-| PUM2, PUM3, PUM5 | PUM1, 100%     | subsets of PUM1                   |
-| PUM4             | Qui1, 100%     | a Quilhua subset labelled Pumalin |
-| Qui5             | Qui1, 100%     | subset of Qui1                    |
-| RP5              | RP3, 100%      | full copy, same count             |
+| file             | reads found in | what it is                               |
+|-----------------|-----------------|--------------------------------------|
+| PUM2, PUM3, PUM5 | PUM1, 100%     | subsets of PUM1                          |
+| PUM4             | PUM5 + Qui1    | a mixture: all of PUM5 plus part of Qui1 |
+| Qui5             | Qui1, 100%     | subset of Qui1                           |
+| RP5              | RP3, 100%      | full copy, same count                    |
+
+PUM4 needed a full check: its first 200,000 reads all come from Qui1, but the rest of the file doesn't. Across all 30,650,313 reads, 74.3% carry the Pumalin index (`TGAGTACT`) and 25.7% the Qui1 index (`CTGTCACT`). By read name, PUM4 is every one of PUM5's 22,785,307 reads plus 7,865,006 reads from Qui1 (20% of that file), and nothing else.
 
 The copies are pair-aware random subsamples in shuffled order, untrimmed 151 bp, with R1/R2 pairing intact. Each source file starts at tile 1101 and each copy starts mid-run. That looks like a downsampling or placeholder step pointed at the wrong input, not sequencing or demultiplexing. I've asked the provider for the original per-sample files.
 
@@ -129,6 +131,37 @@ The RNA-seq from `09` (different animals) has it at 0 to 33 CPM, with half the l
 
 `13.8` tested GO enrichment for genes with a DMR in the body or 2 kb promoter: 47 genes against 6,219. Nothing passes FDR. The top terms (lysosome localization, filopodium assembly, amino acid catabolism) rest on 2 or 3 genes each, mostly on untested windows. Only 8 of the 47 genes sit on confirmed windows, which is too few for enrichment.
 
+## HapA check
+
+The merged reference turned out to be HapA's chromosomes 2A, 4A, 6A and 10A, identical down to the base, plus six chromosomes from HapB. So I re-ran the whole chain on Och_HapA alone (`WGBS_REF=hapa bash code/13-wgbs-submit.sh`, same 9 oysters, same settings) and compared the two with `13.10`.
+
+| mean per oyster                      | merged | Och_HapA |
+|--------------------------------------|-------:|---------:|
+| mapping (unique)                     |  57.4% |    67.4% |
+| pairs mapping to more than one place |  31.9% |    15.8% |
+| CpGs ≥ 5×                            | 7.86 M |   9.13 M |
+
+Half the multi-mapping goes away. Reads that were split between near-duplicate A and B sequences now have one home. On the four chromosomes identical in both references, depth goes up 6% and per-CpG methylation doesn't move: r = 0.995 and a mean difference of 0.7 percentage points in every oyster.
+
+To re-test the population differences, `13.10` lifts every DMR window, every DML CpG (±100 bp) and GN020540 onto HapA with `minimap2`. It then re-measures Rio − Quilhua the same way on both references, from reads pooled per population.
+
+![](images/hapa-replication.png)
+
+| 13.9 class | DMR windows: same direction / ≥ 10% on HapA | single CpGs: same direction / ≥ 20% on HapA |
+|------------------------|------------------------|------------------------|
+| confirmed (tested, no SNP) | 96% / 94% (80 of 82 measurable) | 98% / 92% (461 of 488) |
+| untested | 97% / 91% | 98% / 93% |
+| CpG-destroying SNP | 70% / 57% | 91% / 88% (102 of 204) |
+| repeat-like | 94% / 78% | 93% / 77% |
+
+The confirmed set holds. The CpG-destroying sites "replicate" too, and that's expected rather than reassuring: the SNP is in the oysters' DNA, so it makes the same false difference on any reference. Swapping references tests mapping, not genotype; that job is `13.9`'s. 129 of the single CpGs land where HapA has no CpG at all, so those sites exist only on the HapB chromosome.
+
+**GN020540** maps to `Chromosome_9A:61,735,450–61,741,949` at 100% identity across the gene. Quilhua is 34–61% methylated and Rio 2.7–4.5%, within 1.7 points of the merged values in every oyster.
+
+The genome-wide picture doesn't change either. With genes lifted onto HapA by Liftoff (`13.11`, 17,889 of 21,444) and a HapA SNP mask (1.55 M SNPs, 51.5 k at CpGs), `13.6` on HapA passes 89% of assembly CpGs against 55% on the merged reference. Mean methylation is 20.6% (merged 20.2%), and 35% of genes are methylated and 60% unmethylated. For the 12,010 genes estimated on both, gene-body methylation agrees closely (Spearman ρ = 0.963, median difference 0.07 points, 97.2% in the same class), and the GO picture has the same top terms at both ends.
+
+So HapA is the better reference for this data: more reads placed, half the ambiguity, and the same biology. The cost is the 3,555 genes that didn't lift onto HapA.
+
 ## Next
 
-Re-align to Och_HapA and compare. The merged A/B reference may be part of why 31% of pairs don't map uniquely, and I want to know whether GN020540 and the confirmed set hold up on a single haplotype. After that, the corrected Pumalin, Qui5 and Rio5 files when they arrive, and a rank-based GO across all genes using the gene-body statistics instead of a cut list.
+Make HapA the primary reference. `13.4` is already re-running on the HapA alignment with the lifted annotation, and `13.9` comes next, so the population results come from the cleaner alignment. Then the corrected Pumalin, Qui5 and Rio5 files when they arrive, and a rank-based GO across all genes using the gene-body statistics instead of a cut list.
