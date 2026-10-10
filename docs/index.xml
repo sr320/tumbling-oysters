@@ -10,7 +10,200 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Fri, 02 Oct 2026 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 10 Oct 2026 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Chilean Flat Oyster WGBS: Three Populations, Nine Libraries</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="where-this-started" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-started">Where this started</h2>
+<p>Whole genome bisulfite sequencing (WGBS) for <em>Ostrea chilensis</em> came in on October 8: 15 paired-end files (2×151, NovaSeq X, one lane), named as 5 oysters from each of three sites in southern Chile: Pumalin (PUM), Quilhua (Qui) and Rio Pudeto (RP). These are the same three sites as the ONT RNA-seq in <a href="https://github.com/RobertsLab/project-ostrea-chil">project-ostrea-chil</a>. The plan was simple: align, call methylation, compare populations.</p>
+<p>Everything is on the <code>wgbs-methylation-pipeline</code> branch, <a href="https://github.com/RobertsLab/project-ostrea-chil/pull/2">PR #2</a>, as the <code>13.x</code> series.</p>
+</section>
+<section id="reference" class="level2">
+<h2 class="anchored" data-anchor-id="reference">Reference</h2>
+<p>Same reference as the RNA-seq (<code>09</code>), so gene IDs line up: <code>merged_out.fasta</code> with <code>GN.gene.gff3</code>, from gannet. It’s 1.18 Gb in 10 chromosome-scale sequences, one per chromosome. Four are labelled A (2A, 4A, 6A, 10A) and six B (1B, 5B, 6B, 7B, 8B, 9B), from 41 Mb (<code>10A</code>) to 232 Mb (<code>1B</code>). It’s the same sequence as “Assembly 1.0” in <code>12-compare-genomes</code>. Och_HapA covers 68% of it and Och_HapB 84%, so it isn’t either haplotype assembly. The annotation has 21,444 genes.</p>
+</section>
+<section id="pipeline" class="level2">
+<h2 class="anchored" data-anchor-id="pipeline">Pipeline</h2>
+<p>All on klone, <code>coenv/cpu-g2</code>, 5 samples at a time, using the <code>myflow</code> conda env (Bismark 0.25.1, bowtie2, fastp 1.0.1, samtools 1.22):</p>
+<ul>
+<li><strong>13.1:</strong> download the genome and annotation, build the Bismark index (10 minutes).</li>
+<li><strong>13.2:</strong> one SLURM array task per sample: <code>fastp</code> (10 bp 5′ trim) → Bismark (<code>--score_min L,0,-0.6</code>, directional) → <code>deduplicate_bismark</code> → <code>bismark_methylation_extractor</code> → strand-merged CpG coverage → sorted BAM.</li>
+<li><strong>13.3:</strong> Bismark, MultiQC and a one-line-per-sample summary.</li>
+</ul>
+<p>I ran Pum1 alone first. That caught three problems: the relocated conda env’s <code>curl</code> pointed at a certificate path that no longer exists; Bismark refuses <code>--basename</code> with <code>--parallel</code>; and a second copy of the test job, from another session, ran into the same folder. The Pum1 M-bias was flat for R1 after the 10 bp trim, but R2 was still high at its first 5 bases (29% falling to 20%). So extraction now uses <code>--ignore_r2 5</code>, and each sample takes a lock so two jobs can’t run on it at once. After that, all 15 ran in 1 h 23 min to 2 h 12 min each.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>range across samples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>read pairs after trimming</td>
+<td>22.4 to 41.5 M</td>
+</tr>
+<tr class="even">
+<td>mapping</td>
+<td>56.0 to 58.5%</td>
+</tr>
+<tr class="odd">
+<td>duplicates</td>
+<td>3.5 to 7.1%</td>
+</tr>
+<tr class="even">
+<td>CpG methylation</td>
+<td>18.9 to 21.6%</td>
+</tr>
+<tr class="odd">
+<td>CHH methylation (conversion check)</td>
+<td>0.6 to 0.8%</td>
+</tr>
+</tbody>
+</table>
+<p>Median coverage per CpG is 4 to 5×, which shapes everything below. 31% of read pairs mapped to more than one place.</p>
+</section>
+<section id="fifteen-files-nine-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="fifteen-files-nine-libraries">Fifteen files, nine libraries</h2>
+<p>The QC table was too tidy. Pum1, Pum2, Pum3 and Pum5 all mapped at 56.0% with 19.4% CpG methylation, and Rio3 and Rio5 were identical in every column, down to the read-pair count (32,773,197).</p>
+<p>The index barcodes in the read headers explain it. The 15 files contain 9 barcodes. Checking read names (the first 200,000 of each file, searched across the other file; controls between different barcodes share 0%):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 23%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>file</th>
+<th>reads found in</th>
+<th>what it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>PUM2, PUM3, PUM5</td>
+<td>PUM1, 100%</td>
+<td>subsets of PUM1</td>
+</tr>
+<tr class="even">
+<td>PUM4</td>
+<td>Qui1, 100%</td>
+<td>a Quilhua subset labelled Pumalin</td>
+</tr>
+<tr class="odd">
+<td>Qui5</td>
+<td>Qui1, 100%</td>
+<td>subset of Qui1</td>
+</tr>
+<tr class="even">
+<td>RP5</td>
+<td>RP3, 100%</td>
+<td>full copy, same count</td>
+</tr>
+</tbody>
+</table>
+<p>The copies are pair-aware random subsamples in shuffled order, untrimmed 151 bp, with R1/R2 pairing intact. Each source file starts at tile 1101 and each copy starts mid-run. That looks like a downsampling or placeholder step pointed at the wrong input, not sequencing or demultiplexing. I’ve asked the provider for the original per-sample files.</p>
+<p>That leaves <strong>Pum1, Qui1–4 and Rio1–4</strong>. Pumalin has n = 1, so the only comparison is <strong>Quilhua vs Rio Pudeto, 4 vs 4</strong>.</p>
+</section>
+<section id="the-methylome-as-a-whole" class="level2">
+<h2 class="anchored" data-anchor-id="the-methylome-as-a-whole">The methylome as a whole</h2>
+<p>Before comparing populations I wanted a picture of the shared methylome. <code>13.6</code> (<code>code/13.6-wgbs-methylation-landscape.Rmd</code>) pools read counts across all 9 oysters at each CpG, SNP-masked with the <code>13.7</code> calls. That gets per-CpG depth well above what any one oyster has.</p>
+<p><strong>Global level.</strong> Per oyster, CpG methylation is 18.9–21.6%, with no real difference among sites. Of the 14.4 M CpGs that pass filters (55% of the 26.1 M in the assembly), 18% are methylated (≥ 50%), 78% are unmethylated (&lt; 10%), and only 4% are in between. A classic mosaic invertebrate methylome.</p>
+<p><strong>Where it is.</strong> Methylation is concentrated in gene bodies. Introns are the most methylated compartment, with methylated CpGs 5.6× enriched there; coding exons are 2.1×. Intergenic sequence, 82% of the genome, is depleted (0.32×). The GFF has no UTRs, so “exon” here means coding exon. Along chromosomes, methylation in 100 kb windows tracks gene density (Spearman ρ = 0.37).</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/landscape-features.png" class="img-fluid"></p>
+<p><strong>Gene bodies.</strong> Of the 13,640 genes with enough coverage, 35% are methylated and 59% unmethylated, two clear groups. Methylated genes are CpG-depleted (gene methylation vs CpG o/e, ρ = −0.59), the signature of long-term germline methylation. In methylated genes, methylation jumps from about 31% just upstream of the TSS to about 85% across the body. It also climbs from 5′ to 3′: first exon 18%, sixth and later exons 56%; first intron 37%, later introns 61%. Gene-body levels are very stable between animals (mean SD across oysters, 2.6 percentage points).</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/landscape-metagene.png" class="img-fluid"></p>
+<p><strong>Function.</strong> Genes with a Swiss-Prot hit and GO terms have median gene-body methylation of 67%; genes with no hit sit at 0.8%. 321 of 839 GO BP terms differ (Wilcoxon, FDR &lt; 0.05). The most methylated are housekeeping: mRNA splicing, chromatin remodeling, translation, rRNA processing, ER-to-Golgi transport and protein degradation (medians 82–90%). The least methylated are responsive or tissue-specific: cholinergic synaptic transmission, ion and calcium transport, acetylcholine receptor signaling (medians about 0.6%). Broad groups split the same way: RNA processing, translation, cell cycle and mitochondria at 82–86%, against immune/defense (1.2%), signal transduction (14%) and development (27%). Stress response (67%) isn’t different from background.</p>
+<p>So this is the textbook invertebrate pattern: methylation in the bodies of conserved, constitutively expressed genes, and little in inducible ones. Caveats: Swiss-Prot hits cover only 46% of genes, GO terms are direct annotations (not propagated), and with one Pumalin oyster the pooling is uneven across sites.</p>
+</section>
+<section id="quilhua-vs-rio-pudeto" class="level2">
+<h2 class="anchored" data-anchor-id="quilhua-vs-rio-pudeto">Quilhua vs Rio Pudeto</h2>
+<p><code>13.4</code> (methylKit, in the lab R4.4 container) with CpGs at ≥ 5× in at least 3 of 4 oysters per population. Before testing it drops CpGs that carry a SNP from <code>13.7</code>, which calls SNPs genome-wide from the bisulfite BAMs with <code>biscuit</code>: 952,169 SNPs at QUAL ≥ 20, 31,673 of them at CpGs.</p>
+<ul>
+<li>Global methylation is the same in both: 20.1% Quilhua, 20.5% Rio.</li>
+<li>1,275 single CpGs (DMLs) and 304 1 kb windows (DMRs) differ by ≥ 20% (q &lt; 0.01), mostly intergenic.</li>
+<li>Gene-body methylation (limma on M-values): 1 of 7,247 genes, <strong>GN020540</strong>.</li>
+</ul>
+</section>
+<section id="how-much-of-that-is-genetic" class="level2">
+<h2 class="anchored" data-anchor-id="how-much-of-that-is-genetic">How much of that is genetic?</h2>
+<p>A C→T SNP at a CpG reads exactly like an unmethylated C, and at 5× the genome-wide calls miss a lot. So <code>13.9</code> re-checks each DML and DMR. It splits each oyster’s reads by Bismark strand and counts a base only from the strand where bisulfite can’t change it. At a CpG C, bottom-strand reads report the genotype. It pools reads by population, needs ≥ 8 reads per side and ≥ 2 carrier oysters to call a variant differentiated, and flags windows where most reads have MAPQ &lt; 10. A region is <strong>untested</strong> when fewer than half its CpGs have enough reads to see a SNP.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/snp-check-classes.png" class="img-fluid"></p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>class</th>
+<th style="text-align: right;">DMR windows</th>
+<th style="text-align: right;">single CpGs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>confirmed (tested, no SNP)</td>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">488</td>
+</tr>
+<tr class="even">
+<td>untested</td>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">333</td>
+</tr>
+<tr class="odd">
+<td>CpG-destroying SNP</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">204</td>
+</tr>
+<tr class="even">
+<td>repeat-like</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">149</td>
+</tr>
+<tr class="odd">
+<td>other genetic difference</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">101</td>
+</tr>
+</tbody>
+</table>
+<p>The CpG-destroying ones are artefacts. In all 204 DMLs and 36 of 41 windows, the population carrying the SNP is the one that looks less methylated. These survived the <code>13.7</code> mask; pooling reads by population is what finds them. Of the confirmed set, the single CpGs are 400 intergenic, 65 intron, 20 promoter and 3 exon.</p>
+</section>
+<section id="gn020540" class="level2">
+<h2 class="anchored" data-anchor-id="gn020540">GN020540</h2>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/gn020540-methylation.png" class="img-fluid"></p>
+<p>The one differentially methylated gene. It’s on <code>Chromosome_9B</code>, 6.5 kb, 4 exons, and its best Swiss-Prot hit is Nup107, a nuclear pore protein (54% identity, but the predicted protein is only 168 aa against 926, so probably a partial model). Quilhua is 37 to 60% methylated across its 147 CpGs, Rio is 3 to 5%, and Pum1 looks like Quilhua. 80 of the CpGs have enough reads to test for SNPs, none are differentiated, and depth is the same in both populations. So the CpGs are there in Rio; they just aren’t methylated. A third of its reads are MAPQ &lt; 10, which is worth keeping in mind.</p>
+<p>The RNA-seq from <code>09</code> (different animals) has it at 0 to 33 CPM, with half the libraries at exactly 0. That’s too thin to say anything about expression.</p>
+</section>
+<section id="go" class="level2">
+<h2 class="anchored" data-anchor-id="go">GO</h2>
+<p><code>13.8</code> tested GO enrichment for genes with a DMR in the body or 2 kb promoter: 47 genes against 6,219. Nothing passes FDR. The top terms (lysosome localization, filopodium assembly, amino acid catabolism) rest on 2 or 3 genes each, mostly on untested windows. Only 8 of the 47 genes sit on confirmed windows, which is too few for enrichment.</p>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next</h2>
+<p>Re-align to Och_HapA and compare. The merged A/B reference may be part of why 31% of pairs don’t map uniquely, and I want to know whether GN020540 and the confirmed set hold up on a single haplotype. After that, the corrected Pumalin, Qui5 and Rio5 files when they arrive, and a rank-based GO across all genes using the gene-body statistics instead of a cut list.</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Epigenetics</category>
+  <category>Genomics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/</guid>
+  <pubDate>Sat, 10 Oct 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/gn020540-methylation.png" medium="image" type="image/png" height="69" width="144"/>
+</item>
 <item>
   <title>Ploidy and pH Don’t Move Methylation, Genotype Does</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -4309,40 +4502,6 @@ font-style: inherit;"># then knit code/18-diff-annotation-phenotype.Rmd for the 
   <guid>https://sr320.github.io/tumbling-oysters/posts/76-lake-trout-gene-pheno/</guid>
   <pubDate>Mon, 15 Jun 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/76-lake-trout-gene-pheno/images/clipboard-1759510015.png" medium="image" type="image/png" height="135" width="144"/>
-</item>
-<item>
-  <title>Oyster Priming Week 2</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/77-priming-w2/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<!-- <a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%204%20Substantial%20AI%20Contribution-red" alt="AI Use Level 4: Substantial AI contribution"/></a> -->
-<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%200%20No%20AI%20use-lightgrey" alt="AI Use Level 0: No AI use"></a></p>
-<p>Did a 30 minute bath for small oysters in FTR.</p>
-<p>2pm</p>
-<p>Started Warm = 24.8 C Control = 15.9 C</p>
-<p>End Warm = 24.6 C Control = 16.6 C</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/77-priming-w2/images/clipboard-3886987232.png" class="img-fluid figure-img"></p>
-<figcaption><img src="https://sr320.github.io/tumbling-oysters/posts/77-priming-w2/images/clipboard-2198262507.png" class="img-fluid figure-img"></figcaption>
-</figure>
-</div>
-<p>Updated <a href="https://github.com/RobertsLab/project-gigas-conditioning/blob/main/data/westcott-repeat-priming/treatment_tracking.csv" class="uri">https://github.com/RobertsLab/project-gigas-conditioning/blob/main/data/westcott-repeat-priming/treatment_tracking.csv</a></p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>Aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/77-priming-w2/</guid>
-  <pubDate>Wed, 10 Jun 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/77-priming-w2/images/clipboard-3886987232.png" medium="image" type="image/png" height="135" width="144"/>
 </item>
 </channel>
 </rss>
