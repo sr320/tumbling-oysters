@@ -187,6 +187,18 @@ The `13.9` classes look much the same as before:
 
 The 99 confirmed HapA windows split 57 higher in Rio and 42 higher in Quilhua. They touch the body or 2 kb promoter of 14 genes. Four of those were also among the 8 genes with confirmed windows on the merged reference: GN020540, GN017845 (farnesyltransferase β), GN007260 (NCF-2) and GN012742 (HELZ2).
 
+The single CpGs tell the same story. I ran `13.9` on all 1,455 HapA DMLs with a 50 bp flank, as for the merged set:
+
+| class                      | merged (1,275) | Och_HapA (1,455) |
+|----------------------------|---------------:|-----------------:|
+| confirmed (tested, no SNP) |            488 |              606 |
+| untested                   |            333 |              356 |
+| CpG-destroying SNP         |            204 |              249 |
+| repeat-like                |            149 |              123 |
+| other genetic difference   |            101 |              121 |
+
+42% of the HapA DMLs are confirmed (merged 38%), and fewer are repeat-like, which fits the better read placement. The 606 confirmed CpGs lean toward Quilhua (357 higher there, 249 higher in Rio), the opposite of the confirmed windows, so there's no consistent direction to the population difference. Most are intergenic (504), with 76 in introns, 17 in promoters and 9 in coding exons, and 149 of them sit inside one of the 99 confirmed windows. About 1 in 6 HapA DMLs (249) is a CpG-destroying SNP rather than methylation.
+
 The second differentially methylated gene on HapA, **GN016259** (RNA-binding protein 25, a splicing factor), is −20% in Rio (adjusted p = 0.040). It doesn't hold up. No `13.4` window covers it, so I ran `13.9` on the gene ± 2 kb. It has 9 variants that differ between the populations, and 4 of them destroy a CpG (C\>T at a C, or G\>A at a G). All 4 are at 60–83% in Rio and 0–20% in Quilhua, in the population that looks less methylated (Rio 63–77% against Quilhua 86–92%). That's the SNP signature.
 
 **GN020540** comes through as the top gene again on HapA (−34.3%, against −35.0% merged). It has no differentiated variant across 82 testable CpGs. A third of the reads at this gene are MAPQ \< 10 on both references (2,410 of 7,308 on HapA, 2,344 of 7,019 merged), concentrated in the middle of the gene. So it's a property of the gene, perhaps a repeated or duplicated stretch inside it, not of the reference. Both references call six windows over the gene, all lower in Rio (−25 to −72%). The well-mapped ends are confirmed or untested, and the middle windows (48–66% MAPQ \< 10) are repeat-like: 2 of 6 merged, 3 of 6 on HapA. It deserves a closer look.
