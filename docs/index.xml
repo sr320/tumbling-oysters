@@ -12,273 +12,6 @@
 <generator>quarto-1.6.40</generator>
 <lastBuildDate>Sat, 10 Oct 2026 07:00:00 GMT</lastBuildDate>
 <item>
-  <title>Chilean Flat Oyster WGBS: Three Populations, Nine Libraries</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
-<section id="where-this-started" class="level2">
-<h2 class="anchored" data-anchor-id="where-this-started">Where this started</h2>
-<p>Whole genome bisulfite sequencing (WGBS) for <em>Ostrea chilensis</em> came in on October 8: 15 paired-end files (2×151, NovaSeq X, one lane), named as 5 oysters from each of three sites in southern Chile: Pumalin (PUM), Quilhua (Qui) and Rio Pudeto (RP). These are the same three sites as the ONT RNA-seq in <a href="https://github.com/RobertsLab/project-ostrea-chil">project-ostrea-chil</a>. The plan was simple: align, call methylation, compare populations.</p>
-<p>Everything is on the <code>wgbs-methylation-pipeline</code> branch, <a href="https://github.com/RobertsLab/project-ostrea-chil/pull/2">PR #2</a>, as the <code>13.x</code> series.</p>
-</section>
-<section id="reference" class="level2">
-<h2 class="anchored" data-anchor-id="reference">Reference</h2>
-<p>Same reference as the RNA-seq (<code>09</code>), so gene IDs line up: <code>merged_out.fasta</code> with <code>GN.gene.gff3</code>, from gannet. It’s 1.18 Gb in 10 chromosome-scale sequences, one per chromosome. Four are labelled A (2A, 4A, 6A, 10A) and six B (1B, 5B, 6B, 7B, 8B, 9B), from 41 Mb (<code>10A</code>) to 232 Mb (<code>1B</code>). It’s the same sequence as “Assembly 1.0” in <code>12-compare-genomes</code>. Och_HapA covers 68% of it and Och_HapB 84%, so it isn’t either haplotype assembly. The annotation has 21,444 genes.</p>
-</section>
-<section id="pipeline" class="level2">
-<h2 class="anchored" data-anchor-id="pipeline">Pipeline</h2>
-<p>All on klone, <code>coenv/cpu-g2</code>, 5 samples at a time, using the <code>myflow</code> conda env (Bismark 0.25.1, bowtie2, fastp 1.0.1, samtools 1.22):</p>
-<ul>
-<li><strong>13.1:</strong> download the genome and annotation, build the Bismark index (10 minutes).</li>
-<li><strong>13.2:</strong> one SLURM array task per sample: <code>fastp</code> (10 bp 5′ trim) → Bismark (<code>--score_min L,0,-0.6</code>, directional) → <code>deduplicate_bismark</code> → <code>bismark_methylation_extractor</code> → strand-merged CpG coverage → sorted BAM.</li>
-<li><strong>13.3:</strong> Bismark, MultiQC and a one-line-per-sample summary.</li>
-</ul>
-<p>I ran Pum1 alone first. That caught three problems: the relocated conda env’s <code>curl</code> pointed at a certificate path that no longer exists; Bismark refuses <code>--basename</code> with <code>--parallel</code>; and a second copy of the test job, from another session, ran into the same folder. The Pum1 M-bias was flat for R1 after the 10 bp trim, but R2 was still high at its first 5 bases (29% falling to 20%). So extraction now uses <code>--ignore_r2 5</code>, and each sample takes a lock so two jobs can’t run on it at once. After that, all 15 ran in 1 h 23 min to 2 h 12 min each.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th></th>
-<th>range across samples</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>read pairs after trimming</td>
-<td>22.4 to 41.5 M</td>
-</tr>
-<tr class="even">
-<td>mapping</td>
-<td>56.0 to 58.5%</td>
-</tr>
-<tr class="odd">
-<td>duplicates</td>
-<td>3.5 to 7.1%</td>
-</tr>
-<tr class="even">
-<td>CpG methylation</td>
-<td>18.9 to 21.6%</td>
-</tr>
-<tr class="odd">
-<td>CHH methylation (conversion check)</td>
-<td>0.6 to 0.8%</td>
-</tr>
-</tbody>
-</table>
-<p>Median coverage per CpG is 4 to 5×, which shapes everything below. 31% of read pairs mapped to more than one place.</p>
-</section>
-<section id="fifteen-files-nine-libraries" class="level2">
-<h2 class="anchored" data-anchor-id="fifteen-files-nine-libraries">Fifteen files, nine libraries</h2>
-<p>The QC table was too tidy. Pum1, Pum2, Pum3 and Pum5 all mapped at 56.0% with 19.4% CpG methylation, and Rio3 and Rio5 were identical in every column, down to the read-pair count (32,773,197).</p>
-<p>The index barcodes in the read headers explain it. The 15 files contain 9 barcodes. Checking read names (the first 200,000 of each file, searched across the other file; controls between different barcodes share 0%):</p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 23%">
-<col style="width: 23%">
-<col style="width: 52%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>file</th>
-<th>reads found in</th>
-<th>what it is</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>PUM2, PUM3, PUM5</td>
-<td>PUM1, 100%</td>
-<td>subsets of PUM1</td>
-</tr>
-<tr class="even">
-<td>PUM4</td>
-<td>PUM5 + Qui1</td>
-<td>a mixture: all of PUM5 plus part of Qui1</td>
-</tr>
-<tr class="odd">
-<td>Qui5</td>
-<td>Qui1, 100%</td>
-<td>subset of Qui1</td>
-</tr>
-<tr class="even">
-<td>RP5</td>
-<td>RP3, 100%</td>
-<td>full copy, same count</td>
-</tr>
-</tbody>
-</table>
-<p>PUM4 needed a full check: its first 200,000 reads all come from Qui1, but the rest of the file doesn’t. Across all 30,650,313 reads, 74.3% carry the Pumalin index (<code>TGAGTACT</code>) and 25.7% the Qui1 index (<code>CTGTCACT</code>). By read name, PUM4 is every one of PUM5’s 22,785,307 reads plus 7,865,006 reads from Qui1 (20% of that file), and nothing else.</p>
-<p>The copies are pair-aware random subsamples in shuffled order, untrimmed 151 bp, with R1/R2 pairing intact. Each source file starts at tile 1101 and each copy starts mid-run. That looks like a downsampling or placeholder step pointed at the wrong input, not sequencing or demultiplexing. I’ve asked the provider for the original per-sample files.</p>
-<p>That leaves <strong>Pum1, Qui1–4 and Rio1–4</strong>. Pumalin has n = 1, so the only comparison is <strong>Quilhua vs Rio Pudeto, 4 vs 4</strong>.</p>
-</section>
-<section id="the-methylome-as-a-whole" class="level2">
-<h2 class="anchored" data-anchor-id="the-methylome-as-a-whole">The methylome as a whole</h2>
-<p>Before comparing populations I wanted a picture of the shared methylome. <code>13.6</code> (<code>code/13.6-wgbs-methylation-landscape.Rmd</code>) pools read counts across all 9 oysters at each CpG, SNP-masked with the <code>13.7</code> calls. That gets per-CpG depth well above what any one oyster has.</p>
-<p><strong>Global level.</strong> Per oyster, CpG methylation is 18.9–21.6%, with no real difference among sites. Of the 14.4 M CpGs that pass filters (55% of the 26.1 M in the assembly), 18% are methylated (≥ 50%), 78% are unmethylated (&lt; 10%), and only 4% are in between. A classic mosaic invertebrate methylome.</p>
-<p><strong>Where it is.</strong> Methylation is concentrated in gene bodies. Introns are the most methylated compartment, with methylated CpGs 5.6× enriched there; coding exons are 2.1×. Intergenic sequence, 82% of the genome, is depleted (0.32×). The GFF has no UTRs, so “exon” here means coding exon. Along chromosomes, methylation in 100 kb windows tracks gene density (Spearman ρ = 0.37).</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/landscape-features.png" class="img-fluid"></p>
-<p><strong>Gene bodies.</strong> Of the 13,640 genes with enough coverage, 35% are methylated and 59% unmethylated, two clear groups. Methylated genes are CpG-depleted (gene methylation vs CpG o/e, ρ = −0.59), the signature of long-term germline methylation. In methylated genes, methylation jumps from about 31% just upstream of the TSS to about 85% across the body. It also climbs from 5′ to 3′: first exon 18%, sixth and later exons 56%; first intron 37%, later introns 61%. Gene-body levels are very stable between animals (mean SD across oysters, 2.6 percentage points).</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/landscape-metagene.png" class="img-fluid"></p>
-<p><strong>Function.</strong> Genes with a Swiss-Prot hit and GO terms have median gene-body methylation of 67%; genes with no hit sit at 0.8%. 321 of 839 GO BP terms differ (Wilcoxon, FDR &lt; 0.05). The most methylated are housekeeping: mRNA splicing, chromatin remodeling, translation, rRNA processing, ER-to-Golgi transport and protein degradation (medians 82–90%). The least methylated are responsive or tissue-specific: cholinergic synaptic transmission, ion and calcium transport, acetylcholine receptor signaling (medians about 0.6%). Broad groups split the same way: RNA processing, translation, cell cycle and mitochondria at 82–86%, against immune/defense (1.2%), signal transduction (14%) and development (27%). Stress response (67%) isn’t different from background.</p>
-<p>So this is the textbook invertebrate pattern: methylation in the bodies of conserved, constitutively expressed genes, and little in inducible ones. Caveats: Swiss-Prot hits cover only 46% of genes, GO terms are direct annotations (not propagated), and with one Pumalin oyster the pooling is uneven across sites.</p>
-</section>
-<section id="quilhua-vs-rio-pudeto" class="level2">
-<h2 class="anchored" data-anchor-id="quilhua-vs-rio-pudeto">Quilhua vs Rio Pudeto</h2>
-<p><code>13.4</code> (methylKit, in the lab R4.4 container) with CpGs at ≥ 5× in at least 3 of 4 oysters per population. Before testing it drops CpGs that carry a SNP from <code>13.7</code>, which calls SNPs genome-wide from the bisulfite BAMs with <code>biscuit</code>: 952,169 SNPs at QUAL ≥ 20, 31,673 of them at CpGs.</p>
-<ul>
-<li>Global methylation is the same in both: 20.1% Quilhua, 20.5% Rio.</li>
-<li>1,275 single CpGs (DMLs) and 304 1 kb windows (DMRs) differ by ≥ 20% (q &lt; 0.01), mostly intergenic.</li>
-<li>Gene-body methylation (limma on M-values): 1 of 7,247 genes, <strong>GN020540</strong>.</li>
-</ul>
-</section>
-<section id="how-much-of-that-is-genetic" class="level2">
-<h2 class="anchored" data-anchor-id="how-much-of-that-is-genetic">How much of that is genetic?</h2>
-<p>A C→T SNP at a CpG reads exactly like an unmethylated C, and at 5× the genome-wide calls miss a lot. So <code>13.9</code> re-checks each DML and DMR. It splits each oyster’s reads by Bismark strand and counts a base only from the strand where bisulfite can’t change it. At a CpG C, bottom-strand reads report the genotype. It pools reads by population, needs ≥ 8 reads per side and ≥ 2 carrier oysters to call a variant differentiated, and flags windows where most reads have MAPQ &lt; 10. A region is <strong>untested</strong> when fewer than half its CpGs have enough reads to see a SNP.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/snp-check-classes.png" class="img-fluid"></p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>class</th>
-<th style="text-align: right;">DMR windows</th>
-<th style="text-align: right;">single CpGs</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>confirmed (tested, no SNP)</td>
-<td style="text-align: right;">82</td>
-<td style="text-align: right;">488</td>
-</tr>
-<tr class="even">
-<td>untested</td>
-<td style="text-align: right;">125</td>
-<td style="text-align: right;">333</td>
-</tr>
-<tr class="odd">
-<td>CpG-destroying SNP</td>
-<td style="text-align: right;">41</td>
-<td style="text-align: right;">204</td>
-</tr>
-<tr class="even">
-<td>repeat-like</td>
-<td style="text-align: right;">36</td>
-<td style="text-align: right;">149</td>
-</tr>
-<tr class="odd">
-<td>other genetic difference</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">101</td>
-</tr>
-</tbody>
-</table>
-<p>The CpG-destroying ones are artefacts. In all 204 DMLs and 36 of 41 windows, the population carrying the SNP is the one that looks less methylated. These survived the <code>13.7</code> mask; pooling reads by population is what finds them. Of the confirmed set, the single CpGs are 400 intergenic, 65 intron, 20 promoter and 3 exon.</p>
-</section>
-<section id="gn020540" class="level2">
-<h2 class="anchored" data-anchor-id="gn020540">GN020540</h2>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/gn020540-methylation.png" class="img-fluid"></p>
-<p>The one differentially methylated gene. It’s on <code>Chromosome_9B</code>, 6.5 kb, 4 exons, and its best Swiss-Prot hit is Nup107, a nuclear pore protein (54% identity, but the predicted protein is only 168 aa against 926, so probably a partial model). Quilhua is 37 to 60% methylated across its 147 CpGs, Rio is 3 to 5%, and Pum1 looks like Quilhua. 80 of the CpGs have enough reads to test for SNPs, none are differentiated, and depth is the same in both populations. So the CpGs are there in Rio; they just aren’t methylated. A third of its reads are MAPQ &lt; 10, which is worth keeping in mind.</p>
-<p>The RNA-seq from <code>09</code> (different animals) has it at 0 to 33 CPM, with half the libraries at exactly 0. That’s too thin to say anything about expression.</p>
-</section>
-<section id="go" class="level2">
-<h2 class="anchored" data-anchor-id="go">GO</h2>
-<p><code>13.8</code> tested GO enrichment for genes with a DMR in the body or 2 kb promoter: 47 genes against 6,219. Nothing passes FDR. The top terms (lysosome localization, filopodium assembly, amino acid catabolism) rest on 2 or 3 genes each, mostly on untested windows. Only 8 of the 47 genes sit on confirmed windows, which is too few for enrichment.</p>
-</section>
-<section id="hapa-check" class="level2">
-<h2 class="anchored" data-anchor-id="hapa-check">HapA check</h2>
-<p>The merged reference turned out to be HapA’s chromosomes 2A, 4A, 6A and 10A, identical down to the base, plus six chromosomes from HapB. So I re-ran the whole chain on Och_HapA alone (<code>WGBS_REF=hapa bash code/13-wgbs-submit.sh</code>, same 9 oysters, same settings) and compared the two with <code>13.10</code>.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>mean per oyster</th>
-<th style="text-align: right;">merged</th>
-<th style="text-align: right;">Och_HapA</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>mapping (unique)</td>
-<td style="text-align: right;">57.4%</td>
-<td style="text-align: right;">67.4%</td>
-</tr>
-<tr class="even">
-<td>pairs mapping to more than one place</td>
-<td style="text-align: right;">31.9%</td>
-<td style="text-align: right;">15.8%</td>
-</tr>
-<tr class="odd">
-<td>CpGs ≥ 5×</td>
-<td style="text-align: right;">7.86 M</td>
-<td style="text-align: right;">9.13 M</td>
-</tr>
-</tbody>
-</table>
-<p>Half the multi-mapping goes away. Reads that were split between near-duplicate A and B sequences now have one home. On the four chromosomes identical in both references, depth goes up 6% and per-CpG methylation doesn’t move: r = 0.995 and a mean difference of 0.7 percentage points in every oyster.</p>
-<p>To re-test the population differences, <code>13.10</code> lifts every DMR window, every DML CpG (±100 bp) and GN020540 onto HapA with <code>minimap2</code>. It then re-measures Rio − Quilhua the same way on both references, from reads pooled per population.</p>
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/hapa-replication.png" class="img-fluid"></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>13.9 class</th>
-<th>DMR windows: same direction / ≥ 10% on HapA</th>
-<th>single CpGs: same direction / ≥ 20% on HapA</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>confirmed (tested, no SNP)</td>
-<td>96% / 94% (80 of 82 measurable)</td>
-<td>98% / 92% (461 of 488)</td>
-</tr>
-<tr class="even">
-<td>untested</td>
-<td>97% / 91%</td>
-<td>98% / 93%</td>
-</tr>
-<tr class="odd">
-<td>CpG-destroying SNP</td>
-<td>70% / 57%</td>
-<td>91% / 88% (102 of 204)</td>
-</tr>
-<tr class="even">
-<td>repeat-like</td>
-<td>94% / 78%</td>
-<td>93% / 77%</td>
-</tr>
-</tbody>
-</table>
-<p>The confirmed set holds. The CpG-destroying sites “replicate” too, and that’s expected rather than reassuring: the SNP is in the oysters’ DNA, so it makes the same false difference on any reference. Swapping references tests mapping, not genotype; that job is <code>13.9</code>’s. 129 of the single CpGs land where HapA has no CpG at all, so those sites exist only on the HapB chromosome.</p>
-<p><strong>GN020540</strong> maps to <code>Chromosome_9A:61,735,450–61,741,949</code> at 100% identity across the gene. Quilhua is 34–61% methylated and Rio 2.7–4.5%, within 1.7 points of the merged values in every oyster.</p>
-<p>The genome-wide picture doesn’t change either. With genes lifted onto HapA by Liftoff (<code>13.11</code>, 17,889 of 21,444) and a HapA SNP mask (1.55 M SNPs, 51.5 k at CpGs), <code>13.6</code> on HapA passes 89% of assembly CpGs against 55% on the merged reference. Mean methylation is 20.6% (merged 20.2%), and 35% of genes are methylated and 60% unmethylated. For the 12,010 genes estimated on both, gene-body methylation agrees closely (Spearman ρ = 0.963, median difference 0.07 points, 97.2% in the same class), and the GO picture has the same top terms at both ends.</p>
-<p>So HapA is the better reference for this data: more reads placed, half the ambiguity, and the same biology. The cost is the 3,555 genes that didn’t lift onto HapA.</p>
-</section>
-<section id="next" class="level2">
-<h2 class="anchored" data-anchor-id="next">Next</h2>
-<p>Make HapA the primary reference. <code>13.4</code> is already re-running on the HapA alignment with the lifted annotation, and <code>13.9</code> comes next, so the population results come from the cleaner alignment. Then the corrected Pumalin, Qui5 and Rio5 files when they arrive, and a rank-based GO across all genes using the gene-body statistics instead of a cut list.</p>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>Epigenetics</category>
-  <category>Genomics</category>
-  <category>Computing</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/</guid>
-  <pubDate>Sat, 10 Oct 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/94-ochil-wgbs-methylation/images/gn020540-methylation.png" medium="image" type="image/png" height="69" width="144"/>
-</item>
-<item>
   <title>Chilean vs Olympia Oyster Methylation, and What Sits Inside GN020540</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/95-ostrea-methylation-compare/</link>
@@ -4601,6 +4334,111 @@ font-style: inherit;">write_tsv</span>(out, out_path)</span></code></pre></div>
   <guid>https://sr320.github.io/tumbling-oysters/posts/78-priming-w2/</guid>
   <pubDate>Wed, 17 Jun 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/78-priming-w2/images/clipboard-3886987232.png" medium="image" type="image/png" height="135" width="144"/>
+</item>
+<item>
+  <title>From DMRs and Deletions to Candidate Genes in Lake Trout</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/76-lake-trout-gene-pheno/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-L4%20Substantial-red" alt="AI Use L4: Substantial"></a></p>
+<p>This is the write-up of the <code>code/18</code> series in <a href="https://github.com/RobertsLab/project-lake-trout">project-lake-trout</a>. We already had differential methylation (DMRs/DMCs) and differential presence/absence variants (PAVs) for the lean vs siscowet lake trout comparison on the <strong>GCF_016432855.1 (SaNama_1.0)</strong> reference. What we did <em>not</em> have was any sense of <em>which genes</em> those signals fall in, <em>what those genes do</em>, and <em>which ecotype phenotypes</em> they could plausibly touch. Step 18 closes that gap — it does no new variant calling, it just asks where the existing signals land and reasons about consequences.</p>
+<p>The whole plan, with the per-step status notes, lives in <a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-diff-annotation-phenotype-plan.md"><code>code/18-diff-annotation-phenotype-plan.md</code></a>.</p>
+<section id="the-caveat-that-shapes-everything" class="level2">
+<h2 class="anchored" data-anchor-id="the-caveat-that-shapes-everything">The caveat that shapes everything</h2>
+<p>The reference genome is a problem we have to lead with, not bury. GCF_016432855.1 was assembled from a female gynogenetic <strong>doubled haploid</strong> of the <strong>Seneca Lake (NY) brood stock</strong> — a <strong>lean</strong> morphotype. So every ecotype-asymmetric result is <strong>lean-reference biased</strong>: siscowet diverges more from the reference, which inflates apparent siscowet-specific PAVs and <em>reduces</em> siscowet CpG coverage exactly in the regions where the ecotypes differ most. Two consequences I kept in front of me the whole way:</p>
+<ul>
+<li>A “siscowet-specific deletion” is enriched for lean-present / siscowet-absent sequence — it is a candidate, not a confirmed loss in siscowet.</li>
+<li>Siscowet-specific vs lean-specific counts are <strong>not</strong> magnitude-comparable. The least-biased classes are siscowet-specific deletions and lean-specific <em>insertions</em>.</li>
+</ul>
+<p>Everything below is framed as prioritized hypotheses, not findings.</p>
+</section>
+<section id="step-0-build-a-gene-function-table" class="level2">
+<h2 class="anchored" data-anchor-id="step-0-build-a-gene-function-table">Step 0 — Build a gene function table</h2>
+<p>The repo had gene coordinates and symbols but <strong>no functional annotation</strong>, so that was the one new data dependency. Rather than reach for an ortholog-mapping tool first, I pulled the NCBI RefSeq annotation for the assembly directly:</p>
+<ul>
+<li><code>*_genomic.gff.gz</code> — gene models and transcript <code>product=</code> names (the join backbone)</li>
+<li><code>*_gene_ontology.gaf.gz</code> — GO annotations keyed on NCBI GeneID</li>
+</ul>
+<p><a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-build-gene-function-table.py"><code>code/18-build-gene-function-table.py</code></a> parses both and writes <code>analyses/18-annotation/gene_function_table.tsv</code>, keyed on the same <code>gene-XXX</code> IDs used in the gene BED so every downstream join is trivial. It covers all 46,359 genes — 9,738 with a real symbol, 46,231 with a product name, and <strong>34,367 with at least one GO term</strong>. Because GO came straight from the GAF, the planned eggNOG/DIAMOND ortholog pass turned out to be unnecessary for first-pass coverage. The script QCs itself against the gene BED to confirm the join key matches.</p>
+</section>
+<section id="steps-12-assign-dmrs-dmcs-and-pavs-to-genes" class="level2">
+<h2 class="anchored" data-anchor-id="steps-12-assign-dmrs-dmcs-and-pavs-to-genes">Steps 1–2 — Assign DMRs, DMCs, and PAVs to genes</h2>
+<p><a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18.1-assign-features-to-genes.py"><code>code/18.1-assign-features-to-genes.py</code></a> does the positional assignment, pure stdlib (no bedtools), joining onto the Step 0 table. Two design decisions matter:</p>
+<ul>
+<li><strong>Proximity classes, not just overlap.</strong> Regulatory methylation often sits in promoters, so each feature–gene pair is classified <code>promoter</code> (TSS ± 2 kb, strand-aware) &gt; <code>exon</code> &gt; <code>intron</code> &gt; <code>upstream ≤5 kb</code> &gt; <code>downstream ≤5 kb</code>, with the gene body ± 5 kb as the outer window.</li>
+<li><strong>Lead with the stringent PAV set.</strong> The <code>stringent.siscowet_specific.deletions.bed</code> set (3,465 deletions &gt;100 bp, all-4-vs-none) is the high-confidence signal; the lenient lean/siscowet sets are carried only as a lower-confidence per-gene <em>burden</em> table, with the reference-bias caveat written into the file.</li>
+</ul>
+<p>Outputs: <code>dmr_gene_assignments.tsv</code>, <code>dmc_gene_assignments.tsv</code>, <code>pav_gene_assignments.tsv</code>, and <code>pav_gene_burden.tsv</code>. Headline numbers — 149/302 DMRs within 5 kb of a gene (88 landing in promoters), and 1,543/3,465 stringent deletions near a gene, <strong>54 of them overlapping an exon</strong>.</p>
+</section>
+<section id="step-3-integrate-the-layers-expression" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-integrate-the-layers-expression">Step 3 — Integrate the layers + expression</h2>
+<p><a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18.2-integrate-candidates.py"><code>code/18.2-integrate-candidates.py</code></a> merges the methylation and PAV assignments into one ranked candidate table (<code>integrated_candidate_genes.tsv</code>, 2,036 genes) and flags <strong>convergent</strong> genes hit by <em>both</em> a DMR and a stringent siscowet-specific deletion — the strongest candidates (there are <strong>4</strong>). A few judgment calls baked in:</p>
+<ul>
+<li>Liver RNAseq (<code>whole_tx_table.csv</code>) is joined on <code>gene_id</code> for expression context, but it is from a <em>separate parasite study with different individuals and one tissue</em>, so it is carried as orthogonal support, never confirmation.</li>
+<li>Repetitive ncRNA biotypes (rRNA/snRNA/snoRNA/tRNA) get a <code>caution</code> flag and are deprioritized in the ranked view, because promoter “DMRs” there are usually rDNA-array methylation artifacts rather than gene regulation.</li>
+<li>A simple additive <code>rank_score</code> rewards convergence, promoter DMRs, exonic deletions, expression, and methylation→expression concordance.</li>
+</ul>
+</section>
+<section id="step-4-go-enrichment" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-go-enrichment">Step 4 — GO enrichment</h2>
+<p><a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18.3-go-enrichment.py"><code>code/18.3-go-enrichment.py</code></a> runs a <strong>self-contained</strong> hypergeometric over-representation analysis on the DMR set, the stringent PAV set, and their union. I deliberately used the <em>local</em> GO annotations (from Step 0) with full DAG propagation (<code>go-basic.obo</code>, is_a + part_of, true-path rule) and BH-FDR within each set — an ortholog-based tool like g:Profiler would have dropped most of the symbol-less <code>LOC</code> genes.</p>
+<p>The one robust result is <strong>calcium ion transport / channel</strong> enrichment in the PAV set (FDR ≈ 3e-3). The DMR enrichment is a histone + <code>znf883</code> tandem-cluster artifact, and lipid/growth terms are only suggestive (FDR &gt; 0.1). The README and the script both flag the confounders explicitly: gene-length bias (long channel genes accumulate deletions by chance), reference bias, IEA-only annotations, and gene clustering. KEGG was deferred — GO is the substantive result and KEGG needs KO mapping we don’t have yet.</p>
+</section>
+<section id="step-5-phenotype-synthesis" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-phenotype-synthesis">Step 5 — Phenotype synthesis</h2>
+<p>The narrative report is <a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-diff-annotation-phenotype.Rmd"><code>code/18-diff-annotation-phenotype.Rmd</code></a> (rendered: <a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-diff-annotation-phenotype.html"><code>18-diff-annotation-phenotype.html</code></a>). It walks per-axis evidence blocks — lipid/energy, body-shape/growth/muscle, calcium/sensory-neural, immune, and a chromatin block flagged as artifact — each anchored to the morphometric phenotype data in <code>data/measurements.xlsx</code>, with the full causality and reference-bias caveats. The cleanest takeaways:</p>
+<ul>
+<li>A small <strong>convergent</strong> set (led by a <code>znf883</code> paralog), partly reflecting repetitive mapping, so flagged rather than asserted.</li>
+<li>The <strong>calcium-transport/channel</strong> GO signal in the PAV set (with the gene-length caveat).</li>
+<li>Individual lipid genes (<code>angptl5</code>, <code>mogat2</code>) and a high-effect muscle-development promoter DMR (<code>rbm24b</code>, hyper-methylated in siscowet, Δ33%) that line up with the known lipid- and body-shape differences between the ecotypes.</li>
+</ul>
+<p>None of these are confirmed. They are prioritized hypotheses for follow-up on ecotype-specific (hifiasm) assemblies and in matched tissue — the per-ecotype track is the needed complement to a lean-reference-only analysis.</p>
+</section>
+<section id="reproducing" class="level2">
+<h2 class="anchored" data-anchor-id="reproducing">Reproducing</h2>
+<p>Everything is plain Python 3 (stdlib only) plus a base-R Rmd; no external bioinformatics dependencies. From the repo root, after dropping the three NCBI RefSeq files into <code>analyses/18-annotation/raw/</code> (the GFF, the GAF, and <code>go-basic.obo</code>):</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> code/18-build-gene-function-table.py   <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 0 -&gt; gene_function_table.tsv</span></span>
+<span id="cb1-2"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> code/18.1-assign-features-to-genes.py  <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Steps 1-2 -&gt; *_gene_assignments.tsv</span></span>
+<span id="cb1-3"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> code/18.2-integrate-candidates.py      <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 3 -&gt; integrated_candidate_genes.tsv</span></span>
+<span id="cb1-4"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">python3</span> code/18.3-go-enrichment.py             <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Step 4 -&gt; go_enrichment_{dmr,pav,union}.tsv</span></span>
+<span id="cb1-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># then knit code/18-diff-annotation-phenotype.Rmd for the Step 5 report + figure</span></span></code></pre></div>
+<p>Each script prints its own QC to stderr (gene counts, join-key checks, hit counts, FDR tallies), so a successful run is self-verifying.</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Computing</category>
+  <category>Genomics</category>
+  <category>Epigenetics</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/76-lake-trout-gene-pheno/</guid>
+  <pubDate>Mon, 15 Jun 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/76-lake-trout-gene-pheno/images/clipboard-1759510015.png" medium="image" type="image/png" height="135" width="144"/>
 </item>
 </channel>
 </rss>

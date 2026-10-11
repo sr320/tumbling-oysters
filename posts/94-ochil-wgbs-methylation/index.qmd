@@ -12,7 +12,7 @@ author:
     affiliation: Professor, UW - School of Aquatic and Fishery Sciences
     affiliation-url: https://robertslab.info
   #url:  # self-defined
-draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+draft: true # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 format:
   html:
     toc: true            # ← enable TOC
@@ -65,7 +65,7 @@ The QC table was too tidy. Pum1, Pum2, Pum3 and Pum5 all mapped at 56.0% with 19
 The index barcodes in the read headers explain it. The 15 files contain 9 barcodes. Checking read names (the first 200,000 of each file, searched across the other file; controls between different barcodes share 0%):
 
 | file             | reads found in | what it is                               |
-|-----------------|-----------------|--------------------------------------|
+|------------------|----------------|------------------------------------------|
 | PUM2, PUM3, PUM5 | PUM1, 100%     | subsets of PUM1                          |
 | PUM4             | PUM5 + Qui1    | a mixture: all of PUM5 plus part of Qui1 |
 | Qui5             | Qui1, 100%     | subset of Qui1                           |
@@ -148,7 +148,7 @@ To re-test the population differences, `13.10` lifts every DMR window, every DML
 ![](images/hapa-replication.png)
 
 | 13.9 class | DMR windows: same direction / ≥ 10% on HapA | single CpGs: same direction / ≥ 20% on HapA |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | confirmed (tested, no SNP) | 96% / 94% (80 of 82 measurable) | 98% / 92% (461 of 488) |
 | untested | 97% / 91% | 98% / 93% |
 | CpG-destroying SNP | 70% / 57% | 91% / 88% (102 of 204) |
@@ -158,10 +158,39 @@ The confirmed set holds. The CpG-destroying sites "replicate" too, and that's ex
 
 **GN020540** maps to `Chromosome_9A:61,735,450–61,741,949` at 100% identity across the gene. Quilhua is 34–61% methylated and Rio 2.7–4.5%, within 1.7 points of the merged values in every oyster.
 
-The genome-wide picture doesn't change either. With genes lifted onto HapA by Liftoff (`13.11`, 17,889 of 21,444) and a HapA SNP mask (1.55 M SNPs, 51.5 k at CpGs), `13.6` on HapA passes 89% of assembly CpGs against 55% on the merged reference. Mean methylation is 20.6% (merged 20.2%), and 35% of genes are methylated and 60% unmethylated. For the 12,010 genes estimated on both, gene-body methylation agrees closely (Spearman ρ = 0.963, median difference 0.07 points, 97.2% in the same class), and the GO picture has the same top terms at both ends.
+The genome-wide picture doesn't change either. With genes lifted onto HapA by Liftoff (`13.11`, 17,889 of 21,444) and a HapA SNP mask (1.55 M SNPs, 51.5 k at CpGs; on the four shared chromosomes it recovers 95% of the merged calls, 554,890 of 582,123), `13.6` on HapA passes 89% of assembly CpGs against 55% on the merged reference. Mean methylation is 20.6% (merged 20.2%), and 35% of genes are methylated and 60% unmethylated. For the 12,010 genes estimated on both, gene-body methylation agrees closely (Spearman ρ = 0.963, median difference 0.07 points, 97.2% in the same class), and the GO picture has the same top terms at both ends.
 
 So HapA is the better reference for this data: more reads placed, half the ambiguity, and the same biology. The cost is the 3,555 genes that didn't lift onto HapA.
 
+### Calling the differences again on HapA
+
+Re-measuring the merged calls is one test. The stricter one is to call them from scratch: `13.4` on the HapA alignment, with the lifted genes and the HapA SNP mask, then `13.9` on its windows.
+
+| Quilhua vs Rio Pudeto           | merged | Och_HapA |
+|---------------------------------|-------:|---------:|
+| DMR windows                     |    304 |      379 |
+| single CpGs (DMLs)              |  1,275 |    1,455 |
+| genes tested (gene body)        |  7,247 |    9,457 |
+| differentially methylated genes |      1 |        2 |
+
+More coverage means more windows and genes clear the filters. Of the 289 merged windows that lift to HapA, 160 are called again independently, 158 of them in the same direction, and 218 HapA windows are new.
+
+The `13.9` classes look much the same as before:
+
+| class                      | merged (304) | Och_HapA (379) |
+|----------------------------|-------------:|---------------:|
+| confirmed (tested, no SNP) |           82 |             99 |
+| untested                   |          125 |            133 |
+| CpG-destroying SNP         |           41 |             70 |
+| repeat-like                |           36 |             57 |
+| other genetic difference   |           20 |             20 |
+
+The 99 confirmed HapA windows split 57 higher in Rio and 42 higher in Quilhua. They touch the body or 2 kb promoter of 14 genes. Four of those were also among the 8 genes with confirmed windows on the merged reference: GN020540, GN017845 (farnesyltransferase β), GN007260 (NCF-2) and GN012742 (HELZ2).
+
+The second differentially methylated gene on HapA, **GN016259** (RNA-binding protein 25, a splicing factor), is −20% in Rio (adjusted p = 0.040). It doesn't hold up. No `13.4` window covers it, so I ran `13.9` on the gene ± 2 kb. It has 9 variants that differ between the populations, and 4 of them destroy a CpG (C\>T at a C, or G\>A at a G). All 4 are at 60–83% in Rio and 0–20% in Quilhua, in the population that looks less methylated (Rio 63–77% against Quilhua 86–92%). That's the SNP signature.
+
+**GN020540** comes through as the top gene again on HapA (−34.3%, against −35.0% merged). It has no differentiated variant across 82 testable CpGs. A third of the reads at this gene are MAPQ \< 10 on both references (2,410 of 7,308 on HapA, 2,344 of 7,019 merged), concentrated in the middle of the gene. So it's a property of the gene, perhaps a repeated or duplicated stretch inside it, not of the reference. Both references call six windows over the gene, all lower in Rio (−25 to −72%). The well-mapped ends are confirmed or untested, and the middle windows (48–66% MAPQ \< 10) are repeat-like: 2 of 6 merged, 3 of 6 on HapA. It deserves a closer look.
+
 ## Next
 
-Make HapA the primary reference. `13.4` is already re-running on the HapA alignment with the lifted annotation, and `13.9` comes next, so the population results come from the cleaner alignment. Then the corrected Pumalin, Qui5 and Rio5 files when they arrive, and a rank-based GO across all genes using the gene-body statistics instead of a cut list.
+Use HapA as the primary reference from here. Work out what the low-MAPQ reads at GN020540 are, from relative depth and where the secondary hits fall. Then the corrected Pumalin, Qui5 and Rio5 files when they arrive, and a rank-based GO across all genes using the gene-body statistics instead of a cut list.
