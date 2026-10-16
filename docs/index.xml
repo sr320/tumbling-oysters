@@ -10,7 +10,202 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Sat, 10 Oct 2026 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 16 Oct 2026 07:00:00 GMT</lastBuildDate>
+<item>
+  <title>Lean vs Lean</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/96-trout-lean-baseline/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<p>Rick asked whether we had compared our ecotype genomes to the published lean reference genome, and specifically lean to lean. We had all the pieces from the structural variant work but had never written it up as its own comparison, so here it is. The code is in <a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/23.17-lean-reference-baseline.py">23.17</a> and <a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/23.18-reciprocal-pav-exon.py">23.18</a>, and the full write-up is the <a href="https://github.com/RobertsLab/project-lake-trout/blob/main/analyses/23-lean-baseline/README.md">23-lean-baseline README</a>.</p>
+<section id="why-lean-vs-lean" class="level2">
+<h2 class="anchored" data-anchor-id="why-lean-vs-lean">Why lean vs lean</h2>
+<p>The published reference (SaNama_1.0) comes from a single Seneca-strain lean female, a gynogenetic doubled haploid, so it is one homozygous lean haplotype. Our lean and siscowet assemblies are hifiasm primary contigs from four pooled fish each. Two lean genomes should differ only by within-lean variation and assembly artifacts. That makes the lean vs published-lean difference a baseline for judging lean vs siscowet: if a difference is just as big between two leans, it isn’t telling us about ecotype.</p>
+<p>No new alignment was needed. The SyRI runs for lean vs reference, siscowet vs reference and lean vs siscowet were already done.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/96-trout-lean-baseline/images/plotsr_lean_vs_ref.png" class="img-fluid"></p>
+</section>
+<section id="how-different-are-two-lean-genomes" class="level2">
+<h2 class="anchored" data-anchor-id="how-different-are-two-lean-genomes">How different are two lean genomes?</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 17%">
+<col style="width: 23%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>lean vs ref</th>
+<th>siscowet vs ref</th>
+<th>lean vs siscowet</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SNPs</td>
+<td>1.14 M</td>
+<td>1.23 M</td>
+<td>1.24 M</td>
+</tr>
+<tr class="even">
+<td>Highly diverged (Mb)</td>
+<td>231</td>
+<td>175</td>
+<td>197</td>
+</tr>
+<tr class="odd">
+<td>Inversions (Mb)</td>
+<td>9.9</td>
+<td>21.3</td>
+<td>29.3</td>
+</tr>
+<tr class="even">
+<td>Translocations (Mb)</td>
+<td>62.6</td>
+<td>107.9</td>
+<td>120.8</td>
+</tr>
+<tr class="odd">
+<td>Not aligned, query (Mb)</td>
+<td>230</td>
+<td>380</td>
+<td>491</td>
+</tr>
+</tbody>
+</table>
+<p>At the sequence level (SNPs, indels, diverged blocks), our lean differs from the published lean about as much as it differs from siscowet. Highly diverged sequence is actually higher lean to lean. Large rearrangements are 2–3× bigger between ecotypes, but siscowet vs reference carries most of that on its own, and the siscowet assembly is larger (2.84 vs 2.58 Gb). I can’t yet separate real siscowet structure from assembly differences.</p>
+</section>
+<section id="which-genome-is-the-odd-one-out" class="level2">
+<h2 class="anchored" data-anchor-id="which-genome-is-the-odd-one-out">Which genome is the odd one out?</h2>
+<p>For each of the ~100,000 lean–siscowet SVs (≥ 50 bp), I asked whether our lean and our siscowet each differ from the published lean at that spot. Of the 83,552 events placed on both sides:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>class</th>
+<th>siscowet side</th>
+<th>lean side</th>
+<th>both</th>
+<th>neither</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>all</td>
+<td>0.30</td>
+<td>0.25</td>
+<td>0.36</td>
+<td>0.10</td>
+</tr>
+<tr class="even">
+<td>indel</td>
+<td>0.31</td>
+<td>0.28</td>
+<td>0.34</td>
+<td>0.07</td>
+</tr>
+<tr class="odd">
+<td>translocation</td>
+<td>0.22</td>
+<td>0.13</td>
+<td>0.51</td>
+<td>0.15</td>
+</tr>
+<tr class="even">
+<td>duplication</td>
+<td>0.33</td>
+<td>0.06</td>
+<td>0.32</td>
+<td>0.29</td>
+</tr>
+<tr class="odd">
+<td>inversion</td>
+<td>0.39</td>
+<td>0.24</td>
+<td>0.37</td>
+<td>0.01</td>
+</tr>
+</tbody>
+</table>
+<p>“Lean side” means siscowet matches the published lean and only our lean is different. That is a quarter of all lean–siscowet SVs (99 Mb), and none of them are lean-ecotype differences. For indels the two sides are about equal, which is what polymorphism or assembly noise looks like, not an ecotype axis. Duplications, translocations and inversions skew toward siscowet. “Both” is three times what shuffled positions give, which points to hotspots, probably repeats that are hard to assemble.</p>
+</section>
+<section id="reciprocal-pav-genes-are-mostly-not-missing-genes" class="level2">
+<h2 class="anchored" data-anchor-id="reciprocal-pav-genes-are-mostly-not-missing-genes">Reciprocal PAV genes are mostly not missing genes</h2>
+<p>This was the surprise. Every reciprocal-PAV gene is a reference gene, so all of them are in the published lean genome. That includes the 71 genes absent from all four of our lean fish.</p>
+<p>Looking closer, a reciprocal-PAV “gene” is usually a big gene (median ~56 kb) with a short absent piece, a median of 3% of its length. Only 6 of 115 are at least half absent, and 5 of those are extra Liftoff copies. Splitting the absent sequence by gene model:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 28%">
+<col style="width: 16%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>genes</th>
+<th>CDS hit</th>
+<th>non-coding exon only</th>
+<th>intron only</th>
+<th>CDS bp obs / exp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>all</td>
+<td>115</td>
+<td>7</td>
+<td>5</td>
+<td>103</td>
+<td>0.46</td>
+</tr>
+<tr class="even">
+<td>tier A</td>
+<td>77</td>
+<td>6</td>
+<td>4</td>
+<td>67</td>
+<td>0.46</td>
+</tr>
+</tbody>
+</table>
+<p>90% are intron only. Coding sequence is hit at less than half the rate random placement in the same genes would give. Three single-copy annotated genes lose real coding sequence:</p>
+<ul>
+<li><code>ttll9</code>: 7 of 14 exons, 56% of CDS, absent in lean fish</li>
+<li><code>grb10</code>-like: 3 of 20 exons, 18% of CDS, absent in siscowet fish</li>
+<li><code>gpia</code>: 3 of 18 exons, 12% of CDS, absent in lean fish</li>
+</ul>
+<p>The rest of the coding hits are a transposon-like gene (K02A2.6-like), an extra gene copy and a 12 bp clip.</p>
+</section>
+<section id="what-this-changes" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-changes">What this changes</h2>
+<ul>
+<li>Tier A should be read as intronic structural variation inside genes, not gene presence/absence. Intronic changes could still matter for regulation.</li>
+<li>The energy-metabolism story narrows to <code>gpia</code> and <code>grb10</code>-like for coding changes.</li>
+<li>A lean–siscowet difference is ecotype-informative only if the published lean sides with our lean.</li>
+<li>This is on top of the read-coverage filter from earlier this week. It removed 89% of the corroborated ecotype-only genes as assembly gaps, including angptl5-like and the calcium-channel enrichment from the <a href="../../posts/82-trout-recip-pav/index.html">two-genome post</a>.</li>
+</ul>
+<p>The landing page is updated: <a href="https://robertslab.github.io/project-lake-trout/" class="uri">https://robertslab.github.io/project-lake-trout/</a></p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Genomics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/96-trout-lean-baseline/</guid>
+  <pubDate>Fri, 16 Oct 2026 07:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/96-trout-lean-baseline/images/plotsr_lean_vs_ref.png" medium="image" type="image/png" height="121" width="144"/>
+</item>
 <item>
   <title>Chilean vs Olympia Oyster Methylation, and What Sits Inside GN020540</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -4334,111 +4529,6 @@ font-style: inherit;">write_tsv</span>(out, out_path)</span></code></pre></div>
   <guid>https://sr320.github.io/tumbling-oysters/posts/78-priming-w2/</guid>
   <pubDate>Wed, 17 Jun 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/78-priming-w2/images/clipboard-3886987232.png" medium="image" type="image/png" height="135" width="144"/>
-</item>
-<item>
-  <title>From DMRs and Deletions to Candidate Genes in Lake Trout</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/76-lake-trout-gene-pheno/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-L4%20Substantial-red" alt="AI Use L4: Substantial"></a></p>
-<p>This is the write-up of the <code>code/18</code> series in <a href="https://github.com/RobertsLab/project-lake-trout">project-lake-trout</a>. We already had differential methylation (DMRs/DMCs) and differential presence/absence variants (PAVs) for the lean vs siscowet lake trout comparison on the <strong>GCF_016432855.1 (SaNama_1.0)</strong> reference. What we did <em>not</em> have was any sense of <em>which genes</em> those signals fall in, <em>what those genes do</em>, and <em>which ecotype phenotypes</em> they could plausibly touch. Step 18 closes that gap — it does no new variant calling, it just asks where the existing signals land and reasons about consequences.</p>
-<p>The whole plan, with the per-step status notes, lives in <a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-diff-annotation-phenotype-plan.md"><code>code/18-diff-annotation-phenotype-plan.md</code></a>.</p>
-<section id="the-caveat-that-shapes-everything" class="level2">
-<h2 class="anchored" data-anchor-id="the-caveat-that-shapes-everything">The caveat that shapes everything</h2>
-<p>The reference genome is a problem we have to lead with, not bury. GCF_016432855.1 was assembled from a female gynogenetic <strong>doubled haploid</strong> of the <strong>Seneca Lake (NY) brood stock</strong> — a <strong>lean</strong> morphotype. So every ecotype-asymmetric result is <strong>lean-reference biased</strong>: siscowet diverges more from the reference, which inflates apparent siscowet-specific PAVs and <em>reduces</em> siscowet CpG coverage exactly in the regions where the ecotypes differ most. Two consequences I kept in front of me the whole way:</p>
-<ul>
-<li>A “siscowet-specific deletion” is enriched for lean-present / siscowet-absent sequence — it is a candidate, not a confirmed loss in siscowet.</li>
-<li>Siscowet-specific vs lean-specific counts are <strong>not</strong> magnitude-comparable. The least-biased classes are siscowet-specific deletions and lean-specific <em>insertions</em>.</li>
-</ul>
-<p>Everything below is framed as prioritized hypotheses, not findings.</p>
-</section>
-<section id="step-0-build-a-gene-function-table" class="level2">
-<h2 class="anchored" data-anchor-id="step-0-build-a-gene-function-table">Step 0 — Build a gene function table</h2>
-<p>The repo had gene coordinates and symbols but <strong>no functional annotation</strong>, so that was the one new data dependency. Rather than reach for an ortholog-mapping tool first, I pulled the NCBI RefSeq annotation for the assembly directly:</p>
-<ul>
-<li><code>*_genomic.gff.gz</code> — gene models and transcript <code>product=</code> names (the join backbone)</li>
-<li><code>*_gene_ontology.gaf.gz</code> — GO annotations keyed on NCBI GeneID</li>
-</ul>
-<p><a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-build-gene-function-table.py"><code>code/18-build-gene-function-table.py</code></a> parses both and writes <code>analyses/18-annotation/gene_function_table.tsv</code>, keyed on the same <code>gene-XXX</code> IDs used in the gene BED so every downstream join is trivial. It covers all 46,359 genes — 9,738 with a real symbol, 46,231 with a product name, and <strong>34,367 with at least one GO term</strong>. Because GO came straight from the GAF, the planned eggNOG/DIAMOND ortholog pass turned out to be unnecessary for first-pass coverage. The script QCs itself against the gene BED to confirm the join key matches.</p>
-</section>
-<section id="steps-12-assign-dmrs-dmcs-and-pavs-to-genes" class="level2">
-<h2 class="anchored" data-anchor-id="steps-12-assign-dmrs-dmcs-and-pavs-to-genes">Steps 1–2 — Assign DMRs, DMCs, and PAVs to genes</h2>
-<p><a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18.1-assign-features-to-genes.py"><code>code/18.1-assign-features-to-genes.py</code></a> does the positional assignment, pure stdlib (no bedtools), joining onto the Step 0 table. Two design decisions matter:</p>
-<ul>
-<li><strong>Proximity classes, not just overlap.</strong> Regulatory methylation often sits in promoters, so each feature–gene pair is classified <code>promoter</code> (TSS ± 2 kb, strand-aware) &gt; <code>exon</code> &gt; <code>intron</code> &gt; <code>upstream ≤5 kb</code> &gt; <code>downstream ≤5 kb</code>, with the gene body ± 5 kb as the outer window.</li>
-<li><strong>Lead with the stringent PAV set.</strong> The <code>stringent.siscowet_specific.deletions.bed</code> set (3,465 deletions &gt;100 bp, all-4-vs-none) is the high-confidence signal; the lenient lean/siscowet sets are carried only as a lower-confidence per-gene <em>burden</em> table, with the reference-bias caveat written into the file.</li>
-</ul>
-<p>Outputs: <code>dmr_gene_assignments.tsv</code>, <code>dmc_gene_assignments.tsv</code>, <code>pav_gene_assignments.tsv</code>, and <code>pav_gene_burden.tsv</code>. Headline numbers — 149/302 DMRs within 5 kb of a gene (88 landing in promoters), and 1,543/3,465 stringent deletions near a gene, <strong>54 of them overlapping an exon</strong>.</p>
-</section>
-<section id="step-3-integrate-the-layers-expression" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-integrate-the-layers-expression">Step 3 — Integrate the layers + expression</h2>
-<p><a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18.2-integrate-candidates.py"><code>code/18.2-integrate-candidates.py</code></a> merges the methylation and PAV assignments into one ranked candidate table (<code>integrated_candidate_genes.tsv</code>, 2,036 genes) and flags <strong>convergent</strong> genes hit by <em>both</em> a DMR and a stringent siscowet-specific deletion — the strongest candidates (there are <strong>4</strong>). A few judgment calls baked in:</p>
-<ul>
-<li>Liver RNAseq (<code>whole_tx_table.csv</code>) is joined on <code>gene_id</code> for expression context, but it is from a <em>separate parasite study with different individuals and one tissue</em>, so it is carried as orthogonal support, never confirmation.</li>
-<li>Repetitive ncRNA biotypes (rRNA/snRNA/snoRNA/tRNA) get a <code>caution</code> flag and are deprioritized in the ranked view, because promoter “DMRs” there are usually rDNA-array methylation artifacts rather than gene regulation.</li>
-<li>A simple additive <code>rank_score</code> rewards convergence, promoter DMRs, exonic deletions, expression, and methylation→expression concordance.</li>
-</ul>
-</section>
-<section id="step-4-go-enrichment" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-go-enrichment">Step 4 — GO enrichment</h2>
-<p><a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18.3-go-enrichment.py"><code>code/18.3-go-enrichment.py</code></a> runs a <strong>self-contained</strong> hypergeometric over-representation analysis on the DMR set, the stringent PAV set, and their union. I deliberately used the <em>local</em> GO annotations (from Step 0) with full DAG propagation (<code>go-basic.obo</code>, is_a + part_of, true-path rule) and BH-FDR within each set — an ortholog-based tool like g:Profiler would have dropped most of the symbol-less <code>LOC</code> genes.</p>
-<p>The one robust result is <strong>calcium ion transport / channel</strong> enrichment in the PAV set (FDR ≈ 3e-3). The DMR enrichment is a histone + <code>znf883</code> tandem-cluster artifact, and lipid/growth terms are only suggestive (FDR &gt; 0.1). The README and the script both flag the confounders explicitly: gene-length bias (long channel genes accumulate deletions by chance), reference bias, IEA-only annotations, and gene clustering. KEGG was deferred — GO is the substantive result and KEGG needs KO mapping we don’t have yet.</p>
-</section>
-<section id="step-5-phenotype-synthesis" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-phenotype-synthesis">Step 5 — Phenotype synthesis</h2>
-<p>The narrative report is <a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-diff-annotation-phenotype.Rmd"><code>code/18-diff-annotation-phenotype.Rmd</code></a> (rendered: <a href="https://github.com/RobertsLab/project-lake-trout/blob/main/code/18-diff-annotation-phenotype.html"><code>18-diff-annotation-phenotype.html</code></a>). It walks per-axis evidence blocks — lipid/energy, body-shape/growth/muscle, calcium/sensory-neural, immune, and a chromatin block flagged as artifact — each anchored to the morphometric phenotype data in <code>data/measurements.xlsx</code>, with the full causality and reference-bias caveats. The cleanest takeaways:</p>
-<ul>
-<li>A small <strong>convergent</strong> set (led by a <code>znf883</code> paralog), partly reflecting repetitive mapping, so flagged rather than asserted.</li>
-<li>The <strong>calcium-transport/channel</strong> GO signal in the PAV set (with the gene-length caveat).</li>
-<li>Individual lipid genes (<code>angptl5</code>, <code>mogat2</code>) and a high-effect muscle-development promoter DMR (<code>rbm24b</code>, hyper-methylated in siscowet, Δ33%) that line up with the known lipid- and body-shape differences between the ecotypes.</li>
-</ul>
-<p>None of these are confirmed. They are prioritized hypotheses for follow-up on ecotype-specific (hifiasm) assemblies and in matched tissue — the per-ecotype track is the needed complement to a lean-reference-only analysis.</p>
-</section>
-<section id="reproducing" class="level2">
-<h2 class="anchored" data-anchor-id="reproducing">Reproducing</h2>
-<p>Everything is plain Python 3 (stdlib only) plus a base-R Rmd; no external bioinformatics dependencies. From the repo root, after dropping the three NCBI RefSeq files into <code>analyses/18-annotation/raw/</code> (the GFF, the GAF, and <code>go-basic.obo</code>):</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">python3</span> code/18-build-gene-function-table.py   <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Step 0 -&gt; gene_function_table.tsv</span></span>
-<span id="cb1-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">python3</span> code/18.1-assign-features-to-genes.py  <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Steps 1-2 -&gt; *_gene_assignments.tsv</span></span>
-<span id="cb1-3"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">python3</span> code/18.2-integrate-candidates.py      <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Step 3 -&gt; integrated_candidate_genes.tsv</span></span>
-<span id="cb1-4"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">python3</span> code/18.3-go-enrichment.py             <span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># Step 4 -&gt; go_enrichment_{dmr,pav,union}.tsv</span></span>
-<span id="cb1-5"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># then knit code/18-diff-annotation-phenotype.Rmd for the Step 5 report + figure</span></span></code></pre></div>
-<p>Each script prints its own QC to stderr (gene counts, join-key checks, hit counts, FDR tallies), so a successful run is self-verifying.</p>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>Computing</category>
-  <category>Genomics</category>
-  <category>Epigenetics</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/76-lake-trout-gene-pheno/</guid>
-  <pubDate>Mon, 15 Jun 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/76-lake-trout-gene-pheno/images/clipboard-1759510015.png" medium="image" type="image/png" height="135" width="144"/>
 </item>
 </channel>
 </rss>
