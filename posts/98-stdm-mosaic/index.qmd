@@ -39,6 +39,17 @@ It runs on the E5 MOSAiC data: *Acropora pulchra*, *Porites evermanni* and *Poci
 
 This post covers phases 3–5. [Post 97](../97-coral-multiomics/index.qmd) took a different route on the same data (variance partitioning, within-colony coupling, WGCNA). Where the two overlap, they agree.
 
+::: callout-note
+## Updated with corrected sample identities
+
+Post 97's SNP calls from the WGBS reads showed that some colony labels are wrong:
+
+-   **Five samples carry another colony's genotype**, likely mix-ups: ACR-145-TP2 and ACR-150-TP2 (swapped), POR-245-TP3 and TP4, and POC-57-TP4.
+-   **Two *A. pulchra* colony pairs are clonemates:** ACR-145 with ACR-265, and ACR-150 with ACR-237.
+
+I added this genotype table to `workflow-stdm` and reran everything with the five samples dropped and one colony per genotype (106 of 117 samples). The gene-by-gene and CpG results below are from that rerun, with the first version's numbers in brackets. The batch-correction section and its figure use the original labels. The corrected model is the same, as noted there. Two *A. pulchra* results from the first version did not survive: the 12 genes coupled within colony, and the genotype signal in the CpG check.
+:::
+
 ## The talk's model does not hold up
 
 The talk used rank 35 with l1 penalties on the ortholog × colony × timepoint tensor.
@@ -67,6 +78,7 @@ After removing batch effects per gene, while keeping site and timepoint in the r
 
 -   **The site component holds in *P. evermanni* (p = 2e-5) and *P. tuahiniensis* (p = 9e-4).** It is gone in *A. pulchra* (p = 0.13). The *A. pulchra* site difference was extraction batch.
 -   **An *A. pulchra* timepoint component survives, but it is provisional.** The 2023 extraction holds only TP1 and TP4 samples, so batch and time are hard to separate, and the component reproduces poorly across colony halves (0.51).
+-   **Correcting sample identities changes neither component.** Refit without the mismatched samples and with one colony per genotype, the site component matches the original (gene-loading cosine 0.96), and the timepoint component matches at 0.83. With colonies as the unit, the site difference holds in *P. evermanni* (p = 2e-4) and *P. tuahiniensis* (p = 0.016).
 
 ![](images/site-component.png)
 
@@ -74,7 +86,7 @@ After removing batch effects per gene, while keeping site and timepoint in the r
 
 I scored each sample on the components and tested the scores against 11 physiology traits and the ITS2 profiles. Each test ran on all samples, within site, and within site × timepoint.
 
--   **Physiology:** 8 of 66 tests pass on all samples or within site, but **none hold within site × timepoint**. The *A. pulchra* timepoint component tracks calcification, but only because both are low at TP1 and TP4. Calcification is near zero at those timepoints in all three species, which needs checking.
+-   **Physiology:** 7 of 66 tests pass on all samples or within site, but **none hold within site × timepoint**. The *A. pulchra* timepoint component tracks calcification, but only because both are low at TP1 and TP4. Calcification is near zero at those timepoints in all three species, which needs checking.
 -   **ITS2:** no associations.
 -   **Calcification genes:** not enriched among the top loadings of either component.
 -   **GO slim (on the model before batch correction):** the *A. pulchra* seasonal component is dominated by nucleolus, RNA binding and mRNA metabolism. That is a ribosome-biogenesis signature that also shows up with RNA-quality differences, consistent with the batch confounding.
@@ -95,7 +107,7 @@ I scored each sample on the components and tested the scores against 11 physiolo
 | Gene-body methylation | −0.10 | −0.11            | −0.07     | −1.19            |
 | miRNA                 | −0.02 | 0.17             | −0.36     | −0.16            |
 
-*Values are held-out R².*
+*Values are held-out R², with colony labels as given. The rerun with corrected identities is in progress and will replace them.*
 
 ![](images/elastic-net-r2.png)
 
@@ -119,15 +131,18 @@ The question gets sharper at the gene level: does a gene's own body methylation 
 -   **between colonies:** colonies compared at the same site and timepoint;
 -   **within colony:** changes over time, after removing colony means.
 
-|                                     | Apul | Peve | Ptua |
-|-------------------------------------|------|------|------|
-| Between colonies, genes at q \< 0.1 | 151  | 77   | 35   |
-| Within colony, genes at q \< 0.1    | 12   | 1    | 0    |
+|                                     | Apul      | Peve    | Ptua    |
+|-------------------------------------|-----------|---------|---------|
+| Samples (genotypes)                 | 32 (8)    | 35 (10) | 31 (10) |
+| Between colonies, genes at q \< 0.1 | 70 (151)  | 62 (77) | 26 (35) |
+| Within colony, genes at q \< 0.1    | 0 (12)    | 0 (1)   | 0 (0)   |
+
+*In brackets: the first version, with colony labels as given.*
 
 ![](images/cis-methylation-null.png)
 
--   **Between colonies, coupling is real in all three species.** There are 3–6× more strong correlations than expected. They are mostly positive and mostly in weakly methylated genes whose methylation varies more than average.
--   **Over time within a colony there is almost nothing,** a few *A. pulchra* genes at most. Post 97 found the same thing and traced the *A. pulchra* excess to one sample-level axis.
+-   **Between colonies, coupling is real in all three species.** There are about 3–4× more strong correlations than expected. They are mostly positive and mostly in weakly methylated genes whose methylation varies more than average. Per-gene correlations barely moved with the corrected identities (r = 0.92–0.99 with the first version). *A. pulchra* has fewer significant genes because it now has 8 genotypes instead of 10 colonies.
+-   **Over time within a colony, no single gene is coupled.** The 12 *A. pulchra* genes in the first version depended on the swapped and cloned samples. *A. pulchra* still has a modest excess of strong correlations over the null (194 vs 71). Post 97 traced that excess to one sample-level axis.
 -   **The component genes are no more coupled than other genes.**
 
 ## Is the between-colony coupling just genotype?
@@ -136,23 +151,20 @@ Each colony is a genet, so a sequence difference could move both measurements. A
 
 |   | Apul | Peve | Ptua |
 |------------------|------------------|------------------|------------------|
-| Coupled genes reproduced from CpG data | 68 | 16 | 26 |
-| Still coupled without variant-like CpGs | 47 | 13 | 20 |
-| Still coupled without the top CpG | 57 | 14 | 22 |
-| Variant-like CpGs, hits vs matched controls | 18.5% vs 9.3% | 9.9% vs 7.8% | 4.8% vs 4.6% |
+| Coupled genes reproduced from CpG data | 43 (68) | 14 (16) | 19 (26) |
+| Still coupled without variant-like CpGs | 36 (47) | 12 (13) | 14 (20) |
+| Still coupled without the top CpG | 35 (57) | 12 (14) | 19 (22) |
+| Variant-like CpGs, hits vs matched controls | 9.6% vs 8.5% (18.5% vs 9.3%) | 8.5% vs 7.5% | 6.1% vs 6.7% |
+
+*In brackets: the first version, with colony labels as given.*
 
 ![](images/cpg-check.png)
 
 Each point is a coupled gene that reproduces from the CpG data. Points on the diagonal are unchanged by removing variant-like CpGs; the dashed line is \|r\| = 0.5.
 
--   **In most coupled genes the signal is a gene-wide shift,** not one site switched off.
--   **In *A. pulchra*, genotype contributes:** variant-like CpGs are twice as common in its coupled genes.
--   **Not ruled out:** heterozygous variants and other genetic effects on methylation. Those need genotype calls from the raw WGBS reads.
-
-**Note added after reading post 97 again:**
-
--   **Clone pairs.** Two pairs of *A. pulchra* colonies are clones: ACR-145 (Manava) with ACR-265 (Mahana), and ACR-150 (Manava) with ACR-237 (Mahana). The gene-level and CpG tests here count each pair as two independent colonies, so the *A. pulchra* between-colony results are probably a little overstated. The *A. pulchra* genotype signal above may partly reflect these pairs. The elastic net ran only on *P. evermanni* and *P. tuahiniensis*, so it is unaffected.
--   **SNP calls already exist.** Post 97's mpileup-based calls from the WGBS reads are a more direct genotype check than the CpG-pattern flag used here. The next step is to rerun the *A. pulchra* tests with one colony per genotype, and to drop CpGs that overlap called SNPs.
+-   **In most coupled genes the signal is a gene-wide shift,** not one site switched off. More of their CpGs agree in direction than in matched controls, clearly so in *A. pulchra* (0.80 vs 0.65).
+-   **No species shows an excess of variant-like CpGs.** The first version found twice as many in *A. pulchra* coupled genes as in controls. That came from the clone pairs: a variant shared by two clonemates looked like two independent colonies agreeing.
+-   **Not ruled out:** heterozygous variants and other genetic effects on methylation. Post 97's SNP calls could test these directly, for example by dropping CpGs that overlap called SNPs.
 
 ## Where this leaves things
 
@@ -160,7 +172,8 @@ Each point is a coupled gene that reproduces from the CpG data. Points on the di
 -   **Regulatory layers:** none explains the site component independently.
     -   lncRNA mirrors the transcriptome.
     -   miRNA shows almost nothing.
-    -   Gene-body methylation tracks expression as stable colony differences, partly genetic in *A. pulchra*, and barely at all over time.
+    -   Gene-body methylation tracks expression as stable differences between genotypes, spread across whole genes, and not detectably over time.
+-   **Sample identity matters for *A. pulchra*.** Clonemates and one swapped timepoint produced the *A. pulchra* within-colony genes and its apparent CpG genotype signal.
 -   **The talk's narrative,** with many sparse components predicted by epigenetic features, doesn't survive proper rank selection, masking of missing samples, and colony-level validation.
 
 ## Questions for the lab
@@ -169,8 +182,9 @@ Each point is a coupled gene that reproduces from the CpG data. Points on the di
 2.  **Calcification:** are the near-zero TP1 and TP4 calcification values real, or a measurement difference?
 3.  **POR-73-TP2:** its RNA concentration is recorded as 0.0 ng/µL. Is that a real reading?
 4.  **ACR-225-TP1:** it is in the gene-methylation table but missing from the merged CpG file. Was it dropped on purpose?
+5.  **Mismatched samples:** can the field or lab records explain ACR-145-TP2/ACR-150-TP2, POR-245-TP3/TP4 and POC-57-TP4? Are the clonemate pairs (ACR-145/265, ACR-150/237) known?
 
 ## Next
 
 -   Metabolomics and lipidomics against the site component. These are independent assays, so they test whether the site difference reaches metabolism.
--   Rerun the *A. pulchra* methylation–expression tests with one colony per genotype, using post 97's SNP calls to drop SNP-overlapping CpGs.
+-   Use post 97's SNP calls to drop SNP-overlapping CpGs and test heterozygous variants directly.
