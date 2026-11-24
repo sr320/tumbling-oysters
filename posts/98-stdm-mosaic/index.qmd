@@ -137,6 +137,11 @@ Each colony is a genet, so a sequence difference could move both measurements. A
 - **In *A. pulchra*, genotype contributes:** variant-like CpGs are twice as common in its coupled genes.
 - **Not ruled out:** heterozygous variants and other genetic effects on methylation. Those need genotype calls from the raw WGBS reads.
 
+**Note added after reading post 97 again:**
+
+- **Clone pairs.** Two pairs of *A. pulchra* colonies are clones: ACR-145 (Manava) with ACR-265 (Mahana), and ACR-150 (Manava) with ACR-237 (Mahana). The gene-level and CpG tests here count each pair as two independent colonies, so the *A. pulchra* between-colony results are probably a little overstated. The *A. pulchra* genotype signal above may partly reflect these pairs. The elastic net ran only on *P. evermanni* and *P. tuahiniensis*, so it is unaffected.
+- **SNP calls already exist.** Post 97's mpileup-based calls from the WGBS reads are a more direct genotype check than the CpG-pattern flag used here. The next step is to rerun the *A. pulchra* tests with one colony per genotype, and to drop CpGs that overlap called SNPs.
+
 ## Where this leaves things
 
 - **Expression:** a real site difference in *P. evermanni* and *P. tuahiniensis*. The *A. pulchra* site and season patterns are tangled with extraction batch.
@@ -156,5 +161,5 @@ Each colony is a genet, so a sequence difference could move both measurements. A
 ## Next
 
 - Metabolomics and lipidomics against the site component. These are independent assays, so they test whether the site difference reaches metabolism.
-- Genotype calls from the WGBS BAMs, if the methylation–expression coupling becomes central.
+- Rerun the *A. pulchra* methylation–expression tests with one colony per genotype, using post 97's SNP calls to drop SNP-overlapping CpGs.
 
