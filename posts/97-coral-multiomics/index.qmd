@@ -51,9 +51,9 @@ For every feature in every layer I fit a mixed model with colony, timepoint, sit
 
 ![](images/variance-fractions-mean.png)
 
--   **Methylation is a colony trait.** In methylated genes (≥5% mean methylation), colony explains 26–40% of the variance and time only 2–6%. Unmethylated genes are mostly noise.
--   **Expression is split.** Colony and time each explain a real share; for Apul genes, colony 18% and time 15%.
--   **Physiology is mostly time.** In Apul, timepoint explains about 30% and colony 9%. Season moves physiology more than identity does.
+-   **Methylation is a colony trait.** In methylated genes (≥5% mean methylation), colony explains 30–43% of the variance and time only 2–5%. Unmethylated genes are mostly noise.
+-   **Expression is split.** Colony and time each explain a real share; for Apul genes, colony 22% and time 15%.
+-   **Physiology is mostly time.** In Apul, timepoint explains about 29% and colony 10%. Season moves physiology more than identity does.
 -   **Site explains almost nothing** on its own in any layer.
 
 I also rolled per-CpG methylation up to gene bodies, requiring at least 10 CpGs per gene and sample. Methylated genes are more highly expressed (ρ 0.39–0.46 across genes) and less variable over time, which is the familiar invertebrate gene-body pattern.
@@ -62,12 +62,12 @@ I also rolled per-CpG methylation up to gene bodies, requiring at least 10 CpGs 
 
 Genes that are methylated are also expressed. The sharper question is whether a gene's methylation *changes* with its expression when the same colony is followed through time. I removed colony means and shared site × time change, then correlated what was left gene by gene. The null came from shuffling methylation samples among timepoints within each colony (1,000 permutations).
 
-At first Apul looked exciting: 422 genes at p \< 0.01 against 140 expected. Two things made me suspicious:
+At first Apul looked exciting: 443 genes at p \< 0.01 against 133 expected. Two things made me suspicious:
 
 -   The correlations split evenly between positive and negative.
 -   Peve and Ptua showed little excess.
 
-So in **56.1** I added the top hidden factors from the residuals. Removing a single factor took Apul from 422 to 143 genes against 131 expected. Symbiont load, measured as cells per cm² and symbiont:host biomass, did not remove the excess.
+So in **56.1** I added the top hidden factors from the residuals. Removing a single factor took Apul from 443 to 130 genes against 130 expected. Symbiont load, measured as cells per cm² and symbiont:host biomass, did not remove the excess.
 
 ![](images/excess-vs-k.png)
 
@@ -78,11 +78,11 @@ So in **56.1** I added the top hidden factors from the residuals. Removing a sin
 I built WGCNA networks (signed, 10,000 most variable genes per species) and related module eigengenes to physiology. Each eigengene was split into a between-colony part and a within-colony part.
 
 -   **The Apul confound from 56 is a tissue-state axis.** Sample-wide methylation correlates with Apul modules M1 (+0.66) and M2 (−0.59). That axis tracks host biomass, symbiont biomass, and protein per cm², not surface area.
--   **Calcification relates to modules** in Apul and Peve, but not once shared seasonal change is removed. Expression and physiology mostly move together because they share the season.
+-   **Calcification relates to modules** in Apul (M1 and M2, FDR 0.017) and more weakly in Peve (M2, FDR 0.08), but not once shared seasonal change is removed. Expression and physiology mostly move together because they share the season.
 
 ![](images/module-trait-within.png)
 
--   **Thermal history.** I used logger temperature over the 7, 30, and 90 days before each sampling. Only saturating irradiance (Ik) tracked the 30–90 day mean temperature, at permutation FDR 0.08–0.09 with only 8 site × time units.
+-   **Thermal history.** I used logger temperature over the 7, 30, and 90 days before each sampling. Only saturating irradiance (Ik) tracked the 30-day mean temperature in Apul (r = 0.89, permutation p = 0.04). With only 8 site × time units it does not survive correction (FDR 0.34), so treat it as a lead.
 -   **No cross-species concordance.** Across 9,017 one-to-one orthologs, 0 of 78 tests were significant at FDR \< 0.1, so the three corals don't respond to the year with the same genes.
 
 ## 58 · Is the colony methylation signal genetic?
@@ -113,7 +113,7 @@ Branching *Acropora* spread by fragmentation, so I read these as clonemates, eve
 | POR-245-TP3, TP4 | POR-236 (TP1–TP2) | POR-245 is a different genotype at TP1–TP2; mix-up or a neighbouring colony sampled at later visits |
 | POC-57-TP4 | POC-53 | the other three POC-57 timepoints don't match POC-53 |
 
-These five samples are left out of colony genotypes and profiles in 58. Scripts 55–57 still assign them to their labelled colony, so those results need a rerun without them.
+These five samples are left out of everything: 58 writes a sample-to-genotype table, and 55–57 read it, drop the five, and use genotype in place of colony. The Apul clonemate pairs count as one unit each, so Apul has 8 genotypes rather than 10 colonies. All numbers in this post are from that corrected run.
 
 ### Does methylation follow relatedness?
 
@@ -139,10 +139,27 @@ Two practical notes for remote genotyping:
 -   **Expression and physiology** move mostly with season. Within a colony, expression doesn't follow methylation.
 -   **Environment over the year** reaches physiology mostly through shared seasonal change. Thermal history shows up only in Ik.
 
+## Rerun with corrected identities
+
+The first pass of 55–57 used colony labels as given. After 58 I reran all of it without the five mismatched samples and with clonemates merged. The conclusions held:
+
+| Result | First pass | Corrected |
+|------------------------|------------------------|------------------------|
+| Colony share, Apul gene-body methylation | 0.25 | 0.26 |
+| Colony share, Apul expression | 0.18 | 0.22 |
+| Apul within-colony coupling, genes at p \< 0.01 (expected) | 422 (140) | 443 (133) |
+| Same, after removing one hidden factor | 143 (131) | 130 (130) |
+| Apul M1/M2 vs calcification, FDR | 0.03–0.04 | 0.017 |
+| Peve M2 vs calcification, FDR | 0.044 | 0.08 |
+| Apul Ik vs 30-day temperature, permutation p | 0.004 | 0.04 |
+| Ortholog tests significant | 0 of 78 | 0 of 78 |
+
+Colony shares went up a little almost everywhere, which is what you'd expect once misassigned samples stop adding noise to colony means. The thermal Ik result got weaker.
+
 Next:
 
-1.  Rerun 55–57 without the five mismatched samples, and treat the Apul clonemates as one genotype.
+1.  Identify the hidden factor behind the Apul within-colony coupling: technical (depth, RNA quality, conversion) or biological (symbiont fraction, tissue state)?
 2.  Directly compare methylation between clonemates on different reefs.
 3.  Bring metabolites and lipids into the same colony-versus-time framework.
 
-Code: [55–57](https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts) · 58 is in [PR #141](https://github.com/urol-e5/timeseries_molecular/pull/141).
+Code: [55–58](https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts) · [PR #141](https://github.com/urol-e5/timeseries_molecular/pull/141) (58) and [PR #142](https://github.com/urol-e5/timeseries_molecular/pull/142) (corrected rerun).
