@@ -177,6 +177,276 @@
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/variance-fractions-mean.png" medium="image" type="image/png" height="72" width="144"/>
 </item>
 <item>
+  <title>Tensor Decomposition and Elastic Net on the E5 Coral Timeseries</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="what-this-is" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-is">What this is</h2>
+<p><a href="https://github.com/sr320/workflow-stdm"><code>workflow-stdm</code></a> is the clean, reproducible version of the workflow from the 2026 eScience talk:</p>
+<ol type="1">
+<li>Decompose gene expression with sparse tensor decomposition (Barnacle sparse CP).</li>
+<li>Predict the components from epigenetic layers with elastic net.</li>
+</ol>
+<p>It runs on the E5 MOSAiC data: <em>Acropora pulchra</em>, <em>Porites evermanni</em> and <em>Pocillopora tuahiniensis</em>, with 10 colonies each (5 at Manava, 5 at Mahana) sampled four times in 2020. Every input comes from the URLs listed on the <a href="https://urol-e5.github.io/MOSAiC/">MOSAiC site</a>, cached with checksums. Each step is a <code>stdm</code> command, and the full record is in the repo’s README and PLAN.</p>
+<p>This post covers phases 3–5. <a href="../../posts/97-coral-multiomics/index.html">Post 97</a> took a different route on the same data (variance partitioning, within-colony coupling, WGCNA). Where the two overlap, they agree.</p>
+</section>
+<section id="the-talks-model-does-not-hold-up" class="level2">
+<h2 class="anchored" data-anchor-id="the-talks-model-does-not-hold-up">The talk’s model does not hold up</h2>
+<p>The talk used rank 35 with l1 penalties on the ortholog × colony × timepoint tensor.</p>
+<ul>
+<li><strong>It reproduces exactly:</strong> the factors match the published ones to 1e-7. But all initialisations stopped at the iteration cap without converging, and the three missing samples were filled with zeros.</li>
+<li><strong>It isn’t stable:</strong> masked properly and run to convergence, mean similarity to the published components is 0.32.</li>
+<li><strong>Held-out-sample CV can’t choose a rank.</strong> Sample-level noise outweighs the shared colony and time signal at every rank.</li>
+<li><strong>The l1 penalty removes whole components</strong> before it makes genes sparse.</li>
+</ul>
+<p>I chose rank by split-half stability instead: refit on site-balanced colony halves and check that components reproduce. On the species-centred tensor with the top 2,000 variable genes, ranks 2–3 give the best agreement.</p>
+</section>
+<section id="a-site-component-and-an-extraction-batch-problem" class="level2">
+<h2 class="anchored" data-anchor-id="a-site-component-and-an-extraction-batch-problem">A site component, and an extraction-batch problem</h2>
+<p>The rank-3 model had three components:</p>
+<ul>
+<li>a site difference shared by all three species;</li>
+<li>an <em>A. pulchra</em> seasonal pattern;</li>
+<li>a component driven by outlier samples.</li>
+</ul>
+<p>The site component looked great until I checked RNA extraction batch. Extraction dates are embedded in some sample names in the RNA metadata. In <em>A. pulchra</em>:</p>
+<ul>
+<li>the January 2023 extraction is all Mahana;</li>
+<li>8 of 9 August 2024 samples are Manava.</li>
+</ul>
+<p>After removing batch effects per gene, while keeping site and timepoint in the regression, rank 3 became degenerate, so I used rank 2.</p>
+<ul>
+<li><strong>The site component holds in <em>P. evermanni</em> (p = 2e-5) and <em>P. tuahiniensis</em> (p = 9e-4).</strong> It is gone in <em>A. pulchra</em> (p = 0.13). The <em>A. pulchra</em> site difference was extraction batch.</li>
+<li><strong>An <em>A. pulchra</em> timepoint component survives, but it is provisional.</strong> The 2023 extraction holds only TP1 and TP4 samples, so batch and time are hard to separate, and the component reproduces poorly across colony halves (0.51).</li>
+</ul>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/images/site-component.png" class="img-fluid"></p>
+</section>
+<section id="interpretation-physiology-symbionts-calcification-genes" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation-physiology-symbionts-calcification-genes">Interpretation: physiology, symbionts, calcification genes</h2>
+<p>I scored each sample on the components and tested the scores against 11 physiology traits and the ITS2 profiles. Each test ran on all samples, within site, and within site × timepoint.</p>
+<ul>
+<li><strong>Physiology:</strong> 8 of 66 tests pass on all samples or within site, but <strong>none hold within site × timepoint</strong>. The <em>A. pulchra</em> timepoint component tracks calcification, but only because both are low at TP1 and TP4. Calcification is near zero at those timepoints in all three species, which needs checking.</li>
+<li><strong>ITS2:</strong> no associations.</li>
+<li><strong>Calcification genes:</strong> not enriched among the top loadings of either component.</li>
+<li><strong>GO slim (on the model before batch correction):</strong> the <em>A. pulchra</em> seasonal component is dominated by nucleolus, RNA binding and mRNA metabolism. That is a ribosome-biogenesis signature that also shows up with RNA-quality differences, consistent with the batch confounding.</li>
+</ul>
+</section>
+<section id="elastic-net-what-predicts-the-site-component" class="level2">
+<h2 class="anchored" data-anchor-id="elastic-net-what-predicts-the-site-component">Elastic net: what predicts the site component?</h2>
+<p><code>stdm elastic-net</code> predicts each sample’s site-component score from miRNA, lncRNA and gene-body methylation, per species.</p>
+<ul>
+<li><strong>Validation:</strong> each fold holds out one colony from each site (all 25 pairs), so no colony is in training and test at once. A random 80/20 split of samples would put the same colony on both sides and inflate accuracy.</li>
+<li><strong>Two targets:</strong> the score itself, and the score within site (what’s left after the site difference).</li>
+<li><strong>Null:</strong> 50 permutations shuffling colonies within site.</li>
+<li><strong>Stable features:</strong> stability selection against injected noise features.</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 9%">
+<col style="width: 23%">
+<col style="width: 14%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Predictors</th>
+<th>Peve</th>
+<th>Peve within site</th>
+<th>Ptua</th>
+<th>Ptua within site</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Site-mean baseline</td>
+<td>~0.4</td>
+<td>0</td>
+<td>~0.1–0.2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>lncRNA</td>
+<td>0.93</td>
+<td>0.62</td>
+<td>0.93</td>
+<td>0.75</td>
+</tr>
+<tr class="odd">
+<td>Gene-body methylation</td>
+<td>−0.10</td>
+<td>−0.11</td>
+<td>−0.07</td>
+<td>−1.19</td>
+</tr>
+<tr class="even">
+<td>miRNA</td>
+<td>−0.02</td>
+<td>0.17</td>
+<td>−0.36</td>
+<td>−0.16</td>
+</tr>
+</tbody>
+</table>
+<p><em>Values are held-out R².</em></p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/images/elastic-net-r2.png" class="img-fluid"></p>
+<p>Black ticks mark the 95th percentile of the permutation null. The <em>P. tuahiniensis</em> methylation bar is clipped at −0.4; its label shows the actual value.</p>
+<p>lncRNA predicts almost perfectly, but it isn’t telling us about regulation:</p>
+<ul>
+<li><strong>The site component is lncRNA’s own leading axis.</strong> lncRNA PC1 correlates −0.91 with the score in <em>P. evermanni</em>.</li>
+<li><strong>Technical covariates don’t explain it.</strong> Removing library size, RNA concentration, plate and batch leaves the within-site prediction (R² 0.32 and 0.75).</li>
+<li><strong>Gene-expression axes do.</strong> Removing the leading gene-expression PCs removes all of it.</li>
+<li><strong>The site component isn’t special.</strong> lncRNA predicts other gene-expression PCs just as well (R² 0.5–0.86).</li>
+</ul>
+<p>lncRNA and genes come from the same libraries and move along the same few axes. With these data I can’t tell regulation from shared response or library effects.</p>
+<p>Methylation is the only layer measured on a separate assay, and it predicts nothing.</p>
+</section>
+<section id="gene-by-gene-methylation-vs-its-own-expression" class="level2">
+<h2 class="anchored" data-anchor-id="gene-by-gene-methylation-vs-its-own-expression">Gene by gene: methylation vs its own expression</h2>
+<p>The question gets sharper at the gene level: does a gene’s own body methylation track its expression? <code>stdm cis-meth</code> tested this at two levels, using a colony-permutation null with 200 permutations:</p>
+<ul>
+<li><strong>between colonies:</strong> colonies compared at the same site and timepoint;</li>
+<li><strong>within colony:</strong> changes over time, after removing colony means.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Apul</th>
+<th>Peve</th>
+<th>Ptua</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Between colonies, genes at q &lt; 0.1</td>
+<td>151</td>
+<td>77</td>
+<td>35</td>
+</tr>
+<tr class="even">
+<td>Within colony, genes at q &lt; 0.1</td>
+<td>12</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/images/cis-methylation-null.png" class="img-fluid"></p>
+<ul>
+<li><strong>Between colonies, coupling is real in all three species.</strong> There are 3–6× more strong correlations than expected. They are mostly positive and mostly in weakly methylated genes whose methylation varies more than average.</li>
+<li><strong>Over time within a colony there is almost nothing,</strong> a few <em>A. pulchra</em> genes at most. Post 97 found the same thing and traced the <em>A. pulchra</em> excess to one sample-level axis.</li>
+<li><strong>The component genes are no more coupled than other genes.</strong></li>
+</ul>
+</section>
+<section id="is-the-between-colony-coupling-just-genotype" class="level2">
+<h2 class="anchored" data-anchor-id="is-the-between-colony-coupling-just-genotype">Is the between-colony coupling just genotype?</h2>
+<p>Each colony is a genet, so a sequence difference could move both measurements. A C/T mutation that destroys a CpG reads as unmethylated in that colony at every timepoint. <code>stdm cpg-check</code> used the CpG-level WGBS files to flag CpGs with that pattern. It then re-tested each coupled gene without those CpGs, and without its single most influential CpG.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Apul</th>
+<th>Peve</th>
+<th>Ptua</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Coupled genes reproduced from CpG data</td>
+<td>68</td>
+<td>16</td>
+<td>26</td>
+</tr>
+<tr class="even">
+<td>Still coupled without variant-like CpGs</td>
+<td>47</td>
+<td>13</td>
+<td>20</td>
+</tr>
+<tr class="odd">
+<td>Still coupled without the top CpG</td>
+<td>57</td>
+<td>14</td>
+<td>22</td>
+</tr>
+<tr class="even">
+<td>Variant-like CpGs, hits vs matched controls</td>
+<td>18.5% vs 9.3%</td>
+<td>9.9% vs 7.8%</td>
+<td>4.8% vs 4.6%</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/images/cpg-check.png" class="img-fluid"></p>
+<p>Each point is a coupled gene that reproduces from the CpG data. Points on the diagonal are unchanged by removing variant-like CpGs; the dashed line is |r| = 0.5.</p>
+<ul>
+<li><strong>In most coupled genes the signal is a gene-wide shift,</strong> not one site switched off.</li>
+<li><strong>In <em>A. pulchra</em>, genotype contributes:</strong> variant-like CpGs are twice as common in its coupled genes.</li>
+<li><strong>Not ruled out:</strong> heterozygous variants and other genetic effects on methylation. Those need genotype calls from the raw WGBS reads.</li>
+</ul>
+<p><strong>Note added after reading post 97 again:</strong></p>
+<ul>
+<li><strong>Clone pairs.</strong> Two pairs of <em>A. pulchra</em> colonies are clones: ACR-145 (Manava) with ACR-265 (Mahana), and ACR-150 (Manava) with ACR-237 (Mahana). The gene-level and CpG tests here count each pair as two independent colonies, so the <em>A. pulchra</em> between-colony results are probably a little overstated. The <em>A. pulchra</em> genotype signal above may partly reflect these pairs. The elastic net ran only on <em>P. evermanni</em> and <em>P. tuahiniensis</em>, so it is unaffected.</li>
+<li><strong>SNP calls already exist.</strong> Post 97’s mpileup-based calls from the WGBS reads are a more direct genotype check than the CpG-pattern flag used here. The next step is to rerun the <em>A. pulchra</em> tests with one colony per genotype, and to drop CpGs that overlap called SNPs.</li>
+</ul>
+</section>
+<section id="where-this-leaves-things" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-leaves-things">Where this leaves things</h2>
+<ul>
+<li><strong>Expression:</strong> a real site difference in <em>P. evermanni</em> and <em>P. tuahiniensis</em>. The <em>A. pulchra</em> site and season patterns are tangled with extraction batch.</li>
+<li><strong>Regulatory layers:</strong> none explains the site component independently.
+<ul>
+<li>lncRNA mirrors the transcriptome.</li>
+<li>miRNA shows almost nothing.</li>
+<li>Gene-body methylation tracks expression as stable colony differences, partly genetic in <em>A. pulchra</em>, and barely at all over time.</li>
+</ul></li>
+<li><strong>The talk’s narrative,</strong> with many sparse components predicted by epigenetic features, doesn’t survive proper rank selection, masking of missing samples, and colony-level validation.</li>
+</ul>
+</section>
+<section id="questions-for-the-lab" class="level2">
+<h2 class="anchored" data-anchor-id="questions-for-the-lab">Questions for the lab</h2>
+<ol type="1">
+<li><strong>Extraction batches:</strong> do the dated RNA sample names (2021–22, 2023-01, 2024-08) really mark extraction batches? Are the undated, numbered ones one earlier batch? Everything about <em>A. pulchra</em> depends on this.</li>
+<li><strong>Calcification:</strong> are the near-zero TP1 and TP4 calcification values real, or a measurement difference?</li>
+<li><strong>POR-73-TP2:</strong> its RNA concentration is recorded as 0.0 ng/µL. Is that a real reading?</li>
+<li><strong>ACR-225-TP1:</strong> it is in the gene-methylation table but missing from the merged CpG file. Was it dropped on purpose?</li>
+</ol>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next</h2>
+<ul>
+<li>Metabolomics and lipidomics against the site component. These are independent assays, so they test whether the site difference reaches metabolism.</li>
+<li>Rerun the <em>A. pulchra</em> methylation–expression tests with one colony per genotype, using post 97’s SNP calls to drop SNP-overlapping CpGs.</li>
+</ul>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Epigenetics</category>
+  <category>Transcriptomics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/</guid>
+  <pubDate>Tue, 24 Nov 2026 08:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/images/site-component.png" medium="image" type="image/png" height="86" width="144"/>
+</item>
+<item>
   <title>Lean vs Lean</title>
   <dc:creator>Steven Roberts</dc:creator>
   <link>https://sr320.github.io/tumbling-oysters/posts/96-trout-lean-baseline/</link>
@@ -4104,557 +4374,6 @@ font-style: inherit;">'</span> output/12-compare-genomes/assembly_stats.tsv</spa
   <guid>https://sr320.github.io/tumbling-oysters/posts/79-trout-synteny/</guid>
   <pubDate>Thu, 02 Jul 2026 07:00:00 GMT</pubDate>
   <media:content url="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/plots/01_synteny_summary.png" medium="image" type="image/png"/>
-</item>
-<item>
-  <title>Liftoff Annotation of Lean &amp; Siscowet Lake Trout Ecotype Assemblies</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/78-trout-lift-over/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Quick write-up of the Liftoff-only structural annotation of the two ecotype-specific PacBio HiFi assemblies (<code>lean</code>, <code>siscowet</code>). This is Track A of <code>code/20-ecotype-genomes.md</code>; the full executable workflow is in <code>code/20.1-liftoff-annotation.Rmd</code>. This post just records what was run and what came out.</p>
-<p>Both assemblies are the same species as the annotated NCBI reference <strong>GCF_016432855.1 (SaNama_1.0)</strong>, so rather than predicting genes de novo I transferred the reference annotation directly onto each assembly with <a href="https://github.com/agshumate/Liftoff">Liftoff</a> (Shumate &amp; Salzberg 2021). Lifted genes inherit the existing functional annotation in <code>analyses/18-annotation/gene_function_table.tsv</code> through the shared <code>gene-XXX</code> ID — no new functional computation needed.</p>
-<p>No repeat masking or de novo prediction (BRAKER3) here; that’s the optional Track B for later.</p>
-<p>Outputs are large and <strong>not committed to GitHub</strong>. They live on Gannet: <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/" class="uri">https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/</a></p>
-</section>
-<section id="inputs" class="level2">
-<h2 class="anchored" data-anchor-id="inputs">Inputs</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 75%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Input</th>
-<th style="text-align: left;">Path</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Lean assembly</td>
-<td style="text-align: left;"><code>data/genome/pb-hifiasm-lean-assembly.fa</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Siscowet assembly</td>
-<td style="text-align: left;"><code>data/genome/pb-hifiasm-siscowet-assembly.fa</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Reference FASTA</td>
-<td style="text-align: left;"><code>data/genome/ref-GCF_016432855.1/GCF_016432855.1_SaNama_1.0_genomic.fna</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Reference GFF</td>
-<td style="text-align: left;"><code>data/genome/ref-GCF_016432855.1/genomic.gff</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Functional table</td>
-<td style="text-align: left;"><code>analyses/18-annotation/gene_function_table.tsv</code></td>
-</tr>
-</tbody>
-</table>
-<p>Tools: NCBI <code>datasets</code>, <code>liftoff</code> + <code>minimap2</code> (liftoff_env conda env), <code>gffread</code> 0.12.7, <code>samtools</code> 1.12. Run with 40 threads.</p>
-</section>
-<section id="workflow" class="level2">
-<h2 class="anchored" data-anchor-id="workflow">Workflow</h2>
-<section id="download-the-reference-annotation" class="level3">
-<h3 class="anchored" data-anchor-id="download-the-reference-annotation">1. Download the reference annotation</h3>
-<p>The reference FASTA and GFF3 for <code>GCF_016432855.1</code> (SaNama_1.0) are the source annotation Liftoff transfers from. Run once; skipped if already present.</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_dir}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-2"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${datasets}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> download genome accession <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_accession}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-3">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--exclude-rna</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-4">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--exclude-protein</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-5">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--exclude-genomic-cds</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb1-6">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">--filename</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_accession}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">.zip"</span></span>
-<span id="cb1-7"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">unzip</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_accession}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">.zip"</span></span>
-<span id="cb1-8"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cp</span> ncbi_dataset/data/<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_accession}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>/<span class="pp" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">*</span>_genomic.fna <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_fasta}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb1-9"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">cp</span> ncbi_dataset/data/<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_accession}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span>/genomic.gff   <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_gff}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
-</section>
-<section id="run-liftoff-per-ecotype" class="level3">
-<h3 class="anchored" data-anchor-id="run-liftoff-per-ecotype">2. Run Liftoff per ecotype</h3>
-<p>For each ecotype the reference annotation is transferred onto the assembly. Key flags:</p>
-<ul>
-<li><code>-g</code> source GFF, <code>-p</code> threads</li>
-<li><code>-polish</code> re-aligns to fix gene/exon boundaries (writes <code>&lt;out&gt;_polished</code>)</li>
-<li><code>-copies -sc 0.95</code> reports additional gene copies (expansions) at ≥95% identity</li>
-<li><code>-u</code> records reference genes that could <strong>not</strong> be lifted (ecotype-specific loss / PAV candidates)</li>
-</ul>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb2-2"><span class="ex" style="color: null;
-background-color: null;
-font-style: inherit;">samtools</span> faidx <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${lean_fasta}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb2-3"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${liftoff}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-4">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${lean_fasta}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-5">  <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_fasta}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-6">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-g</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${ref_gff}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-7">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-o</span> lean.liftoff.gff3 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-8">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-u</span> lean.unmapped_features.txt <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-9">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-dir</span> lean_intermediate <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-10">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-m</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${minimap2}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-11">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-p</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${threads}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-12">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-polish</span> <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-13">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-copies</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-sc</span> 0.95 <span class="dt" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">\</span></span>
-<span id="cb2-14">  <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> lean.liftoff.log <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;&amp;</span><span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span></span></code></pre></div>
-<p>The siscowet run is identical with <code>siscowet.*</code> substituted in.</p>
-</section>
-<section id="derive-genes-only-bed-protein-fasta" class="level3">
-<h3 class="anchored" data-anchor-id="derive-genes-only-bed-protein-fasta">3. Derive genes-only BED + protein FASTA</h3>
-<p><code>-polish</code> writes <code>*.gff3_polished</code>; prefer that when present. A genes-only BED is built to match the repo’s <code>data/...genes.bed</code> convention (<code>chrom start end gene-ID 0 strand</code>), and proteins are extracted with <code>gffread</code>.</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">cd</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${output_dir}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span>
-<span id="cb3-2"><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">LEAN_GFF</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>lean.liftoff.gff3_polished</span>
-<span id="cb3-3"><span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">[</span> <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">-s</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$LEAN_GFF</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="bu" style="color: null;
-background-color: null;
-font-style: inherit;">]</span> <span class="kw" style="color: #003B4F;
-background-color: null;
-font-weight: bold;
-font-style: inherit;">||</span> <span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">LEAN_GFF</span><span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">=</span>lean.liftoff.gff3</span>
-<span id="cb3-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">awk</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">'BEGIN{OFS="\t"} $3=="gene"{</span></span>
-<span id="cb3-5"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  id=""; n=split($9,a,";");</span></span>
-<span id="cb3-6"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  for(i=1;i&lt;=n;i++){ if(a[i]~/^ID=/){ sub(/^ID=/,"",a[i]); id=a[i] } }</span></span>
-<span id="cb3-7"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">  print $1, $4-1, $5, id, 0, $7</span></span>
-<span id="cb3-8"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">}'</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$LEAN_GFF</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="op" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">&gt;</span> lean.liftoff.genes.bed</span>
-<span id="cb3-9"><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${gffread}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-y</span> lean.liftoff.proteins.faa <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">-g</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">${lean_fasta}</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span><span class="va" style="color: #111111;
-background-color: null;
-font-style: inherit;">$LEAN_GFF</span><span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"</span></span></code></pre></div>
-</section>
-<section id="inherit-functional-annotation" class="level3">
-<h3 class="anchored" data-anchor-id="inherit-functional-annotation">4. Inherit functional annotation</h3>
-<p>Lifted gene IDs are the reference <code>gene-XXX</code> IDs, which are the join key in the existing <code>gene_function_table.tsv</code>. A left join carries symbol / product / GO onto each ecotype’s lifted genes with no new computation.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">func <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> readr<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read_tsv</span>(func_table, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">show_col_types =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
-<span id="cb4-2">bed_cols <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"chrom"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"start"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"end"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gene_id"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"score"</span>, <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"strand"</span>)</span>
-<span id="cb4-3">genes <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> readr<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">read_tsv</span>(bed_path, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">col_names =</span> bed_cols, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">show_col_types =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
-<span id="cb4-4">out <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> genes <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb4-5">  dplyr<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">select</span>(gene_id, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">eco_chrom =</span> chrom, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">eco_start =</span> start,</span>
-<span id="cb4-6">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">eco_end =</span> end, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">eco_strand =</span> strand) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">%&gt;%</span></span>
-<span id="cb4-7">  dplyr<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">left_join</span>(func, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">by =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gene_id"</span>)</span>
-<span id="cb4-8">readr<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">write_tsv</span>(out, out_path)</span></code></pre></div>
-</div>
-</section>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>Liftoff transferred the SaNama_1.0 annotation onto both ecotype assemblies with very low loss (~1–1.6% of reference features unmapped).</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Metric</th>
-<th style="text-align: left;">Lean</th>
-<th style="text-align: left;">Siscowet</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Lifted genes</td>
-<td style="text-align: left;">79,535</td>
-<td style="text-align: left;">82,691</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">mRNAs</td>
-<td style="text-align: left;">67,707</td>
-<td style="text-align: left;">71,789</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Proteins extracted</td>
-<td style="text-align: left;">67,888</td>
-<td style="text-align: left;">72,050</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Unmapped reference features</td>
-<td style="text-align: left;">1,294</td>
-<td style="text-align: left;">1,073</td>
-</tr>
-</tbody>
-</table>
-<p>The unmapped feature lists are the immediate ecotype-specific loss / PAV candidates and feed directly into the differential-PAV checks.</p>
-</section>
-<section id="deliverables" class="level2">
-<h2 class="anchored" data-anchor-id="deliverables">Deliverables</h2>
-<p>Per ecotype, written to <code>output/20.1-liftoff-annotation/</code>. Replace the placeholder URLs below with the final Gannet links.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th style="text-align: left;">File</th>
-<th style="text-align: left;">Description</th>
-<th style="text-align: left;">Link</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><code>{eco}.liftoff.gff3_polished</code></td>
-<td style="text-align: left;">Lifted gene models on the ecotype assembly</td>
-<td style="text-align: left;"><a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/lean.liftoff.gff3_polished">lean</a> · <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/siscowet.liftoff.gff3_polished">siscowet</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{eco}.liftoff.genes.bed</code></td>
-<td style="text-align: left;">Genes-only BED</td>
-<td style="text-align: left;"><a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/lean.liftoff.genes.bed">lean</a> · <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/siscowet.liftoff.genes.bed">siscowet</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>{eco}.liftoff.proteins.faa</code></td>
-<td style="text-align: left;">Predicted proteins</td>
-<td style="text-align: left;"><a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/lean.liftoff.proteins.faa">lean</a> · <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/siscowet.liftoff.proteins.faa">siscowet</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{eco}.liftoff.gene_function_table.tsv</code></td>
-<td style="text-align: left;">Lifted genes joined to symbol/product/GO</td>
-<td style="text-align: left;"><a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/lean.liftoff.gene_function_table.tsv">lean</a> · <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/siscowet.liftoff.gene_function_table.tsv">siscowet</a></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;"><code>{eco}.unmapped_features.txt</code></td>
-<td style="text-align: left;">Reference genes not lifted (PAV / loss candidates)</td>
-<td style="text-align: left;"><a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/lean.unmapped_features.txt">lean</a> · <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/siscowet.unmapped_features.txt">siscowet</a></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;"><code>{eco}.liftoff.log</code></td>
-<td style="text-align: left;">Full Liftoff run log</td>
-<td style="text-align: left;"><a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/lean.liftoff.log">lean</a> · <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/20.1-liftoff-annotation/siscowet.liftoff.log">siscowet</a></td>
-</tr>
-</tbody>
-</table>
-<p>Each output also has a sibling <code>.md5</code> checksum file in the same directory.</p>
-</section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
-<p>These per-ecotype gene models feed the ecotype-coordinate version of <code>code/13.3-hifiasm-differential-methylation-plan.md</code> and let the PAV results in <code>code/15-diff-pav.py</code> be checked against per-ecotype gene models. Optional Track B (repeat masking + BRAKER3 de novo prediction) remains for later.</p>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ul>
-<li>Shumate, A. &amp; Salzberg, S.L. (2021). Liftoff: accurate mapping of gene annotations. <em>Bioinformatics</em> 37(12):1639–1643.</li>
-</ul>
-
-
-<!-- -->
-
-</section>
-
- ]]></description>
-  <category>Genomics</category>
-  <category>Computing</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/78-trout-lift-over/</guid>
-  <pubDate>Thu, 18 Jun 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/78-trout-lift-over/images/clipboard-584962284.png" medium="image" type="image/png" height="124" width="144"/>
 </item>
 </channel>
 </rss>
