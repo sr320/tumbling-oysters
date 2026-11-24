@@ -47,7 +47,7 @@ Post 97's SNP calls from the WGBS reads showed that some colony labels are wrong
 -   **Five samples carry another colony's genotype**, likely mix-ups: ACR-145-TP2 and ACR-150-TP2 (swapped), POR-245-TP3 and TP4, and POC-57-TP4.
 -   **Two *A. pulchra* colony pairs are clonemates:** ACR-145 with ACR-265, and ACR-150 with ACR-237.
 
-I added this genotype table to `workflow-stdm` and reran everything with the five samples dropped and one colony per genotype (106 of 117 samples). The gene-by-gene and CpG results below are from that rerun, with the first version's numbers in brackets. The batch-correction section and its figure use the original labels. The corrected model is the same, as noted there. Two *A. pulchra* results from the first version did not survive: the 12 genes coupled within colony, and the genotype signal in the CpG check.
+I added this genotype table to `workflow-stdm` and reran everything with the five samples dropped and one colony per genotype (106 of 117 samples). The elastic net, gene-by-gene and CpG results below are from that rerun, with the first version's numbers in brackets. The batch-correction section and its figure, and the lncRNA follow-up checks, use the original labels. The corrected model is the same, as noted there. Three results from the first version did not survive: the 12 *A. pulchra* genes coupled within colony, the *A. pulchra* genotype signal in the CpG check, and a weak *P. evermanni* miRNA signal in the elastic net.
 :::
 
 ## The talk's model does not hold up
@@ -102,16 +102,18 @@ I scored each sample on the components and tested the scores against 11 physiolo
 
 | Predictors            | Peve  | Peve within site | Ptua      | Ptua within site |
 |-----------------------|-------|------------------|-----------|------------------|
-| Site-mean baseline    | \~0.4 | 0                | \~0.1–0.2 | 0                |
-| lncRNA                | 0.93  | 0.62             | 0.93      | 0.75             |
-| Gene-body methylation | −0.10 | −0.11            | −0.07     | −1.19            |
-| miRNA                 | −0.02 | 0.17             | −0.36     | −0.16            |
+| Site-mean baseline    | \~0.4 | 0                | \~0.1     | 0                |
+| lncRNA                | 0.91 (0.93)   | 0.62 (0.62)  | 0.93 (0.93)   | 0.78 (0.75)  |
+| Gene-body methylation | −0.15 (−0.10) | −0.03 (−0.10) | −0.22 (−0.07) | −0.04 (−1.19) |
+| miRNA                 | 0.01 (−0.02)  | −0.02 (0.17)  | −0.29 (−0.36) | −0.02 (−0.16) |
 
-*Values are held-out R², with colony labels as given. The rerun with corrected identities is in progress and will replace them.*
+*Values are held-out R² from the rerun with corrected identities, with the first version in brackets.*
+
+The corrected identities change nothing for lncRNA or methylation. The one marginal result from the first version, a weak *P. evermanni* miRNA signal within site (R² 0.17, p = 0.04), is gone (p = 0.24).
 
 ![](images/elastic-net-r2.png)
 
-Black ticks mark the 95th percentile of the permutation null. The *P. tuahiniensis* methylation bar is clipped at −0.4; its label shows the actual value.
+Black ticks mark the 95th percentile of the permutation null.
 
 lncRNA predicts almost perfectly, but it isn't telling us about regulation:
 
