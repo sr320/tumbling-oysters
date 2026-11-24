@@ -43,7 +43,7 @@ Each species has ten tagged colonies, five at Manava and five at Mahana, sampled
 -   metabolites and lipids
 -   13 physiology traits
 
-The overarching question: **how do environment and epigenetics inform gene expression and physiology?** I worked through it in four steps, all in [`M-multi-species/scripts`](https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts) of `timeseries_molecular` (scripts 55–58).
+The overarching question: **how do environment and epigenetics inform gene expression and physiology?** I worked through it in five steps, all in [`M-multi-species/scripts`](https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts) of `timeseries_molecular` (scripts 55–59).
 
 ## 55 · What drives variation in each layer?
 
@@ -133,10 +133,24 @@ Two practical notes for remote genotyping:
 -   `bcftools query` output read with `fread` turns `13,0` allele depths into the decimal 13.0, so read those columns as text.
 -   Long remote mpileup runs on gannet drop connections. 100-gene chunks with retries and resume fixed it.
 
+## 59 · What is the hidden factor?
+
+In 56.1 one hidden factor per layer was enough to remove the Apul coupling. In 59 I asked what that factor is. I took each layer's factor scores and compared them with sequencing QC, nucleic-acid yield, physiology, the ITS2 symbiont community, and the 57 modules. Every candidate was residualised on genotype and site × time first, so a match means it varies with the factor within a genotype at one sampling event.
+
+-   **It's on the methylation side.** Removing only the methylation factor took the excess from 443 genes (133 expected) to 133 (128 expected). Removing only the expression factor left about 107 extra genes.
+-   **The methylation factor is global methylation level.** It is essentially each sample's mean gene-body methylation (r = −0.998). Adding that one number as a covariate removes the excess (139 vs 123, p = 0.24). The shift is spread over genes in every module, not concentrated in a gene set.
+-   **It tracks WGBS library metrics.** Deeper sequencing (r = 0.65), lower alignment (r = −0.70) and more non-CpG methylation (r = 0.66) go with lower CpG methylation. Each of these removes about half of the excess as a covariate. That pattern is the reverse of plain incomplete conversion, which would raise methylation in every context.
+-   **On the expression side, the factor is module M1** (r = 0.99). It also tracks the share of RNA reads aligning to the coral genome (r = 0.58), a rough measure of host versus symbiont and other material.
+-   **Physiology mostly doesn't explain it.** Only host biomass relates to the expression factor (r = 0.54), and as a covariate it removes about a third of the excess. Symbiont density, the ITS2 community and calcification don't explain it.
+
+![](images/factor-candidates.png)
+
+So the coupling first seen in 56 is a sample-wide shift in methylation level that moves with library and composition metrics in both layers. It is not gene-by-gene regulation. My best guess is sample makeup or quality: how much host tissue versus other material went into each extraction. Thermal history can't be tested here, because it is measured per site × time and that term is already removed.
+
 ## Where this leaves things
 
 -   **Methylation** is a stable colony (or genotype) property. It is not explained by relatedness among distinct genotypes, and it barely moves with season.
--   **Expression and physiology** move mostly with season. Within a colony, expression doesn't follow methylation.
+-   **Expression and physiology** move mostly with season. Within a colony, expression doesn't follow methylation gene by gene. The one shared signal is a sample-wide methylation shift tied to library and tissue-composition metrics (59).
 -   **Environment over the year** reaches physiology mostly through shared seasonal change. Thermal history shows up only in Ik.
 
 ## Rerun with corrected identities
@@ -158,8 +172,8 @@ Colony shares went up a little almost everywhere, which is what you'd expect onc
 
 Next:
 
-1.  Identify the hidden factor behind the Apul within-colony coupling: technical (depth, RNA quality, conversion) or biological (symbiont fraction, tissue state)?
-2.  Directly compare methylation between clonemates on different reefs.
-3.  Bring metabolites and lipids into the same colony-versus-time framework.
+1.  Directly compare methylation between clonemates on different reefs.
+2.  Bring metabolites and lipids into the same colony-versus-time framework.
+3.  Check whether the global methylation shift seen in Apul also sits behind the smaller Ptua excess, and correct for it in later methylation analyses.
 
-Code: [55–58](https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts) · [PR #141](https://github.com/urol-e5/timeseries_molecular/pull/141) (58) and [PR #142](https://github.com/urol-e5/timeseries_molecular/pull/142) (corrected rerun).
+Code: [55–59](https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts) · [PR #141](https://github.com/urol-e5/timeseries_molecular/pull/141) (58), [PR #142](https://github.com/urol-e5/timeseries_molecular/pull/142) (corrected rerun) and [PR #143](https://github.com/urol-e5/timeseries_molecular/pull/143) (59).
