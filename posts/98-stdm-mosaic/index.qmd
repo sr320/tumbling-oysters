@@ -4,7 +4,7 @@ description: "Rank selection, a batch check, and what regulatory layers can and 
 categories: ["Epigenetics", "Transcriptomics", "Computing"] #choose "Aquaculture", "Computing", "Epigenetics", "Genomics", "Lab Updates", "Reading Notes", "Transcriptomics"
 #citation:
 date: 11-24-2026
-image: "" # finding a good image
+image: "images/site-component.png"
 author:
   - name: Steven Roberts
     url:
@@ -68,6 +68,8 @@ After removing batch effects per gene, while keeping site and timepoint in the r
 - **The site component holds in *P. evermanni* (p = 2e-5) and *P. tuahiniensis* (p = 9e-4).** It is gone in *A. pulchra* (p = 0.13). The *A. pulchra* site difference was extraction batch.
 - **An *A. pulchra* timepoint component survives, but it is provisional.** The 2023 extraction holds only TP1 and TP4 samples, so batch and time are hard to separate, and the component reproduces poorly across colony halves (0.51).
 
+![](images/site-component.png)
+
 ## Interpretation: physiology, symbionts, calcification genes
 
 I scored each sample on the components and tested the scores against 11 physiology traits and the ITS2 profiles. Each test ran on all samples, within site, and within site × timepoint.
@@ -95,6 +97,10 @@ I scored each sample on the components and tested the scores against 11 physiolo
 
 *Values are held-out R².*
 
+![](images/elastic-net-r2.png)
+
+Black ticks mark the 95th percentile of the permutation null. The *P. tuahiniensis* methylation bar is clipped at −0.4; its label shows the actual value.
+
 lncRNA predicts almost perfectly, but it isn't telling us about regulation:
 
 - **The site component is lncRNA's own leading axis.** lncRNA PC1 correlates −0.91 with the score in *P. evermanni*.
@@ -118,6 +124,8 @@ The question gets sharper at the gene level: does a gene's own body methylation 
 | Between colonies, genes at q < 0.1 | 151 | 77 | 35 |
 | Within colony, genes at q < 0.1 | 12 | 1 | 0 |
 
+![](images/cis-methylation-null.png)
+
 - **Between colonies, coupling is real in all three species.** There are 3–6× more strong correlations than expected. They are mostly positive and mostly in weakly methylated genes whose methylation varies more than average.
 - **Over time within a colony there is almost nothing,** a few *A. pulchra* genes at most. Post 97 found the same thing and traced the *A. pulchra* excess to one sample-level axis.
 - **The component genes are no more coupled than other genes.**
@@ -132,6 +140,10 @@ Each colony is a genet, so a sequence difference could move both measurements. A
 | Still coupled without variant-like CpGs | 47 | 13 | 20 |
 | Still coupled without the top CpG | 57 | 14 | 22 |
 | Variant-like CpGs, hits vs matched controls | 18.5% vs 9.3% | 9.9% vs 7.8% | 4.8% vs 4.6% |
+
+![](images/cpg-check.png)
+
+Each point is a coupled gene that reproduces from the CpG data. Points on the diagonal are unchanged by removing variant-like CpGs; the dashed line is |r| = 0.5.
 
 - **In most coupled genes the signal is a gene-wide shift,** not one site switched off.
 - **In *A. pulchra*, genotype contributes:** variant-like CpGs are twice as common in its coupled genes.
