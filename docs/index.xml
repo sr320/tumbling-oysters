@@ -10,7 +10,172 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Fri, 16 Oct 2026 07:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 24 Nov 2026 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>What Shapes Coral Methylation, Expression, and Physiology Over a Year</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="the-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-question">The question</h2>
+<p>The E5 timeseries project sampled three corals four times over a year on Moorea:</p>
+<ul>
+<li><em>Acropora pulchra</em> (Apul)</li>
+<li><em>Porites evermanni</em> (Peve)</li>
+<li><em>Pocillopora tuahiniensis</em> (Ptua)</li>
+</ul>
+<p>Each species has ten tagged colonies, five at Manava and five at Mahana, sampled at TP1–TP4. For the same samples we have:</p>
+<ul>
+<li>gene and lncRNA expression, and miRNA</li>
+<li>whole-genome bisulfite methylation</li>
+<li>metabolites and lipids</li>
+<li>13 physiology traits</li>
+</ul>
+<p>The overarching question: <strong>how do environment and epigenetics inform gene expression and physiology?</strong> I worked through it in four steps, all in <a href="https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts"><code>M-multi-species/scripts</code></a> of <code>timeseries_molecular</code> (scripts 55–58).</p>
+</section>
+<section id="what-drives-variation-in-each-layer" class="level2">
+<h2 class="anchored" data-anchor-id="what-drives-variation-in-each-layer">55 · What drives variation in each layer?</h2>
+<p>For every feature in every layer I fit a mixed model with colony, timepoint, site, and site × timepoint as random effects. I then took the share of variance each one explains.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/variance-fractions-mean.png" class="img-fluid"></p>
+<ul>
+<li><strong>Methylation is a colony trait.</strong> In methylated genes (≥5% mean methylation), colony explains 26–40% of the variance and time only 2–6%. Unmethylated genes are mostly noise.</li>
+<li><strong>Expression is split.</strong> Colony and time each explain a real share; for Apul genes, colony 18% and time 15%.</li>
+<li><strong>Physiology is mostly time.</strong> In Apul, timepoint explains about 30% and colony 9%. Season moves physiology more than identity does.</li>
+<li><strong>Site explains almost nothing</strong> on its own in any layer.</li>
+</ul>
+<p>I also rolled per-CpG methylation up to gene bodies, requiring at least 10 CpGs per gene and sample. Methylated genes are more highly expressed (ρ 0.39–0.46 across genes) and less variable over time, which is the familiar invertebrate gene-body pattern.</p>
+</section>
+<section id="does-methylation-track-expression-within-a-colony" class="level2">
+<h2 class="anchored" data-anchor-id="does-methylation-track-expression-within-a-colony">56 · Does methylation track expression within a colony?</h2>
+<p>Genes that are methylated are also expressed. The sharper question is whether a gene’s methylation <em>changes</em> with its expression when the same colony is followed through time. I removed colony means and shared site × time change, then correlated what was left gene by gene. The null came from shuffling methylation samples among timepoints within each colony (1,000 permutations).</p>
+<p>At first Apul looked exciting: 422 genes at p &lt; 0.01 against 140 expected. Two things made me suspicious:</p>
+<ul>
+<li>The correlations split evenly between positive and negative.</li>
+<li>Peve and Ptua showed little excess.</li>
+</ul>
+<p>So in <strong>56.1</strong> I added the top hidden factors from the residuals. Removing a single factor took Apul from 422 to 143 genes against 131 expected. Symbiont load, measured as cells per cm² and symbiont:host biomass, did not remove the excess.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/excess-vs-k.png" class="img-fluid"></p>
+<p><strong>There is no robust gene-specific coupling of methylation and expression within colonies.</strong> What looked like coupling was one sample-level axis shared by both layers.</p>
+</section>
+<section id="expression-to-physiology-and-thermal-history" class="level2">
+<h2 class="anchored" data-anchor-id="expression-to-physiology-and-thermal-history">57 · Expression to physiology, and thermal history</h2>
+<p>I built WGCNA networks (signed, 10,000 most variable genes per species) and related module eigengenes to physiology. Each eigengene was split into a between-colony part and a within-colony part.</p>
+<ul>
+<li><strong>The Apul confound from 56 is a tissue-state axis.</strong> Sample-wide methylation correlates with Apul modules M1 (+0.66) and M2 (−0.59). That axis tracks host biomass, symbiont biomass, and protein per cm², not surface area.</li>
+<li><strong>Calcification relates to modules</strong> in Apul and Peve, but not once shared seasonal change is removed. Expression and physiology mostly move together because they share the season.</li>
+</ul>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/module-trait-within.png" class="img-fluid"></p>
+<ul>
+<li><strong>Thermal history.</strong> I used logger temperature over the 7, 30, and 90 days before each sampling. Only saturating irradiance (Ik) tracked the 30–90 day mean temperature, at permutation FDR 0.08–0.09 with only 8 site × time units.</li>
+<li><strong>No cross-species concordance.</strong> Across 9,017 one-to-one orthologs, 0 of 78 tests were significant at FDR &lt; 0.1, so the three corals don’t respond to the year with the same genes.</li>
+</ul>
+</section>
+<section id="is-the-colony-methylation-signal-genetic" class="level2">
+<h2 class="anchored" data-anchor-id="is-the-colony-methylation-signal-genetic">58 · Is the colony methylation signal genetic?</h2>
+<p>If colony explains a third of methylation variance, is that just DNA sequence? Related colonies should have similar methylation, and C→T SNPs at CpGs read as unmethylated in bisulfite data.</p>
+<p>I called SNPs from the RNA-seq reads in 3,000 moderately expressed genes per species. The reads were pulled straight from the BAMs on gannet with htslib range requests, so no full BAM was downloaded. That gave 421,504 SNPs for Apul, 256,923 for Peve, and 344,642 for Ptua. Every sample got its own genotype, so I could first check that a colony’s four timepoints really are one animal.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/sample-identity.png" class="img-fluid"></p>
+<section id="the-flags" class="level3">
+<h3 class="anchored" data-anchor-id="the-flags">The flags</h3>
+<p>Samples from the same colony usually differ by an allele-sharing distance of 0.01–0.03. Different colonies differ by 0.15–0.25. I grouped samples into genotypes with a cutoff of 0.1, and two kinds of mismatch came up.</p>
+<p><strong>Two colonies, one genotype: clones (Apul).</strong> Ten Apul colonies collapse into eight genotypes:</p>
+<ul>
+<li>ACR-145 (Manava) and ACR-265 (Mahana) are one genotype.</li>
+<li>ACR-150 (Manava) and ACR-237 (Mahana) are another.</li>
+</ul>
+<p>Branching <em>Acropora</em> spread by fragmentation, so I read these as clonemates, even across sites. They aren’t errors, but they aren’t independent colonies either.</p>
+<p><strong>One colony label, two genotypes: likely sample mix-ups.</strong> Cloning can’t explain these. A clone gives two colonies the same genotype; it can’t give one tagged colony a different genotype at a different timepoint.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sample</th>
+<th>What it matches</th>
+<th>Likely explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ACR-145-TP2</td>
+<td>ACR-150/237 genotype</td>
+<td>TP2 swap between ACR-145 and ACR-150</td>
+</tr>
+<tr class="even">
+<td>ACR-150-TP2</td>
+<td>ACR-145/265 genotype</td>
+<td>same swap</td>
+</tr>
+<tr class="odd">
+<td>POR-245-TP3, TP4</td>
+<td>POR-236 (TP1–TP2)</td>
+<td>POR-245 is a different genotype at TP1–TP2; mix-up or a neighbouring colony sampled at later visits</td>
+</tr>
+<tr class="even">
+<td>POC-57-TP4</td>
+<td>POC-53</td>
+<td>the other three POC-57 timepoints don’t match POC-53</td>
+</tr>
+</tbody>
+</table>
+<p>These five samples are left out of colony genotypes and profiles in 58. Scripts 55–57 still assign them to their labelled colony, so those results need a rerun without them.</p>
+</section>
+<section id="does-methylation-follow-relatedness" class="level3">
+<h3 class="anchored" data-anchor-id="does-methylation-follow-relatedness">Does methylation follow relatedness?</h3>
+<p>Colony profiles are colony means over time. I used Mantel tests with 9,999 permutations, and partial tests that control for site or genetics.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/distance-vs-genetic.png" class="img-fluid"></p>
+<ul>
+<li><strong>Methylation vs genetics:</strong> strong in Apul (r = 0.44, p &lt; 0.001), but driven by the clone pairs. With one colony per genotype it drops to r = 0.28, p = 0.10. Peve and Ptua show nothing (r = 0.07 and −0.01). Among distinct genotypes, methylation does not track relatedness.</li>
+<li><strong>The clones are interesting in their own right.</strong> Clonemates on different reefs have similar methylation, which suggests genotype shapes methylation even when the environment differs. A direct test of this is still to do.</li>
+<li><strong>Expression vs genetics:</strong> the clearest genetic signal, pooled r = 0.39, p = 0.0001, strongest in Ptua (r = 0.36).</li>
+<li><strong>Physiology vs methylation:</strong> Peve only (r = 0.37, p = 0.01). It holds after controlling for genetics.</li>
+<li><strong>Physiology vs genetics:</strong> nothing in any species.</li>
+<li><strong>C→T SNPs at CpGs:</strong> only 2–5 modelled CpGs per species overlap a SNP, too few to estimate any inflation.</li>
+</ul>
+<p>Two practical notes for remote genotyping:</p>
+<ul>
+<li><code>bcftools query</code> output read with <code>fread</code> turns <code>13,0</code> allele depths into the decimal 13.0, so read those columns as text.</li>
+<li>Long remote mpileup runs on gannet drop connections. 100-gene chunks with retries and resume fixed it.</li>
+</ul>
+</section>
+</section>
+<section id="where-this-leaves-things" class="level2">
+<h2 class="anchored" data-anchor-id="where-this-leaves-things">Where this leaves things</h2>
+<ul>
+<li><strong>Methylation</strong> is a stable colony (or genotype) property. It is not explained by relatedness among distinct genotypes, and it barely moves with season.</li>
+<li><strong>Expression and physiology</strong> move mostly with season. Within a colony, expression doesn’t follow methylation.</li>
+<li><strong>Environment over the year</strong> reaches physiology mostly through shared seasonal change. Thermal history shows up only in Ik.</li>
+</ul>
+<p>Next:</p>
+<ol type="1">
+<li>Rerun 55–57 without the five mismatched samples, and treat the Apul clonemates as one genotype.</li>
+<li>Directly compare methylation between clonemates on different reefs.</li>
+<li>Bring metabolites and lipids into the same colony-versus-time framework.</li>
+</ol>
+<p>Code: <a href="https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts">55–57</a> · 58 is in <a href="https://github.com/urol-e5/timeseries_molecular/pull/141">PR #141</a>.</p>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Epigenetics</category>
+  <category>Transcriptomics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/</guid>
+  <pubDate>Tue, 24 Nov 2026 08:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/variance-fractions-mean.png" medium="image" type="image/png" height="72" width="144"/>
+</item>
 <item>
   <title>Lean vs Lean</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -4490,45 +4655,6 @@ font-style: inherit;">write_tsv</span>(out, out_path)</span></code></pre></div>
   <guid>https://sr320.github.io/tumbling-oysters/posts/78-trout-lift-over/</guid>
   <pubDate>Thu, 18 Jun 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/78-trout-lift-over/images/clipboard-584962284.png" medium="image" type="image/png" height="124" width="144"/>
-</item>
-<item>
-  <title>Oyster Priming Week 3</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/78-priming-w2/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<!-- <a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%204%20Substantial%20AI%20Contribution-red" alt="AI Use Level 4: Substantial AI contribution"/></a> -->
-<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%200%20No%20AI%20use-lightgrey" alt="AI Use Level 0: No AI use"></a></p>
-<p>Did a 30 minute bath for small oysters in FTR.</p>
-<p>1pm</p>
-<p>Started Warm = 24.5 C Control = 12.5 C</p>
-<p>End Warm = 24.8 Control = 13.0 C</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://sr320.github.io/tumbling-oysters/posts/78-priming-w2/images/clipboard-3886987232.png" class="img-fluid figure-img"></p>
-<figcaption><img src="https://sr320.github.io/tumbling-oysters/posts/78-priming-w2/images/clipboard-2198262507.png" class="img-fluid figure-img"></figcaption>
-</figure>
-</div>
-<p>Updated <a href="https://github.com/RobertsLab/project-gigas-conditioning/blob/main/data/westcott-repeat-priming/treatment_tracking.csv" class="uri">https://github.com/RobertsLab/project-gigas-conditioning/blob/main/data/westcott-repeat-priming/treatment_tracking.csv</a><br>
-<br>
-<br>
-<br>
-# Point Whitney</p>
-<p>Went on June 19 - went up to 36 for heated. Controls just at room temperature inside hatchery space. Going forward I suggest we go 36C about every ~4-5 days on heated and leave controls in silo.</p>
-
-
-<!-- -->
-
-
- ]]></description>
-  <category>Aquaculture</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/78-priming-w2/</guid>
-  <pubDate>Wed, 17 Jun 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://sr320.github.io/tumbling-oysters/posts/78-priming-w2/images/clipboard-3886987232.png" medium="image" type="image/png" height="135" width="144"/>
 </item>
 </channel>
 </rss>

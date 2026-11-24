@@ -12,7 +12,7 @@ author:
     affiliation: Professor, UW - School of Aquatic and Fishery Sciences
     affiliation-url: https://robertslab.info
   #url:  # self-defined
-draft: true # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
 format:
   html:
     toc: true            # ← enable TOC
@@ -32,16 +32,16 @@ format:
 
 The E5 timeseries project sampled three corals four times over a year on Moorea:
 
-- *Acropora pulchra* (Apul)
-- *Porites evermanni* (Peve)
-- *Pocillopora tuahiniensis* (Ptua)
+-   *Acropora pulchra* (Apul)
+-   *Porites evermanni* (Peve)
+-   *Pocillopora tuahiniensis* (Ptua)
 
 Each species has ten tagged colonies, five at Manava and five at Mahana, sampled at TP1–TP4. For the same samples we have:
 
-- gene and lncRNA expression, and miRNA
-- whole-genome bisulfite methylation
-- metabolites and lipids
-- 13 physiology traits
+-   gene and lncRNA expression, and miRNA
+-   whole-genome bisulfite methylation
+-   metabolites and lipids
+-   13 physiology traits
 
 The overarching question: **how do environment and epigenetics inform gene expression and physiology?** I worked through it in four steps, all in [`M-multi-species/scripts`](https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts) of `timeseries_molecular` (scripts 55–58).
 
@@ -51,10 +51,10 @@ For every feature in every layer I fit a mixed model with colony, timepoint, sit
 
 ![](images/variance-fractions-mean.png)
 
-- **Methylation is a colony trait.** In methylated genes (≥5% mean methylation), colony explains 26–40% of the variance and time only 2–6%. Unmethylated genes are mostly noise.
-- **Expression is split.** Colony and time each explain a real share; for Apul genes, colony 18% and time 15%.
-- **Physiology is mostly time.** In Apul, timepoint explains about 30% and colony 9%. Season moves physiology more than identity does.
-- **Site explains almost nothing** on its own in any layer.
+-   **Methylation is a colony trait.** In methylated genes (≥5% mean methylation), colony explains 26–40% of the variance and time only 2–6%. Unmethylated genes are mostly noise.
+-   **Expression is split.** Colony and time each explain a real share; for Apul genes, colony 18% and time 15%.
+-   **Physiology is mostly time.** In Apul, timepoint explains about 30% and colony 9%. Season moves physiology more than identity does.
+-   **Site explains almost nothing** on its own in any layer.
 
 I also rolled per-CpG methylation up to gene bodies, requiring at least 10 CpGs per gene and sample. Methylated genes are more highly expressed (ρ 0.39–0.46 across genes) and less variable over time, which is the familiar invertebrate gene-body pattern.
 
@@ -62,10 +62,10 @@ I also rolled per-CpG methylation up to gene bodies, requiring at least 10 CpGs 
 
 Genes that are methylated are also expressed. The sharper question is whether a gene's methylation *changes* with its expression when the same colony is followed through time. I removed colony means and shared site × time change, then correlated what was left gene by gene. The null came from shuffling methylation samples among timepoints within each colony (1,000 permutations).
 
-At first Apul looked exciting: 422 genes at p < 0.01 against 140 expected. Two things made me suspicious:
+At first Apul looked exciting: 422 genes at p \< 0.01 against 140 expected. Two things made me suspicious:
 
-- The correlations split evenly between positive and negative.
-- Peve and Ptua showed little excess.
+-   The correlations split evenly between positive and negative.
+-   Peve and Ptua showed little excess.
 
 So in **56.1** I added the top hidden factors from the residuals. Removing a single factor took Apul from 422 to 143 genes against 131 expected. Symbiont load, measured as cells per cm² and symbiont:host biomass, did not remove the excess.
 
@@ -77,13 +77,13 @@ So in **56.1** I added the top hidden factors from the residuals. Removing a sin
 
 I built WGCNA networks (signed, 10,000 most variable genes per species) and related module eigengenes to physiology. Each eigengene was split into a between-colony part and a within-colony part.
 
-- **The Apul confound from 56 is a tissue-state axis.** Sample-wide methylation correlates with Apul modules M1 (+0.66) and M2 (−0.59). That axis tracks host biomass, symbiont biomass, and protein per cm², not surface area.
-- **Calcification relates to modules** in Apul and Peve, but not once shared seasonal change is removed. Expression and physiology mostly move together because they share the season.
+-   **The Apul confound from 56 is a tissue-state axis.** Sample-wide methylation correlates with Apul modules M1 (+0.66) and M2 (−0.59). That axis tracks host biomass, symbiont biomass, and protein per cm², not surface area.
+-   **Calcification relates to modules** in Apul and Peve, but not once shared seasonal change is removed. Expression and physiology mostly move together because they share the season.
 
 ![](images/module-trait-within.png)
 
-- **Thermal history.** I used logger temperature over the 7, 30, and 90 days before each sampling. Only saturating irradiance (Ik) tracked the 30–90 day mean temperature, at permutation FDR 0.08–0.09 with only 8 site × time units.
-- **No cross-species concordance.** Across 9,017 one-to-one orthologs, 0 of 78 tests were significant at FDR < 0.1, so the three corals don't respond to the year with the same genes.
+-   **Thermal history.** I used logger temperature over the 7, 30, and 90 days before each sampling. Only saturating irradiance (Ik) tracked the 30–90 day mean temperature, at permutation FDR 0.08–0.09 with only 8 site × time units.
+-   **No cross-species concordance.** Across 9,017 one-to-one orthologs, 0 of 78 tests were significant at FDR \< 0.1, so the three corals don't respond to the year with the same genes.
 
 ## 58 · Is the colony methylation signal genetic?
 
@@ -99,15 +99,15 @@ Samples from the same colony usually differ by an allele-sharing distance of 0.0
 
 **Two colonies, one genotype: clones (Apul).** Ten Apul colonies collapse into eight genotypes:
 
-- ACR-145 (Manava) and ACR-265 (Mahana) are one genotype.
-- ACR-150 (Manava) and ACR-237 (Mahana) are another.
+-   ACR-145 (Manava) and ACR-265 (Mahana) are one genotype.
+-   ACR-150 (Manava) and ACR-237 (Mahana) are another.
 
 Branching *Acropora* spread by fragmentation, so I read these as clonemates, even across sites. They aren't errors, but they aren't independent colonies either.
 
 **One colony label, two genotypes: likely sample mix-ups.** Cloning can't explain these. A clone gives two colonies the same genotype; it can't give one tagged colony a different genotype at a different timepoint.
 
 | Sample | What it matches | Likely explanation |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | ACR-145-TP2 | ACR-150/237 genotype | TP2 swap between ACR-145 and ACR-150 |
 | ACR-150-TP2 | ACR-145/265 genotype | same swap |
 | POR-245-TP3, TP4 | POR-236 (TP1–TP2) | POR-245 is a different genotype at TP1–TP2; mix-up or a neighbouring colony sampled at later visits |
@@ -121,30 +121,28 @@ Colony profiles are colony means over time. I used Mantel tests with 9,999 permu
 
 ![](images/distance-vs-genetic.png)
 
-- **Methylation vs genetics:** strong in Apul (r = 0.44, p < 0.001), but driven by the clone pairs. With one colony per genotype it drops to r = 0.28, p = 0.10. Peve and Ptua show nothing (r = 0.07 and −0.01). Among distinct genotypes, methylation does not track relatedness.
-- **The clones are interesting in their own right.** Clonemates on different reefs have similar methylation, which suggests genotype shapes methylation even when the environment differs. A direct test of this is still to do.
-- **Expression vs genetics:** the clearest genetic signal, pooled r = 0.39, p = 0.0001, strongest in Ptua (r = 0.36).
-- **Physiology vs methylation:** Peve only (r = 0.37, p = 0.01). It holds after controlling for genetics.
-- **Physiology vs genetics:** nothing in any species.
-- **C→T SNPs at CpGs:** only 2–5 modelled CpGs per species overlap a SNP, too few to estimate any inflation.
+-   **Methylation vs genetics:** strong in Apul (r = 0.44, p \< 0.001), but driven by the clone pairs. With one colony per genotype it drops to r = 0.28, p = 0.10. Peve and Ptua show nothing (r = 0.07 and −0.01). Among distinct genotypes, methylation does not track relatedness.
+-   **The clones are interesting in their own right.** Clonemates on different reefs have similar methylation, which suggests genotype shapes methylation even when the environment differs. A direct test of this is still to do.
+-   **Expression vs genetics:** the clearest genetic signal, pooled r = 0.39, p = 0.0001, strongest in Ptua (r = 0.36).
+-   **Physiology vs methylation:** Peve only (r = 0.37, p = 0.01). It holds after controlling for genetics.
+-   **Physiology vs genetics:** nothing in any species.
+-   **C→T SNPs at CpGs:** only 2–5 modelled CpGs per species overlap a SNP, too few to estimate any inflation.
 
 Two practical notes for remote genotyping:
 
-- `bcftools query` output read with `fread` turns `13,0` allele depths into the decimal 13.0, so read those columns as text.
-- Long remote mpileup runs on gannet drop connections. 100-gene chunks with retries and resume fixed it.
+-   `bcftools query` output read with `fread` turns `13,0` allele depths into the decimal 13.0, so read those columns as text.
+-   Long remote mpileup runs on gannet drop connections. 100-gene chunks with retries and resume fixed it.
 
 ## Where this leaves things
 
-- **Methylation** is a stable colony (or genotype) property. It is not explained by relatedness among distinct genotypes, and it barely moves with season.
-- **Expression and physiology** move mostly with season. Within a colony, expression doesn't follow methylation.
-- **Environment over the year** reaches physiology mostly through shared seasonal change. Thermal history shows up only in Ik.
+-   **Methylation** is a stable colony (or genotype) property. It is not explained by relatedness among distinct genotypes, and it barely moves with season.
+-   **Expression and physiology** move mostly with season. Within a colony, expression doesn't follow methylation.
+-   **Environment over the year** reaches physiology mostly through shared seasonal change. Thermal history shows up only in Ik.
 
 Next:
 
-1. Rerun 55–57 without the five mismatched samples, and treat the Apul clonemates as one genotype.
-2. Directly compare methylation between clonemates on different reefs.
-3. Bring metabolites and lipids into the same colony-versus-time framework.
+1.  Rerun 55–57 without the five mismatched samples, and treat the Apul clonemates as one genotype.
+2.  Directly compare methylation between clonemates on different reefs.
+3.  Bring metabolites and lipids into the same colony-versus-time framework.
 
 Code: [55–57](https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts) · 58 is in [PR #141](https://github.com/urol-e5/timeseries_molecular/pull/141).
-
-
