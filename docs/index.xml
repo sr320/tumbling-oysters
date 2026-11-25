@@ -10,7 +10,283 @@
 <atom:link href="https://sr320.github.io/tumbling-oysters/index.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.6.40</generator>
-<lastBuildDate>Tue, 24 Nov 2026 08:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 25 Nov 2026 08:00:00 GMT</lastBuildDate>
+<item>
+  <title>Co-folding the Sea Louse Secretome Against the Salmon Skin Interface</title>
+  <dc:creator>Steven Roberts</dc:creator>
+  <link>https://sr320.github.io/tumbling-oysters/posts/99-caligus-salmon-ppi/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
+<section id="what-this-is" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-is">What this is</h2>
+<p>An end-to-end attempt to predict which <em>Caligus rogercresseyi</em> secreted proteins contact which <em>Salmo salar</em> proteins at the skin, mucus and blood interface. Four evidence channels scored candidate pairs, a shortlist went to Boltz-2 co-folding on Hyak, and a set of controls decided what the interface metrics mean. The interesting part is not the hit list. It is that three of the four channels turned out to have no pair-level power, and the controls are what showed it.</p>
+</section>
+<section id="building-the-pieces" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-pieces">Building the pieces</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Louse working proteome</td>
+<td>39,721 proteins, BUSCO C:91.0%</td>
+</tr>
+<tr class="even">
+<td>Predicted secretome</td>
+<td>4,566 proteins (tier A 1,759 / B 2,446 / C 361)</td>
+</tr>
+<tr class="odd">
+<td>Salmon interface set</td>
+<td>2,799 genes / 1,682 ohnolog groups; 735-gene priority subset</td>
+</tr>
+<tr class="even">
+<td>Ranked pairs</td>
+<td>55,735 scored, all channels kept separate</td>
+</tr>
+<tr class="odd">
+<td>Top-50 audit</td>
+<td>33/50 unflagged</td>
+</tr>
+</tbody>
+</table>
+<p>The only annotated <em>C. rogercresseyi</em> assembly (GCA_013387185.1) has a protein set that fails QC outright: BUSCO C:15.7%, median protein 94 aa, 8,995 “partial” deflines. The cause was measured rather than assumed. <strong>78.9% of miniprot models on this assembly cross at least one frameshift</strong> (mean 3.54 per model), which is an assembly-level indel defect. Translating the deposited transcriptome (TSA GAZX01, from ENA since the NCBI <code>wgs_aux</code> path 404s) and reconciling ORFs against the genome models at 95% identity, preferring 5’-complete non-frameshifted representatives, brought completeness to C:91.0%.</p>
+<p>That matters more than it sounds. Signal-peptide prediction reads the N-terminus, so the unrepaired set would have made roughly 38% of secretome calls artefacts.</p>
+</section>
+<section id="two-channels-rank-kinds-of-pairing-not-pairs" class="level2">
+<h2 class="anchored" data-anchor-id="two-channels-rank-kinds-of-pairing-not-pairs">Two channels rank kinds of pairing, not pairs</h2>
+<p>Each sequence channel was tested against 50,000 uniform-random louse–salmon pairs drawn from the same two sets.</p>
+<ul>
+<li><strong>Domain/mechanism</strong> (109 curated rules, 3did DDI reference): enrichment <strong>1.01</strong> at combined prior ≥ 0.3 and <strong>0.85</strong> at ≥ 0.9. No discrimination at all. That is structural, not a defect in the rules: the score is a function of each protein’s class, so every louse serpin × host serine protease pair scores alike whether or not it is real.</li>
+<li><strong>LLM mechanism judgement</strong> (58,735 pairs scored blind, 3,000 background pairs hidden among them): looks strong, with background mean 0.051 vs selected 0.130 and AUROC 0.897. But <strong>within a matched (louse class, MEROPS, salmon module) cell the background-minus-selected difference is −0.0017</strong>. It is a better class discriminator than the rule table and nothing more.</li>
+<li><strong>Interolog transfer</strong> is genuinely pair-specific but sparse. 536 pairs reach ≥ 0.5 where no random pair exceeded 0.496, but <strong>313 of those are conserved-core transfers</strong> (ribosomal protein SA, RUVBL1, CDC42) that project intracellular interactions onto a secretome. <strong>223 remain.</strong></li>
+</ul>
+<p>Under 50 draws of 25% weight perturbation the ordering is robust (Spearman 0.984) but top-100 membership is not (mean overlap 76.6, range 37–97). Read the ordering, not the membership of any cut.</p>
+</section>
+<section id="the-structural-run" class="level2">
+<h2 class="anchored" data-anchor-id="the-structural-run">The structural run</h2>
+<p>1,059 Boltz-2 runs over 653 pairs completed on klone with zero failures and zero OOM fallbacks, so no run is excluded for settings drift. 34 positive controls (verified host–parasite PDB complexes, re-folded) went against 80 random and 34 shuffled negatives on identical settings.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>metric</th>
+<th>AUROC vs random</th>
+<th>vs shuffled</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pDockQ2</td>
+<td>0.990</td>
+<td>0.887</td>
+</tr>
+<tr class="even">
+<td>ipSAE (reimpl.)</td>
+<td>0.981</td>
+<td>0.883</td>
+</tr>
+<tr class="odd">
+<td>interface pLDDT</td>
+<td>0.971</td>
+<td><strong>0.971</strong></td>
+</tr>
+<tr class="even">
+<td>cross-group ipTM</td>
+<td>0.972</td>
+<td>0.725</td>
+</tr>
+<tr class="odd">
+<td>pDockQ</td>
+<td>0.804</td>
+<td>0.835</td>
+</tr>
+<tr class="even">
+<td>buried surface area</td>
+<td><strong>0.334</strong></td>
+<td>0.458</td>
+</tr>
+</tbody>
+</table>
+<p>Two things worth keeping:</p>
+<ul>
+<li><strong>pDockQ is unusable here.</strong> Its median is 0.742, its mathematical ceiling, in <em>every</em> class including random negatives. No threshold exists.</li>
+<li><strong>Buried surface area is anti-predictive</strong> (0.334). Random pairs of large proteins bury more area nonspecifically than real complexes of modest size. It stays as a descriptive column only.</li>
+</ul>
+<p>The two negative sets are not equivalent. Shuffled controls keep their native host chains and score well above random on the PAE metrics (median cross-group ipTM 0.605 vs 0.271). Interface pLDDT is the only metric that separates them cleanly, because a shuffled chain docks but docks <em>unconfidently</em>. So the call uses one metric from each family:</p>
+<blockquote class="blockquote">
+<p><strong>STRONG</strong> = ipSAE ≥ 0.7007 <strong>and</strong> interface pLDDT ≥ 78.39 <strong>MODERATE</strong> = ≥3 of the four thresholded metrics pass</p>
+</blockquote>
+<p>STRONG recovers <strong>79.4% of positive controls</strong> at <strong>1.2%</strong> on random and <strong>2.9%</strong> on shuffled negatives.</p>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/99-caligus-salmon-ppi/images/structural-tiers.png" class="img-fluid"></p>
+<p>The shuffled negatives are the instructive bar: they dock readily (16 of 34 reach MODERATE) and are held out almost entirely by the interface pLDDT term.</p>
+</section>
+<section id="the-pre-registered-channel-test" class="level2">
+<h2 class="anchored" data-anchor-id="the-pre-registered-channel-test">The pre-registered channel test</h2>
+<p>Before the run I said the LLM channel’s unvalidated within-class residual would be tested against structure, and its weight zeroed if it failed. Within the 448 shortlist pairs matched to the v1 ranking (20 structurally supported):</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>channel</th>
+<th>AUROC</th>
+<th>95% CI</th>
+<th>verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>pair-specific interolog</td>
+<td>0.721</td>
+<td>0.647–0.789</td>
+<td><strong>above chance</strong></td>
+</tr>
+<tr class="even">
+<td>combined domain/mechanism prior</td>
+<td>0.433</td>
+<td>0.333–0.538</td>
+<td>chance</td>
+</tr>
+<tr class="odd">
+<td><strong>LLM mechanism score</strong></td>
+<td><strong>0.324</strong></td>
+<td><strong>0.230–0.438</strong></td>
+<td><strong>below chance</strong></td>
+</tr>
+<tr class="even">
+<td>v1 weighted score</td>
+<td>0.579</td>
+<td>0.417–0.736</td>
+<td>chance</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/99-caligus-salmon-ppi/images/channel-validation.png" class="img-fluid"></p>
+<p><strong>The LLM channel failed in the informative direction.</strong> It is significantly <em>anti</em>-correlated with structural support, rating the eight STRONG pairs at mean 0.09 and calling most of them “none_plausible”. Its weight is now zero. The domain/mechanism prior is indistinguishable from chance, consistent with its 1.01 enrichment earlier. Only interolog transfer, the one channel that was ever pair-specific, predicts structure.</p>
+</section>
+<section id="what-the-structure-found" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-structure-found">What the structure found</h2>
+<p>8 shortlist pairs reach STRONG and 14 more MODERATE, of 505 folded.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>pair</th>
+<th>ipSAE</th>
+<th>pDockQ2</th>
+<th>if-pLDDT</th>
+<th>mechanism</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Crog2_030737 × trypsin-II (<em>trp-ii</em>)</td>
+<td>0.89</td>
+<td>0.80</td>
+<td>92.7</td>
+<td>louse protease inhibitor vs host trypsin</td>
+</tr>
+<tr class="even">
+<td>Crog2_002777 × <strong>TIMP2</strong></td>
+<td>0.87</td>
+<td>0.18</td>
+<td>78.5</td>
+<td>louse metallopeptidase vs host metalloprotease inhibitor</td>
+</tr>
+<tr class="odd">
+<td>Crog2_022439 × coagulation protease</td>
+<td>0.75</td>
+<td>0.53</td>
+<td>86.1</td>
+<td>louse Kunitz vs coagulation protease</td>
+</tr>
+<tr class="even">
+<td>Crog2_033262 × <strong>factor X</strong> (<em>f10</em>)</td>
+<td>0.69</td>
+<td>0.35</td>
+<td>82.8</td>
+<td>louse Kunitz vs FXa, the ixolaris precedent</td>
+</tr>
+<tr class="odd">
+<td>Crog2_021270 × lysozyme (<em>lyz</em>)</td>
+<td>0.52</td>
+<td>0.13</td>
+<td>79.4</td>
+<td>louse chitin-binding vs host lysozyme</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/99-caligus-salmon-ppi/images/ipsae-vs-plddt.png" class="img-fluid"></p>
+<p>Each point is one folded shortlist pair; dashed lines are the two thresholds. The STRONG set is the upper-right quadrant, and the MODERATE points to the left of the pLDDT line are the ones that dock confidently by PAE but not by local confidence.</p>
+<p>The trypsin-II pair is the strongest result in the project: rank 1 on sequence evidence and rank 3 on independent structural evidence, from two channels the data show are otherwise poorly correlated. The TIMP2 and Kunitz–coagulation pairs match the inhibitor-fold compatibility table built from the tick literature, which was never fitted to anything here.</p>
+<p>Two promiscuity flags, not findings: louse protein Crog2_029252 accounts for 4 of the 22 hits, all against mucin/ECM proteins, and salmon <em>llph</em> appears in 4 MODERATE hits with 4 different louse proteins at high ipTM but low interface pLDDT (55–66). Both look like sticky-surface artefacts, and the STRONG pLDDT term already excludes the <em>llph</em> set.</p>
+</section>
+<section id="the-honest-negative-result" class="level2">
+<h2 class="anchored" data-anchor-id="the-honest-negative-result">The honest negative result</h2>
+<p><strong>The shortlist is not significantly enriched for structural support over random pairs</strong>: 1.6% STRONG (8/505) vs 1.2% (1/80), Fisher OR 1.27, p = 0.65. Including MODERATE, 4.4% vs 1.2%, OR 3.60, p = 0.15. Suggestive, not significant.</p>
+<p>So the sequence channels did not enrich the shortlist for structurally plausible pairs. The pipeline worked as a <em>screen</em>, reducing 12.78 M pairs to 505 affordable ones among which structure found 22 worth attention, but it did not demonstrate predictive power at pair level. A differently chosen 505 might have done as well.</p>
+</section>
+<section id="other-things-established-along-the-way" class="level2">
+<h2 class="anchored" data-anchor-id="other-things-established-along-the-way">Other things established along the way</h2>
+<ul>
+<li><strong>The LGP gap is an annotation artefact, not an absence.</strong> Labial gland proteins LGP1–4 have the strongest functional precedent of any sea-louse effector, yet only 3 <em>C. rogercresseyi</em> homologues are detectable. The family is domainless and fast-evolving with no paralogue even within the <em>L. salmonis</em> genome, which is exactly what ortholog transfer under-recovers across genera. Meanwhile 187 of our secretome proteins do hit <em>L. salmonis</em> labial-gland queries. Score LGP mechanisms as “plausible but undetected”, never “absent”.</li>
+<li><strong>Resistant-species targets:</strong> hepcidin/HAMP1, complement C3, CLEC4M, CHIA and the coho chitin-sensing receptor set differ between resistant (coho, pink) and susceptible (Atlantic) salmonids. Hepcidin/HAMP is absent from our 2,799-gene interface set, so it could not be paired. That is a gap in the host set, not evidence against it.</li>
+</ul>
+</section>
+<section id="limits-that-travel-with-every-number-here" class="level2">
+<h2 class="anchored" data-anchor-id="limits-that-travel-with-every-number-here">Limits that travel with every number here</h2>
+<ol type="1">
+<li><strong>No <em>C. rogercresseyi</em> E/S proteome exists.</strong> Every secretion call is prediction plus ortholog transfer from the single <em>L. salmonis</em> E/S proteome (Hamilton 2018, 187 proteins).</li>
+<li><strong>Tier B (2,446 of 4,566) is a candidate pool, not a call set.</strong> Its second signal-peptide opinion is a von Heijne weight rule, not a trained predictor.</li>
+<li><strong>Host compartment coverage measures sampling depth.</strong> Skin (2,494 genes) rests on one snRNA-seq library; only mucus (561) and blood (223) have proteomic evidence, and no <em>S. salar</em> plasma proteomics exists in PRIDE at all.</li>
+<li><strong>No <em>C. rogercresseyi</em> expression data was obtainable</strong>, so all infestation responses are <em>L. salmonis</em> proxies.</li>
+<li><strong>41.6% of the secretome has no Pfam domain,</strong> so the DDI channel is blind to it.</li>
+<li><strong>Catalytic “degraded” flags mostly reflect 5’-partial ORFs</strong>, not genuinely inactive homologues.</li>
+</ol>
+</section>
+<section id="next" class="level2">
+<h2 class="anchored" data-anchor-id="next">Next</h2>
+<ol type="1">
+<li><strong>Test the trypsin-II, TIMP2 and Kunitz–coagulation pairs first.</strong> Convergent evidence, named mechanisms, obvious assays: inhibition kinetics against the specific host enzyme.</li>
+<li><strong>Treat the remaining STRONG hits as structure-only leads.</strong> Several have <code>functional_class=unknown</code> on the louse side, so identify those proteins before investing.</li>
+<li><strong>Spend any future GPU budget differently.</strong> These results argue for co-folding a broader, less pre-filtered set, since the filters added little. Folding all tier-A secretome × priority-interface pairs would beat a cleverly chosen subset.</li>
+<li><strong>Pull-down of louse secretion products against salmon skin-mucus and plasma by LC-MS/MS.</strong> This would supply the <em>C. rogercresseyi</em> E/S proteome the field lacks, which remains the single most valuable missing dataset for this question.</li>
+</ol>
+
+
+<!-- -->
+
+</section>
+
+ ]]></description>
+  <category>Genomics</category>
+  <category>Computing</category>
+  <guid>https://sr320.github.io/tumbling-oysters/posts/99-caligus-salmon-ppi/</guid>
+  <pubDate>Wed, 25 Nov 2026 08:00:00 GMT</pubDate>
+  <media:content url="https://sr320.github.io/tumbling-oysters/posts/99-caligus-salmon-ppi/images/structural-tiers.png" medium="image" type="image/png" height="68" width="144"/>
+</item>
 <item>
   <title>What Shapes Coral Methylation, Expression, and Physiology Over a Year</title>
   <dc:creator>Steven Roberts</dc:creator>
@@ -4346,133 +4622,6 @@ font-style: inherit;">'</span> output/12-compare-genomes/assembly_stats.tsv</spa
   <guid>https://sr320.github.io/tumbling-oysters/posts/80-sormi-post-mort/</guid>
   <pubDate>Sat, 04 Jul 2026 07:00:00 GMT</pubDate>
   <media:content url="https://sr320.github.io/tumbling-oysters/posts/80-sormi-post-mort/images/clipboard-3088985903.png" medium="image" type="image/png" height="65" width="144"/>
-</item>
-<item>
-  <title>Gene-Anchored Synteny Between Lean and Siscowet Lake Trout</title>
-  <dc:creator>Steven Roberts</dc:creator>
-  <link>https://sr320.github.io/tumbling-oysters/posts/79-trout-synteny/</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"></a></p>
-<p>Two lake trout ecotypes, two hifiasm assemblies, and one question: do the <strong>lean</strong> and <strong>siscowet</strong> genomes agree on gene order, and how does each line up against the reference? This is the gene-anchored synteny pass (Track B of the ecotype genome-comparison plan). The trick that makes it cheap is that orthology is already solved — Liftoff gave every lifted gene the reference <code>gene-XXX</code> ID, so a gene shared between two genomes carries the <strong>same base ID</strong>. That means MCScanX anchor pairs can be synthesized straight from ID identity, with no OrthoFinder / DIAMOND step.</p>
-<p>Full outputs (too large for GitHub) live on <a href="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/">gannet</a>.</p>
-<section id="step-1-purge-haplotigs" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-purge-haplotigs">Step 1 — Purge haplotigs</h2>
-<p>The raw hifiasm assemblies were size-inflated relative to the ~2.5 Gb expected genome, a classic sign of retained haplotigs that would show up as spurious duplications in any synteny map. So each assembly went through the standard <code>purge_dups</code> HiFi pipeline (map reads back for depth → cutoffs → self-align → purge → extract primary set) before anything else.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Ecotype</th>
-<th>Raw</th>
-<th>Purged</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>lean</td>
-<td>3.73 Gb / 33,035 contigs</td>
-<td><strong>2.58 Gb / 12,700 contigs</strong></td>
-</tr>
-<tr class="even">
-<td>siscowet</td>
-<td>4.0 Gb / 24,184 contigs</td>
-<td><strong>2.84 Gb / 8,159 contigs</strong></td>
-</tr>
-</tbody>
-</table>
-<p>That knocked lean down to essentially the expected genome size and roughly halved the contig count for both.</p>
-</section>
-<section id="step-2-re-lift-the-annotation" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-re-lift-the-annotation">Step 2 — Re-lift the annotation</h2>
-<p>Gene coordinates have to match the sequences being compared, so I re-ran Liftoff (same flags: <code>-polish -copies -sc 0.95 -u</code>) against the purged FASTAs and pulled a genes-only BED per ecotype.</p>
-<ul>
-<li><strong>lean</strong>: 55,437 lifted genes (4,636 unmapped)</li>
-<li><strong>siscowet</strong>: 59,968 lifted genes (3,069 unmapped)</li>
-</ul>
-</section>
-<section id="step-34-synthetic-anchors-mcscanx" class="level2">
-<h2 class="anchored" data-anchor-id="step-34-synthetic-anchors-mcscanx">Step 3–4 — Synthetic anchors + MCScanX</h2>
-<p>Instead of running an aligner to find homologs, I built the MCScanX <code>.blast</code> files by joining the per-genome gene maps on their <strong>base ID</strong> (stripping the <code>_N</code> copy suffix Liftoff adds, so gene-family expansions still form multiple pairs). Genome codes (<code>rf</code>, <code>ln</code>, <code>si</code>) prefix every chromosome tag and gene UID so MCScanX can tell intra- from inter-genome blocks, and the <code>.</code> in accessions like <code>NC_052307.1</code> gets stripped since MCScanX chokes on it.</p>
-<p>Three comparisons, all anchored to the same 42-chromosome reference:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Comparison</th>
-<th>Collinear blocks</th>
-<th>Anchor genes</th>
-<th>Inverted blocks</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>reference vs lean</td>
-<td>1,897</td>
-<td>29,695</td>
-<td>889</td>
-</tr>
-<tr class="even">
-<td>reference vs siscowet</td>
-<td>1,966</td>
-<td>34,231</td>
-<td>973</td>
-</tr>
-<tr class="odd">
-<td>lean vs siscowet</td>
-<td>4,113</td>
-<td>77,628</td>
-<td>1,130</td>
-</tr>
-</tbody>
-</table>
-<p>The cross-ecotype comparison (lean vs siscowet) is the richest — nearly 78k anchor genes across 4,113 blocks — which is what you’d hope for between two assemblies of the same species. The reference comparisons are more fragmented, as expected given the reference is chromosome-scale while the ecotype assemblies are still contigs.</p>
-</section>
-<section id="step-56-summarize-and-plot" class="level2">
-<h2 class="anchored" data-anchor-id="step-56-summarize-and-plot">Step 5–6 — Summarize and plot</h2>
-<p>Each <code>.collinearity</code> was parsed into a tidy block table (<code>synteny_blocks.tsv</code>) and a contig-to-reference-chromosome assignment (<code>contig_to_chromosome.tsv</code>), then three figure types were rendered to <code>plots/</code>:</p>
-<ol type="1">
-<li><strong>Comparison summary bars</strong> — blocks, anchor genes, % inverted per comparison.</li>
-<li><strong>Contig-to-chromosome heatmaps</strong> — which ecotype contig maps to which reference chromosome.</li>
-<li><strong>Gene-level dotplots</strong> — anchor positions per chromosome pair, colored by orientation.</li>
-</ol>
-<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/plots/01_synteny_summary.png" class="img-fluid"></p>
-<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/plots/02_contig_to_chrom_heatmap.png" class="img-fluid"></p>
-<p><img src="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/plots/03_dotplot_lean_vs_siscowet.png" class="img-fluid"></p>
-</section>
-<section id="deliverables" class="level2">
-<h2 class="anchored" data-anchor-id="deliverables">Deliverables</h2>
-<p>Written to <code>output/21.1-gene-anchored-synteny/</code>:</p>
-<ul>
-<li><code>{eco}.purged.fa</code> — haplotig-purged primary assemblies</li>
-<li><code>{eco}.purged.liftoff.genes.bed</code> — re-lifted genes on the purged assemblies</li>
-<li><code>{ref_lean,ref_sisco,lean_sisco}.collinearity</code> — MCScanX collinear blocks</li>
-<li><code>synteny_blocks.tsv</code> — tidy block table (chromosomes, anchor counts, orientation)</li>
-<li><code>contig_to_chromosome.tsv</code> — ecotype contig → reference chromosome assignment</li>
-</ul>
-<p>These feed the structural-variant and overlay steps next — whole-genome alignment (Track A), plus PAV and DMR overlay.</p>
-</section>
-<section id="in-plain-english" class="level2">
-<h2 class="anchored" data-anchor-id="in-plain-english">In plain English</h2>
-<p>A few terms from the table above:</p>
-<ul>
-<li><p><strong>Anchor genes</strong> — genes we could confidently match up as “the same gene” in both genomes being compared. These are the shared landmarks. The more anchors, the more the two genomes have in common. Between the two ecotypes we found ~78,000 of them.</p></li>
-<li><p><strong>Collinear blocks</strong> — runs of anchor genes that appear in the <em>same order</em> in both genomes. A block is a stretch where the layout is conserved, like a passage of text that reads identically in both books. Thousands of blocks means large parts of the genome are laid out the same way in both fish.</p></li>
-<li><p><strong>Inverted blocks</strong> — blocks where the genes are the same and still in order, but the whole segment is <em>flipped</em> end-for-end (like a paragraph printed backwards). This happens when a chunk of DNA gets reversed during evolution. Tracking these tells us where the two genomes have been rearranged rather than simply copied.</p></li>
-</ul>
-<p>One housekeeping step worth explaining: the raw genome drafts were nearly <em>twice</em> as big as they should be. That’s because the sequencing captured both copies of each chromosome (one from each parent) and sometimes listed them as if they were separate pieces — inflating the total. <strong>Purging</strong> removes those redundant copies so we’re comparing one clean version of each genome, not a genome accidentally doubled up.</p>
-
-
-</section>
-
- ]]></description>
-  <category>Computing</category>
-  <category>Genomics</category>
-  <guid>https://sr320.github.io/tumbling-oysters/posts/79-trout-synteny/</guid>
-  <pubDate>Thu, 02 Jul 2026 07:00:00 GMT</pubDate>
-  <media:content url="https://gannet.fish.washington.edu/v1_web/owlshell/bu-github/project-lake-trout/output/21.1-gene-anchored-synteny/plots/01_synteny_summary.png" medium="image" type="image/png"/>
 </item>
 </channel>
 </rss>

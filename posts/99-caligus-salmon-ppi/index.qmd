@@ -1,0 +1,147 @@
+---
+title: "Co-folding the Sea Louse Secretome Against the Salmon Skin Interface"
+description: "A structural channel that worked, three sequence channels that did not, and an honest negative result"
+categories: ["Genomics", "Computing"] #choose "Aquaculture", "Computing", "Epigenetics", "Genomics", "Lab Updates", "Reading Notes", "Transcriptomics"
+#citation:
+date: 11-25-2026
+image: "images/structural-tiers.png"
+author:
+  - name: Steven Roberts
+    url:
+    orcid: 0000-0001-8302-1138
+    affiliation: Professor, UW - School of Aquatic and Fishery Sciences
+    affiliation-url: https://robertslab.info
+  #url:  # self-defined
+draft: false # setting this to `true` will prevent your post from appearing on your listing page until you're ready!
+format:
+  html:
+    toc: true            # ← enable TOC
+    toc-location: left   # or: right, body
+    toc-depth: 3         # how many heading levels to show
+    code-fold: FALSE
+    code-tools: true
+    code-copy: true
+    highlight-style: github
+    code-overflow: wrap
+#runtime: shiny
+---
+
+<a href="https://robertslab.github.io/resources/Agentic-Coding-Tools/#five-level-rubric"><img src="https://img.shields.io/badge/AI%20Use-Level%202%20Drafting%2FCoding-yellowgreen" alt="AI Use Level 2: AI-assisted drafting or coding"/></a>
+
+## What this is
+
+An end-to-end attempt to predict which *Caligus rogercresseyi* secreted proteins contact which *Salmo salar* proteins at the skin, mucus and blood interface. Four evidence channels scored candidate pairs, a shortlist went to Boltz-2 co-folding on Hyak, and a set of controls decided what the interface metrics mean. The interesting part is not the hit list. It is that three of the four channels turned out to have no pair-level power, and the controls are what showed it.
+
+## Building the pieces
+
+| Component | Result |
+|------------------------------------|------------------------------------|
+| Louse working proteome | 39,721 proteins, BUSCO C:91.0% |
+| Predicted secretome | 4,566 proteins (tier A 1,759 / B 2,446 / C 361) |
+| Salmon interface set | 2,799 genes / 1,682 ohnolog groups; 735-gene priority subset |
+| Ranked pairs | 55,735 scored, all channels kept separate |
+| Top-50 audit | 33/50 unflagged |
+
+The only annotated *C. rogercresseyi* assembly (GCA_013387185.1) has a protein set that fails QC outright: BUSCO C:15.7%, median protein 94 aa, 8,995 "partial" deflines. The cause was measured rather than assumed. **78.9% of miniprot models on this assembly cross at least one frameshift** (mean 3.54 per model), which is an assembly-level indel defect. Translating the deposited transcriptome (TSA GAZX01, from ENA since the NCBI `wgs_aux` path 404s) and reconciling ORFs against the genome models at 95% identity, preferring 5'-complete non-frameshifted representatives, brought completeness to C:91.0%.
+
+That matters more than it sounds. Signal-peptide prediction reads the N-terminus, so the unrepaired set would have made roughly 38% of secretome calls artefacts.
+
+## Two channels rank kinds of pairing, not pairs
+
+Each sequence channel was tested against 50,000 uniform-random louse–salmon pairs drawn from the same two sets.
+
+-   **Domain/mechanism** (109 curated rules, 3did DDI reference): enrichment **1.01** at combined prior ≥ 0.3 and **0.85** at ≥ 0.9. No discrimination at all. That is structural, not a defect in the rules: the score is a function of each protein's class, so every louse serpin × host serine protease pair scores alike whether or not it is real.
+-   **LLM mechanism judgement** (58,735 pairs scored blind, 3,000 background pairs hidden among them): looks strong, with background mean 0.051 vs selected 0.130 and AUROC 0.897. But **within a matched (louse class, MEROPS, salmon module) cell the background-minus-selected difference is −0.0017**. It is a better class discriminator than the rule table and nothing more.
+-   **Interolog transfer** is genuinely pair-specific but sparse. 536 pairs reach ≥ 0.5 where no random pair exceeded 0.496, but **313 of those are conserved-core transfers** (ribosomal protein SA, RUVBL1, CDC42) that project intracellular interactions onto a secretome. **223 remain.**
+
+Under 50 draws of 25% weight perturbation the ordering is robust (Spearman 0.984) but top-100 membership is not (mean overlap 76.6, range 37–97). Read the ordering, not the membership of any cut.
+
+## The structural run
+
+1,059 Boltz-2 runs over 653 pairs completed on klone with zero failures and zero OOM fallbacks, so no run is excluded for settings drift. 34 positive controls (verified host–parasite PDB complexes, re-folded) went against 80 random and 34 shuffled negatives on identical settings.
+
+| metric              | AUROC vs random | vs shuffled |
+|---------------------|-----------------|-------------|
+| pDockQ2             | 0.990           | 0.887       |
+| ipSAE (reimpl.)     | 0.981           | 0.883       |
+| interface pLDDT     | 0.971           | **0.971**   |
+| cross-group ipTM    | 0.972           | 0.725       |
+| pDockQ              | 0.804           | 0.835       |
+| buried surface area | **0.334**       | 0.458       |
+
+Two things worth keeping:
+
+-   **pDockQ is unusable here.** Its median is 0.742, its mathematical ceiling, in *every* class including random negatives. No threshold exists.
+-   **Buried surface area is anti-predictive** (0.334). Random pairs of large proteins bury more area nonspecifically than real complexes of modest size. It stays as a descriptive column only.
+
+The two negative sets are not equivalent. Shuffled controls keep their native host chains and score well above random on the PAE metrics (median cross-group ipTM 0.605 vs 0.271). Interface pLDDT is the only metric that separates them cleanly, because a shuffled chain docks but docks *unconfidently*. So the call uses one metric from each family:
+
+> **STRONG** = ipSAE ≥ 0.7007 **and** interface pLDDT ≥ 78.39 **MODERATE** = ≥3 of the four thresholded metrics pass
+
+STRONG recovers **79.4% of positive controls** at **1.2%** on random and **2.9%** on shuffled negatives.
+
+![](images/structural-tiers.png)
+
+The shuffled negatives are the instructive bar: they dock readily (16 of 34 reach MODERATE) and are held out almost entirely by the interface pLDDT term.
+
+## The pre-registered channel test
+
+Before the run I said the LLM channel's unvalidated within-class residual would be tested against structure, and its weight zeroed if it failed. Within the 448 shortlist pairs matched to the v1 ranking (20 structurally supported):
+
+| channel                         | AUROC     | 95% CI          | verdict          |
+|------------------|------------------|------------------|------------------|
+| pair-specific interolog         | 0.721     | 0.647–0.789     | **above chance** |
+| combined domain/mechanism prior | 0.433     | 0.333–0.538     | chance           |
+| **LLM mechanism score**         | **0.324** | **0.230–0.438** | **below chance** |
+| v1 weighted score               | 0.579     | 0.417–0.736     | chance           |
+
+![](images/channel-validation.png)
+
+**The LLM channel failed in the informative direction.** It is significantly *anti*-correlated with structural support, rating the eight STRONG pairs at mean 0.09 and calling most of them "none_plausible". Its weight is now zero. The domain/mechanism prior is indistinguishable from chance, consistent with its 1.01 enrichment earlier. Only interolog transfer, the one channel that was ever pair-specific, predicts structure.
+
+## What the structure found
+
+8 shortlist pairs reach STRONG and 14 more MODERATE, of 505 folded.
+
+| pair | ipSAE | pDockQ2 | if-pLDDT | mechanism |
+|---------------|---------------|---------------|---------------|---------------|
+| Crog2_030737 × trypsin-II (*trp-ii*) | 0.89 | 0.80 | 92.7 | louse protease inhibitor vs host trypsin |
+| Crog2_002777 × **TIMP2** | 0.87 | 0.18 | 78.5 | louse metallopeptidase vs host metalloprotease inhibitor |
+| Crog2_022439 × coagulation protease | 0.75 | 0.53 | 86.1 | louse Kunitz vs coagulation protease |
+| Crog2_033262 × **factor X** (*f10*) | 0.69 | 0.35 | 82.8 | louse Kunitz vs FXa, the ixolaris precedent |
+| Crog2_021270 × lysozyme (*lyz*) | 0.52 | 0.13 | 79.4 | louse chitin-binding vs host lysozyme |
+
+![](images/ipsae-vs-plddt.png)
+
+Each point is one folded shortlist pair; dashed lines are the two thresholds. The STRONG set is the upper-right quadrant, and the MODERATE points to the left of the pLDDT line are the ones that dock confidently by PAE but not by local confidence.
+
+The trypsin-II pair is the strongest result in the project: rank 1 on sequence evidence and rank 3 on independent structural evidence, from two channels the data show are otherwise poorly correlated. The TIMP2 and Kunitz–coagulation pairs match the inhibitor-fold compatibility table built from the tick literature, which was never fitted to anything here.
+
+Two promiscuity flags, not findings: louse protein Crog2_029252 accounts for 4 of the 22 hits, all against mucin/ECM proteins, and salmon *llph* appears in 4 MODERATE hits with 4 different louse proteins at high ipTM but low interface pLDDT (55–66). Both look like sticky-surface artefacts, and the STRONG pLDDT term already excludes the *llph* set.
+
+## The honest negative result
+
+**The shortlist is not significantly enriched for structural support over random pairs**: 1.6% STRONG (8/505) vs 1.2% (1/80), Fisher OR 1.27, p = 0.65. Including MODERATE, 4.4% vs 1.2%, OR 3.60, p = 0.15. Suggestive, not significant.
+
+So the sequence channels did not enrich the shortlist for structurally plausible pairs. The pipeline worked as a *screen*, reducing 12.78 M pairs to 505 affordable ones among which structure found 22 worth attention, but it did not demonstrate predictive power at pair level. A differently chosen 505 might have done as well.
+
+## Other things established along the way
+
+-   **The LGP gap is an annotation artefact, not an absence.** Labial gland proteins LGP1–4 have the strongest functional precedent of any sea-louse effector, yet only 3 *C. rogercresseyi* homologues are detectable. The family is domainless and fast-evolving with no paralogue even within the *L. salmonis* genome, which is exactly what ortholog transfer under-recovers across genera. Meanwhile 187 of our secretome proteins do hit *L. salmonis* labial-gland queries. Score LGP mechanisms as "plausible but undetected", never "absent".
+-   **Resistant-species targets:** hepcidin/HAMP1, complement C3, CLEC4M, CHIA and the coho chitin-sensing receptor set differ between resistant (coho, pink) and susceptible (Atlantic) salmonids. Hepcidin/HAMP is absent from our 2,799-gene interface set, so it could not be paired. That is a gap in the host set, not evidence against it.
+
+## Limits that travel with every number here
+
+1.  **No *C. rogercresseyi* E/S proteome exists.** Every secretion call is prediction plus ortholog transfer from the single *L. salmonis* E/S proteome (Hamilton 2018, 187 proteins).
+2.  **Tier B (2,446 of 4,566) is a candidate pool, not a call set.** Its second signal-peptide opinion is a von Heijne weight rule, not a trained predictor.
+3.  **Host compartment coverage measures sampling depth.** Skin (2,494 genes) rests on one snRNA-seq library; only mucus (561) and blood (223) have proteomic evidence, and no *S. salar* plasma proteomics exists in PRIDE at all.
+4.  **No *C. rogercresseyi* expression data was obtainable**, so all infestation responses are *L. salmonis* proxies.
+5.  **41.6% of the secretome has no Pfam domain,** so the DDI channel is blind to it.
+6.  **Catalytic "degraded" flags mostly reflect 5'-partial ORFs**, not genuinely inactive homologues.
+
+## Next
+
+1.  **Test the trypsin-II, TIMP2 and Kunitz–coagulation pairs first.** Convergent evidence, named mechanisms, obvious assays: inhibition kinetics against the specific host enzyme.
+2.  **Treat the remaining STRONG hits as structure-only leads.** Several have `functional_class=unknown` on the louse side, so identify those proteins before investing.
+3.  **Spend any future GPU budget differently.** These results argue for co-folding a broader, less pre-filtered set, since the filters added little. Folding all tier-A secretome × priority-interface pairs would beat a cleverly chosen subset.
+4.  **Pull-down of louse secretion products against salmon skin-mucus and plasma by LC-MS/MS.** This would supply the *C. rogercresseyi* E/S proteome the field lacks, which remains the single most valuable missing dataset for this question.
