@@ -107,7 +107,7 @@ Branching *Acropora* spread by fragmentation, so I read these as clonemates, eve
 **One colony label, two genotypes: likely sample mix-ups.** Cloning can't explain these. A clone gives two colonies the same genotype; it can't give one tagged colony a different genotype at a different timepoint.
 
 | Sample | What it matches | Likely explanation |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | ACR-145-TP2 | ACR-150/237 genotype | TP2 swap between ACR-145 and ACR-150 |
 | ACR-150-TP2 | ACR-145/265 genotype | same swap |
 | POR-245-TP3, TP4 | POR-236 (TP1–TP2) | POR-245 is a different genotype at TP1–TP2; mix-up or a neighbouring colony sampled at later visits |
@@ -158,7 +158,7 @@ So the coupling first seen in 56 is a sample-wide shift in methylation level tha
 The first pass of 55–57 used colony labels as given. After 58 I reran all of it without the five mismatched samples and with clonemates merged. The conclusions held:
 
 | Result | First pass | Corrected |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Colony share, Apul gene-body methylation | 0.25 | 0.26 |
 | Colony share, Apul expression | 0.18 | 0.22 |
 | Apul within-colony coupling, genes at p \< 0.01 (expected) | 422 (140) | 443 (133) |

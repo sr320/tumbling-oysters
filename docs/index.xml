@@ -37,16 +37,16 @@
 <li>metabolites and lipids</li>
 <li>13 physiology traits</li>
 </ul>
-<p>The overarching question: <strong>how do environment and epigenetics inform gene expression and physiology?</strong> I worked through it in four steps, all in <a href="https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts"><code>M-multi-species/scripts</code></a> of <code>timeseries_molecular</code> (scripts 55–58).</p>
+<p>The overarching question: <strong>how do environment and epigenetics inform gene expression and physiology?</strong> I worked through it in five steps, all in <a href="https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts"><code>M-multi-species/scripts</code></a> of <code>timeseries_molecular</code> (scripts 55–59).</p>
 </section>
 <section id="what-drives-variation-in-each-layer" class="level2">
 <h2 class="anchored" data-anchor-id="what-drives-variation-in-each-layer">55 · What drives variation in each layer?</h2>
 <p>For every feature in every layer I fit a mixed model with colony, timepoint, site, and site × timepoint as random effects. I then took the share of variance each one explains.</p>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/variance-fractions-mean.png" class="img-fluid"></p>
 <ul>
-<li><strong>Methylation is a colony trait.</strong> In methylated genes (≥5% mean methylation), colony explains 26–40% of the variance and time only 2–6%. Unmethylated genes are mostly noise.</li>
-<li><strong>Expression is split.</strong> Colony and time each explain a real share; for Apul genes, colony 18% and time 15%.</li>
-<li><strong>Physiology is mostly time.</strong> In Apul, timepoint explains about 30% and colony 9%. Season moves physiology more than identity does.</li>
+<li><strong>Methylation is a colony trait.</strong> In methylated genes (≥5% mean methylation), colony explains 30–43% of the variance and time only 2–5%. Unmethylated genes are mostly noise.</li>
+<li><strong>Expression is split.</strong> Colony and time each explain a real share; for Apul genes, colony 22% and time 15%.</li>
+<li><strong>Physiology is mostly time.</strong> In Apul, timepoint explains about 29% and colony 10%. Season moves physiology more than identity does.</li>
 <li><strong>Site explains almost nothing</strong> on its own in any layer.</li>
 </ul>
 <p>I also rolled per-CpG methylation up to gene bodies, requiring at least 10 CpGs per gene and sample. Methylated genes are more highly expressed (ρ 0.39–0.46 across genes) and less variable over time, which is the familiar invertebrate gene-body pattern.</p>
@@ -54,12 +54,12 @@
 <section id="does-methylation-track-expression-within-a-colony" class="level2">
 <h2 class="anchored" data-anchor-id="does-methylation-track-expression-within-a-colony">56 · Does methylation track expression within a colony?</h2>
 <p>Genes that are methylated are also expressed. The sharper question is whether a gene’s methylation <em>changes</em> with its expression when the same colony is followed through time. I removed colony means and shared site × time change, then correlated what was left gene by gene. The null came from shuffling methylation samples among timepoints within each colony (1,000 permutations).</p>
-<p>At first Apul looked exciting: 422 genes at p &lt; 0.01 against 140 expected. Two things made me suspicious:</p>
+<p>At first Apul looked exciting: 443 genes at p &lt; 0.01 against 133 expected. Two things made me suspicious:</p>
 <ul>
 <li>The correlations split evenly between positive and negative.</li>
 <li>Peve and Ptua showed little excess.</li>
 </ul>
-<p>So in <strong>56.1</strong> I added the top hidden factors from the residuals. Removing a single factor took Apul from 422 to 143 genes against 131 expected. Symbiont load, measured as cells per cm² and symbiont:host biomass, did not remove the excess.</p>
+<p>So in <strong>56.1</strong> I added the top hidden factors from the residuals. Removing a single factor took Apul from 443 to 130 genes against 130 expected. Symbiont load, measured as cells per cm² and symbiont:host biomass, did not remove the excess.</p>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/excess-vs-k.png" class="img-fluid"></p>
 <p><strong>There is no robust gene-specific coupling of methylation and expression within colonies.</strong> What looked like coupling was one sample-level axis shared by both layers.</p>
 </section>
@@ -68,11 +68,11 @@
 <p>I built WGCNA networks (signed, 10,000 most variable genes per species) and related module eigengenes to physiology. Each eigengene was split into a between-colony part and a within-colony part.</p>
 <ul>
 <li><strong>The Apul confound from 56 is a tissue-state axis.</strong> Sample-wide methylation correlates with Apul modules M1 (+0.66) and M2 (−0.59). That axis tracks host biomass, symbiont biomass, and protein per cm², not surface area.</li>
-<li><strong>Calcification relates to modules</strong> in Apul and Peve, but not once shared seasonal change is removed. Expression and physiology mostly move together because they share the season.</li>
+<li><strong>Calcification relates to modules</strong> in Apul (M1 and M2, FDR 0.017) and more weakly in Peve (M2, FDR 0.08), but not once shared seasonal change is removed. Expression and physiology mostly move together because they share the season.</li>
 </ul>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/module-trait-within.png" class="img-fluid"></p>
 <ul>
-<li><strong>Thermal history.</strong> I used logger temperature over the 7, 30, and 90 days before each sampling. Only saturating irradiance (Ik) tracked the 30–90 day mean temperature, at permutation FDR 0.08–0.09 with only 8 site × time units.</li>
+<li><strong>Thermal history.</strong> I used logger temperature over the 7, 30, and 90 days before each sampling. Only saturating irradiance (Ik) tracked the 30-day mean temperature in Apul (r = 0.89, permutation p = 0.04). With only 8 site × time units it does not survive correction (FDR 0.34), so treat it as a lead.</li>
 <li><strong>No cross-species concordance.</strong> Across 9,017 one-to-one orthologs, 0 of 78 tests were significant at FDR &lt; 0.1, so the three corals don’t respond to the year with the same genes.</li>
 </ul>
 </section>
@@ -127,7 +127,7 @@
 </tr>
 </tbody>
 </table>
-<p>These five samples are left out of colony genotypes and profiles in 58. Scripts 55–57 still assign them to their labelled colony, so those results need a rerun without them.</p>
+<p>These five samples are left out of everything: 58 writes a sample-to-genotype table, and 55–57 read it, drop the five, and use genotype in place of colony. The Apul clonemate pairs count as one unit each, so Apul has 8 genotypes rather than 10 colonies. All numbers in this post are from that corrected run.</p>
 </section>
 <section id="does-methylation-follow-relatedness" class="level3">
 <h3 class="anchored" data-anchor-id="does-methylation-follow-relatedness">Does methylation follow relatedness?</h3>
@@ -148,20 +148,94 @@
 </ul>
 </section>
 </section>
+<section id="what-is-the-hidden-factor" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-the-hidden-factor">59 · What is the hidden factor?</h2>
+<p>In 56.1 one hidden factor per layer was enough to remove the Apul coupling. In 59 I asked what that factor is. I took each layer’s factor scores and compared them with sequencing QC, nucleic-acid yield, physiology, the ITS2 symbiont community, and the 57 modules. Every candidate was residualised on genotype and site × time first, so a match means it varies with the factor within a genotype at one sampling event.</p>
+<ul>
+<li><strong>It’s on the methylation side.</strong> Removing only the methylation factor took the excess from 443 genes (133 expected) to 133 (128 expected). Removing only the expression factor left about 107 extra genes.</li>
+<li><strong>The methylation factor is global methylation level.</strong> It is essentially each sample’s mean gene-body methylation (r = −0.998). Adding that one number as a covariate removes the excess (139 vs 123, p = 0.24). The shift is spread over genes in every module, not concentrated in a gene set.</li>
+<li><strong>It tracks WGBS library metrics.</strong> Deeper sequencing (r = 0.65), lower alignment (r = −0.70) and more non-CpG methylation (r = 0.66) go with lower CpG methylation. Each of these removes about half of the excess as a covariate. That pattern is the reverse of plain incomplete conversion, which would raise methylation in every context.</li>
+<li><strong>On the expression side, the factor is module M1</strong> (r = 0.99). It also tracks the share of RNA reads aligning to the coral genome (r = 0.58), a rough measure of host versus symbiont and other material.</li>
+<li><strong>Physiology mostly doesn’t explain it.</strong> Only host biomass relates to the expression factor (r = 0.54), and as a covariate it removes about a third of the excess. Symbiont density, the ITS2 community and calcification don’t explain it.</li>
+</ul>
+<p><img src="https://sr320.github.io/tumbling-oysters/posts/97-coral-multiomics/images/factor-candidates.png" class="img-fluid"></p>
+<p>So the coupling first seen in 56 is a sample-wide shift in methylation level that moves with library and composition metrics in both layers. It is not gene-by-gene regulation. My best guess is sample makeup or quality: how much host tissue versus other material went into each extraction. Thermal history can’t be tested here, because it is measured per site × time and that term is already removed.</p>
+</section>
 <section id="where-this-leaves-things" class="level2">
 <h2 class="anchored" data-anchor-id="where-this-leaves-things">Where this leaves things</h2>
 <ul>
 <li><strong>Methylation</strong> is a stable colony (or genotype) property. It is not explained by relatedness among distinct genotypes, and it barely moves with season.</li>
-<li><strong>Expression and physiology</strong> move mostly with season. Within a colony, expression doesn’t follow methylation.</li>
+<li><strong>Expression and physiology</strong> move mostly with season. Within a colony, expression doesn’t follow methylation gene by gene. The one shared signal is a sample-wide methylation shift tied to library and tissue-composition metrics (59).</li>
 <li><strong>Environment over the year</strong> reaches physiology mostly through shared seasonal change. Thermal history shows up only in Ik.</li>
 </ul>
+</section>
+<section id="rerun-with-corrected-identities" class="level2">
+<h2 class="anchored" data-anchor-id="rerun-with-corrected-identities">Rerun with corrected identities</h2>
+<p>The first pass of 55–57 used colony labels as given. After 58 I reran all of it without the five mismatched samples and with clonemates merged. The conclusions held:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Result</th>
+<th>First pass</th>
+<th>Corrected</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Colony share, Apul gene-body methylation</td>
+<td>0.25</td>
+<td>0.26</td>
+</tr>
+<tr class="even">
+<td>Colony share, Apul expression</td>
+<td>0.18</td>
+<td>0.22</td>
+</tr>
+<tr class="odd">
+<td>Apul within-colony coupling, genes at p &lt; 0.01 (expected)</td>
+<td>422 (140)</td>
+<td>443 (133)</td>
+</tr>
+<tr class="even">
+<td>Same, after removing one hidden factor</td>
+<td>143 (131)</td>
+<td>130 (130)</td>
+</tr>
+<tr class="odd">
+<td>Apul M1/M2 vs calcification, FDR</td>
+<td>0.03–0.04</td>
+<td>0.017</td>
+</tr>
+<tr class="even">
+<td>Peve M2 vs calcification, FDR</td>
+<td>0.044</td>
+<td>0.08</td>
+</tr>
+<tr class="odd">
+<td>Apul Ik vs 30-day temperature, permutation p</td>
+<td>0.004</td>
+<td>0.04</td>
+</tr>
+<tr class="even">
+<td>Ortholog tests significant</td>
+<td>0 of 78</td>
+<td>0 of 78</td>
+</tr>
+</tbody>
+</table>
+<p>Colony shares went up a little almost everywhere, which is what you’d expect once misassigned samples stop adding noise to colony means. The thermal Ik result got weaker.</p>
 <p>Next:</p>
 <ol type="1">
-<li>Rerun 55–57 without the five mismatched samples, and treat the Apul clonemates as one genotype.</li>
 <li>Directly compare methylation between clonemates on different reefs.</li>
 <li>Bring metabolites and lipids into the same colony-versus-time framework.</li>
+<li>Check whether the global methylation shift seen in Apul also sits behind the smaller Ptua excess, and correct for it in later methylation analyses.</li>
 </ol>
-<p>Code: <a href="https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts">55–57</a> · 58 is in <a href="https://github.com/urol-e5/timeseries_molecular/pull/141">PR #141</a>.</p>
+<p>Code: <a href="https://github.com/urol-e5/timeseries_molecular/tree/main/M-multi-species/scripts">55–59</a> · <a href="https://github.com/urol-e5/timeseries_molecular/pull/141">PR #141</a> (58), <a href="https://github.com/urol-e5/timeseries_molecular/pull/142">PR #142</a> (corrected rerun) and <a href="https://github.com/urol-e5/timeseries_molecular/pull/143">PR #143</a> (59).</p>
 
 
 <!-- -->
@@ -196,6 +270,24 @@
 </ol>
 <p>It runs on the E5 MOSAiC data: <em>Acropora pulchra</em>, <em>Porites evermanni</em> and <em>Pocillopora tuahiniensis</em>, with 10 colonies each (5 at Manava, 5 at Mahana) sampled four times in 2020. Every input comes from the URLs listed on the <a href="https://urol-e5.github.io/MOSAiC/">MOSAiC site</a>, cached with checksums. Each step is a <code>stdm</code> command, and the full record is in the repo’s README and PLAN.</p>
 <p>This post covers phases 3–5. <a href="../../posts/97-coral-multiomics/index.html">Post 97</a> took a different route on the same data (variance partitioning, within-colony coupling, WGCNA). Where the two overlap, they agree.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Updated with corrected sample identities
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Post 97’s SNP calls from the WGBS reads showed that some colony labels are wrong:</p>
+<ul>
+<li><strong>Five samples carry another colony’s genotype</strong>, likely mix-ups: ACR-145-TP2 and ACR-150-TP2 (swapped), POR-245-TP3 and TP4, and POC-57-TP4.</li>
+<li><strong>Two <em>A. pulchra</em> colony pairs are clonemates:</strong> ACR-145 with ACR-265, and ACR-150 with ACR-237.</li>
+</ul>
+<p>I added this genotype table to <code>workflow-stdm</code> and reran everything with the five samples dropped and one colony per genotype (106 of 117 samples). The elastic net, gene-by-gene and CpG results below are from that rerun, with the first version’s numbers in brackets. The batch-correction section and its figure, and the lncRNA follow-up checks, use the original labels. The corrected model is the same, as noted there. Three results from the first version did not survive: the 12 <em>A. pulchra</em> genes coupled within colony, the <em>A. pulchra</em> genotype signal in the CpG check, and a weak <em>P. evermanni</em> miRNA signal in the elastic net.</p>
+</div>
+</div>
 </section>
 <section id="the-talks-model-does-not-hold-up" class="level2">
 <h2 class="anchored" data-anchor-id="the-talks-model-does-not-hold-up">The talk’s model does not hold up</h2>
@@ -225,6 +317,7 @@
 <ul>
 <li><strong>The site component holds in <em>P. evermanni</em> (p = 2e-5) and <em>P. tuahiniensis</em> (p = 9e-4).</strong> It is gone in <em>A. pulchra</em> (p = 0.13). The <em>A. pulchra</em> site difference was extraction batch.</li>
 <li><strong>An <em>A. pulchra</em> timepoint component survives, but it is provisional.</strong> The 2023 extraction holds only TP1 and TP4 samples, so batch and time are hard to separate, and the component reproduces poorly across colony halves (0.51).</li>
+<li><strong>Correcting sample identities changes neither component.</strong> Refit without the mismatched samples and with one colony per genotype, the site component matches the original (gene-loading cosine 0.96), and the timepoint component matches at 0.83. With colonies as the unit, the site difference holds in <em>P. evermanni</em> (p = 2e-4) and <em>P. tuahiniensis</em> (p = 0.016).</li>
 </ul>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/images/site-component.png" class="img-fluid"></p>
 </section>
@@ -232,7 +325,7 @@
 <h2 class="anchored" data-anchor-id="interpretation-physiology-symbionts-calcification-genes">Interpretation: physiology, symbionts, calcification genes</h2>
 <p>I scored each sample on the components and tested the scores against 11 physiology traits and the ITS2 profiles. Each test ran on all samples, within site, and within site × timepoint.</p>
 <ul>
-<li><strong>Physiology:</strong> 8 of 66 tests pass on all samples or within site, but <strong>none hold within site × timepoint</strong>. The <em>A. pulchra</em> timepoint component tracks calcification, but only because both are low at TP1 and TP4. Calcification is near zero at those timepoints in all three species, which needs checking.</li>
+<li><strong>Physiology:</strong> 7 of 66 tests pass on all samples or within site, but <strong>none hold within site × timepoint</strong>. The <em>A. pulchra</em> timepoint component tracks calcification, but only because both are low at TP1 and TP4. Calcification is near zero at those timepoints in all three species, which needs checking.</li>
 <li><strong>ITS2:</strong> no associations.</li>
 <li><strong>Calcification genes:</strong> not enriched among the top loadings of either component.</li>
 <li><strong>GO slim (on the model before batch correction):</strong> the <em>A. pulchra</em> seasonal component is dominated by nucleolus, RNA binding and mRNA metabolism. That is a ribosome-biogenesis signature that also shows up with RNA-quality differences, consistent with the batch confounding.</li>
@@ -249,11 +342,11 @@
 </ul>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 29%">
-<col style="width: 9%">
-<col style="width: 23%">
-<col style="width: 14%">
-<col style="width: 23%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -269,35 +362,36 @@
 <td>Site-mean baseline</td>
 <td>~0.4</td>
 <td>0</td>
-<td>~0.1–0.2</td>
+<td>~0.1</td>
 <td>0</td>
 </tr>
 <tr class="even">
 <td>lncRNA</td>
-<td>0.93</td>
-<td>0.62</td>
-<td>0.93</td>
-<td>0.75</td>
+<td>0.91 (0.93)</td>
+<td>0.62 (0.62)</td>
+<td>0.93 (0.93)</td>
+<td>0.78 (0.75)</td>
 </tr>
 <tr class="odd">
 <td>Gene-body methylation</td>
-<td>−0.10</td>
-<td>−0.11</td>
-<td>−0.07</td>
-<td>−1.19</td>
+<td>−0.15 (−0.10)</td>
+<td>−0.03 (−0.10)</td>
+<td>−0.22 (−0.07)</td>
+<td>−0.04 (−1.19)</td>
 </tr>
 <tr class="even">
 <td>miRNA</td>
-<td>−0.02</td>
-<td>0.17</td>
-<td>−0.36</td>
-<td>−0.16</td>
+<td>0.01 (−0.02)</td>
+<td>−0.02 (0.17)</td>
+<td>−0.29 (−0.36)</td>
+<td>−0.02 (−0.16)</td>
 </tr>
 </tbody>
 </table>
-<p><em>Values are held-out R².</em></p>
+<p><em>Values are held-out R² from the rerun with corrected identities, with the first version in brackets.</em></p>
+<p>The corrected identities change nothing for lncRNA or methylation. The one marginal result from the first version, a weak <em>P. evermanni</em> miRNA signal within site (R² 0.17, p = 0.04), is gone (p = 0.24).</p>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/images/elastic-net-r2.png" class="img-fluid"></p>
-<p>Black ticks mark the 95th percentile of the permutation null. The <em>P. tuahiniensis</em> methylation bar is clipped at −0.4; its label shows the actual value.</p>
+<p>Black ticks mark the 95th percentile of the permutation null.</p>
 <p>lncRNA predicts almost perfectly, but it isn’t telling us about regulation:</p>
 <ul>
 <li><strong>The site component is lncRNA’s own leading axis.</strong> lncRNA PC1 correlates −0.91 with the score in <em>P. evermanni</em>.</li>
@@ -326,23 +420,30 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>Between colonies, genes at q &lt; 0.1</td>
-<td>151</td>
-<td>77</td>
-<td>35</td>
+<td>Samples (genotypes)</td>
+<td>32 (8)</td>
+<td>35 (10)</td>
+<td>31 (10)</td>
 </tr>
 <tr class="even">
+<td>Between colonies, genes at q &lt; 0.1</td>
+<td>70 (151)</td>
+<td>62 (77)</td>
+<td>26 (35)</td>
+</tr>
+<tr class="odd">
 <td>Within colony, genes at q &lt; 0.1</td>
-<td>12</td>
-<td>1</td>
-<td>0</td>
+<td>0 (12)</td>
+<td>0 (1)</td>
+<td>0 (0)</td>
 </tr>
 </tbody>
 </table>
+<p><em>In brackets: the first version, with colony labels as given.</em></p>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/images/cis-methylation-null.png" class="img-fluid"></p>
 <ul>
-<li><strong>Between colonies, coupling is real in all three species.</strong> There are 3–6× more strong correlations than expected. They are mostly positive and mostly in weakly methylated genes whose methylation varies more than average.</li>
-<li><strong>Over time within a colony there is almost nothing,</strong> a few <em>A. pulchra</em> genes at most. Post 97 found the same thing and traced the <em>A. pulchra</em> excess to one sample-level axis.</li>
+<li><strong>Between colonies, coupling is real in all three species.</strong> There are about 3–4× more strong correlations than expected. They are mostly positive and mostly in weakly methylated genes whose methylation varies more than average. Per-gene correlations barely moved with the corrected identities (r = 0.92–0.99 with the first version). <em>A. pulchra</em> has fewer significant genes because it now has 8 genotypes instead of 10 colonies.</li>
+<li><strong>Over time within a colony, no single gene is coupled.</strong> The 12 <em>A. pulchra</em> genes in the first version depended on the swapped and cloned samples. <em>A. pulchra</em> still has a modest excess of strong correlations over the null (194 vs 71). Post 97 traced that excess to one sample-level axis.</li>
 <li><strong>The component genes are no more coupled than other genes.</strong></li>
 </ul>
 </section>
@@ -367,41 +468,37 @@
 <tbody>
 <tr class="odd">
 <td>Coupled genes reproduced from CpG data</td>
-<td>68</td>
-<td>16</td>
-<td>26</td>
+<td>43 (68)</td>
+<td>14 (16)</td>
+<td>19 (26)</td>
 </tr>
 <tr class="even">
 <td>Still coupled without variant-like CpGs</td>
-<td>47</td>
-<td>13</td>
-<td>20</td>
+<td>36 (47)</td>
+<td>12 (13)</td>
+<td>14 (20)</td>
 </tr>
 <tr class="odd">
 <td>Still coupled without the top CpG</td>
-<td>57</td>
-<td>14</td>
-<td>22</td>
+<td>35 (57)</td>
+<td>12 (14)</td>
+<td>19 (22)</td>
 </tr>
 <tr class="even">
 <td>Variant-like CpGs, hits vs matched controls</td>
-<td>18.5% vs 9.3%</td>
-<td>9.9% vs 7.8%</td>
-<td>4.8% vs 4.6%</td>
+<td>9.6% vs 8.5% (18.5% vs 9.3%)</td>
+<td>8.5% vs 7.5%</td>
+<td>6.1% vs 6.7%</td>
 </tr>
 </tbody>
 </table>
+<p><em>In brackets: the first version, with colony labels as given.</em></p>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/98-stdm-mosaic/images/cpg-check.png" class="img-fluid"></p>
 <p>Each point is a coupled gene that reproduces from the CpG data. Points on the diagonal are unchanged by removing variant-like CpGs; the dashed line is |r| = 0.5.</p>
 <ul>
-<li><strong>In most coupled genes the signal is a gene-wide shift,</strong> not one site switched off.</li>
-<li><strong>In <em>A. pulchra</em>, genotype contributes:</strong> variant-like CpGs are twice as common in its coupled genes.</li>
-<li><strong>Not ruled out:</strong> heterozygous variants and other genetic effects on methylation. Those need genotype calls from the raw WGBS reads.</li>
-</ul>
-<p><strong>Note added after reading post 97 again:</strong></p>
-<ul>
-<li><strong>Clone pairs.</strong> Two pairs of <em>A. pulchra</em> colonies are clones: ACR-145 (Manava) with ACR-265 (Mahana), and ACR-150 (Manava) with ACR-237 (Mahana). The gene-level and CpG tests here count each pair as two independent colonies, so the <em>A. pulchra</em> between-colony results are probably a little overstated. The <em>A. pulchra</em> genotype signal above may partly reflect these pairs. The elastic net ran only on <em>P. evermanni</em> and <em>P. tuahiniensis</em>, so it is unaffected.</li>
-<li><strong>SNP calls already exist.</strong> Post 97’s mpileup-based calls from the WGBS reads are a more direct genotype check than the CpG-pattern flag used here. The next step is to rerun the <em>A. pulchra</em> tests with one colony per genotype, and to drop CpGs that overlap called SNPs.</li>
+<li><strong>In most coupled genes the signal is a gene-wide shift,</strong> not one site switched off. More of their CpGs agree in direction than in matched controls, clearly so in <em>A. pulchra</em> (0.80 vs 0.65).</li>
+<li><strong>No species shows an excess of variant-like CpGs.</strong> The first version found twice as many in <em>A. pulchra</em> coupled genes as in controls. That came from the clone pairs: a variant shared by two clonemates looked like two independent colonies agreeing.</li>
+<li><strong>Not ruled out:</strong> heterozygous variants and other genetic effects on methylation. Post 97’s SNP calls could test these directly, for example by dropping CpGs that overlap called SNPs.</li>
 </ul>
 </section>
 <section id="where-this-leaves-things" class="level2">
@@ -412,8 +509,9 @@
 <ul>
 <li>lncRNA mirrors the transcriptome.</li>
 <li>miRNA shows almost nothing.</li>
-<li>Gene-body methylation tracks expression as stable colony differences, partly genetic in <em>A. pulchra</em>, and barely at all over time.</li>
+<li>Gene-body methylation tracks expression as stable differences between genotypes, spread across whole genes, and not detectably over time.</li>
 </ul></li>
+<li><strong>Sample identity matters for <em>A. pulchra</em>.</strong> Clonemates and one swapped timepoint produced the <em>A. pulchra</em> within-colony genes and its apparent CpG genotype signal.</li>
 <li><strong>The talk’s narrative,</strong> with many sparse components predicted by epigenetic features, doesn’t survive proper rank selection, masking of missing samples, and colony-level validation.</li>
 </ul>
 </section>
@@ -424,13 +522,14 @@
 <li><strong>Calcification:</strong> are the near-zero TP1 and TP4 calcification values real, or a measurement difference?</li>
 <li><strong>POR-73-TP2:</strong> its RNA concentration is recorded as 0.0 ng/µL. Is that a real reading?</li>
 <li><strong>ACR-225-TP1:</strong> it is in the gene-methylation table but missing from the merged CpG file. Was it dropped on purpose?</li>
+<li><strong>Mismatched samples:</strong> can the field or lab records explain ACR-145-TP2/ACR-150-TP2, POR-245-TP3/TP4 and POC-57-TP4? Are the clonemate pairs (ACR-145/265, ACR-150/237) known?</li>
 </ol>
 </section>
 <section id="next" class="level2">
 <h2 class="anchored" data-anchor-id="next">Next</h2>
 <ul>
 <li>Metabolomics and lipidomics against the site component. These are independent assays, so they test whether the site difference reaches metabolism.</li>
-<li>Rerun the <em>A. pulchra</em> methylation–expression tests with one colony per genotype, using post 97’s SNP calls to drop SNP-overlapping CpGs.</li>
+<li>Use post 97’s SNP calls to drop SNP-overlapping CpGs and test heterozygous variants directly.</li>
 </ul>
 
 

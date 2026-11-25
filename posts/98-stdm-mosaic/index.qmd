@@ -100,12 +100,12 @@ I scored each sample on the components and tested the scores against 11 physiolo
 -   **Null:** 50 permutations shuffling colonies within site.
 -   **Stable features:** stability selection against injected noise features.
 
-| Predictors            | Peve  | Peve within site | Ptua      | Ptua within site |
-|-----------------------|-------|------------------|-----------|------------------|
-| Site-mean baseline    | \~0.4 | 0                | \~0.1     | 0                |
-| lncRNA                | 0.91 (0.93)   | 0.62 (0.62)  | 0.93 (0.93)   | 0.78 (0.75)  |
+| Predictors | Peve | Peve within site | Ptua | Ptua within site |
+|----|----|----|----|----|
+| Site-mean baseline | \~0.4 | 0 | \~0.1 | 0 |
+| lncRNA | 0.91 (0.93) | 0.62 (0.62) | 0.93 (0.93) | 0.78 (0.75) |
 | Gene-body methylation | −0.15 (−0.10) | −0.03 (−0.10) | −0.22 (−0.07) | −0.04 (−1.19) |
-| miRNA                 | 0.01 (−0.02)  | −0.02 (0.17)  | −0.29 (−0.36) | −0.02 (−0.16) |
+| miRNA | 0.01 (−0.02) | −0.02 (0.17) | −0.29 (−0.36) | −0.02 (−0.16) |
 
 *Values are held-out R² from the rerun with corrected identities, with the first version in brackets.*
 
@@ -133,11 +133,11 @@ The question gets sharper at the gene level: does a gene's own body methylation 
 -   **between colonies:** colonies compared at the same site and timepoint;
 -   **within colony:** changes over time, after removing colony means.
 
-|                                     | Apul      | Peve    | Ptua    |
-|-------------------------------------|-----------|---------|---------|
-| Samples (genotypes)                 | 32 (8)    | 35 (10) | 31 (10) |
-| Between colonies, genes at q \< 0.1 | 70 (151)  | 62 (77) | 26 (35) |
-| Within colony, genes at q \< 0.1    | 0 (12)    | 0 (1)   | 0 (0)   |
+|                                     | Apul     | Peve    | Ptua    |
+|-------------------------------------|----------|---------|---------|
+| Samples (genotypes)                 | 32 (8)   | 35 (10) | 31 (10) |
+| Between colonies, genes at q \< 0.1 | 70 (151) | 62 (77) | 26 (35) |
+| Within colony, genes at q \< 0.1    | 0 (12)   | 0 (1)   | 0 (0)   |
 
 *In brackets: the first version, with colony labels as given.*
 
@@ -152,7 +152,7 @@ The question gets sharper at the gene level: does a gene's own body methylation 
 Each colony is a genet, so a sequence difference could move both measurements. A C/T mutation that destroys a CpG reads as unmethylated in that colony at every timepoint. `stdm cpg-check` used the CpG-level WGBS files to flag CpGs with that pattern. It then re-tested each coupled gene without those CpGs, and without its single most influential CpG.
 
 |   | Apul | Peve | Ptua |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | Coupled genes reproduced from CpG data | 43 (68) | 14 (16) | 19 (26) |
 | Still coupled without variant-like CpGs | 36 (47) | 12 (13) | 14 (20) |
 | Still coupled without the top CpG | 35 (57) | 12 (14) | 19 (22) |
