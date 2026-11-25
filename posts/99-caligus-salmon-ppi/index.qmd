@@ -35,7 +35,7 @@ An end-to-end attempt to predict which *Caligus rogercresseyi* secreted proteins
 ## Building the pieces
 
 | Component | Result |
-|------------------------------------|------------------------------------|
+|----|----|
 | Louse working proteome | 39,721 proteins, BUSCO C:91.0% |
 | Predicted secretome | 4,566 proteins (tier A 1,759 / B 2,446 / C 361) |
 | Salmon interface set | 2,799 genes / 1,682 ohnolog groups; 735-gene priority subset |
@@ -58,7 +58,7 @@ Under 50 draws of 25% weight perturbation the ordering is robust (Spearman 0.984
 
 ## The structural run
 
-1,059 Boltz-2 runs over 653 pairs completed on klone with zero failures and zero OOM fallbacks, so no run is excluded for settings drift. 34 positive controls (verified host–parasite PDB complexes, re-folded) went against 80 random and 34 shuffled negatives on identical settings.
+1,059 Boltz-2 runs over 653 pairs completed on klone with zero failures and zero OOM fallbacks, so no run is excluded for settings drift. The campaign came in well under the estimate: 215 batches across 32 A40 tasks, **22.8 h of A40 prediction time** (27.2 GPU-h of task wall), finishing in 3.2 h of campaign wall on the checkpoint queue against the \~80 GPU-h the bundle predicted. 34 positive controls (verified host–parasite PDB complexes, re-folded) went against 80 random and 34 shuffled negatives on identical settings.
 
 | metric              | AUROC vs random | vs shuffled |
 |---------------------|-----------------|-------------|
@@ -78,7 +78,9 @@ The two negative sets are not equivalent. Shuffled controls keep their native ho
 
 > **STRONG** = ipSAE ≥ 0.7007 **and** interface pLDDT ≥ 78.39 **MODERATE** = ≥3 of the four thresholded metrics pass
 
-STRONG recovers **79.4% of positive controls** at **1.2%** on random and **2.9%** on shuffled negatives.
+STRONG recovers **27 of 34 positive controls** (79.4%) at 1 of 80 random and 1 of 34 shuffled negatives.
+
+One caveat on that denominator: **the effective number of positive controls is nearer 16 than 34**, because 16 of the 34 are thrombin complexes. Thresholds were also set against random negatives only, and seed depth differs between classes, so the seed-matched recalibration in the dashboard is the stricter read.
 
 ![](images/structural-tiers.png)
 
@@ -89,7 +91,7 @@ The shuffled negatives are the instructive bar: they dock readily (16 of 34 reac
 Before the run I said the LLM channel's unvalidated within-class residual would be tested against structure, and its weight zeroed if it failed. Within the 448 shortlist pairs matched to the v1 ranking (20 structurally supported):
 
 | channel                         | AUROC     | 95% CI          | verdict          |
-|------------------|------------------|------------------|------------------|
+|---------------------------------|-----------|-----------------|------------------|
 | pair-specific interolog         | 0.721     | 0.647–0.789     | **above chance** |
 | combined domain/mechanism prior | 0.433     | 0.333–0.538     | chance           |
 | **LLM mechanism score**         | **0.324** | **0.230–0.438** | **below chance** |
@@ -97,19 +99,21 @@ Before the run I said the LLM channel's unvalidated within-class residual would 
 
 ![](images/channel-validation.png)
 
-**The LLM channel failed in the informative direction.** It is significantly *anti*-correlated with structural support, rating the eight STRONG pairs at mean 0.09 and calling most of them "none_plausible". Its weight is now zero. The domain/mechanism prior is indistinguishable from chance, consistent with its 1.01 enrichment earlier. Only interolog transfer, the one channel that was ever pair-specific, predicts structure.
+**The LLM channel failed in the informative direction.** It is significantly *anti*-correlated with structural support, rating the eight STRONG pairs at mean 0.09 and calling most of them "none_plausible". Its weight is now zero. The domain/mechanism prior is indistinguishable from chance, consistent with its 1.01 enrichment earlier. Only interolog transfer, the one channel that was ever pair-specific, predicts structure — and even that is not clean independent validation, since `il_pair_specific` enters the structural rank score as a tiebreak term and was used to select the T1 shortlist tier.
 
 ## What the structure found
 
 8 shortlist pairs reach STRONG and 14 more MODERATE, of 505 folded.
 
-| pair | ipSAE | pDockQ2 | if-pLDDT | mechanism |
-|---------------|---------------|---------------|---------------|---------------|
-| Crog2_030737 × trypsin-II (*trp-ii*) | 0.89 | 0.80 | 92.7 | louse protease inhibitor vs host trypsin |
-| Crog2_002777 × **TIMP2** | 0.87 | 0.18 | 78.5 | louse metallopeptidase vs host metalloprotease inhibitor |
-| Crog2_022439 × coagulation protease | 0.75 | 0.53 | 86.1 | louse Kunitz vs coagulation protease |
-| Crog2_033262 × **factor X** (*f10*) | 0.69 | 0.35 | 82.8 | louse Kunitz vs FXa, the ixolaris precedent |
-| Crog2_021270 × lysozyme (*lyz*) | 0.52 | 0.13 | 79.4 | louse chitin-binding vs host lysozyme |
+| pair | tier | ipSAE | if-pLDDT | mechanism |
+|----|----|----|----|----|
+| Crog2_030737 × trypsin-2 (*trp-ii*) | STRONG | 0.90 | 92.7 | louse Kazal inhibitor vs host trypsin |
+| Crog2_002777 × **TIMP2** | STRONG | 0.87 | 78.5 | louse M10 metallopeptidase vs host metalloprotease inhibitor |
+| Crog2_022439 × **factor IX** | STRONG | 0.75 | 86.1 | louse Kunitz vs coagulation protease |
+| Crog2_033262 × **factor X** (*f10*) | MODERATE | 0.69 | 82.8 | louse Kunitz vs FXa, the ixolaris precedent |
+| Crog2_021270 × lysozyme (*lyz*) | MODERATE | 0.52 | 79.4 | louse CBM_14 chitin-binding vs host lysozyme |
+
+These five carry the `REVIEW CORE` flag in the candidate table: a named mechanism on both sides and a fold pairing with precedent. The other four STRONG hits (inorganic pyrophosphatase, plasma alpha-L-fucosidase, glucosidase 2 subunit beta, microsomal triglyceride transfer protein) are all flagged **conserved/homologous complex** — the model is likely recovering a known fold pairing rather than a parasite–host interaction, so they rank high without meaning much.
 
 ![](images/ipsae-vs-plddt.png)
 
@@ -117,7 +121,22 @@ Each point is one folded shortlist pair; dashed lines are the two thresholds. Th
 
 The trypsin-II pair is the strongest result in the project: rank 1 on sequence evidence and rank 3 on independent structural evidence, from two channels the data show are otherwise poorly correlated. The TIMP2 and Kunitz–coagulation pairs match the inhibitor-fold compatibility table built from the tick literature, which was never fitted to anything here.
 
-Two promiscuity flags, not findings: louse protein Crog2_029252 accounts for 4 of the 22 hits, all against mucin/ECM proteins, and salmon *llph* appears in 4 MODERATE hits with 4 different louse proteins at high ipTM but low interface pLDDT (55–66). Both look like sticky-surface artefacts, and the STRONG pLDDT term already excludes the *llph* set.
+Three artefact patterns, not findings. Louse protein Crog2_029252 is a 59-aa **Integrin_beta** fragment and accounts for 4 of the 22 tiered hits (10 across the shortlist), every one against a salmon integrin alpha subunit — that is the model rebuilding the canonical integrin αβ heterodimer, not a secreted effector. And salmon *llph* appears in 4 MODERATE hits whose louse partners are all **ribosomal proteins rescued into the secretome by a de novo signal-peptide call**, at high ipTM but low interface pLDDT (55–66). A third, HRas, is a cytoplasmic lipid-anchored protein that a secreted louse protein never meets. All are artefacts, and the STRONG pLDDT term already excludes the *llph* set. After this review roughly **5 of the 22 tiered pairs survive**.
+
+## The data
+
+Both the browsable results and the underlying table ship with this post:
+
+-   [**`ppi_results_dashboard.html`**](data/ppi_results_dashboard.html) — a self-contained dashboard (open it in a browser, no server needed): the GPU campaign timeline batch by batch, control calibration with the metric scatter and thresholds drawn, the as-used vs seed-matched recalibration table, the channel AUROCs, and a sortable, searchable table of all 505 candidates with a filtered-TSV download.
+
+-   [`ppi_dashboard_candidates.tsv`](data/ppi_dashboard_candidates.tsv) — all **505 folded pairs**, one row each: louse protein and its secretome tier and Pfam domains, salmon symbol and product name, accessibility class, which selection tier put the pair in the shortlist, the five interface metrics, the three sequence-channel scores, and the review flags.
+
+Two columns are worth knowing before reading it:
+
+-   **`selection_tier`** — why the pair was folded at all: `T1_interolog_pair_specific` (222), `T2_top_combined_prior` (140), `T3_mechanism_representative` (96), `T4_resistance_target` (47). Given the channel results above, T1 is the only tier with demonstrated pair-level support.
+-   **`accessibility_class`** — whether the host partner is actually reachable by a secreted louse protein: `secreted` (217), `pm_ectodomain` (142), `secreted_ecm` (60), plus smaller classes where the signal peptide is a feature-rule or de novo call (`secreted_sp_feature` 39, `secreted_denovo` 21, `pm_ectodomain_denovo_noSP` 18). The de novo classes are where the *llph* artefacts live.
+
+**`review_flags`** is the column to filter on first. `REVIEW CORE` marks the five pairs above; `conserved/homologous complex`, `promiscuous louse chain`, `de novo SP rescue` and `topology: cytoplasmic/lipid-anchor` each mark a reason a high score may not mean a real host–parasite interaction. `MODERATE tier (47% shuffled FPR)` is a reminder that MODERATE is a weak call by construction.
 
 ## The honest negative result
 
@@ -138,6 +157,7 @@ So the sequence channels did not enrich the shortlist for structurally plausible
 4.  **No *C. rogercresseyi* expression data was obtainable**, so all infestation responses are *L. salmonis* proxies.
 5.  **41.6% of the secretome has no Pfam domain,** so the DDI channel is blind to it.
 6.  **Catalytic "degraded" flags mostly reflect 5'-partial ORFs**, not genuinely inactive homologues.
+7.  **The positive controls are thrombin-heavy.** 16 of 34 are thrombin complexes, so the sensitivity figure rests on fewer independent complexes than the count suggests.
 
 ## Next
 

@@ -77,7 +77,7 @@
 </section>
 <section id="the-structural-run" class="level2">
 <h2 class="anchored" data-anchor-id="the-structural-run">The structural run</h2>
-<p>1,059 Boltz-2 runs over 653 pairs completed on klone with zero failures and zero OOM fallbacks, so no run is excluded for settings drift. 34 positive controls (verified host–parasite PDB complexes, re-folded) went against 80 random and 34 shuffled negatives on identical settings.</p>
+<p>1,059 Boltz-2 runs over 653 pairs completed on klone with zero failures and zero OOM fallbacks, so no run is excluded for settings drift. The campaign came in well under the estimate: 215 batches across 32 A40 tasks, <strong>22.8 h of A40 prediction time</strong> (27.2 GPU-h of task wall), finishing in 3.2 h of campaign wall on the checkpoint queue against the ~80 GPU-h the bundle predicted. 34 positive controls (verified host–parasite PDB complexes, re-folded) went against 80 random and 34 shuffled negatives on identical settings.</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -128,7 +128,8 @@
 <blockquote class="blockquote">
 <p><strong>STRONG</strong> = ipSAE ≥ 0.7007 <strong>and</strong> interface pLDDT ≥ 78.39 <strong>MODERATE</strong> = ≥3 of the four thresholded metrics pass</p>
 </blockquote>
-<p>STRONG recovers <strong>79.4% of positive controls</strong> at <strong>1.2%</strong> on random and <strong>2.9%</strong> on shuffled negatives.</p>
+<p>STRONG recovers <strong>27 of 34 positive controls</strong> (79.4%) at 1 of 80 random and 1 of 34 shuffled negatives.</p>
+<p>One caveat on that denominator: <strong>the effective number of positive controls is nearer 16 than 34</strong>, because 16 of the 34 are thrombin complexes. Thresholds were also set against random negatives only, and seed depth differs between classes, so the seed-matched recalibration in the dashboard is the stricter read.</p>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/99-caligus-salmon-ppi/images/structural-tiers.png" class="img-fluid"></p>
 <p>The shuffled negatives are the instructive bar: they dock readily (16 of 34 reach MODERATE) and are held out almost entirely by the interface pLDDT term.</p>
 </section>
@@ -137,10 +138,10 @@
 <p>Before the run I said the LLM channel’s unvalidated within-class residual would be tested against structure, and its weight zeroed if it failed. Within the 448 shortlist pairs matched to the v1 ranking (20 structurally supported):</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
+<col style="width: 41%">
+<col style="width: 13%">
+<col style="width: 21%">
+<col style="width: 22%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -178,7 +179,7 @@
 </tbody>
 </table>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/99-caligus-salmon-ppi/images/channel-validation.png" class="img-fluid"></p>
-<p><strong>The LLM channel failed in the informative direction.</strong> It is significantly <em>anti</em>-correlated with structural support, rating the eight STRONG pairs at mean 0.09 and calling most of them “none_plausible”. Its weight is now zero. The domain/mechanism prior is indistinguishable from chance, consistent with its 1.01 enrichment earlier. Only interolog transfer, the one channel that was ever pair-specific, predicts structure.</p>
+<p><strong>The LLM channel failed in the informative direction.</strong> It is significantly <em>anti</em>-correlated with structural support, rating the eight STRONG pairs at mean 0.09 and calling most of them “none_plausible”. Its weight is now zero. The domain/mechanism prior is indistinguishable from chance, consistent with its 1.01 enrichment earlier. Only interolog transfer, the one channel that was ever pair-specific, predicts structure — and even that is not clean independent validation, since <code>il_pair_specific</code> enters the structural rank score as a tiebreak term and was used to select the T1 shortlist tier.</p>
 </section>
 <section id="what-the-structure-found" class="level2">
 <h2 class="anchored" data-anchor-id="what-the-structure-found">What the structure found</h2>
@@ -194,54 +195,69 @@
 <thead>
 <tr class="header">
 <th>pair</th>
+<th>tier</th>
 <th>ipSAE</th>
-<th>pDockQ2</th>
 <th>if-pLDDT</th>
 <th>mechanism</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Crog2_030737 × trypsin-II (<em>trp-ii</em>)</td>
-<td>0.89</td>
-<td>0.80</td>
+<td>Crog2_030737 × trypsin-2 (<em>trp-ii</em>)</td>
+<td>STRONG</td>
+<td>0.90</td>
 <td>92.7</td>
-<td>louse protease inhibitor vs host trypsin</td>
+<td>louse Kazal inhibitor vs host trypsin</td>
 </tr>
 <tr class="even">
 <td>Crog2_002777 × <strong>TIMP2</strong></td>
+<td>STRONG</td>
 <td>0.87</td>
-<td>0.18</td>
 <td>78.5</td>
-<td>louse metallopeptidase vs host metalloprotease inhibitor</td>
+<td>louse M10 metallopeptidase vs host metalloprotease inhibitor</td>
 </tr>
 <tr class="odd">
-<td>Crog2_022439 × coagulation protease</td>
+<td>Crog2_022439 × <strong>factor IX</strong></td>
+<td>STRONG</td>
 <td>0.75</td>
-<td>0.53</td>
 <td>86.1</td>
 <td>louse Kunitz vs coagulation protease</td>
 </tr>
 <tr class="even">
 <td>Crog2_033262 × <strong>factor X</strong> (<em>f10</em>)</td>
+<td>MODERATE</td>
 <td>0.69</td>
-<td>0.35</td>
 <td>82.8</td>
 <td>louse Kunitz vs FXa, the ixolaris precedent</td>
 </tr>
 <tr class="odd">
 <td>Crog2_021270 × lysozyme (<em>lyz</em>)</td>
+<td>MODERATE</td>
 <td>0.52</td>
-<td>0.13</td>
 <td>79.4</td>
-<td>louse chitin-binding vs host lysozyme</td>
+<td>louse CBM_14 chitin-binding vs host lysozyme</td>
 </tr>
 </tbody>
 </table>
+<p>These five carry the <code>REVIEW CORE</code> flag in the candidate table: a named mechanism on both sides and a fold pairing with precedent. The other four STRONG hits (inorganic pyrophosphatase, plasma alpha-L-fucosidase, glucosidase 2 subunit beta, microsomal triglyceride transfer protein) are all flagged <strong>conserved/homologous complex</strong> — the model is likely recovering a known fold pairing rather than a parasite–host interaction, so they rank high without meaning much.</p>
 <p><img src="https://sr320.github.io/tumbling-oysters/posts/99-caligus-salmon-ppi/images/ipsae-vs-plddt.png" class="img-fluid"></p>
 <p>Each point is one folded shortlist pair; dashed lines are the two thresholds. The STRONG set is the upper-right quadrant, and the MODERATE points to the left of the pLDDT line are the ones that dock confidently by PAE but not by local confidence.</p>
 <p>The trypsin-II pair is the strongest result in the project: rank 1 on sequence evidence and rank 3 on independent structural evidence, from two channels the data show are otherwise poorly correlated. The TIMP2 and Kunitz–coagulation pairs match the inhibitor-fold compatibility table built from the tick literature, which was never fitted to anything here.</p>
-<p>Two promiscuity flags, not findings: louse protein Crog2_029252 accounts for 4 of the 22 hits, all against mucin/ECM proteins, and salmon <em>llph</em> appears in 4 MODERATE hits with 4 different louse proteins at high ipTM but low interface pLDDT (55–66). Both look like sticky-surface artefacts, and the STRONG pLDDT term already excludes the <em>llph</em> set.</p>
+<p>Three artefact patterns, not findings. Louse protein Crog2_029252 is a 59-aa <strong>Integrin_beta</strong> fragment and accounts for 4 of the 22 tiered hits (10 across the shortlist), every one against a salmon integrin alpha subunit — that is the model rebuilding the canonical integrin αβ heterodimer, not a secreted effector. And salmon <em>llph</em> appears in 4 MODERATE hits whose louse partners are all <strong>ribosomal proteins rescued into the secretome by a de novo signal-peptide call</strong>, at high ipTM but low interface pLDDT (55–66). A third, HRas, is a cytoplasmic lipid-anchored protein that a secreted louse protein never meets. All are artefacts, and the STRONG pLDDT term already excludes the <em>llph</em> set. After this review roughly <strong>5 of the 22 tiered pairs survive</strong>.</p>
+</section>
+<section id="the-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-data">The data</h2>
+<p>Both the browsable results and the underlying table ship with this post:</p>
+<ul>
+<li><p><a href="data/ppi_results_dashboard.html"><strong><code>ppi_results_dashboard.html</code></strong></a> — a self-contained dashboard (open it in a browser, no server needed): the GPU campaign timeline batch by batch, control calibration with the metric scatter and thresholds drawn, the as-used vs seed-matched recalibration table, the channel AUROCs, and a sortable, searchable table of all 505 candidates with a filtered-TSV download.</p></li>
+<li><p><a href="data/ppi_dashboard_candidates.tsv"><code>ppi_dashboard_candidates.tsv</code></a> — all <strong>505 folded pairs</strong>, one row each: louse protein and its secretome tier and Pfam domains, salmon symbol and product name, accessibility class, which selection tier put the pair in the shortlist, the five interface metrics, the three sequence-channel scores, and the review flags.</p></li>
+</ul>
+<p>Two columns are worth knowing before reading it:</p>
+<ul>
+<li><strong><code>selection_tier</code></strong> — why the pair was folded at all: <code>T1_interolog_pair_specific</code> (222), <code>T2_top_combined_prior</code> (140), <code>T3_mechanism_representative</code> (96), <code>T4_resistance_target</code> (47). Given the channel results above, T1 is the only tier with demonstrated pair-level support.</li>
+<li><strong><code>accessibility_class</code></strong> — whether the host partner is actually reachable by a secreted louse protein: <code>secreted</code> (217), <code>pm_ectodomain</code> (142), <code>secreted_ecm</code> (60), plus smaller classes where the signal peptide is a feature-rule or de novo call (<code>secreted_sp_feature</code> 39, <code>secreted_denovo</code> 21, <code>pm_ectodomain_denovo_noSP</code> 18). The de novo classes are where the <em>llph</em> artefacts live.</li>
+</ul>
+<p><strong><code>review_flags</code></strong> is the column to filter on first. <code>REVIEW CORE</code> marks the five pairs above; <code>conserved/homologous complex</code>, <code>promiscuous louse chain</code>, <code>de novo SP rescue</code> and <code>topology: cytoplasmic/lipid-anchor</code> each mark a reason a high score may not mean a real host–parasite interaction. <code>MODERATE tier (47% shuffled FPR)</code> is a reminder that MODERATE is a weak call by construction.</p>
 </section>
 <section id="the-honest-negative-result" class="level2">
 <h2 class="anchored" data-anchor-id="the-honest-negative-result">The honest negative result</h2>
@@ -264,6 +280,7 @@
 <li><strong>No <em>C. rogercresseyi</em> expression data was obtainable</strong>, so all infestation responses are <em>L. salmonis</em> proxies.</li>
 <li><strong>41.6% of the secretome has no Pfam domain,</strong> so the DDI channel is blind to it.</li>
 <li><strong>Catalytic “degraded” flags mostly reflect 5’-partial ORFs</strong>, not genuinely inactive homologues.</li>
+<li><strong>The positive controls are thrombin-heavy.</strong> 16 of 34 are thrombin complexes, so the sensitivity figure rests on fewer independent complexes than the count suggests.</li>
 </ol>
 </section>
 <section id="next" class="level2">

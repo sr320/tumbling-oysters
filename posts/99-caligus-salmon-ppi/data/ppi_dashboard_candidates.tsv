@@ -1,0 +1,506 @@
+final_rank	struct_tier	louse	louse_tier	pfam	symbol	product_name	accessibility_class	selection_tier	ipsae_reimpl	if_plddt	iptm_groups	pdockq2	n_contacts_cb8	n_seeds	il_pair_specific	llm_score	rank_weighted	struct_rank_score	review_flags
+1	STRONG	Crog2_009572	A	Pyrophosphatase	LOC106577215	inorganic pyrophosphatase	secreted_sp_feature	T1_interolog_pair_specific	0.9028	83.66	0.8795	0.2463	76	1	0.573	0.03	85.0	3.955	conserved/homologous complex
+2	STRONG	Crog2_029252	B	Integrin_beta	LOC106582201	integrin alpha-4	pm_ectodomain	T1_interolog_pair_specific	0.7544	91.78	0.8571	0.5714	40	1	0.566	0.05	640.0	3.948	conserved/homologous complex; promiscuous louse chain (10 tiered hits)
+3	STRONG	Crog2_030737	A	Kazal_1,Kazal_2	trp-ii	trypsin-2	secreted	T1_interolog_pair_specific	0.8908	92.74	0.8997	0.7978	69	1	0.533	0.25	1.0	3.937	REVIEW CORE
+4	STRONG	Crog2_005225	A	Alpha_L_fucos,Fucosidase_C	fuca2	plasma alpha-L-fucosidase	secreted_sp_feature	T1_interolog_pair_specific	0.8087	86.44	0.8433	0.3163	94	1	0.552	0.03	10.0	3.935	conserved/homologous complex
+5	STRONG	Crog2_001628	A	Glyco_hydro_31_2nd,Gal_mutarotas_2,Glyco_hydro_31_3rd	LOC106607221	glucosidase 2 subunit beta	secreted_sp_feature	T1_interolog_pair_specific	0.8252	79.86	0.7975	0.0421	106	1	0.533	0.03	68.0	3.912	
+6	STRONG	Crog2_005910	A	Thioredoxin_6,Thioredoxin	LOC106609996	microsomal triglyceride transfer protein isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.806	90.04	0.8651	0.5334	129	1	0.502	0.04	3823.0	3.899	
+7	STRONG	Crog2_002777	A	Peptidase_M10,fn2,PG_binding_1,Hemopexin	timp2	Metalloproteinase inhibitor 2 precursor	secreted_ecm	T2_top_combined_prior	0.8692	78.53	0.7168	0.1766	218	1	0.008	0.2	11323.0	3.856	REVIEW CORE
+8	STRONG	Crog2_022439	B	Kunitz_BPTI	LOC106612366	coagulation factor IX	secreted	T3_mechanism_representative	0.7511	86.08	0.6881	0.5271	67	1				3.819	REVIEW CORE; no sequence-channel scores (T3/T4)
+9	MODERATE	Crog2_029252	B	Integrin_beta	LOC106605814	integrin alpha-10	pm_ectodomain	T1_interolog_pair_specific	0.5668	89.16	0.7857	0.3464	33	1	0.589	0.03	15.0	2.933	MODERATE tier (47% shuffled FPR); conserved/homologous complex; promiscuous louse chain (10 tiered hits)
+10	MODERATE	Crog2_029252	B	Integrin_beta	LOC106561820	integrin alpha-1	pm_ectodomain	T1_interolog_pair_specific	0.6572	87.09	0.8176	0.3871	41	1	0.573	0.05	553.0	2.932	MODERATE tier (47% shuffled FPR); conserved/homologous complex; promiscuous louse chain (10 tiered hits)
+11	MODERATE	Crog2_029252	B	Integrin_beta	LOC106561807	integrin alpha-2	pm_ectodomain	T1_interolog_pair_specific	0.6371	91.73	0.811	0.4381	32	1	0.564	0.06	19.0	2.928	MODERATE tier (47% shuffled FPR); conserved/homologous complex; promiscuous louse chain (10 tiered hits)
+12	MODERATE	Crog2_004405	B	MGAT4_cons,MGAT4A_C	LOC106586781	alpha-1,3-mannosyl-glycoprotein 4-beta-N-acetylglucosaminyltransferase A isoform X1	secreted	T1_interolog_pair_specific	0.8221	74.54	0.7116	0.0651	224	1	0.561	0.03	18288.0	2.896	MODERATE tier (47% shuffled FPR)
+13	MODERATE	Crog2_023365	A	C1-set	LOC106584651	protein disulfide-isomerase A3	pm_ectodomain	T1_interolog_pair_specific	0.337	89.15	0.7025	0.09	24	1	0.568	0.05	16977.0	2.879	MODERATE tier (47% shuffled FPR)
+14	MODERATE	Crog2_005731	A	ANF_receptor,Peripla_BP_6	LOC106569981	glutamate receptor ionotropic, kainate 5 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.6411	84.36	0.7521	0.2316	102	1	0.51	0.04	832.0	2.878	MODERATE tier (47% shuffled FPR)
+15	MODERATE	Crog2_033262	C	Kunitz_BPTI	f10	coagulation factor X	secreted	T3_mechanism_representative	0.6946	82.78	0.8214	0.3545	75	3	0.136	0.15	1137.0	2.867	REVIEW CORE; MODERATE tier (47% shuffled FPR); promiscuous louse chain (4 tiered hits)
+16	MODERATE	Crog2_020162	B	Ribosomal_L14	llph	protein LLP homolog	secreted_denovo	T1_interolog_pair_specific	0.8285	65.6	0.8801	0.2263	78	1	0.536	0.05	19135.0	2.784	MODERATE tier (47% shuffled FPR); de novo SP rescue; conserved/homologous complex
+17	MODERATE	Crog2_036162	B	Ribosomal_L1	llph	protein LLP homolog	secreted_denovo	T1_interolog_pair_specific	0.9234	60.71	0.9241	0.1858	108	1	0.591	0.03	17167.0	2.782	MODERATE tier (47% shuffled FPR); de novo SP rescue; conserved/homologous complex
+18	MODERATE	Crog2_023350	B	Ribosomal_L14e	llph	protein LLP homolog	secreted_denovo	T1_interolog_pair_specific	0.7044	65.67	0.8113	0.1884	91	1	0.555	0.03	17610.0	2.779	MODERATE tier (47% shuffled FPR); de novo SP rescue; conserved/homologous complex
+19	MODERATE	Crog2_021270	A	CBM_14	lyz	lysozyme C	secreted_sp_feature	T4_resistance_target	0.5206	79.4	0.7693	0.1321	63	3				2.771	REVIEW CORE; MODERATE tier (47% shuffled FPR); no sequence-channel scores (T3/T4)
+20	MODERATE	Crog2_017835	A	Phospholip_A2_2	LOC106588082	group XIIB secretory phospholipase A2-like protein isoform X1	secreted	T1_interolog_pair_specific	0.7668	66.07	0.8122	0.0658	131	1	0.508	0.05	32323.0	2.76	MODERATE tier (47% shuffled FPR)
+21	MODERATE	Crog2_029129	B		rash	GTPase HRas isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.7441	57.67	0.7596	0.1155	126	3	0.685	0.03	18726.0	2.755	MODERATE tier (47% shuffled FPR); topology: cytoplasmic/lipid-anchor
+22	MODERATE	Crog2_028810	B	Ribosomal_L7Ae	llph	protein LLP homolog	secreted_denovo	T1_interolog_pair_specific	0.8067	55.85	0.9005	0.1097	137	1	0.565	0.02	20630.0	2.71	MODERATE tier (47% shuffled FPR); de novo SP rescue; conserved/homologous complex
+23	WEAK	Crog2_016376	C	Arf,Roc,SRPRB,Ras,Gtr1_RagA,MMR_HSR1	LOC106606568	ADP-ribosylation factor-binding protein GGA3	pm_ectodomain	T1_interolog_pair_specific	0.4451	71.98	0.7437	0.0559	124	3	0.694	0.03	2243.0	1.864	
+24	WEAK	Crog2_009190	A	Peptidase_C1,Inhibitor_I29	LOC106611588	cystatin	secreted	T2_top_combined_prior	0.5345	88.03	0.6304	0.1837	85	1	0.103	0.3	2360.0	1.854	
+25	WEAK	Crog2_009343	A	Peptidase_C1,Inhibitor_I29	cst7	cystatin-F precursor	secreted_sp_feature	T2_top_combined_prior	0.4732	81.87	0.579	0.0855	90	1	0.125	0.15	6145.0	1.839	
+26	WEAK	Crog2_029252	B	Integrin_beta	itga5	integrin alpha-5	pm_ectodomain	T1_interolog_pair_specific	0.0109	89.1	0.543	0.0396	32	3	0.638	0.05	178.0	1.839	conserved/homologous complex; promiscuous louse chain (10 tiered hits)
+27	WEAK	Crog2_016394	B	Cyt-b5	LOC106603476	membrane-associated progesterone receptor component 1	secreted	T1_interolog_pair_specific	0.3585	76.56	0.5868	0.0736	34	1	0.547	0.05	2258.0	1.828	
+28	WEAK	Crog2_018134	B	Fz	lrp6	low-density lipoprotein receptor-related protein 6	pm_ectodomain	T1_interolog_pair_specific	0.0886	87.64	0.4173	0.0314	30	1	0.563	0.03	19552.0	1.824	
+29	WEAK	Crog2_008727	B	Glyco_transf_43	LOC106612958	galactosylgalactosylxylosylprotein 3-beta-glucuronosyltransferase 1	secreted	T1_interolog_pair_specific	0.8817	64.69	0.8382	0.0218	295	1	0.59	0.03	677.0	1.814	
+30	WEAK	Crog2_007092	A	G-alpha,Arf	LOC106579482	vasoactive intestinal polypeptide receptor 2	pm_ectodomain	T1_interolog_pair_specific	0.8213	67.17	0.7814	0.0364	162	1	0.553	0.03	836.0	1.811	
+31	WEAK	Crog2_002680	A	Peptidase_M10,fn2,Hemopexin,PG_binding_1	timp2	Metalloproteinase inhibitor 2 precursor	secreted_ecm	T2_top_combined_prior	0.7275	72.06	0.4481	0.0432	168	1	0.016	0.15	12987.0	1.793	
+32	WEAK	Crog2_004870	A	Glyco_hydro_18,CBM_14	LOC106565087	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.8123	76.67	0.6492	0.0292	298	1	0.0	0.12	3979.0	1.793	
+33	WEAK	Crog2_033979	B		phka1a	phosphorylase b kinase regulatory subunit alpha, skeletal muscle isoform isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.6156	69.28	0.7548	0.0481	117	1	0.519	0.02	35019.0	1.784	topology: cytoplasmic/lipid-anchor
+34	WEAK	Crog2_017835	A	Phospholip_A2_2	LOC106602299	group XIIA secretory phospholipase A2	secreted	T1_interolog_pair_specific	0.6011	68.72	0.7104	0.1013	149	1	0.524	0.1	26554.0	1.778	
+35	WEAK	Crog2_031306	B	Ribosomal_L6	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.7456	60.32	0.8593	0.0276	154	3	0.677	0.02	1402.0	1.777	conserved/homologous complex
+36	WEAK	Crog2_033262	C	Kunitz_BPTI	chid1	chitinase domain-containing protein 1	secreted	T4_resistance_target	0.6027	77.92	0.767	0.1675	84	3				1.775	promiscuous louse chain (4 tiered hits); no sequence-channel scores (T3/T4)
+37	WEAK	Crog2_017961	A	Kunitz_BPTI	proca	vitamin K-dependent protein C	secreted	T2_top_combined_prior	0.5585	77.99	0.5748	0.1137	95	1	0.0	0.3	655.0	1.769	
+38	WEAK	Crog2_033262	C	Kunitz_BPTI	proca	vitamin K-dependent protein C	secreted	T2_top_combined_prior	0.3897	73.16	0.6375	0.0674	63	1	0.056	0.15	3036.0	1.769	promiscuous louse chain (4 tiered hits)
+39	WEAK	Crog2_033979	B		LOC106574892	phosphorylase b kinase regulatory subunit alpha, liver isoform isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.7416	66.11	0.7619	0.0378	136	1	0.521	0.04	34155.0	1.767	topology: cytoplasmic/lipid-anchor
+40	WEAK	Crog2_035927	B		npc2.1	NPC intracellular cholesterol transporter 2 precursor	secreted	T1_interolog_pair_specific	0.571	68.26	0.8142	0.1541	73	1	0.52	0.03	34952.0	1.766	
+41	WEAK	Crog2_007092	A	G-alpha,Arf	LOC106569811	vasoactive intestinal polypeptide receptor isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.831	62.56	0.7972	0.044	185	1	0.547	0.03	948.0	1.765	
+42	WEAK	Crog2_004870	A	Glyco_hydro_18,CBM_14	chid1	chitinase domain-containing protein 1	secreted	T4_resistance_target	0.7301	73.9	0.5415	0.0355	257	3	0.0	0.1	16941.0	1.763	
+43	WEAK	Crog2_015223	A	Ephrin	LOC106565894	ephrin type-B receptor 2 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.5349	68.78	0.7702	0.0544	112	1	0.513	0.03	1886.0	1.763	
+44	WEAK	Crog2_012726	B	eIF-6	llph	protein LLP homolog	secreted_denovo	T1_interolog_pair_specific	0.4466	64.96	0.6071	0.0577	100	1	0.588	0.03	15888.0	1.76	de novo SP rescue
+45	WEAK	Crog2_004870	A	Glyco_hydro_18,CBM_14	LOC106565088	acidic mammalian chitinase	secreted	T3_mechanism_representative	0.723	73.08	0.5916	0.0256	373	3	0.0	0.12	3979.0	1.758	
+46	WEAK	Crog2_033262	C	Kunitz_BPTI	LOC106561958	prothrombin	secreted	T2_top_combined_prior	0.5213	70.18	0.7438	0.0472	120	1	0.058	0.15	2965.0	1.758	promiscuous louse chain (4 tiered hits)
+47	WEAK	Crog2_015929	A	Sod_Cu	sod3	extracellular superoxide dismutase [Cu-Zn] precursor	secreted	T3_mechanism_representative	0.3417	87.56	0.6824	0.0777	70	3				1.756	no sequence-channel scores (T3/T4)
+48	WEAK	Crog2_021252	B	G-gamma	LOC106598933	guanine nucleotide-binding protein G(I)/G(S)/G(O) subunit gamma-12	pm_ectodomain	T1_interolog_pair_specific	0.3477	70.92	0.4365	0.0976	57	1	0.516	0.03	21637.0	1.756	topology: cytoplasmic/lipid-anchor
+49	WEAK	Crog2_000402	A	Sod_Cu,Kunitz_BPTI	sod3	extracellular superoxide dismutase [Cu-Zn] precursor	secreted	T3_mechanism_representative	0.3678	79.46	0.5092	0.0319	140	3				1.748	no sequence-channel scores (T3/T4)
+50	WEAK	Crog2_017961	A	Kunitz_BPTI	mbl2	mannose-binding protein C	secreted	T4_resistance_target	0.6629	72.41	0.7826	0.1833	51	3				1.745	no sequence-channel scores (T3/T4)
+51	WEAK	Crog2_032543	B	Ribosomal_S25	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.3261	64.07	0.7119	0.0298	123	3	0.668	0.03	1163.0	1.744	conserved/homologous complex
+52	WEAK	Crog2_036393	B		rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.6946	56.92	0.8568	0.0292	99	3	0.69	0.04	4100.0	1.741	
+53	WEAK	Crog2_011027	A	Trypsin	serpina10a	serpin peptidase inhibitor, clade A (alpha-1 antiproteinase, antitrypsin), member 10a	secreted	T2_top_combined_prior	0.4509	76.09	0.5402	0.0668	71	1	0.0	0.18	1927.0	1.738	
+54	WEAK	Crog2_011027	A	Trypsin	LOC106595495	complement C3	secreted	T4_resistance_target	0.4314	76.5	0.7183	0.0603	98	3	0.0	0.1	4775.0	1.735	
+55	WEAK	Crog2_021407	A	CBM_14	LOC106590133	macrophage mannose receptor 1 isoform X1	pm_ectodomain	T4_resistance_target	0.5558	72.46	0.775	0.0524	88	3				1.73	no sequence-channel scores (T3/T4)
+56	WEAK	Crog2_008039	B	wnt	ror2	tyrosine-protein kinase transmembrane receptor ROR2 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.48	56.83	0.7322	0.0116	326	1	0.569	0.04	3736.0	1.683	
+57	WEAK	Crog2_011900	B	Trypsin	LOC106561958	prothrombin	secreted	T3_mechanism_representative	0.5852	67.77	0.734	0.0434	97	1				1.677	no sequence-channel scores (T3/T4)
+58	WEAK	Crog2_022601	A	CBM_14	LOC106578890	C-type lectin domain family 4 member M	secreted_sp_feature	T4_resistance_target	0.4931	68.56	0.7191	0.0603	78	3				1.674	no sequence-channel scores (T3/T4)
+59	WEAK	Crog2_007635	C	Serpin	plg	plasminogen	secreted	T2_top_combined_prior	0.3653	70.11	0.3735	0.0555	64	1	0.0	0.12	5876.0	1.673	
+60	WEAK	Crog2_011027	A	Trypsin	LOC106586139	complement C3	secreted	T3_mechanism_representative	0.4007	69.31	0.5947	0.058	70	1	0.0	0.4	354.0	1.667	
+61	WEAK	Crog2_007092	A	G-alpha,Arf	LOC106580753	glucagon receptor isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.7754	51.79	0.7222	0.0122	253	1	0.542	0.04	940.0	1.662	
+62	WEAK	Crog2_018286	B	HTH_ARX1_PA2G4	LOC106565537	receptor tyrosine-protein kinase erbB-3 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	81.15	0.2428	0.0099	67	3	0.662	0.04	19768.0	1.646	
+63	WEAK	Crog2_015592	B	Ras,Roc,Arf	LOC106563690	cytokine receptor common subunit gamma	pm_ectodomain	T1_interolog_pair_specific	0.3241	54.15	0.7119	0.0129	289	1	0.595	0.05	25339.0	1.64	
+64	WEAK	Crog2_029252	B	Integrin_beta	itga11b	integrin alpha-11	pm_ectodomain	T1_interolog_pair_specific	0.0	83.66	0.3182	0.0124	27	1	0.602	0.05	352.0	1.638	conserved/homologous complex; promiscuous louse chain (10 tiered hits)
+65	WEAK	Crog2_029252	B	Integrin_beta	LOC106572511	integrin alpha-5	pm_ectodomain	T1_interolog_pair_specific	0.0	88.32	0.4673	0.0229	32	1	0.581	0.04	536.0	1.637	conserved/homologous complex; promiscuous louse chain (10 tiered hits)
+66	WEAK	Crog2_034888	B	ThiF	ube2g2	ubiquitin-conjugating enzyme E2 G2	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.1752	54.91	0.7098	0.0314	115	3	0.727	0.03	706.0	1.633	de novo SP rescue
+67	WEAK	Crog2_029252	B	Integrin_beta	LOC106593628	fibronectin isoform X1	secreted_ecm	T1_interolog_pair_specific	0.0	78.4	0.1671	0.0093	29	3	0.653	0.05	115.0	1.632	promiscuous louse chain (10 tiered hits)
+68	WEAK	Crog2_033881	B	Integrin_A_Ig_2	LOC106572912	laminin subunit alpha-5	secreted_ecm	T1_interolog_pair_specific	0.0	80.43	0.1405	0.0093	58	1	0.572	0.05	29478.0	1.616	
+69	WEAK	Crog2_016029	B	Mesd	lrp6	low-density lipoprotein receptor-related protein 6	pm_ectodomain	T1_interolog_pair_specific	0.0	78.77	0.391	0.0108	70	1	0.583	0.03	27727.0	1.616	
+70	WEAK	Crog2_022439	B	Kunitz_BPTI	plaub	plasminogen activator, urokinase b	secreted	T3_mechanism_representative	0.7138	59.25	0.6966	0.036	163	1				1.61	no sequence-channel scores (T3/T4)
+71	WEAK	Crog2_029252	B	Integrin_beta	LOC106581859	integrin beta-2	pm_ectodomain	T1_interolog_pair_specific	0.0	81.45	0.1922	0.0098	66	1	0.555	0.04	3749.0	1.607	conserved/homologous complex; promiscuous louse chain (10 tiered hits)
+72	WEAK	Crog2_001401	C	CH,EFhand_Ca_insen,Spectrin	itga5	integrin alpha-5	pm_ectodomain	T1_interolog_pair_specific	0.0	78.7	0.1875	0.0093	35	1	0.565	0.03	32375.0	1.604	
+73	WEAK	Crog2_029252	B	Integrin_beta	LOC106600863	integrin alpha-3	pm_ectodomain	T1_interolog_pair_specific	0.0	81.13	0.2571	0.0123	14	1	0.538	0.03	1064.0	1.592	conserved/homologous complex; promiscuous louse chain (10 tiered hits)
+74	WEAK	Crog2_008782	B	GalP_UDP_tr_C,GalP_UDP_transf	LOC100380852	ectonucleotide pyrophosphatase/phosphodiesterase family member 1	secreted	T1_interolog_pair_specific	0.0	81.83	0.2655	0.0104	94	1	0.526	0.08	30954.0	1.587	
+75	WEAK	Crog2_001638	A	Glyco_hydro_38N,Glyco_hydro_38C,Alpha-mann_mid	man2c1	alpha-mannosidase 2C1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	81.78	0.3092	0.0117	98	1	0.523	0.05	2343.0	1.584	de novo SP rescue
+76	WEAK	Crog2_002989	A	Glyco_hydro_35,BetaGal_ABD_1,BetaGal_gal-bd,BetaGal_ABD2,Glyco_hydro_42	glb1l	beta-galactosidase-1-like protein	secreted_sp_feature	T1_interolog_pair_specific	0.0	81.72	0.4324	0.0135	101	1	0.517	0.1	55.0	1.58	
+77	WEAK	Crog2_033881	B	Integrin_A_Ig_2	LOC106566459	laminin subunit beta-2	secreted_ecm	T1_interolog_pair_specific	0.0	85.66	0.2789	0.0116	46	1	0.507	0.05	34855.0	1.577	
+78	WEAK	Crog2_002989	A	Glyco_hydro_35,BetaGal_ABD_1,BetaGal_gal-bd,BetaGal_ABD2,Glyco_hydro_42	ctsa	lysosomal protective protein precursor	secreted_sp_feature	T1_interolog_pair_specific	0.0	86.37	0.1708	0.0098	68	1	0.502	0.05	5739.0	1.573	
+79	WEAK	Crog2_011989	A	Trypsin	LOC106603687	heparin cofactor 2	secreted	T2_top_combined_prior	0.4697	57.84	0.75	0.0199	140	1	0.0	0.18	2539.0	1.568	
+80	WEAK	Crog2_000961	A	Glyco_hydro_18,CBM_14	LOC106565309	acidic mammalian chitinase-like	secreted	T3_mechanism_representative	0.0	84.74	0.3009	0.0122	202	3	0.213	0.2	87.0	1.567	
+81	WEAK	Crog2_027905	B	S_100,EF-hand_7	LOC106561857	annexin A2	secreted_ecm	T1_interolog_pair_specific	0.2764	52.43	0.733	0.0274	73	1	0.519	0.06	387.0	1.566	
+82	WEAK	Crog2_009343	A	Peptidase_C1,Inhibitor_I29	LOC106611588	cystatin	secreted	T2_top_combined_prior	0.0	85.07	0.2787	0.013	58	1	0.099	0.22	5272.0	1.562	
+83	WEAK	Crog2_004187	A	5_nucleotid_C,Metallophos	nt5e	5'-nucleotidase	pm_ectodomain	T3_mechanism_representative	0.0	78.83	0.1637	0.0094	42	1	0.346	0.35	38.0	1.555	
+84	WEAK	Crog2_009264	A	Peptidase_C1,Propeptide_C1	LOC106589915	cystatin	secreted	T2_top_combined_prior	0.0	80.49	0.1519	0.0104	52	1	0.088	0.1	10230.0	1.553	
+85	WEAK	Crog2_029447	C	Calreticulin	crp	c-reactive protein, pentraxin-related precursor	secreted	T4_resistance_target	0.0	85.12	0.1285	0.0102	61	3				1.503	no sequence-channel scores (T3/T4)
+86	WEAK	Crog2_006204	A	Peptidase_M14,Propep_M14	col28a2a	collagen, type XXVIII, alpha 2a isoform X1	secreted_ecm	T2_top_combined_prior	0.0	84.86	0.4638	0.0157	67	1	0.0	0.1	18232.0	1.502	
+87	WEAK	Crog2_012277	A	Ig_3,I-set,Kazal_2,IGFBP	lyz	lysozyme C	secreted_sp_feature	T4_resistance_target	0.0	84.15	0.4141	0.0227	63	3				1.5	no sequence-channel scores (T3/T4)
+88	WEAK	Crog2_002927	A	An_peroxidase	mpx	eosinophil peroxidase	secreted_sp_feature	T3_mechanism_representative	0.0	80.42	0.3298	0.0112	110	1				1.492	no sequence-channel scores (T3/T4)
+89	WEAK	Crog2_008436	C	Peptidase_C1,Propeptide_C1	cst7	cystatin-F precursor	secreted_sp_feature	T2_top_combined_prior	0.0	79.83	0.1592	0.0104	51	1	0.0	0.22	14864.0	1.491	
+90	WEAK	Crog2_019934	C	Trypsin	tfa	serotransferrin-1 precursor	secreted	T4_resistance_target	0.0	79.47	0.3729	0.012	63	3				1.49	no sequence-channel scores (T3/T4)
+91	WEAK	Crog2_034618	C	Calreticulin	LOC106566534	complement C1q tumor necrosis factor-related protein 3	secreted	T3_mechanism_representative	0.0	79.01	0.4963	0.0218	112	1	0.0	0.22	7230.0	1.489	
+92	WEAK	Crog2_034618	C	Calreticulin	LOC106563105	complement C1q-like protein 2	secreted	T3_mechanism_representative	0.0	78.81	0.1394	0.0107	48	1	0.0	0.12	11700.0	1.488	
+93	WEAK	Crog2_014113	A	Metallophos	LOC106565054	snake venom 5'-nucleotidase isoform X1	pm_ectodomain	T3_mechanism_representative	0.0	78.8	0.3885	0.0115	78	1				1.487	no sequence-channel scores (T3/T4)
+94	WEAK	Crog2_004187	A	5_nucleotid_C,Metallophos	LOC106565054	snake venom 5'-nucleotidase isoform X1	pm_ectodomain	T3_mechanism_representative	0.0	78.57	0.1921	0.0095	117	1				1.485	no sequence-channel scores (T3/T4)
+95	WEAK	Crog2_007179	C	Calreticulin	LOC106609001	complement C1q-like protein 2	secreted	T3_mechanism_representative	0.0	78.46	0.3012	0.0141	146	3	0.0	0.18	5547.0	1.484	
+96	WEAK	Crog2_029447	C	Calreticulin	LOC106605128	complement C3	secreted	T4_resistance_target	0.0	78.42	0.1769	0.0094	106	3	0.0	0.08	25923.0	1.483	
+97	none	Crog2_032889	B	GDI	rab9a	ras-related protein Rab-9A	pm_ectodomain	T1_interolog_pair_specific	0.2993	74.61	0.6056	0.0382	50	3	0.694	0.02	1942.0	0.85	topology: cytoplasmic/lipid-anchor
+98	none	Crog2_009767	A	APP_N,APP_Cu_bd	cntn4	contactin-4 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.5288	71.1	0.553	0.0138	279	1	0.573	0.04	5067.0	0.834	topology: cytoplasmic/lipid-anchor
+99	none	Crog2_000931	A	Glyco_hydro_18,CBM_14	LOC106577510	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.6063	77.17	0.4982	0.023	228	1	0.104	0.15	911.0	0.832	
+100	none	Crog2_003001	A	Laminin_N,NTR,EGF_laminin,EGF_LMN_ATRN	unc5ca	netrin receptor UNC5C isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.4381	71.06	0.544	0.0141	266	1	0.564	0.06	2589.0	0.811	
+101	none	Crog2_017539	B	Metallophos	LOC106584546	uncharacterized protein LOC106584546	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.1906	73.25	0.5014	0.0335	88	3	0.613	0.1	179.0	0.81	de novo SP rescue
+102	none	Crog2_000931	A	Glyco_hydro_18,CBM_14	LOC106565087	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.6357	71.56	0.5576	0.0225	263	1	0.228	0.12	161.0	0.795	
+103	none	Crog2_016467	B		jak1	tyrosine-protein kinase JAK1	pm_ectodomain	T1_interolog_pair_specific	0.6459	66.58	0.4863	0.0173	312	1	0.559	0.04	30994.0	0.79	
+104	none	Crog2_002680	A	Peptidase_M10,fn2,Hemopexin,PG_binding_1	LOC106562416	72 kDa type IV collagenase	secreted_ecm	T1_interolog_pair_specific	0.0104	74.11	0.3165	0.0107	180	1	0.587	0.12	3.0	0.76	
+105	none	Crog2_008039	B	wnt	LOC106575172	frizzled-7-A	pm_ectodomain	T1_interolog_pair_specific	0.1324	68.9	0.3668	0.0155	135	3	0.628	0.03	1989.0	0.753	
+106	none	Crog2_034271	B		LOC106601686	uncharacterized protein C16orf52 homolog B	pm_ectodomain_sp_feature	T1_interolog_pair_specific	0.3876	62.21	0.652	0.0416	170	3	0.684	0.03	17290.0	0.746	
+107	none	Crog2_011006	C	Peptidase_C1	si:busm1-57f23.1	cystatin-1	secreted_sp_feature	T2_top_combined_prior	0.3251	72.6	0.5361	0.034	86	1	0.043	0.4	5569.0	0.74	
+108	none	Crog2_004388	A	Polysacc_deac_1,CBM_14,Ldl_recept_a	LOC106613533	galectin-3-binding protein A	secreted_sp_feature	T4_resistance_target	0.4585	75.63	0.5943	0.0297	104	3	0.0	0.25	11862.0	0.738	
+109	none	Crog2_006418	A	Trypsin,Trypsin_2	LOC106605127	complement C3	secreted	T4_resistance_target	0.4406	72.55	0.6309	0.0372	199	3	0.0	0.1	4775.0	0.714	
+110	none	Crog2_004870	A	Glyco_hydro_18,CBM_14	LOC106577510	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.3773	73.35	0.4168	0.0138	255	1	0.0	0.12	3979.0	0.712	
+111	none	Crog2_032889	B	GDI	LOC106585482	ras-related protein Rab-35	pm_ectodomain	T1_interolog_pair_specific	0.1191	69.53	0.5256	0.0347	57	1	0.532	0.02	1125.0	0.708	topology: cytoplasmic/lipid-anchor
+112	none	Crog2_002435	C	Hsp90_C,Hsp90_M,HATPase_c_3	erbb2	receptor tyrosine-protein kinase erbB-2	pm_ectodomain	T1_interolog_pair_specific	0.0105	70.71	0.2738	0.011	287	1	0.55	0.02	634.0	0.704	
+113	none	Crog2_006063	A	zf-RING_14,IBR_2,zf-RING_12,IBR_1,IBR	ube2g2	ubiquitin-conjugating enzyme E2 G2	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.1832	64.13	0.5024	0.0189	156	1	0.594	0.02	3825.0	0.701	de novo SP rescue
+114	none	Crog2_017961	A	Kunitz_BPTI	LOC106561958	prothrombin	secreted	T2_top_combined_prior	0.562	69.15	0.6638	0.033	228	1	0.0	0.2	1579.0	0.692	
+115	none	Crog2_016680	B	Ribosomal_L5,Ribosomal_L5_C	llph	protein LLP homolog	secreted_denovo	T1_interolog_pair_specific	0.2406	61.11	0.6016	0.0169	254	3	0.614	0.03	13871.0	0.69	de novo SP rescue; conserved/homologous complex
+116	none	Crog2_032889	B	GDI	LOC106605895	ras-related protein Rab-13	pm_ectodomain	T1_interolog_pair_specific	0.0108	69.52	0.4559	0.0156	59	1	0.542	0.05	6869.0	0.69	topology: cytoplasmic/lipid-anchor
+117	none	Crog2_021407	A	CBM_14	LOC106565088	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.2772	74.58	0.6615	0.0311	86	1	0.0	0.2	2396.0	0.69	
+118	none	Crog2_006418	A	Trypsin,Trypsin_2	LOC106595495	complement C3	secreted	T3_mechanism_representative	0.3607	71.8	0.5746	0.0249	146	1	0.0	0.4	354.0	0.689	
+119	none	Crog2_017961	A	Kunitz_BPTI	proza	coagulation factor X	secreted	T3_mechanism_representative	0.4559	65.41	0.6742	0.0395	136	3	0.053	0.2	760.0	0.688	
+120	none	Crog2_003479	A	Trypsin,fn2,PAN_4	serpina10b	protein Z-dependent protease inhibitor	secreted	T2_top_combined_prior	0.4674	69.77	0.4256	0.0285	132	1	0.0	0.2	2036.0	0.688	
+121	none	Crog2_026473	B	Ribosomal_L18,Ribosomal_L27A	btf3	transcription factor BTF3 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.3732	55.87	0.6143	0.0254	162	3	0.665	0.03	11694.0	0.684	de novo SP rescue; conserved/homologous complex
+122	none	Crog2_032889	B	GDI	rab5a	ras-related protein Rab-5A	pm_ectodomain	T1_interolog_pair_specific	0.1813	62.96	0.6046	0.0204	59	1	0.565	0.03	6496.0	0.673	topology: cytoplasmic/lipid-anchor
+123	none	Crog2_024128	B	Ribosomal_L27e,KOW	btf3	transcription factor BTF3 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.2153	60.28	0.4357	0.0159	203	1	0.607	0.03	13999.0	0.673	de novo SP rescue; conserved/homologous complex
+124	none	Crog2_014935	B	Lipocalin,Lipocalin_2	ttr	transthyretin isoform X1	secreted	T1_interolog_pair_specific	0.011	66.41	0.3462	0.0198	50	1	0.557	0.08	60.0	0.672	
+125	none	Crog2_007461	B	TGF_beta	bmpr1ba	bone morphogenetic protein receptor type-1B	pm_ectodomain	T1_interolog_pair_specific	0.0625	67.91	0.3178	0.012	218	1	0.513	0.03	3582.0	0.66	
+126	none	Crog2_029961	A		LOC106566674	metabotropic glutamate receptor 7	pm_ectodomain	T1_interolog_pair_specific	0.0104	65.26	0.5056	0.0116	4	1	0.577	0.03	25955.0	0.66	
+127	none	Crog2_032271	C	Calreticulin	LOC106609001	complement C1q-like protein 2	secreted	T3_mechanism_representative	0.0109	77.24	0.4868	0.0308	49	1	0.0	0.2	8120.0	0.66	
+128	none	Crog2_032136	C	GDA1_CD39	LOC106576718	ectonucleoside triphosphate diphosphohydrolase 6 isoform X1	secreted	T1_interolog_pair_specific	0.0105	66.6	0.4749	0.0185	60	1	0.549	0.12	213.0	0.66	
+129	none	Crog2_002572	A	Kunitz_BPTI	LOC106563698	complement factor B	secreted	T2_top_combined_prior	0.3434	69.46	0.3851	0.0166	235	1	0.0	0.3	849.0	0.656	
+130	none	Crog2_005279	A	Fibrinogen_C,Sod_Cu	sod3	extracellular superoxide dismutase [Cu-Zn] precursor	secreted	T3_mechanism_representative	0.4342	68.23	0.4782	0.0307	112	1				0.655	no sequence-channel scores (T3/T4)
+131	none	Crog2_018366	B	Ribosomal_L29	llph	protein LLP homolog	secreted_denovo	T1_interolog_pair_specific	0.1471	65.89	0.4105	0.0318	83	1	0.508	0.02	25691.0	0.652	de novo SP rescue; conserved/homologous complex
+132	none	Crog2_009972	A	CBM_14	LOC106572401	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.2595	70.97	0.3227	0.0153	239	1	0.0	0.15	3518.0	0.65	
+133	none	Crog2_012133	A	Trypsin	LOC106597357	complement C3	secreted	T4_resistance_target	0.4337	67.45	0.6453	0.023	256	3	0.0	0.25	1872.0	0.649	
+134	none	Crog2_002572	A	Kunitz_BPTI	LOC106602980	complement factor B	secreted	T2_top_combined_prior	0.3043	69.67	0.2722	0.0145	212	1	0.0	0.12	3880.0	0.648	
+135	none	Crog2_005577	A	Trypsin,CLIP	serpina10b	protein Z-dependent protease inhibitor	secreted	T2_top_combined_prior	0.6987	63.21	0.3011	0.0248	351	1	0.0	0.15	3116.0	0.646	
+136	none	Crog2_009767	A	APP_N,APP_Cu_bd	rask	GTPase KRas	pm_ectodomain	T1_interolog_pair_specific	0.0699	60.6	0.3311	0.0115	140	1	0.585	0.02	8608.0	0.644	topology: cytoplasmic/lipid-anchor
+137	none	Crog2_022601	A	CBM_14	LOC106565087	acidic mammalian chitinase	secreted	T3_mechanism_representative	0.1927	70.63	0.6295	0.0241	51	1	0.0	0.15	3518.0	0.639	
+138	none	Crog2_003479	A	Trypsin,fn2,PAN_4	LOC106608112	alpha-1-antitrypsin homolog	secreted	T2_top_combined_prior	0.5613	64.35	0.4468	0.0316	111	1	0.0	0.2	2036.0	0.639	
+139	none	Crog2_021515	B	Ribosomal_L6e	btf3	transcription factor BTF3 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.3081	52.28	0.6223	0.0183	199	3	0.662	0.04	10163.0	0.639	de novo SP rescue; conserved/homologous complex
+140	none	Crog2_034618	C	Calreticulin	LOC106597357	complement C3	secreted	T4_resistance_target	0.0105	74.47	0.3944	0.0169	85	3	0.0	0.12	22307.0	0.633	
+141	none	Crog2_026727	B	Ribosomal_L16	btf3	transcription factor BTF3 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.2143	54.79	0.573	0.0187	136	3	0.641	0.03	12038.0	0.632	de novo SP rescue; conserved/homologous complex
+142	none	Crog2_005320	A	Trypsin,fn2	LOC106590133	macrophage mannose receptor 1 isoform X1	pm_ectodomain	T4_resistance_target	0.285	68.78	0.4812	0.0177	161	3	0.0	0.15	35903.0	0.632	
+143	none	Crog2_008039	B	wnt	LOC106560633	tyrosine-protein kinase RYK isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0735	62.66	0.5332	0.0114	402	1	0.531	0.04	33012.0	0.628	
+144	none	Crog2_005577	A	Trypsin,CLIP	LOC106608112	alpha-1-antitrypsin homolog	secreted	T2_top_combined_prior	0.48	63.76	0.5216	0.0116	566	1	0.0	0.3	855.0	0.622	
+145	none	Crog2_009767	A	APP_N,APP_Cu_bd	LOC106612559	sortilin-related receptor isoform X1	secreted	T1_interolog_pair_specific	0.1	61.59	0.4642	0.01	328	1	0.529	0.04	6908.0	0.621	
+146	none	Crog2_003546	A	Ribophorin_I	LOC106612332	dolichyl-diphosphooligosaccharide--protein glycosyltransferase subunit MAGT1	pm_ectodomain	T1_interolog_pair_specific	0.0	77.78	0.2945	0.0123	80	1	0.598	0.03	12298.0	0.616	
+147	none	Crog2_028139	B	Ribosomal_L3	btf3	transcription factor BTF3 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.2624	51.97	0.6001	0.0143	159	3	0.622	0.03	13512.0	0.616	de novo SP rescue; conserved/homologous complex
+148	none	Crog2_010666	C	Trypsin,Nudel	LOC106608112	alpha-1-antitrypsin homolog	secreted	T2_top_combined_prior	0.3485	65.49	0.6072	0.02	142	1	0.0	0.2	4210.0	0.613	
+149	none	Crog2_012861	B	Pkinase,PK_Tyr_Ser-Thr	LOC106574301	activin receptor type-2A isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	77.23	0.5853	0.0169	67	1	0.599	0.03	1977.0	0.613	
+150	none	Crog2_000402	A	Sod_Cu,Kunitz_BPTI	park7	Parkinson disease protein 7 homolog isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	77.26	0.1889	0.0097	56	1	0.592	0.04	6910.0	0.611	topology: cytoplasmic/lipid-anchor
+151	none	Crog2_011518	B	Trypsin	LOC106595495	complement C3	secreted	T3_mechanism_representative	0.0648	70.01	0.569	0.0154	160	1				0.61	no sequence-channel scores (T3/T4)
+152	none	Crog2_010666	C	Trypsin,Nudel	c7b	complement component C7	secreted	T4_resistance_target	0.4197	63.8	0.5502	0.0241	236	3	0.0	0.12	13428.0	0.609	
+153	none	Crog2_002831	C	Kunitz_BPTI	LOC106574204	complement C1r-A subcomponent	secreted	T2_top_combined_prior	0.0115	70.54	0.2543	0.0113	359	1	0.0	0.5	362.0	0.607	
+154	none	Crog2_009264	A	Peptidase_C1,Propeptide_C1	si:busm1-57f23.1	cystatin-1	secreted_sp_feature	T2_top_combined_prior	0.1799	68.31	0.5864	0.0231	90	1	0.0	0.05	19343.0	0.604	
+155	none	Crog2_008559	A	Trypsin	pigr	polymeric immunoglobulin receptor	pm_ectodomain	T3_mechanism_representative	0.3618	64.23	0.5508	0.015	168	1	0.0	0.1	20177.0	0.604	
+156	none	Crog2_006867	C	Calreticulin	LOC123732792	beta-2-microglobulin	secreted	T1_interolog_pair_specific	0.0	77.68	0.2787	0.0126	70	1	0.574	0.08	16911.0	0.603	
+157	none	Crog2_006963	C	Serpin	proza	coagulation factor X	secreted	T2_top_combined_prior	0.4084	63.01	0.663	0.0164	375	1	0.0	0.22	3218.0	0.603	
+158	none	Crog2_018134	B	Fz	gpc4	glypican-4 isoform X1	ecm	T1_interolog_pair_specific	0.0101	59.08	0.5691	0.0117	179	1	0.589	0.03	27720.0	0.602	topology: cytoplasmic/lipid-anchor
+159	none	Crog2_013526	A	ANF_receptor	LOC106611317	metabotropic glutamate receptor 1 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	77.76	0.3009	0.0107	71	1	0.569	0.03	9.0	0.6	
+160	none	Crog2_010919	C	Serpin	f10	coagulation factor X	secreted	T2_top_combined_prior	0.1009	68.58	0.4479	0.0258	102	1	0.0	0.12	6520.0	0.598	
+161	none	Crog2_024128	B	Ribosomal_L27e,KOW	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0103	56.36	0.4502	0.0115	81	3	0.655	0.04	1309.0	0.597	conserved/homologous complex
+162	none	Crog2_032647	B	PDZ,PDZ_6,PDZ_2	LOC106567734	junctional adhesion molecule 3B	pm_ectodomain	T1_interolog_pair_specific	0.0377	60.43	0.5566	0.0209	89	1	0.525	0.04	11089.0	0.595	
+163	none	Crog2_016208	B	Ribosomal_S6e	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0105	54.95	0.3689	0.0116	147	3	0.67	0.04	1144.0	0.593	conserved/homologous complex
+164	none	Crog2_007841	C	Serpin	f9a	coagulation factor IX	secreted	T2_top_combined_prior	0.2661	65.77	0.3273	0.0203	118	1	0.0	0.1	7570.0	0.593	
+165	none	Crog2_021806	B	BIR	casp7	caspase-7 isoform X1	secreted	T1_interolog_pair_specific	0.2343	58.24	0.6161	0.0185	181	1	0.507	0.04	752.0	0.591	
+166	none	Crog2_013245	B	Ras,Roc,Arf	LOC106570689	uncharacterized protein LOC106570689	pm_ectodomain	T1_interolog_pair_specific	0.2057	50.73	0.5442	0.0108	411	1	0.584	0.03	28320.0	0.591	topology: cytoplasmic/lipid-anchor
+167	none	Crog2_012030	C	Kunitz_BPTI	proca	vitamin K-dependent protein C	secreted	T2_top_combined_prior	0.0106	69.65	0.3111	0.0177	126	1	0.0	0.2	3398.0	0.589	
+168	none	Crog2_013245	B	Ras,Roc,Arf	vrk2	serine/threonine-protein kinase VRK2	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.1482	49.64	0.5303	0.0095	480	3	0.616	0.05	3998.0	0.588	de novo SP rescue
+169	none	Crog2_023365	A	C1-set	LOC106613685	calreticulin	secreted_ecm	T1_interolog_pair_specific	0.0	74.74	0.3323	0.0108	65	1	0.576	0.2	1464.0	0.587	
+170	none	Crog2_000232	A	Laminin_N,Laminin_B,Laminin_gamma_C,EGF_laminin,EGF_LMN_ATRN	LOC106590025	integrin beta-1 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	76.92	0.2242	0.0097	174	1	0.561	0.1	3450.0	0.587	
+171	none	Crog2_007841	C	Serpin	LOC106612366	coagulation factor IX	secreted	T2_top_combined_prior	0.2018	65.88	0.3898	0.0219	107	1	0.0	0.12	6750.0	0.585	
+172	none	Crog2_011518	B	Trypsin	LOC106578169	fibrinogen alpha chain	secreted_ecm	T3_mechanism_representative	0.3064	63.87	0.6677	0.0159	238	3				0.584	no sequence-channel scores (T3/T4)
+173	none	Crog2_011518	B	Trypsin	LOC106578170	fibrinogen beta chain	secreted_ecm	T3_mechanism_representative	0.2518	64.83	0.5742	0.0183	209	3				0.581	no sequence-channel scores (T3/T4)
+174	none	Crog2_012030	C	Kunitz_BPTI	f9a	coagulation factor IX	secreted	T3_mechanism_representative	0.1212	60.96	0.3866	0.0113	252	1	0.046	0.2	1904.0	0.579	
+175	none	Crog2_000067	B	DUF4704,Beach,DUF1088,DUF22171,PH_BEACH,Neurobeachin	LOC106579992	neurogenic locus notch homolog protein 1 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	77.26	0.3423	0.0104	383	1	0.544	0.03	33882.0	0.578	
+176	none	Crog2_013643	A	GT_PLOD	colgalt1a	procollagen galactosyltransferase 1	secreted_sp_feature	T1_interolog_pair_specific	0.0	76.15	0.2176	0.0145	55	1	0.555	0.06	14685.0	0.577	
+177	none	Crog2_009767	A	APP_N,APP_Cu_bd	LOC106604847	insulin-degrading enzyme isoform X1	secreted	T1_interolog_pair_specific	0.0	71.87	0.3035	0.0097	456	1	0.604	0.05	6444.0	0.575	
+178	none	Crog2_011989	A	Trypsin	LOC106603572	alpha-2-antiplasmin	secreted	T2_top_combined_prior	0.1755	59.76	0.2404	0.0129	357	1	0.053	0.4	111.0	0.575	
+179	none	Crog2_010904	A	Kunitz_BPTI	fa10	coagulation factor X precursor	secreted	T3_mechanism_representative	0.333	56.3	0.49	0.0165	224	1	0.049	0.35	2969.0	0.574	
+180	none	Crog2_007303	A	Thioredoxin,Thioredoxin_6	LOC123732792	beta-2-microglobulin	secreted	T1_interolog_pair_specific	0.0	75.56	0.1618	0.0105	38	1	0.556	0.03	18539.0	0.574	
+181	none	Crog2_015206	A	Lectin_C	LOC106578890	C-type lectin domain family 4 member M	secreted_sp_feature	T4_resistance_target	0.2814	63.57	0.4738	0.0242	109	3	0.0	0.12	23189.0	0.573	
+182	none	Crog2_000495	B	Laminin_N,LAMININ_IV_B,EGF_laminin,EGF_LMN_ATRN	LOC106590025	integrin beta-1 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	76.51	0.2031	0.0099	137	1	0.545	0.04	11928.0	0.571	
+183	none	Crog2_004655	A	Glyco_hydro_18,CBM_14	LOC106565088	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.2823	62.6	0.3915	0.0113	193	1	0.0	0.35	559.0	0.568	
+184	none	Crog2_022601	A	CBM_14	LOC106565309	acidic mammalian chitinase-like	secreted	T2_top_combined_prior	0.0105	68.4	0.5231	0.0162	88	1	0.0	0.08	5429.0	0.567	
+185	none	Crog2_027228	B		ruvb1	RuvB-like 1	secreted	T1_interolog_pair_specific	0.0	70.89	0.1866	0.0131	141	3	0.63	0.03	24224.0	0.567	
+186	none	Crog2_002991	C	HSP70,MreB_Mbl	chl1b	neural cell adhesion molecule L1-like protein isoform X1	secreted_ecm	T1_interolog_pair_specific	0.0	72.91	0.3642	0.0099	206	1	0.565	0.03	32367.0	0.566	
+187	none	Crog2_028146	B	SGTA_dimer	LOC106602884	junctional adhesion molecule A	pm_ectodomain	T1_interolog_pair_specific	0.0	77.28	0.2058	0.0108	49	1	0.522	0.03	15144.0	0.564	
+188	none	Crog2_002417	B	tRNA-synt_1c,tRNA-synt_1c_C,tRNA-synt_1c_C2,GST_C,GST_C_3	kars1	lysine--tRNA ligase isoform X1	secreted	T1_interolog_pair_specific	0.0	70.4	0.2407	0.0098	235	3	0.638	0.03	3068.0	0.564	
+189	none	Crog2_005320	A	Trypsin,fn2	pigr	polymeric immunoglobulin receptor	pm_ectodomain	T3_mechanism_representative	0.3076	61.06	0.4825	0.0139	139	3	0.0	0.15	17160.0	0.562	
+190	none	Crog2_016772	C	Ferritin	tfr1a	transferrin receptor protein 1	pm_ectodomain	T1_interolog_pair_specific	0.0	78.11	0.3681	0.0122	48	1	0.511	0.12	6.0	0.56	
+191	none	Crog2_031306	B	Ribosomal_L6	btf3	transcription factor BTF3 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.0304	44.91	0.5406	0.0136	211	3	0.649	0.02	12691.0	0.557	de novo SP rescue; conserved/homologous complex
+192	none	Crog2_022911	B	Ribosomal_60s	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0108	50.94	0.3882	0.0106	174	1	0.593	0.03	3015.0	0.557	conserved/homologous complex
+193	none	Crog2_033881	B	Integrin_A_Ig_2	LOC106583707	integrin alpha-7 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	72.23	0.1188	0.009	24	1	0.559	0.05	3224.0	0.554	
+194	none	Crog2_006063	A	zf-RING_14,IBR_2,zf-RING_12,IBR_1,IBR	park7	Parkinson disease protein 7 homolog isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	73.84	0.1335	0.0095	33	1	0.542	0.04	10463.0	0.553	topology: cytoplasmic/lipid-anchor
+195	none	Crog2_008039	B	wnt	LOC106597855	protein Wnt-5b isoform X1	secreted_ecm	T1_interolog_pair_specific	0.0	69.28	0.1899	0.0098	138	3	0.651	0.03	1603.0	0.552	
+196	none	Crog2_002417	B	tRNA-synt_1c,tRNA-synt_1c_C,tRNA-synt_1c_C2,GST_C,GST_C_3	LOC106587184	lysine--tRNA ligase isoform X1	secreted	T1_interolog_pair_specific	0.0	69.49	0.2096	0.0098	453	3	0.622	0.03	3677.0	0.551	
+197	none	Crog2_004867	A	Sulfatase,Sulfatase_C,Phosphodiest	arsb	arylsulfatase B precursor	secreted_sp_feature	T1_interolog_pair_specific	0.0	75.66	0.3236	0.0118	143	1	0.523	0.06	601.0	0.551	
+198	none	Crog2_012861	B	Pkinase,PK_Tyr_Ser-Thr	acv1b	activin receptor type-1B isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	69.88	0.1976	0.0093	114	1	0.594	0.02	2372.0	0.549	
+199	none	Crog2_006062	A	Alpha-amylase	LOC100136478	alpha amylase isoform X1	secreted_sp_feature	T1_interolog_pair_specific	0.0	75.35	0.2328	0.0103	80	1	0.52	0.06	59.0	0.548	
+200	none	Crog2_004450	A	Sema	plxna2	LOW QUALITY PROTEIN: plexin-A2	pm_ectodomain	T1_interolog_pair_specific	0.0	72.92	0.2338	0.0096	148	1	0.534	0.05	1505.0	0.544	
+201	none	Crog2_008039	B	wnt	wnt5a	protein Wnt-5a	secreted_ecm	T1_interolog_pair_specific	0.0	68.84	0.5256	0.0145	214	3	0.62	0.03	2328.0	0.541	
+202	none	Crog2_008530	C	Peptidase_C1,Inhibitor_I29	LOC100195750	cystein proteinase inhibitor protein salarin precursor	secreted	T2_top_combined_prior	0.0101	66.36	0.5149	0.0128	240	1	0.0	0.12	5354.0	0.541	
+203	none	Crog2_004757	C	Peptidase_M17	anpepb.1	alanyl aminopeptidase, membrane b, tandem duplicate 1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	71.15	0.2954	0.0102	209	1	0.558	0.05	11916.0	0.54	de novo SP rescue
+204	none	Crog2_011100	A	Trypsin	f9b	coagulation factor IXb	secreted	T3_mechanism_representative	0.3189	58.63	0.6648	0.0124	242	1	0.0	0.12	4613.0	0.539	
+205	none	Crog2_008614	B	USP8_interact,zf-C3HC4_2,zf-RING_2,zf-C3HC4	LOC106565537	receptor tyrosine-protein kinase erbB-3 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	76.23	0.2197	0.01	127	1	0.505	0.03	35042.0	0.538	
+206	none	Crog2_000799	A	Trypsin,SRCR,Ldl_recept_a,Kringle,PAN_1	LOC106564830	complement C3	secreted	T3_mechanism_representative	0.2873	58.81	0.5326	0.0202	102	1	0.0	0.4	443.0	0.534	
+207	none	Crog2_008983	A	Peptidase_C1,Inhibitor_I29	si:busm1-57f23.1	cystatin-1	secreted_sp_feature	T2_top_combined_prior	0.0	76.56	0.2401	0.0116	84	1	0.118	0.08	9174.0	0.533	
+208	none	Crog2_000072	A	EGF_TEN,Notch,Ank_2,EGF_CA,EGF,hEGF	LOC106564817	protein jagged-1b	secreted	T1_interolog_pair_specific	0.0	71.21	0.2501	0.01	258	1	0.546	0.05	2911.0	0.532	
+209	none	Crog2_006120	B	adh_short,adh_short_C2,WW,KR	erbb4b	receptor tyrosine-protein kinase erbB-4	pm_ectodomain	T1_interolog_pair_specific	0.0	74.64	0.3579	0.0106	219	1	0.506	0.05	34242.0	0.531	
+210	none	Crog2_000232	A	Laminin_N,Laminin_B,Laminin_gamma_C,EGF_laminin,EGF_LMN_ATRN	LOC106600084	integrin alpha-6 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	74.01	0.2244	0.0095	276	1	0.508	0.1	18495.0	0.529	
+211	none	Crog2_000495	B	Laminin_N,LAMININ_IV_B,EGF_laminin,EGF_LMN_ATRN	LOC106600084	integrin alpha-6 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	72.97	0.233	0.0096	152	1	0.513	0.04	34235.0	0.529	
+212	none	Crog2_029252	B	Integrin_beta	LOC106578170	fibrinogen beta chain	secreted_ecm	T1_interolog_pair_specific	0.0	68.55	0.1708	0.0096	66	1	0.593	0.04	9661.0	0.526	promiscuous louse chain (10 tiered hits)
+213	none	Crog2_011006	C	Peptidase_C1	LOC106589915	cystatin	secreted	T2_top_combined_prior	0.0	75.83	0.3314	0.0159	41	1	0.099	0.2	10117.0	0.525	
+214	none	Crog2_006063	A	zf-RING_14,IBR_2,zf-RING_12,IBR_1,IBR	LOC106572481	ubiquitin-conjugating enzyme E2 variant 1 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.0	69.85	0.2302	0.0105	90	1	0.555	0.08	218.0	0.524	de novo SP rescue
+215	none	Crog2_001971	A	Trypsin,Lectin_C	LOC106588402	major histocompatibility complex class I-related protein 1 isoform X1	pm_ectodomain	T3_mechanism_representative	0.0111	62.43	0.2216	0.0103	494	1	0.0	0.08	11932.0	0.52	
+216	none	Crog2_012133	A	Trypsin	LOC106581172	alpha-2-antiplasmin isoform X1	secreted	T2_top_combined_prior	0.0317	55.76	0.5349	0.011	107	1	0.053	0.25	711.0	0.519	
+217	none	Crog2_007897	C	Actin	LOC106589476	integrin beta-4 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	66.41	0.3773	0.0094	355	3	0.629	0.04	24287.0	0.519	
+218	none	Crog2_000232	A	Laminin_N,Laminin_B,Laminin_gamma_C,EGF_laminin,EGF_LMN_ATRN	LOC106573246	laminin subunit beta-1	secreted_ecm	T1_interolog_pair_specific	0.0	71.04	0.189	0.0091	225	1	0.533	0.04	154.0	0.518	
+219	none	Crog2_031306	B	Ribosomal_L6	LOC106583545	uncharacterized protein LOC106583545	secreted_denovo	T1_interolog_pair_specific	0.0313	42.75	0.508	0.0123	132	1	0.554	0.04	6013.0	0.518	de novo SP rescue; conserved/homologous complex
+220	none	Crog2_002977	A	An_peroxidase	LOC106564853	eosinophil peroxidase	secreted_sp_feature	T3_mechanism_representative	0.3649	53.91	0.5685	0.0161	135	1				0.516	no sequence-channel scores (T3/T4)
+221	none	Crog2_012348	C	Transferrin	tfr1a	transferrin receptor protein 1	pm_ectodomain	T4_resistance_target	0.132	50.56	0.5682	0.0118	562	3	0.429	0.15	12.0	0.513	
+222	none	Crog2_013245	B	Ras,Roc,Arf	comta	catechol O-methyltransferase A	secreted_denovo	T1_interolog_pair_specific	0.0	72.14	0.1665	0.0099	92	1	0.507	0.03	34936.0	0.513	de novo SP rescue
+223	none	Crog2_009190	A	Peptidase_C1,Inhibitor_I29	cst7	cystatin-F precursor	secreted_sp_feature	T2_top_combined_prior	0.0	72.56	0.175	0.0099	61	1	0.131	0.25	2657.0	0.509	
+224	none	Crog2_009507	C	Apyrase	LOC106592979	ectonucleoside triphosphate diphosphohydrolase 5	secreted	T1_interolog_pair_specific	0.0	68.31	0.158	0.0092	158	1	0.565	0.2	21472.0	0.508	
+225	none	Crog2_021875	B	Septin,MMR_HSR1	erbb2	receptor tyrosine-protein kinase erbB-2	pm_ectodomain	T1_interolog_pair_specific	0.0	71.6	0.3916	0.0111	130	1	0.508	0.03	15730.0	0.508	
+226	none	Crog2_008983	A	Peptidase_C1,Inhibitor_I29	LOC106589915	cystatin	secreted	T2_top_combined_prior	0.0	72.32	0.1231	0.0095	39	1	0.335	0.12	756.0	0.508	
+227	none	Crog2_002178	A	Ceramidase_alk,Ceramidse_alk_C	LOC106609942	acid ceramidase	secreted	T1_interolog_pair_specific	0.0	68.96	0.209	0.0098	85	1	0.547	0.03	10561.0	0.505	
+228	none	Crog2_005544	A	Hsp90_M,HATPase_c_3,HATPase_c	erbb2	receptor tyrosine-protein kinase erbB-2	pm_ectodomain	T1_interolog_pair_specific	0.0	66.35	0.2725	0.0102	285	1	0.591	0.03	3227.0	0.505	
+229	none	Crog2_022428	B	ATP-synt_F	renr	Renin receptor precursor	pm_ectodomain	T1_interolog_pair_specific	0.0	65.7	0.3762	0.0109	82	3	0.618	0.04	12927.0	0.505	
+230	none	Crog2_003479	A	Trypsin,fn2,PAN_4	LOC106578890	C-type lectin domain family 4 member M	secreted_sp_feature	T4_resistance_target	0.0133	60.55	0.3181	0.0114	199	3	0.0	0.12	40651.0	0.503	
+231	none	Crog2_011724	A	Trypsin	pigr	polymeric immunoglobulin receptor	pm_ectodomain	T3_mechanism_representative	0.0651	59.44	0.5195	0.0128	125	1	0.0	0.12	18825.0	0.501	
+232	none	Crog2_000961	A	Glyco_hydro_18,CBM_14	LOC106577510	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.0	71.7	0.2021	0.0102	200	1	0.231	0.12	145.0	0.499	
+233	none	Crog2_011100	A	Trypsin	LOC106578169	fibrinogen alpha chain	secreted_ecm	T2_top_combined_prior	0.3288	52.68	0.6597	0.0139	177	1	0.0	0.25	1283.0	0.499	
+234	none	Crog2_008436	C	Peptidase_C1,Propeptide_C1	LOC106611588	cystatin	secreted	T2_top_combined_prior	0.0	71.71	0.1587	0.0101	36	1	0.206	0.1	6955.0	0.498	
+235	none	Crog2_000072	A	EGF_TEN,Notch,Ank_2,EGF_CA,EGF,hEGF	LOC106579992	neurogenic locus notch homolog protein 1 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	69.83	0.1679	0.0089	109	1	0.515	0.05	2351.0	0.495	
+236	none	Crog2_027228	B		ruvbl1	ruvB-like 1	secreted	T1_interolog_pair_specific	0.0	64.37	0.2155	0.01	123	3	0.62	0.03	8478.0	0.493	
+237	none	Crog2_026766	B	HIF-1a_CTAD	LOC106579992	neurogenic locus notch homolog protein 1 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	64.98	0.149	0.0087	53	1	0.596	0.02	27710.0	0.493	
+238	none	Crog2_005169	C	Trypsin,RVT_1	LOC106564830	complement C3	secreted	T3_mechanism_representative	0.065	58.16	0.4519	0.0135	232	1	0.0	0.4	1150.0	0.49	
+239	none	Crog2_022439	B	Kunitz_BPTI	fa10	coagulation factor X precursor	secreted	T3_mechanism_representative	0.091	57.62	0.4562	0.0171	68	1				0.489	no sequence-channel scores (T3/T4)
+240	none	Crog2_008614	B	USP8_interact,zf-C3HC4_2,zf-RING_2,zf-C3HC4	asb6	ankyrin repeat and SOCS box protein 6 isoform X1	secreted_sp_feature	T1_interolog_pair_specific	0.0	70.84	0.2862	0.0103	147	1	0.501	0.05	14252.0	0.489	
+241	none	Crog2_007897	C	Actin	erbb2	receptor tyrosine-protein kinase erbB-2	pm_ectodomain	T1_interolog_pair_specific	0.0	68.35	0.3737	0.0103	270	1	0.539	0.03	13989.0	0.488	
+242	none	Crog2_010968	A	Kunitz_BPTI	f9a	coagulation factor IX	secreted	T3_mechanism_representative	0.1419	44.94	0.4468	0.0121	240	1	0.057	0.2	739.0	0.486	
+243	none	Crog2_010904	A	Kunitz_BPTI	LOC106587117	prothrombin isoform X1	secreted	T2_top_combined_prior	0.0102	55.54	0.3856	0.0113	336	1	0.023	0.12	2346.0	0.485	
+244	none	Crog2_002417	B	tRNA-synt_1c,tRNA-synt_1c_C,tRNA-synt_1c_C2,GST_C,GST_C_3	cdc42	cell division control protein 42 homolog isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	67.07	0.2098	0.0126	125	1	0.55	0.02	32640.0	0.485	topology: cytoplasmic/lipid-anchor
+245	none	Crog2_005169	C	Trypsin,RVT_1	LOC106569365	complement C3	secreted	T4_resistance_target	0.0109	58.87	0.3547	0.0112	252	3	0.0	0.2	5448.0	0.485	
+246	none	Crog2_011971	A	Trypsin	LOC106603572	alpha-2-antiplasmin	secreted	T2_top_combined_prior	0.1082	56.66	0.5769	0.0117	147	1	0.0	0.25	1339.0	0.484	
+247	none	Crog2_014113	A	Metallophos	nt5e	5'-nucleotidase	pm_ectodomain	T3_mechanism_representative	0.0	78.14	0.4357	0.0122	83	1				0.482	no sequence-channel scores (T3/T4)
+248	none	Crog2_005118	C	Lectin_C	leg3	galectin-3 isoform X1	secreted	T4_resistance_target	0.3262	49.96	0.3499	0.0093	634	3				0.482	no sequence-channel scores (T3/T4)
+249	none	Crog2_005986	A	Astacin,fn2	LOC100380696	fibronectin isoform X1	secreted_ecm	T2_top_combined_prior	0.0	71.31	0.2695	0.0098	253	1	0.051	0.2	1266.0	0.482	
+250	none	Crog2_020074	C	Calreticulin	LOC106563105	complement C1q-like protein 2	secreted	T3_mechanism_representative	0.0	78.07	0.0849	0.0093	37	1	0.0	0.04	15365.0	0.481	
+251	none	Crog2_003819	C	Kunitz_BPTI	LOC106612366	coagulation factor IX	secreted	T3_mechanism_representative	0.0168	50.06	0.248	0.0094	353	1	0.045	0.3	996.0	0.478	
+252	none	Crog2_001444	A	Kunitz_BPTI,I-set,Ig_3,Ig_2,ig	LOC106574204	complement C1r-A subcomponent	secreted	T2_top_combined_prior	0.0	71.11	0.2557	0.0116	167	1	0.044	0.1	2855.0	0.477	
+253	none	Crog2_011853	A	CLIP_1,Trypsin	mbl2	mannose-binding protein C	secreted	T4_resistance_target	0.0102	59.87	0.3375	0.0125	59	3				0.477	no sequence-channel scores (T3/T4)
+254	none	Crog2_009507	C	Apyrase	enp6	Ectonucleoside triphosphate diphosphohydrolase 6	secreted	T1_interolog_pair_specific	0.0	66.02	0.4894	0.013	103	1	0.552	0.3	16267.0	0.476	
+255	none	Crog2_000961	A	Glyco_hydro_18,CBM_14	LOC106565087	acidic mammalian chitinase	secreted	T1_interolog_pair_specific	0.0	69.15	0.3351	0.0115	224	1	0.507	0.15	2.0	0.476	
+256	none	Crog2_029447	C	Calreticulin	mbl2	mannose-binding protein C	secreted	T4_resistance_target	0.0	77.12	0.2231	0.0171	40	3				0.474	no sequence-channel scores (T3/T4)
+257	none	Crog2_002761	B	An_peroxidase	mpx	eosinophil peroxidase	secreted_sp_feature	T3_mechanism_representative	0.0	76.96	0.3614	0.011	79	1				0.473	no sequence-channel scores (T3/T4)
+258	none	Crog2_026751	C	Cystatin	LOC106611360	cathepsin B isoform X1	secreted_sp_feature	T1_interolog_pair_specific	0.0	67.22	0.2814	0.0112	42	1	0.531	0.4	170.0	0.472	
+259	none	Crog2_000377	A	Trypsin,SRCR,Kringle,PAN_1,CBM_14,Ldl_recept_a	LOC106581002	complement C4-B	secreted	T3_mechanism_representative	0.0	76.76	0.4089	0.0178	153	3	0.0	0.25	1858.0	0.472	
+260	none	Crog2_005577	A	Trypsin,CLIP	LOC106587117	prothrombin isoform X1	secreted	T3_mechanism_representative	0.1727	53.85	0.2622	0.0099	394	1	0.0	0.12	5391.0	0.472	
+261	none	Crog2_029447	C	Calreticulin	c7b	complement component C7	secreted	T4_resistance_target	0.0	76.71	0.2295	0.0122	75	3	0.0	0.2	19886.0	0.471	
+262	none	Crog2_007424	A	HH_signal,Hint	boc	brother of CDO	pm_ectodomain	T1_interolog_pair_specific	0.0	67.93	0.165	0.009	243	1	0.519	0.03	6118.0	0.47	
+263	none	Crog2_015877	A	Lectin_C	LOC106613533	galectin-3-binding protein A	secreted_sp_feature	T4_resistance_target	0.0	76.37	0.3537	0.0139	147	3				0.468	no sequence-channel scores (T3/T4)
+264	none	Crog2_026473	B	Ribosomal_L18,Ribosomal_L27A	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0	60.9	0.4961	0.0151	220	3	0.652	0.03	1932.0	0.468	conserved/homologous complex
+265	none	Crog2_006918	A	Peptidase_M14,CarboxypepD_reg	LOC106585544	collagen alpha-6(VI) chain isoform X1	secreted_ecm	T2_top_combined_prior	0.0	76.29	0.2157	0.0096	111	1	0.0	0.1	18232.0	0.467	
+266	none	Crog2_005986	A	Astacin,fn2	LOC106593628	fibronectin isoform X1	secreted_ecm	T2_top_combined_prior	0.0	69.48	0.2724	0.01	290	1	0.102	0.1	1645.0	0.467	
+267	none	Crog2_026727	B	Ribosomal_L16	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0	60.63	0.3223	0.0108	114	3	0.657	0.02	1640.0	0.467	conserved/homologous complex
+268	none	Crog2_021407	A	CBM_14	chia.1	chitinase, acidic.1	secreted	T3_mechanism_representative	0.0	76.15	0.3701	0.0133	91	1	0.0	0.2	2396.0	0.466	
+269	none	Crog2_020074	C	Calreticulin	LOC106609001	complement C1q-like protein 2	secreted	T3_mechanism_representative	0.0	75.79	0.1015	0.0098	62	1	0.0	0.2	8120.0	0.464	
+270	none	Crog2_022290	B	Ribosomal_S3Ae	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0	60.58	0.3029	0.0105	295	3	0.65	0.05	1701.0	0.463	conserved/homologous complex
+271	none	Crog2_029129	B		LOC106600426	epidermal growth factor receptor	pm_ectodomain	T1_interolog_pair_specific	0.0	63.52	0.3386	0.0119	118	1	0.57	0.02	32637.0	0.463	
+272	none	Crog2_015592	B	Ras,Roc,Arf	LOC106602884	junctional adhesion molecule A	pm_ectodomain	T1_interolog_pair_specific	0.0	66.19	0.1419	0.0094	115	1	0.528	0.05	12570.0	0.462	
+273	none	Crog2_032271	C	Calreticulin	LOC106605127	complement C3	secreted	T4_resistance_target	0.0	75.26	0.3398	0.0116	85	3	0.0	0.18	18243.0	0.461	
+274	none	Crog2_026550	C	GDA1_CD39	LOC106576718	ectonucleoside triphosphate diphosphohydrolase 6 isoform X1	secreted	T1_interolog_pair_specific	0.0	66.12	0.4262	0.011	93	1	0.527	0.15	311.0	0.46	
+275	none	Crog2_014360	A	PAE	LOC123725465	carboxylesterase notum2	secreted_sp_feature	T1_interolog_pair_specific	0.0	62.87	0.3917	0.0113	223	1	0.571	0.03	438.0	0.46	
+276	none	Crog2_005571	A	Peptidase_M10,Hemopexin,PG_binding_1	LOC106606431	metalloproteinase inhibitor 2 isoform X1	secreted_ecm	T2_top_combined_prior	0.0	68.76	0.1496	0.0095	84	1	0.126	0.25	198.0	0.46	
+277	none	Crog2_006649	A	Kazal_2,Kazal_1	LOC106598822	haptoglobin	secreted	T2_top_combined_prior	0.0	74.63	0.2774	0.0104	107	1	0.0	0.2	3044.0	0.459	
+278	none	Crog2_000377	A	Trypsin,SRCR,Kringle,PAN_1,CBM_14,Ldl_recept_a	LOC106569365	complement C3	secreted	T3_mechanism_representative	0.0	74.52	0.4019	0.0164	100	3	0.0	0.5	129.0	0.457	
+279	none	Crog2_000931	A	Glyco_hydro_18,CBM_14	LOC106572401	acidic mammalian chitinase	secreted	T3_mechanism_representative	0.0	68.56	0.2758	0.01	199	1	0.11	0.1	1282.0	0.456	
+280	none	Crog2_015877	A	Lectin_C	LOC106590133	macrophage mannose receptor 1 isoform X1	pm_ectodomain	T4_resistance_target	0.0	74.21	0.327	0.0108	155	3	0.0	0.2	17595.0	0.455	
+281	none	Crog2_006866	A	Peptidase_M14,Propep_M14	LOC106585541	collagen alpha-6(VI) chain isoform X1	secreted_ecm	T2_top_combined_prior	0.0	74.08	0.294	0.0103	91	1	0.0	0.1	18232.0	0.454	
+282	none	Crog2_005490	A	HSP70,MreB_Mbl	erbb2	receptor tyrosine-protein kinase erbB-2	pm_ectodomain	T1_interolog_pair_specific	0.0	67.33	0.2482	0.0094	131	1	0.506	0.03	11936.0	0.453	
+283	none	Crog2_010620	A	CBM_14	LOC106572401	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.0	74.0	0.2497	0.0108	89	1	0.0	0.12	4853.0	0.453	
+284	none	Crog2_032889	B	GDI	LOC106589656	ras-related protein Rab-4A isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	60.45	0.313	0.0113	41	1	0.611	0.03	318.0	0.452	topology: cytoplasmic/lipid-anchor
+285	none	Crog2_007179	C	Calreticulin	LOC106566534	complement C1q tumor necrosis factor-related protein 3	secreted	T3_mechanism_representative	0.0	73.04	0.2885	0.0103	181	1	0.0	0.12	7568.0	0.449	
+286	none	Crog2_005571	A	Peptidase_M10,Hemopexin,PG_binding_1	LOC106606432	metalloproteinase inhibitor 2	secreted_ecm	T2_top_combined_prior	0.0	68.21	0.1096	0.0091	88	1	0.106	0.12	1101.0	0.449	
+287	none	Crog2_007179	C	Calreticulin	LOC106563105	complement C1q-like protein 2	secreted	T3_mechanism_representative	0.0	72.88	0.1789	0.0098	158	3	0.0	0.12	7568.0	0.447	
+288	none	Crog2_006865	A	Peptidase_M14,Propep_M14	LOC106585541	collagen alpha-6(VI) chain isoform X1	secreted_ecm	T2_top_combined_prior	0.0	72.56	0.2492	0.0096	97	1	0.0	0.08	19482.0	0.445	
+289	none	Crog2_000748	B	NTE_Ploop,Patatin,cNMP_binding	pla2g15	lysosomal phospholipase A and acyltransferase precursor	secreted_sp_feature	T1_interolog_pair_specific	0.0	65.95	0.3629	0.0109	163	1	0.511	0.03	34607.0	0.445	
+290	none	Crog2_004655	A	Glyco_hydro_18,CBM_14	LOC106577510	acidic mammalian chitinase	secreted	T3_mechanism_representative	0.0	72.52	0.3375	0.0133	337	1	0.0	0.12	3979.0	0.444	
+291	none	Crog2_006026	A	TGFb_propeptide,TGF_beta	LOC106574301	activin receptor type-2A isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	65.47	0.3368	0.0118	101	1	0.517	0.04	2352.0	0.443	
+292	none	Crog2_006865	A	Peptidase_M14,Propep_M14	col28a2a	collagen, type XXVIII, alpha 2a isoform X1	secreted_ecm	T2_top_combined_prior	0.0	72.45	0.3483	0.0101	162	1	0.0	0.08	19482.0	0.442	
+293	none	Crog2_032647	B	PDZ,PDZ_6,PDZ_2	LOC106602884	junctional adhesion molecule A	pm_ectodomain	T1_interolog_pair_specific	0.0	60.48	0.4887	0.0146	97	1	0.581	0.03	10948.0	0.441	
+294	none	Crog2_012348	C	Transferrin	LOC106599563	serotransferrin-2-like isoform X1	secreted	T2_top_combined_prior	0.0	72.31	0.3594	0.0121	54	1	0.0	0.12	6545.0	0.441	
+295	none	Crog2_002991	C	HSP70,MreB_Mbl	LOC106565224	protein-glutamine gamma-glutamyltransferase 2	secreted_ecm	T1_interolog_pair_specific	0.0	65.6	0.4293	0.011	136	1	0.511	0.02	16673.0	0.44	
+296	none	Crog2_011900	B	Trypsin	proca	vitamin K-dependent protein C	secreted	T3_mechanism_representative	0.0	72.11	0.2354	0.0099	123	1				0.439	no sequence-channel scores (T3/T4)
+297	none	Crog2_025133	B	DER1	sel1l	protein sel-1 homolog 1 isoform X1	pm_ectodomain_sp_feature	T1_interolog_pair_specific	0.0	59.98	0.2323	0.0094	244	1	0.587	0.02	18593.0	0.438	
+298	none	Crog2_012348	C	Transferrin	tfa	serotransferrin-1 precursor	secreted	T4_resistance_target	0.0	71.97	0.2654	0.0099	81	3	0.0	0.08	8083.0	0.437	
+299	none	Crog2_009972	A	CBM_14	chia.1	chitinase, acidic.1	secreted	T2_top_combined_prior	0.0	71.9	0.3316	0.0105	282	1	0.0	0.1	4878.0	0.436	
+300	none	Crog2_011724	A	Trypsin	LOC106562293	LOW QUALITY PROTEIN: mucin-5AC	secreted_ecm	T3_mechanism_representative	0.0	71.86	0.206	0.0094	154	1	0.0	0.15	6679.0	0.435	
+301	none	Crog2_020162	B	Ribosomal_L14	LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	65.06	0.1985	0.009	103	1	0.511	0.04	14062.0	0.435	conserved/homologous complex
+302	none	Crog2_015877	A	Lectin_C	LOC106598110	C-type mannose receptor 2	secreted_sp_feature	T4_resistance_target	0.0	71.76	0.4809	0.0124	143	3	0.0	0.2	17595.0	0.434	
+303	none	Crog2_017741	B	Neur_chan_memb	LOC123725163	neuronal acetylcholine receptor subunit alpha-7	pm_ectodomain	T1_interolog_pair_specific	0.0	60.71	0.257	0.0096	319	1	0.564	0.03	243.0	0.434	
+304	none	Crog2_012956	C	14-3-3	LOC106587099	ubiquitin carboxyl-terminal hydrolase 43 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.0	58.11	0.3993	0.0118	213	3	0.616	0.03	28379.0	0.433	de novo SP rescue
+305	none	Crog2_010666	C	Trypsin,Nudel	serpina10b	protein Z-dependent protease inhibitor	secreted	T2_top_combined_prior	0.0	71.71	0.1961	0.01	59	1	0.0	0.14	5956.0	0.433	
+306	none	Crog2_000495	B	Laminin_N,LAMININ_IV_B,EGF_laminin,EGF_LMN_ATRN	LOC106599430	laminin subunit gamma-1	secreted_ecm	T1_interolog_pair_specific	0.0	61.82	0.1679	0.0089	70	1	0.546	0.06	148.0	0.433	
+307	none	Crog2_026040	B	Ribosomal_S3_C	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0	56.56	0.4842	0.0107	114	3	0.714	0.05	37.0	0.433	conserved/homologous complex
+308	none	Crog2_001173	A	Astacin,CUB,FXa_inhibition,EGF_CA	col11a2	collagen alpha-2(XI) chain isoform X1	secreted_ecm	T2_top_combined_prior	0.0	71.4	0.3067	0.0129	167	1	0.0	0.15	3363.0	0.43	
+309	none	Crog2_004655	A	Glyco_hydro_18,CBM_14	LOC106565309	acidic mammalian chitinase-like	secreted	T2_top_combined_prior	0.0	71.37	0.1833	0.0099	150	1	0.0	0.12	3979.0	0.43	
+310	none	Crog2_015206	A	Lectin_C	LOC106581808	CD302 antigen	pm_ectodomain_sp_feature	T3_mechanism_representative	0.0	71.35	0.3411	0.0121	64	1				0.429	no sequence-channel scores (T3/T4)
+311	none	Crog2_002761	B	An_peroxidase	LOC106564853	eosinophil peroxidase	secreted_sp_feature	T3_mechanism_representative	0.0	71.21	0.2582	0.0098	109	1				0.428	no sequence-channel scores (T3/T4)
+312	none	Crog2_012348	C	Transferrin	meltf	melanotransferrin	secreted	T2_top_combined_prior	0.0	71.06	0.3401	0.0106	161	1	0.0	0.12	6545.0	0.425	topology: cytoplasmic/lipid-anchor
+313	none	Crog2_028139	B	Ribosomal_L3	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0	55.98	0.5495	0.0108	156	3	0.664	0.04	1329.0	0.425	conserved/homologous complex
+314	none	Crog2_034618	C	Calreticulin	LOC106609001	complement C1q-like protein 2	secreted	T3_mechanism_representative	0.0	71.04	0.1954	0.0129	46	1	0.0	0.28	5385.0	0.424	
+315	none	Crog2_013389	B	eRF1_3,eRF1_2	LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	60.94	0.2991	0.0092	256	1	0.546	0.03	13083.0	0.423	
+316	none	Crog2_007755	C	Serpin	proza	coagulation factor X	secreted	T2_top_combined_prior	0.0	70.93	0.1543	0.0091	64	1	0.0	0.2	3687.0	0.422	
+317	none	Crog2_016680	B	Ribosomal_L5,Ribosomal_L5_C	LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	59.93	0.2387	0.0091	247	1	0.563	0.03	11272.0	0.422	conserved/homologous complex
+318	none	Crog2_018134	B	Fz	LOC106560633	tyrosine-protein kinase RYK isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	57.25	0.2658	0.0091	170	1	0.595	0.05	25415.0	0.422	
+319	none	Crog2_033509	B	UQ_con	LOC106567870	E3 ubiquitin-protein ligase RNF167	pm_ectodomain	T1_interolog_pair_specific	0.0	56.54	0.5951	0.0122	106	3	0.622	0.02	2151.0	0.421	
+320	none	Crog2_029961	A		LOC106582707	metabotropic glutamate receptor 4 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	61.4	0.3645	0.0105	71	1	0.534	0.03	30964.0	0.42	
+321	none	Crog2_009070	A	Peptidase_C1,Inhibitor_I29	LOC100195750	cystein proteinase inhibitor protein salarin precursor	secreted	T2_top_combined_prior	0.0	65.09	0.2609	0.0095	130	1	0.106	0.25	238.0	0.42	
+322	none	Crog2_024268	C	Kunitz_BPTI,Ldl_recept_a	c7b	complement component C7	secreted	T4_resistance_target	0.0	70.42	0.261	0.0099	131	3	0.0	0.08	33094.0	0.418	
+323	none	Crog2_020074	C	Calreticulin	LOC106566534	complement C1q tumor necrosis factor-related protein 3	secreted	T3_mechanism_representative	0.0	70.11	0.3411	0.012	126	1	0.0	0.25	6259.0	0.416	
+324	none	Crog2_010620	A	CBM_14	chia.1	chitinase, acidic.1	secreted	T2_top_combined_prior	0.0	70.06	0.1883	0.0096	120	1	0.0	0.08	5927.0	0.415	
+325	none	Crog2_018739	B	Complex1_51K	LOC106566779	monoglyceride lipase isoform X1	secreted_denovo	T1_interolog_pair_specific	0.0	62.35	0.1123	0.009	96	1	0.513	0.03	34980.0	0.414	de novo SP rescue
+326	none	Crog2_010620	A	CBM_14	LOC106598110	C-type mannose receptor 2	secreted_sp_feature	T4_resistance_target	0.0	69.97	0.445	0.0165	110	3				0.414	no sequence-channel scores (T3/T4)
+327	none	Crog2_002939	C	5_nucleotid_C,Metallophos	nt5e	5'-nucleotidase	pm_ectodomain	T3_mechanism_representative	0.0	63.91	0.2023	0.0091	329	3	0.5	0.2	51.0	0.413	
+328	none	Crog2_003540	A	SRP68	btf3	transcription factor BTF3 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.0	62.79	0.1972	0.0103	121	1	0.507	0.02	24618.0	0.411	de novo SP rescue
+329	none	Crog2_022601	A	CBM_14	LOC106565088	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.0	69.67	0.4102	0.0107	112	1	0.0	0.1	4878.0	0.411	
+330	none	Crog2_004714	C	5_nucleotid_C,Metallophos	nt5e	5'-nucleotidase	pm_ectodomain	T3_mechanism_representative	0.0	69.66	0.1448	0.0091	53	1				0.41	no sequence-channel scores (T3/T4)
+331	none	Crog2_000381	A	D8C_UMOD,Kunitz_BPTI,VWD,Vwde	LOC106563698	complement factor B	secreted	T2_top_combined_prior	0.0	69.63	0.2208	0.0094	206	1	0.0	0.1	4396.0	0.409	
+332	none	Crog2_009859	C	RL10P_insert,Ribosomal_60s,Ribosomal_L10	LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	58.86	0.3067	0.009	327	1	0.551	0.03	13099.0	0.408	conserved/homologous complex
+333	none	Crog2_027228	B		ruvbl2	ruvB-like 2	secreted	T1_interolog_pair_specific	0.0	55.02	0.1852	0.0093	287	3	0.618	0.05	7715.0	0.407	
+334	none	Crog2_000377	A	Trypsin,SRCR,Kringle,PAN_1,CBM_14,Ldl_recept_a	LOC106564830	complement C3	secreted	T3_mechanism_representative	0.0	69.44	0.2971	0.0137	70	1	0.0	0.2	2856.0	0.405	
+335	none	Crog2_002977	A	An_peroxidase	mpx	eosinophil peroxidase	secreted_sp_feature	T3_mechanism_representative	0.0	69.38	0.2731	0.0098	137	1				0.404	no sequence-channel scores (T3/T4)
+336	none	Crog2_032889	B	GDI	LOC106579142	ras-related protein Rab-5C	pm_ectodomain	T1_interolog_pair_specific	0.0	57.04	0.2896	0.0116	78	1	0.567	0.05	5738.0	0.404	topology: cytoplasmic/lipid-anchor
+337	none	Crog2_007755	C	Serpin	f10	coagulation factor X	secreted	T2_top_combined_prior	0.0	69.12	0.4305	0.0114	64	1	0.0	0.3	1656.0	0.401	
+338	none	Crog2_011853	A	CLIP_1,Trypsin	crp	c-reactive protein, pentraxin-related precursor	secreted	T4_resistance_target	0.0	68.89	0.1597	0.0093	109	3				0.399	no sequence-channel scores (T3/T4)
+339	none	Crog2_011657	B	Trypsin	LOC106595495	complement C3	secreted	T3_mechanism_representative	0.0	68.79	0.2202	0.0097	94	1				0.398	no sequence-channel scores (T3/T4)
+340	none	Crog2_005888	A	Peptidase_M10,PG_binding_1,Hemopexin	LOC106606431	metalloproteinase inhibitor 2 isoform X1	secreted_ecm	T2_top_combined_prior	0.0	63.83	0.2083	0.0104	180	1	0.052	0.15	1667.0	0.397	
+341	none	Crog2_013320	A	EMC7_beta-sandw	mmgt1	ER membrane protein complex subunit 5 precursor	pm_ectodomain	T1_interolog_pair_specific	0.0	55.46	0.2422	0.0115	173	1	0.586	0.04	13919.0	0.397	
+342	none	Crog2_017111	B	Pkinase	LOC106598947	receptor-type tyrosine-protein phosphatase R isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	53.44	0.1678	0.0086	318	1	0.602	0.03	28447.0	0.396	
+343	none	Crog2_002777	A	Peptidase_M10,fn2,PG_binding_1,Hemopexin	timp3	Metalloproteinase inhibitor 3 precursor	secreted_ecm	T2_top_combined_prior	0.0	64.23	0.2477	0.01	161	1	0.029	0.12	13418.0	0.395	
+344	none	Crog2_028389	B	RNA_pol_Rpb2_7	ints5	integrator complex subunit 5	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	55.46	0.2967	0.0099	87	1	0.58	0.02	21738.0	0.395	de novo SP rescue
+345	none	Crog2_006223	A	Serpin	plg	plasminogen	secreted	T2_top_combined_prior	0.0	68.6	0.5316	0.0162	113	1	0.0	0.12	3400.0	0.395	
+346	none	Crog2_002991	C	HSP70,MreB_Mbl	LOC106613115	eukaryotic translation initiation factor 4 gamma 1 isoform X1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	57.76	0.3833	0.0095	761	1	0.549	0.05	12544.0	0.395	de novo SP rescue
+347	none	Crog2_001444	A	Kunitz_BPTI,I-set,Ig_3,Ig_2,ig	c1s.1	complement component 1, s subcomponent .1	secreted	T2_top_combined_prior	0.0	64.03	0.2038	0.0092	332	1	0.036	0.2	1321.0	0.394	
+348	none	Crog2_011657	B	Trypsin	LOC106564830	complement C3	secreted	T3_mechanism_representative	0.0	68.58	0.424	0.0164	96	1				0.394	no sequence-channel scores (T3/T4)
+349	none	Crog2_006601	B	Band_7,Flot	LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	57.21	0.158	0.0086	282	1	0.551	0.05	11086.0	0.393	
+350	none	Crog2_018860	B	Ribosomal_S13	LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	55.41	0.3192	0.0091	135	1	0.577	0.04	9873.0	0.393	conserved/homologous complex
+351	none	Crog2_008559	A	Trypsin	LOC106562293	LOW QUALITY PROTEIN: mucin-5AC	secreted_ecm	T3_mechanism_representative	0.0	68.55	0.2679	0.0113	228	1	0.0	0.1	8699.0	0.392	
+352	none	Crog2_005966	C	Tubulin,Tubulin_C,TUB2_C	LOC106609586	T-complex protein 11-like protein 2	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	58.28	0.4575	0.0101	175	1	0.534	0.02	34932.0	0.391	de novo SP rescue
+353	none	Crog2_011971	A	Trypsin	LOC106605128	complement C3	secreted	T4_resistance_target	0.0	68.47	0.5043	0.0124	235	3	0.0	0.35	766.0	0.391	
+354	none	Crog2_003930	A	Peptidase_M10,Hemopexin,PG_binding_1	LOC106606431	metalloproteinase inhibitor 2 isoform X1	secreted_ecm	T2_top_combined_prior	0.0	62.11	0.2097	0.0096	171	1	0.074	0.1	1902.0	0.389	
+355	none	Crog2_000689	A	Kunitz_BPTI	LOC106571394	plasminogen	secreted	T2_top_combined_prior	0.0	62.22	0.2429	0.0102	262	1	0.054	0.08	1732.0	0.388	
+356	none	Crog2_006223	A	Serpin	LOC106597357	complement C3	secreted	T4_resistance_target	0.0	68.18	0.2443	0.0104	109	3				0.386	no sequence-channel scores (T3/T4)
+357	none	Crog2_000074	A	ADAMTS_spacer1,Kunitz_BPTI,TSP1_ADAMTS,I-set,Ig_3,WAP	LOC106569366	complement factor B isoform X1	secreted	T2_top_combined_prior	0.0	68.02	0.1933	0.0097	106	1	0.0	0.2	2708.0	0.385	
+358	none	Crog2_020074	C	Calreticulin	LOC106592053	complement C3 isoform X1	secreted	T4_resistance_target	0.0	67.67	0.192	0.0096	127	3	0.0	0.15	20043.0	0.383	
+359	none	Crog2_001173	A	Astacin,CUB,FXa_inhibition,EGF_CA	LOC106562962	collagen alpha-1(V) chain isoform X1	secreted_ecm	T2_top_combined_prior	0.0	67.52	0.2198	0.0095	387	1	0.0	0.05	6072.0	0.382	
+360	none	Crog2_039228	B		LOC106581920	ras-related protein Rab-9A	pm_ectodomain	T1_interolog_pair_specific	0.0	57.89	0.2467	0.0104	28	1	0.528	0.03	34124.0	0.382	topology: cytoplasmic/lipid-anchor
+361	none	Crog2_029129	B		rask	GTPase KRas	pm_ectodomain	T1_interolog_pair_specific	0.0	56.27	0.2157	0.0106	98	1	0.551	0.04	12756.0	0.381	topology: cytoplasmic/lipid-anchor
+362	none	Crog2_021407	A	CBM_14	LOC106565309	acidic mammalian chitinase-like	secreted	T2_top_combined_prior	0.0	67.26	0.2785	0.0109	115	1	0.0	0.12	4243.0	0.381	
+363	none	Crog2_004388	A	Polysacc_deac_1,CBM_14,Ldl_recept_a	lg3bp	Galectin-3-binding protein precursor	secreted_ecm	T4_resistance_target	0.0	67.23	0.385	0.0114	205	3	0.0	0.15	36713.0	0.38	
+364	none	Crog2_006649	A	Kazal_2,Kazal_1	si:ch1073-280e3.1	complement C2	secreted	T2_top_combined_prior	0.0	66.84	0.4463	0.0122	130	1	0.0	0.12	5234.0	0.378	
+365	none	Crog2_021515	B	Ribosomal_L6e	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0	48.79	0.4674	0.01	279	3	0.645	0.04	1589.0	0.377	conserved/homologous complex
+366	none	Crog2_011657	B	Trypsin	LOC106586139	complement C3	secreted	T3_mechanism_representative	0.0	66.71	0.2388	0.0098	119	1				0.377	no sequence-channel scores (T3/T4)
+367	none	Crog2_011989	A	Trypsin	LOC106592053	complement C3 isoform X1	secreted	T4_resistance_target	0.0	66.56	0.4628	0.0113	196	3	0.0	0.2	2873.0	0.375	
+368	none	Crog2_000689	A	Kunitz_BPTI	f7i	coagulation factor VIIi	secreted	T2_top_combined_prior	0.0	60.97	0.2694	0.0114	240	1	0.052	0.45	32.0	0.375	
+369	none	Crog2_004714	C	5_nucleotid_C,Metallophos	LOC106565054	snake venom 5'-nucleotidase isoform X1	pm_ectodomain	T3_mechanism_representative	0.0	66.5	0.1773	0.0092	139	1				0.375	no sequence-channel scores (T3/T4)
+370	none	Crog2_003819	C	Kunitz_BPTI	LOC106571394	plasminogen	secreted	T2_top_combined_prior	0.0	66.44	0.2393	0.0096	195	1	0.0	0.2	3816.0	0.374	
+371	none	Crog2_018877	B	Ribosomal_S11	LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	56.42	0.3167	0.0092	112	1	0.539	0.04	12340.0	0.373	conserved/homologous complex
+372	none	Crog2_026550	C	GDA1_CD39	LOC106611031	ectonucleoside triphosphate diphosphohydrolase 5	secreted	T1_interolog_pair_specific	0.0	55.16	0.1654	0.0088	129	1	0.551	0.3	36.0	0.372	
+373	none	Crog2_003930	A	Peptidase_M10,Hemopexin,PG_binding_1	LOC106606432	metalloproteinase inhibitor 2	secreted_ecm	T2_top_combined_prior	0.0	61.08	0.1725	0.0096	169	1	0.037	0.2	1269.0	0.371	
+374	none	Crog2_004650	A	Trypsin,CLIP	plg	plasminogen	secreted	T3_mechanism_representative	0.0	66.3	0.3088	0.0098	239	1	0.0	0.15	4549.0	0.371	
+375	none	Crog2_016786	A	Peptidase_M16	LOC106574335	amyloid-beta A4 protein isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	58.84	0.3098	0.009	211	1	0.505	0.08	19212.0	0.37	
+376	none	Crog2_018860	B	Ribosomal_S13	LOC106613115	eukaryotic translation initiation factor 4 gamma 1 isoform X1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	52.14	0.2072	0.0086	230	1	0.573	0.03	5061.0	0.37	de novo SP rescue; conserved/homologous complex
+377	none	Crog2_000381	A	D8C_UMOD,Kunitz_BPTI,VWD,Vwde	LOC106602980	complement factor B	secreted	T2_top_combined_prior	0.0	66.13	0.2781	0.0104	148	1	0.0	0.22	1754.0	0.37	
+378	none	Crog2_036162	B	Ribosomal_L1	LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	52.95	0.2134	0.0087	109	1	0.563	0.03	12057.0	0.368	conserved/homologous complex
+379	none	Crog2_004134	B	Ribos_L4_asso_C,Ribosomal_L4	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0	46.36	0.1829	0.0086	345	3	0.628	0.04	1887.0	0.368	conserved/homologous complex
+380	none	Crog2_006418	A	Trypsin,Trypsin_2	LOC106603687	heparin cofactor 2	secreted	T2_top_combined_prior	0.0	65.96	0.2736	0.0099	212	1	0.0	0.2	1658.0	0.367	
+381	none	Crog2_015206	A	Lectin_C	LOC106586182	CD302 antigen isoform X1	pm_ectodomain_sp_feature	T3_mechanism_representative	0.0	65.9	0.2836	0.0098	222	1				0.366	no sequence-channel scores (T3/T4)
+382	none	Crog2_007179	C	Calreticulin	LOC106569365	complement C3	secreted	T4_resistance_target	0.0	65.88	0.2818	0.0103	209	3	0.0	0.2	12449.0	0.364	
+383	none	Crog2_029129	B		LOC106562341	ras-related protein R-Ras2	pm_ectodomain	T1_interolog_pair_specific	0.0	54.55	0.3093	0.011	125	1	0.54	0.04	33744.0	0.361	topology: cytoplasmic/lipid-anchor
+384	none	Crog2_033979	B		LOC106612828	phosphorylase b kinase gamma catalytic chain, skeletal muscle/heart isoform	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	55.62	0.4653	0.012	114	1	0.531	0.02	34291.0	0.361	de novo SP rescue
+385	none	Crog2_009767	A	APP_N,APP_Cu_bd	LOC106574335	amyloid-beta A4 protein isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	49.57	0.2669	0.0087	674	1	0.575	0.04	1292.0	0.36	
+386	none	Crog2_002831	C	Kunitz_BPTI	c1s.1	complement component 1, s subcomponent .1	secreted	T2_top_combined_prior	0.0	60.35	0.2541	0.0098	341	1	0.036	0.15	4787.0	0.359	
+387	none	Crog2_021270	A	CBM_14	chia.1	chitinase, acidic.1	secreted	T2_top_combined_prior	0.0	65.08	0.5445	0.0162	114	1	0.0	0.12	4243.0	0.357	
+388	none	Crog2_028146	B	SGTA_dimer	LOC106584872	EGF-containing fibulin-like extracellular matrix protein 1 isoform X1	secreted_ecm	T1_interolog_pair_specific	0.0	50.74	0.1855	0.0088	114	1	0.563	0.04	12031.0	0.356	
+389	none	Crog2_009070	A	Peptidase_C1,Inhibitor_I29	LOC106613935	kininogen-like	secreted_sp_feature	T2_top_combined_prior	0.0	58.35	0.2316	0.0091	187	1	0.089	0.15	991.0	0.355	
+390	none	Crog2_011100	A	Trypsin	LOC106578170	fibrinogen beta chain	secreted_ecm	T2_top_combined_prior	0.0	64.95	0.4384	0.0129	203	1	0.0	0.35	512.0	0.355	
+391	none	Crog2_006223	A	Serpin	f7	coagulation factor VII	secreted	T2_top_combined_prior	0.0	64.95	0.2227	0.0094	136	1	0.0	0.35	420.0	0.355	
+392	none	Crog2_028146	B	SGTA_dimer	LOC106570326	large proline-rich protein BAG6 isoform X1	secreted	T1_interolog_pair_specific	0.0	47.87	0.1599	0.0087	239	1	0.575	0.03	7077.0	0.354	
+393	none	Crog2_006204	A	Peptidase_M14,Propep_M14	LOC106585541	collagen alpha-6(VI) chain isoform X1	secreted_ecm	T2_top_combined_prior	0.0	64.79	0.2144	0.009	221	1	0.0	0.1	18232.0	0.353	
+394	none	Crog2_005320	A	Trypsin,fn2	fgg	fibrinogen gamma chain	secreted_ecm	T2_top_combined_prior	0.0	64.7	0.2846	0.0097	216	1	0.0	0.2	2612.0	0.353	
+395	none	Crog2_007790	B	RRM_1,RRM_PARP14_3	LOC106571586	heterogeneous nuclear ribonucleoprotein U	pm_ectodomain	T1_interolog_pair_specific	0.0	33.95	0.1992	0.008	857	1	0.599	0.03	4089.0	0.352	
+396	none	Crog2_000799	A	Trypsin,SRCR,Ldl_recept_a,Kringle,PAN_1	LOC106581002	complement C4-B	secreted	T3_mechanism_representative	0.0	64.53	0.2079	0.0092	79	1	0.0	0.15	4041.0	0.351	
+397	none	Crog2_013490	B	Lectin_C	LOC106561101	aggrecan core protein isoform X1	secreted_ecm	T3_mechanism_representative	0.0	64.42	0.2577	0.0099	297	1				0.351	no sequence-channel scores (T3/T4)
+398	none	Crog2_010845	B	MitMem_reg,JAB	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0	56.64	0.1946	0.0092	288	1	0.504	0.04	7905.0	0.349	
+399	none	Crog2_008614	B	USP8_interact,zf-C3HC4_2,zf-RING_2,zf-C3HC4	LOC106567671	E3 ubiquitin-protein ligase CBL	pm_ectodomain	T1_interolog_pair_specific	0.0	53.07	0.1635	0.0086	339	1	0.533	0.03	548.0	0.349	
+400	none	Crog2_007848	A	Peptidase_C1,Inhibitor_I29	LOC100195750	cystein proteinase inhibitor protein salarin precursor	secreted	T2_top_combined_prior	0.0	64.19	0.3851	0.01	272	1	0.0	0.12	2872.0	0.348	
+401	none	Crog2_012859	B	Snf7	LOC106582223	charged multivesicular body protein 2b	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	45.01	0.2624	0.009	223	1	0.575	0.03	30109.0	0.345	de novo SP rescue
+402	none	Crog2_007848	A	Peptidase_C1,Inhibitor_I29	LOC106613935	kininogen-like	secreted_sp_feature	T2_top_combined_prior	0.0	57.57	0.4041	0.0105	294	1	0.06	0.3	225.0	0.345	
+403	none	Crog2_000689	A	Kunitz_BPTI	f9a	coagulation factor IX	secreted	T3_mechanism_representative	0.0	57.97	0.2624	0.0099	361	1	0.051	0.25	361.0	0.345	
+404	none	Crog2_012133	A	Trypsin	serpina10a	serpin peptidase inhibitor, clade A (alpha-1 antiproteinase, antitrypsin), member 10a	secreted	T2_top_combined_prior	0.0	63.85	0.2638	0.0113	87	1	0.0	0.35	538.0	0.344	
+405	none	Crog2_007667	C	Serpin	f7	coagulation factor VII	secreted	T2_top_combined_prior	0.0	63.76	0.2551	0.0161	92	1	0.0	0.2	3687.0	0.342	
+406	none	Crog2_000799	A	Trypsin,SRCR,Ldl_recept_a,Kringle,PAN_1	LOC106569365	complement C3	secreted	T3_mechanism_representative	0.0	63.64	0.2546	0.0097	104	1	0.0	0.3	1187.0	0.341	
+407	none	Crog2_028564	B	EMC3_TMCO1	mmgt1	ER membrane protein complex subunit 5 precursor	pm_ectodomain	T1_interolog_pair_specific	0.0	45.89	0.2978	0.0096	165	1	0.567	0.05	18204.0	0.341	
+408	none	Crog2_002939	C	5_nucleotid_C,Metallophos	LOC106565054	snake venom 5'-nucleotidase isoform X1	pm_ectodomain	T3_mechanism_representative	0.0	63.2	0.2092	0.0089	387	3				0.339	no sequence-channel scores (T3/T4)
+409	none	Crog2_013974	C	Ras,Roc,Arf,MMR_HSR1	LOC106603537	UV radiation resistance-associated gene protein isoform X1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	47.43	0.2475	0.0088	191	1	0.557	0.02	25956.0	0.339	de novo SP rescue
+410	none	Crog2_018877	B	Ribosomal_S11	LOC106613115	eukaryotic translation initiation factor 4 gamma 1 isoform X1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	51.43	0.2036	0.0087	163	1	0.535	0.05	6324.0	0.339	de novo SP rescue; conserved/homologous complex
+411	none	Crog2_006418	A	Trypsin,Trypsin_2	LOC106603572	alpha-2-antiplasmin	secreted	T2_top_combined_prior	0.0	62.77	0.3449	0.0114	164	1	0.0	0.3	689.0	0.336	
+412	none	Crog2_005355	A	Peptidase_M14	LOC106585544	collagen alpha-6(VI) chain isoform X1	secreted_ecm	T2_top_combined_prior	0.0	62.7	0.2416	0.0091	352	1	0.0	0.15	15381.0	0.335	
+413	none	Crog2_004134	B	Ribos_L4_asso_C,Ribosomal_L4	btf3	transcription factor BTF3 isoform X1	secreted_denovo	T1_interolog_pair_specific	0.0	33.72	0.197	0.0084	442	1	0.57	0.03	16976.0	0.335	de novo SP rescue; conserved/homologous complex
+414	none	Crog2_023980	B	Ribosomal_S2	kars1	lysine--tRNA ligase isoform X1	secreted	T1_interolog_pair_specific	0.0	53.1	0.2092	0.0094	146	1	0.512	0.03	15457.0	0.335	conserved/homologous complex
+415	none	Crog2_006433	A	PCI,eIF3_N,EIF3E_C	rssa	40S ribosomal protein SA	pm_ectodomain	T1_interolog_pair_specific	0.0	49.09	0.2121	0.0091	311	1	0.545	0.04	4001.0	0.334	
+416	none	Crog2_015877	A	Lectin_C	lgals3b	galectin-3b isoform X1	secreted	T4_resistance_target	0.0	62.18	0.4563	0.0116	273	3				0.331	no sequence-channel scores (T3/T4)
+417	none	Crog2_011853	A	CLIP_1,Trypsin	chid1	chitinase domain-containing protein 1	secreted	T4_resistance_target	0.0	61.81	0.3048	0.0109	260	3				0.329	no sequence-channel scores (T3/T4)
+418	none	Crog2_007667	C	Serpin	plg	plasminogen	secreted	T2_top_combined_prior	0.0	61.75	0.2962	0.0103	79	1	0.0	0.08	7174.0	0.328	
+419	none	Crog2_005577	A	Trypsin,CLIP	lyz	lysozyme C	secreted_sp_feature	T4_resistance_target	0.0	61.7	0.2391	0.01	158	3	0.0	0.12	17960.0	0.328	
+420	none	Crog2_026766	B	HIF-1a_CTAD	ruvbl2	ruvB-like 2	secreted	T1_interolog_pair_specific	0.0	52.28	0.3553	0.0098	317	1	0.513	0.03	14443.0	0.327	
+421	none	Crog2_003281	A	Kunitz_BPTI	LOC106569366	complement factor B isoform X1	secreted	T2_top_combined_prior	0.0	61.69	0.2927	0.0094	293	1	0.0	0.3	849.0	0.327	
+422	none	Crog2_032271	C	Calreticulin	LOC106563105	complement C1q-like protein 2	secreted	T3_mechanism_representative	0.0	61.6	0.1477	0.0101	42	1	0.0	0.15	10235.0	0.327	
+423	none	Crog2_001048	A	Spond_N,Reeler,Kunitz_BPTI,TSP_1	c1s.1	complement component 1, s subcomponent .1	secreted	T2_top_combined_prior	0.0	61.47	0.1788	0.0088	201	1	0.0	0.2	2014.0	0.325	
+424	none	Crog2_010968	A	Kunitz_BPTI	LOC106571394	plasminogen	secreted	T2_top_combined_prior	0.0	56.69	0.2729	0.0093	308	1	0.015	0.3	504.0	0.325	
+425	none	Crog2_005888	A	Peptidase_M10,PG_binding_1,Hemopexin	LOC106606432	metalloproteinase inhibitor 2	secreted_ecm	T2_top_combined_prior	0.0	56.61	0.2292	0.0096	158	1	0.032	0.1	3225.0	0.325	
+426	none	Crog2_023350	B	Ribosomal_L14e	LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	52.29	0.143	0.0086	71	1	0.509	0.03	14781.0	0.325	conserved/homologous complex
+427	none	Crog2_000079	A	ADAMTS_spacer1,Kunitz_BPTI,Ig_3,I-set,TSP1_ADAMTS,ADAMTS_CR_3	LOC106569366	complement factor B isoform X1	secreted	T2_top_combined_prior	0.0	61.43	0.2179	0.0096	242	1	0.0	0.2	2014.0	0.325	
+428	none	Crog2_006940	A	Trypsin	LOC106562293	LOW QUALITY PROTEIN: mucin-5AC	secreted_ecm	T3_mechanism_representative	0.0	61.04	0.3047	0.0093	186	1	0.0	0.2	5224.0	0.322	
+429	none	Crog2_012350	C	14-3-3	LOC106573733	breast cancer anti-estrogen resistance protein 1 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	46.05	0.1967	0.0084	391	1	0.54	0.04	33798.0	0.321	
+430	none	Crog2_032271	C	Calreticulin	LOC106566534	complement C1q tumor necrosis factor-related protein 3	secreted	T3_mechanism_representative	0.0	61.02	0.3754	0.0134	60	1	0.0	0.08	13282.0	0.321	
+431	none	Crog2_031241	B	Clathrin	LOC106589449	ADP-ribosylation factor-binding protein GGA1	pm_ectodomain	T1_interolog_pair_specific	0.0	44.13	0.201	0.0084	181	1	0.545	0.02	416.0	0.32	
+432	none	Crog2_034685	B		LOC106566779	monoglyceride lipase isoform X1	secreted_denovo	T1_interolog_pair_specific	0.0	45.99	0.2836	0.0093	44	1	0.539	0.03	33406.0	0.32	de novo SP rescue
+433	none	Crog2_006931	A	Trypsin,CLIP	fgg	fibrinogen gamma chain	secreted_ecm	T2_top_combined_prior	0.0	60.83	0.313	0.0105	221	1	0.0	0.2	2612.0	0.318	
+434	none	Crog2_016680	B	Ribosomal_L5,Ribosomal_L5_C	LOC106608359	uncharacterized protein LOC106608359 isoform X1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	52.17	0.2565	0.0086	324	1	0.505	0.02	35495.0	0.318	de novo SP rescue; conserved/homologous complex
+435	none	Crog2_015401	C	Ras,Roc,Arf	LOC106570326	large proline-rich protein BAG6 isoform X1	secreted	T1_interolog_pair_specific	0.0	47.61	0.3312	0.0089	257	1	0.526	0.05	28051.0	0.318	
+436	none	Crog2_002083	B	PK_Tyr_Ser-Thr,Pkinase,I-set,Ig_3,FslL_N	ror2	tyrosine-protein kinase transmembrane receptor ROR2 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	49.78	0.2691	0.0087	593	1	0.513	0.03	2912.0	0.318	
+437	none	Crog2_021270	A	CBM_14	LOC106572401	acidic mammalian chitinase	secreted	T2_top_combined_prior	0.0	60.61	0.4783	0.0112	85	1	0.0	0.1	4878.0	0.316	
+438	none	Crog2_004154	B	Cpn60_TCP1	tsc1a	TSC complex subunit 1a isoform X1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	50.62	0.238	0.0088	443	1	0.508	0.03	34833.0	0.315	de novo SP rescue
+439	none	Crog2_024199	A		LOC106570046	syndecan-2-A	pm_ectodomain	T1_interolog_pair_specific	0.0	36.74	0.1141	0.0082	443	1	0.541	0.05	28515.0	0.314	
+440	none	Crog2_004650	A	Trypsin,CLIP	LOC106578169	fibrinogen alpha chain	secreted_ecm	T2_top_combined_prior	0.0	60.57	0.3784	0.0117	140	1	0.0	0.4	398.0	0.314	
+441	none	Crog2_015592	B	Ras,Roc,Arf	il2rb	interleukin-2 receptor subunit beta precursor	pm_ectodomain	T1_interolog_pair_specific	0.0	46.25	0.3496	0.0093	343	1	0.526	0.08	30960.0	0.312	
+442	none	Crog2_029129	B		mrasa	ras-related protein M-Ras	pm_ectodomain	T1_interolog_pair_specific	0.0	48.91	0.2708	0.0097	115	1	0.513	0.03	35789.0	0.312	topology: cytoplasmic/lipid-anchor
+443	none	Crog2_011971	A	Trypsin	fgg	fibrinogen gamma chain	secreted_ecm	T3_mechanism_representative	0.0	60.33	0.3767	0.0106	80	1	0.0	0.12	4507.0	0.31	
+444	none	Crog2_018860	B	Ribosomal_S13	LOC106608359	uncharacterized protein LOC106608359 isoform X1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	46.86	0.1691	0.0086	169	1	0.518	0.04	33879.0	0.309	de novo SP rescue; conserved/homologous complex
+445	none	Crog2_011900	B	Trypsin	LOC106571394	plasminogen	secreted	T3_mechanism_representative	0.0	60.23	0.2418	0.0093	202	1				0.309	no sequence-channel scores (T3/T4)
+446	none	Crog2_005169	C	Trypsin,RVT_1	serpina10a	serpin peptidase inhibitor, clade A (alpha-1 antiproteinase, antitrypsin), member 10a	secreted	T2_top_combined_prior	0.0	60.18	0.2432	0.0102	130	1	0.0	0.22	3761.0	0.308	
+447	none	Crog2_004650	A	Trypsin,CLIP	LOC106578170	fibrinogen beta chain	secreted_ecm	T2_top_combined_prior	0.0	59.82	0.2078	0.0091	261	1	0.0	0.12	4507.0	0.306	
+448	none	Crog2_001048	A	Spond_N,Reeler,Kunitz_BPTI,TSP_1	fa10	coagulation factor X precursor	secreted	T3_mechanism_representative	0.0	53.19	0.184	0.0086	279	1	0.04	0.2	7827.0	0.305	
+449	none	Crog2_011027	A	Trypsin	LOC106581172	alpha-2-antiplasmin isoform X1	secreted	T2_top_combined_prior	0.0	59.78	0.5765	0.0112	154	1	0.0	0.4	214.0	0.305	
+450	none	Crog2_014808	A	SapA,SapB_1,SapB_2	LOC106609201	prosaposin receptor GPR37 isoform X1	pm_ectodomain	T1_interolog_pair_specific	0.0	43.27	0.3132	0.0086	435	1	0.524	0.04	31427.0	0.305	
+451	none	Crog2_013490	B	Lectin_C	LOC106581808	CD302 antigen	pm_ectodomain_sp_feature	T3_mechanism_representative	0.0	59.61	0.143	0.009	195	1				0.304	no sequence-channel scores (T3/T4)
+452	none	Crog2_000335	A	COLFI,Collagen	LOC106588939	uncharacterized protein LOC106588939	secreted_ecm	T1_interolog_pair_specific	0.0	39.39	0.1312	0.0081	1170	1	0.524	0.08	35.0	0.304	
+453	none	Crog2_023905	B		LOC106613115	eukaryotic translation initiation factor 4 gamma 1 isoform X1	pm_ectodomain_denovo_noSP	T1_interolog_pair_specific	0.0	49.05	0.1784	0.0085	129	1	0.506	0.03	16591.0	0.304	de novo SP rescue
+454	none	Crog2_011853	A	CLIP_1,Trypsin	LOC106598110	C-type mannose receptor 2	secreted_sp_feature	T4_resistance_target	0.0	59.54	0.2192	0.0093	218	3				0.303	no sequence-channel scores (T3/T4)
+455	none	Crog2_010904	A	Kunitz_BPTI	f9b	coagulation factor IXb	secreted	T2_top_combined_prior	0.0	52.99	0.1915	0.009	248	1	0.042	0.12	1819.0	0.303	
+456	none	Crog2_009767	A	APP_N,APP_Cu_bd	LOC106590234	extracellular sulfatase Sulf-1 isoform X1	ecm	T1_interolog_pair_specific	0.0	49.57	0.2448	0.0091	257	1	0.503	0.04	33225.0	0.303	
+457	none	Crog2_003479	A	Trypsin,fn2,PAN_4	f7i	coagulation factor VIIi	secreted	T3_mechanism_representative	0.0	52.12	0.2373	0.0094	358	1	0.057	0.22	1393.0	0.302	
+458	none	Crog2_006963	C	Serpin	f10	coagulation factor X	secreted	T2_top_combined_prior	0.0	59.16	0.3436	0.0116	113	1	0.0	0.08	7174.0	0.302	
+459	none	Crog2_001971	A	Trypsin,Lectin_C	LOC106569936	H-2 class I histocompatibility antigen, Q10 alpha chain isoform X1	pm_ectodomain	T3_mechanism_representative	0.0	58.65	0.1948	0.0088	314	1	0.0	0.07	32491.0	0.298	
+460	none	Crog2_019934	C	Trypsin	tfr1a	transferrin receptor protein 1	pm_ectodomain	T4_resistance_target	0.0	58.5	0.4947	0.0102	220	3				0.297	no sequence-channel scores (T3/T4)
+461	none	Crog2_003281	A	Kunitz_BPTI	LOC106576886	factor VII-activating protease	secreted	T2_top_combined_prior	0.0	52.39	0.3417	0.0091	549	1	0.03	0.35	329.0	0.296	
+462	none	Crog2_000074	A	ADAMTS_spacer1,Kunitz_BPTI,TSP1_ADAMTS,I-set,Ig_3,WAP	LOC106576886	factor VII-activating protease	secreted	T2_top_combined_prior	0.0	58.37	0.195	0.0088	536	1	0.0	0.25	1733.0	0.296	
+463	none	Crog2_030702	B		LOC106587268	cadherin-1	pm_ectodomain	T1_interolog_pair_specific	0.0	46.69	0.2571	0.0087	96	1	0.503	0.05	15026.0	0.294	
+464	none	Crog2_003235	A	Peptidase_M14	LOC106585544	collagen alpha-6(VI) chain isoform X1	secreted_ecm	T2_top_combined_prior	0.0	58.25	0.298	0.0093	339	1	0.0	0.12	16985.0	0.294	
+465	none	Crog2_001479	B	Spond_N,Reeler,Kunitz_BPTI,TSP1_spondin,TSP_1	plaub	plasminogen activator, urokinase b	secreted	T3_mechanism_representative	0.0	58.25	0.218	0.0095	437	1				0.294	no sequence-channel scores (T3/T4)
+466	none	Crog2_015206	A	Lectin_C	LOC106561101	aggrecan core protein isoform X1	secreted_ecm	T3_mechanism_representative	0.0	57.82	0.2828	0.0122	249	1				0.29	no sequence-channel scores (T3/T4)
+467	none	Crog2_013490	B	Lectin_C	LOC106586182	CD302 antigen isoform X1	pm_ectodomain_sp_feature	T3_mechanism_representative	0.0	57.69	0.2245	0.0093	226	1				0.289	no sequence-channel scores (T3/T4)
+468	none	Crog2_003825	C	Kunitz_BPTI	f9b	coagulation factor IXb	secreted	T2_top_combined_prior	0.0	51.63	0.2471	0.0089	691	1	0.019	0.2	3103.0	0.288	
+469	none	Crog2_000079	A	ADAMTS_spacer1,Kunitz_BPTI,Ig_3,I-set,TSP1_ADAMTS,ADAMTS_CR_3	LOC106576886	factor VII-activating protease	secreted	T2_top_combined_prior	0.0	57.37	0.2123	0.0088	581	1	0.0	0.2	2014.0	0.286	
+470	none	Crog2_007635	C	Serpin	f7	coagulation factor VII	secreted	T2_top_combined_prior	0.0	57.13	0.2671	0.0167	59	1	0.0	0.08	7174.0	0.284	
+471	none	Crog2_001971	A	Trypsin,Lectin_C	LOC106588377	class I histocompatibility antigen, F10 alpha chain isoform X2	pm_ectodomain	T3_mechanism_representative	0.0	57.12	0.2875	0.0091	299	1	0.0	0.08	31865.0	0.284	
+472	none	Crog2_003980	C	Kunitz_BPTI	f9b	coagulation factor IXb	secreted	T2_top_combined_prior	0.0	49.45	0.1728	0.0084	492	1	0.043	0.3	1018.0	0.283	
+473	none	Crog2_011724	A	Trypsin	fga	fibrinogen alpha chain	secreted_ecm	T2_top_combined_prior	0.0	56.7	0.4366	0.0097	187	1	0.0	0.3	1074.0	0.281	
+474	none	Crog2_001048	A	Spond_N,Reeler,Kunitz_BPTI,TSP_1	LOC106574204	complement C1r-A subcomponent	secreted	T2_top_combined_prior	0.0	56.68	0.2021	0.0104	202	1	0.0	0.2	2014.0	0.28	
+475	none	Crog2_010919	C	Serpin	proza	coagulation factor X	secreted	T2_top_combined_prior	0.0	56.67	0.2414	0.0101	178	1	0.0	0.15	5559.0	0.28	
+476	none	Crog2_010968	A	Kunitz_BPTI	f7i	coagulation factor VIIi	secreted	T2_top_combined_prior	0.0	45.38	0.4217	0.0103	345	1	0.059	0.1	1740.0	0.278	
+477	none	Crog2_003819	C	Kunitz_BPTI	f7i	coagulation factor VIIi	secreted	T2_top_combined_prior	0.0	46.87	0.1636	0.0084	278	1	0.049	0.1	4624.0	0.278	
+478	none	Crog2_012030	C	Kunitz_BPTI	LOC106561958	prothrombin	secreted	T2_top_combined_prior	0.0	56.52	0.3077	0.0096	345	1	0.0	0.15	4733.0	0.276	
+479	none	Crog2_003980	C	Kunitz_BPTI	LOC106612366	coagulation factor IX	secreted	T3_mechanism_representative	0.0	47.12	0.2893	0.0089	481	1	0.042	0.1	4913.0	0.276	
+480	none	Crog2_003825	C	Kunitz_BPTI	fa10	coagulation factor X precursor	secreted	T3_mechanism_representative	0.0	44.64	0.173	0.0084	399	1	0.058	0.2	11697.0	0.275	
+481	none	Crog2_011971	A	Trypsin	LOC106603687	heparin cofactor 2	secreted	T2_top_combined_prior	0.0	55.75	0.2003	0.0093	116	1	0.0	0.3	855.0	0.271	
+482	none	Crog2_002182	C	Trypsin,Nudel,Ldl_recept_a	LOC106605128	complement C3	secreted	T3_mechanism_representative	0.0	55.72	0.2128	0.0087	507	1	0.0	0.25	4748.0	0.27	
+483	none	Crog2_011989	A	Trypsin	LOC106586139	complement C3	secreted	T3_mechanism_representative	0.0	55.71	0.36	0.0094	129	1	0.0	0.35	766.0	0.27	
+484	none	Crog2_006866	A	Peptidase_M14,Propep_M14	col28a2a	collagen, type XXVIII, alpha 2a isoform X1	secreted_ecm	T2_top_combined_prior	0.0	55.5	0.2097	0.0085	613	1	0.0	0.1	18232.0	0.268	
+485	none	Crog2_002927	A	An_peroxidase	LOC106564853	eosinophil peroxidase	secreted_sp_feature	T3_mechanism_representative	0.0	55.41	0.2821	0.0093	152	1				0.266	no sequence-channel scores (T3/T4)
+486	none	Crog2_003980	C	Kunitz_BPTI	LOC106587117	prothrombin isoform X1	secreted	T2_top_combined_prior	0.0	42.37	0.2036	0.0083	766	1	0.023	0.2	2968.0	0.262	
+487	none	Crog2_010620	A	CBM_14	lgals3b	galectin-3b isoform X1	secreted	T4_resistance_target	0.0	54.28	0.3053	0.0104	313	3				0.261	no sequence-channel scores (T3/T4)
+488	none	Crog2_012133	A	Trypsin	LOC106586139	complement C3	secreted	T3_mechanism_representative	0.0	54.01	0.3347	0.0093	95	1	0.0	0.2	2873.0	0.26	
+489	none	Crog2_003195	A	Trypsin,ShK	f7	coagulation factor VII	secreted	T3_mechanism_representative	0.0	53.84	0.2603	0.0096	393	1	0.0	0.2	3261.0	0.258	
+490	none	Crog2_006311	C	An_peroxidase	mpx	eosinophil peroxidase	secreted_sp_feature	T3_mechanism_representative	0.0	53.39	0.1935	0.0086	145	1				0.257	no sequence-channel scores (T3/T4)
+491	none	Crog2_001818	C	Trypsin,Nudel	LOC106562293	LOW QUALITY PROTEIN: mucin-5AC	secreted_ecm	T3_mechanism_representative	0.0	53.18	0.2324	0.0089	240	1	0.0	0.08	14570.0	0.256	
+492	none	Crog2_008559	A	Trypsin	cd8a	T-cell surface glycoprotein CD8 alpha chain precursor	pm_ectodomain	T3_mechanism_representative	0.0	52.99	0.1581	0.0091	325	1	0.0	0.06	36558.0	0.254	
+493	none	Crog2_005118	C	Lectin_C	lg3bp	Galectin-3-binding protein precursor	secreted_ecm	T4_resistance_target	0.0	52.68	0.1799	0.0086	622	3				0.252	no sequence-channel scores (T3/T4)
+494	none	Crog2_006931	A	Trypsin,CLIP	pigr	polymeric immunoglobulin receptor	pm_ectodomain	T3_mechanism_representative	0.0	52.67	0.3226	0.0099	178	3	0.0	0.08	21827.0	0.251	
+495	none	Crog2_008530	C	Peptidase_C1,Inhibitor_I29	LOC106613935	kininogen-like	secreted_sp_feature	T2_top_combined_prior	0.0	52.6	0.2486	0.0092	281	1	0.0	0.2	3332.0	0.25	
+496	none	Crog2_010967	C	Kunitz_BPTI	LOC106602980	complement factor B	secreted	T2_top_combined_prior	0.0	52.32	0.1945	0.0087	209	1	0.0	0.45	510.0	0.249	
+497	none	Crog2_003195	A	Trypsin,ShK	fgg	fibrinogen gamma chain	secreted_ecm	T2_top_combined_prior	0.0	52.06	0.1665	0.0086	169	1	0.0	0.15	3709.0	0.245	
+498	none	Crog2_003825	C	Kunitz_BPTI	LOC106587117	prothrombin isoform X1	secreted	T2_top_combined_prior	0.0	51.35	0.1877	0.0085	606	1	0.0	0.22	3344.0	0.242	
+499	none	Crog2_005320	A	Trypsin,fn2	fga	fibrinogen alpha chain	secreted_ecm	T2_top_combined_prior	0.0	50.89	0.3279	0.009	322	1	0.0	0.22	2172.0	0.24	
+500	none	Crog2_005169	C	Trypsin,RVT_1	LOC106581172	alpha-2-antiplasmin isoform X1	secreted	T2_top_combined_prior	0.0	50.52	0.3203	0.0092	263	1	0.0	0.4	818.0	0.237	
+501	none	Crog2_010666	C	Trypsin,Nudel	fga	fibrinogen alpha chain	secreted_ecm	T3_mechanism_representative	0.0	49.76	0.3683	0.0094	338	1	0.0	0.2	4981.0	0.235	
+502	none	Crog2_003195	A	Trypsin,ShK	LOC106578169	fibrinogen alpha chain	secreted_ecm	T2_top_combined_prior	0.0	49.38	0.5444	0.011	308	1	0.0	0.15	3709.0	0.232	
+503	none	Crog2_006931	A	Trypsin,CLIP	fga	fibrinogen alpha chain	secreted_ecm	T2_top_combined_prior	0.0	48.15	0.4118	0.0091	420	1	0.0	0.3	1074.0	0.229	
+504	none	Crog2_010967	C	Kunitz_BPTI	LOC106563698	complement factor B	secreted	T2_top_combined_prior	0.0	48.14	0.1667	0.0084	278	1	0.0	0.15	5629.0	0.229	
+505	none	Crog2_021270	A	CBM_14	leg3	galectin-3 isoform X1	secreted	T4_resistance_target	0.0	46.43	0.4169	0.0099	151	3				0.224	no sequence-channel scores (T3/T4)
